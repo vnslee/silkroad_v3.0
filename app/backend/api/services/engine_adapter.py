@@ -80,7 +80,9 @@ def render_report_html(domain: str, report_json_path: str) -> str:
 
 
 def render_detail_html(domain: str, target_id: str, version: Optional[str] = None) -> str:
-    """detail 렌더러 함수형 render() 호출 → 출력 HTML 절대경로 반환(self-locate)."""
+    """detail 렌더러 함수형 render() 호출 → 출력 HTML 절대경로 반환(self-locate).
+
+    디스크에 DTL_<ID>_nnn.html 캐시 파일을 생성한다(CLI·비동기 잡용)."""
     if domain == "country":
         import country_detail_rendering_engine as cdr  # type: ignore
 
@@ -88,3 +90,16 @@ def render_detail_html(domain: str, target_id: str, version: Optional[str] = Non
     import region_detail_rendering_engine as rdr  # type: ignore
 
     return str(rdr.render(target_id, version))
+
+
+def render_detail_html_str(domain: str, target_id: str, version: Optional[str] = None) -> str:
+    """detail 렌더러 → HTML 문자열 반환(파일 미생성, API 실시간 렌더용).
+
+    매 요청 최신 데이터로 렌더하되 디스크 캐시(DTL_<ID>_nnn.html)는 쌓지 않는다."""
+    if domain == "country":
+        import country_detail_rendering_engine as cdr  # type: ignore
+
+        return str(cdr.render_to_string(target_id, version))
+    import region_detail_rendering_engine as rdr  # type: ignore
+
+    return str(rdr.render_to_string(target_id, version))

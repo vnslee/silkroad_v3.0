@@ -78,6 +78,25 @@ class RegionReportEngine:
     KILLSWITCH_ITEMS = ["외국인 지분 한도", "외환·배당 송금 자유도",
                         "데이터 현지화 의무", "국가신용등급"]
 
+    # 킬스위치 4단계 분류 기본 규칙 (internal_data.killswitch_tier_rules 누락 시 폴백).
+    # severity 낮을수록 위험(나쁨); worst-first로 평가해 다중 FLAG 시 가장 나쁜 tier 확정.
+    DEFAULT_KILLSWITCH_TIER_RULES = {
+        "tiers": [
+            {"key": "jv_required", "label_ko": "JV 필수", "label_en": "JV Required",
+             "severity": 1, "trigger": {"any_fail": ["국가신용등급"]}, "fallback": True,
+             "eligible": False, "quickwin_penalty": None, "killswitch_excluded": True},
+            {"key": "jv_recommended", "label_ko": "JV 권고", "label_en": "JV Recommended",
+             "severity": 2, "trigger": {"any_fail": ["외환·배당 송금 자유도", "외국인 지분 한도"]},
+             "eligible": True, "quickwin_penalty": 10, "killswitch_excluded": False},
+            {"key": "external_solution", "label_ko": "외부솔루션 사용", "label_en": "External Solution",
+             "severity": 3, "trigger": {"only_fail": ["데이터 현지화 의무"]},
+             "eligible": True, "quickwin_penalty": 0, "killswitch_excluded": False},
+            {"key": "in_region_confidence", "label_ko": "권역내 확신", "label_en": "In-Region Confidence",
+             "severity": 4, "trigger": {"all_pass": True},
+             "eligible": True, "quickwin_penalty": 0, "killswitch_excluded": False},
+        ],
+    }
+
     def __init__(self, region_data_path: str,
                  internal_data_path: str = "storage/data/internal/internal_latest.json",
                  output_base_path: str = "storage/report"):
@@ -373,12 +392,55 @@ class RegionReportEngine:
     # Tab 2-0: Killswitch
     # ------------------------------------------------------------------
 
+    def _killswitch_tier_rules(self) -> Dict[str, Any]:
+        """internal_data.killswitch_tier_rules 로드 (누락 시 내장 기본 규칙)."""
+        rules = (self.internal_data or {}).get("killswitch_tier_rules")
+        if not rules or not rules.get("tiers"):
+            return self.DEFAULT_KILLSWITCH_TIER_RULES
+        return rules
+
+    def _classify_killswitch_tier(self, gates: Dict[str, Dict[str, Any]],
+                                  rules: Dict[str, Any]) -> Dict[str, Any]:
+        """국가별 게이트 결과 → 4단계 tier 판정.
+
+        PASS 외(FLAG·UNKNOWN·누락) 게이트를 not-PASS로 보고, severity 오름차순
+        (worst-first)으로 trigger를 평가해 첫 매치 tier를 반환한다(다중 FLAG → 가장
+        나쁜 tier). 미매치 시 fallback tier(없으면 가장 severe한 tier).
+        """
+        failed_gates = {g for g in self.KILLSWITCH_ITEMS
+                        if (gates.get(g, {}).get("status") or "").upper() != "PASS"}
+        tiers = sorted(rules.get("tiers", []), key=lambda t: t.get("severity", 0))
+
+        def _matches(trigger: Dict[str, Any]) -> bool:
+            if not trigger:
+                return False
+            if trigger.get("all_pass"):
+                return not failed_gates
+            if "only_fail" in trigger:
+                return failed_gates == set(trigger["only_fail"])
+            if "any_fail" in trigger:
+                return bool(failed_gates & set(trigger["any_fail"]))
+            return False
+
+        for tier in tiers:
+            if _matches(tier.get("trigger", {})):
+                return tier
+        # 미매치 → fallback tier, 없으면 가장 severe(첫 항목)
+        fallback = next((t for t in tiers if t.get("fallback")), None)
+        return fallback or (tiers[0] if tiers else {})
+
     def compute_killswitch(self) -> Dict[str, Any]:
-        """Per-country pass/fail across killswitch gates → status_matrix."""
+        """Per-country gate matrix + 4단계 tier 분류 → status_matrix.
+
+        `pass`(bool)·`passed`/`failed`는 하위호환 위해 그대로 유지(전 게이트 PASS=pass).
+        추가로 tier(4단계)·tier_label·tier_counts를 부착한다.
+        """
+        rules = self._killswitch_tier_rules()
         countries = self.region_data.get("countries", [])
         matrix: List[Dict[str, Any]] = []
         passed_codes: List[str] = []
         failed_codes: List[str] = []
+        tier_counts: Dict[str, int] = {}
 
         for country in countries:
             idx = self._country_items_index(country)
@@ -402,13 +464,27 @@ class RegionReportEngine:
                 }
                 if result != "PASS":
                     country_pass = False
+            tier = self._classify_killswitch_tier(gates, rules)
+            tier_key = tier.get("key")
+            tier_counts[tier_key] = tier_counts.get(tier_key, 0) + 1
             matrix.append({
                 "country": code,
                 "country_name": country.get("country"),
                 "pass": country_pass,
+                "tier": tier_key,
+                "tier_label": {"ko": tier.get("label_ko"), "en": tier.get("label_en")},
                 "gates": gates,
             })
             (passed_codes if country_pass else failed_codes).append(code)
+
+        # tier_summary: 규칙 정의 순서(severity)대로 카운트·라벨 노출
+        tier_summary = [
+            {"key": t.get("key"),
+             "label": {"ko": t.get("label_ko"), "en": t.get("label_en")},
+             "severity": t.get("severity"),
+             "count": tier_counts.get(t.get("key"), 0)}
+            for t in sorted(rules.get("tiers", []), key=lambda t: t.get("severity", 0))
+        ]
 
         return {
             "nature": "status_matrix",
@@ -419,6 +495,8 @@ class RegionReportEngine:
             "failed": failed_codes,
             "passed_count": len(passed_codes),
             "failed_count": len(failed_codes),
+            "tier_counts": tier_counts,
+            "tier_summary": tier_summary,
         }
 
     # ------------------------------------------------------------------
@@ -750,8 +828,14 @@ class RegionReportEngine:
         attr_map = {c["country"]: c["attractiveness_score"] for c in attractiveness["countries"]}
         it_map = {c["country"]: c["it_similarity_raw"] for c in it_similarity["countries"]}
         it_band_map = {c["country"]: c["it_similarity_band"] for c in it_similarity["countries"]}
-        passed = set(killswitch["passed"])
         baseline = it_similarity.get("baseline_country")
+
+        # 킬스위치 4단계 tier 연동: tier별 eligible(랭킹 포함 여부)·quickwin_penalty(감점).
+        # JV필수(eligible=false) → 랭킹 제외(killswitch_excluded), JV권고 → 감점 후 포함,
+        # 확신·외부솔루션 → 정상 포함.
+        rules = self._killswitch_tier_rules()
+        tier_meta = {t.get("key"): t for t in rules.get("tiers", [])}
+        ks_country_map = {c["country"]: c for c in killswitch["countries"]}
 
         # 진출국(이미 운영중이거나 기진출 자산 보유) — 신규 진출 추천 후보가 아니므로 랭킹에서 제외.
         country_status = (self.internal_data.get("country_status") or {})
@@ -766,12 +850,18 @@ class RegionReportEngine:
             attr = attr_map.get(code)
             it = it_map.get(code)
             is_baseline = code == baseline
-            ks_excluded = code not in passed
+            ks_entry = ks_country_map.get(code, {})
+            tier_key = ks_entry.get("tier")
+            tier_label = ks_entry.get("tier_label")
+            meta = tier_meta.get(tier_key, {})
+            # eligible=false인 tier(JV필수)만 킬스위치 사유로 제외 — 하위호환 killswitch_excluded 보존.
+            ks_excluded = not meta.get("eligible", True)
+            penalty = meta.get("quickwin_penalty") or 0
             already_entered = code in entered
             excluded = is_baseline or ks_excluded or already_entered
             raw_score = None
             if attr is not None and it is not None:
-                raw_score = attr * w_biz + it * w_it
+                raw_score = max(0.0, attr * w_biz + it * w_it - penalty)
             rows.append({
                 "country": code,
                 "country_name": country.get("country"),
@@ -782,12 +872,15 @@ class RegionReportEngine:
                 "quickwin_band": self._bucket_10(raw_score),
                 "is_baseline": is_baseline,
                 "killswitch_excluded": ks_excluded,
+                "killswitch_tier": tier_key,
+                "killswitch_tier_label": tier_label,
+                "quickwin_penalty": penalty,
                 "already_entered": already_entered,
                 "excluded": excluded,
                 "exclusion_reason": (
                     "baseline (기준국, 후보 아님)" if is_baseline else
                     "진출국 (이미 운영중, 후보 아님)" if already_entered else
-                    "killswitch fail" if ks_excluded else None
+                    f"killswitch: {tier_key} (랭킹 제외)" if ks_excluded else None
                 ),
             })
 
@@ -813,8 +906,8 @@ class RegionReportEngine:
                          "it_similarity_band": r["it_similarity_band"]}
                         for r in ranked],
             "note": {
-                "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·킬스위치 탈락국 제외. 10점 구간 표기.",
-                "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and killswitch failures excluded. Reported in 10-point buckets.",
+                "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.",
+                "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets.",
             },
         }
 
@@ -842,6 +935,8 @@ class RegionReportEngine:
                 "attractiveness": attr_map.get(code, {}).get("attractiveness_score"),
                 "it_similarity_band": it_map.get(code, {}).get("it_similarity_band"),
                 "killswitch_pass": ks_map.get(code, {}).get("pass"),
+                "killswitch_tier": ks_map.get(code, {}).get("tier"),
+                "killswitch_tier_label": ks_map.get(code, {}).get("tier_label"),
                 "market_brief": {
                     "신차_판매대수": (idx.get("신차 판매대수") or {}).get("value"),
                     "금융_이용률_신차": (idx.get("금융 이용률(신차)") or {}).get("value"),
@@ -978,6 +1073,7 @@ class RegionReportEngine:
                 "source_flag": "CALC",
                 "top3": top_ranking,
                 "killswitch_failed_count": killswitch.get("failed_count", 0),
+                "killswitch_tier_counts": killswitch.get("tier_counts", {}),
                 "why_top1": why_top1,
             },
             "ai_cross_insight": {

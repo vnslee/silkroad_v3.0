@@ -496,6 +496,15 @@ def load_detail(region, version=None):
     return data, path
 
 
+def render_to_string(region="EU", version=None):
+    """파일을 쓰지 않고 권역 상세화면 HTML 문자열만 반환(API 실시간 렌더용).
+
+    매 요청마다 최신 리서치 스냅샷·보고서·internal_latest를 병합 렌더하므로 데이터 변경이
+    즉시 반영된다. 디스크 캐시(DTL_<REGION>_nnn.html)는 만들지 않는다."""
+    data, _src = load_detail(region, version)
+    return render_html(data)
+
+
 def render(region="EU", version=None):
     data, src = load_detail(region, version)
     out_html = render_html(data)
