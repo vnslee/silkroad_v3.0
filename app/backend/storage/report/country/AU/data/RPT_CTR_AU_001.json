@@ -1,0 +1,1427 @@
+{
+  "report_id": "RPT_CTR_AU_001",
+  "report_type": "type1_country",
+  "title": "호주 진출 진단 보고서",
+  "target": {
+    "country": "AU",
+    "base_country": "AU"
+  },
+  "generated_at": "2026-06-23T18:59:21.390917",
+  "schema_version": "1.1",
+  "overall_insight": "APAC 권역의 자사 베이스라인 국가. 3대 기관 트리플A·외국인 100%·외환 자유로 진입 게이트는 전부 PASS다. 시장 구조의 핵심 차별점은 Toyota의 부동의 1위와 novated lease(급여공제·FBT 연동 리스) 채널의 독특한 발달 — 단순 오토론 복제로는 시장 핵심을 놓치므로 salary-packaging/FBT 연동 상품 모듈이 결정적 성공요인이다. 면허는 소비자신용=ACL(ASIC, 약 150일 인가)이 핵심 관문이나 B2B chattel mortgage는 National Credit Code 적용제외(무면허)라 세그먼트 비대칭이 단계적 진입의 출발점이다. 비즈니스 매력도(안정·고소득)는 상위권이나 add-on insurance deferred sales(2021.10.5, 4일 의무유예)·anti-hawking 규제가 보험 부가수익 모델을 사실상 차단하는 핵심 리스크 플래그. 2025년 NVES 연비규제 + EV FBT 면제가 맞물려 EV+novated 결합상품이 가장 빠른 성장축이며 EV 잔가 곡선과 ABS 프라임 풀 관리가 손익의 핵심 변수다.",
+  "overall_insight_en": "The APAC regional baseline country. Triple-A from all three agencies, 100% foreign ownership, and free FX make all entry gates PASS. The structural differentiator is Toyota's unchallenged #1 position and the uniquely developed novated lease (salary-sacrifice, FBT-linked) channel — a plain auto-loan copy misses the market core, so a salary-packaging/FBT-linked product module is the decisive success factor. On licensing, consumer credit (ACL via ASIC, ~150-day authorisation) is the key gate, but B2B chattel mortgage is excluded from the National Credit Code (unlicensed) — this segment asymmetry is the starting point for phased entry. Business attractiveness (stable, high-income) is upper-tier, but add-on insurance deferred sales (commenced 5 Oct 2021, 4-day deferral) and anti-hawking rules effectively block tied insurance revenue — a key risk flag. With the 2025 NVES efficiency standard plus the EV FBT exemption, EV+novated bundles are the fastest-growing axis; EV residual curves and ABS prime-pool management are the key P&L variables.",
+  "country_meta": {
+    "country": "Australia",
+    "country_ko": "호주",
+    "region": "APAC",
+    "currency": "AUD",
+    "data_year": 2025,
+    "fetched_at": "2026-06-23T12:00:00+09:00",
+    "fetched_by": "ai",
+    "entry_status": "운영중"
+  },
+  "data_quality": {
+    "completeness_pct": 97.95918367346938,
+    "total_items": 49,
+    "target_items": 48,
+    "timeseries_coverage": 85.71428571428571,
+    "source_tiers": {
+      "tier1": 22,
+      "tier2": 21,
+      "tier3": 6,
+      "tier4": 0
+    },
+    "items_by_category": {
+      "business": [
+        {
+          "item": "오토금융/리스 시장규모",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "GDP 성장률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "금융 이용률(신차)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "금융 이용률(중고차)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "평균 금리/APR",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "신차 판매대수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "캡티브 강도(점유율)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "금융사 점유율(Top 5)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "법인세율",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "이자소득 원천징수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "배당 원천징수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "EV 보급률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "EV·ICE 잔존가치 리스크",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "해당국 정성 요약",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "브랜드 Top10",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "OEM 순위(Top 5)",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "금융사 순위(Top 5)",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "경쟁사 리스트",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "경쟁사 진출 형태",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "경쟁사 금리 범위",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "평균 신차가격",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "외부 이슈 스캔",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        }
+      ],
+      "shared": [
+        {
+          "item": "외국인 지분 한도",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "외환·배당 송금 자유도",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "국가신용등급",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "라이선스 취득 가능 여부(외국사)",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "금리 상한 규제",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "최저자본금",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "법적 회수 소요기간",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "추심 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "충당금 규정",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "연체 분류 기준",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "의무보험 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "신용생명보험 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "보험 끼워팔기 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "AI 신용평가 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "규제기관 식별",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 1
+        }
+      ],
+      "it": [
+        {
+          "item": "솔루션 벤더",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "솔루션 유형",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "신용정보(CB) 인프라",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "결제·정산 인프라",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "디지털 딜러 성숙도",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "국외이전 제한",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        }
+      ]
+    },
+    "critical_gaps": [],
+    "readiness": {
+      "can_generate": true,
+      "tabs": {
+        "1-1": {
+          "name": "Similarity Scoring (vs Baseline)",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-2": {
+          "name": "System Decision Tree",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-3": {
+          "name": "Contract Volume & 10Y TCO",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-4": {
+          "name": "Market & Competition Background",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        }
+      }
+    }
+  },
+  "tabs": {
+    "tab_1_1_similarity": {
+      "overall_score": 100.0,
+      "axes": {
+        "system": 100.0,
+        "product": 100.0,
+        "regulatory": 100.0,
+        "risk": 100.0
+      },
+      "items": [],
+      "method": "self_baseline",
+      "note": "베이스라인 국가 자기 자신 — 유사도 100점 적용",
+      "evidence_items": [
+        {
+          "item": "솔루션 유형",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": "글로벌 패키지(Alfa/NetSol/Solifi) + 대형사 자체 코어, SaaS/클라우드 전환 진행",
+          "value_en": "Global packages (Alfa/NetSol/Solifi) + large-player proprietary cores, with ongoing SaaS/cloud migration.",
+          "unit": "type",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Industry (asset finance system modernization trends) 2025",
+          "source_en": "Industry (asset finance system modernization trends) 2025",
+          "insight": "베이스라인 기준 — 패키지+자체 코어 혼재, SaaS 전환 진행. 권역 내 아키텍처 이식 기준점.",
+          "insight_en": "The baseline — packages plus proprietary cores mixed, with SaaS migration underway. The reference point for regional architecture portability.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": 4,
+          "value_en": null,
+          "unit": "maturity_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Industry (online application, e-signature, CDR Open Banking) 2025",
+          "source_en": "Industry (online application, e-signature, CDR Open Banking) 2025",
+          "insight": "온라인 신청·비대면 성숙. CDR(Open Banking)이 영국보다 후발이라 API 개방도는 한 단계 아래. 전반적으로 선진권 4/5.",
+          "insight_en": "Mature online application and remote contracting. CDR (Open Banking) is later than the UK, so API openness is a notch lower. Advanced overall — 4/5.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "디지털 딜러 성숙도",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": 4,
+          "value_en": null,
+          "unit": "maturity_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Industry (carsales.com.au marketplace, dealer embedded finance) 2025",
+          "source_en": "Industry (carsales.com.au marketplace, dealer embedded finance) 2025",
+          "insight": "carsales 등 온라인 마켓플레이스 강력, 딜러 임베디드 금융 발달. 풀스택 온라인 판매는 다소 후발이나 선진 수준 4/5.",
+          "insight_en": "Strong online marketplaces (carsales) and developed dealer embedded finance. Full-stack online sales lag somewhat but remain advanced — 4/5.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "소비자신용=ACL 인가(ASIC 심사 약 150일, fit&proper). B2B chattel mortgage=National Credit Code 적용제외(무면허). novated lease=FBT 연동",
+          "value_en": "Consumer credit = ACL authorisation (ASIC ~150-day review, fit & proper). B2B chattel mortgage = excluded from National Credit Code (unlicensed). Novated lease = FBT-linked.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "segment",
+          "segment": "consumer_credit",
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "NCCP Act 2009 s.29 + National Credit Code s.5/6 (business-purpose exclusion) / ASIC RG 204",
+          "source_en": "NCCP Act 2009 s.29 + National Credit Code s.5/6 (business-purpose exclusion) / ASIC RG 204",
+          "insight": "영국(FCA) 체제와 구조적으로 유사 — 베이스라인 컴플라이언스 모듈 재사용성 높음. 결정적 차이는 B2B chattel mortgage가 Code 적용제외라 규제 부담이 현저히 가벼움.",
+          "insight_en": "Structurally similar to the UK (FCA) regime — high reuse of baseline compliance modules. The decisive difference: B2B chattel mortgage is Code-excluded, so its regulatory burden is markedly lighter.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "강제 현지화 없음. Privacy Act 1988 APP 8(국외이전 책임주의). EU GDPR 적정성 미인정",
+          "value_en": "No mandatory localization. Privacy Act 1988 APP 8 (accountability model for cross-border disclosure). No EU GDPR adequacy.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "operating_model",
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Privacy Act 1988 (APP 8) / Consumer Data Right (CDR) / OAIC",
+          "source_en": "Privacy Act 1988 (APP 8) / Consumer Data Right (CDR) / OAIC",
+          "insight": "데이터 국내저장 의무 없음 — APP 8은 국외이전 시 수령자 준수를 이전자가 책임지는 모델. 한국 본사 클라우드 활용 가능(책임은 호주 법인 귀속).",
+          "insight_en": "No domestic-storage mandate — APP 8 holds the transferor accountable for the recipient's compliance. HQ cloud usable, with liability resting on the Australian entity.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": 3,
+          "value_en": null,
+          "unit": "ease_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "National Credit Code Part 5 (default·repossession) / ASIC RG 205 (hardship)",
+          "source_en": "National Credit Code Part 5 (default, repossession) / ASIC RG 205 (hardship)",
+          "insight": "소비자 신용은 Code 보호 강함 — default notice(약 30일)·hardship 대응 의무, 거주지 내 자력회수는 법원명령/동의 필요. B2B chattel mortgage는 Code 비적용이라 회수 용이 — 세그먼트 분기 필수. 종합 3(소비자 기준).",
+          "insight_en": "Consumer credit is strongly Code-protected — default notice (~30 days), hardship obligations, and court order/consent required for at-home self-repossession. B2B chattel mortgage is Code-excluded so repossession is easier — segment branching required. Overall 3 (consumer basis).",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_2_decision": {
+      "is_baseline": true,
+      "decision": "baseline_already_deployed",
+      "recommendation": {
+        "ko": "AU는 권역 기준국 — 시스템(Self-built)이 이미 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
+        "en": "AU is the regional baseline — system (Self-built) is already operational. The new-entry decision tree does not apply."
+      },
+      "similarity_score": 100.0,
+      "base_country": "AU",
+      "base_system": "Self-built",
+      "region_system_exists": true,
+      "items": [
+        {
+          "item": "금리 상한 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "소비자신용 연 48%(이자+수수료 all-inclusive) 상한 — 주(state) 단위. 비교금리(comparison rate) 의무공시. B2B 비적용",
+          "value_en": "Consumer-credit 48% p.a. all-inclusive cap — at state level. Mandatory comparison-rate disclosure. Not applicable to B2B.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "segment",
+          "segment": "consumer_credit",
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "National Credit Code / state cost-of-credit caps (48% all-inclusive) / ASIC comparison-rate rules",
+          "source_en": "National Credit Code / state cost-of-credit caps (48% all-inclusive) / ASIC comparison-rate rules",
+          "insight": "자동차 대출 표준금리(6~10%대)는 48% 상한과 무관 — 사실상 제약 아님. 비교금리 의무공시가 가격 투명성 규제의 핵심. B2B 신용은 상한 비적용.",
+          "insight_en": "Standard auto-loan rates (6-10%) are far below the 48% cap — effectively no constraint. Mandatory comparison-rate disclosure is the core price-transparency rule. B2B credit is exempt.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "외환·배당 송금 자유도",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "외환통제 없음, 배당·이자 송금 자유. 이자 WHT 10%/배당(unfranked) 15%(조약). AUSTRAC 보고의무",
+          "value_en": "No FX controls; free dividend/interest remittance. Interest WHT 10% / unfranked dividend 15% (treaty). AUSTRAC reporting required.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "country",
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "RBA (free FX) / ATO Withholding / Korea-Australia DTAA / AML-CTF Act (AUSTRAC)",
+          "source_en": "RBA (free FX) / ATO Withholding / Korea-Australia DTAA / AML-CTF Act (AUSTRAC)",
+          "insight": "자본·배당 회수 자유로 킬스위치 통과. franked dividend는 WHT 0%. 송금 자체는 AUSTRAC AML 보고(국제이체 IFTI) 외 제약 없음.",
+          "insight_en": "Free capital and dividend repatriation — killswitch passes. Franked dividends carry 0% WHT. Remittance itself is unconstrained beyond AUSTRAC AML (IFTI) reporting.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "의무보험 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": "CTP(Compulsory Third Party) 자동차 책임보험 의무 — 주(state)별 상이(NSW Green Slip·VIC TAC·QLD 등)",
+          "value_en": "CTP (Compulsory Third Party) liability insurance mandatory — varies by state (NSW Green Slip, VIC TAC, QLD, etc.).",
+          "unit": "regime",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "State Motor Accidents/CTP statutes (NSW Motor Accident Injuries Act, VIC TAC, etc.)",
+          "source_en": "State Motor Accidents/CTP statutes (NSW Motor Accident Injuries Act, VIC TAC, etc.)",
+          "insight": "차량 등록 시 CTP 가입 의무는 전국 표준이나 주별 제도·운영주체·요율 분절(NSW 민영 vs VIC 공영). 보험연동 로직 주별 분기 필요. 자동차금융 자체엔 게이트 아님.",
+          "insight_en": "CTP is a national requirement at registration but fragmented by state in scheme, operator, and pricing (NSW private vs VIC public). Insurance-linkage logic needs per-state branching. Not a gate for auto finance itself.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "신용생명보험 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": "ASIC deferred sales model(2021.10.5 시행) — add-on insurance(신용생명·CCI 등)는 주상품 판매 후 4 clear days 의무 유예 후 별도 판매",
+          "value_en": "ASIC deferred sales model (commenced 5 Oct 2021) — add-on insurance (credit life/CCI, etc.) sold separately after a 4-clear-day deferral following the principal product.",
+          "unit": "regime",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Financial Sector Reform (Hayne Royal Commission) Act / ASIC RG 275 deferred sales model",
+          "source_en": "Financial Sector Reform (Hayne Royal Commission) Act / ASIC RG 275 deferred sales model",
+          "insight": "Hayne 왕립위원회 후 add-on 보험에 4일 의무 유예 — 차/대출 판매시점 동시 끼워팔기 금지. 끼워팔기 수익모델 사실상 차단, 보험 부가수익 설계 핵심 제약.",
+          "insight_en": "Post-Hayne, add-on insurance carries a 4-day deferral — no tying at the point of vehicle/loan sale. Tied-revenue models are effectively blocked — a key constraint on ancillary insurance revenue.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_3_tco": {
+      "is_baseline": true,
+      "message": {
+        "ko": "AU는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
+        "en": "AU is the regional baseline — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
+      },
+      "currency": "AUD",
+      "items": [
+        {
+          "item": "신차 판매대수",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 1200000,
+          "value_en": null,
+          "unit": "units",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 1049000
+              },
+              {
+                "year": 2022,
+                "value": 1081000
+              },
+              {
+                "year": 2023,
+                "value": 1204000
+              },
+              {
+                "year": 2024,
+                "value": 1220000
+              },
+              {
+                "year": 2025,
+                "value": 1200000
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 1210000
+              },
+              {
+                "year": 2027,
+                "value": 1225000
+              },
+              {
+                "year": 2028,
+                "value": 1240000
+              },
+              {
+                "year": 2029,
+                "value": 1255000
+              },
+              {
+                "year": 2030,
+                "value": 1270000
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 1,
+          "source": "FCAI VFACTS 2025",
+          "source_en": "FCAI VFACTS 2025",
+          "insight": "2025년 신차 약 120만대 — 2024 역대최고(122만) 후 소폭 조정. ute·SUV 편중으로 여신 단가 큼. Toyota 부동의 1위.",
+          "insight_en": "~1.2M new cars in 2025 — slight pullback from the 2024 record (1.22M). Ute/SUV skew keeps ticket sizes high. Toyota the unchallenged #1.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융 이용률(신차)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 62,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 58
+              },
+              {
+                "year": 2022,
+                "value": 59
+              },
+              {
+                "year": 2023,
+                "value": 60
+              },
+              {
+                "year": 2024,
+                "value": 61
+              },
+              {
+                "year": 2025,
+                "value": 62
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 63
+              },
+              {
+                "year": 2027,
+                "value": 64
+              },
+              {
+                "year": 2028,
+                "value": 65
+              },
+              {
+                "year": 2029,
+                "value": 66
+              },
+              {
+                "year": 2030,
+                "value": 67
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 2,
+          "source": "AFIA / Industry research 2025",
+          "source_en": "AFIA / Industry research 2025",
+          "insight": "신차 약 62%가 금융 조달 — 캡티브 프로모·novated lease·딜러금융 주도. 현금 구매 비중도 상당.",
+          "insight_en": "~62% of new cars financed — led by captive promos, novated lease, and dealer finance. Cash purchases remain material.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 55,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "AFIA / NALSPA Novated Leasing Data 2025",
+          "source_en": "AFIA / NALSPA Novated Leasing Data 2025",
+          "insight": "소비자 할부론 + novated lease(급여공제 리스) + B2B chattel mortgage 다층 구조. novated lease가 호주 고유의 발달 채널 — 진출 핵심.",
+          "insight_en": "Multi-layered: consumer loans + novated lease (salary-sacrifice) + B2B chattel mortgage. Novated lease is the uniquely developed Australian channel — central to entry.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "캡티브 강도(점유율)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 35,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "Industry estimate (Toyota Finance·VWFS·premium captives) 2025",
+          "source_en": "Industry estimate (Toyota Finance, VWFS, premium captives) 2025",
+          "insight": "캡티브(Toyota Finance·VWFS·Mercedes/BMW FS) 약 35%. 4대 은행 소비자 딜러금융 부분 후퇴로 캡티브·비은행 비중 확대.",
+          "insight_en": "Captives (Toyota Finance, VWFS, Mercedes/BMW FS) ~35%. With the big-four banks partly retreating from consumer dealer finance, captives and non-banks gain share.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "평균 신차가격",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": "약 AUD 55,000~60,000 (€33,000~36,000). ute·SUV 편중으로 단가 높음. EV·프리미엄 SUV가 상승 견인.",
+          "value_en": "Approx. AUD 55,000-60,000 (€33,000-36,000). High ticket due to ute/SUV skew; EVs and premium SUVs push prices up.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "FCAI / carsales Pricing Data 2025",
+          "source_en": "FCAI / carsales Pricing Data 2025",
+          "insight": "평균 약 €34k — 유럽(€30k)보다 높음. ute(Ranger·HiLux)·대형 SUV 중심. 여신 단가·잔가 모델이 픽업/SUV 중심.",
+          "insight_en": "Average ~€34k — above Europe (€30k). Centered on utes (Ranger, HiLux) and large SUVs. Ticket sizes and residual models are pickup/SUV-driven.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_4_market": {
+      "items": [
+        {
+          "item": "GDP 성장률",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 2.0,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 5.2
+              },
+              {
+                "year": 2022,
+                "value": 3.9
+              },
+              {
+                "year": 2023,
+                "value": 2.1
+              },
+              {
+                "year": 2024,
+                "value": 1.5
+              },
+              {
+                "year": 2025,
+                "value": 2.0
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 2.2
+              },
+              {
+                "year": 2027,
+                "value": 2.4
+              },
+              {
+                "year": 2028,
+                "value": 2.4
+              },
+              {
+                "year": 2029,
+                "value": 2.5
+              },
+              {
+                "year": 2030,
+                "value": 2.5
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 1,
+          "source": "RBA / ABS / IMF WEO 2025",
+          "source_en": "RBA / ABS / IMF WEO 2025",
+          "insight": "2025년 실질 GDP 약 2.0% — 선진국 평균 수준 안정. 이민 기반 인구성장·자원수출이 하방 지지.",
+          "insight_en": "Real GDP ~2.0% in 2025 — stable at advanced-economy average. Migration-led population growth and resource exports provide downside support.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 5.3,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 4.5
+              },
+              {
+                "year": 2022,
+                "value": 5.8
+              },
+              {
+                "year": 2023,
+                "value": 5.5
+              },
+              {
+                "year": 2024,
+                "value": 5.2
+              },
+              {
+                "year": 2025,
+                "value": 5.3
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 4.7
+              },
+              {
+                "year": 2027,
+                "value": 4.5
+              },
+              {
+                "year": 2028,
+                "value": 4.3
+              },
+              {
+                "year": 2029,
+                "value": 4.1
+              },
+              {
+                "year": 2030,
+                "value": 4.0
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 2,
+          "source": "AFIA / IBISWorld Australia Auto Finance 2025",
+          "source_en": "AFIA / IBISWorld Australia Auto Finance 2025",
+          "insight": "2021~2025 CAGR 약 5.3% — 성숙시장 안정 성장. EV+novated 전환과 차량가 상승이 견인, 인하 사이클로 신규 수요 회복.",
+          "insight_en": "~5.3% CAGR over 2021-2025 — stable growth of a mature market. Driven by EV+novated shift and rising vehicle prices; the rate-cut cycle revives new demand.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융사 순위(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": [
+            {
+              "rank": 1,
+              "name": "Toyota Finance Australia",
+              "market_share": "캡티브 최대(추정)"
+            },
+            {
+              "rank": 2,
+              "name": "Macquarie (Leasing/Auto)",
+              "market_share": "은행계 강자(추정)"
+            },
+            {
+              "rank": 3,
+              "name": "Volkswagen Financial Services Australia",
+              "market_share": "캡티브(추정)"
+            },
+            {
+              "rank": 4,
+              "name": "Pepper Money",
+              "market_share": "비은행 최대급(추정)"
+            },
+            {
+              "rank": 5,
+              "name": "Westpac/St.George Auto",
+              "market_share": "은행계(추정)"
+            }
+          ],
+          "value_en": null,
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 3,
+          "source": "Industry estimate (no official AU per-company share statistics) 2025",
+          "source_en": "Industry estimate (no official AU per-company share statistics) 2025",
+          "insight": "호주는 회사별 공식 점유율 통계 부재 — 자산규모·인지도 기반 정성 순위. 4대 은행 소비자 딜러금융 부분 후퇴로 비은행·핀테크가 공백 흡수 중.",
+          "insight_en": "Australia has no official per-company share statistics — qualitative ranking by asset size and recognition. The big-four banks' partial retreat from consumer dealer finance is being absorbed by non-banks and fintechs.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융사 점유율(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 50,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "Industry estimate (no official AU auto-finance share statistics) 2025",
+          "source_en": "Industry estimate (no official AU auto-finance market-share statistics) 2025",
+          "insight": "상위 5개사 약 50% 추정 — 호주는 회사별 공식 점유율 통계 부재. 캡티브·은행계·비은행 분산 구조로 집중도 중간.",
+          "insight_en": "Top 5 ~50% (estimated) — Australia has no official per-company share statistics. Captive/bank/non-bank dispersion gives moderate concentration.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "경쟁사 금리 범위",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": "신차 secured 비교금리 약 6.5~10% (프라임 ~5.9~6.2%, 캡티브 프로모 0~3.9% 한정, 핀테크 위험기반 ~15%+). novated lease 실효 ~7~9%대. comparison rate 표기 의무.",
+          "value_en": "New-car secured comparison rate ~6.5-10% (prime ~5.9-6.2%, captive promos 0-3.9% limited, fintech risk-based ~15%+). Novated lease effective ~7-9%. Comparison-rate disclosure mandatory.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "Canstar / RBA Cash Rate / Industry pricing 2025",
+          "source_en": "Canstar / RBA Cash Rate / Industry pricing 2025",
+          "insight": "은행/비은행 6.5~10%, 캡티브 프로모 최저, 핀테크 위험기반 상단. RBA 인하 사이클로 조달비용 하향 — 가격 경쟁 심화.",
+          "insight_en": "Banks/non-banks 6.5-10%, captive promos lowest, fintech risk-based at the top. The RBA cut cycle lowers funding costs — intensifying price competition.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "OEM 순위(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": [
+            {
+              "rank": 1,
+              "name": "Toyota Group",
+              "market_share": "약 20%"
+            },
+            {
+              "rank": 2,
+              "name": "Hyundai Motor Group (Hyundai·Kia·Genesis)",
+              "market_share": "약 12.5%"
+            },
+            {
+              "rank": 3,
+              "name": "Mazda",
+              "market_share": "약 7.5%"
+            },
+            {
+              "rank": 4,
+              "name": "Ford",
+              "market_share": "약 7.5%"
+            },
+            {
+              "rank": 5,
+              "name": "SAIC (MG·LDV)",
+              "market_share": "약 5.5%"
+            }
+          ],
+          "value_en": null,
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "FCAI VFACTS 2025 (group-aggregated)",
+          "source_en": "FCAI VFACTS 2025 (group-aggregated)",
+          "insight": "Toyota 그룹 단독 ~20%. 한국 현대차그룹 2위(~12.5%)로 강세 — 캡티브 제휴 시 한국계 OEM 우선 타깃 가능.",
+          "insight_en": "Toyota Group alone ~20%. Korea's Hyundai Motor Group is #2 (~12.5%) — Korean OEMs are a priority captive-partnership target.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "EV 보급률",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 9.0,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 1.0
+              },
+              {
+                "year": 2022,
+                "value": 3.1
+              },
+              {
+                "year": 2023,
+                "value": 7.2
+              },
+              {
+                "year": 2024,
+                "value": 8.0
+              },
+              {
+                "year": 2025,
+                "value": 9.0
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 12.0
+              },
+              {
+                "year": 2027,
+                "value": 16.0
+              },
+              {
+                "year": 2028,
+                "value": 21.0
+              },
+              {
+                "year": 2029,
+                "value": 26.0
+              },
+              {
+                "year": 2030,
+                "value": 32.0
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 2,
+          "source": "FCAI VFACTS / EV PROfiler / NVES Policy 2025",
+          "source_en": "FCAI VFACTS / EV PROfiler / NVES Policy 2025",
+          "insight": "2025년 EV 점유 약 9% — Tesla Model Y·BYD 견인. NVES(연비규제 2025 시행)·EV FBT 면제가 가속. 2030년 30%대 전망.",
+          "insight_en": "EV share ~9% in 2025 — led by Tesla Model Y and BYD. NVES (efficiency standard, 2025) and the EV FBT exemption accelerate adoption. ~30% projected by 2030.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "EV·ICE 잔존가치 리스크",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 15,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "Datium Insights / carsales Resale Data 2025",
+          "source_en": "Datium Insights / carsales Resale Data 2025",
+          "insight": "EV 3년 잔가가 ICE 대비 약 15pp 낮음 — 신모델 가격하락·Tesla 가격조정 영향. novated lease 잔가(GFV) 보수적 설계 필수.",
+          "insight_en": "EV 3-yr residuals ~15pp below ICE — driven by new-model price drops and Tesla repricing. Conservative novated-lease residual (GFV) design essential.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ],
+      "competitors": {
+        "item": "경쟁사 리스트",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          "Toyota Finance Australia",
+          "Volkswagen Financial Services Australia",
+          "Mercedes-Benz Financial Services / BMW Australia Finance",
+          "Macquarie (Leasing/Auto)",
+          "Pepper Money",
+          "Liberty Financial",
+          "Plenti",
+          "Wisr",
+          "Westpac / St.George",
+          "Latitude Financial / MoneyMe"
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 2,
+        "source": "ASX disclosures / Industry directory 2025",
+        "source_en": "ASX disclosures / Industry directory 2025",
+        "insight": "캡티브·은행계·비은행·핀테크 다층 구조. novated lease 전문사(SG Fleet·Smartgroup·McMillan Shakespeare·Eclipx)가 salary-packaging 채널 지배.",
+        "insight_en": "Multi-layered: captive, bank, non-bank, fintech. Novated-lease specialists (SG Fleet, Smartgroup, McMillan Shakespeare, Eclipx) dominate the salary-packaging channel.",
+        "insight_ai_generated": true
+      },
+      "competitor_entry_form": {
+        "item": "경쟁사 진출 형태",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": "캡티브(Toyota Finance·VWFS·Mercedes/BMW FS) + 은행계 ADI(Macquarie·Westpac/St.George·NAB·CBA) + 독립 비은행 non-ADI(Pepper·Liberty·Latitude, ABS 증권화 조달) + 핀테크 디지털 렌더(Plenti·Wisr·MoneyMe) + novated lease 전문(SG Fleet·Smartgroup·McMillan Shakespeare·Eclipx). 외국사 단독 진출 가능.",
+        "value_en": "Captives (Toyota Finance, VWFS, Mercedes/BMW FS) + bank ADIs (Macquarie, Westpac/St.George, NAB, CBA) + independent non-ADIs (Pepper, Liberty, Latitude, ABS-funded) + fintech digital lenders (Plenti, Wisr, MoneyMe) + novated-lease specialists (SG Fleet, Smartgroup, McMillan Shakespeare, Eclipx). Foreign solo entry feasible.",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 2,
+        "source": "ASX disclosures / Industry research 2025",
+        "source_en": "ASX disclosures / Industry research 2025",
+        "insight": "novated lease는 호주 진출의 결정적 차별 포인트 — 단순 오토론 복제로는 시장 핵심을 놓침. FBT 연동 상품 모듈 필수.",
+        "insight_en": "Novated lease is the decisive differentiator for Australian entry — a plain auto-loan copy misses the market core. An FBT-linked product module is essential.",
+        "insight_ai_generated": true
+      },
+      "brand_top10": {
+        "item": "브랜드 Top10",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          "Toyota",
+          "Mazda",
+          "Ford",
+          "Kia",
+          "Hyundai",
+          "MG",
+          "Mitsubishi",
+          "Isuzu Ute",
+          "Tesla",
+          "BYD"
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 2,
+        "source": "FCAI VFACTS + EV PROfiler 2025",
+        "source_en": "FCAI VFACTS + EV PROfiler 2025",
+        "insight": "Toyota 부동의 1위. 한국계(Hyundai·Kia) 합산 ~12-13% 강한 입지. MG·BYD 중국계가 가장 빠른 성장축 — 캡티브/제휴 파트너 풀로 주목.",
+        "insight_en": "Toyota the unchallenged #1. Korean brands (Hyundai, Kia) ~12-13% combined — strong footprint. Chinese MG/BYD are the fastest-growing axis — notable captive/partnership pool.",
+        "insight_ai_generated": true
+      },
+      "news": {
+        "item": "외부 이슈 스캔",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          {
+            "news_category": "auto_market",
+            "headline": "호주 2025 신차 판매 약 120만대 — ute·SUV 편중 지속, Toyota·Ford Ranger 우위",
+            "headline_en": "Australia 2025 new-car sales ~1.2M — ute/SUV skew persists, Toyota and Ford Ranger lead",
+            "so_what": "고차량가로 여신 단가 큼 — 캡티브 제휴 시 Toyota·Ford·한국계 우선 타깃.",
+            "so_what_en": "High ticket sizes from expensive vehicles — Toyota, Ford, and Korean OEMs are priority captive-partnership targets.",
+            "publisher": "Automotive News",
+            "pub_date": "2026-01-10",
+            "url": "https://www.fcai.com.au/news/sales/"
+          },
+          {
+            "news_category": "electrification",
+            "headline": "호주 2026년 5월 전동화 판매 46% 돌파 — NVES 연비규제 페널티 본격화",
+            "headline_en": "Australia electrified-vehicle sales pass 46% in May 2026 — NVES penalties take effect",
+            "so_what": "EV 잔가 곡선 별도 모델링 필수. EV FBT 면제 + novated 결합이 전환 최대 촉매 — EV+novated 상품 성장 핵심.",
+            "so_what_en": "Separate EV residual modeling essential. The EV FBT exemption plus novated bundling is the biggest catalyst — EV+novated products are the growth core.",
+            "publisher": "Just Auto",
+            "pub_date": "2026-05-20",
+            "url": "https://www.just-auto.com/"
+          },
+          {
+            "news_category": "auto_finance",
+            "headline": "호주 4대 은행 소비자 자동차 딜러금융 부분 후퇴 — 비은행·핀테크가 공백 흡수",
+            "headline_en": "Australia's big-four banks partly retreat from consumer auto dealer finance — non-banks and fintechs absorb the gap",
+            "so_what": "비은행/캡티브/디지털 렌더 진입 여지 확대. novated lease 채널 장악이 진입 장벽이자 제휴 기회.",
+            "so_what_en": "Expanded entry room for non-banks, captives, and digital lenders. Novated-lease channel dominance is both a barrier and a partnership opportunity.",
+            "publisher": "Auto Finance News",
+            "pub_date": "2025-11-15",
+            "url": "https://www.autofinancenews.net/"
+          },
+          {
+            "news_category": "regulation",
+            "headline": "ASIC, add-on insurance(GAP·신용보험) 미스셀링 단속 강화·소비자 보상",
+            "headline_en": "ASIC steps up enforcement on add-on insurance (GAP, credit insurance) mis-selling, with consumer remediation",
+            "so_what": "끼워팔기·add-on 마진 규제 강화 — UK PPI·DCA 흐름 유사. add-on 의존 수익모델 위험, 적합성·공정가치 컴플라이언스 선제 구축 필요.",
+            "so_what_en": "Tighter tying/add-on margin rules — similar to the UK PPI/DCA trajectory. Add-on-dependent revenue models are risky; build suitability and fair-value compliance proactively.",
+            "publisher": "American Banker",
+            "pub_date": "2025-12-05",
+            "url": "https://asic.gov.au/"
+          },
+          {
+            "news_category": "credit_abs",
+            "headline": "호주 prime auto loan ABS 딜린퀀시 안정, 일부 니어프라임 풀 연체 소폭 상승",
+            "headline_en": "Australia prime auto-loan ABS delinquencies stable; some near-prime pools tick up",
+            "so_what": "비은행 렌더 조달 핵심이 ABS 증권화 — 프라임 풀 우량 유지가 조달비용 좌우. 진입 초기 프라임 중심·니어프라임 보수 정책 권장.",
+            "so_what_en": "Non-bank funding hinges on ABS securitization — prime-pool quality drives funding costs. Favor prime-centric, conservative near-prime policy at entry.",
+            "publisher": "S&P",
+            "pub_date": "2026-02-18",
+            "url": "https://www.spglobal.com/ratings/"
+          }
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "news",
+        "timeseries": null,
+        "tier": 2,
+        "source": "FCAI·Auto Finance News·ASIC·S&P (whitelist 2025-2026)",
+        "source_en": "FCAI, Auto Finance News, ASIC, S&P (whitelist 2025-2026)",
+        "insight": "EV 가속·은행 후퇴·add-on 규제 강화가 3대 이슈. 진입 여지는 넓으나 novated·EV·컴플라이언스 동시 설계 필요.",
+        "insight_en": "EV acceleration, bank retreat, and tighter add-on rules are the three key issues. Entry room is broad, but novated, EV, and compliance must be designed in parallel.",
+        "insight_ai_generated": true
+      },
+      "regulators": {
+        "item": "규제기관 식별",
+        "item_en": null,
+        "category": "shared",
+        "role": "context",
+        "value": "ASIC(시장행위·소비자신용 ACL·책임대출) / APRA(건전성·ADI) / RBA(중앙은행·결제) / ATO(세무·FBT) / FIRB(외국인투자) / ACCC(경쟁·소비자보호) / OAIC(프라이버시·CDR) / AUSTRAC(AML/CTF)",
+        "value_en": "ASIC (market conduct, consumer credit ACL, responsible lending) / APRA (prudential, ADIs) / RBA (central bank, payments) / ATO (tax, FBT) / FIRB (foreign investment) / ACCC (competition, consumer protection) / OAIC (privacy, CDR) / AUSTRAC (AML/CTF).",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 1,
+        "source": "ASIC / APRA / RBA / ATO / FIRB / ACCC / OAIC / AUSTRAC Official 2025",
+        "source_en": "ASIC / APRA / RBA / ATO / FIRB / ACCC / OAIC / AUSTRAC Official 2025",
+        "insight": "ASIC ACL 취득이 소비자 자동차금융 핵심 관문. 예금취급(ADI)은 APRA 별도. FIRB 외국인 심사 통과 필수. FBT(ATO)는 novated lease 세제 핵심.",
+        "insight_en": "Obtaining the ASIC ACL is the key gate for consumer auto finance. Deposit-taking (ADI) sits separately under APRA. FIRB foreign-investment clearance is required. FBT (ATO) is central to novated-lease taxation.",
+        "insight_ai_generated": true
+      },
+      "country_summary": {
+        "item": "해당국 정성 요약",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": "선진·안정·고소득 시장. 신차 ~120만대·높은 금융침투·통화/송금 리스크 최저(3대 트리플A)로 매력도 상위권. 핵심 차별점은 Toyota 부동의 1위와 novated lease(급여공제 리스) 채널의 독특한 발달 — FBT/salary-packaging 연동 상품이 진출 성공요인. 난이도는 ASIC ACL·NCCP 책임대출 인가가 관문이고 add-on insurance deferred sales 규제가 보험 부가수익을 차단하는 리스크 플래그. 4대 은행 부분 후퇴로 Pepper·Liberty 비은행과 Plenti·Wisr 핀테크에 진입 여지. 2025 NVES + EV FBT 면제로 EV+novated 결합이 최대 성장축이며 EV 잔가·ABS 프라임 풀 관리가 손익 변수. B2B chattel mortgage 무면허 즉시 진입 → ACL 취득 후 소비자 확장 전략 유효.",
+        "value_en": "Advanced, stable, high-income market. ~1.2M new cars, high finance penetration, and lowest currency/remittance risk (triple-A from all three) put attractiveness in the upper tier. The differentiators are Toyota's unchallenged #1 position and the uniquely developed novated lease channel — FBT/salary-packaging-linked products are the success factor. Difficulty centers on ASIC ACL / NCCP responsible-lending authorisation, with add-on insurance deferred-sales rules a risk flag blocking ancillary insurance revenue. The big-four banks' partial retreat leaves room for non-banks (Pepper, Liberty) and fintechs (Plenti, Wisr). With the 2025 NVES and EV FBT exemption, EV+novated bundles are the top growth axis, with EV residuals and ABS prime-pool management as P&L variables. Strategy: enter unlicensed via B2B chattel mortgage, then expand to consumer after obtaining the ACL.",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 1,
+        "source": "Synthesized from RBA, ASIC, FCAI, AFIA, ATO 2025",
+        "source_en": "Synthesized from RBA, ASIC, FCAI, AFIA, ATO 2025",
+        "insight": "매력도 상위·게이트 전부 PASS의 베이스라인 시장. novated lease + 비은행/핀테크 + 보수적 EV 잔가 전략 권장.",
+        "insight_en": "Baseline market with upper-tier attractiveness and all gates passing. Novated lease + non-bank/fintech + conservative EV residual strategy recommended.",
+        "insight_ai_generated": true
+      }
+    }
+  }
+}
