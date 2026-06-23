@@ -56,6 +56,47 @@ export const DICT: Dict = {
   'chat.research.triggerError': { ko: '리서치 트리거 실패: ', en: 'Failed to trigger research: ' },
   'chat.error': { ko: '오류가 발생했습니다: ', en: 'An error occurred: ' },
   'chat.jobLabel': { ko: ' 리서치', en: ' research' },
+  'chat.reportLabel': { ko: ' 보고서', en: ' report' },
+  // 거절(아니오) 후 안내 — 보유국 한정.
+  'chat.research.declined': {
+    ko: '알겠습니다. 보유 중인 국가 정보에 한해서만 답변드릴 수 있어요. 다른 국가를 물어봐 주세요.',
+    en: 'Understood. I can only answer about countries already on hand. Please ask about another country.',
+  },
+  // 권역 신규 리서치 차단(정책) — 백엔드 403과 동일 취지.
+  'chat.research.regionBlocked': {
+    ko: '권역 단위 신규 리서치는 현재 지원하지 않습니다. 권역 내 개별 국가의 리서치를 도와드릴 수 있어요.',
+    en: 'Region-level new research is not supported. I can help research individual countries within a region.',
+  },
+  // 보고서 흐름
+  'chat.report.started': {
+    ko: '보고서 생성을 시작했습니다. 진행 상황은 상단에 표시됩니다…',
+    en: 'Report generation started. Progress shows at the top…',
+  },
+  'chat.report.done': { ko: '보고서 생성이 완료되었습니다.', en: 'Report generation complete.' },
+  'chat.report.doneShare': {
+    ko: '보고서 생성이 완료되었습니다 ({id}). 메일로 공유하시겠어요?',
+    en: 'Report generated ({id}). Share by email?',
+  },
+  'chat.report.error': { ko: '보고서 생성 중 오류가 발생했습니다: ', en: 'Report error: ' },
+  'chat.report.triggerError': { ko: '보고서 생성 트리거 실패: ', en: 'Failed to trigger report: ' },
+  'chat.research.startedTop': {
+    ko: '리서치를 시작했습니다. 진행 상황은 상단에 표시됩니다…',
+    en: 'Research started. Progress shows at the top…',
+  },
+  // 액션 칩 라벨
+  'chat.action.summary': { ko: '국가 상세 정보 요약하기', en: 'Summarize country detail' },
+  'chat.action.research': { ko: '리서치 수행', en: 'Run research' },
+  'chat.action.re_research': { ko: '리서치 재수행', en: 'Re-run research' },
+  'chat.action.report': { ko: '보고서 생성', en: 'Generate report' },
+  'chat.action.re_report': { ko: '보고서 재생성', en: 'Regenerate report' },
+  // 상세/요약 분기
+  'chat.summary.ask': {
+    ko: '{id} 정보를 상세 화면에서 보시겠어요, 아니면 요약으로 받으시겠어요?',
+    en: 'View {id} in the detail screen, or get a summary here?',
+  },
+  'chat.summary.openDetail': { ko: '상세 화면 열기', en: 'Open detail view' },
+  'chat.summary.getSummary': { ko: '요약으로 받기', en: 'Get summary' },
+  'chat.summary.request': { ko: '{id} 핵심 지표를 요약해줘', en: 'Summarize key metrics for {id}' },
 
   // 화면 액션 버튼(상세/보고서 우측 상단)
   'action.simulation': { ko: '시뮬레이션', en: 'Simulate' },

@@ -5,7 +5,22 @@ import { mapStepToBars } from '../utils/progress'
 describe('mapStepToBars', () => {
   it('research는 5개 바(시장/규제/상품/시스템/결과)', () => {
     const bars = mapStepToBars('research', 'calling_bedrock', 0)
-    expect(bars.map((b) => b.key)).toEqual(['market', 'regulation', 'product', 'system', 'result'])
+    expect(bars.map((b) => b.key)).toEqual(['market', 'regulatory', 'product', 'system', 'result'])
+  })
+
+  it('agents[]가 있으면 분야별 실제 진행률을 반영', () => {
+    const bars = mapStepToBars('research', 'calling_bedrock', 30, [
+      { key: 'market', label: '시장', status: 'succeeded', percent: 100 },
+      { key: 'regulatory', label: '규제', status: 'running', percent: 40 },
+      { key: 'system', label: '시스템', status: 'queued', percent: 0 },
+      { key: 'product', label: '상품', status: 'running', percent: 10 },
+    ])
+    const market = bars.find((b) => b.key === 'market')!
+    const regulatory = bars.find((b) => b.key === 'regulatory')!
+    expect(market.percent).toBe(100)
+    expect(market.state).toBe('done')
+    expect(regulatory.percent).toBe(40)
+    expect(regulatory.state).toBe('active')
   })
 
   it('report는 데이터→렌더→완료 3바', () => {

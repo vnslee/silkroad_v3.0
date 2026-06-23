@@ -29,17 +29,21 @@ def chat(req: ChatRequest) -> ChatResponse:
     members = [c.upper() for c in (req.member_codes or [])]
     domain = req.domain
     try:
-        # 질문 속 국가/권역을 LLM으로 추출 — 식별되면 그 대상으로 분기,
-        # 실패 시 프론트가 보낸 domain/target_id로 폴백(§6.5).
+        # 질문 속 국가/권역을 추출(LLM + 결정적 매칭). 식별되면 그 대상으로 분기.
         resolved = chatbot.resolve_target(req.message, history=req.history)
         if resolved:
             r_domain, r_target = resolved
             if re.fullmatch(TARGET_ID_PATTERN, r_target):
                 domain, target = r_domain, r_target
+        elif not chatbot.continues_prior_target(req.message, req.history):
+            # 대상 식별 실패 + 이전 대상을 이어가는 후속질문도 아님(예: '아프리카' 같은
+            # 대륙·모호한 질문) → 프론트 기본값(ES)으로 답하지 말고 어느 국가인지 되묻는다.
+            return chatbot.ask_for_target()
+        # (식별 실패지만 후속질문이면 프론트가 보낸 직전 target 유지 — 대화 연속성)
         resp = chatbot.handle(
             domain, target, req.message, history=req.history, member_codes=members
         )
-        # 식별한 대상을 응답에 실어 프론트가 리서치 트리거 대상으로 쓰게 한다.
+        # 식별한 대상을 응답에 실어 프론트가 리서치/보고서 트리거 대상으로 쓰게 한다.
         resp.resolved_domain = domain
         resp.resolved_target_id = target
         return resp

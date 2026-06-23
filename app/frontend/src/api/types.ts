@@ -8,6 +8,9 @@ export type JobStep =
   | 'generating'
   | 'rendering'
   | 'calling_bedrock'
+  | 'members_progress'
+  | 'region_synth'
+  | 'result_gen'
   | 'saving'
   | 'done'
 
@@ -22,7 +25,11 @@ export interface CountrySummary {
   is_baseline: boolean
   has_detail: boolean
   has_report: boolean
+  // 진출 상태(internal_latest.json country_status): 운영중·미진출 등. 없으면 null.
   status?: string | null
+  // 지도 마커 좌표(백엔드 geo 참조). 있으면 프론트가 마커를 자동 표시.
+  lon?: number | null
+  lat?: number | null
 }
 
 export interface RegionSummary {
@@ -96,6 +103,14 @@ export interface JobCreatedResponse {
   status_url: string
 }
 
+// 분야 agent별 진행률(리서치 잡 per-agent 프로그레스바). schemas.py AgentProgress와 1:1.
+export interface AgentProgress {
+  key: string // market | regulatory | system | product
+  label: string
+  status: JobState
+  percent: number
+}
+
 export interface JobStatus {
   job_id: string
   kind: string
@@ -106,6 +121,8 @@ export interface JobStatus {
   result?: JobResultUnion | null
   error?: string | null
   params: Record<string, string>
+  // 리서치 잡의 분야 agent별 진행률. 보고서/상세 잡은 빈 배열.
+  agents: AgentProgress[]
 }
 
 export interface ChatTurn {
@@ -121,14 +138,25 @@ export interface ChatRequest {
   member_codes?: string[]
 }
 
+export type ChatIntent = 'qa' | 'research' | 'report'
+export type ChatAction = 'summary' | 'research' | 're_research' | 'report' | 're_report'
+
 export interface ChatResponse {
   answer?: string | null
   needs_research: boolean
+  needs_report: boolean
+  // 명시적 의도(보유국 재리서치·보고서 생성)면 확인 없이 즉시 트리거.
+  auto_trigger: boolean
   research_suggestion?: string | null
   missing_codes: string[]
-  // 질문에서 백엔드가 식별한 대상(§6.5) — 리서치 트리거 대상으로 사용.
+  // 질문에서 백엔드가 식별한 대상(§6.5) — 리서치/보고서 트리거 대상으로 사용.
   resolved_domain?: Domain | null
   resolved_target_id?: string | null
+  // 대상 상태 + 노출할 선택지(상세요약/리서치/보고서).
+  intent: ChatIntent
+  exists: boolean
+  has_report: boolean
+  actions: ChatAction[]
 }
 
 export interface ResearchTriggerRequest {
