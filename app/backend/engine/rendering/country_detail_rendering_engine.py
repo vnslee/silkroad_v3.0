@@ -553,6 +553,15 @@ def load_detail(code, version=None):
         return json.load(f), path
 
 
+def render_to_string(code="ES", version=None):
+    """파일을 쓰지 않고 상세화면 HTML 문자열만 반환(API 실시간 렌더용).
+
+    매 요청마다 최신 리서치 데이터·internal_latest(country_status 등)를 읽어 렌더하므로
+    데이터 변경이 즉시 반영된다. 디스크 캐시(DTL_<CODE>_nnn.html)는 만들지 않는다."""
+    data, _src = load_detail(code, version)
+    return render_html(data)
+
+
 def render(code="ES", version=None):
     data, src = load_detail(code, version)
     out_html = render_html(data)
