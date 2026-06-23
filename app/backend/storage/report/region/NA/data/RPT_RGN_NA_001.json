@@ -12,10 +12,10 @@
     ],
     "baseline_country": "US"
   },
-  "generated_at": "2026-06-22T19:11:48.615993",
+  "generated_at": "2026-06-23T20:01:41.436140",
   "generated_by": "engine",
   "data_snapshot_id": "2026-06-22T16:00:00+09:00",
-  "config_version": "1.3",
+  "config_version": "1.1",
   "engine_version": "v1.0",
   "schema_version": "1.1",
   "fx": {
@@ -1288,6 +1288,7 @@
           "quickwin_band": 90,
           "is_baseline": true,
           "killswitch_excluded": false,
+          "already_entered": true,
           "excluded": true,
           "exclusion_reason": "baseline (기준국, 후보 아님)"
         },
@@ -1301,6 +1302,7 @@
           "quickwin_band": 60,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 1
@@ -1315,6 +1317,7 @@
           "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 2
@@ -1329,6 +1332,7 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": true,
+          "already_entered": false,
           "excluded": true,
           "exclusion_reason": "killswitch fail"
         }
@@ -1350,8 +1354,8 @@
         }
       ],
       "note": {
-        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국) 및 킬스위치 탈락국 제외. 10점 구간 표기.",
-        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline and killswitch failures excluded. Reported in 10-point buckets."
+        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·킬스위치 탈락국 제외. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and killswitch failures excluded. Reported in 10-point buckets."
       }
     },
     "top3_country_cards": [
@@ -1503,7 +1507,7 @@
         ],
         "killswitch_failed_count": 1,
         "why_top1": {
-          "ko": "Canada(CA) — 매력도 45.8, IT유사도 70 구간, 퀵윈 60 구간",
+          "ko": "캐나다 — 매력도 45.8, IT유사도 70 구간, 퀵윈 60 구간",
           "en": "Canada(CA) — Attractiveness 45.8, IT band 70, Quickwin band 60"
         }
       },
@@ -1511,15 +1515,15 @@
         "source_flag": "AI",
         "insights": [
           {
-            "ko": "CA이 후보국 매력도·IT유사도 모두 1위 — 권역 진출의 명백한 1순위.",
+            "ko": "캐나다가 후보국 매력도·IT유사도 모두 1위 — 권역 진출의 명백한 1순위.",
             "en": "CA ranks #1 in both attractiveness and IT similarity — the clear top entry candidate for the region."
           },
           {
-            "ko": "기준국 US은 이미 시스템 보유국 → 순위에서 제외(B국 시스템 확산의 비교 기준).",
+            "ko": "기준국 미국은 이미 시스템 보유국 → 순위에서 제외(B국 시스템 확산의 비교 기준).",
             "en": "Baseline US already operates a deployed system — excluded from the ranking (used as the reference for system expansion)."
           },
           {
-            "ko": "킬스위치 탈락국: PR — 규제·신용등급 게이트로 사전 차단(스코어링 제외).",
+            "ko": "킬스위치 탈락국: 푸에르토리코 — 규제·신용등급 게이트로 사전 차단(스코어링 제외).",
             "en": "Killswitch failed: PR — pre-blocked by regulatory/credit-rating gates (excluded from scoring)."
           }
         ]

@@ -33,6 +33,8 @@ class CountrySummary(BaseModel):
     # 지도 마커 좌표(geo 참조). 좌표가 있으면 프론트가 마커를 자동 표시한다.
     lon: Optional[float] = None
     lat: Optional[float] = None
+    # 진출형태(internal_latest.json country_assets[code].type): 단독법인·JV. 기진출국만, 미진출국은 None.
+    entry_mode: Optional[str] = None
 
 
 class RegionSummary(BaseModel):

@@ -1,43 +1,48 @@
 {
-  "version": "1.0",
-  "updated_at": "2026-06-22T19:35:14+09:00",
+  "version": "1.1",
+  "updated_at": "2026-06-23T00:00:00+09:00",
   "country_assets": {
     "GB": {
       "solution": "NetSol",
+      "type": "SA",
+      "subscription": true,
       "products": [
         "오토론",
         "리스",
         "할부금융"
       ],
-      "since": 2015,
+      "since": 2026,
       "build_cost": 5000,
-      "build_months": 18,
+      "build_months": 20,
       "reuse_factor": 0.7
     },
     "US": {
       "solution": "Salesforce",
+      "type": "SA",
       "products": [
         "오토론",
         "리스"
       ],
-      "since": 2017,
-      "build_cost": 6000,
-      "build_months": 20,
+      "since": 1989,
+      "build_cost": 1000,
+      "build_months": 18,
       "reuse_factor": 0.5
     },
     "AU": {
       "solution": "Self-built",
+      "type": "SA",
       "products": [
         "오토론",
         "운용리스"
       ],
-      "since": 2019,
-      "build_cost": 4500,
-      "build_months": 16,
+      "since": 2016,
+      "build_cost": 8000,
+      "build_months": 18,
       "reuse_factor": 1.0
     },
     "FR": {
-      "solution": "NetSol",
+      "solution": "Cetelem Core",
+      "type": "JV",
       "products": [
         "오토론",
         "리스"
@@ -46,6 +51,7 @@
     },
     "IT": {
       "solution": "Cetelem Core",
+      "type": "JV",
       "products": [
         "오토론",
         "할부금융"
@@ -54,12 +60,33 @@
     },
     "DE": {
       "solution": "Self-built",
+      "type": "JV",
       "products": [
         "오토론",
         "운용리스",
         "할부금융"
       ],
       "since": 2016
+    },
+    "BR": {
+      "solution": "현지 SI",
+      "type": "JV",
+      "subscription": false,
+      "products": [
+        "오토론",
+        "할부금융"
+      ],
+      "since": 2024,
+      "build_cost": 3641,
+      "build_months": 18,
+      "reuse_factor": 0.7,
+      "_note": "SA 권역 베이스라인. build_cost는 EUR 작업통화 기준(약 400만 USD 환산). SA 권역 표시통화는 USD(region_currency)."
+    },
+    "ID": {
+      "type": "JV"
+    },
+    "CN": {
+      "type": "JV"
     }
   },
   "region_baselines": {
@@ -68,6 +95,19 @@
     "APAC": "AU",
     "SA": "BR"
   },
+  "region_currency": {
+    "EU": "EUR",
+    "NA": "USD",
+    "SA": "USD",
+    "APAC": "KRW",
+    "_note": "권역별 보고서 표시통화. TCO는 EUR로 계산 후 이 통화로 환산해 노출(fx.rates 경유)."
+  },
+  "_country_status_values": [
+    "운영중",
+    "준비중",
+    "진출예정",
+    "미진출"
+  ],
   "country_status": {
     "GB": "운영중",
     "US": "운영중",
@@ -86,8 +126,9 @@
     "KR": "미진출",
     "SG": "미진출",
     "IN": "미진출",
-    "ID": "미진출",
-    "CN": "미진출"
+    "ID": "진출예정",
+    "CN": "진출예정",
+    "BR": "진출예정"
   },
   "country_to_region": {
     "ES": "EU",
@@ -759,30 +800,60 @@
   "subscription_tiers": [
     {
       "min_volume": 0,
-      "max_volume": 2000,
+      "max_volume": 500,
+      "price_per_unit": 24.7,
+      "currency": "EUR"
+    },
+    {
+      "min_volume": 501,
+      "max_volume": 1000,
       "price_per_unit": 9.88,
       "currency": "EUR"
     },
     {
+      "min_volume": 1001,
+      "max_volume": 1500,
+      "price_per_unit": 8.645,
+      "currency": "EUR"
+    },
+    {
+      "min_volume": 1501,
+      "max_volume": 2000,
+      "price_per_unit": 7.41,
+      "currency": "EUR"
+    },
+    {
       "min_volume": 2001,
-      "max_volume": 4000,
-      "price_per_unit": 5.928,
+      "max_volume": 3000,
+      "price_per_unit": 6.175,
       "currency": "EUR"
     },
     {
-      "min_volume": 4001,
-      "max_volume": 7500,
-      "price_per_unit": 5.434,
+      "min_volume": 3001,
+      "max_volume": 5000,
+      "price_per_unit": 5.681,
       "currency": "EUR"
     },
     {
-      "min_volume": 7501,
+      "min_volume": 5001,
       "max_volume": 10000,
       "price_per_unit": 4.94,
       "currency": "EUR"
     },
     {
       "min_volume": 10001,
+      "max_volume": 12000,
+      "price_per_unit": 4.693,
+      "currency": "EUR"
+    },
+    {
+      "min_volume": 12001,
+      "max_volume": 14000,
+      "price_per_unit": 4.446,
+      "currency": "EUR"
+    },
+    {
+      "min_volume": 14001,
       "max_volume": 20000,
       "price_per_unit": 4.323,
       "currency": "EUR"
@@ -790,7 +861,7 @@
     {
       "min_volume": 20001,
       "max_volume": 80000,
-      "price_per_unit": 4.073,
+      "price_per_unit": 4.076,
       "currency": "EUR"
     },
     {

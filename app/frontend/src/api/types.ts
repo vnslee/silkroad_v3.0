@@ -30,6 +30,8 @@ export interface CountrySummary {
   // 지도 마커 좌표(백엔드 geo 참조). 있으면 프론트가 마커를 자동 표시.
   lon?: number | null
   lat?: number | null
+  // 진출형태(internal country_assets[code].type): '단독법인'|'JV'. 기진출국만, 미진출국은 null.
+  entry_mode?: string | null
 }
 
 export interface RegionSummary {

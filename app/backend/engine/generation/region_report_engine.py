@@ -753,6 +753,13 @@ class RegionReportEngine:
         passed = set(killswitch["passed"])
         baseline = it_similarity.get("baseline_country")
 
+        # 진출국(이미 운영중이거나 기진출 자산 보유) — 신규 진출 추천 후보가 아니므로 랭킹에서 제외.
+        country_status = (self.internal_data.get("country_status") or {})
+        country_assets = (self.internal_data.get("country_assets") or {})
+        entered = {
+            c for c, s in country_status.items() if s == "운영중"
+        } | set(country_assets.keys())
+
         rows: List[Dict[str, Any]] = []
         for country in self.region_data.get("countries", []):
             code = country.get("code")
@@ -760,7 +767,8 @@ class RegionReportEngine:
             it = it_map.get(code)
             is_baseline = code == baseline
             ks_excluded = code not in passed
-            excluded = is_baseline or ks_excluded
+            already_entered = code in entered
+            excluded = is_baseline or ks_excluded or already_entered
             raw_score = None
             if attr is not None and it is not None:
                 raw_score = attr * w_biz + it * w_it
@@ -774,9 +782,11 @@ class RegionReportEngine:
                 "quickwin_band": self._bucket_10(raw_score),
                 "is_baseline": is_baseline,
                 "killswitch_excluded": ks_excluded,
+                "already_entered": already_entered,
                 "excluded": excluded,
                 "exclusion_reason": (
                     "baseline (기준국, 후보 아님)" if is_baseline else
+                    "진출국 (이미 운영중, 후보 아님)" if already_entered else
                     "killswitch fail" if ks_excluded else None
                 ),
             })
@@ -803,8 +813,8 @@ class RegionReportEngine:
                          "it_similarity_band": r["it_similarity_band"]}
                         for r in ranked],
             "note": {
-                "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국) 및 킬스위치 탈락국 제외. 10점 구간 표기.",
-                "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline and killswitch failures excluded. Reported in 10-point buckets.",
+                "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·킬스위치 탈락국 제외. 10점 구간 표기.",
+                "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and killswitch failures excluded. Reported in 10-point buckets.",
             },
         }
 
