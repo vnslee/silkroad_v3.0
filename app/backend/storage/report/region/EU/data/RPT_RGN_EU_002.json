@@ -17,10 +17,10 @@
     ],
     "baseline_country": "GB"
   },
-  "generated_at": "2026-06-22T19:29:10.156490",
+  "generated_at": "2026-06-23T20:26:17.205444",
   "generated_by": "engine",
   "data_snapshot_id": "2026-06-22T16:00:00+09:00",
-  "config_version": "1.4",
+  "config_version": "1.1",
   "engine_version": "v1.0",
   "schema_version": "1.1",
   "fx": {
@@ -2688,9 +2688,10 @@
           "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
-          "rank": 7
+          "rank": 6
         },
         {
           "country": "DK",
@@ -2702,6 +2703,7 @@
           "quickwin_band": 60,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 2
@@ -2716,6 +2718,7 @@
           "quickwin_band": 60,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 3
@@ -2730,9 +2733,9 @@
           "quickwin_band": 30,
           "is_baseline": false,
           "killswitch_excluded": false,
-          "excluded": false,
-          "exclusion_reason": null,
-          "rank": 8
+          "already_entered": true,
+          "excluded": true,
+          "exclusion_reason": "진출국 (이미 운영중, 후보 아님)"
         },
         {
           "country": "GB",
@@ -2744,6 +2747,7 @@
           "quickwin_band": 80,
           "is_baseline": true,
           "killswitch_excluded": false,
+          "already_entered": true,
           "excluded": true,
           "exclusion_reason": "baseline (기준국, 후보 아님)"
         },
@@ -2757,9 +2761,9 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": false,
-          "excluded": false,
-          "exclusion_reason": null,
-          "rank": 6
+          "already_entered": true,
+          "excluded": true,
+          "exclusion_reason": "진출국 (이미 운영중, 후보 아님)"
         },
         {
           "country": "NL",
@@ -2771,6 +2775,7 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 4
@@ -2785,6 +2790,7 @@
           "quickwin_band": 70,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 1
@@ -2799,6 +2805,7 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 5
@@ -2842,29 +2849,15 @@
         },
         {
           "rank": 6,
-          "country": "IT",
-          "score_band": 50,
-          "attractiveness": 36.4,
-          "it_similarity_band": 60
-        },
-        {
-          "rank": 7,
           "country": "AT",
           "score_band": 40,
           "attractiveness": 26.5,
           "it_similarity_band": 70
-        },
-        {
-          "rank": 8,
-          "country": "FR",
-          "score_band": 30,
-          "attractiveness": 8.9,
-          "it_similarity_band": 60
         }
       ],
       "note": {
-        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국) 및 킬스위치 탈락국 제외. 10점 구간 표기.",
-        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline and killswitch failures excluded. Reported in 10-point buckets."
+        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·킬스위치 탈락국 제외. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and killswitch failures excluded. Reported in 10-point buckets."
       }
     },
     "top3_country_cards": [
@@ -3091,7 +3084,7 @@
         ],
         "killswitch_failed_count": 0,
         "why_top1": {
-          "ko": "Poland(PL) — 매력도 76.6, IT유사도 70 구간, 퀵윈 70 구간",
+          "ko": "폴란드 — 매력도 76.6, IT유사도 70 구간, 퀵윈 70 구간",
           "en": "Poland(PL) — Attractiveness 76.6, IT band 70, Quickwin band 70"
         }
       },

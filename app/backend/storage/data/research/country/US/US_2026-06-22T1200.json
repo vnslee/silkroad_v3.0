@@ -1,0 +1,1453 @@
+{
+  "country": "United States",
+  "country_ko": "미국",
+  "code": "US",
+  "region": "NORTH_AMERICA",
+  "is_baseline": true,
+  "currency": "USD",
+  "schema_version": "1.2",
+  "data_year": 2025,
+  "fetched_at": "2026-06-22T12:00:00+09:00",
+  "fetched_by": "ai",
+  "overall_insight": "세계 최대 자동차금융 시장이자 북미 권역의 베이스라인 국가다. 2025년 신차 판매 약 1,600만대·금융침투율 80%+의 초대형 고침투 환경으로, 자동차여신 잔액은 USD 1.6조 규모(연간 신규 취급 USD 약 750bn)다. 비즈니스 매력도는 규모와 깊이(ABS·캡티브·은행계의 두터운 자본시장)가 핵심이며, 성장률은 성숙시장 특성상 한 자릿수 초중반이다. 비용·난이도 드라이버는 연방-주 이중 규제 — 연방(Fed·OCC·CFPB·FTC)과 주별 면허·이자상한(usury)·DMV 체제가 진입 복잡도를 키운다. 단 외국인 지분 제한 없음·외환 자유로 게이트는 대부분 PASS. IT 인프라는 베이스라인 그 자체 — Equifax/Experian/TransUnion 3강 CB·ACH/Fedwire/FedNow 결제·전자서명·US GAAP CECL로 권역 최상위다. 매력도↔규제 불일치 지점은 주별 usury·면허 분산으로, 다주 진출 시 컴플라이언스 매핑이 필수다. 차량회수는 UCC Article 9 기반 self-help repossession이 광범위하게 허용돼 캐나다·EU보다 회수가 용이한 점이 강점이다. 다크호스는 EV 가속(2025 BEV+PHEV 약 11%)과 강한 캡티브(GM Financial·Ford Credit·Toyota Financial)·은행계(Ally·Capital One·Chase·Wells Fargo) 공존 구조다. 한국 OEM(현대·기아) 캡티브 연계 또는 핀테크·임베디드 금융 진입이 유효하다.",
+  "overall_insight_en": "The world's largest auto-finance market and the baseline country of the North America region. A mega-scale, high-penetration environment with ~16M new-car sales in 2025 and 80%+ finance penetration; auto-credit outstanding is ~USD 1.6 trillion (annual new originations ~USD 750bn). Business attractiveness hinges on scale and depth (deep ABS, captive, and bank-led capital markets), with low-single-digit growth typical of a mature market. Cost/difficulty drivers are federal-state dual regulation — federal (Fed·OCC·CFPB·FTC) plus state-by-state licensing, usury caps, and DMV regimes raise entry complexity. However, with no foreign-ownership limit and free FX, most gates PASS. IT infrastructure is the baseline itself — the Equifax/Experian/TransUnion tri-bureau CB, ACH/Fedwire/FedNow payments, e-signature, and US GAAP CECL make it top-tier in the region. The attractiveness↔regulation mismatch is state-level usury/licensing dispersion, making compliance mapping essential for multi-state entry. Repossession is a strength: UCC Article 9 self-help repossession is broadly permitted, making recovery easier than in Canada or the EU. The dark horse is EV acceleration (2025 BEV+PHEV ~11%) and a strong-captive (GM Financial·Ford Credit·Toyota Financial) and bank-led (Ally·Capital One·Chase·Wells Fargo) coexistence structure. A Korean OEM (Hyundai/Kia) captive linkage or fintech/embedded-finance entry is viable.",
+  "items": [
+    {
+      "item": "오토금융/리스 시장규모",
+      "category": "business",
+      "role": "score",
+      "value": 750000,
+      "unit": "USD_M",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 620000
+          },
+          {
+            "year": 2022,
+            "value": 660000
+          },
+          {
+            "year": 2023,
+            "value": 700000
+          },
+          {
+            "year": 2024,
+            "value": 730000
+          },
+          {
+            "year": 2025,
+            "value": 750000
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 775000
+          },
+          {
+            "year": 2027,
+            "value": 800000
+          },
+          {
+            "year": 2028,
+            "value": 825000
+          },
+          {
+            "year": 2029,
+            "value": 850000
+          },
+          {
+            "year": 2030,
+            "value": 875000
+          }
+        ],
+        "cagr_hist": 4.9,
+        "cagr_forecast": 3.1,
+        "estimated": true
+      },
+      "tier": 2,
+      "source": "Federal Reserve G.19 소비자신용 / Experian State of the Automotive Finance Market 2025 (자동차여신 잔액 약 USD 1.6조, 연간 신규 취급 약 USD 750bn 추정)",
+      "source_en": "Federal Reserve G.19 consumer credit / Experian State of the Automotive Finance Market 2025 (auto-credit outstanding ~USD 1.6T, annual new originations ~USD 750bn estimate)",
+      "insight": "세계 최대 시장 — 연간 신규 취급 약 USD 750bn(잔액 USD 1.6조). 캐나다(95bn)의 약 8배·멕시코(32bn)의 23배. 깊은 ABS·자본시장으로 펀딩 다변화 우수. 북미 베이스라인 그 자체.",
+      "insight_en": "World's largest market — annual new originations ~USD 750bn (outstanding USD 1.6T). ~8x Canada (95bn) and 23x Mexico (32bn). Deep ABS/capital markets give excellent funding diversification. The North America baseline itself.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "오토금융 성장률(CAGR)",
+      "category": "business",
+      "role": "score",
+      "value": 4.9,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 5.5
+          },
+          {
+            "year": 2022,
+            "value": 6.5
+          },
+          {
+            "year": 2023,
+            "value": 6.1
+          },
+          {
+            "year": 2024,
+            "value": 4.3
+          },
+          {
+            "year": 2025,
+            "value": 2.7
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 3.3
+          },
+          {
+            "year": 2027,
+            "value": 3.2
+          },
+          {
+            "year": 2028,
+            "value": 3.1
+          },
+          {
+            "year": 2029,
+            "value": 3.0
+          },
+          {
+            "year": 2030,
+            "value": 2.9
+          }
+        ],
+        "cagr_hist": 4.9,
+        "cagr_forecast": 3.1,
+        "estimated": true
+      },
+      "tier": 2,
+      "source": "Experian / Cox Automotive 2025, S&P Global Mobility US Auto Finance",
+      "source_en": "Experian / Cox Automotive 2025, S&P Global Mobility US Auto Finance",
+      "insight": "한 자릿수 초중반 성장 — 고금리·차량가 정점 후 둔화했으나 Fed 인하 사이클·EV 전환이 중기 회복 견인. 성숙·초대형 시장 특성상 안정적 완만 성장.",
+      "insight_en": "Low-single-digit growth — slowed after high rates and a vehicle-price peak, but the Fed easing cycle and EV transition support a medium-term recovery. Stable, moderate growth typical of a mega-mature market.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "GDP 성장률",
+      "category": "business",
+      "role": "score",
+      "value": 2.1,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 5.8
+          },
+          {
+            "year": 2022,
+            "value": 1.9
+          },
+          {
+            "year": 2023,
+            "value": 2.5
+          },
+          {
+            "year": 2024,
+            "value": 2.8
+          },
+          {
+            "year": 2025,
+            "value": 2.1
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 2.0
+          },
+          {
+            "year": 2027,
+            "value": 2.0
+          },
+          {
+            "year": 2028,
+            "value": 1.9
+          },
+          {
+            "year": 2029,
+            "value": 1.9
+          },
+          {
+            "year": 2030,
+            "value": 1.9
+          }
+        ],
+        "estimated": true
+      },
+      "tier": 1,
+      "source": "Federal Reserve·Bureau of Economic Analysis(BEA)·IMF WEO 2025",
+      "source_en": "Federal Reserve, Bureau of Economic Analysis (BEA), IMF WEO 2025",
+      "insight": "2025년 약 2.1% 성장 — 견조한 소비·고용이 지지, Fed 완화로 연착륙. 캐나다(1.6%)보다 높고 선진국 최상위권. 자동차 수요 안정 기반.",
+      "insight_en": "~2.1% growth in 2025 — supported by resilient consumption and employment, soft landing as the Fed eases. Higher than Canada (1.6%) and top-tier among advanced economies. A stable base for vehicle demand.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "금융 이용률(신차)",
+      "category": "business",
+      "role": "score",
+      "value": 80,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 82
+          },
+          {
+            "year": 2022,
+            "value": 81
+          },
+          {
+            "year": 2023,
+            "value": 80
+          },
+          {
+            "year": 2024,
+            "value": 80
+          },
+          {
+            "year": 2025,
+            "value": 80
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 80
+          },
+          {
+            "year": 2027,
+            "value": 81
+          },
+          {
+            "year": 2028,
+            "value": 81
+          },
+          {
+            "year": 2029,
+            "value": 81
+          },
+          {
+            "year": 2030,
+            "value": 82
+          }
+        ],
+        "cagr_hist": -0.5,
+        "cagr_forecast": 0.5,
+        "estimated": true
+      },
+      "tier": 2,
+      "source": "Experian State of the Automotive Finance Market 2025 / Cox Automotive (신차의 약 80%가 금융·리스 경유)",
+      "source_en": "Experian State of the Automotive Finance Market 2025 / Cox Automotive (~80% of new cars via finance/lease)",
+      "insight": "신차 등록의 약 80%가 금융 경유 — 캐나다(82%) 동급, 멕시코(65%) 대비 고침투. 고금리기 현금구매 소폭 증가했으나 인하 사이클로 재상승 전망. 베이스라인 기준선.",
+      "insight_en": "~80% of new-car registrations go through finance — on par with Canada (82%) and a high-penetration market vs Mexico (65%). Cash purchases rose slightly during the high-rate period but should recover as rates ease. The baseline benchmark.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "금융 이용률(중고차)",
+      "category": "business",
+      "role": "score",
+      "value": 55,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": null,
+      "tier": 2,
+      "source": "Experian / Cox Automotive·CarMax·Carvana 데이터 (중고차 금융 침투율 약 50~60%)",
+      "source_en": "Experian / Cox Automotive·CarMax·Carvana data (used-car finance penetration ~50-60%)",
+      "insight": "중고차 금융 침투율 약 55% — 캐나다(45%)보다 높고 멕시코(18%)를 압도. CarMax·Carvana 등 디지털 중고채널 거대화로 임베디드 금융 기회 최대. 베이스라인 최상위.",
+      "insight_en": "Used-car finance penetration ~55% — higher than Canada (45%) and far above Mexico (18%). The massive digital used channels (CarMax·Carvana) create the largest embedded-finance opportunity. Top-tier baseline.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "평균 금리/APR",
+      "category": "business",
+      "role": "score",
+      "value": 7.8,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 4.1
+          },
+          {
+            "year": 2022,
+            "value": 5.7
+          },
+          {
+            "year": 2023,
+            "value": 7.4
+          },
+          {
+            "year": 2024,
+            "value": 8.0
+          },
+          {
+            "year": 2025,
+            "value": 7.8
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 7.2
+          },
+          {
+            "year": 2027,
+            "value": 6.8
+          },
+          {
+            "year": 2028,
+            "value": 6.5
+          },
+          {
+            "year": 2029,
+            "value": 6.3
+          },
+          {
+            "year": 2030,
+            "value": 6.2
+          }
+        ],
+        "cagr_hist": 17.4,
+        "cagr_forecast": -4.5,
+        "estimated": true
+      },
+      "tier": 2,
+      "source": "Experian / Edmunds 2025 (신차 자동차대출 평균 APR 약 7~8%, Fed 정책금리 4.25~4.50%)",
+      "source_en": "Experian / Edmunds 2025 (new-car auto-loan average APR ~7-8%, Fed funds rate 4.25-4.50%)",
+      "insight": "신차 자동차대출 평균 APR 약 7.8%(캐나다 8.2%·EU 8% 동급). Fed 인하 사이클로 하향 전망. 캡티브 프로모(0~3.9%)·서브프라임(15%+) 분산 큼 — 신용등급별 마진 설계 핵심.",
+      "insight_en": "Average new-car loan APR ~7.8% (on par with Canada 8.2% / EU 8%). Trending down with the Fed easing cycle. Wide dispersion between captive promos (0-3.9%) and subprime (15%+) — credit-tier margin design is key.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "신차 판매대수",
+      "category": "business",
+      "role": "score",
+      "value": 16000000,
+      "unit": "units",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 14930000
+          },
+          {
+            "year": 2022,
+            "value": 13750000
+          },
+          {
+            "year": 2023,
+            "value": 15500000
+          },
+          {
+            "year": 2024,
+            "value": 15900000
+          },
+          {
+            "year": 2025,
+            "value": 16000000
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 16200000
+          },
+          {
+            "year": 2027,
+            "value": 16400000
+          },
+          {
+            "year": 2028,
+            "value": 16600000
+          },
+          {
+            "year": 2029,
+            "value": 16700000
+          },
+          {
+            "year": 2030,
+            "value": 16800000
+          }
+        ],
+        "cagr_hist": 1.8,
+        "cagr_forecast": 1.0,
+        "estimated": true
+      },
+      "tier": 2,
+      "source": "Cox Automotive / WardsAuto / S&P Global Mobility 2025 (경량차 신차 판매 약 1,600만대)",
+      "source_en": "Cox Automotive / WardsAuto / S&P Global Mobility 2025 (~16M light-vehicle new-car sales)",
+      "insight": "2025년 약 1,600만대 — 팬데믹·공급망 충격 후 회복. 캐나다(188만)의 약 8.5배. 건수 산식 기준 모수로 금융침투율·우리사 점유율과 결합. 세계 2위 단일시장(중국 다음).",
+      "insight_en": "~16M units in 2025 — recovery after pandemic/supply-chain shocks. ~8.5x Canada (1.88M). Base unit for volume calculations, combined with finance penetration and our share. The world's #2 single market (after China).",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "구매 패턴(할부·리스 비중)",
+      "category": "business",
+      "role": "score",
+      "value": 80,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": null,
+      "tier": 2,
+      "source": "Experian / Edmunds 2025 (할부대출 약 60%·리스(Lease) 약 20%)",
+      "source_en": "Experian / Edmunds 2025 (installment loans ~60%, lease ~20%)",
+      "insight": "신차의 약 80%가 금융 경유 — 할부대출 60% + 리스 20%. 리스 비중이 캐나다(22%) 동급·멕시코(15%) 상회로 베이스라인 리스 상품 정합성 우수. 상품 믹스의 기준선.",
+      "insight_en": "~80% of new cars go through finance — installment loans 60% + lease 20%. Lease share is on par with Canada (22%) and above Mexico (15%), so baseline lease-product fit is excellent. The product-mix benchmark.",
+      "insight_ai_generated": true,
+      "score_dimensions": {
+        "리스 취급 일치도": {
+          "target_score": 5,
+          "note": "Lease 20% 베이스라인 표준",
+          "note_en": "Lease 20%, baseline standard"
+        },
+        "렌탈 취급 일치도": {
+          "target_score": 5,
+          "note": "단기렌탈·구독 시장 성숙",
+          "note_en": "Short-term rental·subscription market mature"
+        },
+        "플릿 취급 일치도": {
+          "target_score": 5,
+          "note": "법인 플릿리스 세계 최대",
+          "note_en": "World's largest corporate fleet leasing"
+        },
+        "상품별 비중 유사도": {
+          "target_score": 5,
+          "note": "대출+리스 균형 베이스라인 기준",
+          "note_en": "Loan + lease balance is the baseline benchmark"
+        }
+      },
+      "similarity_axis": "product",
+      "similarity_weight": 0.15
+    },
+    {
+      "item": "캡티브 강도(점유율)",
+      "category": "business",
+      "role": "score",
+      "value": 50,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null,
+      "tier": 3,
+      "source": "Experian 2025 (GM Financial·Ford Credit·Toyota Financial·Honda Financial 등 캡티브 합산 약 50%)",
+      "source_en": "Experian 2025 (GM Financial·Ford Credit·Toyota Financial·Honda Financial captives combine ~50%)",
+      "insight": "캡티브 강세 — GM Financial·Ford Credit·Toyota Financial·Honda Financial 합산 약 50%. 은행계(Ally·Capital One·Chase·Wells Fargo) 약 35%, 신협(NCUA) 약 15%. 은행계·신협 비중이 멕시코(60% 캡티브)보다 분산.",
+      "insight_en": "Strong captives — GM Financial·Ford Credit·Toyota Financial·Honda Financial combine for ~50%. Banks (Ally·Capital One·Chase·Wells Fargo) ~35%, credit unions (NCUA) ~15%. A more dispersed bank/credit-union mix than Mexico (60% captive).",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "금융사 점유율(Top 5)",
+      "category": "business",
+      "role": "score",
+      "value": 9,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null,
+      "tier": 3,
+      "source": "Experian 2025 (Ally 약 9%, Capital One 8%, Toyota Financial 7%, Chase Auto 6%, GM Financial 6%)",
+      "source_en": "Experian 2025 (Ally ~9%, Capital One 8%, Toyota Financial 7%, Chase Auto 6%, GM Financial 6%)",
+      "insight": "Ally Financial·Capital One이 독립·은행계 양강(각 약 9%·8%). 톱5 합산 약 36%로 캐나다(60%)·멕시코보다 분산 — 초대형 시장으로 신규 진입 틈새 풍부(EV·중고차·서브프라임·핀테크).",
+      "insight_en": "Ally Financial and Capital One lead among independents/banks (~9%/8%). Top-5 combine for only ~36% — more dispersed than Canada (60%) or Mexico; the mega-market leaves ample entry niches (EV·used·subprime·fintech).",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "법인세율",
+      "category": "business",
+      "role": "score",
+      "value": 25.8,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "timeseries": null,
+      "tier": 1,
+      "source": "Internal Revenue Service(IRS): 연방 21% + 주 평균 약 4.8%(가중) = 합산 약 25.8% / 주별 편차 큼(텍사스·네바다 무과세 ~ 캘리포니아 8.84%)",
+      "source_en": "Internal Revenue Service (IRS): federal 21% + state avg ~4.8% (weighted) = combined ~25.8% / wide state variation (no tax in TX·NV ~ California 8.84%)",
+      "insight": "합산 법인세 약 25.8%(연방 21%+주 가중 4.8%, 주별 편차 큼). 캐나다(26.5%)·멕시코(30%)보다 낮음. 한·미 조세조약으로 배당·이자 송금 효율 양호. 주 선택이 세부담 변수.",
+      "insight_en": "Combined corporate tax ~25.8% (federal 21% + weighted state 4.8%, wide state variation). Lower than Canada (26.5%) and Mexico (30%). The Korea-US tax treaty makes dividend/interest remittance efficient. State choice is a tax-burden variable.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "이자소득 원천징수",
+      "category": "business",
+      "role": "score",
+      "value": 12,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "timeseries": null,
+      "tier": 1,
+      "source": "Internal Revenue Code / 한·미 조세조약 (비거주자 이자 표준 30%, portfolio interest 면제, 조약 12%)",
+      "source_en": "Internal Revenue Code / Korea-US tax treaty (non-resident interest standard 30%, portfolio interest exempt, treaty 12%)",
+      "insight": "비거주자 이자 표준 30%이나 portfolio interest exemption으로 면제 가능, 한·미 조세조약 적용 시 12%. 본사 차입(portfolio interest) 구조 설계로 효율화 가능 — 캐나다(10%) 동급.",
+      "insight_en": "Non-resident interest standard 30%, but the portfolio interest exemption can zero it out and the Korea-US tax treaty reduces it to 12%. Can be optimized via HQ-loan (portfolio interest) structuring — on par with Canada (10%).",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "배당 원천징수",
+      "category": "business",
+      "role": "score",
+      "value": 10,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "timeseries": null,
+      "tier": 1,
+      "source": "Internal Revenue Code / 한·미 조세조약 (배당 표준 30%, 조약 10%/15% 차등)",
+      "source_en": "Internal Revenue Code / Korea-US tax treaty (dividend standard 30%, treaty 10%/15% tiered)",
+      "insight": "배당 표준 30%이나 한·미 조세조약(10%+ 지분 보유 시 10%) — 한국 본사 회수 효율 양호. 캐나다(5%)보다 다소 높으나 안정적. 베이스라인 송금 환경.",
+      "insight_en": "Dividend standard 30%, but the Korea-US tax treaty (10% with 10%+ ownership) — good HQ-repatriation efficiency. Slightly higher than Canada (5%) but stable. The baseline remittance environment.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "외국인 지분 한도",
+      "category": "shared",
+      "role": "gate",
+      "value": "금융업 100% 허용. CFIUS(외국인투자심의위) 국가안보 심사만 적용(자동차금융은 통상 대상 외). 은행은 OCC/Fed 인가 필요",
+      "value_en": "Financial business 100% allowed. Only CFIUS (Committee on Foreign Investment) national-security review applies (auto finance typically out of scope). Banks require OCC/Fed authorization.",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null,
+      "tier": 1,
+      "source": "FINSA/CFIUS regulations, National Bank Act, OCC·Federal Reserve 가이드",
+      "source_en": "FINSA/CFIUS regulations, National Bank Act, OCC·Federal Reserve guidance",
+      "insight": "외국인 100% 허용. CFIUS 국가안보 심사는 자동차금융 자회사에 통상 미적용 — 단독 진출 자유. 비은행 여신회사 형태면 연방 은행인가 불필요. 베이스라인 개방성.",
+      "insight_en": "100% foreign ownership allowed. CFIUS national-security review typically does not apply to auto-finance subsidiaries — standalone entry is free. As a non-bank finance company, no federal bank charter is required. Baseline openness.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "외환·배당 송금 자유도",
+      "category": "shared",
+      "role": "gate",
+      "value": "외환 완전 자유, 자본통제 없음. 배당 30%(조약 10%)·portfolio interest 면제. 기축통화국으로 송금 자유도 최상위",
+      "value_en": "Fully free FX, no capital controls. Dividend 30% (treaty 10%), portfolio interest exempt. As the reserve-currency country, remittance freedom is top-tier.",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null,
+      "tier": 1,
+      "source": "Federal Reserve, Internal Revenue Code, 한·미 조세조약",
+      "source_en": "Federal Reserve, Internal Revenue Code, Korea-US tax treaty",
+      "insight": "외환 송금 완전 자유, 통제 없음. 배당 30%→조약 10%, portfolio interest 면제로 본국 회수 환경 우수. 기축통화(USD)로 환위험 자체가 베이스라인 — 권역 최우호.",
+      "insight_en": "Fully free FX remittance, no controls. Dividend 30%→10% under treaty, portfolio interest exempt — excellent repatriation environment. As the reserve currency (USD), FX risk is itself the baseline — most favorable in the region.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "데이터 현지화 의무",
+      "category": "shared",
+      "role": "gate",
+      "value": "연방 통일 개인정보보호법 부재. 강제 현지화 의무 없음. 주별(CCPA/CPRA 캘리포니아 등 20여 주) 규율, GLBA(금융)·FCRA(신용) 연방법 적용. 국외이전 자유",
+      "value_en": "No federal unified privacy law. No forced localization. State-by-state rules (CCPA/CPRA in California and ~20 states), with federal GLBA (financial) and FCRA (credit) applying. Free cross-border transfer.",
+      "gate_result": "PASS",
+      "gate_scope": "operating_model",
+      "segment": null,
+      "tier": 1,
+      "source": "GLBA, FCRA, CCPA/CPRA(California) 등 주별 프라이버시법, FTC",
+      "source_en": "GLBA, FCRA, CCPA/CPRA (California) and state privacy laws, FTC",
+      "insight": "연방 통일 개인정보법 부재·강제 현지화 없음 — 본사(한국) 연동 아키텍처 자유. 단 금융은 GLBA·신용은 FCRA, 캘리포니아 CCPA/CPRA 등 주별 의무 분산. 멀티주 컴플라이언스 매핑 필요하나 이전 제약 없음.",
+      "insight_en": "No federal unified privacy law and no forced localization — HQ (Korea) connected architecture is free. However, financial data falls under GLBA, credit under FCRA, and state obligations are dispersed (California CCPA/CPRA, etc.). Multi-state compliance mapping is needed, but there is no transfer restriction.",
+      "insight_ai_generated": false,
+      "score_dimensions": {
+        "현지 저장 강제": {
+          "target_score": 5,
+          "note": "연방·주 강제 현지화 없음",
+          "note_en": "No federal/state forced localization"
+        },
+        "국외 이전 허용도": {
+          "target_score": 5,
+          "note": "국외이전 자유, 적정성 불요",
+          "note_en": "Free cross-border transfer, no adequacy needed"
+        },
+        "동의·보관 규제": {
+          "target_score": 4,
+          "note": "GLBA/FCRA·주별 CCPA 분산",
+          "note_en": "GLBA/FCRA·state CCPA dispersion"
+        },
+        "GDPR 동등성": {
+          "target_score": 3,
+          "note": "연방 통일법 부재로 부분 동등",
+          "note_en": "Partial equivalence absent a federal law"
+        }
+      },
+      "similarity_axis": "regulatory",
+      "similarity_weight": 0.1
+    },
+    {
+      "item": "국가신용등급",
+      "category": "shared",
+      "role": "gate",
+      "value": "AA+ (S&P, 2023 강등) / Aa1 (Moody's, 2025 강등) / AA+ (Fitch, 2023 강등), 안정적",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null,
+      "tier": 1,
+      "source": "S&P·Moody's·Fitch 국가신용등급 (S&P AA+ 2011/2023, Fitch AA+ 2023, Moody's Aa1 2025)",
+      "source_en": "S&P·Moody's·Fitch sovereign ratings (S&P AA+ 2011/2023, Fitch AA+ 2023, Moody's Aa1 2025)",
+      "insight": "투자등급 최상위권(AA+/Aa1) — 3대 평가사 모두 한 단계 강등(재정·부채 부담)됐으나 기축통화·심층 자본시장으로 송금·자본회수 리스크 사실상 없음. 킬스위치 통과, 멕시코(BBB) 압도.",
+      "insight_en": "Top investment grade (AA+/Aa1) — all three agencies have downgraded one notch (fiscal/debt burden), but the reserve currency and deep capital markets mean negligible remittance/capital-recovery risk. Killswitch passes, far above Mexico (BBB).",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "라이선스 취득 가능 여부(외국사)",
+      "category": "shared",
+      "role": "gate",
+      "value": "소비자 자동차금융=주별 sales finance/lender 라이선스(주마다 상이, 약 50개 주 등록/면허) 취득가능, B2B 리스=대부분 무면허 또는 단순 사업등록. 은행은 OCC/주 은행인가",
+      "value_en": "Consumer auto finance = per-state sales-finance/lender license (varies by state, ~50-state registration/licensing) obtainable; B2B leasing = mostly unlicensed or simple business registration. Banks require an OCC/state bank charter.",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "segment": "consumer_credit",
+      "tier": 1,
+      "source": "주별 sales finance company/consumer lender 면허법 / OCC / CFPB / NMLS",
+      "source_en": "State sales finance company/consumer lender licensing laws / OCC / CFPB / NMLS",
+      "insight": "은행 인가 없이 자동차금융 영업 가능(여신회사 형태). 소비자신용은 주별 면허(약 50개 주, NMLS 등록 일부)·CFPB 감독. B2B 리스는 진입 장벽 낮음 — 단계적 진입 권장. 캐나다(13주)보다 주 수 많아 면허 작업량 큼.",
+      "insight_en": "Auto-finance operations possible without a bank charter (as a finance company). Consumer credit requires per-state licensing (~50 states, some via NMLS) and CFPB oversight. B2B leasing has low entry barriers — staged entry recommended. More states than Canada (13), so the licensing workload is larger.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "라이선스 체제(세그먼트별)",
+      "category": "shared",
+      "role": "gate",
+      "value": "소비자/B2B 자동차금융=비은행 여신회사(finance company) 형태로 연방 은행인가 불필요(예금 미수취 시), 주별 sales finance/consumer lender 면허만 / 은행 인가(OCC, ILC 등)는 별도 옵션",
+      "value_en": "Consumer/B2B auto finance = as a non-bank finance company, no federal bank charter required (if non-deposit-taking), only per-state sales-finance/consumer-lender licensing / bank charter (OCC, ILC, etc.) is a separate option.",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "segment": "consumer_credit",
+      "tier": 1,
+      "source": "National Bank Act, OCC 가이드, 주별 sales finance/consumer credit 면허법, CFPB",
+      "source_en": "National Bank Act, OCC guidance, state sales-finance/consumer-credit licensing laws, CFPB",
+      "insight": "예금 미수취 여신회사는 연방 은행인가 면제 — 진입 유연. 다만 약 50개 주별 면허 취득·갱신과 CFPB 연방 감독이 다층적. 단일 면허 없음이 부담이나 시장 규모로 상쇄. 베이스라인 규제 기준선.",
+      "insight_en": "Non-deposit-taking finance companies are exempt from a federal bank charter — flexible entry. But obtaining/renewing licenses across ~50 states plus federal CFPB oversight is layered. The absence of a single license is a burden, offset by market size. The baseline regulatory benchmark.",
+      "insight_ai_generated": false,
+      "score_dimensions": {
+        "취득방식(등록 vs 인가)": {
+          "target_score": 4,
+          "note": "여신회사 면허형, 연방 인가 면제",
+          "note_en": "Finance-company license type, federal-charter exempt"
+        },
+        "외국인 취득 가능": {
+          "target_score": 5,
+          "note": "CFIUS 외 100% 허용",
+          "note_en": "100% allowed apart from CFIUS"
+        },
+        "처리기간(개월)": {
+          "target_score": 3,
+          "note": "주별 면허 합산 3~9개월",
+          "note_en": "Per-state licensing 3-9 months combined"
+        },
+        "최저자본금 수준": {
+          "target_score": 4,
+          "note": "여신회사 자본 요건 경량",
+          "note_en": "Light finance-company capital requirements"
+        },
+        "감독 강도": {
+          "target_score": 3,
+          "note": "연방 CFPB + 약 50개 주 분산",
+          "note_en": "Federal CFPB + dispersed across ~50 states"
+        }
+      },
+      "similarity_axis": "regulatory",
+      "similarity_weight": 0.25
+    },
+    {
+      "item": "금리 상한 규제",
+      "category": "shared",
+      "role": "gate",
+      "value": "연방 통일 상한 없음 — 주별 usury law 상이(일부 주 상한 없음, 일부 18~36%). 군인은 연방 MLA(Military Lending Act) 36% MAPR 상한",
+      "value_en": "No federal unified cap — state usury laws vary (some states have no cap, others 18-36%). Military borrowers face the federal Military Lending Act (MLA) 36% MAPR cap.",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "segment": "consumer_credit",
+      "tier": 1,
+      "source": "주별 usury statutes / Military Lending Act(36% MAPR) / Truth in Lending Act(TILA) 공시",
+      "source_en": "State usury statutes / Military Lending Act (36% MAPR) / Truth in Lending Act (TILA) disclosure",
+      "insight": "연방 통일 금리상한 없음 — 주별 usury law 차이 큼(일부 주 무상한). 군인 MLA 36% MAPR만 연방 강제. 자동차금융 평균 8%보다 충분히 높아 실무 제약 미미. TILA 공시는 베이스라인 표준. 멕시코(상한 없음)와 유사 유연.",
+      "insight_en": "No federal unified rate cap — wide state usury-law variation (some states have no cap). Only the military MLA 36% MAPR is federally mandated. Well above the ~8% auto-finance average, so practical constraint is minimal. TILA disclosure is the baseline standard. Flexible, similar to Mexico (no cap).",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "최저자본금",
+      "category": "shared",
+      "role": "score",
+      "value": "여신회사(예금 미수취) 연방 최저자본 규정 없음(주별 면허 net worth·보증금 수준, 통상 USD 25k~250k) / 은행(National Bank/ILC) OCC 최저 자본 + 건전성 자본",
+      "value_en": "Finance company (non-deposit-taking) has no federal minimum-capital rule (state-license net-worth/bond level, typically USD 25k-250k) / banks (National Bank/ILC) OCC minimum capital + prudential capital",
+      "unit": "USD",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null,
+      "tier": 1,
+      "source": "National Bank Act, OCC Capital Requirements, 주별 sales finance/lender 면허 net worth·bond",
+      "source_en": "National Bank Act, OCC Capital Requirements, state sales-finance/lender license net-worth/bond",
+      "insight": "예금 미수취 여신회사는 연방 최저자본 규정 없음(주별 net worth·보증금 USD 25k~250k 수준) — 진입 유연. 은행 인가 시 OCC 자본 부담 큼. 캐나다·멕시코 SOFOM과 유사한 경량 옵션 존재. 베이스라인 기준선.",
+      "insight_en": "Non-deposit-taking finance companies have no federal minimum-capital rule (state net-worth/bonds of ~USD 25k-250k) — flexible entry. Bank authorization carries a heavy OCC capital burden. A light option exists, similar to Canada and Mexico's SOFOM. The baseline benchmark.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "솔루션 벤더",
+      "category": "it",
+      "role": "score",
+      "value": "글로벌 벤더(defi SOLUTIONS/NETSOL/Fiserv/FIS/Salesforce Auto Cloud/Tata TCS BaNCS) + 대형 SI 혼재 — 미국이 표준 생태계",
+      "value_en": "Global vendors (defi SOLUTIONS/NETSOL/Fiserv/FIS/Salesforce Auto Cloud/Tata TCS BaNCS) + large SI mix — the US is the standard ecosystem",
+      "unit": "match",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 3,
+      "source": "시장 조사 (미국 = 글로벌 자동차금융 솔루션 벤더 생태계의 원천·베이스라인)",
+      "source_en": "Market research (the US = origin/baseline of the global auto-finance solution-vendor ecosystem)",
+      "insight": "defi SOLUTIONS·Fiserv·FIS·NETSOL 등 표준 벤더 생태계의 본거지 — 미국이 곧 베이스라인. 권역 내 직접 재사용률 최상위. 캐나다·EU 진출 시 미국 스택을 그대로 이식하는 기준점.",
+      "insight_en": "Home of the standard vendor ecosystem (defi SOLUTIONS·Fiserv·FIS·NETSOL) — the US is the baseline. Highest direct reuse in the region. The reference point whose stack is ported as-is when expanding to Canada or the EU.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "솔루션 유형",
+      "category": "it",
+      "role": "score",
+      "value": "글로벌 패키지 + 은행계 자체 코어(JPMorgan·Wells Fargo·Capital One) + 캡티브 자체 시스템(GM Financial·Ford Credit·Toyota Financial) + SaaS",
+      "value_en": "Global packages + bank proprietary cores (JPMorgan·Wells Fargo·Capital One) + captive proprietary systems (GM Financial·Ford Credit·Toyota Financial) + SaaS",
+      "unit": "type",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 3,
+      "source": "업계",
+      "source_en": "Industry",
+      "insight": "대형 은행계·캡티브는 자체 코어, 중소 여신사·핀테크는 SaaS(defi·Fiserv). 클라우드 네이티브·API 우선 아키텍처가 표준 — 미국이 베이스라인 정의. 권역 정합성의 기준점.",
+      "insight_en": "Large banks/captives use proprietary cores, while small/mid lenders and fintechs use SaaS (defi·Fiserv). Cloud-native, API-first architecture is standard — the US defines the baseline. The reference point for regional fit.",
+      "insight_ai_generated": true,
+      "score_dimensions": {
+        "배포형태(패키지/SI/SaaS)": {
+          "target_score": 5,
+          "note": "패키지·SaaS·클라우드 표준 정의",
+          "note_en": "Defines the package·SaaS·cloud standard"
+        },
+        "커스터마이징 자유도": {
+          "target_score": 5,
+          "note": "defi/Fiserv 고도 커스터마이징",
+          "note_en": "High customization with defi/Fiserv"
+        },
+        "벤더 종속도": {
+          "target_score": 4,
+          "note": "벤더 다양·전환 유연",
+          "note_en": "Diverse vendors, flexible switching"
+        },
+        "멀티테넌시 여부": {
+          "target_score": 5,
+          "note": "SaaS 멀티테넌시 표준",
+          "note_en": "SaaS multi-tenancy is standard"
+        }
+      },
+      "similarity_axis": "system",
+      "similarity_weight": 0.2
+    },
+    {
+      "item": "디지털 채널 성숙도",
+      "category": "it",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 2,
+      "source": "ACH/Fedwire, FedNow(2023~), Zelle, 전자서명(ESIGN Act/UETA), Open Banking(CFPB 1033 룰)",
+      "source_en": "ACH/Fedwire, FedNow (2023+), Zelle, e-signature (ESIGN Act/UETA), Open Banking (CFPB Rule 1033)",
+      "insight": "ACH·FedNow 즉시이체·전자서명(ESIGN) 보편·온라인 신청 표준 — 세계 최상위 디지털 인프라이자 베이스라인. 비대면 계약·페이퍼리스 완성. CFPB 1033 오픈뱅킹으로 API 개방 확대.",
+      "insight_en": "ACH/FedNow instant transfer, universal e-signature (ESIGN), and standard online applications — the world's top-tier digital infrastructure and the baseline. Remote contracting and paperless processes are complete. CFPB Rule 1033 open banking expands API openness.",
+      "insight_ai_generated": true,
+      "score_dimensions": {
+        "온라인 신청 연동": {
+          "target_score": 5,
+          "note": "온라인 신청·심사 완전 표준",
+          "note_en": "Online application·underwriting fully standard"
+        },
+        "비대면 계약 가능": {
+          "target_score": 5,
+          "note": "ESIGN/UETA 전자서명 보편",
+          "note_en": "ESIGN/UETA e-signature universal"
+        },
+        "API 개방도": {
+          "target_score": 4,
+          "note": "CFPB 1033 오픈뱅킹 도입",
+          "note_en": "CFPB 1033 open banking rollout"
+        },
+        "페이퍼리스 수준": {
+          "target_score": 5,
+          "note": "페이퍼리스 완성",
+          "note_en": "Paperless complete"
+        }
+      },
+      "similarity_axis": "system",
+      "similarity_weight": 0.2
+    },
+    {
+      "item": "신용정보(CB) 인프라",
+      "category": "it",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 1,
+      "source": "Equifax, Experian, TransUnion (3강 CB) + FICO/VantageScore - 포괄적 신용보고",
+      "source_en": "Equifax, Experian, TransUnion (tri-bureau CB) + FICO/VantageScore - comprehensive credit reporting",
+      "insight": "Equifax·Experian·TransUnion 3강 CB + FICO/VantageScore — 세계 최고 신용정보 인프라이자 베이스라인. 포괄적 신용점수·자동조회·FCRA 규율 표준. 권역 내 CB 연동 패턴의 원천.",
+      "insight_en": "The Equifax/Experian/TransUnion tri-bureau CB + FICO/VantageScore — the world's best credit-information infrastructure and the baseline. Comprehensive scores, automated inquiries, and FCRA governance are standard. The source of regional CB-integration patterns.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "결제·정산 인프라",
+      "category": "it",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 1,
+      "source": "Federal Reserve (Fedwire 고액·FedACH·FedNow 실시간), The Clearing House(RTP), NACHA ACH, Zelle",
+      "source_en": "Federal Reserve (Fedwire large-value·FedACH·FedNow real-time), The Clearing House (RTP), NACHA ACH, Zelle",
+      "insight": "Fedwire·ACH 정산 + FedNow/RTP 실시간 이체 + 자동이체(ACH debit) 보편 — 수금 자동화 세계 최상위이자 베이스라인. FedNow(2023~) 확산으로 실시간 정산 고도화. 권역 표준 결제 인프라의 기준점.",
+      "insight_en": "Fedwire/ACH settlement + FedNow/RTP real-time transfer + universal ACH debit — the world's top-tier collection automation and the baseline. FedNow (2023+) advances real-time settlement. The reference point for regional payment infrastructure.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "디지털 딜러 성숙도",
+      "category": "it",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 3,
+      "source": "업계 (Carvana·CarMax·Cars.com·AutoTrader·Tesla 직판·Cox/Dealertrack·RouteOne)",
+      "source_en": "Industry (Carvana·CarMax·Cars.com·AutoTrader·Tesla direct sales·Cox/Dealertrack·RouteOne)",
+      "insight": "Carvana·CarMax 등 온라인 중고차·Dealertrack/RouteOne 딜러 F&I 플랫폼·Tesla 직판 — 세계 최대·최성숙 디지털 딜러 생태계이자 베이스라인. 임베디드 금융 연동의 원천.",
+      "insight_en": "Carvana·CarMax online used cars, Dealertrack/RouteOne dealer F&I platforms, and Tesla direct sales — the world's largest and most mature digital-dealer ecosystem and the baseline. The source of embedded-finance integration.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "국외이전 제한",
+      "category": "it",
+      "role": "score",
+      "value": 1,
+      "unit": "restriction_1to5",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 1,
+      "source": "연방 통일 개인정보법 부재 / GLBA·FCRA / 주별 CCPA(국외이전 자유)",
+      "source_en": "No federal unified privacy law / GLBA·FCRA / state CCPA (free cross-border transfer)",
+      "insight": "연방 통일 개인정보법 부재로 국외이전 제한 거의 없음 — 본사 연동 제약 최소이자 베이스라인. GLBA·FCRA 보안 의무·주별 CCPA 통지만 준수. 캐나다(Quebec Law 25)·EU(GDPR)보다 자유.",
+      "insight_en": "Absent a federal unified privacy law, cross-border transfer is barely restricted — minimal HQ-connectivity constraint and the baseline. Only GLBA/FCRA security duties and state CCPA notices apply. Freer than Canada (Quebec Law 25) or the EU (GDPR).",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "차량회수 절차 용이성",
+      "category": "shared",
+      "role": "score",
+      "value": 5,
+      "unit": "ease_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 2,
+      "source": "UCC Article 9(self-help repossession 광범위 허용) / 주별 절차, 업계",
+      "source_en": "UCC Article 9 (broad self-help repossession) / state procedures, industry",
+      "insight": "UCC Article 9 기반 self-help repossession(평화 침해 없는 한 법원명령 불요)이 거의 전 주에서 허용 — 회수가 캐나다·EU보다 압도적으로 용이한 베이스라인. 평균 30~60일. 리스는 소유권 기반으로 더 빠름.",
+      "insight_en": "UCC Article 9 self-help repossession (no court order needed absent breach of peace) is permitted in nearly all states — recovery is far easier than in Canada or the EU, the baseline. Average 30-60 days. Leasing is faster on an ownership basis.",
+      "insight_ai_generated": true,
+      "score_dimensions": {
+        "사법절차 필요": {
+          "target_score": 5,
+          "note": "self-help, 법원명령 불요",
+          "note_en": "Self-help, no court order needed"
+        },
+        "회수 소요기간(일)": {
+          "target_score": 5,
+          "note": "평균 30~60일",
+          "note_en": "Average 30-60 days"
+        },
+        "자력구제 허용": {
+          "target_score": 5,
+          "note": "UCC Art.9 self-help 광범위 허용",
+          "note_en": "UCC Art.9 self-help broadly allowed"
+        },
+        "회수율": {
+          "target_score": 5,
+          "note": "성숙시장 회수율 최상위",
+          "note_en": "Top-tier recovery rate in a mature market"
+        }
+      },
+      "similarity_axis": "risk",
+      "similarity_weight": 0.1
+    },
+    {
+      "item": "법적 회수 소요기간",
+      "category": "shared",
+      "role": "score",
+      "value": 45,
+      "unit": "days",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 3,
+      "source": "UCC Article 9 / 업계 추정 (self-help 회수 평균 30~60일)",
+      "source_en": "UCC Article 9 / industry estimate (self-help repossession avg 30-60 days)",
+      "insight": "self-help repossession 활용 시 평균 30~60일(중앙값 45일) — 법원명령 불요로 캐나다(120일)·EU(180일)보다 짧음. 베이스라인 최단. 일부 주(소비자보호 강한 주) 통지·redemption 기간만 추가.",
+      "insight_en": "Average 30-60 days (median 45 days) using self-help repossession — no court order needed, so shorter than Canada (120 days) or the EU (180 days). The shortest baseline. Only some consumer-protective states add notice/redemption periods.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "추심 규제",
+      "category": "shared",
+      "role": "score",
+      "value": 3,
+      "unit": "constraint_1to5",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 2,
+      "source": "FDCPA(Fair Debt Collection Practices Act), CFPB Regulation F, 주별 추심법",
+      "source_en": "FDCPA (Fair Debt Collection Practices Act), CFPB Regulation F, state collection laws",
+      "insight": "FDCPA·CFPB Regulation F가 부당추심 규율 — 글로벌 컴플라이언스의 베이스라인 표준. 제3자 추심·연락 빈도·통지 규제 명확. 캐나다·EU 추심규제의 원형. 주별 면허 추가 주의.",
+      "insight_en": "The FDCPA and CFPB Regulation F govern unfair collection — the baseline standard for global compliance. Clear rules on third-party collection, contact frequency, and notices. The prototype for Canada's and the EU's collection rules. Watch for additional state licensing.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "충당금 규정",
+      "category": "shared",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 1,
+      "source": "US GAAP CECL(Current Expected Credit Loss, ASC 326), FASB / 은행 감독(Fed·OCC)",
+      "source_en": "US GAAP CECL (Current Expected Credit Loss, ASC 326), FASB / bank supervision (Fed·OCC)",
+      "insight": "US GAAP CECL(기대신용손실, ASC 326) 전면 적용 — IFRS 9와 다른 미국 고유 모델이나 기대손실 기반으로 글로벌 표준 대등. 충당 엔진은 CECL 전용 산식 필요(IFRS 9 stage와 매핑 보정). 베이스라인 정의.",
+      "insight_en": "Full application of US GAAP CECL (expected credit loss, ASC 326) — a US-specific model distinct from IFRS 9 but expected-loss-based and on par with the global standard. The provisioning engine needs CECL-specific formulas (mapped/adjusted against IFRS 9 stages). Defines the baseline.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "연체 분류 기준",
+      "category": "shared",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 2,
+      "source": "Fed/OCC FFIEC (30/60/90일 단계, 120일 charge-off), US GAAP CECL 단계",
+      "source_en": "Fed/OCC FFIEC (30/60/90-day stages, 120-day charge-off), US GAAP CECL staging",
+      "insight": "FFIEC 30/60/90일 단계 + 통상 120일 charge-off(자동차여신) — 글로벌 표준의 베이스라인. CECL 기대손실 단계와 정합. 캐나다 OSFI·EU EBA 분류의 기준점.",
+      "insight_en": "FFIEC 30/60/90-day stages + typical 120-day charge-off (auto loans) — the baseline of the global standard. Aligned with CECL expected-loss staging. The reference point for Canada's OSFI and the EU's EBA classifications.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "의무보험 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "자동차 의무책임보험(주별 강제, New Hampshire 제외 거의 전 주). 대인·대물배상 의무, 주별 최저한도 상이. 전부 민영(공영보험 없음)",
+      "value_en": "Compulsory auto liability insurance (mandatory in nearly all states except New Hampshire). Bodily-injury/property-damage liability required, minimum limits vary by state. Entirely private (no public insurer).",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 1,
+      "source": "주별 자동차보험법 (State financial responsibility laws), NAIC(전미보험감독관협회), 주 보험감독청",
+      "source_en": "State auto-insurance laws (financial responsibility laws), NAIC (National Association of Insurance Commissioners), state insurance departments",
+      "insight": "자동차 책임보험 거의 전 주 강제(NH 예외), 전부 민영 경쟁(캐나다 일부 공영과 대비). 리스·금융 차량은 종합보험 표준. NAIC 모델법으로 주간 정합 — 보험연동 로직 베이스라인.",
+      "insight_en": "Compulsory auto liability in nearly all states (NH excepted), entirely private-competitive (unlike Canada's partial public insurers). Comprehensive insurance is standard for leased/financed vehicles. NAIC model laws give inter-state alignment — the insurance-integration baseline.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "신용생명보험 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "끼워팔기(anti-tying) 제한 (Bank Holding Company Act s.106, 주별 보험법). 신용생명보험 옵션 제공·분리구매 보장, 주별 요율 규제(NAIC 모델)",
+      "value_en": "Anti-tying restriction (Bank Holding Company Act s.106, state insurance laws). Credit-life-insurance option offering and standalone purchase guaranteed, with state rate regulation (NAIC model).",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 2,
+      "source": "Bank Holding Company Act s.106(anti-tying), 주별 Credit Insurance Act(NAIC 모델), 주 보험감독청",
+      "source_en": "Bank Holding Company Act s.106 (anti-tying), state Credit Insurance Acts (NAIC model), state insurance departments",
+      "insight": "anti-tying(강제 끼워팔기) 금지 — 신용생명보험 옵션·분리구매 보장. NAIC 모델법으로 주별 요율·공시 규제. 캐나다·EU IDD 규제의 원형. 베이스라인 컴플라이언스 기준.",
+      "insight_en": "Anti-tying is prohibited — credit-life-insurance options and standalone purchase are guaranteed. NAIC model laws regulate state rates/disclosure. The prototype for Canada's and the EU IDD rules. The baseline compliance benchmark.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "보험 끼워팔기 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "강제 끼워팔기 금지(anti-tying, BHCA s.106), 묶음 조건부 허용 (FTC + 주별 보험법)",
+      "value_en": "Mandatory tied selling prohibited (anti-tying, BHCA s.106), bundling conditionally allowed (FTC + state insurance laws)",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 2,
+      "source": "Bank Holding Company Act s.106, FTC, 주별 Insurance Act",
+      "source_en": "Bank Holding Company Act s.106, FTC, state Insurance Acts",
+      "insight": "강제 끼워팔기 금지(anti-tying), 묶음판매는 분리구매 옵션·정보제공 시 허용. FTC·주 보험법 규율. 캐나다·EU IDD와 정합 — 베이스라인 컴플라이언스 기준.",
+      "insight_en": "Mandatory tied selling is prohibited (anti-tying); bundling is allowed with standalone-purchase options and disclosure. Governed by the FTC and state insurance laws. Aligned with Canada and EU IDD — the baseline compliance benchmark.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "AI 신용평가 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "전용 연방 AI법 미시행. ECOA/Reg B(공정대출)·FCRA(adverse action 통지)·CFPB가 AI 신용평가 차별·설명가능성 규율. 주별(콜로라도 AI법 등) 추가",
+      "value_en": "No dedicated federal AI law in force. ECOA/Reg B (fair lending), FCRA (adverse-action notice), and the CFPB govern AI credit-scoring discrimination and explainability. State additions (e.g. Colorado AI Act).",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 1,
+      "source": "ECOA/Regulation B, FCRA, CFPB(AI/algorithmic 신용평가 가이드), 주별 AI법(Colorado SB 205)",
+      "source_en": "ECOA/Regulation B, FCRA, CFPB (AI/algorithmic credit-scoring guidance), state AI laws (Colorado SB 205)",
+      "insight": "전용 연방 AI법 미시행이나 ECOA(공정대출)·FCRA(adverse action 사유 통지)·CFPB가 AI 신용평가 차별·설명가능성 강력 규율 — 사실상 EU AI Act 못지않은 모델 거버넌스 부담. 신용평가 모델 설명가능성·공정성 설계 필수. 콜로라도 등 주별 추가.",
+      "insight_en": "No dedicated federal AI law, but ECOA (fair lending), FCRA (adverse-action reason notice), and the CFPB strongly govern AI credit-scoring discrimination and explainability — effectively model-governance burden on par with the EU AI Act. Credit-scoring model explainability/fairness design is essential. State additions like Colorado.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "EV 보급률",
+      "category": "business",
+      "role": "score",
+      "value": 11,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 4.5
+          },
+          {
+            "year": 2022,
+            "value": 6.7
+          },
+          {
+            "year": 2023,
+            "value": 9.0
+          },
+          {
+            "year": 2024,
+            "value": 10.2
+          },
+          {
+            "year": 2025,
+            "value": 11.0
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 13.0
+          },
+          {
+            "year": 2027,
+            "value": 16.0
+          },
+          {
+            "year": 2028,
+            "value": 20.0
+          },
+          {
+            "year": 2029,
+            "value": 25.0
+          },
+          {
+            "year": 2030,
+            "value": 30.0
+          }
+        ],
+        "cagr_hist": 25.0,
+        "cagr_forecast": 22.2,
+        "estimated": true
+      },
+      "tier": 3,
+      "source": "Cox Automotive / S&P Global Mobility 2025 (BEV+PHEV 신차 점유 약 11%), 연방 IRA 세액공제·California ZEV",
+      "source_en": "Cox Automotive / S&P Global Mobility 2025 (BEV+PHEV new-car share ~11%), federal IRA tax credit·California ZEV",
+      "insight": "2025년 BEV+PHEV 신차 점유 약 11% — 캐나다(13%)와 유사. 연방 IRA 세액공제 변동·California ZEV mandate(2035 100%)가 변수. 리스 잔가 모델에 EV 별도 곡선 필수 — 리스 비중 큰 EV 특성 반영.",
+      "insight_en": "2025 BEV+PHEV new-car share ~11% — similar to Canada (13%). Federal IRA tax-credit shifts and the California ZEV mandate (2035 100%) are variables. A separate EV curve is essential for lease residual models — reflecting EVs' high lease share.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "EV·ICE 잔존가치 리스크",
+      "category": "business",
+      "role": "score",
+      "value": 52,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 60
+          },
+          {
+            "year": 2022,
+            "value": 58
+          },
+          {
+            "year": 2023,
+            "value": 55
+          },
+          {
+            "year": 2024,
+            "value": 53
+          },
+          {
+            "year": 2025,
+            "value": 52
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 51
+          },
+          {
+            "year": 2027,
+            "value": 50
+          },
+          {
+            "year": 2028,
+            "value": 49
+          },
+          {
+            "year": 2029,
+            "value": 48
+          },
+          {
+            "year": 2030,
+            "value": 47
+          }
+        ],
+        "cagr_hist": -3.5,
+        "cagr_forecast": -1.9,
+        "estimated": true
+      },
+      "tier": 3,
+      "source": "Cox Automotive/Manheim 잔가 지수 / Black Book 추정(3년 EV 기준)",
+      "source_en": "Cox Automotive/Manheim residual index / Black Book estimate (3-year EV basis)",
+      "insight": "EV 3년 잔가 52%로 하락 추세 — Tesla 가격인하·공급 확대로 ICE 대비 리스 손익 압박 큼. IRA 변동·중국 경쟁이 추가 변수. 잔가 보증·바이백 보수적 설계 필수 — 베이스라인 EV 리스크 기준.",
+      "insight_en": "EV 3-year residual at 52% and declining — Tesla price cuts and supply expansion pressure lease P&L versus ICE significantly. IRA shifts and Chinese competition add variables. Conservative residual guarantees/buyback design essential — the baseline EV-risk benchmark.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "해당국 정성 요약",
+      "category": "business",
+      "role": "context",
+      "value": "세계 최대·북미 베이스라인 자동차금융 시장(2025 신차 약 1,600만대, 금융침투 80%, 여신잔액 USD 1.6조). AA+/Aa1 국가신용·기축통화·외환 자유·외국인 100% 허용으로 개방성 최상위. 캡티브(GM·Ford·Toyota·Honda 약 50%)+은행계(Ally·Capital One·Chase·Wells Fargo 약 35%)+신협 공존. 연방(Fed·OCC·CFPB·FTC) + 약 50개 주별 면허·usury·DMV가 진입 복잡도. Equifax/Experian/TransUnion 3강 CB·ACH/FedNow 결제·전자서명·US GAAP CECL로 IT 인프라가 권역 베이스라인. EV(약 11%) 가속, UCC Art.9 self-help 회수로 회수 용이.",
+      "value_en": "The world's largest, North America-baseline auto-finance market (2025 new cars ~16M, finance penetration 80%, outstanding USD 1.6T). AA+/Aa1 sovereign credit, the reserve currency, free FX, and 100% foreign ownership make openness top-tier. Captive (GM·Ford·Toyota·Honda ~50%) + bank-led (Ally·Capital One·Chase·Wells Fargo ~35%) + credit-union coexistence. Federal (Fed·OCC·CFPB·FTC) + ~50-state licensing/usury/DMV drive entry complexity. The Equifax/Experian/TransUnion tri-bureau CB, ACH/FedNow payments, e-signature, and US GAAP CECL make IT infrastructure the regional baseline. EV (~11%) accelerates; UCC Art.9 self-help makes repossession easy.",
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "Federal Reserve, Experian, Cox Automotive, CFPB, S&P Global Mobility",
+      "source_en": "Federal Reserve, Experian, Cox Automotive, CFPB, S&P Global Mobility",
+      "insight": "규모·깊이·IT 정합성·회수 용이성에서 권역 베이스라인이자 최우호 환경이나 연방-주 이중규제·약 50개 주 면허 분산이 비용 드라이버. 핀테크·임베디드 금융 진입 또는 한국 OEM(현대·기아) 캡티브 연계 전략 유효.",
+      "insight_en": "The regional baseline and most favorable environment in scale, depth, IT fit, and recovery ease, but federal-state dual regulation and ~50-state licensing dispersion are cost drivers. A fintech/embedded-finance entry or a Korean OEM (Hyundai/Kia) captive linkage is a viable strategy.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "브랜드 Top10",
+      "category": "business",
+      "role": "context",
+      "value": [
+        "Ford",
+        "Toyota",
+        "Chevrolet (GM)",
+        "Honda",
+        "Hyundai",
+        "Kia",
+        "Nissan",
+        "Jeep (Stellantis)",
+        "GMC",
+        "Subaru"
+      ],
+      "context_type": "descriptive",
+      "tier": 2,
+      "source": "Cox Automotive / WardsAuto 2025 신차 판매 통계",
+      "source_en": "Cox Automotive / WardsAuto 2025 new-car sales statistics",
+      "insight": "Ford(F-150 픽업)·Toyota·Chevrolet 강세. 한국 브랜드(Hyundai 5위·Kia 6위) 합산 톱3급으로 점유 우수. 픽업·SUV 비중 매우 높아 평균가·잔가 모델에 차종 믹스 반영 필수.",
+      "insight_en": "Ford (F-150 pickup)·Toyota·Chevrolet lead. Korean brands (Hyundai #5·Kia #6) combine into a top-3-class share. Very high pickup/SUV mix requires reflecting vehicle mix in average-price/residual models.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "OEM 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "rank": 1,
+          "name": "General Motors (Chevrolet/GMC/Buick/Cadillac)",
+          "market_share": "16.5%"
+        },
+        {
+          "rank": 2,
+          "name": "Toyota",
+          "market_share": "15.0%"
+        },
+        {
+          "rank": 3,
+          "name": "Ford",
+          "market_share": "13.0%"
+        },
+        {
+          "rank": 4,
+          "name": "Hyundai-Kia",
+          "market_share": "10.8%"
+        },
+        {
+          "rank": 5,
+          "name": "Stellantis (Jeep/Ram/Dodge)",
+          "market_share": "8.5%"
+        }
+      ],
+      "context_type": "descriptive",
+      "tier": 2,
+      "source": "Cox Automotive / WardsAuto 2025 신차 판매",
+      "source_en": "Cox Automotive / WardsAuto 2025 new-car sales",
+      "insight": "GM·Toyota·Ford 톱3. 현대-기아 합산 약 10.8%로 4위 — 한국 OEM 합산 톱4 점유. 한국 OEM 캡티브(현대캐피탈) 강화 매력 — 진출 시너지 핵심. 픽업·SUV 비중 큼.",
+      "insight_en": "GM·Toyota·Ford top-3. Hyundai-Kia combine for ~10.8%, #4 — Korean OEMs hold a top-4 combined share. Attractive for strengthening the Korean OEM captive (Hyundai Capital) — a key entry synergy. High pickup/SUV mix.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "금융사 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "rank": 1,
+          "name": "Ally Financial",
+          "market_share": "약 9%"
+        },
+        {
+          "rank": 2,
+          "name": "Capital One Auto Finance",
+          "market_share": "약 8%"
+        },
+        {
+          "rank": 3,
+          "name": "Toyota Financial Services",
+          "market_share": "약 7%"
+        },
+        {
+          "rank": 4,
+          "name": "Chase Auto (JPMorgan)",
+          "market_share": "약 6%"
+        },
+        {
+          "rank": 5,
+          "name": "GM Financial",
+          "market_share": "약 6%"
+        }
+      ],
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "Experian 2025 / 은행·캡티브 공시 추정",
+      "source_en": "Experian 2025 / bank·captive disclosure estimate",
+      "insight": "Ally·Capital One 독립·은행계 양강 + 캡티브(Toyota·GM)·Chase 균형. 톱5 합산 약 36% — 캐나다(60%)보다 분산. 초대형 시장으로 EV·중고차·서브프라임·핀테크 진입 틈새 풍부.",
+      "insight_en": "Ally·Capital One lead among independents/banks, balanced with captives (Toyota·GM) and Chase. Top-5 combine for ~36% — more dispersed than Canada (60%). The mega-market leaves ample EV·used·subprime·fintech entry niches.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "경쟁사 리스트",
+      "category": "business",
+      "role": "context",
+      "value": [
+        "Ally Financial",
+        "Capital One Auto Finance",
+        "Toyota Financial Services",
+        "Chase Auto (JPMorgan)",
+        "GM Financial",
+        "Ford Credit",
+        "Wells Fargo Auto",
+        "Honda Financial Services",
+        "Santander Consumer USA",
+        "Hyundai Capital America (HCA)",
+        "Kia Motors Finance",
+        "Nissan Motor Acceptance",
+        "American Honda Finance",
+        "Bank of America Auto",
+        "US Bank Auto",
+        "Carvana / Bridgecrest"
+      ],
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "Experian, 업계 공시",
+      "source_en": "Experian, industry disclosures",
+      "insight": "독립계(Ally·Santander·Carvana)+은행계(Capital One·Chase·Wells Fargo)+캡티브(Toyota·GM·Ford·현대·기아) 혼재. 한국 Hyundai Capital America·Kia Finance 이미 진출 — 점유 강화·통합 운영 매력. 핀테크·중고차 디지털도 진입 옵션.",
+      "insight_en": "Mix of independents (Ally·Santander·Carvana) + banks (Capital One·Chase·Wells Fargo) + captives (Toyota·GM·Ford·Hyundai·Kia). Korean Hyundai Capital America and Kia Finance already present — attractive for share-strengthening and integrated operations. Fintech and used-car digital are also entry options.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "경쟁사 진출 형태",
+      "category": "business",
+      "role": "context",
+      "value": "OEM 캡티브(GM Financial·Ford Credit·Toyota Financial·Honda FS·Hyundai Capital·Kia Finance) + 은행계 자동차여신부문(Capital One·Chase·Wells Fargo·Bank of America) + 독립 여신사(Ally·Santander Consumer)·핀테크(Carvana/Bridgecrest). 비은행 여신회사 또는 ILC/은행 인가 형태",
+      "value_en": "OEM captives (GM Financial·Ford Credit·Toyota Financial·Honda FS·Hyundai Capital·Kia Finance) + bank auto-lending arms (Capital One·Chase·Wells Fargo·Bank of America) + independent lenders (Ally·Santander Consumer)·fintech (Carvana/Bridgecrest). As non-bank finance companies or ILC/bank-chartered entities.",
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "Experian, OCC, 업계",
+      "source_en": "Experian, OCC, industry",
+      "insight": "OEM 캡티브는 예금 미수취 여신회사로 진출(연방 인가 면제)·주별 면허. 한국 Hyundai Capital America·Kia Finance 선례. 진출 형태 유연하나 약 50개 주 면허·CFPB 감독 다층적.",
+      "insight_en": "OEM captives enter as non-deposit-taking finance companies (federal-charter exempt) with per-state licensing. The Korean Hyundai Capital America and Kia Finance precedents. Entry form is flexible but ~50-state licensing and CFPB oversight are layered.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "경쟁사 금리 범위",
+      "category": "business",
+      "role": "context",
+      "value": "신차 자동차대출 APR 평균 약 6~9% (캡티브 프로모 0~3.9% 한정), 리스 월납 USD 450~700, 중고차 APR 9~14%, 서브프라임 15%+. 군인 MLA 36% 상한",
+      "value_en": "New-car auto-loan APR averages ~6-9% (captive promos 0-3.9% only), lease monthly USD 450-700, used-car APR 9-14%, subprime 15%+. Military MLA 36% cap.",
+      "context_type": "descriptive",
+      "tier": 2,
+      "source": "Experian 2025, Edmunds, OEM 캡티브 프로모",
+      "source_en": "Experian 2025, Edmunds, OEM captive promos",
+      "insight": "표준 신차 APR 6~9%, 캡티브 프로모 0~3.9%, 서브프라임 15%+. Fed 인하로 하향 전망. 신용등급별 분산 큼 — 등급별 마진·서브프라임 리스크 정책 핵심. 한국 캡티브 프로모 경쟁력 확보 가능.",
+      "insight_en": "Standard new-car APR 6-9%, captive promos 0-3.9%, subprime 15%+. Trending down as the Fed eases. Wide dispersion by credit tier — tier-based margin and subprime-risk policy is key. Korean captives can secure promo competitiveness.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "평균 신차가격",
+      "category": "business",
+      "role": "context",
+      "value": "약 USD 48,000 (평균 거래가 ATP, 픽업·SUV·EV로 우상향)",
+      "value_en": "~USD 48,000 (average transaction price ATP, trending up with pickups·SUVs·EVs)",
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "Cox Automotive/Kelley Blue Book 2025 평균 거래가(ATP) 추정",
+      "source_en": "Cox Automotive/Kelley Blue Book 2025 average-transaction-price (ATP) estimate",
+      "insight": "평균 신차 거래가 약 USD 48k로 캐나다(USD 33k)·멕시코(USD 22.5k)·EU(€30k) 대비 가장 높음 — 픽업·SUV·EV·트림 상향 영향. 고가차 비중으로 여신 단가·잔가 익스포저 가장 큼.",
+      "insight_en": "Average new-car transaction price ~USD 48k — the highest versus Canada (USD 33k), Mexico (USD 22.5k), and the EU (€30k), driven by pickups·SUVs·EVs and trim upgrades. The high-value mix means the largest lending-ticket and residual exposure.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "규제기관 식별",
+      "category": "shared",
+      "role": "context",
+      "value": "Federal Reserve(중앙은행·은행 건전성) / OCC(통화감독청, 연방은행 인가) / CFPB(소비자금융보호국, 시장행위) / FTC(연방거래위, 불공정행위) / NCUA(신협 감독) / 주별 금융감독·DMV / NAIC·주 보험감독청(보험)",
+      "value_en": "Federal Reserve (central bank, bank prudential) / OCC (Office of the Comptroller of the Currency, federal bank charters) / CFPB (Consumer Financial Protection Bureau, market conduct) / FTC (Federal Trade Commission, unfair practices) / NCUA (credit-union supervision) / state financial regulators·DMV / NAIC·state insurance departments (insurance)",
+      "context_type": "descriptive",
+      "tier": 1,
+      "source": "Federal Reserve, OCC, CFPB, FTC, NCUA, NAIC 공식",
+      "source_en": "Federal Reserve, OCC, CFPB, FTC, NCUA, NAIC official",
+      "insight": "Fed(건전성)+OCC(인가)+CFPB(시장행위)+FTC(불공정)가 연방 감독, 신용은 FCRA(CFPB/FTC), 소비자신용 면허·DMV는 주별, 보험은 NAIC·주별. 연방-주 이중·약 50개 주 분산이 캐나다(13주)·멕시코(CNBV 단일)보다 복잡 — 다주 진출 시 컴플라이언스 매핑 필수. 베이스라인 규제 지형.",
+      "insight_en": "The Fed (prudential) + OCC (charters) + CFPB (market conduct) + FTC (unfairness) for federal supervision, credit under FCRA (CFPB/FTC), consumer-credit licensing/DMV per state, and insurance via NAIC/states. Federal-state dual and ~50-state dispersion is more complex than Canada (13 provinces) or Mexico (single CNBV) — compliance mapping essential for multi-state entry. The baseline regulatory landscape.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "context_type": "news",
+      "value": [
+        {
+          "news_category": "auto_market",
+          "headline": "미국 2025년 신차 판매 약 1,600만대로 회복, 평균 거래가 USD 48k 고착",
+          "headline_en": "US 2025 new-car sales recover to ~16M, average transaction price holds at ~USD 48k",
+          "so_what": "초대형 시장 회복 신호 — 금융침투 80% 기반 안정 수요. 고차량가로 여신 단가 큼. 한국 OEM(현대-기아) 톱4로 캡티브 강화 매력.",
+          "so_what_en": "Mega-market recovery signal — stable demand on 80% finance penetration. High vehicle prices mean large lending tickets. Korean OEMs (Hyundai-Kia) at #4 make captive strengthening attractive.",
+          "publisher": "Automotive News",
+          "pub_date": "2026-01-12",
+          "url": "https://www.autonews.com/..."
+        },
+        {
+          "news_category": "auto_market",
+          "headline": "미국 EV 신차 점유 11%대, IRA 세액공제 변동·Tesla 가격경쟁 변수",
+          "headline_en": "US EV new-car share ~11%, IRA tax-credit shifts and Tesla price competition as variables",
+          "so_what": "EV 잔가 압박 지속 — 리스 잔가·EV 전용 상품 정교화 필수. IRA 정책 변동 모니터링, 캡티브 진입 시 EV 보조 연계 기회.",
+          "so_what_en": "Continued EV residual pressure — lease residual and EV-specific products must be refined. Monitor IRA policy shifts; opportunity to link EV subsidies on captive entry.",
+          "publisher": "WardsAuto",
+          "pub_date": "2026-03-05",
+          "url": "https://www.wardsauto.com/..."
+        },
+        {
+          "news_category": "auto_finance",
+          "headline": "미국 자동차금융 Fed 인하 사이클로 APR 8%대 하향, 서브프라임 연체 상승 경계",
+          "headline_en": "US auto finance: APR falls to ~8% on the Fed easing cycle, subprime delinquency rise watched",
+          "so_what": "조달비용 인하로 마진 우호이나 서브프라임 연체 상승은 충당 부담 — 등급별 신용정책·CECL 충당 정교화 필요.",
+          "so_what_en": "Lower funding cost favors margins, but rising subprime delinquency adds provisioning burden — tier-based credit policy and CECL provisioning must be refined.",
+          "publisher": "Auto Finance News",
+          "pub_date": "2026-02-18",
+          "url": "https://www.autofinancenews.net/..."
+        },
+        {
+          "news_category": "credit_abs",
+          "headline": "미국 prime auto loan ABS 딜린퀀시 안정, 서브프라임 풀 60일+ 연체 상승세",
+          "headline_en": "US prime auto-loan ABS delinquency steady, subprime pools see rising 60+ day delinquency",
+          "so_what": "프라임 우량·서브프라임 약세 양극화 — 진입 초기 프라임 중심 풀 구성·서브프라임 보수 정책 권장. CECL 기대손실 반영.",
+          "so_what_en": "Prime strength vs subprime weakness polarization — recommend a prime-centric pool at entry with conservative subprime policy. Reflect in CECL expected loss.",
+          "publisher": "Moody's / S&P",
+          "pub_date": "2026-04-08",
+          "url": "https://www.spglobal.com/..."
+        },
+        {
+          "news_category": "geopolitical",
+          "headline": "미국 수입차 관세 정책 변동, USMCA 재검토 시그널로 차량가·공급망 변수",
+          "headline_en": "US import-tariff policy shifts and USMCA review signals — variables for vehicle prices and supply chains",
+          "so_what": "관세는 차량가 상승·공급망 영향 — 자동차금융 사업 자체 영향은 제한적이나 차량가 변동에 LTV·잔가 가정 보수화 권장.",
+          "so_what_en": "Tariffs raise vehicle prices and affect supply chains — direct impact on auto finance is limited, but recommend conservative LTV/residual assumptions for price swings.",
+          "publisher": "Reuters",
+          "pub_date": "2026-05-22",
+          "url": "https://www.reuters.com/..."
+        },
+        {
+          "news_category": "finance",
+          "headline": "Federal Reserve 2025말 정책금리 4.25~4.50%, 2026 추가 인하 시그널",
+          "headline_en": "Federal Reserve policy rate 4.25-4.50% at end-2025, signaling further 2026 cuts",
+          "so_what": "금리 하향 환경 — 조달비용 우호이나 자동차여신 마진 압축. 펀딩 효율·ABS 구조 설계 중요.",
+          "so_what_en": "A declining-rate environment — favorable funding cost but compresses auto-lending margin. Funding efficiency and ABS structure design matter.",
+          "publisher": "Wall Street Journal",
+          "pub_date": "2025-12-18",
+          "url": "https://www.wsj.com/..."
+        }
+      ],
+      "tier": 3,
+      "source": "화이트리스트(Automotive News·WardsAuto·Auto Finance News·Moody's/S&P·Reuters·Wall Street Journal)",
+      "source_en": "Whitelist (Automotive News·WardsAuto·Auto Finance News·Moody's/S&P·Reuters·Wall Street Journal)",
+      "insight": "초대형·안정·고침투·EV 가속·회수 용이·저금리 진입 환경이 우호 vs 마진 압박·서브프라임 연체·관세 변수·EV 잔가 리스크. 프라임 중심 진입 + EV/플릿 상품 정교화 + 한국 OEM 캡티브 연계 권장. 권역 베이스라인 시장.",
+      "insight_en": "A supportive environment of mega-scale, stability, high penetration, EV acceleration, easy recovery, and falling rates vs margin pressure, subprime delinquency, tariff variables, and EV residual risk. Recommend a prime-centric entry + refining EV/fleet products + linking with Korean OEM captives. The regional baseline market.",
+      "insight_ai_generated": true
+    }
+  ]
+}

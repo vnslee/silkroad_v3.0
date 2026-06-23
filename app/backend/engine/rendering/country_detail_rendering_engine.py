@@ -389,6 +389,29 @@ def _latest_report(code):
         return None
 
 
+# 법인종류 코드 → (라벨, 배경, 글자색). 미지정은 None.
+_ENTITY_TYPE = {
+    "SA": ("단독법인", "#E9F3EE", "#4F8A6D"),
+    "JV": ("JV", "#FBF0E6", "#C08A2E"),
+}
+
+
+def _entity_cell(t):
+    """법인종류(SA/JV) → 배지 HTML. 비면 빈 문자열."""
+    label, bg, fg = _ENTITY_TYPE.get((t or "").upper(), (None, None, None))
+    if not label:
+        return ""
+    return rre.badge(label, bg, fg)
+
+
+def _products_cell(products):
+    """관리상품 리스트 → 작은 칩 배지 묶음. 비면 '—'."""
+    if not products:
+        return '<span class="font-body-sm text-[13px] text-outline">—</span>'
+    return '<div class="flex flex-wrap gap-1 justify-end">' + "".join(
+        rre.badge(p, "#EAF0F8", "#2C4C86") for p in products) + '</div>'
+
+
 def entry_info(data):
     code = data.get("code", "")
     region = data.get("region", "")
@@ -408,38 +431,53 @@ def entry_info(data):
     # 진출 상태
     row("진출 상태", _status_badge(status_text))
 
-    # 시스템 결정 + IT 유사도 (보고서 있으면)
-    if report:
-        tabs = report.get("tabs", {})
-        decision = tabs.get("tab_1_2_decision", {})
-        rec = decision.get("recommendation")
-        rec_text = rec.get("ko") if isinstance(rec, dict) else rec
-        if rec_text:
-            row("시스템 결정",
-                f'<span class="font-body-sm text-[13px] font-semibold text-secondary">{rre.esc(rec_text)}</span>')
-        sim = tabs.get("tab_1_1_similarity", {}).get("overall_score")
-        if isinstance(sim, (int, float)):
-            row("IT 유사도",
-                f'<span class="font-mono text-[16px] font-bold text-secondary">{sim:.1f}'
-                '<span class="font-body-sm text-[12px] text-outline font-normal"> / 100</span></span>')
-
-    # 권역 베이스라인 국가
-    base_code = (internal.get("region_baselines", {}) or {}).get(region)
-    if base_code:
-        base_ko = _country_ko(base_code)
-        flag = ""
-        if len(base_code) == 2 and base_code.isalpha():
-            flag = f'<span class="mr-1">{_flag_emoji(base_code)}</span>'
-        row("권역 베이스라인",
-            f'<span class="font-body-sm text-[13px] font-semibold">{flag}{rre.esc(base_ko)} ({rre.esc(base_code)})</span>')
-
-    # 지원 방식 권고(있으면) — overall_insight 마지막 문장의 전략 힌트는 생략, 베이스라인 솔루션 표시
-    if base_code:
-        sol = (internal.get("country_assets", {}) or {}).get(base_code, {}).get("solution")
+    if status_text == "운영중":
+        # 운영중 — 추천(베이스라인/기준 솔루션) 대신 실제 자체 운영 정보를 표시.
+        asset = (internal.get("country_assets", {}) or {}).get(code, {})
+        sol = asset.get("solution")
         if sol:
-            rows[-1] = rows[-1]  # noop
-            row("기준 솔루션",
-                f'<span class="font-body-sm text-[13px] font-semibold">{rre.esc(sol)}</span>', border=False)
+            row("운영 솔루션",
+                f'<span class="font-body-sm text-[13px] font-semibold">{rre.esc(sol)}</span>')
+        ent = _entity_cell(asset.get("type"))
+        if ent:
+            row("법인종류", ent)
+        products = asset.get("products") or []
+        if products:
+            row("관리상품", _products_cell(products))
+        since = asset.get("since")
+        if since:
+            row("진출연도",
+                f'<span class="font-body-sm text-[13px] font-semibold">{rre.esc(since)}</span>')
+    else:
+        # 미진출/준비중 등 — 진출 추천 정보(시스템 결정·IT 유사도·베이스라인·기준 솔루션).
+        if report:
+            tabs = report.get("tabs", {})
+            decision = tabs.get("tab_1_2_decision", {})
+            rec = decision.get("recommendation")
+            rec_text = rec.get("ko") if isinstance(rec, dict) else rec
+            if rec_text:
+                row("시스템 결정",
+                    f'<span class="font-body-sm text-[13px] font-semibold text-secondary">{rre.esc(rec_text)}</span>')
+            sim = tabs.get("tab_1_1_similarity", {}).get("overall_score")
+            if isinstance(sim, (int, float)):
+                row("IT 유사도",
+                    f'<span class="font-mono text-[16px] font-bold text-secondary">{sim:.1f}'
+                    '<span class="font-body-sm text-[12px] text-outline font-normal"> / 100</span></span>')
+
+        # 권역 베이스라인 국가
+        base_code = (internal.get("region_baselines", {}) or {}).get(region)
+        if base_code:
+            base_ko = _country_ko(base_code)
+            flag = ""
+            if len(base_code) == 2 and base_code.isalpha():
+                flag = f'<span class="mr-1">{_flag_emoji(base_code)}</span>'
+            row("권역 베이스라인",
+                f'<span class="font-body-sm text-[13px] font-semibold">{flag}{rre.esc(base_ko)} ({rre.esc(base_code)})</span>')
+            # 베이스라인 솔루션을 기준 솔루션으로 표시
+            sol = (internal.get("country_assets", {}) or {}).get(base_code, {}).get("solution")
+            if sol:
+                row("기준 솔루션",
+                    f'<span class="font-body-sm text-[13px] font-semibold">{rre.esc(sol)}</span>', border=False)
     if rows:
         # 마지막 행 보더 제거
         rows[-1] = rows[-1].replace(" border-b border-surface-border", "")
@@ -463,23 +501,6 @@ def _flag_emoji(code):
     if len(code) != 2 or not code.isalpha():
         return ""
     return "".join(chr(0x1F1E6 + ord(c) - ord("A")) for c in code)
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 보고서 생성 CTA — 다크 카드 (mockup)
-# ─────────────────────────────────────────────────────────────────────────────
-def report_cta(data):
-    ko = data.get("country_ko") or data.get("country") or data.get("code", "")
-    return (
-        '<div class="bg-primary rounded-2xl p-lg text-white">'
-        '<div class="font-headline-md text-[15px] font-bold">진단 보고서 생성</div>'
-        f'<div class="font-body-sm text-[12.5px] mt-[7px] leading-[1.5]" style="color:#AEB6C4">'
-        f'현재 룰셋 기준으로 {rre.esc(ko)} 정밀 진단 보고서를 생성합니다.</div>'
-        '<div class="mt-[15px] rounded-[11px] p-[11px] text-center font-body-sm text-[13.5px] font-semibold cursor-pointer" '
-        'style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)">기존 보고서 보기</div>'
-        '<div class="mt-[9px] rounded-[11px] p-[13px] text-center font-body-md text-[14px] font-bold cursor-pointer" '
-        'style="background:#3F6CB4;box-shadow:0 6px 18px rgba(63,108,180,.4)">새 보고서 생성 →</div>'
-        '</div>')
 
 
 def flag_cell(data):
@@ -511,8 +532,7 @@ def render_html(data):
             .replace("{{MARKET_CHART}}", market_chart(data))
             .replace("{{COMPETITORS}}", competitors_table(data))
             .replace("{{AI_INSIGHTS}}", ai_insights(data))
-            .replace("{{ENTRY_INFO}}", entry_info(data))
-            .replace("{{REPORT_CTA}}", report_cta(data)))
+            .replace("{{ENTRY_INFO}}", entry_info(data)))
 
 
 # ─────────────────────────────────────────────────────────────────────────────
