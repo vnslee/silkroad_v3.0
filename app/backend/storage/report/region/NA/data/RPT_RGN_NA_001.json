@@ -1,0 +1,1595 @@
+{
+  "report_id": "RPT_RGN_NA_001",
+  "report_type": "type2_region",
+  "title": "North America 권역 퀵윈 순위 보고서",
+  "target": {
+    "region": "NA",
+    "evaluated_countries": [
+      "US",
+      "CA",
+      "MX",
+      "PR"
+    ],
+    "baseline_country": "US"
+  },
+  "generated_at": "2026-06-22T19:11:48.615993",
+  "generated_by": "engine",
+  "data_snapshot_id": "2026-06-22T16:00:00+09:00",
+  "config_version": "1.3",
+  "engine_version": "v1.0",
+  "schema_version": "1.1",
+  "fx": {
+    "base": "KRW",
+    "as_of": "2026-06-01",
+    "rates": {
+      "KRW": 1.0,
+      "EUR": 1450.0,
+      "PLN": 330.0,
+      "GBP": 1680.0,
+      "USD": 1320.0,
+      "CZK": 58.0,
+      "HUF": 3.8,
+      "AUD": 880.0
+    },
+    "note": "기준통화=KRW. 각 통화 1단위당 KRW 환산율. 관리자가 입력하며 스냅샷에 고정됨."
+  },
+  "region_meta": {
+    "region": "North America",
+    "region_ko": "북미권역",
+    "code": "NA",
+    "fetched_at": "2026-06-22T16:00:00+09:00",
+    "fetched_by": "aggregator"
+  },
+  "data_quality": {
+    "total_countries": 4,
+    "countries": [
+      "US",
+      "CA",
+      "MX",
+      "PR"
+    ],
+    "timeseries_coverage_avg": 65.3061224489796,
+    "source_tiers": {
+      "tier1": 74,
+      "tier2": 48,
+      "tier3": 74,
+      "tier4": 0
+    },
+    "country_completeness": {
+      "US": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "CA": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "MX": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "PR": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      }
+    },
+    "critical_gaps": [],
+    "readiness": {
+      "can_generate": true,
+      "tabs": {
+        "2-0": {
+          "name": "Kill Switch Filter",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "2-1": {
+          "name": "Business Attractiveness",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "2-2": {
+          "name": "IT/Speed-to-Market Similarity",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "2-3": {
+          "name": "Market Background",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        }
+      }
+    }
+  },
+  "tabs": {
+    "tab_2_0_killswitch": {
+      "nature": "status_matrix",
+      "source_flag": "CALC",
+      "gates": [
+        "외국인 지분 한도",
+        "외환·배당 송금 자유도",
+        "데이터 현지화 의무",
+        "국가신용등급"
+      ],
+      "countries": [
+        {
+          "country": "US",
+          "country_name": "United States",
+          "pass": true,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "금융업 100% 허용. CFIUS(외국인투자심의위원회) 안보심사 대상 가능하나 자동차금융은 통상 비해당. 은행 진출은 OCC/Fed 인가",
+              "source": "CFIUS(FIRRMA), National Bank Act, OCC/Federal Reserve",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "PASS",
+              "value": "외환 완전 자유, 자본통제 없음. 배당 30%(조약 10%)·portfolio interest 면제. 기축통화국으로 송금 자유도 최상",
+              "source": "U.S. Treasury, IRC, 한·미 조세조약",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "연방 차원 강제 현지화 의무 없음. 부문별 규제(GLBA 금융프라이버시·FCRA 신용정보) + 주별(CCPA/CPRA 등) 소비자프라이버시. 국외이전 자유",
+              "source": "GLBA, FCRA, CCPA/CPRA(캘리포니아) 등 주별 프라이버시법",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "PASS",
+              "value": "AA+ (S&P) / Aaa (Moody's) / AA+ (Fitch), 안정적",
+              "source": "S&P·Moody's·Fitch 국가신용등급 (2025)",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        },
+        {
+          "country": "CA",
+          "country_name": "Canada",
+          "pass": true,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "금융업 100% 허용. Investment Canada Act(ICA) 심사 임계 초과 시 'net benefit' 심사. 은행은 Bank Act(OSFI) 인가 필요",
+              "source": "Investment Canada Act, Bank Act, OSFI 가이드",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "PASS",
+              "value": "외환 완전 자유, 자본통제 없음. 배당 25%(조약 5%)·비특수관계 이자 면제. USMCA로 미국 송금 자유도 우수",
+              "source": "Bank of Canada, Income Tax Act, 한·캐 조세조약, USMCA",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "PIPEDA(연방 개인정보보호법) 적용. 강제 현지화 의무 없음(연방). 단 Quebec Law 25(2023~)·BC/AB 공공부문 일부 제한. 국외이전은 동의/계약",
+              "source": "PIPEDA, Quebec Law 25(2023), OPC(연방 개인정보보호위원회)",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "PASS",
+              "value": "AAA (S&P) / Aaa (Moody's) / AA+ (Fitch), 안정적",
+              "source": "S&P·Moody's·Fitch 국가신용등급 (2025)",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        },
+        {
+          "country": "MX",
+          "country_name": "Mexico",
+          "pass": true,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "금융업 100% 허용 (NAFTA→USMCA 자유화), 일반 산업도 대부분 100%. 은행·SOFOM은 CNBV/SHCP 사전 인가 필요",
+              "source": "Ley de Inversión Extranjera, USMCA, CNBV 가이드",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "PASS",
+              "value": "외환 자유 (Banxico 보고 의무 일부), 배당 10%·이자 4.9%(은행/금융기관), USMCA로 미국 송금 자유도 우수",
+              "source": "Ley Monetaria, Banxico 외환 가이드, USMCA",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "LFPDPPP(개인정보보호법) 적용. 강제 현지화 의무 없음 — 국제이전은 동의/계약/적정성",
+              "source": "LFPDPPP 2010, INAI(국립정보투명성청)",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "PASS",
+              "value": "BBB (S&P, 2025) / Baa2 (Moody's, 2024 하향) / BBB- (Fitch), 안정적/부정적",
+              "source": "S&P·Moody's·Fitch 국가신용등급 (2025); Moody's 2024 부정적 전망",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        },
+        {
+          "country": "PR",
+          "country_name": "Puerto Rico",
+          "pass": false,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "100% 허용 (미국 자치령 — 외국인 투자 제한 없음, 연방·PR 법 모두 내국민 대우)",
+              "source": "미 연방법 / PR 상법, OCIF 가이드",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "PASS",
+              "value": "USD 사용·미국 통화권 — 외환통제 없음, 송금 완전 자유 (원천세는 PR 세법 적용)",
+              "source": "미 연방 통화법, PR Internal Revenue Code",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "강제 현지화 없음 — 미 연방 GLBA·FCRA + PR Act 111(데이터 침해 통지법) 적용, 국외 이전 자유",
+              "source": "미 GLBA·FCRA, PR Act 111-2005 (Citizen Information on Data Banks Security Act)",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "FLAG",
+              "value": "주권 신용등급 별도 부재(미국 자치령). PR 정부 일반채(GO)는 PROMESA 채무 구조조정(2022 완료) 후 회복 중 — 준국가 신용 FLAG",
+              "source": "PROMESA(2016) Oversight Board, S&P/Moody's PR GO 등급, 2022 Plan of Adjustment",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        }
+      ],
+      "passed": [
+        "US",
+        "CA",
+        "MX"
+      ],
+      "failed": [
+        "PR"
+      ],
+      "passed_count": 3,
+      "failed_count": 1
+    },
+    "tab_2_1_attractiveness": {
+      "nature": "ranking",
+      "source_flag": "CALC",
+      "weights": {
+        "GDP 성장률": 0.2,
+        "자동차 판매대수": 0.15,
+        "시장규모": 0.15,
+        "오토금융 성장률(CAGR)": 0.15,
+        "금융 이용률": 0.15,
+        "금융이용유형": 0.1,
+        "경쟁강도": 0.1
+      },
+      "tier_weights": {
+        "tier1": 1.0,
+        "tier2": 0.85,
+        "tier3": 0.7,
+        "tier4": 0.5,
+        "_note": "출처 신뢰도(Tier)별 점수 가중 배수. Tier1=1.0 고정. Tier2~4는 관리자가 조정 가능. 매력도·IT 유사도 산식에서 항목 가중치에 곱해 effective weight = item_weight × tier_multiplier 로 사용."
+      },
+      "axes": {
+        "GDP 성장률": {
+          "US": 100.0,
+          "CA": 57.9,
+          "MX": 52.6,
+          "PR": 0.0
+        },
+        "자동차 판매대수": {
+          "US": 100.0,
+          "CA": 11.2,
+          "MX": 9.0,
+          "PR": 0.0
+        },
+        "시장규모": {
+          "US": 100.0,
+          "CA": 6.4,
+          "MX": 2.0,
+          "PR": 0.0
+        },
+        "오토금융 성장률(CAGR)": {
+          "US": 0.0,
+          "CA": 20.0,
+          "MX": 100.0,
+          "PR": 38.3
+        },
+        "금융 이용률": {
+          "US": 88.2,
+          "CA": 100.0,
+          "MX": 0.0,
+          "PR": 100.0
+        },
+        "금융이용유형": {
+          "US": 90.9,
+          "CA": 100.0,
+          "MX": 0.0,
+          "PR": 100.0
+        },
+        "경쟁강도": {
+          "US": 50.0,
+          "CA": 25.0,
+          "MX": 0.0,
+          "PR": 100.0
+        }
+      },
+      "countries": [
+        {
+          "country": "US",
+          "country_name": "United States",
+          "attractiveness_score": 79.9,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 2.4,
+              "normalized": 100.0,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 20.0
+            },
+            "자동차 판매대수": {
+              "raw_value": 16000000.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 12.75
+            },
+            "시장규모": {
+              "raw_value": 1450000.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 10.5
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 3.8,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 0.0
+            },
+            "금융 이용률": {
+              "raw_value": 80.0,
+              "normalized": 88.2,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 9.26
+            },
+            "금융이용유형": {
+              "raw_value": 80.0,
+              "normalized": 90.9,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 7.73
+            },
+            "경쟁강도": {
+              "raw_value": 50.0,
+              "normalized": 50.0,
+              "weight": 0.1,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.07,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 3.5
+            }
+          },
+          "rank": 1
+        },
+        {
+          "country": "CA",
+          "country_name": "Canada",
+          "attractiveness_score": 45.8,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 1.6,
+              "normalized": 57.9,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 11.58
+            },
+            "자동차 판매대수": {
+              "raw_value": 1880000.0,
+              "normalized": 11.2,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 1.43
+            },
+            "시장규모": {
+              "raw_value": 95000.0,
+              "normalized": 6.4,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 0.67
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 5.0,
+              "normalized": 20.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 2.1
+            },
+            "금융 이용률": {
+              "raw_value": 82.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 10.5
+            },
+            "금융이용유형": {
+              "raw_value": 82.0,
+              "normalized": 100.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 8.5
+            },
+            "경쟁강도": {
+              "raw_value": 55.0,
+              "normalized": 25.0,
+              "weight": 0.1,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.07,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 1.75
+            }
+          },
+          "rank": 2
+        },
+        {
+          "country": "MX",
+          "country_name": "Mexico",
+          "attractiveness_score": 28.1,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 1.5,
+              "normalized": 52.6,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 10.52
+            },
+            "자동차 판매대수": {
+              "raw_value": 1530000.0,
+              "normalized": 9.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 1.15
+            },
+            "시장규모": {
+              "raw_value": 32000.0,
+              "normalized": 2.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 0.21
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 9.8,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 10.5
+            },
+            "금융 이용률": {
+              "raw_value": 65.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 0.0
+            },
+            "금융이용유형": {
+              "raw_value": 60.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 0.0
+            },
+            "경쟁강도": {
+              "raw_value": 60.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.07,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 0.0
+            }
+          },
+          "rank": 4
+        },
+        {
+          "country": "PR",
+          "country_name": "Puerto Rico",
+          "attractiveness_score": 37.6,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 0.5,
+              "normalized": 0.0,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 0.0
+            },
+            "자동차 판매대수": {
+              "raw_value": 102000.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 0.0
+            },
+            "시장규모": {
+              "raw_value": 2600.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 0.0
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 6.1,
+              "normalized": 38.3,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 4.02
+            },
+            "금융 이용률": {
+              "raw_value": 82.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 10.5
+            },
+            "금융이용유형": {
+              "raw_value": 82.0,
+              "normalized": 100.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 8.5
+            },
+            "경쟁강도": {
+              "raw_value": 40.0,
+              "normalized": 100.0,
+              "weight": 0.1,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.07,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 7.0
+            }
+          },
+          "rank": 3
+        }
+      ],
+      "ranking": [
+        {
+          "rank": 1,
+          "country": "US",
+          "score": 79.9
+        },
+        {
+          "rank": 2,
+          "country": "CA",
+          "score": 45.8
+        },
+        {
+          "rank": 3,
+          "country": "PR",
+          "score": 37.6
+        },
+        {
+          "rank": 4,
+          "country": "MX",
+          "score": 28.1
+        }
+      ],
+      "method": "min-max normalize per axis → effective weight = item_weight × tier_multiplier → weighted average. config: values.biz_attractiveness × tier_weights."
+    },
+    "tab_2_2_it_similarity": {
+      "nature": "score_multiaxis",
+      "source_flag": "CALC",
+      "baseline_country": "US",
+      "weights": {
+        "솔루션 유형": 0.3,
+        "디지털 채널 성숙도": 0.25,
+        "라이선스 종류": 0.2,
+        "데이터현지화": 0.15,
+        "차량회수 절차": 0.1
+      },
+      "tier_weights": {
+        "tier1": 1.0,
+        "tier2": 0.85,
+        "tier3": 0.7,
+        "tier4": 0.5,
+        "_note": "출처 신뢰도(Tier)별 점수 가중 배수. Tier1=1.0 고정. Tier2~4는 관리자가 조정 가능. 매력도·IT 유사도 산식에서 항목 가중치에 곱해 effective weight = item_weight × tier_multiplier 로 사용."
+      },
+      "countries": [
+        {
+          "country": "US",
+          "country_name": "United States",
+          "it_similarity_raw": 98.3,
+          "it_similarity_band": 100,
+          "is_baseline": true,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "글로벌 패키지(defi·CGI) + 대형 은행계 자체 코어(Ally·Chase·Capital One) + 캡티브 자체 시스템(GM Financial·Ford Credit·Toyota Financial), SaaS 전환 진행",
+              "baseline_value": "글로벌 패키지(defi·CGI) + 대형 은행계 자체 코어(Ally·Chase·Capital One) + 캡티브 자체 시스템(GM Financial·Ford Credit·Toyota Financial), SaaS 전환 진행",
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.2125,
+              "target_value": 5,
+              "baseline_value": 5,
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "target_value": "소비자/B2B 자동차금융=비은행 여신회사(finance company) 형태로 연방 은행인가 불필요, 주별 sales finance/consumer lender 라이선스만 / 은행 인가(OCC national bank, ILC 등)는 별도 옵션",
+              "baseline_value": "소비자/B2B 자동차금융=비은행 여신회사(finance company) 형태로 연방 은행인가 불필요, 주별 sales finance/consumer lender 라이선스만 / 은행 인가(OCC national bank, ILC 등)는 별도 옵션",
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "연방 차원 강제 현지화 의무 없음. 부문별 규제(GLBA 금융프라이버시·FCRA 신용정보) + 주별(CCPA/CPRA 등) 소비자프라이버시. 국외이전 자유",
+              "baseline_value": "연방 차원 강제 현지화 의무 없음. 부문별 규제(GLBA 금융프라이버시·FCRA 신용정보) + 주별(CCPA/CPRA 등) 소비자프라이버시. 국외이전 자유",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 4,
+              "baseline_value": 4,
+              "score_raw": 100.0,
+              "score_band": 100
+            }
+          }
+        },
+        {
+          "country": "CA",
+          "country_name": "Canada",
+          "it_similarity_raw": 72.9,
+          "it_similarity_band": 70,
+          "is_baseline": false,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "글로벌 패키지 + 은행계 자체 코어(RBC·TD·Scotiabank) + 캡티브 자체 시스템(북미 공유)",
+              "baseline_value": "글로벌 패키지(defi·CGI) + 대형 은행계 자체 코어(Ally·Chase·Capital One) + 캡티브 자체 시스템(GM Financial·Ford Credit·Toyota Financial), SaaS 전환 진행",
+              "score_raw": 46.9,
+              "score_band": 50
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.2125,
+              "target_value": 5,
+              "baseline_value": 5,
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "target_value": "소비자/B2B 자동차금융=비은행 여신회사(finance company) 형태로 OSFI 건전성 인가 불필요(예금 미수취 시), 주별 소비자신용 등록·면허만 / 은행 인가(OSFI, 자본 CAD 5M+)는 별도 옵션",
+              "baseline_value": "소비자/B2B 자동차금융=비은행 여신회사(finance company) 형태로 연방 은행인가 불필요, 주별 sales finance/consumer lender 라이선스만 / 은행 인가(OCC national bank, ILC 등)는 별도 옵션",
+              "score_raw": 55.6,
+              "score_band": 60
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "PIPEDA(연방 개인정보보호법) 적용. 강제 현지화 의무 없음(연방). 단 Quebec Law 25(2023~)·BC/AB 공공부문 일부 제한. 국외이전은 동의/계약",
+              "baseline_value": "연방 차원 강제 현지화 의무 없음. 부문별 규제(GLBA 금융프라이버시·FCRA 신용정보) + 주별(CCPA/CPRA 등) 소비자프라이버시. 국외이전 자유",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 3,
+              "baseline_value": 4,
+              "score_raw": 80.0,
+              "score_band": 80
+            }
+          },
+          "rank": 1
+        },
+        {
+          "country": "MX",
+          "country_name": "Mexico",
+          "it_similarity_raw": 64.7,
+          "it_similarity_band": 60,
+          "is_baseline": false,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "글로벌 패키지 + 은행계 자체 코어(BBVA·Santander·Banorte) + 캡티브 자체 시스템",
+              "baseline_value": "글로벌 패키지(defi·CGI) + 대형 은행계 자체 코어(Ally·Chase·Capital One) + 캡티브 자체 시스템(GM Financial·Ford Credit·Toyota Financial), SaaS 전환 진행",
+              "score_raw": 48.2,
+              "score_band": 50
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.2125,
+              "target_value": 4,
+              "baseline_value": 5,
+              "score_raw": 80.0,
+              "score_band": 80
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "target_value": "소비자/B2B 자동차금융=SOFOM ENR(비규제, CONDUSEF 등록만) 또는 SOFOM ER(CNBV 인가, 그룹 계열일 때) / 은행 인가(자본 USD 90M+)는 별도 옵션",
+              "baseline_value": "소비자/B2B 자동차금융=비은행 여신회사(finance company) 형태로 연방 은행인가 불필요, 주별 sales finance/consumer lender 라이선스만 / 은행 인가(OCC national bank, ILC 등)는 별도 옵션",
+              "score_raw": 40.5,
+              "score_band": 40
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "LFPDPPP(개인정보보호법) 적용. 강제 현지화 의무 없음 — 국제이전은 동의/계약/적정성",
+              "baseline_value": "연방 차원 강제 현지화 의무 없음. 부문별 규제(GLBA 금융프라이버시·FCRA 신용정보) + 주별(CCPA/CPRA 등) 소비자프라이버시. 국외이전 자유",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 3,
+              "baseline_value": 4,
+              "score_raw": 80.0,
+              "score_band": 80
+            }
+          },
+          "rank": 2
+        },
+        {
+          "country": "PR",
+          "country_name": "Puerto Rico",
+          "it_similarity_raw": 64.5,
+          "it_similarity_band": 60,
+          "is_baseline": false,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "미국 패키지 + 은행계 자체 코어(Banco Popular) + 캡티브 본토 시스템 직접 연동",
+              "baseline_value": "글로벌 패키지(defi·CGI) + 대형 은행계 자체 코어(Ally·Chase·Capital One) + 캡티브 자체 시스템(GM Financial·Ford Credit·Toyota Financial), SaaS 전환 진행",
+              "score_raw": 43.9,
+              "score_band": 40
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.2125,
+              "target_value": 4,
+              "baseline_value": 5,
+              "score_raw": 80.0,
+              "score_band": 80
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "target_value": "개인 신차 금융=OCIF 'Financing Company' 라이선스(인가)+연방 Reg Z 준수, B2B 리스=상업금융 등록(경량). 연방+현지 이중 체제",
+              "baseline_value": "소비자/B2B 자동차금융=비은행 여신회사(finance company) 형태로 연방 은행인가 불필요, 주별 sales finance/consumer lender 라이선스만 / 은행 인가(OCC national bank, ILC 등)는 별도 옵션",
+              "score_raw": 35.3,
+              "score_band": 40
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "강제 현지화 없음 — 미 연방 GLBA·FCRA + PR Act 111(데이터 침해 통지법) 적용, 국외 이전 자유",
+              "baseline_value": "연방 차원 강제 현지화 의무 없음. 부문별 규제(GLBA 금융프라이버시·FCRA 신용정보) + 주별(CCPA/CPRA 등) 소비자프라이버시. 국외이전 자유",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 4,
+              "baseline_value": 4,
+              "score_raw": 100.0,
+              "score_band": 100
+            }
+          },
+          "rank": 3
+        }
+      ],
+      "ranking": [
+        {
+          "rank": 1,
+          "country": "CA",
+          "score_band": 70
+        },
+        {
+          "rank": 2,
+          "country": "MX",
+          "score_band": 60
+        },
+        {
+          "rank": 3,
+          "country": "PR",
+          "score_band": 60
+        }
+      ],
+      "method": "축별 raw = 수치(100−|Δ|×20) / 범주(텍스트 Jaccard 30+J×65) / gate(동일=90·한쪽 PASS=50) → effective weight = item_weight × tier_multiplier → 가중평균 raw → 10점 구간 반올림.",
+      "note": "10점 구간 표기. 소수점·1점 단위 비교 금지(spec). 동률 시 raw로 타이브레이크. Tier 가중은 대상국 데이터 신뢰도 기준."
+    },
+    "tab_2_3_market_background": {
+      "nature": "ranking",
+      "source_flag": "EXT",
+      "countries": [
+        {
+          "country": "US",
+          "country_name": "United States",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "General Motors (Chevrolet/GMC/Buick/Cadillac)",
+              "market_share": "16.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Toyota",
+              "market_share": "15.0%"
+            },
+            {
+              "rank": 3,
+              "name": "Ford",
+              "market_share": "13.0%"
+            },
+            {
+              "rank": 4,
+              "name": "Hyundai-Kia",
+              "market_share": "11.0%"
+            },
+            {
+              "rank": 5,
+              "name": "Stellantis",
+              "market_share": "8.5%"
+            }
+          ],
+          "brand_top10": [
+            "Toyota",
+            "Ford",
+            "Chevrolet (GM)",
+            "Honda",
+            "Nissan",
+            "Hyundai",
+            "Kia",
+            "Jeep (Stellantis)",
+            "Ram (Stellantis)",
+            "Tesla"
+          ],
+          "purchase_pattern": 80,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "Toyota Financial Services",
+            "GM Financial",
+            "Ally Financial",
+            "Capital One Auto Finance",
+            "Chase Auto",
+            "Ford Credit",
+            "Honda Financial Services",
+            "Wells Fargo Auto",
+            "Nissan Motor Acceptance",
+            "Hyundai Capital America (HCA)",
+            "Kia Motors Finance",
+            "American Honda Finance",
+            "Santander Consumer USA",
+            "World Omni / Southeast Toyota",
+            "Bank of America Auto",
+            "Carvana / Bridgecrest"
+          ],
+          "competitor_entry_form": "OEM 캡티브(Toyota Financial·GM Financial·Ford Credit·Honda FS·Hyundai Capital·Kia Finance) + 은행계 자동차여신부문(Ally·Chase·Capital One·Wells Fargo) + 독립 여신사(Santander Consumer·Carvana/Bridgecrest). 비은행 여신회사(finance company) 또는 은행/ILC 인가 형태",
+          "competitor_rates": "신차 자동차대출 APR 평균 약 6~9% (캡티브 프로모 0~3.9% 한정), 리스 월납 USD 450~750, 중고차 APR 9~14%(서브프라임 더 높음). 연방 일률 상한 없음",
+          "avg_new_car_price": "약 USD 48,000 (평균 거래가 ATP, 픽업·SUV·EV로 우상향)",
+          "qualitative_summary": "세계 최대 자동차금융 시장(자동차여신 잔액 약 USD 1.5T+, 2025 신차 약 1,600만대, 금융침투 약 80%). AA+/Aaa 국가신용·기축통화 USD·외환 완전자유·외국인 100% 허용으로 안정성·송금 최상위. 캡티브(GM Financial·Ford Credit·Toyota Financial 등 약 50%)+은행계(Ally·Chase·Capital One·Wells Fargo 약 35%)+크레딧유니온(약 15%) 다층 구조. 연방(CFPB·OCC·Fed) + 50개 주별 sales finance 라이선스·usury·UDAP이 진입 복잡도. Equifax/Experian/TransUnion 3대 CB·FICO·ACH/FedNow·전자서명(ESIGN)·CECL로 IT 인프라 세계 최상위. UCC 자력회수로 회수 빠름(30~90일). EV(약 10%)·IRA 정책변동성·고차값이 변수. 권역 베이스라인 기준국."
+        },
+        {
+          "country": "CA",
+          "country_name": "Canada",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "Ford",
+              "market_share": "13.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Toyota",
+              "market_share": "12.8%"
+            },
+            {
+              "rank": 3,
+              "name": "General Motors (Chevrolet/GMC)",
+              "market_share": "11.5%"
+            },
+            {
+              "rank": 4,
+              "name": "Honda",
+              "market_share": "9.5%"
+            },
+            {
+              "rank": 5,
+              "name": "Hyundai",
+              "market_share": "8.0%"
+            }
+          ],
+          "brand_top10": [
+            "Ford",
+            "Toyota",
+            "Honda",
+            "Chevrolet (GM)",
+            "Hyundai",
+            "Kia",
+            "Nissan",
+            "Volkswagen",
+            "Ram (Stellantis)",
+            "Mazda"
+          ],
+          "purchase_pattern": 82,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "Scotiabank Auto Finance",
+            "TD Auto Finance",
+            "Ford Credit Canada",
+            "Toyota Credit Canada",
+            "GM Financial Canada",
+            "Honda Financial Services Canada",
+            "Volkswagen Finance Canada",
+            "RBC Royal Bank Auto",
+            "BMO Auto Finance",
+            "Nissan Canada Finance",
+            "Hyundai Auto Canada (HCCA)",
+            "Kia Finance Canada",
+            "BMW Financial Services Canada",
+            "Mercedes-Benz Financial Canada",
+            "iA Auto Finance",
+            "Santander Consumer (Canada)"
+          ],
+          "competitor_entry_form": "OEM 캡티브(Ford Credit·Toyota Credit·GM Financial·Honda FS·VW Finance·Hyundai·Kia) + 은행계 자동차여신부문(Scotiabank·TD·RBC·BMO) + 독립 여신사(iA Auto·Santander Consumer). 비은행 여신회사(finance company) 또는 은행 인가 형태",
+          "competitor_rates": "신차 자동차대출 APR 평균 약 6~9% (캡티브 프로모 0~3.99% 한정), 리스 월납 CAD 400~700, 중고차 APR 8~13%. 형법 상한 35% APR",
+          "avg_new_car_price": "약 CAD 45,000 (USD 33,000, 평균 거래가, 픽업·SUV·EV로 우상향)",
+          "qualitative_summary": "G7 성숙 자동차금융 시장(2025 신차 약 188만대, 금융침투 82%). AAA/Aaa 국가신용·외환 자유·외국인 100% 허용으로 안정성 최상위. 캡티브(Toyota·Honda·Ford·GM·VW 약 55%)+은행계(Scotiabank·RBC·TD·BMO 약 35%) 공존. 연방 OSFI 건전성 + 주별 소비자신용·면허(Quebec 최엄격)·이중언어(EN/FR) 의무가 진입 복잡도. Equifax/TransUnion CB·Interac/EFT 결제·전자서명·IFRS 9로 IT 인프라 G7 최상위. EV(ZEV 13%)·ZEV mandate 가속, 차량회수 주별 편차가 리스크."
+        },
+        {
+          "country": "MX",
+          "country_name": "Mexico",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "Nissan",
+              "market_share": "17.5%"
+            },
+            {
+              "rank": 2,
+              "name": "General Motors (Chevrolet)",
+              "market_share": "14.2%"
+            },
+            {
+              "rank": 3,
+              "name": "Volkswagen",
+              "market_share": "10.8%"
+            },
+            {
+              "rank": 4,
+              "name": "Toyota",
+              "market_share": "8.5%"
+            },
+            {
+              "rank": 5,
+              "name": "KIA",
+              "market_share": "7.2%"
+            }
+          ],
+          "brand_top10": [
+            "Nissan",
+            "General Motors (Chevrolet)",
+            "Volkswagen",
+            "Toyota",
+            "KIA",
+            "Hyundai",
+            "Ford",
+            "Mazda",
+            "MG",
+            "Honda"
+          ],
+          "purchase_pattern": 60,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "NR Finance México (Nissan Renault)",
+            "GM Financial México",
+            "Volkswagen Leasing/Bank México",
+            "BBVA Auto México",
+            "Santander Consumer México",
+            "Banorte Auto",
+            "HSBC Auto",
+            "Ford Credit México",
+            "Toyota Financial Services México",
+            "Stellantis Financial Services México",
+            "Hyundai Capital México",
+            "Kia Finance México",
+            "Honda Financial Services México",
+            "Banco Inbursa Auto",
+            "Banco Sabadell México",
+            "Kavak Capital",
+            "Creditas México"
+          ],
+          "competitor_entry_form": "OEM 캡티브(NR Finance·GM Financial·VW·Ford·Stellantis·Toyota·Hyundai Capital·Kia Finance) + 은행계 자회사(BBVA·Santander Consumer·Banorte·HSBC·Inbursa) + 핀테크(Kavak·Creditas·Konfio·Clip). SOFOM ENR/ER 또는 은행 인가 형태",
+          "competitor_rates": "신차 자동차 Crédito CAT 평균 약 12~18% (프로모 5~10% 캡티브 한정), Arrendamiento Puro 월 임대료 MXN 8,000~18,000(USD 400~900), 소비자신용 평균 Banxico 통계 약 14%",
+          "avg_new_car_price": "약 MXN 450,000 (USD 22,500, turismos 평균 거래가, SUV·픽업·EV로 우상향)",
+          "qualitative_summary": "라틴 2위·북미 3위 자동차 시장(2025 신차 153만대, +2.2%, 글로벌 톱10권). USMCA 통합·니어쇼어링·인구 1.3억 매크로 우위. 캡티브(GM·Nissan·VW·Ford·Stellantis·Toyota·Hyundai 약 60%)+은행계(BBVA·Santander·Banorte 약 25%) 양강. SOFOM ENR(CNBV 면제) 진입 매우 유연(자본 USD 2.5M), CAT 분기 모니터링·금리상한 사실상 없음. CoDi/DiMo·Buró·e.firma·LFPDPPP·Ley Fintech 2018(중남미 최초 핀테크법)로 디지털 인프라 양호. BBB 신용·페소 변동성·정치 리스크가 양면."
+        },
+        {
+          "country": "PR",
+          "country_name": "Puerto Rico",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "Toyota",
+              "market_share": "약 22%"
+            },
+            {
+              "rank": 2,
+              "name": "Honda",
+              "market_share": "약 13%"
+            },
+            {
+              "rank": 3,
+              "name": "Hyundai",
+              "market_share": "약 11%"
+            },
+            {
+              "rank": 4,
+              "name": "KIA",
+              "market_share": "약 9%"
+            },
+            {
+              "rank": 5,
+              "name": "Nissan",
+              "market_share": "약 8%"
+            }
+          ],
+          "brand_top10": [
+            "Toyota",
+            "Honda",
+            "Hyundai",
+            "KIA",
+            "Nissan",
+            "Ford",
+            "Chevrolet",
+            "Mitsubishi",
+            "Mazda",
+            "Jeep"
+          ],
+          "purchase_pattern": 82,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "Popular Auto (Banco Popular)",
+            "Reliable Financial Services",
+            "Oriental Bank Auto",
+            "FirstBank Auto",
+            "Toyota Financial Services PR",
+            "Honda Finance PR",
+            "Ford Credit PR",
+            "GM Financial PR",
+            "Hyundai Capital (본토 연동)",
+            "Kia Finance (본토 연동)",
+            "Cooperativas (신협 자동차대출)"
+          ],
+          "competitor_entry_form": "현지 은행계 자회사(Popular Auto·Oriental·FirstBank) + 독립 금융사(Reliable) + OEM 캡티브(Toyota·Honda·Ford·GM, 본토 연동) + 신협(cooperativas). OCIF financing company 라이선스 형태",
+          "competitor_rates": "신차 할부 APR 약 7~12% (프로모 캡티브 1.9~4.9%), 중고차 약 12~18%, B2B 리스 별도. 미국 본토 대비 약간 높음",
+          "avg_new_car_price": "약 USD 32,000 (소형·컴팩트 선호, SUV·EV로 우상향, 미 본토 평균 USD 48k보다 낮음)",
+          "qualitative_summary": "미국 자치령(인구 약 320만, USD)·연 신차 약 10만대의 소형 고침투 시장. 신차 금융침투 80%대로 미 본토 수준. 미 연방 소비자금융 프레임워크(CFPB·TILA/Reg Z·Dodd-Frank·FCRA·FDCPA) + 현지 OCIF 라이선스·소매할부/소액대출법 이중 적용. Banco Popular/Popular Auto·Reliable Financial 과점(합산 약 30%)+Oriental·FirstBank+캡티브(Toyota·Honda·Ford·GM). 신용정보 미국 3대 CB(TransUnion·Equifax·Experian)·FICO 직접 사용, 결제 ATH Móvil+미국 ACH/Zelle. 회수는 UCC Art.9 자력구제로 채권자 우호적. PROMESA 감독위·채무 구조조정 이력으로 재정 취약(준국가 신용 FLAG). 조세조약 미적용으로 본사 송금 세효율 별도 설계 필요."
+        }
+      ]
+    },
+    "quickwin": {
+      "nature": "ranking",
+      "source_flag": "CALC",
+      "weights": {
+        "w_biz": 0.6,
+        "w_it": 0.4
+      },
+      "baseline_country": "US",
+      "rows": [
+        {
+          "country": "US",
+          "country_name": "United States",
+          "attractiveness": 79.9,
+          "it_similarity": 98.3,
+          "it_similarity_band": 100,
+          "quickwin_raw": 87.3,
+          "quickwin_band": 90,
+          "is_baseline": true,
+          "killswitch_excluded": false,
+          "excluded": true,
+          "exclusion_reason": "baseline (기준국, 후보 아님)"
+        },
+        {
+          "country": "CA",
+          "country_name": "Canada",
+          "attractiveness": 45.8,
+          "it_similarity": 72.9,
+          "it_similarity_band": 70,
+          "quickwin_raw": 56.6,
+          "quickwin_band": 60,
+          "is_baseline": false,
+          "killswitch_excluded": false,
+          "excluded": false,
+          "exclusion_reason": null,
+          "rank": 1
+        },
+        {
+          "country": "MX",
+          "country_name": "Mexico",
+          "attractiveness": 28.1,
+          "it_similarity": 64.7,
+          "it_similarity_band": 60,
+          "quickwin_raw": 42.7,
+          "quickwin_band": 40,
+          "is_baseline": false,
+          "killswitch_excluded": false,
+          "excluded": false,
+          "exclusion_reason": null,
+          "rank": 2
+        },
+        {
+          "country": "PR",
+          "country_name": "Puerto Rico",
+          "attractiveness": 37.6,
+          "it_similarity": 64.5,
+          "it_similarity_band": 60,
+          "quickwin_raw": 48.4,
+          "quickwin_band": 50,
+          "is_baseline": false,
+          "killswitch_excluded": true,
+          "excluded": true,
+          "exclusion_reason": "killswitch fail"
+        }
+      ],
+      "ranking": [
+        {
+          "rank": 1,
+          "country": "CA",
+          "score_band": 60,
+          "attractiveness": 45.8,
+          "it_similarity_band": 70
+        },
+        {
+          "rank": 2,
+          "country": "MX",
+          "score_band": 40,
+          "attractiveness": 28.1,
+          "it_similarity_band": 60
+        }
+      ],
+      "note": {
+        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국) 및 킬스위치 탈락국 제외. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline and killswitch failures excluded. Reported in 10-point buckets."
+      }
+    },
+    "top3_country_cards": [
+      {
+        "rank": 1,
+        "country": "CA",
+        "country_name": "Canada",
+        "quickwin_score_band": 60,
+        "attractiveness": 45.8,
+        "it_similarity_band": 70,
+        "killswitch_pass": true,
+        "market_brief": {
+          "신차_판매대수": 1880000,
+          "금융_이용률_신차": 82,
+          "EV_보급률": 13
+        },
+        "competition_brief": {
+          "금융사_Top5": [
+            {
+              "rank": 1,
+              "name": "Scotiabank (Auto Finance)",
+              "market_share": "약 16%"
+            },
+            {
+              "rank": 2,
+              "name": "TD Auto Finance",
+              "market_share": "약 14%"
+            },
+            {
+              "rank": 3,
+              "name": "Ford Credit Canada",
+              "market_share": "약 11%"
+            },
+            {
+              "rank": 4,
+              "name": "Toyota Credit Canada",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 5,
+              "name": "GM Financial Canada",
+              "market_share": "약 9%"
+            }
+          ],
+          "경쟁사_진출_형태": "OEM 캡티브(Ford Credit·Toyota Credit·GM Financial·Honda FS·VW Finance·Hyundai·Kia) + 은행계 자동차여신부문(Scotiabank·TD·RBC·BMO) + 독립 여신사(iA Auto·Santander Consumer). 비은행 여신회사(finance company) 또는 은행 인가 형태"
+        },
+        "top_news": {
+          "news_category": "auto_market",
+          "headline": "캐나다 2025년 신차 판매 약 188만대로 회복세, 2017 정점 근접",
+          "headline_en": "Canada 2025 new-car sales recover to ~1.88M, approaching the 2017 peak",
+          "so_what": "성숙시장 회복 신호 — 금융침투 82% 기반 안정 수요. 한국 OEM(현대·기아) 톱5+로 캡티브 강화 매력.",
+          "so_what_en": "Mature-market recovery signal — stable demand on 82% finance penetration. Korean OEMs (Hyundai·Kia) in the top-5+ make captive strengthening attractive.",
+          "publisher": "Automotive News",
+          "pub_date": "2026-01-15",
+          "url": "https://www.autonews.com/..."
+        },
+        "ai_comment": "안정성·고침투·IT 정합성에서 북미 최우호 환경이나 연방-주 이중규제·Quebec 특수성이 비용 드라이버. B2B 리스·플릿 우선 진입 후 주별 소비자신용 확장, 또는 한국 OEM(현대·기아) 캡티브 연계 전략 유효.",
+        "source_flags": {
+          "rank": "CALC",
+          "score": "CALC",
+          "market": "EXT",
+          "competition": "EXT",
+          "news": "NEWS",
+          "ai_comment": "AI"
+        }
+      },
+      {
+        "rank": 2,
+        "country": "MX",
+        "country_name": "Mexico",
+        "quickwin_score_band": 40,
+        "attractiveness": 28.1,
+        "it_similarity_band": 60,
+        "killswitch_pass": true,
+        "market_brief": {
+          "신차_판매대수": 1530000,
+          "금융_이용률_신차": 65,
+          "EV_보급률": 7
+        },
+        "competition_brief": {
+          "금융사_Top5": [
+            {
+              "rank": 1,
+              "name": "NR Finance México (Nissan Renault)",
+              "market_share": "약 18%"
+            },
+            {
+              "rank": 2,
+              "name": "GM Financial México",
+              "market_share": "약 15%"
+            },
+            {
+              "rank": 3,
+              "name": "Volkswagen Leasing/Bank",
+              "market_share": "약 12%"
+            },
+            {
+              "rank": 4,
+              "name": "BBVA Auto México",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 5,
+              "name": "Santander Consumer México",
+              "market_share": "약 8%"
+            }
+          ],
+          "경쟁사_진출_형태": "OEM 캡티브(NR Finance·GM Financial·VW·Ford·Stellantis·Toyota·Hyundai Capital·Kia Finance) + 은행계 자회사(BBVA·Santander Consumer·Banorte·HSBC·Inbursa) + 핀테크(Kavak·Creditas·Konfio·Clip). SOFOM ENR/ER 또는 은행 인가 형태"
+        },
+        "top_news": {
+          "news_category": "auto_market",
+          "headline": "멕시코 2025년 신차 등록 153만대 +2.2%, 2016 정점 회복 임박",
+          "headline_en": "Mexico's 2025 new-car registrations reach 1.53M, +2.2% — nearing 2016 peak recovery",
+          "so_what": "시장 회복 신호 + 니어쇼어링 매크로 호조 — 금융 침투 확대 기회. 한국 OEM(현대·기아) 점유 톱5+로 캡티브 진입 매력 큼.",
+          "so_what_en": "Market-recovery signal + favorable nearshoring macro — opportunity to expand finance penetration. Korean OEMs (Hyundai/Kia) in the top-5+ make captive entry highly attractive.",
+          "publisher": "Automotive News",
+          "pub_date": "2026-01-22",
+          "url": "https://www.autonews.com/..."
+        },
+        "ai_comment": "USMCA·니어쇼어링+SOFOM ENR 진입 유연성으로 라틴 최우호 환경. 한국 OEM(현대 진출, 기아 진출) 캡티브 강화 또는 핀테크 협력형 SOFOM ENR 진입. Hyundai Capital MX·Kia Finance MX 통합 전략 검토.",
+        "source_flags": {
+          "rank": "CALC",
+          "score": "CALC",
+          "market": "EXT",
+          "competition": "EXT",
+          "news": "NEWS",
+          "ai_comment": "AI"
+        }
+      }
+    ],
+    "executive_summary": {
+      "core_conclusion": {
+        "source_flag": "CALC",
+        "top3": [
+          {
+            "rank": 1,
+            "country": "CA",
+            "score_band": 60,
+            "attractiveness": 45.8,
+            "it_similarity_band": 70
+          },
+          {
+            "rank": 2,
+            "country": "MX",
+            "score_band": 40,
+            "attractiveness": 28.1,
+            "it_similarity_band": 60
+          }
+        ],
+        "killswitch_failed_count": 1,
+        "why_top1": {
+          "ko": "Canada(CA) — 매력도 45.8, IT유사도 70 구간, 퀵윈 60 구간",
+          "en": "Canada(CA) — Attractiveness 45.8, IT band 70, Quickwin band 60"
+        }
+      },
+      "ai_cross_insight": {
+        "source_flag": "AI",
+        "insights": [
+          {
+            "ko": "CA이 후보국 매력도·IT유사도 모두 1위 — 권역 진출의 명백한 1순위.",
+            "en": "CA ranks #1 in both attractiveness and IT similarity — the clear top entry candidate for the region."
+          },
+          {
+            "ko": "기준국 US은 이미 시스템 보유국 → 순위에서 제외(B국 시스템 확산의 비교 기준).",
+            "en": "Baseline US already operates a deployed system — excluded from the ranking (used as the reference for system expansion)."
+          },
+          {
+            "ko": "킬스위치 탈락국: PR — 규제·신용등급 게이트로 사전 차단(스코어링 제외).",
+            "en": "Killswitch failed: PR — pre-blocked by regulatory/credit-rating gates (excluded from scoring)."
+          }
+        ]
+      },
+      "external_news_scan": {
+        "source_flag": "NEWS",
+        "items": [
+          {
+            "country": null,
+            "scope": "region",
+            "headline": "미·멕시코, USMCA 개정 위한 1차 무역협상 마무리…자동차·금속·안보 의제",
+            "headline_en": "US and Mexico conclude first round of USMCA revision talks on autos, metals, security",
+            "so_what": "미국이 북미산 차량의 미국산 부품 비중 상향(최대 50%)을 요구하며 멕시코와 양자 협상을 진행해, 멕시코 생산 차량의 원가·공급망·가격이 흔들릴 수 있다. 캡티브 의존도가 높은 멕시코 자동차금융 진입 시 관세·USMCA 변수가 단가·잔존가치 가정의 핵심 리스크가 된다.",
+            "so_what_en": "With Washington pressing for higher U.S. content (up to 50%) in North American vehicles via bilateral talks with Mexico, costs, supply chains and prices for Mexico-built cars could shift. For captive-heavy Mexican auto finance, tariff/USMCA dynamics become the central risk to pricing and residual-value assumptions.",
+            "publisher": "Reuters",
+            "date": "2026-05-29",
+            "url": "https://www.reuters.com/business/us-mexico-conclude-first-round-trade-deal-talks-autos-metals-security-2026-05-29/",
+            "news_category": "geopolitical"
+          },
+          {
+            "country": null,
+            "scope": "region",
+            "headline": "5월 미국 자동차 신용 가용성 상승…승인율 개선·수익률 스프레드 축소로 2022년 4월 이후 최고",
+            "headline_en": "US auto credit availability climbs in May as approval rates improve and yield spreads narrow",
+            "so_what": "Dealertrack 신용 가용성 지수가 103.7로 2022년 4월 이후 최고를 기록하고 승인율이 72.4%로 오르며 대출 환경이 완화됐으나, 서브프라임 비중은 2개월 연속 하락(16.7%)하고 마이너스 에쿼티가 전년比 250bp 높다. 신규 진입자는 프라임·니어프라임 중심으로 빠른 성과를 노리되 서브프라임은 신중해야 한다.",
+            "so_what_en": "The Dealertrack index hit 103.7, its highest since April 2022, with approval rates at 72.4%, signaling looser conditions, yet subprime share fell for a second month (16.7%) and negative equity sits 250bp above year-ago. New entrants should chase quick wins in prime/near-prime while treating subprime cautiously.",
+            "publisher": "Cox Automotive",
+            "date": "2026-06-10",
+            "url": "https://www.coxautoinc.com/insights/auto-credit-availability-climbs-in-may-as-approval-rates-improve-yield-spreads-narrow/",
+            "news_category": "auto_finance"
+          },
+          {
+            "country": null,
+            "scope": "region",
+            "headline": "5월 미국 신차 구매여력 개선…가격 하락·소득 증가로 평균 월납입 753달러",
+            "headline_en": "Price drop and income growth improve US new-vehicle affordability in May",
+            "so_what": "평균 신차가 49,220달러로 하락하고 소득이 4% 늘며 구매에 필요한 중위소득 주수가 34.9주로 줄었지만, 금리는 9.53%로 여전히 높고 인센티브 의존이 커졌다. 구매여력 회복은 신차금융 수요 기반을 넓혀 진입 타이밍에 우호적이다.",
+            "so_what_en": "Average new-vehicle price fell to $49,220 and income rose 4%, cutting weeks-of-income-to-buy to 34.9, though rates remain elevated at 9.53% with rising incentive reliance. Improving affordability widens the new-vehicle finance demand base, supporting entry timing.",
+            "publisher": "Cox Automotive",
+            "date": "2026-06-16",
+            "url": "https://www.coxautoinc.com/insights/may-2026-vai/",
+            "news_category": "auto_finance"
+          },
+          {
+            "country": "CA",
+            "scope": "country",
+            "headline": "캐나다 2025년 신차 판매 약 188만대로 회복세, 2017 정점 근접",
+            "headline_en": "Canada 2025 new-car sales recover to ~1.88M, approaching the 2017 peak",
+            "so_what": "성숙시장 회복 신호 — 금융침투 82% 기반 안정 수요. 한국 OEM(현대·기아) 톱5+로 캡티브 강화 매력.",
+            "so_what_en": "Mature-market recovery signal — stable demand on 82% finance penetration. Korean OEMs (Hyundai·Kia) in the top-5+ make captive strengthening attractive.",
+            "publisher": "Automotive News",
+            "date": null
+          },
+          {
+            "country": "MX",
+            "scope": "country",
+            "headline": "멕시코 2025년 신차 등록 153만대 +2.2%, 2016 정점 회복 임박",
+            "headline_en": "Mexico's 2025 new-car registrations reach 1.53M, +2.2% — nearing 2016 peak recovery",
+            "so_what": "시장 회복 신호 + 니어쇼어링 매크로 호조 — 금융 침투 확대 기회. 한국 OEM(현대·기아) 점유 톱5+로 캡티브 진입 매력 큼.",
+            "so_what_en": "Market-recovery signal + favorable nearshoring macro — opportunity to expand finance penetration. Korean OEMs (Hyundai/Kia) in the top-5+ make captive entry highly attractive.",
+            "publisher": "Automotive News",
+            "date": null
+          }
+        ],
+        "region_news_count": 3,
+        "note": {
+          "ko": "권역 공통 이슈 3건 + 상위 3개국 헤드라인. '조사 필요' 항목은 제외.",
+          "en": "3 region-wide issues + top-3 country headlines. '조사 필요' (research needed) entries excluded."
+        }
+      }
+    }
+  }
+}

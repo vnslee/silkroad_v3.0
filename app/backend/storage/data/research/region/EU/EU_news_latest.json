@@ -1,0 +1,124 @@
+{
+  "region": "European Union",
+  "region_ko": "유럽권역",
+  "code": "EU",
+  "baseline_country": "GB",
+  "schema_version": "1.0",
+  "fetched_at": "2026-06-22T16:00:00+09:00",
+  "fetched_by": "ai",
+  "overall_insight": "유럽(EU) 권역의 오토파이낸스 시장은 전동화 가속과 중국 OEM의 공세라는 두 축이 동시에 작동하는 구조다. BYD의 현지공장·맞춤형 PHEV 확장(독일 €28,990 출시)과 EU의 중국산 PHEV 추가 관세 검토가 맞물리며, 관세·규제 환경이 가격·잔존가치·금융 구조를 흔드는 핵심 변수가 됐다. 동시에 BMW i3 조기 주문·Smart #2 등 신차 수요와 Stellantis·Renault의 €15,000 저가 EV 추진은 신규 할부·리스 수요 풀을 넓히는 기회 요인이다. 데이터 보유국(영국·프랑스·스페인·이탈리아·네덜란드·폴란드·포르투갈·오스트리아·덴마크) 중 GB(영국)를 베이스라인으로 두는 이유는, 영국의 ZEV 의무(2030년 EV 80%)와 닛산 선덜랜드 지원 협상에서 보듯 정책·산업 변동성이 크지만 시장 규모와 캡티브 침투가 높아 진입 학습효과가 큰 시장이기 때문이다. 공통 리스크는 (1) 중국산 EV/PHEV 관세·규제 변동으로 인한 잔존가치·LTV 불확실성, (2) ZEV 의무 완화 논쟁(80%→50%) 등 정책 일관성 저하다. 단계적 진입은 캡티브 침투가 높고 규제 신호가 비교적 명확한 영국·프랑스를 1차로, 저가 EV·소형차 수요가 확대되는 스페인·이탈리아·폴란드를 2차로, 잔존가치·관세 영향을 모니터링하며 네덜란드·포르투갈·오스트리아·덴마크를 후속으로 두는 순서를 권장한다.",
+  "overall_insight_en": "The EU region's auto-finance landscape is shaped by two simultaneous forces: accelerating electrification and an intensifying Chinese OEM push. BYD's local-plant and tailored-PHEV expansion (launching at EUR 28,990 in Germany) alongside the EU's preparation of additional tariffs on China-built PHEVs makes the tariff/regulatory environment the key variable reshaping pricing, residual values, and financing structures. At the same time, demand for new models (BMW i3's early order launch, Smart #2) and the EUR 15,000 affordable-EV push by Stellantis and Renault widen the pool of new loan and lease demand. Among the countries we hold data for (UK, France, Spain, Italy, Netherlands, Poland, Portugal, Austria, Denmark), GB is the baseline because, despite high policy/industry volatility (the ZEV mandate of 80% EV by 2030 and the Nissan Sunderland support talks), it offers large market size and high captive penetration, yielding strong learning effects for entry. Common regional risks are (1) residual-value and LTV uncertainty from shifting tariffs/regulation on Chinese EVs/PHEVs, and (2) weakening policy consistency, as seen in the debate to relax the ZEV mandate (80% to 50%). A phased entry is recommended: UK and France first; Spain, Italy, and Poland second; then Netherlands, Portugal, Austria, and Denmark as follow-ups while monitoring residual-value and tariff impacts.",
+  "items": [
+    {
+      "item": "권역 외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "context_type": "news",
+      "value": [
+        {
+          "news_category": "geopolitical",
+          "scope": "region",
+          "headline": "EU, 中 브랜드의 'EV 위장' 허점 차단 위해 중국산 PHEV 관세 준비",
+          "headline_en": "EU said to prepare tariffs on China-built PHEVs after brands exploit EV loophole",
+          "so_what": "중국산 PHEV에 대한 추가 관세는 BYD 등 저가 모델의 진입 비용을 높여 차량 가격·잔존가치 전망을 흔들며, 할부·리스의 LTV 산정과 캡티브 가격 정책에 직접적 불확실성을 만든다.",
+          "so_what_en": "New tariffs on China-built PHEVs raise the entry cost of low-priced models like BYD's, shaking vehicle pricing and residual-value outlooks and creating direct uncertainty for LTV calculations and captive pricing in loans and leases.",
+          "publisher": "Automotive News Europe",
+          "pub_date": "2026-06-19",
+          "url": "https://www.autonews.com/ev/ane-eu-prepares-phev-tariffs-china-imports-0619/"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "BYD, 현지 공장·맞춤형 제품으로 유럽 확장 가속 (독일서 PHEV €28,990 출시)",
+          "headline_en": "BYD accelerates European expansion with new plants, tailored products",
+          "so_what": "중국 OEM의 현지 생산·저가 PHEV 공세는 유럽 신차 금융 수요 풀을 키우는 동시에 기존 캡티브의 가격·잔존가치 경쟁을 심화시켜, 신규 진입자에게 차별화된 금융 상품 설계 필요성을 높인다.",
+          "so_what_en": "A Chinese OEM's local production and low-priced PHEV push expands Europe's new-vehicle financing pool while intensifying price and residual-value competition for incumbent captives, raising the need for differentiated financing products for new entrants.",
+          "publisher": "Automotive News Europe",
+          "pub_date": "2026-06-22",
+          "url": "https://www.autonews.com/byd/ane-byd-europe-expansion-push-plants-local-products-0622/"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "유럽의 '저가 EV' 계획, 중국 대항 노렸지만 실현 가능성 의문",
+          "headline_en": "Europe's affordable EV plan — aimed at challenging Chinese — faces viability questions",
+          "so_what": "Stellantis·Renault의 €15,000 EV 추진은 신규 대중 할부·리스 수요를 창출할 잠재력이 크지만, 수익성·실현성 불확실성은 잔존가치 가정과 금융 마진 설계에 보수적 접근을 요구한다.",
+          "so_what_en": "The Stellantis/Renault EUR 15,000 EV push could create significant new mass-market loan and lease demand, but uncertainty over profitability and feasibility calls for a conservative approach to residual-value assumptions and financing margins.",
+          "publisher": "Automotive News Europe",
+          "pub_date": "2026-06-04",
+          "url": "https://www.autonews.com/ev/ane-stellantis-china-evs-cheaper-co2-0603/"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "영국, 닛산 선덜랜드 두고 지원 패키지 논의 — ZEV 의무 완화도 거론",
+          "headline_en": "UK discusses support package with Nissan over Sunderland – report",
+          "so_what": "영국의 보조금·세제 지원과 ZEV 의무(2030년 EV 80%→50%) 완화 논쟁은 베이스라인 시장의 EV 침투 속도와 정책 예측가능성에 영향을 주어, 영국 진입 시 EV 금융 비중·잔존가치 가정의 시나리오 분기를 요구한다.",
+          "so_what_en": "UK grants/tax support and the debate to relax the ZEV mandate (80% to 50% EV by 2030) affect the baseline market's EV penetration pace and policy predictability, requiring scenario branching of EV-financing share and residual-value assumptions for UK entry.",
+          "publisher": "Just Auto",
+          "pub_date": "2026-06-19",
+          "url": "https://www.just-auto.com/news/uk-discusses-support-package-nissan-sunderland/"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "global",
+          "headline": "유럽 완성차업체, SDV 위해 코드 공유 — 그러나 중국 따라잡을 수 있나",
+          "headline_en": "European automakers pool code to build software-defined vehicles — but can they catch China?",
+          "so_what": "BMW·VW·Stellantis의 SDV 공동개발은 출시 기간을 30% 단축해 신차 회전을 빠르게 하지만, 소프트웨어·OTA 기반 차량은 잔존가치·중고 가치 평가 방식을 바꿔 리스·할부 상품의 잔가 모델 재설계를 요구한다.",
+          "so_what_en": "Joint SDV development by BMW, VW and Stellantis could cut time-to-market by 30% and speed up model turnover, but software/OTA-centric vehicles change how residual and used values are assessed, requiring redesign of residual-value models for lease and loan products.",
+          "publisher": "Automotive News Europe",
+          "pub_date": "2026-06-21",
+          "url": "https://www.autonews.com/technology/ane-open-source-bmw-vw-stellantis-0621/"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "스웨덴, 속도제한 초과 기능 미제거 시 테슬라 FSD의 EU 승인 차단 가능",
+          "headline_en": "Sweden may block EU approval of Tesla's self-driving software – report",
+          "so_what": "EU 회원국 간 자율주행 승인 분열(스웨덴·핀란드·노르웨이 우려 vs 네덜란드·덴마크 승인)은 규제 단편화를 보여주며, 권역 단일 금융 상품 설계 시 국가별 규제·기술 채택 차이를 반영해야 함을 시사한다.",
+          "so_what_en": "Fragmentation among EU members on self-driving approval illustrates regulatory fragmentation, signaling that pan-regional financing products must account for country-level differences in regulation and tech adoption.",
+          "publisher": "Just Auto",
+          "pub_date": "2026-06-19",
+          "url": "https://www.just-auto.com/news/sweden-block-eu-approval-tesla-fsd/"
+        },
+        {
+          "news_category": "finance",
+          "scope": "",
+          "headline": "조사 필요",
+          "headline_en": "조사 필요",
+          "so_what": "조사 필요",
+          "so_what_en": "",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "auto_finance",
+          "scope": "",
+          "headline": "조사 필요",
+          "headline_en": "조사 필요",
+          "so_what": "조사 필요",
+          "so_what_en": "",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "credit_abs",
+          "scope": "",
+          "headline": "조사 필요",
+          "headline_en": "조사 필요",
+          "so_what": "조사 필요",
+          "so_what_en": "",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        }
+      ],
+      "tier": 3,
+      "source": "화이트리스트(Automotive News Europe · Just Auto)",
+      "insight": "유럽(EU) 권역의 오토파이낸스 시장은 전동화 가속과 중국 OEM의 공세라는 두 축이 동시에 작동하는 구조다. BYD의 현지공장·맞춤형 PHEV 확장(독일 €28,990 출시)과 EU의 중국산 PHEV 추가 관세 검토가 맞물리며, 관세·규제 환경이 가격·잔존가치·금융 구조를 흔드는 핵심 변수가 됐다. 동시에 BMW i3 조기 주문·Smart #2 등 신차 수요와 Stellantis·Renault의 €15,000 저가 EV 추진은 신규 할부·리스 수요 풀을 넓히는 기회 요인이다. 데이터 보유국(영국·프랑스·스페인·이탈리아·네덜란드·폴란드·포르투갈·오스트리아·덴마크) 중 GB(영국)를 베이스라인으로 두는 이유는, 영국의 ZEV 의무(2030년 EV 80%)와 닛산 선덜랜드 지원 협상에서 보듯 정책·산업 변동성이 크지만 시장 규모와 캡티브 침투가 높아 진입 학습효과가 큰 시장이기 때문이다. 공통 리스크는 (1) 중국산 EV/PHEV 관세·규제 변동으로 인한 잔존가치·LTV 불확실성, (2) ZEV 의무 완화 논쟁(80%→50%) 등 정책 일관성 저하다. 단계적 진입은 캡티브 침투가 높고 규제 신호가 비교적 명확한 영국·프랑스를 1차로, 저가 EV·소형차 수요가 확대되는 스페인·이탈리아·폴란드를 2차로, 잔존가치·관세 영향을 모니터링하며 네덜란드·포르투갈·오스트리아·덴마크를 후속으로 두는 순서를 권장한다.",
+      "insight_ai_generated": true
+    }
+  ]
+}

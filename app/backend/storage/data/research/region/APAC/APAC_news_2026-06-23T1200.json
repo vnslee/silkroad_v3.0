@@ -1,0 +1,96 @@
+{
+  "region": "Asia-Pacific",
+  "region_ko": "아시아·태평양권역",
+  "code": "APAC",
+  "baseline_country": "AU",
+  "schema_version": "1.0",
+  "fetched_at": "2026-06-23T12:00:00+09:00",
+  "fetched_by": "ai",
+  "overall_insight": "2026년 2분기 APAC 권역은 금리 상승 사이클이 두드러진다 — 인도네시아가 한 달 새 1%p 인상, 일본은 미 재무장관 압박 속 추가 인상 관측이 커지며 엔화가 약세를 보였다. 이는 신차 할부금융 조달비용·월납입금 부담을 직접 끌어올려 신규 진출 시 금리 민감도가 높은 시장임을 시사한다. 자동차 시장 측면에서는 중국이 보조금 축소로 4월 내수가 전년比 24% 급감했고, 한국은 현대차 공급망 차질로 내수가 위축되는 등 수요 변동성이 크다. 동시에 미중 무역 긴장 재점화(중국의 미국 기업 수출 통제)와 중국-호주 관세 마찰은 권역 공급망·환율 변동성을 키운다. 다만 auto_finance·credit_abs(딜린퀀시·ABS) 직접 데이터는 화이트리스트 출처 접근 차단으로 이번 분기 확보하지 못해 추가 조사가 필요하다.",
+  "items": [
+    {
+      "item": "권역 외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "context_type": "news",
+      "value": [
+        {
+          "news_category": "geopolitical",
+          "scope": "region",
+          "headline": "중국, 미국 기업 수십 곳에 수출 통제·조달 금지 조치",
+          "so_what": "미중 무역 긴장 재점화로 APAC 자동차 부품·반도체 공급망 교란 위험이 커져 차량 인도·재고에 영향을 줄 수 있다.",
+          "publisher": "Nikkei Asia",
+          "pub_date": "2026-06-23",
+          "url": "https://asia.nikkei.com/Economy/China-hits-dozens-of-US-companies-with-export-controls-procurement-bans"
+        },
+        {
+          "news_category": "geopolitical",
+          "scope": "region",
+          "headline": "중국, 호주산 소고기 쿼터 소진 선언하며 55% 관세 발동",
+          "so_what": "중국-호주 무역 마찰 격화는 호주 거시·환율 변동성을 키워 호주 자동차 수요·소비자 신용 환경에 부정적이다.",
+          "publisher": "Nikkei Asia",
+          "pub_date": "2026-06-19",
+          "url": "https://asia.nikkei.com/Economy/China-says-Australia-has-reached-beef-quota-triggering-55-tariff"
+        },
+        {
+          "news_category": "finance",
+          "scope": "region",
+          "headline": "인도네시아 중앙은행, 한 달 새 누적 1%p 추가 금리 인상",
+          "so_what": "인니 급격한 긴축은 자동차 할부 조달비용·월납입금을 끌어올려 신규 대출 수요와 연체 리스크에 직접 영향을 준다.",
+          "publisher": "Nikkei Asia",
+          "pub_date": "2026-06-18",
+          "url": "https://asia.nikkei.com/business/markets/indonesia-s-central-bank-hikes-rates-again-totaling-1-in-span-of-a-month"
+        },
+        {
+          "news_category": "finance",
+          "scope": "region",
+          "headline": "Fed 결정 후 엔화 약세, 4월 이후 개입 효과 소멸…일본 추가 인상 관측",
+          "so_what": "엔 약세와 일본 금리 인상 압력은 일본 OEM 수익·아시아 조달금리에 파급돼 권역 할부금융 가격 책정 변동성을 키운다.",
+          "publisher": "Nikkei Asia",
+          "pub_date": "2026-06-18",
+          "url": "https://asia.nikkei.com/Economy/Yen-falls-after-Fed-decision-erasing-intervention-gains-since-April"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "중국 내수, 보조금 축소로 타격…4월 판매 전년比 24% 급감, 수출로 생산 방어",
+          "so_what": "최대 시장인 중국 내수 급락은 가격경쟁·재고압박을 심화시켜 잔존가치 하락과 권역 전반의 할부 마진 압박을 부른다.",
+          "publisher": "Just Auto",
+          "pub_date": "2026-06-09",
+          "url": "https://www.just-auto.com/industry-data/chinese-domestic-demand-hit-by-subsidy-tightening-as-output-anchored-by-export-surge/"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "한국 내수 감소: 공급망 차질로 현대차 판매 위축",
+          "so_what": "한국 OEM 공급망 차질은 신차 인도 지연·판매 감소로 이어져 신규 할부 취급량 둔화와 딜러 재고 리스크를 키운다.",
+          "publisher": "Just Auto",
+          "pub_date": "2026-06-12",
+          "url": "https://www.just-auto.com/features/south-korea-report-domestic-sales-down-as-supply-chain-disruption-bites/"
+        },
+        {
+          "news_category": "auto_finance",
+          "scope": "",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "credit_abs",
+          "scope": "",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        }
+      ],
+      "tier": 3,
+      "source": "화이트리스트(Nikkei Asia · Just Auto)",
+      "insight": "금리 상승 사이클(인니·일본)과 중국 내수 급락·미중/중호 무역마찰이 권역 공통 리스크다 — 조달금리·잔존가치·공급망 모두에 부담. auto_finance·credit_abs(Auto Finance News·S&P·Moody's·Fitch)는 출처 접근 차단으로 미확보, 실사 단계에서 권역 딜린퀀시·ABS 데이터 보강 필요.",
+      "insight_ai_generated": true
+    }
+  ]
+}

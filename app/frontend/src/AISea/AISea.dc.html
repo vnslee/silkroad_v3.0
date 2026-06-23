@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:'Pretendard',system-ui,sans-serif;color:#14171C;background:#EEF0F2;-webkit-font-smoothing:antialiased}
+@keyframes aisea-pulse{0%{opacity:.5;transform:scale(1)}70%{opacity:0;transform:scale(2.8)}100%{opacity:0}}
+@keyframes aisea-spin{to{transform:rotate(360deg)}}
+@keyframes aisea-pop{from{opacity:0;transform:scale(.975) translateY(6px)}to{opacity:1;transform:none}}
+@keyframes aisea-op{from{opacity:0}to{opacity:1}}
+@keyframes aisea-slide{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#D2D7DE;border-radius:8px;border:3px solid transparent;background-clip:padding-box}
+.mono{font-family:'Space Grotesk','Pretendard',sans-serif}
+</style>
+</helmet>
+<div style="position:relative;width:100%;height:100vh;overflow:hidden;background:#EEF0F2">
+
+  <!-- ============ TOP BAR ============ -->
+  <header style="position:absolute;top:0;left:0;right:0;height:60px;z-index:60;display:flex;align-items:center;gap:18px;padding:0 22px;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border-bottom:1px solid #E6E9EC">
+    <div onClick="{{ goMap }}" style="display:flex;align-items:center;gap:9px;cursor:pointer;padding-right:6px">
+      <div style="width:26px;height:26px;border-radius:7px;background:#3F6CB4;position:relative;display:flex;align-items:center;justify-content:center">
+        <div style="width:11px;height:11px;border:2px solid #fff;border-radius:50%"></div>
+        <div style="position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;right:6px;bottom:6px"></div>
+      </div>
+      <span class="mono" style="font-weight:700;font-size:18px;letter-spacing:-.4px">AISea</span>
+    </div>
+
+    <nav style="display:flex;align-items:center;gap:2px;font-size:14px">
+      <div onClick="{{ goMap }}" style="padding:8px 12px;border-radius:8px;cursor:pointer;color:{{ navMapColor }};font-weight:500">지도</div>
+      <div onClick="{{ toggleCountryMenu }}" style="padding:8px 12px;border-radius:8px;cursor:pointer;color:#3B3F46;font-weight:500;display:flex;align-items:center;gap:5px">국가 분석<span style="font-size:9px;opacity:.5">▾</span></div>
+      <div onClick="{{ toggleRegionMenu }}" style="padding:8px 12px;border-radius:8px;cursor:pointer;color:#3B3F46;font-weight:500;display:flex;align-items:center;gap:5px">권역 분석<span style="font-size:9px;opacity:.5">▾</span></div>
+      <div onClick="{{ toggleReportMenu }}" style="padding:8px 12px;border-radius:8px;cursor:pointer;color:#3B3F46;font-weight:500;display:flex;align-items:center;gap:5px">보고서<span style="font-size:9px;opacity:.5">▾</span></div>
+      <div onClick="{{ openRulesetFull }}" style="padding:8px 12px;border-radius:8px;cursor:pointer;color:#3B3F46;font-weight:500">룰셋</div>
+    </nav>
+
+    <div style="flex:1"></div>
+
+    <sc-if value="{{ onMap }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:2px;background:#EEF0F2;border-radius:9px;padding:3px">
+        <div onClick="{{ setLayoutA }}" title="플로팅" style="width:28px;height:24px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:{{ tabABg }}">
+          <div style="width:13px;height:13px;border:1.6px solid {{ tabAInk }};border-radius:3px;position:relative"></div>
+        </div>
+        <div onClick="{{ setLayoutB }}" title="분할 레일" style="width:28px;height:24px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:{{ tabBBg }}">
+          <div style="display:flex;gap:2px"><div style="width:4px;height:13px;background:{{ tabBInk }};border-radius:1px"></div><div style="width:9px;height:13px;border:1.6px solid {{ tabBInk }};border-radius:2px"></div></div>
+        </div>
+        <div onClick="{{ setLayoutC }}" title="히어로" style="width:28px;height:24px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:{{ tabCBg }}">
+          <div style="display:flex;flex-direction:column;gap:2px;align-items:center"><div style="width:11px;height:3px;background:{{ tabCInk }};border-radius:1px"></div><div style="width:7px;height:7px;border:1.6px solid {{ tabCInk }};border-radius:2px"></div></div>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="display:flex;align-items:center;background:#fff;border:1px solid #E6E9EC;border-radius:9px;padding:7px 11px;gap:8px;width:212px">
+      <span style="color:#9AA0A8;font-size:13px">⌕</span>
+      <input value="{{ searchVal }}" onChange="{{ onSearchChange }}" onKeyDown="{{ onSearchKey }}" placeholder="국가 검색…" style="border:none;outline:none;font-family:inherit;font-size:13px;width:100%;background:transparent;color:#14171C" />
+    </div>
+
+    <div onClick="{{ toggleChat }}" title="AISea 어시스턴트" style="width:38px;height:38px;border-radius:10px;background:#3F6CB4;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(63,108,180,.32)">
+      <div style="width:16px;height:14px;border:2px solid #fff;border-radius:5px;position:relative"><div style="position:absolute;bottom:-5px;left:3px;width:5px;height:5px;background:#3F6CB4;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)"></div></div>
+    </div>
+
+    <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#3F6CB4,#6E97D6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600">JK</div>
+  </header>
+
+  <!-- ============ NAV DROPDOWNS ============ -->
+  <sc-if value="{{ countryMenuOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenus }}" style="position:fixed;inset:0;z-index:65"></div>
+    <div style="position:absolute;top:56px;left:118px;z-index:66;background:#fff;border:1px solid #E6E9EC;border-radius:13px;box-shadow:0 16px 44px rgba(20,23,28,.14);padding:7px;width:230px;animation:aisea-pop .15s ease">
+      <div style="font-size:11px;color:#9AA0A8;padding:7px 10px 4px;letter-spacing:.04em">국가 정보 · 풀사이즈</div>
+      <sc-for list="{{ countryMenuItems }}" as="c" hint-placeholder-count="5">
+        <div onClick="{{ c.open }}" style="display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:14px" style-hover="background:#F2F5FA">
+          <span>{{ c.flag }}&nbsp;&nbsp;{{ c.label }}</span>
+          <span class="mono" style="font-size:12px;color:{{ c.color }};font-weight:600">{{ c.score }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ regionMenuOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenus }}" style="position:fixed;inset:0;z-index:65"></div>
+    <div style="position:absolute;top:56px;left:210px;z-index:66;background:#fff;border:1px solid #E6E9EC;border-radius:13px;box-shadow:0 16px 44px rgba(20,23,28,.14);padding:7px;width:230px;animation:aisea-pop .15s ease">
+      <div style="font-size:11px;color:#9AA0A8;padding:7px 10px 4px;letter-spacing:.04em">권역 정보 · 풀사이즈</div>
+      <sc-for list="{{ regionMenuItems }}" as="r" hint-placeholder-count="5">
+        <div onClick="{{ r.open }}" style="display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:14px" style-hover="background:#F2F5FA">
+          <span>{{ r.label }}</span>
+          <span style="font-size:11px;color:#9AA0A8">{{ r.count }}개국</span>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ reportMenuOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenus }}" style="position:fixed;inset:0;z-index:65"></div>
+    <div style="position:absolute;top:56px;left:300px;z-index:66;background:#fff;border:1px solid #E6E9EC;border-radius:13px;box-shadow:0 16px 44px rgba(20,23,28,.14);padding:7px;width:236px;animation:aisea-pop .15s ease">
+      <div style="font-size:11px;color:#9AA0A8;padding:7px 10px 4px;letter-spacing:.04em">진단 보고서 · 풀사이즈</div>
+      <div onClick="{{ openPR1Full }}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:9px;cursor:pointer;font-size:14px" style-hover="background:#F2F5FA"><span style="font-size:16px">📄</span>국가 진단 보고서</div>
+      <div onClick="{{ openPR2Full }}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:9px;cursor:pointer;font-size:14px" style-hover="background:#F2F5FA"><span style="font-size:16px">🗂️</span>권역 진단 보고서</div>
+    </div>
+  </sc-if>
+
+  <!-- ============ MAIN AREA ============ -->
+  <div style="position:absolute;top:60px;left:0;right:0;bottom:0">
+
+    <!-- map -->
+    <div ref="{{ setMapEl }}" style="position:absolute;inset:0;background:radial-gradient(120% 120% at 50% 0%,#F7F8FA 0%,#EBEEF1 100%)"></div>
+
+    <sc-if value="{{ mapLoading }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#9AA0A8">
+        <div style="width:34px;height:34px;border:3px solid #DCE0E6;border-top-color:#3F6CB4;border-radius:50%;animation:aisea-spin .9s linear infinite"></div>
+        <div style="font-size:13px">월드맵 로딩 중…</div>
+      </div>
+    </sc-if>
+
+    <!-- LAYOUT A: floating -->
+    <sc-if value="{{ layoutA }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;top:22px;left:50%;transform:translateX(-50%);z-index:14;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid #E6E9EC;border-radius:14px;padding:10px 16px;box-shadow:0 8px 28px rgba(20,23,28,.08)">
+        <span style="font-size:13px;color:#6B7280">진출 후보 시장을 지도에서 선택하거나</span>
+        <span onClick="{{ toggleChat }}" style="font-size:13px;color:#3F6CB4;font-weight:600;cursor:pointer">AISea에게 물어보세요 →</span>
+      </div>
+      <div style="position:absolute;top:22px;left:22px;z-index:14;width:268px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border:1px solid #E6E9EC;border-radius:16px;box-shadow:0 10px 34px rgba(20,23,28,.1);overflow:hidden">
+        <div style="padding:15px 16px 11px;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-weight:700;font-size:15px;white-space:nowrap">Quick-win 후보</div>
+          <div style="font-size:11px;color:#3F6CB4;background:#EAF0F8;padding:3px 8px;border-radius:7px;font-weight:600">{{ quickwinCount }}개</div>
+        </div>
+        <div style="padding:0 9px 9px">
+          <sc-for list="{{ hotspots }}" as="h" hint-placeholder-count="5">
+            <div onClick="{{ h.open }}" style="display:flex;align-items:center;gap:11px;padding:9px 8px;border-radius:11px;cursor:pointer" style-hover="background:#F2F5FA">
+              <span style="font-size:19px">{{ h.flag }}</span>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:13.5px;font-weight:600">{{ h.label }}</div>
+                <div style="font-size:11px;color:#9AA0A8">{{ h.region }}</div>
+              </div>
+              <div style="text-align:right">
+                <div class="mono" style="font-size:15px;font-weight:700;color:{{ h.color }};line-height:1">{{ h.score }}</div>
+                <div style="font-size:10px;color:#9AA0A8">매력도</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- LAYOUT B: split rail -->
+    <sc-if value="{{ layoutB }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;top:0;left:0;bottom:0;z-index:14;width:340px;background:#fff;border-right:1px solid #E6E9EC;box-shadow:6px 0 30px rgba(20,23,28,.05);display:flex;flex-direction:column">
+        <div style="padding:22px 22px 16px">
+          <div style="font-size:12px;color:#9AA0A8;letter-spacing:.04em">GLOBAL ENTRY RADAR</div>
+          <div style="font-size:21px;font-weight:700;margin-top:3px">진출 후보 워치리스트</div>
+          <div style="display:flex;gap:9px;margin-top:16px">
+            <div style="flex:1;background:#F2F5FA;border-radius:12px;padding:12px"><div class="mono" style="font-size:23px;font-weight:700;color:#3F6CB4">{{ watchTotal }}</div><div style="font-size:11px;color:#6B7280;margin-top:2px">분석 시장</div></div>
+            <div style="flex:1;background:#F2F5FA;border-radius:12px;padding:12px"><div class="mono" style="font-size:23px;font-weight:700;color:#4F8A6D">{{ quickwinCount }}</div><div style="font-size:11px;color:#6B7280;margin-top:2px">Quick-win</div></div>
+          </div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:4px 12px 16px">
+          <sc-for list="{{ hotspots }}" as="h" hint-placeholder-count="6">
+            <div onClick="{{ h.open }}" style="display:flex;align-items:center;gap:12px;padding:12px 11px;border-radius:13px;cursor:pointer;margin-bottom:3px" style-hover="background:#F2F5FA">
+              <span style="font-size:22px">{{ h.flag }}</span>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px">{{ h.label }}<sc-if value="{{ h.qw }}" hint-placeholder-val="{{ false }}"><span style="font-size:9.5px;color:#4F8A6D;background:#E9F3EE;padding:2px 6px;border-radius:5px;font-weight:700">QW</span></sc-if></div>
+                <div style="height:5px;background:#EEF0F2;border-radius:9px;margin-top:7px;overflow:hidden"><div style="height:100%;border-radius:9px;width:{{ h.width }};background:{{ h.color }}"></div></div>
+              </div>
+              <div class="mono" style="font-size:16px;font-weight:700;color:{{ h.color }}">{{ h.score }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- LAYOUT C: hero -->
+    <sc-if value="{{ layoutC }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;top:46px;left:0;right:0;z-index:14;text-align:center;pointer-events:none;padding:0 24px">
+        <div style="font-size:12px;color:#3F6CB4;letter-spacing:.14em;font-weight:600">OVERSEAS MARKET ENTRY · RISK INTELLIGENCE</div>
+        <div style="font-size:42px;font-weight:700;letter-spacing:-1px;margin-top:10px;line-height:1.05;text-wrap:balance">진출 전, 세계 시장의<br>리스크를 먼저 진단하세요</div>
+        <div style="font-size:15px;color:#6B7280;margin-top:14px">지도에서 국가를 선택하면 매력도·리스크 진단을 시작합니다</div>
+      </div>
+      <div style="position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:14;display:flex;gap:0;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border:1px solid #E6E9EC;border-radius:16px;box-shadow:0 12px 38px rgba(20,23,28,.1);overflow:hidden">
+        <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
+          <div style="padding:16px 30px;text-align:center;border-right:1px solid #EEF0F2">
+            <div class="mono" style="font-size:28px;font-weight:700;color:{{ s.color }};line-height:1">{{ s.value }}</div>
+            <div style="font-size:11px;color:#6B7280;margin-top:5px;letter-spacing:.03em">{{ s.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- zoom + legend (A & C) -->
+    <sc-if value="{{ showMapChrome }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;bottom:24px;right:24px;z-index:14;display:flex;flex-direction:column;gap:8px">
+        <div onClick="{{ zoomIn }}" style="width:40px;height:40px;border-radius:11px;background:#fff;border:1px solid #E6E9EC;box-shadow:0 4px 14px rgba(20,23,28,.07);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:19px;color:#3B3F46">+</div>
+        <div onClick="{{ zoomOut }}" style="width:40px;height:40px;border-radius:11px;background:#fff;border:1px solid #E6E9EC;box-shadow:0 4px 14px rgba(20,23,28,.07);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:21px;color:#3B3F46">−</div>
+      </div>
+      <div style="position:absolute;bottom:24px;left:24px;z-index:14;display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid #E6E9EC;border-radius:11px;padding:9px 14px;font-size:11.5px;color:#6B7280;box-shadow:0 4px 14px rgba(20,23,28,.06)">
+        <span style="font-weight:600;color:#3B3F46">진출 매력도</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:11px;height:11px;border-radius:3px;background:#C0533F"></span>주의</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:11px;height:11px;border-radius:3px;background:#C08A2E"></span>보통</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:11px;height:11px;border-radius:3px;background:#4F8A6D"></span>안정</span>
+      </div>
+    </sc-if>
+
+    <!-- scrim for popups -->
+    <sc-if value="{{ scrimOn }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ closeModal }}" style="position:absolute;inset:0;z-index:30;background:rgba(20,23,28,.34);backdrop-filter:blur(1.5px);animation:aisea-pop .18s ease"></div>
+    </sc-if>
+
+    <!-- ============ MODAL CONTAINER (P1/P2/PR1/PR2/PS1) ============ -->
+    <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;z-index:40;inset:{{ modalInset }};background:#fff;border-radius:{{ modalRadius }};box-shadow:{{ modalShadow }};overflow:hidden;display:flex;flex-direction:column;animation:aisea-pop .2s ease">
+
+        <!-- modal top strip -->
+        <div style="height:58px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid #EEF0F2;background:#fff">
+          <div style="display:flex;align-items:center;gap:12px;min-width:0">
+            <sc-if value="{{ isFull }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ closeModal }}" style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:9px;background:#F2F5FA;cursor:pointer;font-size:13px;font-weight:500;color:#3B3F46" style-hover="background:#E8EDF4">← 지도로</div>
+            </sc-if>
+            <span style="font-size:11px;color:#fff;background:{{ modalTagBg }};padding:3px 9px;border-radius:7px;font-weight:600;letter-spacing:.03em">{{ modalTag }}</span>
+            <span style="font-weight:700;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ modalTitle }}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:#9AA0A8;font-weight:500">{{ modalModeLabel }}</span>
+            <div onClick="{{ closeModal }}" style="width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#6B7280;font-size:17px" style-hover="background:#F2F5FA">✕</div>
+          </div>
+        </div>
+
+        <div style="flex:1;overflow-y:auto;background:#F7F8FA">
+
+          <!-- ===== P1 : COUNTRY INFO ===== -->
+          <sc-if value="{{ showP1 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:24px;display:grid;grid-template-columns:1.45fr 1fr;gap:18px;align-items:start">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:22px;display:flex;align-items:center;gap:20px">
+                  <div style="font-size:50px;line-height:1">{{ cd.flag }}</div>
+                  <div style="flex:1">
+                    <div style="display:flex;align-items:center;gap:10px"><span style="font-size:24px;font-weight:700">{{ cd.name }}</span><span style="font-size:12px;color:#6B7280;background:#F2F5FA;padding:3px 9px;border-radius:7px">{{ cd.regionLabel }}</span></div>
+                    <div style="font-size:13px;color:#6B7280;margin-top:5px">{{ cd.tagline }}</div>
+                  </div>
+                  <div style="text-align:center;padding-left:20px;border-left:1px solid #EEF0F2">
+                    <div class="mono" style="font-size:40px;font-weight:700;color:{{ cd.color }};line-height:1">{{ cd.overall }}</div>
+                    <div style="font-size:11px;color:#6B7280;margin-top:3px">진출 매력도</div>
+                    <div style="font-size:11px;font-weight:700;color:{{ cd.color }};margin-top:4px">{{ cd.levelLabel }}</div>
+                  </div>
+                </div>
+
+                <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:22px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="font-weight:700;font-size:15px">리스크 카테고리 스코어</div><div style="font-size:11px;color:#9AA0A8">룰셋 가중치 반영</div></div>
+                  <div style="display:flex;flex-direction:column;gap:14px">
+                    <sc-for list="{{ cd.scores }}" as="s" hint-placeholder-count="5">
+                      <div style="display:flex;align-items:center;gap:13px">
+                        <div style="width:88px;font-size:13px;color:#3B3F46">{{ s.label }}</div>
+                        <div style="flex:1;height:9px;background:#EEF0F2;border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;width:{{ s.width }};background:{{ s.color }}"></div></div>
+                        <div class="mono" style="width:30px;text-align:right;font-weight:600;font-size:13px">{{ s.score }}</div>
+                        <div style="width:48px;font-size:11px;color:#9AA0A8;text-align:right">w {{ s.weight }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:22px">
+                  <div style="font-weight:700;font-size:15px;margin-bottom:14px">최근 시그널</div>
+                  <div style="display:flex;flex-direction:column;gap:11px">
+                    <sc-for list="{{ cd.signals }}" as="g" hint-placeholder-count="3">
+                      <div style="display:flex;gap:11px;align-items:flex-start">
+                        <div style="width:7px;height:7px;border-radius:50%;background:{{ g.color }};margin-top:6px;flex:none"></div>
+                        <div style="flex:1"><div style="font-size:13.5px;line-height:1.45">{{ g.text }}</div><div style="font-size:11px;color:#9AA0A8;margin-top:2px">{{ g.meta }}</div></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <sc-if value="{{ cd.qw }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:linear-gradient(135deg,#E9F3EE,#F2F8F5);border:1px solid #D6E8DF;border-radius:16px;padding:18px">
+                    <div style="display:flex;align-items:center;gap:8px;color:#3C7359;font-weight:700;font-size:14px">⚡ Quick-win 후보</div>
+                    <div style="font-size:12.5px;color:#4A6B5C;margin-top:7px;line-height:1.5">{{ cd.qwText }}</div>
+                  </div>
+                </sc-if>
+                <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:20px">
+                  <div style="font-weight:700;font-size:15px;margin-bottom:15px">핵심 지표</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                    <sc-for list="{{ cd.indicators }}" as="i" hint-placeholder-count="6">
+                      <div><div style="font-size:11px;color:#9AA0A8">{{ i.label }}</div><div class="mono" style="font-size:19px;font-weight:700;margin-top:3px;color:#14171C">{{ i.value }}</div></div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="background:#101622;border-radius:16px;padding:20px;color:#fff">
+                  <div style="font-weight:700;font-size:15px">진단 보고서 생성</div>
+                  <div style="font-size:12.5px;color:#AEB6C4;margin-top:6px;line-height:1.5">현재 룰셋 기준으로 {{ cd.name }} 정밀 진단 보고서를 생성합니다.</div>
+                  <div onClick="{{ viewPR1 }}" style="margin-top:15px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:11px;padding:11px;text-align:center;cursor:pointer;font-size:13.5px;font-weight:600" style-hover="background:rgba(255,255,255,.16)">기존 보고서 보기</div>
+                  <div onClick="{{ genCountry }}" style="margin-top:9px;background:#3F6CB4;border-radius:11px;padding:13px;text-align:center;cursor:pointer;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(63,108,180,.4)" style-hover="background:#4B79C2">새 보고서 생성 →</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== P2 : REGION INFO ===== -->
+          <sc-if value="{{ showP2 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:24px;display:grid;grid-template-columns:1fr 1.5fr;gap:18px;align-items:start">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:22px">
+                  <div style="font-size:13px;color:#3F6CB4;font-weight:600;letter-spacing:.03em">REGION</div>
+                  <div style="font-size:26px;font-weight:700;margin-top:4px">{{ rd.name }}</div>
+                  <div style="display:flex;gap:12px;margin-top:18px">
+                    <div style="flex:1;text-align:center;background:#F2F5FA;border-radius:13px;padding:15px 8px"><div class="mono" style="font-size:26px;font-weight:700;color:#3F6CB4">{{ rd.avg }}</div><div style="font-size:11px;color:#6B7280;margin-top:3px">평균 매력도</div></div>
+                    <div style="flex:1;text-align:center;background:#F2F5FA;border-radius:13px;padding:15px 8px"><div class="mono" style="font-size:26px;font-weight:700;color:#4F8A6D">{{ rd.qwCount }}</div><div style="font-size:11px;color:#6B7280;margin-top:3px">Quick-win</div></div>
+                    <div style="flex:1;text-align:center;background:#F2F5FA;border-radius:13px;padding:15px 8px"><div class="mono" style="font-size:26px;font-weight:700">{{ rd.count }}</div><div style="font-size:11px;color:#6B7280;margin-top:3px">분석 국가</div></div>
+                  </div>
+                </div>
+                <div style="background:#101622;border-radius:16px;padding:20px;color:#fff">
+                  <div style="font-weight:700;font-size:15px">권역 진단 보고서</div>
+                  <div style="font-size:12.5px;color:#AEB6C4;margin-top:6px;line-height:1.5">{{ rd.name }} 권역 비교 진단 및 Quick-win 매트릭스를 생성합니다.</div>
+                  <div onClick="{{ viewPR2 }}" style="margin-top:15px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:11px;padding:11px;text-align:center;cursor:pointer;font-size:13.5px;font-weight:600" style-hover="background:rgba(255,255,255,.16)">기존 보고서 보기</div>
+                  <div onClick="{{ genRegion }}" style="margin-top:9px;background:#3F6CB4;border-radius:11px;padding:13px;text-align:center;cursor:pointer;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(63,108,180,.4)" style-hover="background:#4B79C2">새 보고서 생성 →</div>
+                </div>
+              </div>
+              <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:22px">
+                <div style="font-weight:700;font-size:15px;margin-bottom:14px">국가별 매력도 랭킹</div>
+                <div style="display:flex;flex-direction:column;gap:3px">
+                  <sc-for list="{{ rd.members }}" as="m" hint-placeholder-count="6">
+                    <div onClick="{{ m.open }}" style="display:flex;align-items:center;gap:13px;padding:11px 9px;border-radius:11px;cursor:pointer" style-hover="background:#F2F5FA">
+                      <div class="mono" style="width:20px;font-size:13px;color:#9AA0A8;font-weight:600">{{ m.rank }}</div>
+                      <span style="font-size:20px">{{ m.flag }}</span>
+                      <div style="flex:1;font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px">{{ m.label }}<sc-if value="{{ m.qw }}" hint-placeholder-val="{{ false }}"><span style="font-size:9.5px;color:#4F8A6D;background:#E9F3EE;padding:2px 6px;border-radius:5px;font-weight:700">QW</span></sc-if></div>
+                      <div style="width:120px;height:7px;background:#EEF0F2;border-radius:9px;overflow:hidden"><div style="height:100%;border-radius:9px;width:{{ m.width }};background:{{ m.color }}"></div></div>
+                      <div class="mono" style="width:30px;text-align:right;font-weight:700;font-size:15px;color:{{ m.color }}">{{ m.score }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== PR1 : COUNTRY REPORT ===== -->
+          <sc-if value="{{ showPR1 }}" hint-placeholder-val="{{ false }}">
+            <div style="max-width:980px;margin:0 auto;padding:28px 24px 36px">
+              <div style="background:#fff;border:1px solid #EEF0F2;border-radius:18px;overflow:hidden">
+                <div style="padding:28px 30px;background:linear-gradient(120deg,#101622,#1F2D45);color:#fff">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div><div style="font-size:12px;color:#8FA0BD;letter-spacing:.1em">COUNTRY DIAGNOSTIC REPORT</div><div style="font-size:28px;font-weight:700;margin-top:6px">{{ cd.flag }} {{ cd.name }} 시장 진단</div><div style="font-size:12.5px;color:#AEB6C4;margin-top:7px">생성일 2026.06.22 · 룰셋 {{ rulesetPreset }} · v1.0</div></div>
+                    <div style="text-align:center"><div class="mono" style="font-size:54px;font-weight:700;color:{{ cd.colorLight }};line-height:1">{{ cd.overall }}</div><div style="font-size:12px;color:#AEB6C4;margin-top:4px">{{ cd.levelLabel }}</div></div>
+                  </div>
+                </div>
+                <div style="padding:26px 30px">
+                  <div style="font-weight:700;font-size:15px;margin-bottom:8px">Executive Summary</div>
+                  <div style="font-size:14px;line-height:1.7;color:#3B3F46">{{ cd.summary }}</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px">
+                    <div>
+                      <div style="font-weight:700;font-size:14px;margin-bottom:14px">카테고리별 진단</div>
+                      <div style="display:flex;flex-direction:column;gap:13px">
+                        <sc-for list="{{ cd.scores }}" as="s" hint-placeholder-count="5">
+                          <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>{{ s.label }}</span><span class="mono" style="font-weight:600;color:{{ s.color }}">{{ s.score }}</span></div><div style="height:8px;background:#EEF0F2;border-radius:9px;overflow:hidden"><div style="height:100%;border-radius:9px;width:{{ s.width }};background:{{ s.color }}"></div></div><div style="font-size:11.5px;color:#9AA0A8;margin-top:5px;line-height:1.4">{{ s.note }}</div></div>
+                        </sc-for>
+                      </div>
+                    </div>
+                    <div>
+                      <div style="font-weight:700;font-size:14px;margin-bottom:14px">권고 사항</div>
+                      <div style="display:flex;flex-direction:column;gap:10px">
+                        <sc-for list="{{ cd.recos }}" as="r" hint-placeholder-count="4">
+                          <div style="background:#F7F8FA;border:1px solid #EEF0F2;border-radius:12px;padding:13px 14px;display:flex;gap:11px"><span style="color:{{ r.color }};font-weight:700;font-size:13px">{{ r.tag }}</span><span style="flex:1;font-size:13px;line-height:1.45">{{ r.text }}</span></div>
+                        </sc-for>
+                      </div>
+                      <div style="display:flex;gap:9px;margin-top:18px">
+                        <div onClick="{{ openRulesetFromReport }}" style="flex:1;text-align:center;border:1px solid #DCE0E6;border-radius:11px;padding:12px;cursor:pointer;font-size:13.5px;font-weight:600;color:#3B3F46" style-hover="background:#F2F5FA">⚙ 룰셋 설정</div>
+                        <div onClick="{{ genCountry }}" style="flex:1;text-align:center;background:#3F6CB4;color:#fff;border-radius:11px;padding:12px;cursor:pointer;font-size:13.5px;font-weight:700" style-hover="background:#4B79C2">↻ 재생성</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== PR2 : REGION REPORT ===== -->
+          <sc-if value="{{ showPR2 }}" hint-placeholder-val="{{ false }}">
+            <div style="max-width:1040px;margin:0 auto;padding:28px 24px 36px">
+              <div style="background:#fff;border:1px solid #EEF0F2;border-radius:18px;overflow:hidden">
+                <div style="padding:28px 30px;background:linear-gradient(120deg,#101622,#1F2D45);color:#fff;display:flex;align-items:center;justify-content:space-between">
+                  <div><div style="font-size:12px;color:#8FA0BD;letter-spacing:.1em">REGION DIAGNOSTIC REPORT</div><div style="font-size:28px;font-weight:700;margin-top:6px">{{ rd.name }} 권역 진단</div><div style="font-size:12.5px;color:#AEB6C4;margin-top:7px">{{ rd.count }}개국 비교 · 룰셋 {{ rulesetPreset }} · v1.0</div></div>
+                  <div style="text-align:center"><div class="mono" style="font-size:48px;font-weight:700;color:#7FB6FF;line-height:1">{{ rd.avg }}</div><div style="font-size:12px;color:#AEB6C4;margin-top:4px">권역 평균</div></div>
+                </div>
+                <div style="padding:26px 30px">
+                  <div style="font-weight:700;font-size:15px;margin-bottom:8px">Executive Summary</div>
+                  <div style="font-size:14px;line-height:1.7;color:#3B3F46">{{ rd.summary }}</div>
+                  <div style="font-weight:700;font-size:14px;margin:26px 0 13px">Quick-win 매트릭스 (매력도 × 진입속도)</div>
+                  <div style="display:flex;flex-direction:column;gap:3px">
+                    <sc-for list="{{ rd.members }}" as="m" hint-placeholder-count="6">
+                      <div style="display:flex;align-items:center;gap:13px;padding:11px 12px;border-radius:11px;background:#F7F8FA">
+                        <div class="mono" style="width:20px;font-size:13px;color:#9AA0A8;font-weight:600">{{ m.rank }}</div>
+                        <span style="font-size:20px">{{ m.flag }}</span>
+                        <div style="flex:1;font-size:14px;font-weight:600">{{ m.label }}</div>
+                        <div style="font-size:12px;color:#6B7280;width:130px">{{ m.speed }}</div>
+                        <div style="width:130px;height:7px;background:#EEF0F2;border-radius:9px;overflow:hidden"><div style="height:100%;border-radius:9px;width:{{ m.width }};background:{{ m.color }}"></div></div>
+                        <div class="mono" style="width:30px;text-align:right;font-weight:700;font-size:15px;color:{{ m.color }}">{{ m.score }}</div>
+                        <sc-if value="{{ m.qw }}" hint-placeholder-val="{{ false }}"><span style="font-size:9.5px;color:#4F8A6D;background:#E9F3EE;padding:3px 7px;border-radius:6px;font-weight:700">QW</span></sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;gap:9px;margin-top:20px;max-width:380px">
+                    <div onClick="{{ openRulesetFromReport }}" style="flex:1;text-align:center;border:1px solid #DCE0E6;border-radius:11px;padding:12px;cursor:pointer;font-size:13.5px;font-weight:600;color:#3B3F46" style-hover="background:#F2F5FA">⚙ 룰셋 설정</div>
+                    <div onClick="{{ genRegion }}" style="flex:1;text-align:center;background:#3F6CB4;color:#fff;border-radius:11px;padding:12px;cursor:pointer;font-size:13.5px;font-weight:700" style-hover="background:#4B79C2">↻ 재생성</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== PS1 : RULESET ===== -->
+          <sc-if value="{{ showPS1 }}" hint-placeholder-val="{{ false }}">
+            <div style="max-width:900px;margin:0 auto;padding:26px 24px 36px;display:flex;flex-direction:column;gap:18px">
+              <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:24px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><div style="font-weight:700;font-size:16px">진단 룰셋</div><div style="font-size:12px;color:{{ weightSumColor }};font-weight:600">가중치 합계 {{ weightSum }}%</div></div>
+                <div style="font-size:12.5px;color:#9AA0A8;margin-bottom:20px">카테고리 가중치를 조정하면 모든 보고서 매력도 점수가 즉시 재계산됩니다.</div>
+                <div style="display:flex;flex-direction:column;gap:18px">
+                  <sc-for list="{{ weightRows }}" as="w" hint-placeholder-count="5">
+                    <div style="display:flex;align-items:center;gap:16px">
+                      <div style="width:96px;font-size:13.5px;font-weight:600">{{ w.label }}</div>
+                      <input type="range" min="0" max="40" value="{{ w.value }}" onInput="{{ w.onInput }}" style="flex:1;accent-color:#3F6CB4;height:4px" />
+                      <div class="mono" style="width:46px;text-align:right;font-size:15px;font-weight:700;color:#3F6CB4">{{ w.value }}%</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+                <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:22px">
+                  <div style="font-weight:700;font-size:15px;margin-bottom:6px">Quick-win 기준</div>
+                  <div style="font-size:12.5px;color:#9AA0A8;margin-bottom:18px">매력도 임계값 이상 + 운영환경 양호 시 Quick-win 지정</div>
+                  <div style="display:flex;align-items:center;gap:14px"><input type="range" min="55" max="80" value="{{ qwThreshold }}" onInput="{{ onQwInput }}" style="flex:1;accent-color:#3F6CB4;height:4px" /><div class="mono" style="width:40px;text-align:right;font-size:18px;font-weight:700;color:#3F6CB4">{{ qwThreshold }}</div></div>
+                </div>
+                <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:22px">
+                  <div style="font-weight:700;font-size:15px;margin-bottom:14px">시나리오 프리셋</div>
+                  <div style="display:flex;gap:8px">
+                    <sc-for list="{{ presets }}" as="p" hint-placeholder-count="3">
+                      <div onClick="{{ p.select }}" style="flex:1;text-align:center;padding:11px 6px;border-radius:11px;cursor:pointer;font-size:13px;font-weight:600;border:1.5px solid {{ p.border }};background:{{ p.bg }};color:{{ p.ink }}">{{ p.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+              <div style="background:#fff;border:1px solid #EEF0F2;border-radius:16px;padding:22px">
+                <div style="font-weight:700;font-size:15px;margin-bottom:14px">데이터 소스</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+                  <sc-for list="{{ dataSources }}" as="d" hint-placeholder-count="5">
+                    <div onClick="{{ d.toggle }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:12px;cursor:pointer;border:1px solid {{ d.border }};background:{{ d.bg }}">
+                      <span style="font-size:13.5px;font-weight:500;color:{{ d.ink }}">{{ d.label }}</span>
+                      <div style="width:38px;height:22px;border-radius:99px;background:{{ d.track }};position:relative;transition:background .15s"><div style="position:absolute;top:2px;left:{{ d.knobX }};width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:left .15s"></div></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div onClick="{{ applyRuleset }}" style="align-self:flex-end;background:#3F6CB4;color:#fff;border-radius:12px;padding:13px 26px;cursor:pointer;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(63,108,180,.32)" style-hover="background:#4B79C2">{{ rulesetApplyLabel }}</div>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ PS2 : PROGRESS POPUP ============ -->
+    <sc-if value="{{ ps2Open }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;z-index:45;display:flex;align-items:center;justify-content:center;pointer-events:none">
+      <div style="pointer-events:auto;width:560px;max-width:90%;background:#fff;border-radius:18px;box-shadow:0 24px 70px rgba(20,23,28,.3);overflow:hidden;animation:aisea-op .2s ease">
+        <div style="padding:22px 24px;border-bottom:1px solid #EEF0F2;display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div style="flex:1"><div style="font-size:11px;color:#3F6CB4;font-weight:600;letter-spacing:.08em">GENERATING REPORT</div><div style="font-size:18px;font-weight:700;margin-top:3px">{{ ps2Title }}</div></div>
+          <div onClick="{{ minimizePs2 }}" style="width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#6B7280;font-size:15px" style-hover="background:#F2F5FA" title="최소화">▢</div>
+        </div>
+        <div style="padding:22px 24px">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px;color:#6B7280">전체 진행률</span><span class="mono" style="font-size:30px;font-weight:700;color:#3F6CB4;line-height:1">{{ ps2Overall }}%</span></div>
+          <div style="height:10px;background:#EEF0F2;border-radius:99px;overflow:hidden;margin-bottom:22px"><div style="height:100%;border-radius:99px;width:{{ ps2OverallW }};background:linear-gradient(90deg,#3F6CB4,#6E97D6);transition:width .3s"></div></div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ ps2Tasks }}" as="t" hint-placeholder-count="5">
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px;display:flex;align-items:center;gap:8px"><span style="color:{{ t.iconColor }};font-size:13px">{{ t.icon }}</span>{{ t.label }}</span><span class="mono" style="font-size:12px;color:#9AA0A8">{{ t.pct }}%</span></div>
+                <div style="height:6px;background:#EEF0F2;border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;width:{{ t.width }};background:{{ t.barColor }};transition:width .3s"></div></div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ ps2Done }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ openFinishedReport }}" style="margin-top:22px;background:#3F6CB4;color:#fff;border-radius:12px;padding:14px;text-align:center;cursor:pointer;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(63,108,180,.32)" style-hover="background:#4B79C2">보고서 열기 →</div>
+          </sc-if>
+        </div>
+      </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <!-- ============ PROGRESS CARD (top-right) ============ -->
+  <sc-if value="{{ showProgressCard }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;top:72px;right:22px;z-index:35;width:288px;background:#fff;border:1px solid #E6E9EC;border-radius:15px;box-shadow:0 12px 36px rgba(20,23,28,.14);padding:16px;animation:aisea-slide .25s ease">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:13px">
+        <sc-if value="{{ cardDone }}" hint-placeholder-val="{{ false }}"><div style="width:22px;height:22px;border-radius:50%;background:#4F8A6D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px">✓</div></sc-if>
+        <sc-if value="{{ cardRunning }}" hint-placeholder-val="{{ true }}"><div style="width:18px;height:18px;border:2.5px solid #DCE0E6;border-top-color:#3F6CB4;border-radius:50%;animation:aisea-spin .9s linear infinite"></div></sc-if>
+        <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ cardTitle }}</div><div style="font-size:11px;color:#9AA0A8">{{ cardSub }}</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:13px">
+        <div style="flex:1;height:7px;background:#EEF0F2;border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;width:{{ cardW }};background:{{ cardBarColor }};transition:width .3s"></div></div>
+        <span class="mono" style="font-size:13px;font-weight:700;color:{{ cardBarColor }}">{{ cardPct }}%</span>
+      </div>
+      <div onClick="{{ cardAction }}" style="text-align:center;border-radius:10px;padding:10px;cursor:pointer;font-size:13px;font-weight:600;background:{{ cardBtnBg }};color:{{ cardBtnInk }}" style-hover="opacity:.9">{{ cardBtnLabel }}</div>
+    </div>
+  </sc-if>
+
+  <!-- ============ CHATBOT C1 ============ -->
+  <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;z-index:50;display:flex;pointer-events:none;{{ chatWrapCss }}">
+    <div style="pointer-events:auto;display:flex;flex-direction:column;background:#fff;border:1px solid #E6E9EC;border-radius:18px;box-shadow:0 24px 70px rgba(20,23,28,.26);overflow:hidden;animation:aisea-op .2s ease;{{ chatBoxCss }}">
+      <div style="flex:none;padding:15px 18px;background:#101622;color:#fff;display:flex;align-items:center;gap:11px">
+        <div style="width:30px;height:30px;border-radius:9px;background:#3F6CB4;display:flex;align-items:center;justify-content:center"><div style="width:13px;height:11px;border:2px solid #fff;border-radius:4px"></div></div>
+        <div style="flex:1"><div style="font-weight:700;font-size:14px">AISea 어시스턴트</div><div style="font-size:11px;color:#8FA0BD;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:#4F8A6D;display:inline-block"></span>진단 엔진 온라인</div></div>
+        <div onClick="{{ toggleChat }}" style="width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#8FA0BD;font-size:16px" style-hover="background:rgba(255,255,255,.1)">✕</div>
+      </div>
+      <div ref="{{ setChatScrollEl }}" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:13px;background:#F7F8FA">
+        <sc-for list="{{ chatMessages }}" as="msg" hint-placeholder-count="2">
+          <div style="display:flex;justify-content:{{ msg.justify }}">
+            <div style="max-width:80%;padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.5;background:{{ msg.bg }};color:{{ msg.ink }};border:{{ msg.border }};white-space:pre-wrap">{{ msg.text }}</div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ chatTyping }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;justify-content:flex-start"><div style="padding:13px 16px;border-radius:14px;background:#fff;border:1px solid #EEF0F2;display:flex;gap:4px"><div style="width:6px;height:6px;border-radius:50%;background:#9AA0A8;animation:aisea-pulse 1s infinite"></div><div style="width:6px;height:6px;border-radius:50%;background:#9AA0A8;animation:aisea-pulse 1s infinite .2s"></div><div style="width:6px;height:6px;border-radius:50%;background:#9AA0A8;animation:aisea-pulse 1s infinite .4s"></div></div></div>
+        </sc-if>
+      </div>
+      <div style="flex:none;padding:12px 14px;border-top:1px solid #EEF0F2;background:#fff">
+        <sc-if value="{{ showQuickPrompts }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:11px">
+            <sc-for list="{{ quickPrompts }}" as="q" hint-placeholder-count="2">
+              <div onClick="{{ q.run }}" style="font-size:12px;padding:7px 11px;border-radius:9px;background:#EAF0F8;color:#3F6CB4;cursor:pointer;font-weight:500;line-height:1.3" style-hover="background:#DCE6F5">{{ q.text }}</div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <div style="display:flex;align-items:center;gap:9px;background:#F2F5FA;border-radius:12px;padding:5px 5px 5px 14px">
+          <input value="{{ chatInput }}" onChange="{{ onChatChange }}" onKeyDown="{{ onChatKey }}" placeholder="진출 시장에 대해 물어보세요…" style="flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:13.5px;color:#14171C" />
+          <div onClick="{{ sendChat }}" style="width:36px;height:36px;border-radius:10px;background:#3F6CB4;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:15px" style-hover="background:#4B79C2">↑</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </sc-if>
+
+  <!-- chat FAB -->
+  <sc-if value="{{ showFab }}" hint-placeholder-val="{{ true }}">
+    <div onClick="{{ toggleChat }}" style="position:absolute;bottom:26px;right:78px;z-index:48;height:52px;padding:0 20px 0 18px;border-radius:26px;background:#101622;color:#fff;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 10px 30px rgba(20,23,28,.28);animation:aisea-slide .3s ease" style-hover="background:#1B2333">
+      <div style="width:30px;height:30px;border-radius:50%;background:#3F6CB4;display:flex;align-items:center;justify-content:center"><div style="width:13px;height:11px;border:2px solid #fff;border-radius:4px"></div></div>
+      <span style="font-size:14px;font-weight:600">AISea에게 물어보기</span>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    layout: 'a',
+    mapLoading: true,
+    menu: null,                 // 'country' | 'region' | 'report' | null
+    modal: null,                // 'P1'|'P2'|'PR1'|'PR2'|'PS1'
+    modalMode: 'popup',         // 'popup' | 'full'
+    ps2: false,
+    ps2Job: null,
+    country: 'Poland',
+    region: 'Europe',
+    chatOpen: false,
+    chatTyping: false,
+    chatInput: '',
+    searchVal: '',
+    messages: [{ who:'bot', text:'안녕하세요 👋 AISea 진단 어시스턴트예요.\n진출을 검토 중인 국가나 권역을 말씀해 주시면 리스크 진단을 도와드릴게요.' }],
+    jobs: [],
+    weights: { pol:18, eco:20, mkt:26, ops:21, fin:15 },
+    qw: 66,
+    preset: '균형',
+    sources: { trade:true, reg:true, news:true, market:true, fx:true },
+    dirty: false,
+    tick: 0,
+  };
+
+  CATS = [
+    { key:'pol', label:'정치·규제' },
+    { key:'eco', label:'거시경제' },
+    { key:'mkt', label:'시장성' },
+    { key:'ops', label:'운영 환경' },
+    { key:'fin', label:'재무·금융' },
+  ];
+
+  FLAGS = { 'Poland':'🇵🇱','Germany':'🇩🇪','France':'🇫🇷','Spain':'🇪🇸','Netherlands':'🇳🇱','Czechia':'🇨🇿','Vietnam':'🇻🇳','India':'🇮🇳','Indonesia':'🇮🇩','Thailand':'🇹🇭','Malaysia':'🇲🇾','Philippines':'🇵🇭','United States of America':'🇺🇸','Canada':'🇨🇦','Mexico':'🇲🇽','Brazil':'🇧🇷','Chile':'🇨🇱','Colombia':'🇨🇴','Argentina':'🇦🇷','Peru':'🇵🇪','United Arab Emirates':'🇦🇪','Saudi Arabia':'🇸🇦','Turkey':'🇹🇷','South Africa':'🇿🇦','Egypt':'🇪🇬','Morocco':'🇲🇦','China':'🇨🇳','Japan':'🇯🇵','South Korea':'🇰🇷','United Kingdom':'🇬🇧','Italy':'🇮🇹','Australia':'🇦🇺' };
+
+  REGION_MEMBERS = {
+    'Europe': ['Poland','Germany','France','Spain','Netherlands','Czechia'],
+    'Asia-Pacific': ['Vietnam','India','Indonesia','Thailand','Malaysia','Philippines'],
+    'North America': ['United States of America','Canada','Mexico'],
+    'Latin America': ['Brazil','Chile','Colombia','Argentina','Peru','Mexico'],
+    'MEA': ['United Arab Emirates','Saudi Arabia','Turkey','South Africa','Egypt','Morocco'],
+  };
+
+  REGION_FULL = {
+    'Europe': new Set(['Poland','Germany','France','Spain','Italy','Netherlands','Belgium','Sweden','Norway','Finland','Denmark','Austria','Switzerland','Portugal','Ireland','Czechia','Czech Republic','Hungary','Romania','Greece','Ukraine','United Kingdom','Slovakia','Bulgaria','Croatia','Serbia','Lithuania','Latvia','Estonia']),
+    'Asia-Pacific': new Set(['China','India','Japan','South Korea','Vietnam','Indonesia','Thailand','Malaysia','Philippines','Singapore','Australia','New Zealand','Taiwan','Bangladesh','Pakistan','Myanmar','Cambodia','Laos','Sri Lanka','Nepal','Mongolia']),
+    'North America': new Set(['United States of America','Canada','Mexico']),
+    'Latin America': new Set(['Brazil','Argentina','Chile','Colombia','Peru','Ecuador','Bolivia','Paraguay','Uruguay','Venezuela','Panama','Guatemala','Costa Rica','Cuba']),
+    'MEA': new Set(['Saudi Arabia','United Arab Emirates','Qatar','Oman','Kuwait','South Africa','Egypt','Nigeria','Kenya','Morocco','Turkey','Israel','Ethiopia','Algeria','Tunisia','Ghana','Tanzania','Angola']),
+  };
+
+  REGION_LABEL = { 'Europe':'유럽','Asia-Pacific':'아시아·태평양','North America':'북미','Latin America':'중남미','MEA':'중동·아프리카' };
+
+  // ---------- deterministic data ----------
+  hash(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619);} return (h>>>0); }
+  rnd(s,salt){ return (this.hash(s+'|'+salt)%1000)/1000; }
+  catScore(name,key){ return 34 + Math.round(this.rnd(name,key)*56); }
+
+  normWeights(){
+    const w=this.state.weights; const sum=w.pol+w.eco+w.mkt+w.ops+w.fin || 1;
+    const o={}; this.CATS.forEach(c=> o[c.key]=w[c.key]/sum); return o;
+  }
+  overall(name){
+    const nw=this.normWeights(); let t=0;
+    this.CATS.forEach(c=> t += this.catScore(name,c.key)*nw[c.key]);
+    return Math.round(t);
+  }
+  isQw(name){ return this.overall(name) >= this.state.qw && this.catScore(name,'ops') >= 56; }
+  levelOf(v){ if(v>=70) return {label:'안정',color:'#4F8A6D',light:'#7FD3A6'}; if(v>=55) return {label:'보통',color:'#C08A2E',light:'#E8C173'}; return {label:'주의',color:'#C0533F',light:'#E89380'}; }
+  catColor(v){ if(v>=68) return '#4F8A6D'; if(v>=50) return '#C08A2E'; return '#C0533F'; }
+  flag(n){ return this.FLAGS[n] || '🏳️'; }
+  disp(n){ return n==='United States of America' ? 'United States' : n; }
+  regionOf(name){ for(const r in this.REGION_FULL){ if(this.REGION_FULL[r].has(name)) return r; } return 'Global'; }
+
+  // ---------- map ----------
+  setMapEl = (el)=>{ this.mapEl = el; };
+  setChatScrollEl = (el)=>{ this.chatScrollEl = el; };
+
+  componentDidMount(){ this.initMap(); this._resize = ()=>this.fitMap(); window.addEventListener('resize', this._resize); }
+  componentWillUnmount(){ window.removeEventListener('resize', this._resize); (this.intervals||[]).forEach(clearInterval); }
+
+  async initMap(){
+    let n=0; while((!window.d3 || !window.topojson) && n<120){ await new Promise(r=>setTimeout(r,50)); n++; }
+    if(!window.d3 || !window.topojson){ this.setState({mapLoading:false}); return; }
+    try{
+      const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+      const world = await res.json();
+      this.features = window.topojson.feature(world, world.objects.countries).features
+        .filter(f=> f.properties.name !== 'Antarctica');
+      this.drawMap();
+      this.setState({mapLoading:false});
+    }catch(e){ this.setState({mapLoading:false}); }
+  }
+
+  drawMap(){
+    const el=this.mapEl; if(!el || !this.features) return;
+    const d3=window.d3;
+    el.innerHTML='';
+    const w=el.clientWidth||1200, h=el.clientHeight||700;
+    const fc={type:'FeatureCollection',features:this.features};
+    this.projection = d3.geoNaturalEarth1().fitExtent([[24,30],[w-24,h-30]], fc);
+    this.geoPath = d3.geoPath(this.projection);
+    const svg = d3.select(el).append('svg').attr('width',w).attr('height',h).style('display','block');
+    this.zoomG = svg.append('g');
+    this.pathSel = this.zoomG.selectAll('path').data(this.features).join('path')
+      .attr('d', this.geoPath)
+      .attr('stroke','#F4F6F8').attr('stroke-width',0.6)
+      .style('cursor','pointer')
+      .on('mouseenter', (e,d)=>{ if(d.properties.name!==this.state.country) d3.select(e.currentTarget).attr('fill','#9DB8DE'); })
+      .on('mouseleave', (e,d)=> this.paintMap())
+      .on('click', (e,d)=> this.openCountry(d.properties.name, 'popup'));
+    // hotspot markers
+    this.markerG = svg.append('g');
+    ['Poland','Vietnam','India','Brazil','Indonesia','Mexico'].forEach(n=>{
+      const f=this.features.find(x=>x.properties.name===n); if(!f) return;
+      const c=this.geoPath.centroid(f); if(!c||isNaN(c[0])) return;
+      const g=this.markerG.append('g').style('cursor','pointer').on('click',()=>this.openCountry(n,'popup'));
+      const ring=g.append('circle').attr('cx',c[0]).attr('cy',c[1]).attr('r',6).attr('fill','#3F6CB4');
+      ring.style('transform-origin',c[0]+'px '+c[1]+'px').style('animation','aisea-pulse 2.4s ease-out infinite');
+      g.append('circle').attr('cx',c[0]).attr('cy',c[1]).attr('r',4).attr('fill','#3F6CB4').attr('stroke','#fff').attr('stroke-width',1.5);
+    });
+    this.zoomBeh = d3.zoom().scaleExtent([1,6]).on('zoom',(ev)=> this.zoomG.attr('transform',ev.transform) || this.markerG.attr('transform',ev.transform));
+    svg.call(this.zoomBeh);
+    this.svgSel = svg;
+    this.paintMap();
+  }
+  fitMap(){ if(this.features){ this.drawMap(); } }
+
+  paintMap(){
+    if(!this.pathSel) return;
+    const sc=this.state.country, modalSel = this.state.modal==='P1';
+    const regSel = (this.state.modal==='P2'||this.state.modal==='PR2') ? this.state.region : null;
+    const members = regSel ? this.REGION_FULL[regSel] : null;
+    this.pathSel.attr('fill', d=>{
+      const n=d.properties.name;
+      if(modalSel && n===sc) return '#3F6CB4';
+      if(members && members.has(n)) return '#7FA0D2';
+      // tint by attractiveness, very light
+      const lv=this.overall(n);
+      if(lv>=70) return '#D7E2DC';
+      if(lv>=55) return '#E2DDCF';
+      return '#E6D8D2';
+    });
+  }
+
+  // ---------- navigation ----------
+  goMap = ()=>{ this.setState({modal:null, ps2:false, menu:null}); setTimeout(()=>this.paintMap(),0); };
+  closeMenus = ()=> this.setState({menu:null});
+  toggleCountryMenu = ()=> this.setState(s=>({menu: s.menu==='country'?null:'country'}));
+  toggleRegionMenu = ()=> this.setState(s=>({menu: s.menu==='region'?null:'region'}));
+  toggleReportMenu = ()=> this.setState(s=>({menu: s.menu==='report'?null:'report'}));
+
+  setLayoutA=()=>this.setState({layout:'a'});
+  setLayoutB=()=>this.setState({layout:'b'});
+  setLayoutC=()=>this.setState({layout:'c'});
+
+  zoomIn=()=>{ if(this.svgSel&&this.zoomBeh) this.svgSel.transition().duration(300).call(this.zoomBeh.scaleBy,1.4); };
+  zoomOut=()=>{ if(this.svgSel&&this.zoomBeh) this.svgSel.transition().duration(300).call(this.zoomBeh.scaleBy,0.7); };
+
+  openCountry=(name, mode)=>{ this.setState({country:name, modal:'P1', modalMode:mode, menu:null}); setTimeout(()=>this.paintMap(),0); };
+  openRegion=(name, mode)=>{ this.setState({region:name, modal:'P2', modalMode:mode, menu:null}); setTimeout(()=>this.paintMap(),0); };
+  openPR1Full=()=>{ this.setState({modal:'PR1', modalMode:'full', menu:null}); };
+  openPR2Full=()=>{ this.setState({modal:'PR2', modalMode:'full', menu:null}); setTimeout(()=>this.paintMap(),0); };
+  openRulesetFull=()=>{ this.setState({modal:'PS1', modalMode:'full', menu:null}); };
+  openRulesetFromReport=()=>{ this.setState({modal:'PS1'}); };
+  viewPR1=()=>{ this.setState({modal:'PR1'}); };
+  viewPR2=()=>{ this.setState({modal:'PR2'}); };
+  closeModal=()=>{ this.setState({modal:null}); setTimeout(()=>this.paintMap(),0); };
+
+  // ---------- search ----------
+  onSearchChange=(e)=> this.setState({searchVal:e.target.value});
+  onSearchKey=(e)=>{ if(e.key==='Enter'){ const q=this.state.searchVal.trim().toLowerCase(); if(!q) return; const hit=Object.keys(this.FLAGS).find(n=> this.disp(n).toLowerCase().includes(q)); if(hit){ this.openCountry(hit,'popup'); this.setState({searchVal:''}); } } };
+
+  // ---------- chat ----------
+  toggleChat=()=> this.setState(s=>({chatOpen:!s.chatOpen}));
+  onChatChange=(e)=> this.setState({chatInput:e.target.value});
+  onChatKey=(e)=>{ if(e.key==='Enter') this.sendChat(); };
+  scrollChat(){ setTimeout(()=>{ if(this.chatScrollEl) this.chatScrollEl.scrollTop=this.chatScrollEl.scrollHeight; },30); }
+
+  sendChat=()=>{
+    const t=this.state.chatInput.trim(); if(!t) return;
+    this.setState(s=>({messages:[...s.messages,{who:'user',text:t}], chatInput:'', chatTyping:true}));
+    this.scrollChat();
+    setTimeout(()=> this.botRespond(t), 900);
+  };
+  runPrompt=(t)=>{ this.setState(s=>({messages:[...s.messages,{who:'user',text:t}], chatTyping:true})); this.scrollChat(); setTimeout(()=>this.botRespond(t),900); };
+
+  botRespond(t){
+    const lo=t.toLowerCase();
+    const koCountry={ '폴란드':'Poland','독일':'Germany','베트남':'Vietnam','인도네시아':'Indonesia','인도':'India','브라질':'Brazil','멕시코':'Mexico','프랑스':'France','스페인':'Spain','미국':'United States of America','태국':'Thailand' };
+    const koRegion={ '유럽':'Europe','아시아':'Asia-Pacific','북미':'North America','중남미':'Latin America','중동':'MEA','아프리카':'MEA' };
+    let country=null, region=null;
+    for(const k in koCountry){ if(t.includes(k)){ country=koCountry[k]; break; } }
+    if(!country){ for(const n of Object.keys(this.FLAGS)){ if(lo.includes(this.disp(n).toLowerCase())){ country=n; break; } } }
+    for(const k in koRegion){ if(t.includes(k)){ region=koRegion[k]; break; } }
+    if(!region && (lo.includes('europe'))) region='Europe';
+    const wantReport = t.includes('보고서')||lo.includes('report')||t.includes('진단');
+    const wantQw = t.includes('quick')||t.includes('퀵')||lo.includes('quick-win');
+
+    let reply;
+    if(country && (wantReport || true)){
+      const ov=this.overall(country);
+      reply = `${this.flag(country)} ${this.disp(country)} 진단을 시작합니다.\n현재 진출 매력도는 ${ov}점(${this.levelOf(ov).label})으로 평가돼요. 보고서 생성을 진행할게요.`;
+      this.setState(s=>({messages:[...s.messages,{who:'bot',text:reply}], chatTyping:false}));
+      this.startJob(country,'country', true);
+    } else if(region && (wantQw || wantReport)){
+      const qc=this.REGION_MEMBERS[region].filter(n=>this.isQw(n)).length;
+      reply = `${this.REGION_LABEL[region]} 권역 내 Quick-win 가능 국가는 현재 ${qc}곳입니다.\n권역 진단 보고서를 생성할게요.`;
+      this.setState(s=>({messages:[...s.messages,{who:'bot',text:reply}], chatTyping:false}));
+      this.startJob(region,'region', true);
+    } else if(region){
+      this.setState(s=>({messages:[...s.messages,{who:'bot',text:`${this.REGION_LABEL[region]} 권역 정보를 열어드릴게요.`}], chatTyping:false}));
+      setTimeout(()=>this.openRegion(region,'popup'),400);
+    } else {
+      reply = '진출을 검토 중인 국가나 권역을 알려주세요. 예: "폴란드 시장 진단 보고서 만들어줘", "유럽 권역 Quick-win 분석".';
+      this.setState(s=>({messages:[...s.messages,{who:'bot',text:reply}], chatTyping:false}));
+    }
+    this.scrollChat();
+  }
+
+  // ---------- report jobs ----------
+  TASK_DEFS=[
+    {key:'collect',label:'데이터 수집',icon:'⛁'},
+    {key:'reg',label:'규제·정책 분석',icon:'§'},
+    {key:'market',label:'시장성 평가',icon:'◷'},
+    {key:'risk',label:'리스크 스코어링',icon:'△'},
+    {key:'write',label:'보고서 작성',icon:'✎'},
+  ];
+
+  startJob(target, type, fromChat){
+    const id='j'+Date.now();
+    const tasks=this.TASK_DEFS.map((d,i)=>({...d, pct:0, rate: 0.7+this.rnd(target,d.key)*1.1, delay:i*4 }));
+    const job={ id, target, type, tasks, overall:0, status:'running' };
+    this.setState(s=>({ jobs:[job, ...s.jobs.filter(j=>j.status!=='archived')] }));
+    if(!fromChat){ this.setState({ps2:true, ps2Job:id, modal:null}); }
+    const iv=setInterval(()=>{
+      let done=true;
+      const j=this.state.jobs.find(x=>x.id===id); if(!j){ clearInterval(iv); return; }
+      j.tasks.forEach(tk=>{ if(tk.delay>0){tk.delay--; done=false; return;} if(tk.pct<100){ tk.pct=Math.min(100, tk.pct + (1.6+tk.rate*2.4)); if(tk.pct<100) done=false; } });
+      j.overall=Math.round(j.tasks.reduce((a,b)=>a+b.pct,0)/j.tasks.length);
+      if(done){ j.overall=100; j.status='done'; clearInterval(iv); }
+      this.setState(s=>({ jobs:[...s.jobs], tick:s.tick+1 }));
+    }, 240);
+    this.intervals=this.intervals||[]; this.intervals.push(iv);
+  }
+  genCountry=()=>{ this.startJob(this.state.country,'country', false); };
+  genRegion=()=>{ this.startJob(this.state.region,'region', false); };
+  openPs2ForCard=()=>{ const j=this.activeJob(); if(j) this.setState({ps2:true, ps2Job:j.id}); };
+  minimizePs2=()=> this.setState({ps2:false});
+  activeJob(){ return this.state.jobs.find(j=>j.status!=='archived') || null; }
+  openFinishedReport=()=>{
+    const j=this.state.jobs.find(x=>x.id===this.state.ps2Job) || this.activeJob(); if(!j) return;
+    const patch = j.type==='country' ? {country:j.target, modal:'PR1'} : {region:j.target, modal:'PR2'};
+    j.status='archived';
+    this.setState(s=>({ ...patch, ps2:false, modalMode:'full', jobs:[...s.jobs] }));
+    setTimeout(()=>this.paintMap(),0);
+  };
+  cardAction=()=>{ const j=this.activeJob(); if(!j) return; if(j.status==='done'){ this.openCardReport(j); } else { this.openPs2ForCard(); } };
+  openCardReport(j){ const patch=j.type==='country'?{country:j.target,modal:'PR1'}:{region:j.target,modal:'PR2'}; j.status='archived'; this.setState(s=>({...patch, modalMode:'full', jobs:[...s.jobs]})); setTimeout(()=>this.paintMap(),0); }
+
+  // ---------- ruleset ----------
+  setWeight(key,val){ this.setState(s=>({weights:{...s.weights,[key]:+val}, dirty:true})); }
+  onQwInput=(e)=> this.setState({qw:+e.target.value, dirty:true});
+  selectPreset(p){
+    const map={ '균형':{pol:18,eco:20,mkt:26,ops:21,fin:15}, '보수적':{pol:30,eco:24,mkt:14,ops:20,fin:12}, '공격적':{pol:10,eco:16,mkt:38,ops:18,fin:18} };
+    this.setState({preset:p, weights:{...map[p]}, dirty:true});
+  }
+  toggleSource(key){ this.setState(s=>({sources:{...s.sources,[key]:!s.sources[key]}, dirty:true})); }
+  applyRuleset=()=>{ this.setState({dirty:false}); setTimeout(()=>this.paintMap(),0); };
+
+  // ---------- derived render data ----------
+  countryData(){
+    const n=this.state.country; const ov=this.overall(n); const lv=this.levelOf(ov); const nw=this.normWeights();
+    const scores=this.CATS.map(c=>{ const v=this.catScore(n,c.key); return { label:c.label, score:v, width:v+'%', color:this.catColor(v), weight:Math.round(nw[c.key]*100), note:this.catNote(c.key,v) }; });
+    const qw=this.isQw(n);
+    const inds=[
+      {label:'GDP 성장률', value:(this.rnd(n,'gdp')*6.5-1).toFixed(1)+'%'},
+      {label:'시장 규모', value:'$'+(40+Math.round(this.rnd(n,'mkt2')*920))+'B'},
+      {label:'인구', value:(5+Math.round(this.rnd(n,'pop')*125))+'M'},
+      {label:'사업용이성', value:'#'+(4+Math.round(this.rnd(n,'ease')*120))},
+      {label:'환율 변동성', value:(this.rnd(n,'fx')*16+2.5).toFixed(1)+'%'},
+      {label:'관세 부담', value:(this.rnd(n,'tar')*12+1).toFixed(1)+'%'},
+    ];
+    const signals=[
+      {text:this.disp(n)+' 정부, 외국인 직접투자 인센티브 패키지 발표', meta:'규제 모니터링 · 3일 전', color:'#4F8A6D'},
+      {text:'현지 통화 변동성 확대 — 단기 헤지 전략 권고', meta:'환율 데이터 · 1주 전', color:'#C08A2E'},
+      {text:this.REGION_LABEL[this.regionOf(n)]+' 역내 교역량 전년 대비 증가세', meta:'무역 데이터 · 2주 전', color:'#3F6CB4'},
+    ];
+    const recos=[
+      {tag:'진입', color:'#3F6CB4', text:qw?'단기 파일럿 진출 후 6개월 내 본격 확장 권장':'합작·현지 파트너십 통한 단계적 진입 권장'},
+      {tag:'규제', color:'#C08A2E', text:'현지 법인 설립 시 규제 자문 사전 확보 필요'},
+      {tag:'재무', color:'#4F8A6D', text:'환헤지 라인 확보 및 현지 통화 결제 비중 조정'},
+      {tag:'운영', color:'#C0533F', text:'물류·공급망 리드타임 버퍼 확보'},
+    ];
+    return {
+      name:this.disp(n), flag:this.flag(n), regionLabel:this.REGION_LABEL[this.regionOf(n)]||'Global',
+      tagline:'해외 시장 진출 사전 리스크 진단', overall:ov, color:lv.color, colorLight:lv.light, levelLabel:lv.label+' 등급',
+      scores, qw, qwText:'규제 안정성과 시장 성장성이 동시에 양호해, 빠른 성과(Quick-win)가 기대되는 시장입니다.',
+      indicators:inds, signals,
+      summary:`${this.disp(n)}은(는) 현재 룰셋 기준 진출 매력도 ${ov}점으로 ${lv.label} 등급에 해당합니다. 시장성과 거시경제 지표가 ${ov>=65?'우호적':'혼조세'}이며, ${qw?'단기 Quick-win 후보로 분류됩니다.':'중장기 관점의 단계적 진입이 적합합니다.'} 주요 리스크는 규제 변동성과 환율 변동성으로, 진입 전 현지 파트너십과 헤지 전략 확보가 권장됩니다.`,
+      recos,
+    };
+  }
+  catNote(key,v){ const m={pol:'정치·규제 안정성',eco:'거시경제 펀더멘털',mkt:'시장 규모·성장성',ops:'운영·물류 환경',fin:'금융·재무 접근성'}; return m[key]+' '+(v>=68?'양호':v>=50?'보통':'주의 필요'); }
+
+  regionData(){
+    const r=this.state.region; const members=this.REGION_MEMBERS[r];
+    const rows=members.map(n=>({ name:n, ov:this.overall(n), qw:this.isQw(n) })).sort((a,b)=>b.ov-a.ov);
+    const avg=Math.round(rows.reduce((a,b)=>a+b.ov,0)/rows.length);
+    const speeds=['즉시 진입 가능','3~6개월','6~12개월','12개월+'];
+    const mem=rows.map((x,i)=>({ rank:String(i+1).padStart(2,'0'), flag:this.flag(x.name), label:this.disp(x.name), score:x.ov, width:x.ov+'%', color:this.catColor(x.ov), qw:x.qw, speed:speeds[Math.min(3,Math.floor((100-x.ov)/13))], open:()=>this.openCountry(x.name, this.state.modalMode) }));
+    const qwCount=rows.filter(x=>x.qw).length;
+    return { name:this.REGION_LABEL[r], avg, qwCount, count:rows.length, members:mem,
+      summary:`${this.REGION_LABEL[r]} 권역 ${rows.length}개국의 평균 진출 매력도는 ${avg}점입니다. ${this.disp(rows[0].name)}이(가) ${rows[0].ov}점으로 가장 유망하며, 현재 룰셋 기준 ${qwCount}개국이 Quick-win 후보로 분류됩니다. 권역 내 규제·시장 성숙도 편차가 크므로, 상위 시장 우선 진입 후 인접국 확장 전략이 효과적입니다.` };
+  }
+
+  renderVals(){
+    const s=this.state;
+    const onMap = !s.modal && !s.ps2;
+    const popupModes = ['P1','P2','PR1','PR2','PS1'];
+    const modalOpen = popupModes.includes(s.modal);
+    const isFull = s.modalMode==='full';
+    const scrimOn = (modalOpen && !isFull) || s.ps2;
+    const blue='#3F6CB4';
+
+    // layout tabs
+    const tab=(k)=> s.layout===k;
+    const cd=this.countryData();
+    const rd=this.regionData();
+
+    // hotspots list
+    const hsNames=['Vietnam','Poland','India','Indonesia','Mexico','Brazil'];
+    const hotspots=hsNames.map(n=>{ const ov=this.overall(n); return { flag:this.flag(n), label:this.disp(n), region:this.REGION_LABEL[this.regionOf(n)], score:ov, width:ov+'%', color:this.catColor(ov), qw:this.isQw(n), open:()=>this.openCountry(n,'popup') }; }).sort((a,b)=>b.score-a.score);
+    const quickwinCount=hotspots.filter(h=>h.qw).length;
+
+    const heroStats=[
+      {value:'195', label:'분석 가능 국가', color:blue},
+      {value:String(quickwinCount), label:'Quick-win 후보', color:'#4F8A6D'},
+      {value:'5', label:'리스크 카테고리', color:'#14171C'},
+      {value:'24h', label:'데이터 갱신 주기', color:'#14171C'},
+    ];
+
+    // modal frame
+    const modalInset = isFull ? '0' : '6% 7%';
+    const modalRadius = isFull ? '0' : '20px';
+    const modalShadow = isFull ? 'none' : '0 30px 90px rgba(20,23,28,.34)';
+    const tagMap={P1:'국가 정보',P2:'권역 정보',PR1:'국가 진단 보고서',PR2:'권역 진단 보고서',PS1:'룰셋 설정'};
+    const tagBgMap={P1:'#3F6CB4',P2:'#3F6CB4',PR1:'#101622',PR2:'#101622',PS1:'#6B7280'};
+    const titleMap={P1:cd.name, P2:rd.name+' 권역', PR1:cd.name+' 진단 보고서', PR2:rd.name+' 권역 보고서', PS1:'진단 룰셋 설정'};
+
+    // ruleset
+    const weightSum=this.CATS.reduce((a,c)=>a+s.weights[c.key],0);
+    const weightRows=this.CATS.map(c=>({ label:c.label, value:s.weights[c.key], onInput:(e)=>this.setWeight(c.key, e.target.value) }));
+    const srcDefs=[{k:'trade',l:'관세·무역 데이터'},{k:'reg',l:'규제 모니터링'},{k:'news',l:'현지 뉴스 NLP'},{k:'market',l:'시장 규모 추정'},{k:'fx',l:'환율 변동성'}];
+    const dataSources=srcDefs.map(d=>{ const on=s.sources[d.k]; return { label:d.l, toggle:()=>this.toggleSource(d.k), border:on?'#CBD9EE':'#E6E9EC', bg:on?'#F4F8FD':'#fff', ink:on?'#14171C':'#9AA0A8', track:on?'#3F6CB4':'#D2D7DE', knobX:on?'18px':'2px' }; });
+    const presets=['균형','보수적','공격적'].map(p=>({ label:p, select:()=>this.selectPreset(p), border:s.preset===p?'#3F6CB4':'#E6E9EC', bg:s.preset===p?'#EAF0F8':'#fff', ink:s.preset===p?'#3F6CB4':'#6B7280' }));
+
+    // PS2
+    const ps2Job=s.jobs.find(j=>j.id===s.ps2Job) || this.activeJob();
+    const ps2Tasks=(ps2Job?ps2Job.tasks:this.TASK_DEFS.map(d=>({...d,pct:0}))).map(t=>({ label:t.label, icon:t.icon, pct:Math.round(t.pct), width:Math.round(t.pct)+'%', barColor:t.pct>=100?'#4F8A6D':'#3F6CB4', iconColor:t.pct>=100?'#4F8A6D':'#9AA0A8' }));
+    const ps2Overall=ps2Job?ps2Job.overall:0;
+    const ps2Title=ps2Job ? ( (ps2Job.type==='country'?this.disp(ps2Job.target):this.REGION_LABEL[ps2Job.target]) + (ps2Job.type==='country'?' 시장 진단':' 권역 진단') ) : '보고서 생성';
+
+    // progress card
+    const card=this.activeJob();
+    const showProgressCard = !!card && !s.ps2;
+    const cardDone = card && card.status==='done';
+    let cardData={};
+    if(card){
+      const tgt = card.type==='country'?this.disp(card.target):this.REGION_LABEL[card.target];
+      cardData={ cardTitle:tgt+(card.type==='country'?' 진단':' 권역 진단'), cardSub: cardDone?'생성 완료':'보고서 생성 중…', cardW:card.overall+'%', cardPct:card.overall, cardBarColor:cardDone?'#4F8A6D':'#3F6CB4', cardBtnLabel:cardDone?'보고서 열기 →':'상세 보기', cardBtnBg:cardDone?'#4F8A6D':'#EAF0F8', cardBtnInk:cardDone?'#fff':'#3F6CB4', cardRunning:!cardDone, cardDone };
+    }
+
+    // chat
+    const chatBottomLeft = popupModes.includes(s.modal);
+    const chatWrapCss = chatBottomLeft
+      ? 'align-items:flex-end;justify-content:flex-start;padding:22px'
+      : 'align-items:center;justify-content:center';
+    const chatBoxCss = chatBottomLeft
+      ? 'width:30%;min-width:340px;height:54%;min-height:440px'
+      : 'width:46%;min-width:420px;height:62%;min-height:520px;max-height:90%';
+    const messages=s.messages.map(m=>({ text:m.text, justify:m.who==='user'?'flex-end':'flex-start', bg:m.who==='user'?'#3F6CB4':'#fff', ink:m.who==='user'?'#fff':'#14171C', border:m.who==='user'?'none':'1px solid #EEF0F2' }));
+    const quickPrompts=[
+      {text:'폴란드 시장 진단 보고서 만들어줘', run:()=>this.runPrompt('폴란드 시장 진단 보고서 만들어줘')},
+      {text:'유럽 권역 내 Quick-win 가능 국가 분석', run:()=>this.runPrompt('유럽 권역 내 Quick-win 가능 국가 리스트 분석')},
+    ];
+
+    return {
+      // top bar
+      goMap:this.goMap, navMapColor:onMap?blue:'#3B3F46',
+      toggleCountryMenu:this.toggleCountryMenu, toggleRegionMenu:this.toggleRegionMenu, toggleReportMenu:this.toggleReportMenu, openRulesetFull:this.openRulesetFull,
+      onMap,
+      tabABg:tab('a')?'#fff':'transparent', tabAInk:tab('a')?blue:'#9AA0A8',
+      tabBBg:tab('b')?'#fff':'transparent', tabBInk:tab('b')?blue:'#9AA0A8',
+      tabCBg:tab('c')?'#fff':'transparent', tabCInk:tab('c')?blue:'#9AA0A8',
+      setLayoutA:this.setLayoutA, setLayoutB:this.setLayoutB, setLayoutC:this.setLayoutC,
+      searchVal:s.searchVal, onSearchChange:this.onSearchChange, onSearchKey:this.onSearchKey,
+      toggleChat:this.toggleChat,
+      // menus
+      countryMenuOpen:s.menu==='country', regionMenuOpen:s.menu==='region', reportMenuOpen:s.menu==='report', closeMenus:this.closeMenus,
+      countryMenuItems:['Vietnam','Poland','India','Indonesia','Germany','Brazil'].map(n=>{ const ov=this.overall(n); return { flag:this.flag(n), label:this.disp(n), score:ov, color:this.catColor(ov), open:()=>this.openCountry(n,'full') }; }),
+      regionMenuItems:Object.keys(this.REGION_MEMBERS).map(r=>({ label:this.REGION_LABEL[r], count:this.REGION_FULL[r].size, open:()=>this.openRegion(r,'full') })),
+      openPR1Full:this.openPR1Full, openPR2Full:this.openPR2Full,
+      // map
+      setMapEl:this.setMapEl, mapLoading:s.mapLoading,
+      layoutA:tab('a'), layoutB:tab('b'), layoutC:tab('c'), showMapChrome:tab('a')||tab('c'),
+      hotspots, quickwinCount, watchTotal:hotspots.length, heroStats,
+      zoomIn:this.zoomIn, zoomOut:this.zoomOut,
+      // scrim/modal
+      scrimOn, modalOpen, isFull, closeModal:this.closeModal,
+      modalInset, modalRadius, modalShadow,
+      modalTag:tagMap[s.modal]||'', modalTagBg:tagBgMap[s.modal]||'#3F6CB4', modalTitle:titleMap[s.modal]||'', modalModeLabel:isFull?'풀사이즈 모드':'팝업 모드',
+      showP1:s.modal==='P1', showP2:s.modal==='P2', showPR1:s.modal==='PR1', showPR2:s.modal==='PR2', showPS1:s.modal==='PS1',
+      cd, rd,
+      viewPR1:this.viewPR1, viewPR2:this.viewPR2, genCountry:this.genCountry, genRegion:this.genRegion, openRulesetFromReport:this.openRulesetFromReport,
+      rulesetPreset:s.preset,
+      // ruleset
+      weightRows, weightSum, weightSumColor: (weightSum>=95&&weightSum<=105)?'#4F8A6D':'#C08A2E',
+      qwThreshold:s.qw, onQwInput:this.onQwInput, presets, dataSources,
+      applyRuleset:this.applyRuleset, rulesetApplyLabel:s.dirty?'변경사항 적용':'적용됨 ✓',
+      // ps2
+      ps2Open:s.ps2, ps2Title, ps2Overall, ps2OverallW:ps2Overall+'%', ps2Tasks, ps2Done:ps2Job&&ps2Job.status==='done', minimizePs2:this.minimizePs2, openFinishedReport:this.openFinishedReport,
+      // card
+      showProgressCard, cardAction:this.cardAction, ...cardData,
+      // chat
+      chatOpen:s.chatOpen, chatWrapCss, chatBoxCss, chatTyping:s.chatTyping, chatMessages:messages, chatInput:s.chatInput,
+      onChatChange:this.onChatChange, onChatKey:this.onChatKey, sendChat:this.sendChat, setChatScrollEl:this.setChatScrollEl,
+      quickPrompts, showQuickPrompts:s.messages.length<=2,
+      showFab:!s.chatOpen,
+    };
+  }
+}
+</script>
+</body>
+</html>

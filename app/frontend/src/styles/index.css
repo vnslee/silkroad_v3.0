@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-background text-on-surface font-sans antialiased;
+  }
+
+  /* AISea 커스텀 스크롤바(mockup 동일) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d2d7de;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+
+  /* Material Symbols (mockup 아이콘) */
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+  }
+
+  /* 접근성: 키보드 포커스 가시화(AR-3) */
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-secondary;
+  }
+
+  /* 전체 Pretendard 통일(사용자 요청) — 숫자·로고도 Pretendard */
+  .mono {
+    font-family: 'Pretendard', system-ui, sans-serif;
+  }
+}
+
+/* AISea 모션 키프레임(mockup 동일) */
+@keyframes aisea-pulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes aisea-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes aisea-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.975) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes aisea-op {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes aisea-slide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-aisea-pop {
+  animation: aisea-pop 0.18s ease;
+}
+.animate-aisea-op {
+  animation: aisea-op 0.2s ease;
+}
+.animate-aisea-slide {
+  animation: aisea-slide 0.25s ease;
+}
+.animate-aisea-spin {
+  animation: aisea-spin 0.9s linear infinite;
+}
+
+/* prefers-reduced-motion 존중(AR-1) — 모션 최소화 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 지도 마커 레이더 펄스(AISea) — 진출국 dot 주위로 퍼지는 링 */
+@keyframes marker-radar {
+  0% { opacity: 0.5; transform: scale(1); }
+  70% { opacity: 0; transform: scale(2.8); }
+  100% { opacity: 0; transform: scale(2.8); }
+}
+.marker-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: marker-radar 2.4s ease-out infinite;
+}
+
+/* 챗봇 타이핑 인디케이터(답변 대기) — 점 3개 펄스 */
+@keyframes typing {
+  0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+.animate-typing {
+  animation: typing 1.2s ease-in-out infinite;
+}

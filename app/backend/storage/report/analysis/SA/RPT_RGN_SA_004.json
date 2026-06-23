@@ -1,0 +1,1259 @@
+{
+  "report_type": "gap_analysis",
+  "analysis_type": "TYPE2",
+  "region": "South America",
+  "region_code": "SA",
+  "generated_at": "2026-06-22T19:32:52.815439",
+  "schema_version": "1.1",
+  "summary": {
+    "total_countries": 3,
+    "countries": [
+      "AR",
+      "BR",
+      "CL"
+    ],
+    "avg_completeness_pct": 97.95918367346938
+  },
+  "by_category": {
+    "business": [
+      {
+        "item": "오토금융/리스 시장규모",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융 성장률(CAGR)",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "GDP 성장률",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "금융 이용률(신차)",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융 이용률(중고차)",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "평균 금리/APR",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신차 판매대수",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "구매 패턴(할부·리스 비중)",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "캡티브 강도(점유율)",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융사 점유율(Top 5)",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "법인세율",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "이자소득 원천징수",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "배당 원천징수",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "EV 보급률",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "EV·ICE 잔존가치 리스크",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "해당국 정성 요약",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "브랜드 Top10",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "OEM 순위(Top 5)",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "금융사 순위(Top 5)",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 리스트",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 진출 형태",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 금리 범위",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "평균 신차가격",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "외부 이슈 스캔",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융/리스 시장규모",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융 성장률(CAGR)",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "GDP 성장률",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "금융 이용률(신차)",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융 이용률(중고차)",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "평균 금리/APR",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신차 판매대수",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "구매 패턴(할부·리스 비중)",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "캡티브 강도(점유율)",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융사 점유율(Top 5)",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "법인세율",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "이자소득 원천징수",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "배당 원천징수",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "EV 보급률",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "EV·ICE 잔존가치 리스크",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "해당국 정성 요약",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "브랜드 Top10",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "OEM 순위(Top 5)",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "금융사 순위(Top 5)",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 리스트",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 진출 형태",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 금리 범위",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "평균 신차가격",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "외부 이슈 스캔",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융/리스 시장규모",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융 성장률(CAGR)",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "GDP 성장률",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "금융 이용률(신차)",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융 이용률(중고차)",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "평균 금리/APR",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신차 판매대수",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "구매 패턴(할부·리스 비중)",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "캡티브 강도(점유율)",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융사 점유율(Top 5)",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "법인세율",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "이자소득 원천징수",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "배당 원천징수",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "EV 보급률",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "EV·ICE 잔존가치 리스크",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "해당국 정성 요약",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "브랜드 Top10",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "OEM 순위(Top 5)",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "금융사 순위(Top 5)",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 리스트",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 진출 형태",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 금리 범위",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "평균 신차가격",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "외부 이슈 스캔",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      }
+    ],
+    "shared": [
+      {
+        "item": "외국인 지분 한도",
+        "country": "AR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외환·배당 송금 자유도",
+        "country": "AR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "데이터 현지화 의무",
+        "country": "AR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "국가신용등급",
+        "country": "AR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 취득 가능 여부(외국사)",
+        "country": "AR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 체제(세그먼트별)",
+        "country": "AR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "금리 상한 규제",
+        "country": "AR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "최저자본금",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "차량회수 절차 용이성",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "법적 회수 소요기간",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "추심 규제",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "충당금 규정",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "연체 분류 기준",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "의무보험 규제",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "신용생명보험 규제",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "보험 끼워팔기 규제",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "AI 신용평가 규제",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "규제기관 식별",
+        "country": "AR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외국인 지분 한도",
+        "country": "BR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외환·배당 송금 자유도",
+        "country": "BR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "데이터 현지화 의무",
+        "country": "BR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "국가신용등급",
+        "country": "BR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 취득 가능 여부(외국사)",
+        "country": "BR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 체제(세그먼트별)",
+        "country": "BR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "금리 상한 규제",
+        "country": "BR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "최저자본금",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "차량회수 절차 용이성",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "법적 회수 소요기간",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "추심 규제",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "충당금 규정",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "연체 분류 기준",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "의무보험 규제",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "신용생명보험 규제",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "보험 끼워팔기 규제",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "AI 신용평가 규제",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "규제기관 식별",
+        "country": "BR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외국인 지분 한도",
+        "country": "CL",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외환·배당 송금 자유도",
+        "country": "CL",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "데이터 현지화 의무",
+        "country": "CL",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "국가신용등급",
+        "country": "CL",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 취득 가능 여부(외국사)",
+        "country": "CL",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 체제(세그먼트별)",
+        "country": "CL",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "금리 상한 규제",
+        "country": "CL",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "최저자본금",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "차량회수 절차 용이성",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "법적 회수 소요기간",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "추심 규제",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "충당금 규정",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "연체 분류 기준",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "의무보험 규제",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "신용생명보험 규제",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "보험 끼워팔기 규제",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "AI 신용평가 규제",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "규제기관 식별",
+        "country": "CL",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 1
+      }
+    ],
+    "it": [
+      {
+        "item": "솔루션 벤더",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "솔루션 유형",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "디지털 채널 성숙도",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신용정보(CB) 인프라",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "결제·정산 인프라",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "디지털 딜러 성숙도",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "국외이전 제한",
+        "country": "AR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "솔루션 벤더",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "솔루션 유형",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "디지털 채널 성숙도",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "신용정보(CB) 인프라",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "결제·정산 인프라",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "디지털 딜러 성숙도",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "국외이전 제한",
+        "country": "BR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "솔루션 벤더",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "솔루션 유형",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "디지털 채널 성숙도",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "신용정보(CB) 인프라",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "결제·정산 인프라",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "디지털 딜러 성숙도",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "국외이전 제한",
+        "country": "CL",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      }
+    ]
+  },
+  "data_quality": {
+    "countries_coverage": 3,
+    "timeseries_coverage_avg": 65.3061224489796,
+    "source_tiers": {
+      "tier1": 57,
+      "tier2": 36,
+      "tier3": 54,
+      "tier4": 0
+    },
+    "data_sources": [
+      "Cox Automotive Latam·현지 중고 EV 가격 추정(3년 EV 기준)",
+      "Banco Central do Brasil·IBGE·IMF WEO 2025",
+      "업계 (Mercado Libre Vehículos·DeMotores·Kavak Argentina·OLX Autos)",
+      "ANAC/ABIF 2025 (중고차 금융 침투율 약 40%)",
+      "CMF/Banco Central de Chile 소비자신용 통계 2025 (자동차 crédito 평균 APR 약 14%); TPM 5.0%(2025말)",
+      "화이트리스트(Just Auto·Reuters·Bloomberg·S&P Global)",
+      "ANAC/시장조사 2025 (Toyota·GM·VW·Hyundai 등 OEM 캡티브 합산 약 30%)",
+      "AAFP, BCRA EFNB 등록부, IGJ administradora 등록",
+      "Ley 21.719(자동화 처리 규정), Política Nacional de IA(2021 갱신), OECD AI 원칙",
+      "CDC Art. 39 III, BACEN Res. 4.949/2021, SUSEP Circular",
+      "ABVE(Associação Brasileira do Veículo Elétrico) 2025 (BEV+PHEV+HEV 점유 7%, BEV 단독 약 3%), BYD·GWM 현지 생산",
+      "Lei 4.595/1964 §4, STJ Súmula 596, Lei 14.690/2023(카드 한정), BACEN 분기 평균 공시",
+      "Pix(BACEN), TED/DOC, Boleto Bancário, SPB(BACEN 정산), TecBan ATM",
+      "Ley 18.010 Art. 6(operaciones de crédito de dinero), Ley 20.715(TMC 개혁 2013), CMF 분기 공시",
+      "BCRA·INDEC·IMF WEO 2025",
+      "ACARA 2025 patentamientos (Toyota 1위·Stellantis 그룹 합산 강세)",
+      "juicio ejecutivo(집행소송) 실무, prenda sin desplazamiento 실행 (평균 90~210일)",
+      "BACEN SCR(Sistema de Informações de Crédito, BRL 200+ 의무), Serasa Experian, Boa Vista, SPC Brasil, Cadastro Positivo(2019~)",
+      "Ley 18.490(SOAP), CMF(감독)",
+      "Ley 24.449(교통법) SOA 의무, SSN(Superintendencia de Seguros) 감독",
+      "BACEN 소비자신용 통계 2025 (자동차 CDC 평균 APR 약 26%) / SELIC 11.75%(2025말)",
+      "BACEN 소비자신용 통계 2025, ANEF, OEM 캡티브 프로모",
+      "업계",
+      "Código Civil y Comercial(폭리 원칙), Ley 24.240(소비자보호법), BCRA 신용 규정",
+      "Ley General de Bancos(DFL 3), Ley 21.000(CMF), Ley 20.715(소비자보호·SERNAC)",
+      "ANAC 2025 평균 거래가 추정",
+      "AAFP, BCRA, IGJ",
+      "ACARA + AAFP(Asociación de financieras) + Mordor/Fitch Argentina Auto Finance 추정 (USD 환산, 환율 변동 큼)",
+      "Servicio de Impuestos Internos(SII), Impuesto de Primera Categoría 27%(régimen semi-integrado)",
+      "ACARA/AAFP/Mordor Argentina Auto Finance (2023 침체 → 2024~2025 Milei 디스인플레 회복)",
+      "DICOM(Equifax Chile), CMF Deuda Consolidada, Boletín Comercial(Cámara de Comercio), SINACOFI",
+      "AFIP WHT (배당 7%, 2021~ 법인세 누진구조와 연동)",
+      "BCRA Comunicación 'A' (cepo cambiario), 2024~2025 단계적 완화 조치",
+      "ANAC, ABIF, ACHEL, CMF, Banco Central de Chile, Mordor Intelligence",
+      "ANEF 2025 (Stellantis·VW·GM·Toyota·Hyundai·BYD 캡티브 합산 약 45%); BACEN SCR",
+      "CMF 소비자신용 통계 2025, ANAC, OEM 캡티브 프로모, TMC 상한 이내",
+      "CDC Art. 39 III, SUSEP Circular 631/2021",
+      "Ley 21.382 (Inversiones Extranjeras), BCRA 금융기관 인가 규정",
+      "LGPD Art. 20, PL 2338/2023(AI 규제법, 의회 심의), ANPD 가이드",
+      "ANEF(Associação Nacional das Empresas Financeiras das Montadoras) 2025 + ABEL(Associação Brasileira das Empresas de Leasing) + BACEN SCR 통계",
+      "Lei 14.286/2021(신외환법, 2022.12 시행), BACEN Resolução 277",
+      "Mercado Libre/InfoAuto 잔가 추정, AR 중고 EV 가격 분석 (데이터 희소)",
+      "Decreto-Lei 911/1969 (개정 Lei 13.043/2014로 절차 가속), 업계 (평균 60~180일)",
+      "FENABRAVE, ANEF, ABEL, BACEN, ANFAVEA, Mordor Intelligence",
+      "ANAC(Asociación Nacional Automotriz de Chile)/ABIF 2025 (신차 금융 침투 약 65%)",
+      "LGPD Art. 33-36 (국제이전 적정성·SCC·BCR), ANPD",
+      "AAFP 2025 (Volkswagen S.A. de Ahorro/Plan Óvalo 약 16%, Toyota 14%, Plan Rombo(Renault) 12%, Santander 10%, Galicia 8% 추정)",
+      "Ley 25.326 (Protección de Datos Personales), AAIP(정보접근·데이터보호청), EU 적정성 결정 2003/490/EC",
+      "Ley 24.240(Defensa del Consumidor), SSN Resolución",
+      "ADEFA/AAVEA(아르헨티나 전기차협회) 2025 (BEV+PHEV+HEV 점유 약 2%, BEV 단독 <1%)",
+      "FENABRAVE/ANFAVEA 2025 (신차 등록 약 240만대, +3%; 코로나 이전 2019 273만 회복 중)",
+      "Ley 20.848(Marco para la Inversión Extranjera Directa, 2015), CMF",
+      "S&P·Moody's·Fitch 국가신용등급 (2025); 라틴 최고 등급",
+      "ANAC 2025 (신차 등록 약 31만대; 2022 정점 43만 후 조정·회복)",
+      "BCRA 신용통계 2025, AAFP, Plan de Ahorro administradora 공시",
+      "FENABRAVE 2025 신차 등록 통계 (Fiat 1위·Stellantis 그룹 합산 약 30%)",
+      "Lei 4.595/1964, Resolução CMN 4.434/2015 (SCFI), BACEN, ABEL",
+      "ACHEL/ABIF/Mordor Intelligence Chile Auto Finance (2022 정점 후 조정·회복)",
+      "BCRA Transferencias 3.0(즉시결제, 2021~), Mercado Pago·Ualá(핀테크), DNI digital/AFIP 전자인증",
+      "Lei 13.709/2018 LGPD, ANPD(국가데이터보호청) 가이드",
+      "Resolução CMN 4.434/2015, Lei 6.099/1974, Lei das S.A. 6.404/1976",
+      "SII / 한·칠레 조세조약 (해외 은행·금융기관 이자 4%, 일반 35%)",
+      "Pix(BACEN 즉시결제, 2020.11~, 1.5억 사용자·연 60bn 거래), gov.br(전자인증), Open Finance Brasil",
+      "Decreto-Lei 911/1969 alienação fiduciária(신탁양도), 업계 (busca e apreensão 절차 빠름)",
+      "ANEF, BACEN, ABAC(Consórcio협회)",
+      "Banco Central de Chile, Capítulo XIV Compendio de Normas de Cambios Internacionales(통보 의무만)",
+      "ACARA/AAFP 2025 (Plan de Ahorro 약 25%·prenda 약 18%·Leasing 약 2%·현금 약 55%)",
+      "TEF(transferencia electrónica de fondos), ComBanc(은행간 정산), Transbank/Redcompra, PAC/PAT(자동이체)",
+      "BCRA Transferencias 3.0/CVU(즉시결제), DEBIN(직접출금), Mercado Pago, COELSA(정산)",
+      "BACEN, CMN, SUSEP, ANPD, Senacon 공식",
+      "Ley 24.240 Art. 가격·끼워팔기 규정, SSN(보험감독청)",
+      "S&P·Moody's·Fitch 국가신용등급 (2025); 2024 IMF 프로그램·재정흑자 전환으로 전망 개선",
+      "화이트리스트(Reuters·Financial Times·Just Auto·Fitch)",
+      "CMF, ACHEL, 시장조사",
+      "Ley 24.240(Defensa del Consumidor), 부당추심 금지 원칙, Secretaría de Comercio",
+      "AAFP 2025 / Plan de Ahorro administradora·은행 공시 추정",
+      "Ley 19.496 LPC Art. 17 B-J, CMF·SERNAC, licitación de seguros 의무(대출 연계 보험 입찰)",
+      "ANEF/ABEL/Mordor Intelligence Brazil Auto Finance (코로나 회복+SELIC 인하)",
+      "Ley 21.719(2024.12 공포, 2026 시행)·기존 Ley 19.628, Agencia de Protección de Datos Personales(APDP)",
+      "Ley 19.496(소비자보호법, LPC) Art. 37, SERNAC 감독, gastos de cobranza 상한 규제",
+      "AFIP/Ley de Impuesto a las Ganancias (누진 최고세율 35%, 2021 개혁 누진구조)",
+      "BCRA 여신분류(situación 1~6: 정상~회수불능, 연체일·상환능력 단계)",
+      "Resolução CMN 4.434/2015, Lei 6.099/1974(Leasing), Lei 11.795/2008(Consórcio)",
+      "FENABRAVE 2025 신차 등록 (Fiat 324,000 / VW 307,200 / Chevrolet 264,000 / Toyota 220,800 / Hyundai 204,000 추정)",
+      "CMF Compendio de Normas Contables(modelos de provisiones estandarizados), IFRS 9 도입",
+      "시장 조사 (라틴 특화 시스템 + 글로벌 패키지 일부)",
+      "업계 (Chileautos·Yapo·MercadoLibre Autos·Kavak Chile·Autofact)",
+      "ACHEL(Asociación Chilena de Empresas de Leasing) + ABIF(Asociación de Bancos) + CMF 통계 추정",
+      "ANAC 2025(BEV+PHEV+HEV 점유 약 4%, BEV 단독 약 1.5%), Estrategia Nacional de Electromovilidad",
+      "PwC Brazil WHT (비거주자 이자 15%, 조세회피국 25%; 한·브 조세조약 없음 → 표준 적용)",
+      "prenda sin desplazamiento(Ley 20.190), 사법회수(juicio ejecutivo), Leasing 소유권 기반",
+      "Ley 25.326(개인정보보호법), Subsecretaría/국가 AI 가이드라인(비구속)",
+      "AAFP 2025 (VW·Toyota·Stellantis(PSA)·Ford·GM·Renault 캡티브 + Plan de Ahorro administradora 합산 약 50%)",
+      "Ley 19.496 Art. 17, CMF Norma de Carácter General(seguros asociados a créditos)",
+      "IRPJ 25% + CSLL 9%(보험·금융 20%) = 합산 34% (금융기관 45%로 가중)",
+      "CDC(Código de Defesa do Consumidor) 1990, Senacon 감독, Procon 자치주 기관",
+      "ANAC 2025 신차 등록 (Toyota·Chevrolet·Hyundai·Kia·Suzuki)",
+      "Ley 25.326 Art. 12 (국제이전 — 적정성 보장국 또는 동의/계약 기반), AAIP",
+      "Banco Central de Chile·INE·IMF WEO 2025",
+      "업계 (Webmotors·OLX Autos·iCarros·Mercado Livre Carros·Kavak)",
+      "Ley 21.526(Entidades Financieras), BCRA, Ley 25.248(Leasing), IGJ(법인감독청) Plan de Ahorro 규정",
+      "ANAC/ACHEL 2025 (crédito automotriz 약 50%·Leasing/renting 약 10%·현금 약 40%)",
+      "AFIP WHT (비거주자 이자 일반 35%, 금융기관/특정요건 15.05%; 한·아르헨티나 조세조약 미체결)",
+      "CMF, Banco Central de Chile, SERNAC, SII 공식",
+      "Ley 21.526, BCRA 인가 규정, IGJ Resolución(Planes de Ahorro), Ley 25.248(Leasing)",
+      "BCRA 통계 2025 (자동차 prenda 평균 명목 APR 약 75%) / 정책금리 2025말 약 32% (디스인플레로 급락)",
+      "시장 조사 (글로벌 패키지 + 현지 SI)",
+      "S&P·Moody's·Fitch 국가신용등급 (2025); 2024 다중기관 상향 사이클",
+      "ACARA/AAFP 2025 (prenda 약 20%·Plan de Ahorro 약 25% 합산 약 45%)",
+      "Lei 14.595/2023 (DPVAT 부활), SUSEP 감독",
+      "FENABRAVE/ANEF 2025 (CDC 약 35%·Consórcio 약 18%·Leasing 약 7%)",
+      "Fipe(잔가 지수)·Cox Automotive Latam 추정, BR 중고 EV 가격 분석",
+      "ANEF, BACEN SCFI 등록부",
+      "ACARA 2025 patentamientos 추정",
+      "ANEF 2025 (Santander Financiamentos 약 18% 1위, BV(Banco Votorantim) 15%, Itaú/Itaucard 12%, Bradesco 10%, Banco do Brasil 9%)",
+      "Ley 21.719 국제이전 규정(적정성·SCC·동의), APDP",
+      "화이트리스트(Automotive News·Auto Finance News·Just Auto·S&P Global·Reuters·Financial Times)",
+      "DFL 3 Ley General de Bancos, Ley 21.000(CMF 통합감독, 2017), Ley 20.950(emisores no bancarios)",
+      "DFL 3 Ley General de Bancos Art. 50, Ley 20.950, Ley 18.046(S.A.)",
+      "ACARA, ADEFA, AAFP, BCRA, IGJ, Mordor Intelligence",
+      "CMF 2025 / Santander·Forum·Tanner·BCI·Banco de Chile 공시",
+      "CMF 분류기준(cartera deteriorada·morosidad 90일+), IFRS 9 단계",
+      "BCRA Comunicación 'A'(최저자본 고시), Ley General de Sociedades 19.550, IGJ",
+      "시장 조사 (Plan de Ahorro·인플레 조정 처리로 현지 SI 비중 큼)",
+      "CMF, ACHEL",
+      "ANEF 2025 / Santander·BV·Itaú·Bradesco·BB 공시",
+      "Ley 12.962 prenda con registro 집행 실무 (평균 60~150일)",
+      "FENABRAVE/ANEF 2025 (중고차 CDC 침투율 35%)",
+      "BCRA, IGJ, SSN, AAIP, AFIP 공식",
+      "ANAC 2025 신차 등록 통계",
+      "ACARA/CCA(Cámara del Comercio Automotor) 2025 (중고차 prenda 침투율 약 25%)",
+      "Constituição Federal Art. 192 (1995 개정), CMN Resolução 4.122/2012, BACEN",
+      "ACARA 2025 patentamientos (약 45만대, Milei 회복; 변동성 큼)",
+      "ClaveÚnica(정부 전자인증), TEF/transferencias inmediatas, factura electrónica(전자세금계산서 의무화 세계 선도), firma electrónica avanzada",
+      "ACARA 2025 평균 거래가 추정, InfoAuto 시세",
+      "SII Impuesto Adicional 35% (법인세 27% 공제 — 준통합제 실효 약 44.45% 또는 조약국 한도)",
+      "BACEN Resolução 2.682/1999 (만기·연체 단계별 충당), Resolução CMN 4.966/2021 (IFRS 9 단계 도입)",
+      "PwC Brazil WHT (배당 0% — 글로벌 매우 드문 면세 정책, 1996~)",
+      "BACEN Res. 2.682/1999 (15일·30일·60일·90일·180일·360일 단계), CMN 4.966/2021",
+      "BCRA Comunicación 'A' 2729 외(여신 분류·충당 규정), IFRS 도입 진행",
+      "FENABRAVE/ANEF 2025 (CDC+Leasing 약 45%·Consórcio 약 18%·현금 약 37%)",
+      "CMF/시장조사 2025 (Santander Consumer 약 16% 1위, Forum 14%, Tanner 12%, BCI 10%, Banco de Chile 9%)",
+      "FENABRAVE 2025 평균 거래가 추정, Fipe 시세",
+      "Ley 12.962 prenda con registro(등록담보) 자력집행(ejecución prendaria), 업계",
+      "BCRA Central de Deudores(채무자 중앙등록), Veraz/Equifax, Nosis, BCRA CENDEU"
+    ],
+    "gaps_by_tab": {},
+    "country_completeness": {
+      "AR": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "BR": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "CL": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      }
+    }
+  },
+  "critical_gaps": [],
+  "type2_readiness": {
+    "can_generate": true,
+    "tabs": {
+      "2-0": {
+        "name": "Kill Switch Filter",
+        "ready": true,
+        "missing_count": 0,
+        "missing_fields": []
+      },
+      "2-1": {
+        "name": "Business Attractiveness",
+        "ready": true,
+        "missing_count": 0,
+        "missing_fields": []
+      },
+      "2-2": {
+        "name": "IT/Speed-to-Market Similarity",
+        "ready": true,
+        "missing_count": 0,
+        "missing_fields": []
+      },
+      "2-3": {
+        "name": "Market Background",
+        "ready": true,
+        "missing_count": 0,
+        "missing_fields": []
+      }
+    }
+  }
+}

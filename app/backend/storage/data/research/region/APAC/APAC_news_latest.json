@@ -1,0 +1,113 @@
+{
+  "region": "Asia-Pacific",
+  "region_ko": "APAC권역",
+  "code": "APAC",
+  "baseline_country": "",
+  "schema_version": "1.0",
+  "fetched_at": "2026-06-22T16:00:00+09:00",
+  "fetched_by": "ai",
+  "overall_insight": "APAC 오토파이낸스 시장은 중국의 극심한 NEV 가격 전쟁과 내수 부진(4월 내수 -21.6%, 7개월 연속 감소)이 BYD·Li Auto 등 현지 NEV 캡티브의 마진을 한 자릿수로 압박하면서, 성장축이 내수에서 수출(EV·PHEV 수출 4월 +111.8%)로 이동하는 구조적 전환기에 있다. 진출 우선순위는 디지털 인프라(UPI·Account Aggregator)와 RBI NBFC 라이선스 체계가 정비된 인도, 그리고 OJK 멀티파이낸스·아스트라 생태계가 자리 잡은 인도네시아를 퀵윈으로 삼고, 캡티브가 시장을 장악하고 규제·데이터 현지화(PIPL/CSL) 장벽이 높은 중국은 후순위·제휴형으로 접근하는 것이 합리적이다. 공통 리스크는 (1) BYD·NIO·Geely 등 NEV 캡티브의 자가금융 지배력과 가격 전쟁발 잔존가치(RV)·신용 손실 변동성, (2) 중국발 데이터 현지화 규제 및 미·중 무역 긴장에 따른 지정학 리스크다. 단계적 진입은 인도(NBFC·used-car·디지털 여신)→인도네시아(멀티파이낸스 합작, 외국인 85% 한도 활용)→중국(현지 캡티브·라이선스 파트너십)의 순서로, 각 시장의 캡티브 의존도와 규제 개방도에 맞춰 자본·리스크 노출을 단계적으로 확대하는 것이 바람직하다.",
+  "overall_insight_en": "APAC auto-finance is in a structural transition: China's brutal NEV price war and weak domestic demand (April retail -21.6%, seventh straight monthly drop) are squeezing local NEV captives like BYD and Li Auto into single-digit margins, shifting the growth axis from domestic sales to exports (EV/PHEV exports +111.8% YoY in April). Quick-win priority should favor India, with mature digital rails (UPI/Account Aggregator) and an RBI NBFC licensing path, and Indonesia, with an established OJK multifinance framework and the Astra ecosystem, while China is better approached later via partnerships. Common regional risks are (1) NEV captive dominance (BYD/NIO/Geely) and price-war-driven volatility in residual values and credit losses, and (2) China-centric data-localization rules plus US-China geopolitical tension. A phased entry of India then Indonesia then China lets capital and risk exposure scale with each market's captive dependence and regulatory openness.",
+  "items": [
+    {
+      "item": "권역 외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "context_type": "news",
+      "value": [
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "중국 EV 업체 BYD·샤오펑, SUV 고급화로 이동하나 공급 과잉 위험",
+          "headline_en": "China's EV makers BYD, Xpeng move SUVs upmarket but risk glut",
+          "so_what": "중국 NEV 캡티브가 고마진 프리미엄으로 이동하지만 짧은 제품 사이클과 할인 경쟁이 수익을 잠식해, 진출 시 잔존가치·여신 손실 변동성을 보수적으로 가정해야 한다.",
+          "so_what_en": "Chinese NEV captives are pushing premium for margin, but short product cycles and discounting erode returns, so entrants should assume conservative residual values and credit-loss volatility.",
+          "publisher": "Nikkei Asia",
+          "pub_date": "2026-06-22",
+          "url": "https://asia.nikkei.com/spotlight/electric-cars-in-china/china-s-ev-makers-byd-xpeng-move-suvs-upmarket-but-risk-glut"
+        },
+        {
+          "news_category": "auto_finance",
+          "scope": "region",
+          "headline": "BYD, 2021년 이후 첫 연간 순익 감소…해외에서 반전 모색",
+          "headline_en": "BYD posts first annual profit drop since 2021, eyes turnaround overseas",
+          "so_what": "세계 1위 NEV 캡티브 BYD의 2025년 순익이 19% 감소하며 자가금융 여력이 압박받고 있어, 외부 금융사에 제휴·여신 공동 인수의 진입 틈새가 열린다.",
+          "so_what_en": "BYD's 2025 net income fell 19%, pressuring its captive-finance capacity and opening a partnership/co-lending entry window for external lenders.",
+          "publisher": "Nikkei Asia",
+          "pub_date": "2026-03-27",
+          "url": "https://asia.nikkei.com/business/automobiles/electric-vehicles/byd-posts-first-annual-profit-drop-since-2021-eyes-turnaround-overseas"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "중국 내수 차 수요 약세 지속, 수출은 강세",
+          "headline_en": "China's domestic car demand stays weak but exports strengthen",
+          "so_what": "4월 내수 -21.6%로 7개월 연속 감소한 반면 EV·PHEV 수출은 111.8% 급증해, 중국 진출은 내수 여신보다 수출 차량·해외 캡티브 동반 진출 관점으로 재설계해야 한다.",
+          "so_what_en": "April retail fell 21.6% (seventh straight drop) while EV/PHEV exports surged 111.8%, so China entry should pivot from domestic lending toward export-linked and overseas-captive co-entry.",
+          "publisher": "Nikkei Asia",
+          "pub_date": "2026-05-11",
+          "url": "https://asia.nikkei.com/business/automobiles/china-s-domestic-car-demand-stays-weak-but-exports-strengthen"
+        },
+        {
+          "news_category": "auto_finance",
+          "scope": "region",
+          "headline": "리오토, 분기 사상 최대 손실…가격 전쟁이 수출 압박",
+          "headline_en": "Li Auto's luster fades with record quarterly loss, raising export stakes",
+          "so_what": "리오토의 1분기 3.4억 달러 손실과 한 자릿수 마진은 중국 NEV 캡티브의 자금 체력 약화를 보여주며, 진출 외부 금융사에 신용·자본 리스크의 신중한 보정을 요구한다.",
+          "so_what_en": "Li Auto's $340M Q1 loss and single-digit margins show weakening NEV captive balance sheets, demanding cautious credit and capital-risk calibration by entering lenders.",
+          "publisher": "Nikkei Asia",
+          "pub_date": "2026-05-29",
+          "url": "https://asia.nikkei.com/business/automobiles/electric-vehicles/li-auto-s-luster-fades-with-record-quarterly-loss-raising-export-stakes"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "빈패스트 기반 택시, 인도 진출…베트남 기업 ASEAN 밖 첫 데뷔",
+          "headline_en": "VinFast-powered taxis enter India in Vietnamese firm's debut beyond ASEAN",
+          "so_what": "약 10억 달러 규모 인도 차량호출 시장에 EV 택시 플릿이 진입하며, 플릿·EV 리스 및 상용차 금융 수요가 인도 퀵윈 진입의 구체적 기회로 부상한다.",
+          "so_what_en": "An EV taxi fleet enters India's ~$1B ride-hailing market, surfacing fleet/EV leasing and commercial-vehicle finance demand as a concrete India quick-win opportunity.",
+          "publisher": "Nikkei Asia",
+          "pub_date": "2026-06-08",
+          "url": "https://asia.nikkei.com/business/automobiles/electric-vehicles/vinfast-powered-taxis-enter-india-in-vietnamese-firm-s-debut-beyond-asean"
+        },
+        {
+          "news_category": "geopolitical",
+          "scope": "",
+          "headline": "조사 필요",
+          "headline_en": "조사 필요",
+          "so_what": "조사 필요",
+          "so_what_en": "",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "finance",
+          "scope": "",
+          "headline": "조사 필요",
+          "headline_en": "조사 필요",
+          "so_what": "조사 필요",
+          "so_what_en": "",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "credit_abs",
+          "scope": "",
+          "headline": "조사 필요",
+          "headline_en": "조사 필요",
+          "so_what": "조사 필요",
+          "so_what_en": "",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        }
+      ],
+      "tier": 3,
+      "source": "화이트리스트(Nikkei Asia)",
+      "insight": "APAC 오토파이낸스 시장은 중국의 극심한 NEV 가격 전쟁과 내수 부진(4월 내수 -21.6%, 7개월 연속 감소)이 BYD·Li Auto 등 현지 NEV 캡티브의 마진을 한 자릿수로 압박하면서, 성장축이 내수에서 수출(EV·PHEV 수출 4월 +111.8%)로 이동하는 구조적 전환기에 있다. 진출 우선순위는 디지털 인프라(UPI·Account Aggregator)와 RBI NBFC 라이선스 체계가 정비된 인도, 그리고 OJK 멀티파이낸스·아스트라 생태계가 자리 잡은 인도네시아를 퀵윈으로 삼고, 캡티브가 시장을 장악하고 규제·데이터 현지화(PIPL/CSL) 장벽이 높은 중국은 후순위·제휴형으로 접근하는 것이 합리적이다. 공통 리스크는 (1) BYD·NIO·Geely 등 NEV 캡티브의 자가금융 지배력과 가격 전쟁발 잔존가치(RV)·신용 손실 변동성, (2) 중국발 데이터 현지화 규제 및 미·중 무역 긴장에 따른 지정학 리스크다. 단계적 진입은 인도(NBFC·used-car·디지털 여신)→인도네시아(멀티파이낸스 합작, 외국인 85% 한도 활용)→중국(현지 캡티브·라이선스 파트너십)의 순서로, 각 시장의 캡티브 의존도와 규제 개방도에 맞춰 자본·리스크 노출을 단계적으로 확대하는 것이 바람직하다.",
+      "insight_ai_generated": true
+    }
+  ]
+}

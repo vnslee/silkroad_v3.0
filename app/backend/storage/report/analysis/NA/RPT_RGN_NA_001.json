@@ -1,0 +1,1260 @@
+{
+  "report_type": "gap_analysis",
+  "analysis_type": "TYPE2",
+  "region": "North America",
+  "region_code": "NA",
+  "generated_at": "2026-06-22T18:34:31.488717",
+  "schema_version": "1.1",
+  "summary": {
+    "total_countries": 3,
+    "countries": [
+      "CA",
+      "MX",
+      "PR"
+    ],
+    "avg_completeness_pct": 97.95918367346938
+  },
+  "by_category": {
+    "business": [
+      {
+        "item": "오토금융/리스 시장규모",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융 성장률(CAGR)",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "GDP 성장률",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "금융 이용률(신차)",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융 이용률(중고차)",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "평균 금리/APR",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신차 판매대수",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "구매 패턴(할부·리스 비중)",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "캡티브 강도(점유율)",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융사 점유율(Top 5)",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "법인세율",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "이자소득 원천징수",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "배당 원천징수",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "EV 보급률",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "EV·ICE 잔존가치 리스크",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "해당국 정성 요약",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "브랜드 Top10",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "OEM 순위(Top 5)",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "금융사 순위(Top 5)",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 리스트",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 진출 형태",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 금리 범위",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "평균 신차가격",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "외부 이슈 스캔",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융/리스 시장규모",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융 성장률(CAGR)",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "GDP 성장률",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "금융 이용률(신차)",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융 이용률(중고차)",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "평균 금리/APR",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신차 판매대수",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "구매 패턴(할부·리스 비중)",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "캡티브 강도(점유율)",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융사 점유율(Top 5)",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "법인세율",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "이자소득 원천징수",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "배당 원천징수",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "EV 보급률",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "EV·ICE 잔존가치 리스크",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "해당국 정성 요약",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "브랜드 Top10",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "OEM 순위(Top 5)",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "금융사 순위(Top 5)",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 리스트",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 진출 형태",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 금리 범위",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "평균 신차가격",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "외부 이슈 스캔",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융/리스 시장규모",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "오토금융 성장률(CAGR)",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "GDP 성장률",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "금융 이용률(신차)",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융 이용률(중고차)",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "평균 금리/APR",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신차 판매대수",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "구매 패턴(할부·리스 비중)",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "캡티브 강도(점유율)",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "금융사 점유율(Top 5)",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "법인세율",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "이자소득 원천징수",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "배당 원천징수",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "EV 보급률",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "EV·ICE 잔존가치 리스크",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "해당국 정성 요약",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "브랜드 Top10",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "OEM 순위(Top 5)",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "금융사 순위(Top 5)",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 리스트",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 진출 형태",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "경쟁사 금리 범위",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "평균 신차가격",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      },
+      {
+        "item": "외부 이슈 스캔",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 3
+      }
+    ],
+    "shared": [
+      {
+        "item": "외국인 지분 한도",
+        "country": "CA",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외환·배당 송금 자유도",
+        "country": "CA",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "데이터 현지화 의무",
+        "country": "CA",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "국가신용등급",
+        "country": "CA",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 취득 가능 여부(외국사)",
+        "country": "CA",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 체제(세그먼트별)",
+        "country": "CA",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "금리 상한 규제",
+        "country": "CA",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "최저자본금",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "차량회수 절차 용이성",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "법적 회수 소요기간",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "추심 규제",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "충당금 규정",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "연체 분류 기준",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "의무보험 규제",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "신용생명보험 규제",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "보험 끼워팔기 규제",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "AI 신용평가 규제",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "규제기관 식별",
+        "country": "CA",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외국인 지분 한도",
+        "country": "MX",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외환·배당 송금 자유도",
+        "country": "MX",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "데이터 현지화 의무",
+        "country": "MX",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "국가신용등급",
+        "country": "MX",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 취득 가능 여부(외국사)",
+        "country": "MX",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 체제(세그먼트별)",
+        "country": "MX",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "금리 상한 규제",
+        "country": "MX",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "최저자본금",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "차량회수 절차 용이성",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "법적 회수 소요기간",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "추심 규제",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "충당금 규정",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "연체 분류 기준",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "의무보험 규제",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "신용생명보험 규제",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "보험 끼워팔기 규제",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "AI 신용평가 규제",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "규제기관 식별",
+        "country": "MX",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외국인 지분 한도",
+        "country": "PR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "외환·배당 송금 자유도",
+        "country": "PR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "데이터 현지화 의무",
+        "country": "PR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "국가신용등급",
+        "country": "PR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 취득 가능 여부(외국사)",
+        "country": "PR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "라이선스 체제(세그먼트별)",
+        "country": "PR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 1
+      },
+      {
+        "item": "금리 상한 규제",
+        "country": "PR",
+        "role": "gate",
+        "has_timeseries": false,
+        "source_tier": 2
+      },
+      {
+        "item": "최저자본금",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "차량회수 절차 용이성",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "법적 회수 소요기간",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "추심 규제",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "충당금 규정",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "연체 분류 기준",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "의무보험 규제",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "신용생명보험 규제",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "보험 끼워팔기 규제",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "AI 신용평가 규제",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "규제기관 식별",
+        "country": "PR",
+        "role": "context",
+        "has_timeseries": false,
+        "source_tier": 1
+      }
+    ],
+    "it": [
+      {
+        "item": "솔루션 벤더",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "솔루션 유형",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "디지털 채널 성숙도",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신용정보(CB) 인프라",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "결제·정산 인프라",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "디지털 딜러 성숙도",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "국외이전 제한",
+        "country": "CA",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "솔루션 벤더",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "솔루션 유형",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "디지털 채널 성숙도",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신용정보(CB) 인프라",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "결제·정산 인프라",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "디지털 딜러 성숙도",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "국외이전 제한",
+        "country": "MX",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "솔루션 벤더",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "솔루션 유형",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "디지털 채널 성숙도",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 2
+      },
+      {
+        "item": "신용정보(CB) 인프라",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "결제·정산 인프라",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      },
+      {
+        "item": "디지털 딜러 성숙도",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 3
+      },
+      {
+        "item": "국외이전 제한",
+        "country": "PR",
+        "role": "score",
+        "has_timeseries": true,
+        "source_tier": 1
+      }
+    ]
+  },
+  "data_quality": {
+    "countries_coverage": 3,
+    "timeseries_coverage_avg": 65.3061224489796,
+    "source_tiers": {
+      "tier1": 55,
+      "tier2": 36,
+      "tier3": 56,
+      "tier4": 0
+    },
+    "data_sources": [
+      "CFLA 2025 (Toyota Credit·Honda Financial·Ford Credit·GM Financial·VW Finance 합산 약 55%)",
+      "OCIF(Oficina del Comisionado de Instituciones Financieras), PR Retail Installment Sales Act, 연방 CFPB",
+      "Ley Monetaria, Banxico 외환 가이드, USMCA",
+      "AMFE 2025 (GM Financial·Nissan·Ford Credit·VW Leasing·Stellantis·Toyota·Hyundai Capital 합산 약 60%)",
+      "Canadian Black Book 잔가 지수 / Cox Automotive Canada 추정(3년 EV 기준)",
+      "PR Retail Installment Sales Act, Small Loans Act, OCIF",
+      "CFLA, OSFI, 업계",
+      "TransUnion·Equifax·Experian (미국 3대 CB 동일 적용), FICO 스코어, 연방 FCRA",
+      "DesRosiers / CFLA 2025 (할부대출 약 60%·리스(Lease) 약 22%)",
+      "SPEI(Banxico 정산, 1주 7일/24시간), CoDi, DiMo, TPV(POS), Carta Aclaración",
+      "PR Commercial Transactions Act (UCC Art.9 채택), 자력구제(self-help repossession) 허용",
+      "DesRosiers / GAC 2025 신차 등록",
+      "Popular Auto·Reliable 추정 (할부 약 70%·리스 약 12%, 미국식 retail installment 압도)",
+      "OCIF Reglamento (financing company 자본 요건), PR 금융기관법",
+      "LFPDPPP 2010, INAI(국립정보투명성청)",
+      "GUIA 2025 신차 등록 추정",
+      "PROMESA(2016) Oversight Board, S&P/Moody's PR GO 등급, 2022 Plan of Adjustment",
+      "연방 FFIEC 연체 분류(30/60/90일), OCIF",
+      "시장 조사 (라틴/북미 통합 패키지 + 멕시코 특화 시스템)",
+      "주별 자동차보험법 (BC ICBC, Ontario Insurance Act 등), OSFI/주 보험감독",
+      "CNBV (30/60/90일 단계), Buró de Crédito IMOR(Índice de Morosidad)",
+      "CFLA 2025 / 은행·캡티브 공시 추정",
+      "US GAAP CECL(현재예상신용손실) / IFRS 9, OCIF·연방 감독",
+      "주별 PPSA / 업계 추정 (평균 60~180일, Quebec 사법절차 시 더 김)",
+      "LFPDPPP, CONDUSEF, PROFECO (소비자보호)",
+      "AMDA, AMIA, AMFE, CNBV, Banxico",
+      "AMDA/AMIA 2025 신차 등록 (Nissan 267,750 / GM 217,260 / VW 165,240 / Toyota 130,050 / Kia 110,160 추정)",
+      "화이트리스트(Automotive News·WardsAuto·Auto Finance News·S&P Global·Reuters·Wall Street Journal)",
+      "Canadian Finance & Leasing Association(CFLA) 2025 / Statistics Canada 자동차여신 잔액 추정",
+      "화이트리스트(Automotive News·Auto Finance News·Just Auto·S&P Global·Reuters·Financial Times)",
+      "S&P·Moody's·Fitch 국가신용등급 (2025)",
+      "Bank of Canada 2025, J.D. Power Canada, OEM 캡티브 프로모",
+      "OSFI, Bank of Canada, FCAC, OPC, Quebec AMF 공식",
+      "AMFE, CNBV, CONDUSEF 등록부",
+      "Fedwire/ACH(연방준비), Zelle, ATH Móvil(EVERTEC 현지망), 카드망",
+      "Income Tax Act / 한·캐 조세조약 (비거주자 이자 표준 25%, 비특수관계 이자 면제, 조약 10%)",
+      "OCIF, 업계",
+      "Ley General de Vías de Comunicación (2014 책임보험 의무화), CNSF(국가보험감독) 감독",
+      "AMDA/AMIA/INEGI 2025 (신차 등록 약 153만대, +2.2%; 2016 1.6M 회복 임박)",
+      "업계 (Clutch·Canada Drives·AutoTrader.ca·CarGurus·Tesla 직판)",
+      "Popular Auto·Reliable 추정 / 미국 본토 침투율 패턴 준용 (신차 80%대)",
+      "GUIA 신차 등록 추정 (BEV+PHEV+HEV 약 6%), 높은 연료가·Tesla/BYD 진입",
+      "Ley para la Transparencia y Ordenamiento de los Servicios Financieros 2007, Banxico CAT 가이드",
+      "LGOAAC, CNBV, Ley de Instituciones de Crédito",
+      "Ley de Protección y Defensa al Usuario de Servicios Financieros, CONDUSEF Reglas",
+      "Buró de Crédito(BC), Círculo de Crédito (두 개 CB) - LRSIC 2002로 의무 보고",
+      "Bank Act, FCAC, 주별 Insurance Act",
+      "DesRosiers / GAC 2025 신차 등록 통계",
+      "LFPDPPP, PL Ley para la Regulación Ética de la Inteligencia Artificial(의회), INAI 가이드",
+      "PR Insurance Code, 연방 소비자보호 규정",
+      "AMFE, CNBV SOFOM 등록부",
+      "CNBV 단계별 충당 가이드, IFRS 9 도입(2022~ 대형 SOFOM/은행)",
+      "Junta de Planificación de PR·IMF·BEA 2025",
+      "AMDA(Asociación Mexicana de Distribuidores de Automotores) 2025 / AMFE(자동차금융협회) + CNBV 통계",
+      "Canada Revenue Agency: 연방 15% + 주 평균 약 11.5%(Ontario 기준) = 합산 약 26.5% / GST/HST 별도",
+      "Puerto Rico Internal Revenue Code (비거주 외국법인 이자 원천징수 표준 29%; 한·미 조세조약은 PR 비적용)",
+      "주별 Collection Agencies Act / FCAC, OPC (소비자보호·부당추심 규율)",
+      "CoDi(Banxico 즉시결제 2019~), DiMo(2023~), e.firma(전자서명·SAT), Open Finance México 2024~",
+      "World Bank Doing Business / 업계 추정 (평균 90~365일)",
+      "PwC Mexico WHT (배당 10%, 한·멕 조세조약 0%/15%)",
+      "LGOAAC Art. 87-B, Ley de Instituciones de Crédito, CNBV",
+      "미 연방법 / PR 상법, OCIF 가이드",
+      "미 GLBA·FCRA, PR Act 111 (강제 현지화 없음)",
+      "AMFE 2025 / NR Finance·GM·VW·BBVA·Santander 공시",
+      "업계 (Kavak(중고차 유니콘)·Seminuevos.com·Mercado Libre Vehículos·OLX Autos)",
+      "Bank of Canada·Statistics Canada·IMF WEO 2025",
+      "Bank Act, OSFI 가이드, 주별 Consumer Protection / Cost of Credit Disclosure Act",
+      "CFLA, DesRosiers, OSFI, Statistics Canada, S&P Global Mobility",
+      "업계",
+      "Banxico·INEGI·IMF WEO 2025",
+      "OSFI 가이드, IFRS 9(전면 도입)",
+      "Bank of Canada 소비자신용 통계 2025 / J.D. Power (신차 자동차대출 평균 APR 약 8%, BoC 정책금리 2.75%)",
+      "화이트리스트(Reuters·Moody's·Wall Street Journal). auto_finance·auto_market 카테고리 PR 직접 화이트리스트 출처 미확보 — 실사 보강",
+      "AMDA/AMFE 2025, Mordor Intelligence Mexico Auto Finance",
+      "AMDA 2025 (Crédito automotriz 약 50%·Arrendamiento Puro 약 8%·Financiero 약 7%)",
+      "LFPDPPP, INAI 가이드 (국제이전 동의/계약 기반)",
+      "PIPEDA, Quebec Law 25(2023), OPC(연방 개인정보보호위원회)",
+      "OCIF, GUIA, Popular/Reliable 공시, PROMESA Oversight Board",
+      "DesRosiers 2025 평균 거래가 추정 / J.D. Power",
+      "Ley General de Organizaciones y Actividades Auxiliares del Crédito (LGOAAC) Art. 87-B, CNBV, CONDUSEF",
+      "PIPEDA, Quebec Law 25(자동화 의사결정 통지), AIDA(Bill C-27, 폐기 후 재논의)",
+      "AMDA 2025 평균 거래가 추정, Libro Azul EBC",
+      "Ley de Inversión Extranjera, USMCA, CNBV 가이드",
+      "Payments Canada (Lynx 고액·ACSS 정산), Interac e-Transfer, PAD(사전승인이체), Real-Time Rail(RTR 도입 중)",
+      "PIPEDA, Quebec Law 25, OPC 가이드 (국외이전 동의/계약·영향평가 기반)",
+      "OSFI (30/60/90일 단계), IFRS 9 stage 분류",
+      "미국 ACH/Zelle/카드 인프라 직접 적용, ATH Móvil(현지 즉시결제), e-sign(연방 ESIGN Act)",
+      "업계 (미국 본토 아키텍처 직접 적용)",
+      "업계 추정 (Popular Auto/Reliable 약 30%, Oriental·FirstBank·캡티브 순)",
+      "Bank of Canada, Income Tax Act, 한·캐 조세조약, USMCA",
+      "Bank Act, OSFI Capital Adequacy Requirements, 주별 면허",
+      "업계 (Clasificados Online·미국 Cars.com/CarGurus 접근, 딜러 디지털화 진행)",
+      "DesRosiers Automotive Consultants / Global Automakers of Canada(GAC) 2025 (신차 등록 약 188만대)",
+      "DesRosiers Automotive / J.D. Power Canada 2025 (신차의 80%+가 금융·리스 경유)",
+      "PwC Mexico WHT (은행/금융기관 이자 4.9%, 기타 10/15/21%; 한·멕 조세조약 15%/10%/5% 차등)",
+      "Banxico CAT 통계 2025, AMFE, OEM 캡티브 프로모",
+      "미 GLBA·FCRA, PR Act 111-2005 (Citizen Information on Data Banks Security Act)",
+      "OCIF Reglamento, PR Small Loans Act·Retail Installment Sales Act, 연방 Dodd-Frank/CFPB",
+      "GUIA(Grupo Unido de Importadores de Automóviles) 신차 등록 통계 2025 (연 약 10만대)",
+      "시장 조사 (북미 통합 패키지 — 미국 베이스라인과 높은 정합)",
+      "AMDA/AMIA 2025 신차 등록 통계 (Nissan 1위·한국 OEM 강세)",
+      "OCIF, Popular/Reliable/Oriental/FirstBank 공시 추정",
+      "GUIA 평균 거래가 추정",
+      "업계 추정 (Toyota·Honda·Ford·GM 캡티브 합산 약 40%, 은행/독립계 약 60%)",
+      "Puerto Rico Internal Revenue Code 2011 (법인세 기본 18.5% + 누진 부가세 최대 19% = 합산 약 37.5%)",
+      "연방 FDCPA(공정채권추심법), CFPB, PR 소비자보호 규정",
+      "Interac e-Transfer, EFT, 전자서명(PIPEDA/UECA), Open Banking 프레임워크(2025 도입 중)",
+      "미 연방준비제도 G.19 소비자신용 통계 준용 + Popular/Reliable APR 공시 (신차 약 9~10%)",
+      "Cox Automotive/Manheim 미국 잔가 지수 준용 (3년 EV 기준), 섬 시장 보정",
+      "Investment Canada Act, Bank Act, OSFI 가이드",
+      "PR Commercial Transactions Act(UCC Art.9), 업계 추정 (자력구제 30~60일)",
+      "Popular/Reliable APR 공시, 캡티브 프로모, Fed G.19 준용",
+      "Banco Popular/Popular Auto·Reliable Financial 공시 + OCIF 통계 추정 (USD 약 2.6bn)",
+      "Puerto Rico Internal Revenue Code (외국법인 배당 원천 10%, Act 60 적격 시 우대)",
+      "연방 ECOA(Equal Credit Opportunity Act)·Reg B, FCRA, CFPB AI 가이드",
+      "Banxico 소비자신용 통계 2025 / CNBV CAT 분기 고시 (자동차 CAT 평균 약 14%) / Banxico 기준금리 9.5%",
+      "시장 조사 (미국 본토 동일 벤더 생태계 + 스페인어 현지화)",
+      "미 연방 통화법, PR Internal Revenue Code",
+      "PR Compulsory Motor Vehicle Liability Insurance Act, 보험감독청(Oficina del Comisionado de Seguros)",
+      "Income Tax Act / 한·캐 조세조약 (배당 표준 25%, 조약 5%/15% 차등)",
+      "S&P·Moody's·Fitch 국가신용등급 (2025); Moody's 2024 부정적 전망",
+      "Reliable Financial·핀테크 추정 (중고차 정식 금융 약 40~50%)",
+      "Statistics Canada / S&P Global Mobility 2025 (ZEV 신차 점유 약 13%), 연방 iZEV·Quebec/BC 인센티브",
+      "주별 Personal Property Security Act(PPSA) / Quebec Civil Code, 업계 (주별 회수 절차 상이)",
+      "LPDU, CONDUSEF, CNSF",
+      "AMIA/AMDA 2025 (BEV+PHEV+HEV 점유 약 7%, BEV 단독 약 1.5%), 중국 BYD·MG·JAC 진입 가속",
+      "OCIF, CFPB, FTC, 보험감독청, PROMESA, DACO 공식",
+      "Bank Act s.459.1, 주별 Insurance Act, FCAC 가이드",
+      "CFLA 2025, Mordor Intelligence Canada Auto Finance",
+      "Ley General de Títulos y Operaciones de Crédito (LGTOC) Art. 397 fideicomiso, 업계",
+      "OCIF 등록부, 업계",
+      "Ley del Impuesto sobre la Renta(ISR): 표준 30% / IVA 16%(부가세) 별도",
+      "Libro Azul EBC(잔가 지수)·Cox Automotive Latam 추정",
+      "Criminal Code s.347 (2025 개정: 상한 35% APR), 주별 Cost of Credit Disclosure Act",
+      "AMDA 2025 (신차 등록의 65%가 금융, OEM 캡티브 비중 큼), JATO/CNBV",
+      "AMDA 2025 / Kavak·Clip 데이터 (중고차 정식 금융 침투율 15~20%)",
+      "PR Insurance Code, 연방 anti-tying 규정",
+      "AMFE 2025 (NR Finance(Nissan) 약 18%, GM Financial 15%, VW Leasing 12%, BBVA Auto 10%, Santander Consumer 8%)",
+      "CNBV, SHCP, Banxico, CONDUSEF, CNSF, INAI 공식",
+      "GUIA 신차 등록 통계 2025 (일본·한국 브랜드 강세)",
+      "CFLA 2025 (Scotiabank Auto 약 16%, TD Auto Finance 14%, Ford Credit 11%, Toyota Credit 10%, GM Financial 9%)",
+      "OCIF·Popular Auto 추정, Mordor/IBISWorld Puerto Rico Auto Finance",
+      "DesRosiers / Canada Drives·Clutch 데이터 (중고차 정식 금융 침투율 40~50%)",
+      "CFLA, 업계 공시",
+      "Equifax Canada, TransUnion Canada (양강 CB) - 포괄적 신용보고",
+      "주별 Consumer Protection Act / OSFI / FCAC(연방소비자금융청)"
+    ],
+    "gaps_by_tab": {},
+    "country_completeness": {
+      "CA": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "MX": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "PR": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      }
+    }
+  },
+  "critical_gaps": [],
+  "type2_readiness": {
+    "can_generate": true,
+    "tabs": {
+      "2-0": {
+        "name": "Kill Switch Filter",
+        "ready": true,
+        "missing_count": 0,
+        "missing_fields": []
+      },
+      "2-1": {
+        "name": "Business Attractiveness",
+        "ready": true,
+        "missing_count": 0,
+        "missing_fields": []
+      },
+      "2-2": {
+        "name": "IT/Speed-to-Market Similarity",
+        "ready": true,
+        "missing_count": 0,
+        "missing_fields": []
+      },
+      "2-3": {
+        "name": "Market Background",
+        "ready": true,
+        "missing_count": 0,
+        "missing_fields": []
+      }
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "region": "South America",
+  "region_ko": "남미권역",
+  "code": "SA",
+  "baseline_country": "BR",
+  "schema_version": "1.0",
+  "fetched_at": "2026-06-22T16:00:00+09:00",
+  "fetched_by": "ai",
+  "overall_insight": "남미 권역은 2026년 들어 전반적 디스인플레이션·금리 정상화 국면에 진입했다. 브라질은 6월 17일 SELIC을 14.25%로 3회 연속 인하했지만 인플레이션이 목표 상단을 웃도는 등 여전히 고금리·고비용 환경이라 신차 할부의 이자 부담이 크고, 아르헨티나는 5월 월간 물가가 2.1%(8개월 최저)로 둔화되고 재정흑자(13.4억 달러)를 기록하며 밀레이 안정화가 가시화되는 중이다. 진출 우선순위는 제도가 안정적이고 OECD·투자등급인 칠레와, 시장 규모가 압도적인 브라질을 1차 퀵윈으로 두고, 아르헨티나는 환·물가 변동성과 외환통제(cepo) 잔존 리스크가 줄긴 했으나 회복 초기 단계이므로 후순위 관망이 합리적이다. 공통 리스크는 (1) 인플레이션·환율 변동성에 따른 할부 채권 실질가치·연체 리스크와 (2) EU-메르코수르 협정의 스위스 의회 부결 등 무역·정치 불확실성이다. 단계적 진입은 칠레(안정 진입)→브라질(규모 확보, BACEN/IOF 대응)→아르헨티나(안정화 확인 후 진입)의 순서가 적절하다.",
+  "overall_insight_en": "The South American region entered a clear disinflation and rate-normalization phase in 2026. Brazil cut SELIC to 14.25% in a third straight move on June 17, yet inflation still tops the target range, keeping financing costs and installment interest burdens high; Argentina's monthly inflation slowed to 2.1% in May (an 8-month low) with a USD1.34bn fiscal surplus, making Milei's stabilization increasingly visible. Entry priority should place Chile (stable, OECD, investment grade) and Brazil (dominant market scale) as first-wave quick wins, while Argentina warrants a wait-and-see posture in early recovery. Common risks are (1) inflation/FX volatility eroding receivable values and raising delinquency, and (2) trade/political uncertainty such as the Swiss parliament's rejection of the EU-Mercosur deal. A phased sequence of Chile to Brazil to Argentina is appropriate.",
+  "items": [
+    {
+      "item": "권역 외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "context_type": "news",
+      "value": [
+        {
+          "news_category": "finance",
+          "scope": "region",
+          "headline": "브라질 중앙은행, SELIC 14.25%로 3회 연속 0.25%p 인하",
+          "headline_en": "Brazil central bank cuts rates for third straight meeting by 25 bps to 14.25%",
+          "so_what": "고금리 기조가 완화되면 신차 할부의 자금조달 비용과 월 상환 부담이 낮아져 자동차금융 수요가 점진적으로 회복된다. 다만 물가가 목표 상단을 웃돌아 추가 인하 속도는 제한적이다.",
+          "so_what_en": "Easing high rates lowers funding costs and monthly installments, gradually reviving auto-finance demand, though above-target inflation limits the pace of further cuts.",
+          "publisher": "Reuters",
+          "pub_date": "2026-06-17",
+          "url": "https://money.usnews.com/investing/news/articles/2026-06-17/brazil-central-bank-cuts-rates-for-third-straight-meeting-by-25-bps"
+        },
+        {
+          "news_category": "finance",
+          "scope": "region",
+          "headline": "아르헨티나 5월 물가 2.1%로 둔화, 예상치 하회",
+          "headline_en": "Argentina May inflation slows to 2.1%, below forecasts",
+          "so_what": "월간 물가 둔화는 페소 할부채권의 실질가치 침식과 연체 리스크를 완화해 아르헨티나 자동차금융의 사업성을 점진적으로 개선시킨다. 다만 회복 초기라 진입은 관망이 적절하다.",
+          "so_what_en": "Slowing monthly inflation eases erosion of peso receivables and delinquency risk, gradually improving auto-finance viability, but early-stage recovery favors a wait-and-see entry.",
+          "publisher": "Reuters",
+          "pub_date": "2026-06-10",
+          "url": "https://www.msn.com/en-us/money/markets/argentina-may-inflation-slows-to-21-below-forecasts/ar-AA25q9pb"
+        },
+        {
+          "news_category": "geopolitical",
+          "scope": "region",
+          "headline": "아르헨티나 물가 8개월 최저로 둔화, 밀레이에 호재",
+          "headline_en": "Argentina's inflation slows to 8-month low in a boost for President Milei",
+          "so_what": "밀레이 안정화 정책의 정치적 모멘텀이 강화되면 외환통제(cepo) 완화·시장 개방 가속 기대가 커져 외국계 자동차금융사의 중기 진입 환경이 개선될 수 있다.",
+          "so_what_en": "Stronger political momentum for Milei's stabilization raises hopes of further FX-control easing and market opening, improving the mid-term entry environment for foreign auto-finance players.",
+          "publisher": "Associated Press",
+          "pub_date": "2026-06-10",
+          "url": "https://www.msn.com/en-us/money/general/argentina-s-inflation-slows-to-8-month-low-in-a-boost-for-president-milei/ar-AA25pXsX"
+        },
+        {
+          "news_category": "finance",
+          "scope": "region",
+          "headline": "아르헨티나 5월 재정흑자 13.4억 달러 기록",
+          "headline_en": "Argentina logs $1.34 billion fiscal surplus in May",
+          "so_what": "지속적 재정흑자는 거시 안정성과 국가신용 개선의 신호로, 향후 외환통제 완화와 자본 유입 여건을 뒷받침해 자동차금융 진입 리스크를 낮춘다.",
+          "so_what_en": "A sustained fiscal surplus signals macro stability and improving sovereign credit, supporting eventual FX-control easing and capital inflows that lower auto-finance entry risk.",
+          "publisher": "Reuters",
+          "pub_date": "2026-06-17",
+          "url": "https://www.msn.com/en-us/money/markets/argentina-logs-134-billion-fiscal-surplus-in-may/ar-AA25Tpx0"
+        },
+        {
+          "news_category": "finance",
+          "scope": "region",
+          "headline": "칠레 중앙은행, 글로벌 불확실성 속 4월 금리인상 검토 의사록 공개",
+          "headline_en": "Chile central bank weighed rate hike in April amid global uncertainty, minutes show",
+          "so_what": "칠레가 인상까지 검토할 만큼 통화정책이 신중하다는 점은 거시 안정성을 보여주며, UF 연동·TMC 금리상한 구조와 함께 안정적 자동차금융 진입지로서의 매력을 뒷받침한다.",
+          "so_what_en": "Chile weighing a hike reflects prudent, stable policy, reinforcing its appeal as a stable auto-finance entry market alongside UF-linked finance and the TMC rate cap.",
+          "publisher": "Reuters",
+          "pub_date": "2026-05-07",
+          "url": "https://money.usnews.com/investing/news/articles/2026-05-07/chile-central-bank-weighed-rate-hike-in-april-amid-global-uncertainty-minutes-show"
+        },
+        {
+          "news_category": "geopolitical",
+          "scope": "region",
+          "headline": "스위스 하원, 메르코수르 무역협정 부결",
+          "headline_en": "Swiss lower house of parliament rejects Mercosur trade deal",
+          "so_what": "메르코수르 무역협정의 비준·발효 불확실성은 남미 자동차 수입·부품 공급망과 신차 가격 전망에 변동성을 더해, 할부 잔존가치·물량 가정에 리스크로 작용한다.",
+          "so_what_en": "Uncertainty over Mercosur trade-deal ratification adds volatility to South American auto import/parts supply chains and new-car pricing, posing risk to residual-value and volume assumptions in financing.",
+          "publisher": "Reuters",
+          "pub_date": "2026-06-18",
+          "url": "https://www.usnews.com/news/world/articles/2026-06-18/swiss-lower-house-of-parliament-rejects-mercosur-trade-deal"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "",
+          "headline": "조사 필요",
+          "headline_en": "조사 필요",
+          "so_what": "조사 필요",
+          "so_what_en": "",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "auto_finance",
+          "scope": "",
+          "headline": "조사 필요",
+          "headline_en": "조사 필요",
+          "so_what": "조사 필요",
+          "so_what_en": "",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "credit_abs",
+          "scope": "",
+          "headline": "조사 필요",
+          "headline_en": "조사 필요",
+          "so_what": "조사 필요",
+          "so_what_en": "",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        }
+      ],
+      "tier": 3,
+      "source": "화이트리스트(Associated Press · Reuters)",
+      "insight": "남미 권역은 2026년 들어 전반적 디스인플레이션·금리 정상화 국면에 진입했다. 브라질은 6월 17일 SELIC을 14.25%로 3회 연속 인하했지만 인플레이션이 목표 상단을 웃도는 등 여전히 고금리·고비용 환경이라 신차 할부의 이자 부담이 크고, 아르헨티나는 5월 월간 물가가 2.1%(8개월 최저)로 둔화되고 재정흑자(13.4억 달러)를 기록하며 밀레이 안정화가 가시화되는 중이다. 진출 우선순위는 제도가 안정적이고 OECD·투자등급인 칠레와, 시장 규모가 압도적인 브라질을 1차 퀵윈으로 두고, 아르헨티나는 환·물가 변동성과 외환통제(cepo) 잔존 리스크가 줄긴 했으나 회복 초기 단계이므로 후순위 관망이 합리적이다. 공통 리스크는 (1) 인플레이션·환율 변동성에 따른 할부 채권 실질가치·연체 리스크와 (2) EU-메르코수르 협정의 스위스 의회 부결 등 무역·정치 불확실성이다. 단계적 진입은 칠레(안정 진입)→브라질(규모 확보, BACEN/IOF 대응)→아르헨티나(안정화 확인 후 진입)의 순서가 적절하다.",
+      "insight_ai_generated": true
+    }
+  ]
+}

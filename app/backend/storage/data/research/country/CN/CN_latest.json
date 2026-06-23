@@ -1,0 +1,1338 @@
+{
+  "country": "China",
+  "country_ko": "중국",
+  "code": "CN",
+  "region": "APAC",
+  "is_baseline": false,
+  "currency": "CNY",
+  "schema_version": "1.1",
+  "data_year": 2025,
+  "fetched_at": "2026-06-22T00:00:00+09:00",
+  "fetched_by": "ai",
+  "overall_insight": "세계 최대 자동차 시장(2025 신차 2,350만대)·NEV 50%+ 점유·금융 시장 €280bn 규모로 매력도 최상. 그러나 외국 자동차금융 진출 환경 어려움 — CBIRC Auto Finance Company 인가 + 외국 단독 가능 단 자본·거버넌스 부담↑, 데이터 현지화(개인정보보호법 PIPL + CSL) + 자본 통제 + 미·중 긴장으로 운영 리스크 큼. BYD·NIO·Geely 등 현지 NEV 캡티브 압도 — 외국 진입 여지 좁음. EV·중고차·소비자 운용리스가 단기 차별화 기회. 단독 인가보다는 합작·인수(VW Finance·Stellantis-CMBC 등 사례) 전략 권장.",
+  "overall_insight_en": "World's largest auto market (23.5M new cars 2025), NEV share 50%+, and €280B finance market place attractiveness at the top. However, the foreign auto-finance entry environment is challenging — CBIRC Auto Finance Company licensing, foreign solo entry allowed but with heavy capital/governance burden, data localization (PIPL + CSL), capital controls, and US-China tensions add operational risk. Local NEV captives (BYD, NIO, Geely) dominate — limited room for foreign entrants. EV, used cars, and consumer operating lease offer near-term differentiation. JV/acquisition strategy (e.g., VW Finance, Stellantis-CMBC) preferred over standalone licensing.",
+  "items": [
+    {
+      "item": "오토금융/리스 시장규모",
+      "category": "business",
+      "role": "score",
+      "value": 280000,
+      "unit": "EUR_M",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "PBoC Auto Finance Statistics 2025 / Mordor Intelligence China Auto Finance",
+      "source_en": "PBoC Auto Finance Statistics 2025 / Mordor Intelligence China Auto Finance",
+      "insight": "중국 자동차 금융 시장 약 €280bn — 세계 최대. PBoC 가이드 + CBIRC 인가 Auto Finance Company 25개 + 은행·캡티브 다층.",
+      "insight_en": "China auto finance market ~€280B — world's largest. PBoC guidance + 25 CBIRC-licensed Auto Finance Companies + banks/captives multi-layered.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 200000
+          },
+          {
+            "year": 2022,
+            "value": 220000
+          },
+          {
+            "year": 2023,
+            "value": 240000
+          },
+          {
+            "year": 2024,
+            "value": 260000
+          },
+          {
+            "year": 2025,
+            "value": 280000
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 300000
+          },
+          {
+            "year": 2027,
+            "value": 320000
+          },
+          {
+            "year": 2028,
+            "value": 340000
+          },
+          {
+            "year": 2029,
+            "value": 360000
+          },
+          {
+            "year": 2030,
+            "value": 380000
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "오토금융 성장률(CAGR)",
+      "category": "business",
+      "role": "score",
+      "value": 7.0,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "source": "Mordor Intelligence China Auto Finance 2025",
+      "source_en": "Mordor Intelligence China Auto Finance 2025",
+      "insight": "2021~2025 CAGR 7.0% — 시장 성숙 단계 진입. EV 전환·중고차 금융 확대가 향후 성장 견인.",
+      "insight_en": "7.0% CAGR over 2021-2025 — entering market maturity. EV transition and used-car finance expansion drive future growth.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 9.0
+          },
+          {
+            "year": 2022,
+            "value": 8.5
+          },
+          {
+            "year": 2023,
+            "value": 7.5
+          },
+          {
+            "year": 2024,
+            "value": 7.0
+          },
+          {
+            "year": 2025,
+            "value": 7.0
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 6.5
+          },
+          {
+            "year": 2027,
+            "value": 6.0
+          },
+          {
+            "year": 2028,
+            "value": 5.8
+          },
+          {
+            "year": 2029,
+            "value": 5.5
+          },
+          {
+            "year": 2030,
+            "value": 5.0
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "GDP 성장률",
+      "category": "business",
+      "role": "score",
+      "value": 4.8,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "PBoC·NBS·IMF WEO 2025",
+      "source_en": "PBoC, NBS, IMF WEO 2025",
+      "insight": "2025년 실질 GDP 4.8% — 5%대 목표 하회. 부동산 침체·수출 둔화·인구 감소로 중기 4%대 안정. 정부 부양책 의존.",
+      "insight_en": "Real GDP 4.8% in 2025 — below 5% target. Property downturn, slower exports, and demographic decline stabilize medium-term around 4%. Government stimulus-dependent.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 8.4
+          },
+          {
+            "year": 2022,
+            "value": 3.0
+          },
+          {
+            "year": 2023,
+            "value": 5.2
+          },
+          {
+            "year": 2024,
+            "value": 5.0
+          },
+          {
+            "year": 2025,
+            "value": 4.8
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 4.5
+          },
+          {
+            "year": 2027,
+            "value": 4.3
+          },
+          {
+            "year": 2028,
+            "value": 4.2
+          },
+          {
+            "year": 2029,
+            "value": 4.0
+          },
+          {
+            "year": 2030,
+            "value": 3.8
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "금융 이용률(신차)",
+      "category": "business",
+      "role": "score",
+      "value": 58,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "source": "CADA / China Automotive Finance Industry Report 2025",
+      "source_en": "CADA / China Automotive Finance Industry Report 2025",
+      "insight": "신차 금융 침투율 58% — 글로벌 평균. NEV(전기차) 금융이 침투율 70%+로 견인. 중고차는 별도.",
+      "insight_en": "New-car finance penetration 58% — global average. NEV (EV) finance penetration exceeds 70%, driving overall rate. Used cars separate.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 50
+          },
+          {
+            "year": 2022,
+            "value": 53
+          },
+          {
+            "year": 2023,
+            "value": 55
+          },
+          {
+            "year": 2024,
+            "value": 57
+          },
+          {
+            "year": 2025,
+            "value": 58
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 60
+          },
+          {
+            "year": 2027,
+            "value": 62
+          },
+          {
+            "year": 2028,
+            "value": 64
+          },
+          {
+            "year": 2029,
+            "value": 66
+          },
+          {
+            "year": 2030,
+            "value": 68
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "금융 이용률(중고차)",
+      "category": "business",
+      "role": "score",
+      "value": 30,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 3,
+      "source": "Guazi·Uxin·Cars.com China Used-Car Report 2025",
+      "source_en": "Guazi, Uxin, Cars.com China Used-Car Report 2025",
+      "insight": "중고차 금융 30% — 신차 대비 낮음. Guazi·Uxin·Cars.com 디지털 플랫폼이 침투율 확대. 미개척 시장.",
+      "insight_en": "Used-car finance 30% — below new cars. Digital platforms (Guazi, Uxin, Cars.com) push penetration. Largely untapped.",
+      "insight_ai_generated": true,
+      "timeseries": null
+    },
+    {
+      "item": "평균 금리/APR",
+      "category": "business",
+      "role": "score",
+      "value": 5.5,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "source": "PBoC LPR 2025 / China Auto Finance Industry Report",
+      "source_en": "PBoC LPR 2025 / China Auto Finance Industry Report",
+      "insight": "PBoC LPR 3.1% 기준 자동차 대출 평균 APR 5.5%. 캡티브 프로모 0~3%, 은행 5~7%, 중고차 8~12%.",
+      "insight_en": "Auto-loan APR ~5.5% (PBoC LPR 3.1% basis). Captive promos 0-3%, banks 5-7%, used cars 8-12%.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 6.5
+          },
+          {
+            "year": 2022,
+            "value": 6.0
+          },
+          {
+            "year": 2023,
+            "value": 5.8
+          },
+          {
+            "year": 2024,
+            "value": 5.6
+          },
+          {
+            "year": 2025,
+            "value": 5.5
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 5.3
+          },
+          {
+            "year": 2027,
+            "value": 5.2
+          },
+          {
+            "year": 2028,
+            "value": 5.0
+          },
+          {
+            "year": 2029,
+            "value": 5.0
+          },
+          {
+            "year": 2030,
+            "value": 5.0
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "신차 판매대수",
+      "category": "business",
+      "role": "score",
+      "value": 23500000,
+      "unit": "units",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "CAAM China Auto Sales 2025 / Passenger Vehicles",
+      "source_en": "CAAM China Auto Sales 2025 / Passenger Vehicles",
+      "insight": "2025년 승용차 신차 판매 2,350만대 — 세계 최대. NEV 50%+ 점유 글로벌 EV 리더. BYD 단독 250만대+.",
+      "insight_en": "23.5M new PV sales in 2025 — world's largest. NEV (EV) share 50%+ — global EV leader. BYD alone 2.5M+.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 21500000
+          },
+          {
+            "year": 2022,
+            "value": 23560000
+          },
+          {
+            "year": 2023,
+            "value": 21930000
+          },
+          {
+            "year": 2024,
+            "value": 22900000
+          },
+          {
+            "year": 2025,
+            "value": 23500000
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 24000000
+          },
+          {
+            "year": 2027,
+            "value": 24500000
+          },
+          {
+            "year": 2028,
+            "value": 25000000
+          },
+          {
+            "year": 2029,
+            "value": 25500000
+          },
+          {
+            "year": 2030,
+            "value": 26000000
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "구매 패턴(할부·리스 비중)",
+      "category": "business",
+      "role": "score",
+      "value": 55,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "source": "CADA / China Automotive Finance Industry Report 2025",
+      "source_en": "CADA / China Automotive Finance Industry Report 2025",
+      "insight": "할부 55%, 리스 3% (B2B 플릿+소비자 운용리스 일부). NEV 진입자가 운용리스 모델 시도 — 잔가 리스크 큼.",
+      "insight_en": "Installments 55%; lease 3% (B2B fleet + some consumer operating lease). NEV entrants pilot operating-lease models — high residual risk.",
+      "insight_ai_generated": true,
+      "timeseries": null,
+      "similarity_axis": "product",
+      "similarity_weight": 0.15,
+      "score_dimensions": {
+        "리스 취급 일치도": {
+          "target_score": 2,
+          "note": "리스 3% 미성숙"
+        },
+        "렌탈 취급 일치도": {
+          "target_score": 2,
+          "note": "운용리스 시도 단계"
+        },
+        "플릿 취급 일치도": {
+          "target_score": 3,
+          "note": "B2B 플릿 일부"
+        },
+        "상품별 비중 유사도": {
+          "target_score": 3,
+          "note": "할부 55% 편중"
+        }
+      }
+    },
+    {
+      "item": "캡티브 강도(점유율)",
+      "category": "business",
+      "role": "score",
+      "value": 60,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "tier": 2,
+      "source": "CADA / Industry research 2025",
+      "source_en": "CADA / Industry research 2025",
+      "insight": "캡티브 약 60% 압도적 — VW Finance·Toyota Finance·BYD Auto Finance·GAC-Sofinco·BMW Finance 등 25개 Auto Finance Company.",
+      "insight_en": "Captives ~60% — overwhelming. 25 Auto Finance Companies include VW Finance, Toyota Finance, BYD Auto Finance, GAC-Sofinco, BMW Finance.",
+      "insight_ai_generated": true,
+      "timeseries": null
+    },
+    {
+      "item": "금융사 점유율(Top 5)",
+      "category": "business",
+      "role": "score",
+      "value": 50,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "tier": 2,
+      "timeseries": null,
+      "source": "CADA / China Banking Auto Finance Report 2025",
+      "source_en": "CADA / China Banking Auto Finance Report 2025",
+      "insight": "상위 5개사 약 50% — 분산도 양호. SAIC-GMAC·VW Finance·BYD Auto Finance·Toyota Finance·Ping An Bank 5강.",
+      "insight_en": "Top 5 ~50% — moderate dispersion. SAIC-GMAC, VW Finance, BYD Auto Finance, Toyota Finance, Ping An Bank lead.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "법인세율",
+      "category": "business",
+      "role": "score",
+      "value": 25,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "PRC Enterprise Income Tax Law / PwC China Tax Summary 2025",
+      "source_en": "PRC Enterprise Income Tax Law / PwC China Tax Summary 2025",
+      "insight": "표준 법인세 25%. 첨단기술기업·소형기업·서부지역 우대(15~20%). 자유무역구·해남자유항 인센티브 가능.",
+      "insight_en": "Standard CIT 25%. HNTE/small enterprises/western region preferential 15-20%. FTZ and Hainan Free Trade Port incentives available.",
+      "insight_ai_generated": true,
+      "timeseries": null
+    },
+    {
+      "item": "이자소득 원천징수",
+      "category": "business",
+      "role": "score",
+      "value": 10,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "PRC EIT Law / China-Korea DTAA",
+      "source_en": "PRC EIT Law / China-Korea DTAA",
+      "insight": "비거주자 이자 10% (DTAA 시 7~10% 유지). 한국 기업은 한-중 조세조약으로 10% — 본사 차입 합리적.",
+      "insight_en": "Non-resident interest WHT 10% (7-10% under DTAA). Korea-China treaty keeps it at 10% — HQ-funded structures reasonable.",
+      "insight_ai_generated": true,
+      "timeseries": null
+    },
+    {
+      "item": "배당 원천징수",
+      "category": "business",
+      "role": "score",
+      "value": 10,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "tier": 1,
+      "timeseries": null,
+      "source": "PRC EIT Law / China-Korea DTAA",
+      "source_en": "PRC EIT Law / China-Korea DTAA",
+      "insight": "비거주자 배당 10% (한-중 DTAA 시 5% 가능, 25%+ 지분 보유 시).",
+      "insight_en": "Non-resident dividend WHT 10% (5% under Korea-China DTAA with 25%+ holding).",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "외국인 지분 한도",
+      "category": "shared",
+      "role": "gate",
+      "value": "Auto FDI 100% 자동(2022 Negative List 해제) / Auto Finance Company 외국 100% 가능 (CBIRC 인가)",
+      "value_en": "Auto FDI 100% automatic (2022 negative list lifted) / Auto Finance Company 100% foreign allowed (CBIRC approval).",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "tier": 1,
+      "source": "MOFCOM Foreign Investment Law / CBIRC Auto Finance Reg 2008 rev.2018",
+      "source_en": "MOFCOM Foreign Investment Law / CBIRC Auto Finance Reg 2008 rev.2018",
+      "insight": "자동차·Auto Finance Company 모두 외국 100% 가능. 단 CBIRC 인가가 핵심 — VW·Toyota·BMW Finance 사례 참고.",
+      "insight_en": "Both auto and Auto Finance Company allow 100% foreign ownership. CBIRC licensing is the key gate — see VW, Toyota, BMW Finance precedents.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "외환·배당 송금 자유도",
+      "category": "shared",
+      "role": "gate",
+      "value": "SAFE 통제 하 송금 가능. 배당·로열티 SAFE 사전·사후 보고 의무. CNY 변동성·자본통제 가능성 큼.",
+      "value_en": "Remittance allowed under SAFE controls; dividends/royalties require SAFE prior/post-reporting. High CNY volatility and capital-control risk.",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "tier": 2,
+      "source": "SAFE Foreign Exchange Regulations 2025",
+      "source_en": "SAFE Foreign Exchange Regulations 2025",
+      "insight": "송금 가능하나 SAFE 사전 승인·신고 필요. 자본통제·CNY 약세 시 송금 지연 사례 빈번 — 리스크 대비 필수.",
+      "insight_en": "Remittance possible but requires SAFE prior approval/reporting. Capital-control episodes and CNY weakness frequently delay remittance — risk mitigation essential.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "데이터 현지화 의무",
+      "category": "shared",
+      "role": "gate",
+      "value": "PIPL 2021 + CSL 2017 + DSL 2021 — 중요 데이터·결제 데이터 국내 저장 의무, 국외 이전 시 CAC 사전 평가",
+      "value_en": "PIPL 2021 + CSL 2017 + DSL 2021 — important data and payment data must be stored domestically; cross-border transfer requires CAC pre-assessment.",
+      "gate_result": "PASS",
+      "gate_scope": "operating_model",
+      "tier": 1,
+      "source": "PIPL 2021 / CSL 2017 / DSL 2021",
+      "source_en": "PIPL 2021 / CSL 2017 / DSL 2021",
+      "insight": "중요 정보 국내 저장 의무. CAC 보안 평가 통과 후 국외 이전 가능. 본사 연동 시 별도 아키텍처·중국 데이터 센터 필요.",
+      "insight_en": "Critical data must be stored domestically; cross-border transfer requires CAC security assessment. HQ integration requires separate architecture with China-based data centers.",
+      "insight_ai_generated": true,
+      "similarity_axis": "regulatory",
+      "similarity_weight": 0.1,
+      "score_dimensions": {
+        "현지 저장 강제": {
+          "target_score": 1,
+          "note": "PIPL/CSL/DSL 강제 국내저장"
+        },
+        "국외 이전 허용도": {
+          "target_score": 2,
+          "note": "CAC 보안평가 통과 필요"
+        },
+        "동의·보관 규제": {
+          "target_score": 2,
+          "note": "엄격한 동의·보관 규제"
+        },
+        "GDPR 동등성": {
+          "target_score": 2,
+          "note": "PIPL 부분 정합"
+        }
+      }
+    },
+    {
+      "item": "국가신용등급",
+      "category": "shared",
+      "role": "gate",
+      "value": "A+ (S&P) / A1 (Moody's) / A+ (Fitch), Stable",
+      "value_en": "A+ (S&P) / A1 (Moody's) / A+ (Fitch), Stable",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "tier": 1,
+      "source": "S&P / Moody's / Fitch 2025",
+      "source_en": "S&P / Moody's / Fitch 2025",
+      "insight": "투자등급 안정권. 단 경제·정치 리스크 모니터링 필요. 송금·자본회수 리스크는 SAFE 통제로 보통+.",
+      "insight_en": "Investment grade stable. Watch economic/political risk. Remittance/capital-recovery risk moderate-plus due to SAFE controls.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "라이선스 취득 가능 여부(외국사)",
+      "category": "shared",
+      "role": "gate",
+      "value": "Auto Finance Company 인가 가능. CBIRC 사전 인가 + 최저자본 CNY 50억(€650M) + 거버넌스 요건 충족.",
+      "value_en": "Auto Finance Company license obtainable. CBIRC pre-approval + min capital CNY 5B (€650M) + governance requirements.",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "tier": 1,
+      "source": "CBIRC Auto Finance Company Regulation 2008 (rev.2018)",
+      "source_en": "CBIRC Auto Finance Company Regulation 2008 (rev.2018)",
+      "insight": "외국사 단독 인가 가능 (VW·Toyota·BMW Finance 사례), 단 최저자본 €650M+ 거버넌스 부담 매우 큼. 인수·합작이 보다 일반적.",
+      "insight_en": "Foreign solo licensing feasible (VW, Toyota, BMW Finance precedents), but €650M+ capital and governance burden very high. JV/acquisition more common.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "라이선스 체제(세그먼트별)",
+      "category": "shared",
+      "role": "gate",
+      "value": "Auto Finance Company(CBIRC, 자동차 대출·리스 전용) / 은행 자동차 사업부 / 컨슈머 파이낸스(CBIRC, 무담보) 3종",
+      "value_en": "Three: Auto Finance Company (CBIRC, autos only), bank auto divisions, Consumer Finance (CBIRC, unsecured).",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "tier": 2,
+      "source": "CBIRC Auto Finance Reg / Consumer Finance Reg",
+      "source_en": "CBIRC Auto Finance Reg / Consumer Finance Reg",
+      "insight": "Auto Finance Company가 자동차 금융 주류 라이선스. 운용리스는 Finance Lease Company 별도 인가.",
+      "insight_en": "Auto Finance Company is the main auto-finance license. Operating lease requires separate Finance Lease Company license.",
+      "insight_ai_generated": true,
+      "segment": "consumer_credit",
+      "similarity_axis": "regulatory",
+      "similarity_weight": 0.25,
+      "score_dimensions": {
+        "취득방식(등록 vs 인가)": {
+          "target_score": 2,
+          "note": "Auto Finance Company 인가 중량"
+        },
+        "외국인 취득 가능": {
+          "target_score": 3,
+          "note": "외자 지분 규제 완화 추세"
+        },
+        "처리기간(개월)": {
+          "target_score": 2,
+          "note": "인가 장기"
+        },
+        "최저자본금 수준": {
+          "target_score": 2,
+          "note": "높은 자본요건"
+        },
+        "감독 강도": {
+          "target_score": 2,
+          "note": "CBIRC/CAC 강한 감독"
+        }
+      }
+    },
+    {
+      "item": "금리 상한 규제",
+      "category": "shared",
+      "role": "gate",
+      "value": "법정 절대 상한 없음. 사법해석으로 LPR×4 초과 무효(현재 ~12.4%). 자동차 금융 정상 범위.",
+      "value_en": "No statutory absolute cap. Judicial interpretation voids rates above 4× LPR (~12.4% currently). Auto finance well within range.",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "tier": 2,
+      "source": "Supreme People's Court Judicial Interpretation 2020 / PBoC LPR 2025",
+      "source_en": "Supreme People's Court Judicial Interpretation 2020 / PBoC LPR 2025",
+      "insight": "자동차 금융 일반 5~8% 구간이라 상한 무관. 다만 사법해석 변동 시 모니터링 필요.",
+      "insight_en": "Auto finance generally 5-8%, well below cap. Monitor for changes to the judicial interpretation.",
+      "insight_ai_generated": true,
+      "segment": "consumer_credit"
+    },
+    {
+      "item": "최저자본금",
+      "category": "shared",
+      "role": "score",
+      "value": 650000000,
+      "unit": "EUR",
+      "direction": "down",
+      "axis": "difficulty",
+      "tier": 1,
+      "timeseries": null,
+      "source": "CBIRC Auto Finance Reg (min capital CNY 5B)",
+      "source_en": "CBIRC Auto Finance Reg (min capital CNY 5B)",
+      "insight": "Auto Finance Company 최저자본 CNY 50억(약 €650M) — 글로벌 최고 수준 자본 부담. 합작·인수가 단독보다 합리적.",
+      "insight_en": "Auto Finance Company min capital CNY 5B (~€650M) — among world's highest. JV/acquisition more reasonable than solo entry.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "솔루션 벤더",
+      "category": "it",
+      "role": "score",
+      "value": "글로벌(SAP·Salesforce) + 현지(Yonyong·UFIDA·CYBOS) + 자체구축 보편",
+      "value_en": "Global (SAP, Salesforce) + local (Yonyong, UFIDA, CYBOS) + proprietary builds widespread",
+      "unit": "match",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 3,
+      "timeseries": null,
+      "source": "China Banking Tech Report 2025",
+      "source_en": "China Banking Tech Report 2025",
+      "insight": "Auto Finance Company는 자체 코어 구축 보편. 글로벌 패키지 도입은 외국 캡티브(VW·Toyota Finance) 한정.",
+      "insight_en": "Auto Finance Companies typically build proprietary cores. Global package adoption limited to foreign captives (VW, Toyota Finance).",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "솔루션 유형",
+      "category": "it",
+      "role": "score",
+      "value": "자체 코어 + 클라우드 SaaS(Alibaba Cloud·Tencent Cloud) 혼재. 데이터 주권으로 외산 SaaS 제약",
+      "value_en": "Proprietary cores + cloud SaaS (Alibaba Cloud, Tencent Cloud) mix. Foreign SaaS constrained by data-sovereignty rules.",
+      "unit": "type",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 3,
+      "timeseries": null,
+      "source": "Industry / Alibaba Cloud FSI 2025",
+      "source_en": "Industry / Alibaba Cloud FSI 2025",
+      "insight": "데이터 현지화로 글로벌 패키지 도입 시 중국 데이터 센터 필수. Alibaba·Tencent 클라우드가 사실상 인프라 표준.",
+      "insight_en": "Data localization mandates China data centers for global packages. Alibaba/Tencent cloud is the de-facto infrastructure standard.",
+      "insight_ai_generated": true,
+      "similarity_axis": "system",
+      "similarity_weight": 0.2,
+      "score_dimensions": {
+        "배포형태(패키지/SI/SaaS)": {
+          "target_score": 3,
+          "note": "자체코어+클라우드 SaaS 혼재, 데이터주권 제약"
+        },
+        "커스터마이징 자유도": {
+          "target_score": 3,
+          "note": "현지 클라우드(Alibaba/Tencent) 종속"
+        },
+        "벤더 종속도": {
+          "target_score": 2,
+          "note": "현지 데이터센터 필수로 종속도↑"
+        },
+        "멀티테넌시 여부": {
+          "target_score": 3,
+          "note": "클라우드 멀티테넌시 부분"
+        }
+      }
+    },
+    {
+      "item": "디지털 채널 성숙도",
+      "category": "it",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "PBoC Digital Payment Index / WeChat Pay·Alipay 2025",
+      "source_en": "PBoC Digital Payment Index / WeChat Pay·Alipay 2025",
+      "insight": "WeChat Pay·Alipay·UnionPay 모바일 결제 보편. 디지털 KYC·블록체인 신용평가 활성 — 세계 최상위 5/5.",
+      "insight_en": "WeChat Pay, Alipay, and UnionPay mobile payments ubiquitous. Digital KYC and blockchain credit scoring active — world-leading 5/5.",
+      "insight_ai_generated": true,
+      "similarity_axis": "system",
+      "similarity_weight": 0.2,
+      "score_dimensions": {
+        "온라인 신청 연동": {
+          "target_score": 5,
+          "note": "WeChat/Alipay 결제 보편"
+        },
+        "비대면 계약 가능": {
+          "target_score": 5,
+          "note": "디지털 KYC 활성"
+        },
+        "API 개방도": {
+          "target_score": 4,
+          "note": "빅테크 생태계 폐쇄적 측면"
+        },
+        "페이퍼리스 수준": {
+          "target_score": 5,
+          "note": "페이퍼리스 최상위"
+        }
+      }
+    },
+    {
+      "item": "신용정보(CB) 인프라",
+      "category": "it",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "PBoC Credit Reference Center / Baihang Credit 2025",
+      "source_en": "PBoC Credit Reference Center / Baihang Credit 2025",
+      "insight": "PBoC 신용기록센터(11억+ 파일) + Baihang Credit 민간 보완. 알리바바·텐센트 alternative data 활성. 4/5.",
+      "insight_en": "PBoC Credit Reference Center (1.1B+ files) + Baihang Credit private supplement. Alibaba/Tencent alternative data active — 4/5.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "결제·정산 인프라",
+      "category": "it",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "PBoC Payment System Statistics 2025",
+      "source_en": "PBoC Payment System Statistics 2025",
+      "insight": "CNAPS 실시간 + UnionPay + WeChat/Alipay QR — 세계 최고 결제 인프라. 자동이체 EMI 회수 보편 5/5.",
+      "insight_en": "CNAPS real-time + UnionPay + WeChat/Alipay QR — world-leading payment infrastructure. Direct-debit EMI collection universal — 5/5.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "디지털 딜러 성숙도",
+      "category": "it",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "Autohome / Bitauto / Yiche Digital Sales 2025",
+      "source_en": "Autohome / Bitauto / Yiche Digital Sales 2025",
+      "insight": "Autohome·Bitauto·Yiche 등 플랫폼 발달, NEV OEM(BYD·NIO) 직판 채널 확산. 임베디드 금융 4/5.",
+      "insight_en": "Autohome, Bitauto, Yiche platforms mature; NEV OEMs (BYD, NIO) expand direct-sales channels. Embedded finance 4/5.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "국외이전 제한",
+      "category": "it",
+      "role": "score",
+      "value": 5,
+      "unit": "restriction_1to5",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "PIPL 2021 / CSL 2017 / CAC Cross-Border Data Transfer Regulation",
+      "source_en": "PIPL 2021 / CSL 2017 / CAC Cross-Border Data Transfer Regulation",
+      "insight": "CAC 보안 평가·표준 계약·인증 3가지 경로 중 1개 충족 후 국외 이전 가능. 제약 가장 큼 — 5/5(역점수).",
+      "insight_en": "Cross-border transfer requires one of three routes (CAC assessment, standard contract, certification). Most restrictive — 5/5 (reverse).",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "차량회수 절차 용이성",
+      "category": "shared",
+      "role": "score",
+      "value": 3,
+      "unit": "ease_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "Supreme People's Court Auto Finance Recovery Guidelines",
+      "source_en": "Supreme People's Court Auto Finance Recovery Guidelines",
+      "insight": "공증·법원 명령 후 사적 회수 가능. 분쟁 시 사법 절차 6~12개월. 회수율 70%대.",
+      "insight_en": "Private repossession permitted after notarization/court order. 6-12 months for judicial disputes. Recovery rate ~70%.",
+      "insight_ai_generated": true,
+      "similarity_axis": "risk",
+      "similarity_weight": 0.1,
+      "score_dimensions": {
+        "사법절차 필요": {
+          "target_score": 3,
+          "note": "공증·법원명령 후 회수"
+        },
+        "회수 소요기간(일)": {
+          "target_score": 2,
+          "note": "분쟁시 6~12개월"
+        },
+        "자력구제 허용": {
+          "target_score": 3,
+          "note": "공증 후 사적회수 가능"
+        },
+        "회수율": {
+          "target_score": 4,
+          "note": "회수율 70%대"
+        }
+      }
+    },
+    {
+      "item": "법적 회수 소요기간",
+      "category": "shared",
+      "role": "score",
+      "value": 150,
+      "unit": "days",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "China Court Procedure / Industry Reports 2025",
+      "source_en": "China Court Procedure / Industry Reports 2025",
+      "insight": "차량 회수 평균 5개월. 공증서비스 활용 시 단축 가능. 분쟁 12개월+.",
+      "insight_en": "Avg recovery 5 months; notarization service can shorten. Disputes 12+ months.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "추심 규제",
+      "category": "shared",
+      "role": "score",
+      "value": 3,
+      "unit": "constraint_1to5",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "CBIRC Consumer Protection Guidelines / Civil Code 2020",
+      "source_en": "CBIRC Consumer Protection Guidelines / Civil Code 2020",
+      "insight": "CBIRC 추심 가이드라인 — 시간·방법 제한. 폭력적 추심 형사처벌. AI·로봇콜 추심도 일정 규제 도입.",
+      "insight_en": "CBIRC collection guidelines limit hours and methods; violent collection criminal. AI/robot-call collection subject to regulations.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "충당금 규정",
+      "category": "shared",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "CAS 22 (IFRS 9 equivalent) / CBIRC Loan Loss Reserve Guidelines",
+      "source_en": "CAS 22 (IFRS 9 equivalent) / CBIRC Loan Loss Reserve Guidelines",
+      "insight": "CAS 22(IFRS 9 등가) 적용. CBIRC 추가 충당금 가이드라인 — 4/5 성숙도.",
+      "insight_en": "CAS 22 (IFRS 9 equivalent) applies; CBIRC adds further loan-loss reserve guidance — maturity 4/5.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "연체 분류 기준",
+      "category": "shared",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "CBIRC Five-Category Loan Classification 2025",
+      "source_en": "CBIRC Five-Category Loan Classification 2025",
+      "insight": "정상(Normal)·관찰(Special Mention)·열위(Substandard)·의심(Doubtful)·손실(Loss) 5단계 분류. 4/5 표준.",
+      "insight_en": "Five-tier classification: Normal, Special Mention, Substandard, Doubtful, Loss. Standard 4/5.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "의무보험 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "교통사고책임강제보험(交强险) 의무. 차량 자체보험은 선택, 금융사가 끼워팔기 보편.",
+      "value_en": "Compulsory Motor Traffic Accident Liability Insurance (交强险) mandatory. Own-damage optional; lender bundling common.",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "PRC Road Traffic Safety Law / CBIRC Insurance Regulations",
+      "source_en": "PRC Road Traffic Safety Law / CBIRC Insurance Regulations",
+      "insight": "교강험은 모든 차량 강제. 자차보험은 자율, Auto Finance Company 끼워팔기 일반화.",
+      "insight_en": "Compulsory traffic liability insurance for all vehicles. Own-damage optional; commonly bundled by Auto Finance Companies.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "신용생명보험 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "CBIRC 가이드 — 강제 끼워팔기 금지, 옵트인·해지권 의무",
+      "value_en": "CBIRC guidance — tying prohibited, opt-in and cancellation rights required.",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "CBIRC Bancassurance Guidelines 2019 (rev.2024)",
+      "source_en": "CBIRC Bancassurance Guidelines 2019 (rev.2024)",
+      "insight": "끼워팔기 명시 금지, 옵트인 보편. 시장 침투율은 보통.",
+      "insight_en": "Tying explicitly prohibited; opt-in widespread. Market penetration moderate.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "보험 끼워팔기 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "CBIRC — 강제 끼워팔기 금지, 가격 공시·해지권 보장 시 번들 허용",
+      "value_en": "CBIRC — forced tying prohibited; bundling allowed with price disclosure and cancellation rights.",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "CBIRC Bancassurance Guidelines 2019 (rev.2024)",
+      "source_en": "CBIRC Bancassurance Guidelines 2019 (rev.2024)",
+      "insight": "강제 끼워팔기 금지. 자율 번들은 가능 — 보험 마진은 자동차 금융의 핵심 수익원.",
+      "insight_en": "Forced tying prohibited; voluntary bundling allowed. Insurance margin is a core profit driver for auto finance.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "AI 신용평가 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "PIPL + Algorithmic Recommendation Reg 2022 + Generative AI Reg 2023 — 알고리즘 등록·설명가능성·차별 금지",
+      "value_en": "PIPL + Algorithmic Recommendation Regulation 2022 + Generative AI Regulation 2023 — algorithm filing, explainability, non-discrimination.",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "PIPL / CAC Algorithmic Recommendation Regulation 2022 / Generative AI Reg 2023",
+      "source_en": "PIPL / CAC Algorithmic Recommendation Regulation 2022 / Generative AI Reg 2023",
+      "insight": "AI 신용평가 알고리즘 CAC 등록 의무. 설명가능성·차별 금지 강제 — EU AI Act에 준하는 수준. 컴플라이언스 부담 큼.",
+      "insight_en": "AI credit-scoring algorithms must be filed with CAC. Explainability and non-discrimination enforced — comparable to EU AI Act. High compliance burden.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "EV 보급률",
+      "category": "business",
+      "role": "score",
+      "value": 52,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 1,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 15
+          },
+          {
+            "year": 2022,
+            "value": 27
+          },
+          {
+            "year": 2023,
+            "value": 36
+          },
+          {
+            "year": 2024,
+            "value": 47
+          },
+          {
+            "year": 2025,
+            "value": 52
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 58
+          },
+          {
+            "year": 2027,
+            "value": 63
+          },
+          {
+            "year": 2028,
+            "value": 68
+          },
+          {
+            "year": 2029,
+            "value": 72
+          },
+          {
+            "year": 2030,
+            "value": 75
+          }
+        ],
+        "estimated": true
+      },
+      "source": "CAAM NEV Sales 2025",
+      "source_en": "CAAM NEV Sales 2025",
+      "insight": "2025년 NEV 점유 52% — 세계 최고 EV 보급률. BYD·NIO·Xpeng·Li Auto 주도. 2030년 75%+ 전망.",
+      "insight_en": "NEV share 52% in 2025 — world-leading EV adoption. BYD, NIO, Xpeng, Li Auto lead. 75%+ projected by 2030.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "EV·ICE 잔존가치 리스크",
+      "category": "business",
+      "role": "score",
+      "value": 22,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "tier": 3,
+      "timeseries": null,
+      "source": "Autohome / Guazi EV Resale Index 2025",
+      "source_en": "Autohome / Guazi EV Resale Index 2025",
+      "insight": "EV 3년 잔가가 ICE 대비 약 22pp 낮음 — 기술 진부화·가격 경쟁 격화. 잔가 리스크 매우 큼.",
+      "insight_en": "EV 3-yr residual ~22pp lower than ICE — tech obsolescence and intense price competition. Residual risk very high.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "해당국 정성 요약",
+      "category": "business",
+      "role": "context",
+      "value": "세계 최대 시장(2025 신차 2,350만대)·NEV 52%·금융 €280bn으로 매력도 최상. 그러나 CBIRC 인가 최저자본 €650M·PIPL/CSL 데이터 현지화·SAFE 송금 통제·미중 긴장으로 진입 부담 극대. BYD·NIO 등 현지 NEV 캡티브 압도, EV 잔가 리스크 22pp로 글로벌 최고. 외국 진입은 합작·인수(VW·Stellantis-CMBC) 권장. WeChat Pay·Alipay 디지털 인프라는 세계 최상, 중고차·운용리스 미개척 영역.",
+      "value_en": "World's largest market (23.5M new cars 2025), NEV 52%, €280B finance — top attractiveness. CBIRC licensing min capital €650M, PIPL/CSL data localization, SAFE remittance controls, and US-China tensions maximize entry burden. Local NEV captives (BYD, NIO) dominate; EV residual risk highest globally (22pp). JV/acquisition (VW, Stellantis-CMBC) recommended for foreign entry. WeChat Pay/Alipay digital infrastructure is world-leading; used cars and operating lease remain greenfield.",
+      "unit": null,
+      "tier": 1,
+      "timeseries": null,
+      "source": "Synthesized from CADA, CAAM, PBoC, CBIRC, IMF, Mordor 2025",
+      "source_en": "Synthesized from CADA, CAAM, PBoC, CBIRC, IMF, Mordor 2025",
+      "insight": "매력도 최상이나 인가·자본·정치 리스크 최상. 합작·인수 + 보수적 EV 잔가 + 중국 데이터 센터 설계 권장.",
+      "insight_en": "Top attractiveness but top licensing/capital/political risk. JV/acquisition + conservative EV GFV + China data center recommended.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "브랜드 Top10",
+      "category": "business",
+      "role": "context",
+      "value": [
+        "BYD",
+        "Geely",
+        "Volkswagen",
+        "Toyota",
+        "Changan",
+        "Wuling",
+        "Tesla",
+        "NIO",
+        "Li Auto",
+        "Xpeng"
+      ],
+      "tier": 1,
+      "timeseries": null,
+      "source": "CAAM 2025 brand registrations",
+      "source_en": "CAAM 2025 brand registrations",
+      "insight": "BYD 단독 1위, 현지 NEV 브랜드(BYD·Geely·NIO·Li·Xpeng·Changan)가 Top 10 6개 점유. 한국 브랜드 미주류.",
+      "insight_en": "BYD #1; local NEV brands (BYD, Geely, NIO, Li, Xpeng, Changan) occupy 6 of Top 10. Korean brands non-mainstream.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "OEM 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "rank": 1,
+          "name": "BYD",
+          "market_share": "15.5%"
+        },
+        {
+          "rank": 2,
+          "name": "Geely",
+          "market_share": "9.5%"
+        },
+        {
+          "rank": 3,
+          "name": "Volkswagen",
+          "market_share": "9.0%"
+        },
+        {
+          "rank": 4,
+          "name": "Toyota",
+          "market_share": "7.0%"
+        },
+        {
+          "rank": 5,
+          "name": "Changan",
+          "market_share": "6.5%"
+        }
+      ],
+      "tier": 1,
+      "timeseries": null,
+      "source": "CAAM 2025 PV market share",
+      "source_en": "CAAM 2025 PV market share",
+      "insight": "BYD 15.5% — NEV로 1위 등극. 외국계는 VW·Toyota 약 16% 합산 — 시장 점유 점진 하락.",
+      "insight_en": "BYD 15.5% — top spot via NEV. Foreign VW + Toyota combined ~16% — share gradually declining.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "금융사 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "rank": 1,
+          "name": "SAIC-GMAC",
+          "market_share": "약 12%"
+        },
+        {
+          "rank": 2,
+          "name": "Volkswagen Finance China",
+          "market_share": "약 11%"
+        },
+        {
+          "rank": 3,
+          "name": "BYD Auto Finance",
+          "market_share": "약 10%"
+        },
+        {
+          "rank": 4,
+          "name": "Toyota Motor Finance China",
+          "market_share": "약 9%"
+        },
+        {
+          "rank": 5,
+          "name": "Ping An Bank Auto Finance",
+          "market_share": "약 8%"
+        }
+      ],
+      "tier": 2,
+      "timeseries": null,
+      "source": "CADA / China Auto Finance Industry Report 2025",
+      "source_en": "CADA / China Auto Finance Industry Report 2025",
+      "insight": "외국 캡티브(VW·Toyota)와 현지(SAIC-GMAC·BYD) + 은행계(Ping An) 다층 구조. 신규 진입자는 NEV·중고차·디지털 차별화 필요.",
+      "insight_en": "Foreign captives (VW, Toyota), local (SAIC-GMAC, BYD), and bank-affiliates (Ping An) multi-layered. New entrants need NEV/used-car/digital differentiation.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "경쟁사 리스트",
+      "category": "business",
+      "role": "context",
+      "value": [
+        "SAIC-GMAC",
+        "Volkswagen Finance China",
+        "BYD Auto Finance",
+        "Toyota Motor Finance China",
+        "Ping An Bank Auto Finance",
+        "BMW Automotive Finance",
+        "Mercedes-Benz Auto Finance",
+        "FAW Finance",
+        "Geely Auto Finance",
+        "ICBC Auto Finance"
+      ],
+      "tier": 2,
+      "timeseries": null,
+      "source": "CBIRC Auto Finance Company Directory 2025",
+      "source_en": "CBIRC Auto Finance Company Directory 2025",
+      "insight": "25개 CBIRC 인가 Auto Finance Company 운영 중. 외국 캡티브 다수 (VW·Toyota·BMW·Mercedes·Stellantis-CMBC).",
+      "insight_en": "25 CBIRC-licensed Auto Finance Companies. Multiple foreign captives (VW, Toyota, BMW, Mercedes, Stellantis-CMBC).",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "경쟁사 진출 형태",
+      "category": "business",
+      "role": "context",
+      "value": "외국 캡티브 단독 진출 (Volkswagen Finance China·Toyota Motor Finance China·BMW Auto Finance·Mercedes-Benz Auto Finance) + 합작 (Stellantis-CMBC·Renault-Dongfeng) + 현지 캡티브 (BYD·Geely·SAIC) + 은행계 (Ping An·ICBC). 외국 단독 인가 가능하나 자본·거버넌스 부담 매우 큼.",
+      "value_en": "Foreign captive solo entries (VW Finance China, Toyota Motor Finance China, BMW Auto Finance, Mercedes-Benz Auto Finance) + JVs (Stellantis-CMBC, Renault-Dongfeng) + local captives (BYD, Geely, SAIC) + bank-affiliates (Ping An, ICBC). Foreign solo licensing feasible but heavy capital/governance burden.",
+      "tier": 2,
+      "timeseries": null,
+      "source": "Industry research / CBIRC 2025",
+      "source_en": "Industry research / CBIRC 2025",
+      "insight": "외국 캡티브 단독 진출 전례 다수, 단 €650M+ 자본 부담 큼. 합작·인수 경로 검토 권장.",
+      "insight_en": "Multiple foreign-captive solo entries exist; €650M+ capital burden steep. JV/acquisition recommended.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "경쟁사 금리 범위",
+      "category": "business",
+      "role": "context",
+      "value": "신차 자동차대출 APR 약 4~8% (캡티브 프로모 0~3%, 은행 5~6%, NEV 신규사 6~8%).",
+      "value_en": "New auto-loan APR ~4-8% (captive promos 0-3%, banks 5-6%, NEV new entrants 6-8%).",
+      "tier": 2,
+      "timeseries": null,
+      "source": "PBoC LPR / Industry pricing data 2025",
+      "source_en": "PBoC LPR / Industry pricing data 2025",
+      "insight": "캡티브 프로모(0~3%)가 시장 가격 압박. 진입사 5~7% 구간 경쟁 — NEV 잔가 보증으로 차별화 가능.",
+      "insight_en": "Captive promos (0-3%) compress market pricing. New entrants compete in 5-7% range — NEV residual guarantees differentiate.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "평균 신차가격",
+      "category": "business",
+      "role": "context",
+      "value": "약 CNY 150,000~180,000 (€19,000~23,000). NEV·SUV로 상승 추세.",
+      "value_en": "Approx. CNY 150-180K (€19,000-23,000). Trending up with NEV/SUV mix.",
+      "tier": 2,
+      "timeseries": null,
+      "source": "CAAM / Industry pricing data 2025",
+      "source_en": "CAAM / Industry pricing data 2025",
+      "insight": "평균 약 €21k — 인도네시아(€16k)·유럽(€30k) 사이. NEV·프리미엄 SUV 점진 상승.",
+      "insight_en": "Average ~€21k — between Indonesia (€16k) and EU (€30k). Gradual rise with NEV/premium SUV.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "규제기관 식별",
+      "category": "shared",
+      "role": "context",
+      "value": "CBIRC(은행보험감독, Auto Finance Company 인가) / PBoC(중앙은행·결제) / SAFE(외환) / CAC(데이터·AI) / MOFCOM(외상투자)",
+      "value_en": "CBIRC (Bank-Insurance Regulator, Auto Finance Company licensing) / PBoC (central bank, payments) / SAFE (FX) / CAC (data/AI) / MOFCOM (foreign investment).",
+      "tier": 1,
+      "timeseries": null,
+      "source": "CBIRC / PBoC / SAFE / CAC / MOFCOM Official 2025",
+      "source_en": "CBIRC / PBoC / SAFE / CAC / MOFCOM Official 2025",
+      "insight": "CBIRC가 Auto Finance Company 인가·감독 핵심. 외환(SAFE)·데이터(CAC)·투자(MOFCOM) 다중 감독.",
+      "insight_en": "CBIRC is the principal regulator for Auto Finance Companies. Multi-agency oversight: FX (SAFE), data (CAC), investment (MOFCOM).",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "news_category": "electrification",
+          "headline": "중국 NEV 2025 신차 점유 52% — 세계 EV 시장 절반 차지",
+          "headline_en": "China NEV reaches 52% of 2025 new-car sales — half of global EV market",
+          "so_what": "EV 잔가·금융 모델 수요 폭증. 잔가 리스크 22pp로 보수적 GFV 필수.",
+          "so_what_en": "Surging demand for EV residual/finance models. 22pp residual risk demands conservative GFV.",
+          "publisher": "CAAM",
+          "pub_date": "2026-01-25",
+          "url": "http://www.caam.org.cn/"
+        },
+        {
+          "news_category": "regulation",
+          "headline": "CAC 국외 데이터 이전 보안평가 강화 — 자동차 데이터 별도 가이드라인",
+          "headline_en": "CAC tightens cross-border data transfer security assessment — separate guidelines for auto data",
+          "so_what": "본사 분석 데이터 라우팅 재설계 필요. 중국 데이터 센터 운영 부담 추가.",
+          "so_what_en": "HQ analytics data routing must be redesigned. Additional China-based data center operational burden.",
+          "publisher": "South China Morning Post",
+          "pub_date": "2026-03-30",
+          "url": "https://www.scmp.com/"
+        },
+        {
+          "news_category": "geopolitical",
+          "headline": "미·중 관세 격화 — EV·배터리 무역 영향 확대",
+          "headline_en": "US-China tariff escalation — EV/battery trade impact expands",
+          "so_what": "중국 NEV 가격·물량 변동 가능성. 진입 전략 시점·규모 재검토 필요.",
+          "so_what_en": "Potential price/volume swings for Chinese NEVs. Reassess entry timing and scale.",
+          "publisher": "Reuters",
+          "pub_date": "2026-05-12",
+          "url": "https://www.reuters.com/"
+        }
+      ],
+      "tier": 2,
+      "timeseries": null,
+      "source": "CAAM·SCMP·Reuters (whitelist 2025-2026)",
+      "source_en": "CAAM, SCMP, Reuters (whitelist 2025-2026)",
+      "insight": "EV 가속 + 데이터 규제 강화 + 미중 긴장이 3대 이슈. 진입 시점 신중·합작 모델·중국 데이터 센터·EV 잔가 보수 4박자 동시 필요.",
+      "insight_en": "EV acceleration + tighter data regulation + US-China tensions are the three key issues. Cautious entry timing, JV model, China data center, and conservative EV GFV all required in parallel.",
+      "insight_ai_generated": true,
+      "context_type": "news"
+    }
+  ]
+}

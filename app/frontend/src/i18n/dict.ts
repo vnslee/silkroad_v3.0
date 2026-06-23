@@ -1,0 +1,105 @@
+// 경량 i18n(C12) — 외부 라이브러리 없이 store(lang) 구독 t() 헬퍼.
+// UI 텍스트(헤더·메뉴·범례·지도·챗봇 등) 한/영 사전. 원본 리포트/상세 콘텐츠는
+// 백엔드 데이터라 여기서 다루지 않는다(국가·권역명은 데이터의 name/name_ko 사용).
+import { useStore } from '../store'
+import type { Lang } from '../store'
+
+type Dict = Record<string, { ko: string; en: string }>
+
+export const DICT: Dict = {
+  // 헤더 / 내비
+  'nav.map': { ko: '지도', en: 'Map' },
+  'nav.country': { ko: '국가 분석', en: 'Country' },
+  'nav.region': { ko: '권역 분석', en: 'Region' },
+  'nav.report': { ko: '보고서', en: 'Reports' },
+  'nav.ruleset': { ko: '룰셋', en: 'Ruleset' },
+  'nav.toHome': { ko: '메인 지도로 이동', en: 'Go to map' },
+  'menu.countryTitle': { ko: '국가 정보 · 풀사이즈', en: 'Countries · Fullscreen' },
+  'menu.regionTitle': { ko: '권역 정보 · 풀사이즈', en: 'Regions · Fullscreen' },
+  'menu.reportTitle': { ko: '진단 보고서 · 풀사이즈', en: 'Reports · Fullscreen' },
+  'menu.countryReport': { ko: '📄 국가 진단 보고서', en: '📄 Country report' },
+  'menu.regionReport': { ko: '🗂️ 권역 진단 보고서', en: '🗂️ Region report' },
+  'search.placeholder': { ko: '국가 검색…', en: 'Search country…' },
+  'search.aria': { ko: '국가 검색', en: 'Search country' },
+  'chat.aria': { ko: 'AISea 어시스턴트', en: 'AISea assistant' },
+
+  // 챗봇(ChatWidget)
+  'chat.fab': { ko: 'AISea에게 물어보기', en: 'Ask AISea' },
+  'chat.openAria': { ko: 'AISea 어시스턴트 열기', en: 'Open AISea assistant' },
+  'chat.title': { ko: 'AISea 어시스턴트', en: 'AISea assistant' },
+  'chat.online': { ko: '진단 엔진 온라인', en: 'Diagnostic engine online' },
+  'chat.close': { ko: '챗봇 닫기', en: 'Close chat' },
+  'chat.inputAria': { ko: '질문 입력', en: 'Type your question' },
+  'chat.inputPlaceholder': { ko: '진출 시장에 대해 물어보세요…', en: 'Ask about a target market…' },
+  'chat.send': { ko: '전송', en: 'Send' },
+  'chat.greeting': {
+    ko: '안녕하세요 👋 AISea 진단 어시스턴트예요.\n진출을 검토 중인 국가나 권역을 말씀해 주시면 리스크 진단을 도와드릴게요.',
+    en: "Hi 👋 I'm AISea, your diagnostic assistant.\nTell me a country or region you're considering and I'll help assess the risks.",
+  },
+  'chat.quick.spain': { ko: '스페인 시장 진단 보고서 만들어줘', en: 'Create a Spain market diagnostic report' },
+  'chat.quick.euQuickwin': { ko: '유럽 권역 내 Quick-win 가능 국가 분석', en: 'Analyze Quick-win candidates in Europe' },
+  'chat.research.yes': { ko: '예, 리서치 진행', en: 'Yes, run research' },
+  'chat.research.no': { ko: '아니오', en: 'No' },
+  'chat.research.fallbackPrompt': {
+    ko: '보유 정보가 없습니다. 리서치를 진행할까요?',
+    en: 'No data on hand. Shall I run research?',
+  },
+  'chat.research.started': {
+    ko: '리서치를 시작했습니다. 잠시만 기다려 주세요…',
+    en: 'Research started. Please hold on…',
+  },
+  'chat.research.done': {
+    ko: '리서치가 완료되었습니다. 다시 질문해 주시면 데이터를 바탕으로 답변드릴게요.',
+    en: 'Research complete. Ask again and I’ll answer from the new data.',
+  },
+  'chat.research.error': { ko: '리서치 중 오류가 발생했습니다: ', en: 'Research error: ' },
+  'chat.research.triggerError': { ko: '리서치 트리거 실패: ', en: 'Failed to trigger research: ' },
+  'chat.error': { ko: '오류가 발생했습니다: ', en: 'An error occurred: ' },
+  'chat.jobLabel': { ko: ' 리서치', en: ' research' },
+
+  // 화면 액션 버튼(상세/보고서 우측 상단)
+  'action.simulation': { ko: '시뮬레이션', en: 'Simulate' },
+  'action.report': { ko: '보고서', en: 'Report' },
+  'action.pdf': { ko: 'PDF', en: 'PDF' },
+  'action.sendMail': { ko: '메일 발송', en: 'Send mail' },
+
+  // 상태 배지
+  'badge.baseline': { ko: '기준국', en: 'Baseline' },
+  'badge.entered': { ko: '진출', en: 'Active' },
+  'badge.planned': { ko: '예정', en: 'Planned' },
+
+  // 범례 / 지도
+  'legend.title': { ko: '진출 현황', en: 'Market status' },
+  'legend.established': { ko: '기진출국', en: 'Active markets' },
+  'legend.candidate': { ko: '진출후보국', en: 'Candidate markets' },
+  'legend.operating': { ko: '운영중', en: 'Operating' },
+  'legend.notEntered': { ko: '진출 예정국', en: 'Planned markets' },
+  'legend.hyundai': { ko: '현대차 사업망', en: 'Hyundai network' },
+  'legend.none': { ko: '대상 외', en: 'Out of scope' },
+  'map.aria': { ko: '세계 지도', en: 'World map' },
+  'map.zoomIn': { ko: '확대', en: 'Zoom in' },
+  'map.zoomOut': { ko: '축소', en: 'Zoom out' },
+  'map.bannerLead': { ko: '진출 후보 시장을 지도에서 선택하거나', en: 'Pick a candidate market on the map, or' },
+  'map.bannerAsk': { ko: 'AISea에게 물어보세요 →', en: 'ask AISea →' },
+  'map.regionPrefix': { ko: '권역', en: 'Region' },
+
+  // 권역명(지도 hover/툴팁)
+  'region.na': { ko: '북아메리카', en: 'North America' },
+  'region.sa': { ko: '남아메리카', en: 'South America' },
+  'region.eu': { ko: '유럽', en: 'Europe' },
+  'region.me': { ko: '중동', en: 'Middle East' },
+  'region.ap': { ko: '아시아·태평양', en: 'Asia-Pacific' },
+  'region.af': { ko: '아프리카', en: 'Africa' },
+}
+
+export function translate(key: string, lang: Lang): string {
+  const e = DICT[key]
+  if (!e) return key
+  return e[lang] ?? e.ko
+}
+
+/** 컴포넌트용 — lang store 구독 t(). */
+export function useT() {
+  const lang = useStore((s) => s.lang)
+  return (key: string) => translate(key, lang)
+}

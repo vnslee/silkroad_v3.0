@@ -1,0 +1,1430 @@
+{
+  "country": "India",
+  "country_ko": "인도",
+  "code": "IN",
+  "region": "APAC",
+  "is_baseline": false,
+  "currency": "INR",
+  "schema_version": "1.1",
+  "data_year": 2025,
+  "fetched_at": "2026-06-22T00:00:00+09:00",
+  "fetched_by": "ai",
+  "overall_insight": "세계 3위 자동차 시장(2025년 신차 420만대). GDP 6.8% 고성장과 금융 침투율 80%로 매력도 최상위권. 그러나 RBI NBFC 인가·자본·거버넌스 부담, 결제 데이터 현지화, INR 변동성·자본통제 리스크가 진입 부담. 캡티브 강도 35%로 독립계 진입 여지 있고, 디지털 인프라(UPI·Account Aggregator)와 임베디드 금융이 단기 차별화 기회. 중고차 금융 25%·운용리스 미성숙은 개척 영역. NBFC 인가 우선·디지털 채널 중심 진입이 유효.",
+  "overall_insight_en": "World's 3rd-largest auto market (4.2M new cars in 2025). High GDP growth of 6.8% and 80% finance penetration place attractiveness at the top tier. However, RBI NBFC licensing, capital/governance burden, payment data localization, and INR volatility/capital-control risk add entry friction. Captive intensity at 35% leaves room for independents; digital infrastructure (UPI, Account Aggregator) and embedded finance offer near-term differentiation. Used-car finance (25%) and immature operating lease are greenfield. NBFC-license-first, digital-channel-led entry is effective.",
+  "items": [
+    {
+      "item": "오토금융/리스 시장규모",
+      "category": "business",
+      "role": "score",
+      "value": 35000,
+      "unit": "EUR_M",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "source": "RBI Auto Loans Outstanding 2025 / CRISIL Auto Finance Report 2025",
+      "source_en": "RBI Auto Loans Outstanding 2025 / CRISIL Auto Finance Report 2025",
+      "insight": "인도 자동차 금융 시장 약 €35bn 규모. 2025년 7월 RBI 데이터 기준 자동차 대출 잔액 INR 6.5조(약 €70bn) 중 신규 발생 시장 환산. 세계 3위 자동차 시장 + 금융 침투율 상승으로 빠른 성장.",
+      "insight_en": "India auto finance market at ~€35B. Based on RBI data (Jul 2025), auto loan outstanding stands at INR 6.5T (~€70B); the new-origination market is derived from this. World's 3rd-largest auto market with rising finance penetration drives fast growth.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 18000
+          },
+          {
+            "year": 2022,
+            "value": 22000
+          },
+          {
+            "year": 2023,
+            "value": 27000
+          },
+          {
+            "year": 2024,
+            "value": 31000
+          },
+          {
+            "year": 2025,
+            "value": 35000
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 40000
+          },
+          {
+            "year": 2027,
+            "value": 46000
+          },
+          {
+            "year": 2028,
+            "value": 52000
+          },
+          {
+            "year": 2029,
+            "value": 58000
+          },
+          {
+            "year": 2030,
+            "value": 65000
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "오토금융 성장률(CAGR)",
+      "category": "business",
+      "role": "score",
+      "value": 14.5,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "source": "CRISIL Auto Finance Outlook 2025 / Mordor Intelligence India Auto Finance",
+      "source_en": "CRISIL Auto Finance Outlook 2025 / Mordor Intelligence India Auto Finance",
+      "insight": "2021~2025 연평균 14.5% 고성장. NBFC·은행 경쟁 격화·EV 전환·중고차 금융 확대가 견인. 2030년까지 12%대 유지 전망.",
+      "insight_en": "14.5% CAGR over 2021-2025. NBFC and bank competition, EV transition, and used-car finance expansion drive growth. Projected to sustain 12%+ through 2030.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 22.0
+          },
+          {
+            "year": 2022,
+            "value": 18.0
+          },
+          {
+            "year": 2023,
+            "value": 16.0
+          },
+          {
+            "year": 2024,
+            "value": 13.5
+          },
+          {
+            "year": 2025,
+            "value": 14.5
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 13.5
+          },
+          {
+            "year": 2027,
+            "value": 13.0
+          },
+          {
+            "year": 2028,
+            "value": 12.5
+          },
+          {
+            "year": 2029,
+            "value": 12.0
+          },
+          {
+            "year": 2030,
+            "value": 11.5
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "GDP 성장률",
+      "category": "business",
+      "role": "score",
+      "value": 6.8,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "RBI·IMF WEO·MOSPI 2025",
+      "source_en": "RBI, IMF WEO, MOSPI 2025",
+      "insight": "2025년 실질 GDP 성장률 6.8%로 G20 최상위권. 디지털 인프라·제조업·서비스 수출이 견인. 중기 6%대 안정 성장 전망.",
+      "insight_en": "Real GDP growth of 6.8% in 2025 — top among G20 economies. Driven by digital infrastructure, manufacturing, and services exports. Stable 6%+ medium-term outlook.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 9.7
+          },
+          {
+            "year": 2022,
+            "value": 7.2
+          },
+          {
+            "year": 2023,
+            "value": 8.2
+          },
+          {
+            "year": 2024,
+            "value": 7.0
+          },
+          {
+            "year": 2025,
+            "value": 6.8
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 6.5
+          },
+          {
+            "year": 2027,
+            "value": 6.5
+          },
+          {
+            "year": 2028,
+            "value": 6.5
+          },
+          {
+            "year": 2029,
+            "value": 6.3
+          },
+          {
+            "year": 2030,
+            "value": 6.2
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "금융 이용률(신차)",
+      "category": "business",
+      "role": "score",
+      "value": 80,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "source": "Mordor Intelligence / CRIF High Mark Auto Finance Penetration 2025",
+      "source_en": "Mordor Intelligence / CRIF High Mark Auto Finance Penetration 2025",
+      "insight": "신차 구매의 약 80%가 금융 조달 — 글로벌 최상위권. 중산층 확장·할부 보편화. 디지털 대출 플랫폼(PhonePe·CRED) 침투로 추가 상승 여력.",
+      "insight_en": "~80% of new-car purchases are financed — among the world's highest. Driven by middle-class expansion and ubiquitous installment plans. Digital lending platforms (PhonePe, CRED) offer further upside.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 75
+          },
+          {
+            "year": 2022,
+            "value": 76
+          },
+          {
+            "year": 2023,
+            "value": 78
+          },
+          {
+            "year": 2024,
+            "value": 79
+          },
+          {
+            "year": 2025,
+            "value": 80
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 81
+          },
+          {
+            "year": 2027,
+            "value": 82
+          },
+          {
+            "year": 2028,
+            "value": 83
+          },
+          {
+            "year": 2029,
+            "value": 83
+          },
+          {
+            "year": 2030,
+            "value": 84
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "금융 이용률(중고차)",
+      "category": "business",
+      "role": "score",
+      "value": 25,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 3,
+      "source": "CARS24/Spinny/Cars.com India Used-Car Finance Report 2025",
+      "source_en": "CARS24/Spinny/Cars.com India Used-Car Finance Report 2025",
+      "insight": "중고차 정식 금융 침투율 25%로 신차 대비 크게 낮음. 정형화된 중고차 플랫폼(CARS24·Spinny) 부상으로 빠르게 성장 중 — 미개척 시장.",
+      "insight_en": "Used-car formal-finance penetration of 25%, far below new cars. Organized used-car platforms (CARS24, Spinny) are growing fast — a largely untapped market.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 15
+          },
+          {
+            "year": 2022,
+            "value": 18
+          },
+          {
+            "year": 2023,
+            "value": 20
+          },
+          {
+            "year": 2024,
+            "value": 23
+          },
+          {
+            "year": 2025,
+            "value": 25
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 28
+          },
+          {
+            "year": 2027,
+            "value": 31
+          },
+          {
+            "year": 2028,
+            "value": 34
+          },
+          {
+            "year": 2029,
+            "value": 36
+          },
+          {
+            "year": 2030,
+            "value": 38
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "평균 금리/APR",
+      "category": "business",
+      "role": "score",
+      "value": 10.5,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "source": "RBI Repo Rate 2025 / Bankbazaar India Auto Loan Rates 2025",
+      "source_en": "RBI Repo Rate 2025 / Bankbazaar India Auto Loan Rates 2025",
+      "insight": "RBI 기준금리 6.5%(2025말) 기준 자동차대출 평균 APR 약 10.5%. 신용등급 우수 고객 9.0%~, NBFC는 12~14%. 인플레 안정화로 점진적 하락 전망.",
+      "insight_en": "Average auto-loan APR ~10.5% (RBI policy rate 6.5% at end-2025). Prime customers 9.0%+; NBFCs 12-14%. Gradual decline expected as inflation stabilizes.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 8.5
+          },
+          {
+            "year": 2022,
+            "value": 9.0
+          },
+          {
+            "year": 2023,
+            "value": 10.0
+          },
+          {
+            "year": 2024,
+            "value": 10.8
+          },
+          {
+            "year": 2025,
+            "value": 10.5
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 10.0
+          },
+          {
+            "year": 2027,
+            "value": 9.5
+          },
+          {
+            "year": 2028,
+            "value": 9.3
+          },
+          {
+            "year": 2029,
+            "value": 9.2
+          },
+          {
+            "year": 2030,
+            "value": 9.0
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "신차 판매대수",
+      "category": "business",
+      "role": "score",
+      "value": 4200000,
+      "unit": "units",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "SIAM India Auto Sales 2025 (Passenger Vehicles)",
+      "source_en": "SIAM India Auto Sales 2025 (Passenger Vehicles)",
+      "insight": "2025년 승용차 신차 판매 420만대로 세계 3위 시장. 일본 추월 후 글로벌 빅3 진입. 2030년 600만대 돌파 전망 — 신규 진출 핵심 모수.",
+      "insight_en": "4.2M new passenger-vehicle sales in 2025 — 3rd-largest in the world after passing Japan. Projected to exceed 6M by 2030 — key denominator for new entrants.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 3070000
+          },
+          {
+            "year": 2022,
+            "value": 3790000
+          },
+          {
+            "year": 2023,
+            "value": 4100000
+          },
+          {
+            "year": 2024,
+            "value": 4200000
+          },
+          {
+            "year": 2025,
+            "value": 4200000
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 4500000
+          },
+          {
+            "year": 2027,
+            "value": 4900000
+          },
+          {
+            "year": 2028,
+            "value": 5300000
+          },
+          {
+            "year": 2029,
+            "value": 5700000
+          },
+          {
+            "year": 2030,
+            "value": 6100000
+          }
+        ],
+        "estimated": true
+      }
+    },
+    {
+      "item": "구매 패턴(할부·리스 비중)",
+      "category": "business",
+      "role": "score",
+      "value": 78,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "source": "Mordor Intelligence / Maruti Suzuki Finance Penetration Study 2025",
+      "source_en": "Mordor Intelligence / Maruti Suzuki Finance Penetration Study 2025",
+      "insight": "신차 78%가 할부, 리스는 1% 미만 (B2B 플릿 한정). 소비자 리스 시장 미성숙 — 운용리스 진입 시 단독 시장 개척 필요.",
+      "insight_en": "78% of new cars are financed via installment loans; leasing under 1% (B2B fleet only). Consumer leasing immature — operating-lease entry requires pioneering the market.",
+      "insight_ai_generated": true,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 70
+          },
+          {
+            "year": 2022,
+            "value": 73
+          },
+          {
+            "year": 2023,
+            "value": 75
+          },
+          {
+            "year": 2024,
+            "value": 77
+          },
+          {
+            "year": 2025,
+            "value": 78
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 79
+          },
+          {
+            "year": 2027,
+            "value": 80
+          },
+          {
+            "year": 2028,
+            "value": 81
+          },
+          {
+            "year": 2029,
+            "value": 82
+          },
+          {
+            "year": 2030,
+            "value": 82
+          }
+        ],
+        "estimated": true
+      },
+      "similarity_axis": "product",
+      "similarity_weight": 0.15,
+      "score_dimensions": {
+        "리스 취급 일치도": {
+          "target_score": 1,
+          "note": "신차 리스 1% 미만 — AU 노베이티드리스 문화와 큰 격차"
+        },
+        "렌탈 취급 일치도": {
+          "target_score": 2,
+          "note": "단기 렌탈 미성숙"
+        },
+        "플릿 취급 일치도": {
+          "target_score": 2,
+          "note": "B2B 플릿 리스 한정적"
+        },
+        "상품별 비중 유사도": {
+          "target_score": 2,
+          "note": "신차 78% 할부 편중, 리스 비중 매우 낮음"
+        }
+      }
+    },
+    {
+      "item": "캡티브 강도(점유율)",
+      "category": "business",
+      "role": "score",
+      "value": 35,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "tier": 2,
+      "source": "CRISIL Auto Finance 2025 / Society of Indian Automobile Manufacturers",
+      "source_en": "CRISIL Auto Finance 2025 / Society of Indian Automobile Manufacturers",
+      "insight": "캡티브 약 35%(Maruti Suzuki/Hyundai/Tata Motors Finance). 은행·NBFC가 65%로 우위 — 독립계 진입 여지 충분. SBI·HDFC·ICICI 3대 은행이 핵심.",
+      "insight_en": "Captives ~35% (Maruti Suzuki, Hyundai, Tata Motors Finance). Banks and NBFCs hold 65% — ample room for independent entrants. SBI, HDFC, and ICICI are the top 3.",
+      "insight_ai_generated": true,
+      "timeseries": null
+    },
+    {
+      "item": "금융사 점유율(Top 5)",
+      "category": "business",
+      "role": "score",
+      "value": 55,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "tier": 2,
+      "timeseries": null,
+      "source": "CRISIL Auto Finance 2025 (Top 5 lenders ~55%)",
+      "source_en": "CRISIL Auto Finance 2025 (Top 5 lenders ~55%)",
+      "insight": "상위 5개사 약 55% — 중간 집중도. SBI/HDFC/ICICI/Axis/Tata Motors Finance가 양분. 디지털·임베디드 금융이 신규 진입자에 기회.",
+      "insight_en": "Top 5 lenders ~55% — moderate concentration. SBI, HDFC, ICICI, Axis, and Tata Motors Finance lead. Digital and embedded finance offer opportunities for new entrants.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "법인세율",
+      "category": "business",
+      "role": "score",
+      "value": 25.17,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "Income Tax Act 1961 (Section 115BAA) / PwC India Tax Summaries 2025",
+      "source_en": "Income Tax Act 1961 (Section 115BAA) / PwC India Tax Summaries 2025",
+      "insight": "법인세 22% + 부가세(surcharge·cess) 포함 실효세율 25.17%. 신설 제조업체 Section 115BAB로 17.16% — 진입 초기 우대 가능.",
+      "insight_en": "Corporate tax 22% + surcharge/cess → effective rate 25.17%. New manufacturing firms qualify for 17.16% under Section 115BAB — favorable for early entry.",
+      "insight_ai_generated": true,
+      "timeseries": null
+    },
+    {
+      "item": "이자소득 원천징수",
+      "category": "business",
+      "role": "score",
+      "value": 20,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "PwC India WHT / Income Tax Act Section 195",
+      "source_en": "PwC India WHT / Income Tax Act Section 195",
+      "insight": "비거주자 이자 20% (조세조약 시 5~15%). 한-인도 DTAA로 15%까지 감면 가능 — 본사 차입 구조 가능.",
+      "insight_en": "Non-resident interest WHT 20% (5-15% under tax treaties). Korea-India DTAA reduces it to 15% — HQ-funded structures viable.",
+      "insight_ai_generated": true,
+      "timeseries": null
+    },
+    {
+      "item": "배당 원천징수",
+      "category": "business",
+      "role": "score",
+      "value": 20,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "tier": 1,
+      "source": "PwC India WHT / Finance Act 2020 (DDT 폐지 이후)",
+      "source_en": "PwC India WHT / Finance Act 2020 (post-DDT abolition)",
+      "insight": "비거주자 배당 20% (DTAA 시 10~15%). 한-인도 조약으로 15% — 본국 회수 가능하나 유럽 대비 세율 부담.",
+      "insight_en": "Non-resident dividend WHT 20% (10-15% under DTAA). Korea-India treaty reduces it to 15% — repatriation feasible but higher tax burden than EU.",
+      "insight_ai_generated": true,
+      "timeseries": null
+    },
+    {
+      "item": "외국인 지분 한도",
+      "category": "shared",
+      "role": "gate",
+      "value": "Auto FDI 100% 자동승인 / NBFC FDI 100% 자동승인(RBI 가이드라인 충족 시)",
+      "value_en": "Auto FDI 100% automatic / NBFC FDI 100% automatic (subject to RBI guidelines)",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "tier": 1,
+      "source": "DPIIT FDI Policy 2024 / RBI Master Direction NBFC 2025",
+      "source_en": "DPIIT FDI Policy 2024 / RBI Master Direction NBFC 2025",
+      "insight": "자동차·NBFC 모두 100% 외국인 소유 가능(자동승인). 단 NBFC는 RBI 인가 별도 — 자본·거버넌스 가이드라인 충족 필요.",
+      "insight_en": "100% foreign ownership allowed for both auto and NBFC (automatic route). NBFC requires separate RBI license — must meet capital and governance guidelines.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "외환·배당 송금 자유도",
+      "category": "shared",
+      "role": "gate",
+      "value": "FEMA 1999 하 송금 가능 / RBI 사후 신고 의무, 배당·로열티 자유 (조세 원천징수 후)",
+      "value_en": "Remittance allowed under FEMA 1999; RBI post-reporting required. Dividend and royalty free post-WHT.",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "tier": 1,
+      "source": "FEMA 1999 / RBI Master Direction Foreign Exchange 2025",
+      "source_en": "FEMA 1999 / RBI Master Direction Foreign Exchange 2025",
+      "insight": "외환 통제 일부 잔존 — FEMA 신고 의무 있으나 배당·이자 송금 자유. INR 변동성·자본통제 가능성에 유의.",
+      "insight_en": "Some FX controls remain — FEMA reporting required, but dividend/interest remittance is free. Watch for INR volatility and potential capital-control risk.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "데이터 현지화 의무",
+      "category": "shared",
+      "role": "gate",
+      "value": "DPDP Act 2023 + RBI Payment Data Localization (2018) — 결제·금융 데이터 일부 현지화 의무",
+      "value_en": "DPDP Act 2023 + RBI Payment Data Localization (2018) — partial localization for payment/financial data",
+      "gate_result": "PASS",
+      "gate_scope": "operating_model",
+      "tier": 2,
+      "source": "DPDP Act 2023 / RBI Circular DPSS.CO.OD No.2785/06.08.005/2017-18",
+      "source_en": "DPDP Act 2023 / RBI Circular DPSS.CO.OD No.2785/06.08.005/2017-18",
+      "insight": "결제 데이터 인도 내 저장 의무, 일반 개인정보는 DPDP Act 동의 기반. 본사 연동 시 페이먼트 데이터는 별도 아키텍처 필요.",
+      "insight_en": "Payment data must be stored in India; general PII follows DPDP Act consent model. HQ integration requires a separate architecture for payment data.",
+      "insight_ai_generated": true,
+      "similarity_axis": "regulatory",
+      "similarity_weight": 0.1,
+      "score_dimensions": {
+        "현지 저장 강제": {
+          "target_score": 2,
+          "note": "RBI 결제데이터 현지화 의무 — AU는 강제 없음"
+        },
+        "국외 이전 허용도": {
+          "target_score": 3,
+          "note": "DPDP 일반정보 이전 허용, 결제데이터 별도 제약"
+        },
+        "동의·보관 규제": {
+          "target_score": 3,
+          "note": "DPDP Act 2023 동의 기반"
+        },
+        "GDPR 동등성": {
+          "target_score": 3,
+          "note": "DPDP는 GDPR 부분 정합"
+        }
+      }
+    },
+    {
+      "item": "국가신용등급",
+      "category": "shared",
+      "role": "gate",
+      "value": "BBB- (S&P, 2024.5 stable→positive 상향) / Baa3 (Moody's) / BBB- (Fitch)",
+      "value_en": "BBB- (S&P, upgraded outlook to positive May 2024) / Baa3 (Moody's) / BBB- (Fitch)",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "tier": 1,
+      "source": "S&P·Moody's·Fitch 2025 Sovereign Ratings",
+      "source_en": "S&P, Moody's, Fitch 2025 Sovereign Ratings",
+      "insight": "투자등급 진입선(BBB-). 2024년 S&P가 outlook 상향. 송금·자본 리스크는 보통 수준.",
+      "insight_en": "Investment grade at the threshold (BBB-). S&P upgraded the outlook in 2024. Moderate remittance and capital risk.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "라이선스 취득 가능 여부(외국사)",
+      "category": "shared",
+      "role": "gate",
+      "value": "소비자 여신 = NBFC 인가(RBI Master Direction 2025), 100% 외국인 자동승인 가능. B2B 리스 = 별도 인가 불요.",
+      "value_en": "Consumer credit = NBFC license under RBI Master Direction 2025; 100% foreign ownership automatic. B2B leasing = no separate license.",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "tier": 1,
+      "source": "RBI Master Direction — NBFC 2025 / DPIIT FDI Policy 2024",
+      "source_en": "RBI Master Direction — NBFC 2025 / DPIIT FDI Policy 2024",
+      "insight": "외국사 NBFC 인가 가능, 100% 지분 허용. 인가 절차 6~12개월·자본 INR 100억(약 €11M) 부담. B2B 리스는 부담 경감.",
+      "insight_en": "Foreign-owned NBFCs are licensable with 100% equity. Licensing takes 6-12 months and requires INR 10B (~€11M) capital. B2B leasing has lighter burden.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "라이선스 체제(세그먼트별)",
+      "category": "shared",
+      "role": "gate",
+      "value": "소비자 NBFC=RBI 인가(최저자본 INR 100억·NBFC-IFC/MFI 유형) / 은행=별도 / B2B 리스=비규제 사업법인",
+      "value_en": "Consumer NBFC = RBI license (min capital INR 10B, NBFC-IFC/MFI categories) / Bank = separate / B2B leasing = unregulated corporate entity",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "tier": 2,
+      "source": "RBI Master Direction — NBFC Scale-Based Regulation 2022 / Companies Act 2013",
+      "source_en": "RBI Master Direction — NBFC Scale-Based Regulation 2022 / Companies Act 2013",
+      "insight": "세그먼트별 규제 강도 차이 매우 큼. 소비자 NBFC는 거버넌스·자본·보고 부담↑, 운용리스는 일반 사업회사로 진입 — 단계별 인가 전략 유효.",
+      "insight_en": "Segment regulation intensity varies widely. Consumer NBFC has heavy governance/capital/reporting burden; operating lease is a regular company — phased licensing strategy works.",
+      "insight_ai_generated": true,
+      "segment": "consumer_credit",
+      "similarity_axis": "regulatory",
+      "similarity_weight": 0.25,
+      "score_dimensions": {
+        "취득방식(등록 vs 인가)": {
+          "target_score": 2,
+          "note": "소비자금융 RBI NBFC 인가(중량), AU ACL 등록형 우위"
+        },
+        "외국인 취득 가능": {
+          "target_score": 4,
+          "note": "NBFC FDI 허용(조건부), AU 제한 거의 없음"
+        },
+        "처리기간(개월)": {
+          "target_score": 2,
+          "note": "RBI NBFC 인가 장기, AU 신속"
+        },
+        "최저자본금 수준": {
+          "target_score": 2,
+          "note": "NBFC 최저자본 INR 100억 — 진입부담 큼"
+        },
+        "감독 강도": {
+          "target_score": 2,
+          "note": "RBI 거버넌스·보고 부담 높음"
+        }
+      }
+    },
+    {
+      "item": "금리 상한 규제",
+      "category": "shared",
+      "role": "gate",
+      "value": "법정 절대 상한 없음. 단 RBI Fair Practices Code로 차별·약탈적 금리 금지. NBFC-MFI는 RBI 가이드 상 마진 캡 적용(자본 비용 + 12% 또는 평균 대출 금리 × 1.25 중 낮은 값).",
+      "value_en": "No absolute statutory cap. RBI Fair Practices Code prohibits discriminatory or predatory rates. NBFC-MFIs are subject to a margin cap (lower of cost of funds + 12% or 1.25× average lending rate).",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "tier": 2,
+      "source": "RBI Fair Practices Code 2015 / Master Direction NBFC-MFI 2022",
+      "source_en": "RBI Fair Practices Code 2015 / Master Direction NBFC-MFI 2022",
+      "insight": "일반 NBFC는 금리 자유, NBFC-MFI만 마진 캡 적용. 자동차 NBFC는 자유로워 APR 설계 유연.",
+      "insight_en": "General NBFCs have free pricing; only NBFC-MFIs face margin caps. Auto NBFCs enjoy flexible APR design.",
+      "insight_ai_generated": true,
+      "segment": "consumer_credit"
+    },
+    {
+      "item": "최저자본금",
+      "category": "shared",
+      "role": "score",
+      "value": 11000000,
+      "unit": "EUR",
+      "direction": "down",
+      "axis": "difficulty",
+      "tier": 1,
+      "timeseries": null,
+      "source": "RBI Master Direction NBFC 2025 (NBFC-ND-SI min NOF INR 10 crore)",
+      "source_en": "RBI Master Direction NBFC 2025 (NBFC-ND-SI min NOF INR 10 crore)",
+      "insight": "NBFC 최저자본 INR 100억(약 €11M). 신설 NBFC 진입 자본 부담 큼 — 합작·인수 경로도 검토 권장.",
+      "insight_en": "Min capital INR 10B (~€11M) for NBFCs. Significant entry-capital burden for new NBFCs — JV/acquisition routes are worth considering.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "솔루션 벤더",
+      "category": "it",
+      "role": "score",
+      "value": "글로벌(Pennant Technologies/Nucleus/Misys/Fiserv) + 인도 SI(Tata Consultancy·Wipro·Infosys) 혼재. 자체 코어(SBI·HDFC) 보편.",
+      "value_en": "Global (Pennant Technologies, Nucleus, Misys, Fiserv) + India SIs (TCS, Wipro, Infosys) mixed. Proprietary cores (SBI, HDFC) widespread.",
+      "unit": "match",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 3,
+      "timeseries": null,
+      "source": "Mordor Intelligence India BFSI Tech 2025",
+      "source_en": "Mordor Intelligence India BFSI Tech 2025",
+      "insight": "글로벌 패키지 + 현지 SI 혼재. 대형 은행은 자체 코어, NBFC·신규 진입자는 패키지 + 클라우드 SaaS 선호.",
+      "insight_en": "Global packages + local SIs coexist. Large banks use proprietary cores; NBFCs and new entrants prefer packages and cloud SaaS.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "솔루션 유형",
+      "category": "it",
+      "role": "score",
+      "value": "글로벌 패키지 + 자체 코어 혼재, 클라우드 SaaS 전환 가속",
+      "value_en": "Global packages + proprietary core mix; rapid shift to cloud SaaS",
+      "unit": "type",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 3,
+      "timeseries": null,
+      "source": "Industry — Pennant, Nucleus, Salesforce FSC adoption in India",
+      "source_en": "Industry — Pennant, Nucleus, Salesforce FSC adoption in India",
+      "insight": "대형 은행 자체 코어 유지, NBFC·신규 진입자 클라우드 패키지 채택 가속. NetSol/Salesforce 유사도 양호.",
+      "insight_en": "Large banks keep proprietary cores; NBFCs and new entrants adopt cloud packages quickly. NetSol/Salesforce reuse is reasonable.",
+      "insight_ai_generated": true,
+      "similarity_axis": "system",
+      "similarity_weight": 0.2,
+      "score_dimensions": {
+        "배포형태(패키지/SI/SaaS)": {
+          "target_score": 4,
+          "note": "인도 NBFC·신규진입자 클라우드 패키지 가속, AU도 패키지+SaaS 보편"
+        },
+        "커스터마이징 자유도": {
+          "target_score": 3,
+          "note": "인도 대형은행 자체코어 잔존, AU 패키지 커스터마이징 우위"
+        },
+        "벤더 종속도": {
+          "target_score": 3,
+          "note": "양국 글로벌 패키지+자체 혼재"
+        },
+        "멀티테넌시 여부": {
+          "target_score": 4,
+          "note": "클라우드 SaaS 전환으로 멀티테넌시 보편화"
+        }
+      }
+    },
+    {
+      "item": "디지털 채널 성숙도",
+      "category": "it",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "RBI Digital Payment Index 2025 / UPI Transaction Volume Report",
+      "source_en": "RBI Digital Payment Index 2025 / UPI Transaction Volume Report",
+      "insight": "UPI 결제·Aadhaar 인증·DigiLocker로 풀 디지털 온보딩 보편. Account Aggregator로 신용·소득 데이터 통합 — 디지털 채널 성숙도 4/5.",
+      "insight_en": "UPI payments, Aadhaar authentication, and DigiLocker enable widespread full-digital onboarding. Account Aggregator unifies credit/income data — digital channel maturity 4/5.",
+      "insight_ai_generated": true,
+      "similarity_axis": "system",
+      "similarity_weight": 0.2,
+      "score_dimensions": {
+        "온라인 신청 연동": {
+          "target_score": 5,
+          "note": "UPI·인도스택으로 온라인 신청 완전 연동"
+        },
+        "비대면 계약 가능": {
+          "target_score": 5,
+          "note": "Aadhaar e-KYC·e-Sign으로 비대면 계약 보편"
+        },
+        "API 개방도": {
+          "target_score": 5,
+          "note": "Account Aggregator·India Stack — API 개방도 글로벌 최상위급"
+        },
+        "페이퍼리스 수준": {
+          "target_score": 4,
+          "note": "DigiLocker 보급, 일부 지역 종이 잔존; AU 완전 페이퍼리스"
+        }
+      }
+    },
+    {
+      "item": "신용정보(CB) 인프라",
+      "category": "it",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "CIBIL TransUnion·Experian·Equifax·CRIF High Mark Coverage 2025",
+      "source_en": "CIBIL TransUnion, Experian, Equifax, CRIF High Mark Coverage 2025",
+      "insight": "CIBIL/Experian/Equifax/CRIF 4개 CB가 6억+ 신용 파일 보유. 박형 신용은 Account Aggregator·alternative data로 보강.",
+      "insight_en": "Four CBs (CIBIL, Experian, Equifax, CRIF) hold 600M+ credit files. Thin-file segments are supplemented by Account Aggregator and alternative data.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "결제·정산 인프라",
+      "category": "it",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "NPCI UPI Statistics 2025 / RBI Payment Systems",
+      "source_en": "NPCI UPI Statistics 2025 / RBI Payment Systems",
+      "insight": "UPI 월 거래 200억 건+ 세계 최대 실시간 결제 인프라. NACH 자동이체로 EMI 회수 자동화 보편 — 5/5.",
+      "insight_en": "UPI processes 20B+ monthly transactions — world's largest real-time payment infrastructure. NACH auto-debit enables ubiquitous EMI collection — 5/5.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "디지털 딜러 성숙도",
+      "category": "it",
+      "role": "score",
+      "value": 3,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 3,
+      "timeseries": null,
+      "source": "FADA·CarDekho·CarTrade Digital Sales Report 2025",
+      "source_en": "FADA, CarDekho, CarTrade Digital Sales Report 2025",
+      "insight": "온라인 차량 검색·예약은 보편, 풀 디지털 구매는 OEM별 차이. CarDekho·CarTrade가 임베디드 금융 채널.",
+      "insight_en": "Online search and reservation are universal; full digital purchase varies by OEM. CarDekho and CarTrade serve as embedded-finance channels.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "국외이전 제한",
+      "category": "it",
+      "role": "score",
+      "value": 3,
+      "unit": "restriction_1to5",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "DPDP Act 2023 / RBI Payment Data Localization Circular 2018",
+      "source_en": "DPDP Act 2023 / RBI Payment Data Localization Circular 2018",
+      "insight": "결제 데이터 국외 이전 금지, 일반 개인정보는 DPDP 동의 기반 이전 가능. 화이트리스트 국가 지정 권한이 정부에 있어 모니터링 필요.",
+      "insight_en": "Payment data export prohibited; general PII transferable with DPDP consent. Government holds whitelist authority — monitoring needed.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "차량회수 절차 용이성",
+      "category": "shared",
+      "role": "score",
+      "value": 2,
+      "unit": "ease_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "Supreme Court India ICICI Bank Repossession Guidelines / SARFAESI Act 2002",
+      "source_en": "Supreme Court India ICICI Bank Repossession Guidelines / SARFAESI Act 2002",
+      "insight": "사적 회수는 대법원 가이드라인으로 엄격 규제(공인 회수업자·녹음 의무). SARFAESI 적용 어려운 자동차대출은 사법절차 의존도↑ — 2/5.",
+      "insight_en": "Private repossession is tightly regulated under Supreme Court guidelines (licensed agents, audio recording). Auto loans rarely fit SARFAESI, so judicial recovery dominates — 2/5.",
+      "insight_ai_generated": true,
+      "similarity_axis": "risk",
+      "similarity_weight": 0.1,
+      "score_dimensions": {
+        "사법절차 필요": {
+          "target_score": 2,
+          "note": "SARFAESI 적용 곤란, 사법 의존도 높음 — AU PPSA 우호"
+        },
+        "회수 소요기간(일)": {
+          "target_score": 2,
+          "note": "사법절차로 장기화"
+        },
+        "자력구제 허용": {
+          "target_score": 2,
+          "note": "대법원 가이드라인으로 사적회수 엄격 규제"
+        },
+        "회수율": {
+          "target_score": 3,
+          "note": "회수율 보통"
+        }
+      }
+    },
+    {
+      "item": "법적 회수 소요기간",
+      "category": "shared",
+      "role": "score",
+      "value": 180,
+      "unit": "days",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "Supreme Court ICICI Bank Guidelines / India Recovery Practitioners Report 2025",
+      "source_en": "Supreme Court ICICI Bank Guidelines / India Recovery Practitioners Report 2025",
+      "insight": "차량 회수 평균 6개월, 사법 절차 시 12~18개월. 회수율 60~70% — 회수 리스크 관리 핵심.",
+      "insight_en": "Avg. recovery 6 months; 12-18 months via courts. Recovery rate 60-70% — recovery-risk management is critical.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "추심 규제",
+      "category": "shared",
+      "role": "score",
+      "value": 3,
+      "unit": "constraint_1to5",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "RBI Fair Practices Code / Supreme Court ICICI Guidelines",
+      "source_en": "RBI Fair Practices Code / Supreme Court ICICI Guidelines",
+      "insight": "RBI Fair Practices Code로 추심 시간·방법 규제. 위탁 추심 보편이나 폭력적·강압적 추심은 엄격 금지.",
+      "insight_en": "RBI Fair Practices Code regulates collection hours and methods. Outsourced collection is common; abusive practices strictly prohibited.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "충당금 규정",
+      "category": "shared",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "RBI IRACP (Income Recognition, Asset Classification and Provisioning) Norms 2025",
+      "source_en": "RBI IRACP (Income Recognition, Asset Classification and Provisioning) Norms 2025",
+      "insight": "IRACP 기준에 따라 NPA 90일+ 자동 분류·충당금 단계 적용. ECL 모델은 IFRS 9 채택 진행 중 — 4/5 성숙도.",
+      "insight_en": "IRACP rules auto-classify NPAs at 90+ DPD with staged provisioning. ECL/IFRS 9 adoption is in progress — maturity 4/5.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "연체 분류 기준",
+      "category": "shared",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "RBI IRACP / Master Direction NBFC 2025",
+      "source_en": "RBI IRACP / Master Direction NBFC 2025",
+      "insight": "Standard 0~30일, SMA-1 31~60일, SMA-2 61~90일, NPA 90일+ 표준 분류. UTP 분류 운영 중 — 4/5.",
+      "insight_en": "Standard 0-30d, SMA-1 31-60d, SMA-2 61-90d, NPA 90d+. UTP criteria applied — maturity 4/5.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "의무보험 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "Motor Vehicles Act 1988에 따른 3자 배상 의무보험. 신차 등록 시 5년 일괄 납부.",
+      "value_en": "Compulsory third-party liability insurance under Motor Vehicles Act 1988; 5-year lump-sum at new-car registration.",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 1,
+      "timeseries": null,
+      "source": "Motor Vehicles Act 1988 / IRDAI Regulations 2024",
+      "source_en": "Motor Vehicles Act 1988 / IRDAI Regulations 2024",
+      "insight": "3자 책임보험 의무, 신차 등록시 5년 패키지. 자차보험은 선택 — 금융사 담보보험 끼워팔기 일반.",
+      "insight_en": "Third-party liability mandatory; 5-year package at registration. Own-damage optional — lender-tied collateral insurance is common.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "신용생명보험 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "IRDAI 가이드라인 — 강제 끼워팔기 금지, 별도 동의·해지권 의무",
+      "value_en": "Under IRDAI guidelines — tying prohibited; separate consent and cancellation rights required.",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "IRDAI Bancassurance Guidelines 2016 (rev. 2023)",
+      "source_en": "IRDAI Bancassurance Guidelines 2016 (rev. 2023)",
+      "insight": "신용생명보험 강제 끼워팔기 금지, 옵트인 모델 — 별도 동의 필요. 실제 시장 침투율은 낮은 편.",
+      "insight_en": "Tying prohibited; opt-in model requires separate consent. Actual market penetration is relatively low.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "보험 끼워팔기 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "IRDAI/RBI 공동 — 강제 끼워팔기 금지, 번들링은 조건부 허용(투명 가격 공시·해지권 보장)",
+      "value_en": "Joint IRDAI/RBI rule — forced tying prohibited; bundling allowed conditionally (price disclosure, cancellation rights).",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 2,
+      "timeseries": null,
+      "source": "IRDAI/RBI Joint Bancassurance Code 2023",
+      "source_en": "IRDAI/RBI Joint Bancassurance Code 2023",
+      "insight": "강제 끼워팔기 명시 금지. 자율 번들링은 가능하나 약관·가격 공시 의무.",
+      "insight_en": "Forced tying explicitly prohibited. Voluntary bundling allowed but requires T&C/price disclosure.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "AI 신용평가 규제",
+      "category": "shared",
+      "role": "score",
+      "value": "DPDP Act 2023 + RBI Responsible AI Guidelines 2025 초안 — 알고리즘 책임·설명가능성 의무 도입 진행",
+      "value_en": "DPDP Act 2023 + RBI Responsible AI Guidelines 2025 (draft) — accountability and explainability mandates in progress.",
+      "unit": "regime",
+      "direction": "down",
+      "axis": "similarity",
+      "tier": 3,
+      "timeseries": null,
+      "source": "DPDP Act 2023 / RBI Discussion Paper on AI in Financial Services 2024",
+      "source_en": "DPDP Act 2023 / RBI Discussion Paper on AI in Financial Services 2024",
+      "insight": "AI 신용평가 규제 형성 중 — DPDP 자동결정 거부권 + RBI 가이드라인 초안. 실사 시 발효 시점 재확인 권장.",
+      "insight_en": "AI credit-scoring regulation evolving — DPDP rights against automated decisions + RBI draft guidelines. Re-confirm effective dates during due diligence.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "EV 보급률",
+      "category": "business",
+      "role": "score",
+      "value": 7.5,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "tier": 2,
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 1.0
+          },
+          {
+            "year": 2022,
+            "value": 2.0
+          },
+          {
+            "year": 2023,
+            "value": 4.0
+          },
+          {
+            "year": 2024,
+            "value": 6.0
+          },
+          {
+            "year": 2025,
+            "value": 7.5
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 10.0
+          },
+          {
+            "year": 2027,
+            "value": 14.0
+          },
+          {
+            "year": 2028,
+            "value": 18.0
+          },
+          {
+            "year": 2029,
+            "value": 22.0
+          },
+          {
+            "year": 2030,
+            "value": 27.0
+          }
+        ],
+        "estimated": true
+      },
+      "source": "SMEV India EV Sales 2025 / FAME-II Scheme Data",
+      "source_en": "SMEV India EV Sales 2025 / FAME-II Scheme Data",
+      "insight": "2025년 EV 신차 점유 7.5%. 정부 FAME 보조금·Tata Nexon EV·MG ZS EV가 견인. 2030년 30%대 진입 전망.",
+      "insight_en": "EV new-car share at 7.5% in 2025. Driven by FAME subsidies, Tata Nexon EV, and MG ZS EV. Projected to reach 30%+ by 2030.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "EV·ICE 잔존가치 리스크",
+      "category": "business",
+      "role": "score",
+      "value": 15,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "tier": 3,
+      "timeseries": null,
+      "source": "OLX Autos India / Spinny EV Resale Index 2025",
+      "source_en": "OLX Autos India / Spinny EV Resale Index 2025",
+      "insight": "EV 3년 잔가가 ICE 대비 약 15pp 낮음 — 배터리·기술 진부화 우려. 리스 손익 핵심 변수 — 보수적 GFV 필수.",
+      "insight_en": "EV 3-yr residual ~15pp lower than ICE — battery and tech-obsolescence concerns. Key lever for lease P&L — conservative GFV required.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "해당국 정성 요약",
+      "category": "business",
+      "role": "context",
+      "value": "세계 3위 자동차 시장(2025 신차 420만대)·G20 최상위 성장(GDP 6.8%)·금융 침투율 80%로 매력도 최상. 그러나 NBFC 인가·자본(€11M)·결제 데이터 현지화·INR 변동성·SARFAESI 미적용 회수 어려움 등 진입 부담 큼. UPI·Aadhaar·Account Aggregator·NACH 디지털 인프라가 차별화 기회. 캡티브 35%로 독립계 진입 여지 있고, 중고차(25%)·운용리스(<1%)는 개척 영역. NBFC 인가 우선·디지털·EV 잔가 보수적 설계가 핵심.",
+      "value_en": "World's 3rd-largest auto market (4.2M new cars 2025), top G20 growth (GDP 6.8%), and 80% finance penetration place attractiveness at the top. NBFC licensing, capital (€11M), payment data localization, INR volatility, and non-SARFAESI recovery difficulty add entry friction. UPI/Aadhaar/Account Aggregator/NACH digital infrastructure offers differentiation. Captives at 35% leave room for independents; used cars (25%) and operating lease (<1%) are greenfield. NBFC-license-first, digital-led entry with conservative EV GFV is key.",
+      "unit": null,
+      "tier": 1,
+      "timeseries": null,
+      "source": "Synthesized from RBI·CRISIL·SIAM·IMF·Mordor Intelligence 2025",
+      "source_en": "Synthesized from RBI, CRISIL, SIAM, IMF, Mordor Intelligence 2025",
+      "insight": "매력도 최상위 + 진입 부담 큰 시장. NBFC 인가 + 디지털 + EV 잔가 보수적 전략 권장.",
+      "insight_en": "Top-tier attractiveness with high entry burden. Recommend NBFC-license + digital + conservative EV-GFV strategy.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "브랜드 Top10",
+      "category": "business",
+      "role": "context",
+      "value": [
+        "Maruti Suzuki",
+        "Hyundai",
+        "Tata Motors",
+        "Mahindra",
+        "Toyota",
+        "Kia",
+        "Honda",
+        "Volkswagen",
+        "MG (SAIC)",
+        "Skoda"
+      ],
+      "tier": 1,
+      "timeseries": null,
+      "source": "SIAM 2025 brand registrations",
+      "source_en": "SIAM 2025 brand registrations",
+      "insight": "Maruti Suzuki·Hyundai·Tata 3사가 시장의 70% 차지. 한국 브랜드(Hyundai·Kia) 합산 약 22% — 한국계 협업 채널 우위.",
+      "insight_en": "Maruti Suzuki, Hyundai, and Tata hold ~70% of the market. Korean brands (Hyundai + Kia) together ~22% — favorable Korean partnership channel.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "OEM 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "rank": 1,
+          "name": "Maruti Suzuki",
+          "market_share": "41.0%"
+        },
+        {
+          "rank": 2,
+          "name": "Hyundai",
+          "market_share": "14.5%"
+        },
+        {
+          "rank": 3,
+          "name": "Tata Motors",
+          "market_share": "13.5%"
+        },
+        {
+          "rank": 4,
+          "name": "Mahindra",
+          "market_share": "11.0%"
+        },
+        {
+          "rank": 5,
+          "name": "Toyota",
+          "market_share": "6.5%"
+        }
+      ],
+      "tier": 1,
+      "timeseries": null,
+      "source": "SIAM 2025 PV market share",
+      "source_en": "SIAM 2025 PV market share",
+      "insight": "Maruti Suzuki 41% 압도적 1위. 상위 5개사 86% — 매우 집중적. Maruti·Hyundai 캡티브가 자동차 금융 주도.",
+      "insight_en": "Maruti Suzuki dominates at 41%. Top-5 = 86% — highly concentrated. Maruti and Hyundai captives lead auto finance.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "금융사 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "rank": 1,
+          "name": "HDFC Bank",
+          "market_share": "약 17%"
+        },
+        {
+          "rank": 2,
+          "name": "State Bank of India",
+          "market_share": "약 15%"
+        },
+        {
+          "rank": 3,
+          "name": "ICICI Bank",
+          "market_share": "약 11%"
+        },
+        {
+          "rank": 4,
+          "name": "Tata Motors Finance",
+          "market_share": "약 7%"
+        },
+        {
+          "rank": 5,
+          "name": "Mahindra Finance",
+          "market_share": "약 6%"
+        }
+      ],
+      "tier": 2,
+      "timeseries": null,
+      "source": "CRISIL Auto Finance 2025 / Bank Annual Reports",
+      "source_en": "CRISIL Auto Finance 2025 / Bank Annual Reports",
+      "insight": "은행계(HDFC·SBI·ICICI) 약 43%, 캡티브 NBFC(Tata Motors·Mahindra·Maruti Suzuki Finance) 약 25%, 독립 NBFC 32% — 다층 경쟁구조.",
+      "insight_en": "Banks (HDFC, SBI, ICICI) ~43%, captive NBFCs (Tata Motors, Mahindra, Maruti Suzuki Finance) ~25%, independent NBFCs ~32% — multi-layered competition.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "경쟁사 리스트",
+      "category": "business",
+      "role": "context",
+      "value": [
+        "HDFC Bank",
+        "State Bank of India",
+        "ICICI Bank",
+        "Tata Motors Finance",
+        "Mahindra Finance",
+        "Maruti Suzuki Finance",
+        "Toyota Financial Services",
+        "Hyundai Motor Finance",
+        "Kotak Mahindra Prime",
+        "Bajaj Auto Finance"
+      ],
+      "tier": 2,
+      "timeseries": null,
+      "source": "CRISIL / Industry directory 2025",
+      "source_en": "CRISIL / Industry directory 2025",
+      "insight": "은행·캡티브·독립 NBFC 3분 구조. Hyundai Motor Finance·Toyota Financial Services 등 외국계 캡티브도 활성.",
+      "insight_en": "Banks, captives, and independent NBFCs form a 3-way structure. Foreign captives (Hyundai Motor Finance, Toyota Financial Services) are also active.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "경쟁사 진출 형태",
+      "category": "business",
+      "role": "context",
+      "value": "은행계 (HDFC·SBI·ICICI·Axis·Kotak) + OEM 캡티브 NBFC (Tata Motors Finance·Mahindra Finance·Maruti Suzuki Finance·Hyundai Motor Finance·Toyota Financial Services) + 독립 NBFC (Bajaj Auto Finance·Sundaram Finance·Cholamandalam·Shriram). 외국사는 NBFC 인가 우선 후 합작·인수 통해 진입.",
+      "value_en": "Banks (HDFC, SBI, ICICI, Axis, Kotak) + OEM captive NBFCs (Tata Motors Finance, Mahindra Finance, Maruti Suzuki Finance, Hyundai Motor Finance, Toyota Financial Services) + independent NBFCs (Bajaj Auto Finance, Sundaram Finance, Cholamandalam, Shriram). Foreign players enter via NBFC license followed by JV/acquisition.",
+      "tier": 2,
+      "timeseries": null,
+      "source": "Industry research, CRISIL 2025",
+      "source_en": "Industry research, CRISIL 2025",
+      "insight": "은행계 우위·캡티브 NBFC 강세 구조. 외국 캡티브(Hyundai·Toyota)도 단독 진출 전례 있음 — NBFC 인가 단독 진입 가능.",
+      "insight_en": "Bank-dominant with strong captive NBFCs. Foreign captives (Hyundai, Toyota) have established standalone presence — NBFC license enables solo entry.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "경쟁사 금리 범위",
+      "category": "business",
+      "role": "context",
+      "value": "신차 자동차대출 APR 약 9~14% (HDFC·SBI 9~10.5%, NBFC 11~13%, 프로모 캡티브 7~9%).",
+      "value_en": "New auto-loan APR ~9-14% (HDFC/SBI 9-10.5%, NBFCs 11-13%, captive promos 7-9%).",
+      "tier": 2,
+      "timeseries": null,
+      "source": "Bankbazaar India Auto Loan Rates 2025",
+      "source_en": "Bankbazaar India Auto Loan Rates 2025",
+      "insight": "은행이 가장 저렴, NBFC가 risk-based 상단. 프로모 캡티브가 시장 가격 압박. 진입 시 9~11% 구간 경쟁.",
+      "insight_en": "Banks cheapest; NBFCs at the higher, risk-based end. Captive promos pressure market pricing. New entrants compete in 9-11% range.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "평균 신차가격",
+      "category": "business",
+      "role": "context",
+      "value": "약 INR 1,000,000~1,200,000 (€11,000~13,500). 엔트리 SUV·해치백 견인. 전동화·SUV로 점진 상승.",
+      "value_en": "Approx. INR 1.0-1.2M (€11,000-13,500). Driven by entry SUVs and hatchbacks. Gradually rising with electrification and SUV mix.",
+      "tier": 2,
+      "timeseries": null,
+      "source": "SIAM / CARS24 / Industry pricing data 2025",
+      "source_en": "SIAM / CARS24 / Industry pricing data 2025",
+      "insight": "평균 신차가 약 €12k — 유럽 평균(€30k)의 40% 수준. 저가 시장 중심이라 대출 단가 작고 건수 비즈니스 — 자동화·디지털화 필수.",
+      "insight_en": "Avg. new-car price ~€12k — about 40% of EU average (€30k). Volume business with small ticket sizes — automation and digitalization essential.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "규제기관 식별",
+      "category": "shared",
+      "role": "context",
+      "value": "RBI(중앙은행, NBFC·은행 감독) / SEBI(증권) / IRDAI(보험) / DPDP Board(개인정보) / DPIIT(FDI 정책) / MoRTH(도로교통부, 차량 등록·회수)",
+      "value_en": "RBI (central bank, NBFC/bank supervision) / SEBI (securities) / IRDAI (insurance) / DPDP Board (data protection) / DPIIT (FDI policy) / MoRTH (Road Transport, vehicle registration/recovery).",
+      "tier": 1,
+      "timeseries": null,
+      "source": "RBI / SEBI / IRDAI / DPDP Board / DPIIT / MoRTH Official 2025",
+      "source_en": "RBI / SEBI / IRDAI / DPDP Board / DPIIT / MoRTH Official 2025",
+      "insight": "RBI가 NBFC 인가·감독 핵심. 데이터(DPDP)·보험(IRDAI)·차량(MoRTH) 다중 감독 — 컴플라이언스 조직 설계 시 6개 기관 모두 대응 필요.",
+      "insight_en": "RBI is the principal regulator for NBFCs. Multi-agency oversight across data (DPDP), insurance (IRDAI), and vehicles (MoRTH) — compliance org must cover all 6.",
+      "insight_ai_generated": true,
+      "context_type": "descriptive"
+    },
+    {
+      "item": "외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "news_category": "auto_market",
+          "headline": "인도 2025년 신차 판매 420만대, 일본 추월하며 글로벌 빅3 진입",
+          "headline_en": "India's 2025 new-car sales reach 4.2M — overtakes Japan, enters global top 3",
+          "so_what": "시장 규모 글로벌 3위 확정. 금융 침투 80%로 단위 대출 기회 폭발 — 진입 타이밍 우호적.",
+          "so_what_en": "Confirmed as world's #3 market. 80% finance penetration creates explosive per-loan opportunity — favorable entry timing.",
+          "publisher": "Reuters",
+          "pub_date": "2026-01-08",
+          "url": "https://www.reuters.com/business/autos-transportation/india-2025-car-sales/"
+        },
+        {
+          "news_category": "regulation",
+          "headline": "RBI, NBFC 스케일 기반 규제(SBR) 강화 — 자본·거버넌스 요건 상향 검토",
+          "headline_en": "RBI to tighten NBFC scale-based regulation (SBR) — capital and governance requirements under review",
+          "so_what": "신규 NBFC 인가 자본 부담 추가 상승 가능. 인가 일정 더 길어질 가능성에 대비 — 합작·인수 경로 재검토 권장.",
+          "so_what_en": "Potential further increase in NBFC licensing capital burden. Prepare for longer licensing timelines — JV/acquisition routes worth re-examining.",
+          "publisher": "Economic Times",
+          "pub_date": "2026-03-12",
+          "url": "https://economictimes.indiatimes.com/industry/banking/finance/nbfc-sbr/"
+        },
+        {
+          "news_category": "electrification",
+          "headline": "FAME-III 보조금 발표 — EV 시장 2030년 30%대 목표",
+          "headline_en": "FAME-III subsidy announced — EV market targeted at 30%+ by 2030",
+          "so_what": "EV 잔가 보증·리스 모델 수요 급증 전망. 단 보조금 의존도 큰 잔가 리스크 관리 핵심.",
+          "so_what_en": "Surging demand for EV residual guarantees and lease models expected. Residual risk management critical given subsidy dependence.",
+          "publisher": "Mint",
+          "pub_date": "2026-04-22",
+          "url": "https://www.livemint.com/auto/fame-3-ev-subsidy"
+        }
+      ],
+      "tier": 2,
+      "timeseries": null,
+      "source": "Reuters·Economic Times·Mint (whitelist 2025-2026)",
+      "source_en": "Reuters, Economic Times, Mint (whitelist 2025-2026)",
+      "insight": "시장 글로벌 3위 + 규제 강화 + EV 가속이 3대 이슈. 진입 타이밍은 우호적이나 NBFC 인가·잔가·자본 부담 동시 관리 필요.",
+      "insight_en": "Top-3 market + tighter regulation + EV acceleration are the three key issues. Entry timing favorable, but NBFC licensing, residual risk, and capital burden must be managed in parallel.",
+      "insight_ai_generated": true,
+      "context_type": "news"
+    }
+  ]
+}

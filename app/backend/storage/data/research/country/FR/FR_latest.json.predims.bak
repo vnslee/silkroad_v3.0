@@ -1,0 +1,1328 @@
+{
+  "country": "France",
+  "country_ko": "프랑스",
+  "code": "FR",
+  "region": "EU",
+  "is_baseline": false,
+  "currency": "EUR",
+  "schema_version": "1.1",
+  "data_year": 2025,
+  "fetched_by": "ai",
+  "overall_insight": "프랑스는 EU 3위 신차 시장이자 캡티브 금융(특히 Stellantis·Renault 계열)의 본거지로, 개인 신차 할부·B2B 리스 모두 성숙한 고침투 시장이다. 비즈니스 매력도(시장규모·금융이용률·EV 보급)는 높으나, 진입 난이도 드라이버는 EU CCD2/소비자보호 규제, 추심·회수 절차의 사법 의존성, 그리고 PSD2·GDPR 기반 데이터·AI 신용평가 규제다. IT 유사도는 EU 표준(SEPA·PSD2·오픈뱅킹)에 높게 정렬되어 베이스라인 대비 양호하나, 비즈니스 매력도 대비 회수 실행 리스크(평균 회수기간 장기)가 엇갈리는 지점이다. 다크호스는 B2B 오퍼레이팅 리스·플릿 시장으로 Ayvens(구 ALD·LeasePlan) 본사가 있어 경쟁이 치열하지만 EV 전환 수요가 폭발적이다. 리스크 플래그는 EV 잔가 변동성과 ICE 단계적 퇴출에 따른 잔가 손익으로, 잔가 헤지·리마케팅 역량 없이는 B2B 리스 마진이 압박받는다. 외국사 라이선스는 ACPR 인가 및 EU 패스포팅으로 취득 가능해 국가 게이트는 대체로 PASS다.",
+  "overall_insight_en": "France is the EU's #3 new-car market and the home of major captive finance arms (notably Stellantis and Renault groups), a mature, high-penetration market for both retail new-car installment loans and B2B leasing. Business attractiveness (market size, finance penetration, EV adoption) is high, but entry-difficulty drivers are EU CCD2/consumer-protection regulation, the judicial dependency of collection/repossession procedures, and PSD2/GDPR-based data and AI credit-scoring rules. IT similarity is highly aligned with EU standards (SEPA, PSD2, open banking), favorable vs. baseline, but the divergence point vs. business attractiveness is recovery-execution risk (long average recovery period). The dark horse is the B2B operating-lease/fleet market — Ayvens (ex-ALD/LeasePlan) is headquartered here, so competition is fierce but EV-transition demand is explosive. The risk flags are EV residual-value volatility and residual P&L from the ICE phase-out — without residual hedging and remarketing capabilities, B2B lease margins come under pressure. Foreign licensing is obtainable via ACPR authorization and EU passporting, so the country gate broadly PASSes.",
+  "items": [
+    {
+      "item": "오토금융/리스 시장규모",
+      "category": "business",
+      "role": "score",
+      "tier": 2,
+      "source": "ASF(Association française des Sociétés Financières) 연차보고서, Oliver Wyman EU auto finance estimates",
+      "source_en": "ASF (Association française des Sociétés Financières) annual report, Oliver Wyman EU auto finance estimates",
+      "insight": "프랑스 오토금융·리스 신규취급 규모는 EU 상위권으로 캡티브·전업 리스사가 주도한다. 신차 침투율이 높아 안정적 풀(pool)을 확보할 수 있다.",
+      "insight_en": "France's auto-finance/lease new business ranks among the EU's largest, led by captives and specialized lessors. High new-car penetration secures a stable pool.",
+      "insight_ai_generated": true,
+      "value": 52,
+      "unit": "EUR_billion_new_business",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 45
+          },
+          {
+            "year": 2022,
+            "value": 47
+          },
+          {
+            "year": 2023,
+            "value": 49
+          },
+          {
+            "year": 2024,
+            "value": 51
+          },
+          {
+            "year": 2025,
+            "value": 52
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 54
+          },
+          {
+            "year": 2027,
+            "value": 56
+          },
+          {
+            "year": 2028,
+            "value": 58
+          },
+          {
+            "year": 2029,
+            "value": 60
+          },
+          {
+            "year": 2030,
+            "value": 62
+          }
+        ],
+        "cagr_hist": 0.037,
+        "cagr_forecast": 0.036,
+        "estimated": true
+      }
+    },
+    {
+      "item": "오토금융 성장률(CAGR)",
+      "category": "business",
+      "role": "score",
+      "tier": 3,
+      "source": "ASF, Roland Berger EU mobility finance outlook",
+      "source_en": "ASF, Roland Berger EU mobility finance outlook",
+      "insight": "전기차·구독형 모빌리티 확대로 완만한 성장세 유지. 금리 정점 통과 후 신규취급 회복 기대.",
+      "insight_en": "Steady, moderate growth on EV and subscription-mobility expansion. New business expected to recover after the rate peak.",
+      "insight_ai_generated": true,
+      "value": 3.6,
+      "unit": "percent_cagr",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 4.0
+          },
+          {
+            "year": 2022,
+            "value": 4.4
+          },
+          {
+            "year": 2023,
+            "value": 4.3
+          },
+          {
+            "year": 2024,
+            "value": 4.1
+          },
+          {
+            "year": 2025,
+            "value": 2.0
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 3.7
+          },
+          {
+            "year": 2027,
+            "value": 3.7
+          },
+          {
+            "year": 2028,
+            "value": 3.6
+          },
+          {
+            "year": 2029,
+            "value": 3.5
+          },
+          {
+            "year": 2030,
+            "value": 3.4
+          }
+        ],
+        "cagr_hist": 0.036,
+        "cagr_forecast": 0.036,
+        "estimated": true
+      }
+    },
+    {
+      "item": "GDP 성장률",
+      "category": "business",
+      "role": "score",
+      "value": 0.8,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 6.9
+          },
+          {
+            "year": 2022,
+            "value": 2.6
+          },
+          {
+            "year": 2023,
+            "value": 1.1
+          },
+          {
+            "year": 2024,
+            "value": 1.1
+          },
+          {
+            "year": 2025,
+            "value": 0.8
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 1.0
+          },
+          {
+            "year": 2027,
+            "value": 1.3
+          },
+          {
+            "year": 2028,
+            "value": 1.4
+          },
+          {
+            "year": 2029,
+            "value": 1.4
+          },
+          {
+            "year": 2030,
+            "value": 1.4
+          }
+        ],
+        "estimated": true
+      },
+      "tier": 1,
+      "source": "Banque de France·INSEE·IMF WEO 2025",
+      "source_en": "Banque de France, INSEE, IMF WEO 2025",
+      "insight": "재정 긴축·내수 둔화로 2025년 0.8% 저성장. 정치 불확실성과 부채(110% GDP+)가 부담. 중기 1%대 회복 전망.",
+      "insight_en": "Sluggish 0.8% growth in 2025 amid fiscal tightening and weak consumption. Political uncertainty and 110%+ debt-to-GDP weigh. Medium-term recovery to 1%+.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "금융 이용률(신차)",
+      "category": "business",
+      "role": "score",
+      "tier": 2,
+      "source": "ASF, ACEA, Eurofinas 연차 통계",
+      "source_en": "ASF, ACEA, Eurofinas annual statistics",
+      "insight": "신차 구매의 다수가 할부·리스로 이뤄지는 고침투 시장. 캡티브 채널 의존도가 높다.",
+      "insight_en": "High-penetration market where most new-car purchases are financed via installment/lease. Heavy reliance on the captive channel.",
+      "insight_ai_generated": true,
+      "value": 72,
+      "unit": "percent_penetration",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 68
+          },
+          {
+            "year": 2022,
+            "value": 69
+          },
+          {
+            "year": 2023,
+            "value": 70
+          },
+          {
+            "year": 2024,
+            "value": 71
+          },
+          {
+            "year": 2025,
+            "value": 72
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 73
+          },
+          {
+            "year": 2027,
+            "value": 74
+          },
+          {
+            "year": 2028,
+            "value": 75
+          },
+          {
+            "year": 2029,
+            "value": 76
+          },
+          {
+            "year": 2030,
+            "value": 77
+          }
+        ],
+        "cagr_hist": 0.014,
+        "cagr_forecast": 0.013,
+        "estimated": true
+      }
+    },
+    {
+      "item": "금융 이용률(중고차)",
+      "category": "business",
+      "role": "score",
+      "tier": 3,
+      "source": "ASF, Eurofinas used car finance estimates",
+      "source_en": "ASF, Eurofinas used car finance estimates",
+      "insight": "중고차 금융 침투율은 신차 대비 낮으나 인증중고차·리스 반납차 리마케팅으로 성장 여지 존재.",
+      "insight_en": "Used-car finance penetration is lower than new cars, but room to grow via certified-used and lease-return remarketing.",
+      "insight_ai_generated": true,
+      "value": 38,
+      "unit": "percent_penetration",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": null
+    },
+    {
+      "item": "평균 금리/APR",
+      "category": "business",
+      "role": "score",
+      "tier": 2,
+      "source": "Banque de France consumer credit rates, ACPR",
+      "source_en": "Banque de France consumer credit rates, ACPR",
+      "insight": "ECB 금리 정점 후 하향 안정화 국면. 소비자신용 금리상한(usure) 규제로 상단이 제한된다.",
+      "insight_en": "Easing and stabilizing after the ECB rate peak. Consumer-credit usury caps (usure) limit the upper bound.",
+      "insight_ai_generated": true,
+      "value": 6.5,
+      "unit": "percent_apr",
+      "direction": "down",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 4.0
+          },
+          {
+            "year": 2022,
+            "value": 4.5
+          },
+          {
+            "year": 2023,
+            "value": 6.0
+          },
+          {
+            "year": 2024,
+            "value": 7.0
+          },
+          {
+            "year": 2025,
+            "value": 6.5
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 6.0
+          },
+          {
+            "year": 2027,
+            "value": 5.7
+          },
+          {
+            "year": 2028,
+            "value": 5.5
+          },
+          {
+            "year": 2029,
+            "value": 5.4
+          },
+          {
+            "year": 2030,
+            "value": 5.3
+          }
+        ],
+        "cagr_hist": 0.128,
+        "cagr_forecast": -0.025,
+        "estimated": true
+      }
+    },
+    {
+      "item": "신차 판매대수",
+      "category": "business",
+      "role": "score",
+      "tier": 1,
+      "source": "CCFA/PFA(Plateforme Automobile), ACEA registrations",
+      "source_en": "CCFA/PFA (Plateforme Automobile), ACEA registrations",
+      "insight": "팬데믹·공급망 충격 후 회복했으나 코로나 이전 250만대 수준에는 미달. EV 비중 증가가 구조적 변화.",
+      "insight_en": "Recovered after the pandemic/supply-chain shock but still below the pre-COVID ~2.5M level. Rising EV share is a structural shift.",
+      "insight_ai_generated": true,
+      "value": 1.72,
+      "unit": "million_units",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 1.66
+          },
+          {
+            "year": 2022,
+            "value": 1.53
+          },
+          {
+            "year": 2023,
+            "value": 1.77
+          },
+          {
+            "year": 2024,
+            "value": 1.72
+          },
+          {
+            "year": 2025,
+            "value": 1.72
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 1.78
+          },
+          {
+            "year": 2027,
+            "value": 1.82
+          },
+          {
+            "year": 2028,
+            "value": 1.86
+          },
+          {
+            "year": 2029,
+            "value": 1.9
+          },
+          {
+            "year": 2030,
+            "value": 1.95
+          }
+        ],
+        "cagr_hist": 0.009,
+        "cagr_forecast": 0.019,
+        "estimated": true
+      }
+    },
+    {
+      "item": "구매 패턴(할부·리스 비중)",
+      "category": "business",
+      "role": "score",
+      "tier": 3,
+      "source": "ASF, AAA Data registration analysis",
+      "source_en": "ASF, AAA Data registration analysis",
+      "insight": "개인은 LOA(리스옵션부 임대)·LLD(장기렌탈) 비중이 빠르게 확대되어 전통 할부를 대체 중. B2B는 오퍼레이팅 리스가 지배적.",
+      "insight_en": "For individuals, LOA (lease with purchase option) and LLD (long-term rental) are expanding fast, replacing traditional installment loans. B2B is dominated by operating leases.",
+      "insight_ai_generated": true,
+      "value": 55,
+      "unit": "percent_lease_of_financed",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": null
+    },
+    {
+      "item": "캡티브 강도(점유율)",
+      "category": "business",
+      "role": "score",
+      "tier": 2,
+      "source": "ASF, OEM captive(BPF·RCI/Mobilize) 보고서",
+      "source_en": "ASF, OEM captive (BPF/RCI/Mobilize) reports",
+      "insight": "Stellantis(BPF)·Renault(Mobilize Financial Services) 등 자국 OEM 캡티브가 신차 금융을 강하게 장악. 신규 진입사는 비캡티브·중고·플릿 틈새가 현실적.",
+      "insight_en": "Domestic OEM captives such as Stellantis (BPF) and Renault (Mobilize Financial Services) strongly dominate new-car finance. For new entrants, the realistic niches are non-captive, used, and fleet.",
+      "insight_ai_generated": true,
+      "value": 60,
+      "unit": "percent_captive_share",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "금융사 점유율(Top 5)",
+      "category": "business",
+      "role": "score",
+      "tier": 3,
+      "source": "ASF, 업계 추정(BPF·Mobilize·CA Consumer Finance·Ayvens·Cofidis)",
+      "source_en": "ASF, industry estimates (BPF/Mobilize/CA Consumer Finance/Ayvens/Cofidis)",
+      "insight": "상위 5사 합산 점유율이 70%를 상회하는 집중 시장. 자국 OEM 캡티브와 은행계 소비자금융이 주도.",
+      "insight_en": "Concentrated market where the top 5 hold over 70% combined. Led by domestic OEM captives and bank-affiliated consumer finance.",
+      "insight_ai_generated": true,
+      "value": 72,
+      "unit": "percent_top5_share",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "법인세율",
+      "category": "business",
+      "role": "score",
+      "tier": 1,
+      "source": "Direction générale des Finances publiques(DGFiP), 2025 corporate tax",
+      "source_en": "Direction générale des Finances publiques (DGFiP), 2025 corporate tax",
+      "insight": "표준 법인세율 25%. 대기업 추가 부담금 논의 있으나 EU 평균 대비 중상위 수준.",
+      "insight_en": "Standard corporate tax 25%. Surcharge discussions for large firms exist, but it sits in the upper-middle range vs. the EU average.",
+      "insight_ai_generated": true,
+      "value": 25,
+      "unit": "percent",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "이자소득 원천징수",
+      "category": "business",
+      "role": "score",
+      "tier": 1,
+      "source": "DGFiP, France-EU 이중과세조약",
+      "source_en": "DGFiP, France-EU double taxation treaties",
+      "insight": "EU 역내 이자지급은 이자·로열티 지침으로 면제 가능. 비거주자 일반세율 적용 시 조약으로 경감.",
+      "insight_en": "Intra-EU interest payments can be exempt under the Interest & Royalties Directive. Standard non-resident rate is reduced by treaty.",
+      "insight_ai_generated": true,
+      "value": 0,
+      "unit": "percent_eu_intra",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "배당 원천징수",
+      "category": "business",
+      "role": "score",
+      "tier": 1,
+      "source": "DGFiP, EU 모회사-자회사 지침",
+      "source_en": "DGFiP, EU Parent-Subsidiary Directive",
+      "insight": "EU 모자회사 지침 적용 시 면제 가능. 표준 비거주자 배당 원천세 25%이나 조약·지침으로 경감.",
+      "insight_en": "Exemption available under the EU Parent-Subsidiary Directive. Standard non-resident dividend WHT is 25% but reduced by treaty/directive.",
+      "insight_ai_generated": true,
+      "value": 25,
+      "unit": "percent_standard",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "외국인 지분 한도",
+      "category": "shared",
+      "role": "gate",
+      "tier": 1,
+      "source": "Code monétaire et financier, EU 자본자유이동",
+      "source_en": "Code monétaire et financier, EU free movement of capital",
+      "insight": "금융업 외국인 지분 제한 없음(100% 가능). EU 역외 투자는 일부 전략부문 사전심사 대상이나 오토금융은 비해당.",
+      "insight_en": "No foreign-ownership restriction on financial business (100% possible). Non-EU investment is subject to screening in some strategic sectors, but auto finance is not covered.",
+      "insight_ai_generated": true,
+      "value": "외국인 100% 지분 허용. 금융 라이선스 인가가 핵심 관문.",
+      "value_en": "Foreigners may own 100%. Financial licensing is the key gate.",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null
+    },
+    {
+      "item": "외환·배당 송금 자유도",
+      "category": "shared",
+      "role": "gate",
+      "tier": 1,
+      "source": "Banque de France, EU 자본이동 자유",
+      "source_en": "Banque de France, EU free movement of capital",
+      "insight": "EUR 자유태환·자본이동 완전 자유. 송금 제약 없음.",
+      "insight_en": "EUR is freely convertible with full freedom of capital movement. No remittance restrictions.",
+      "insight_ai_generated": true,
+      "value": "외환·배당 송금 자유. 자본통제 없음.",
+      "value_en": "Free FX and dividend remittance. No capital controls.",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null
+    },
+    {
+      "item": "데이터 현지화 의무",
+      "category": "shared",
+      "role": "gate",
+      "tier": 1,
+      "source": "GDPR, CNIL 가이드라인",
+      "source_en": "GDPR, CNIL guidelines",
+      "insight": "엄격한 현지화 의무는 없으나 GDPR·역외이전 규칙(SCC·적정성) 준수 필수. EU 내 저장이 사실상 표준.",
+      "insight_en": "No strict localization mandate, but GDPR and cross-border transfer rules (SCC/adequacy) must be observed. EU-internal storage is effectively the standard.",
+      "insight_ai_generated": true,
+      "value": "강제 현지화 없음. GDPR 기반 역외이전 통제 적용.",
+      "value_en": "No forced localization. GDPR-based cross-border transfer controls apply.",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null
+    },
+    {
+      "item": "국가신용등급",
+      "category": "shared",
+      "role": "gate",
+      "tier": 1,
+      "source": "S&P/Fitch/Moody's sovereign rating 2025",
+      "source_en": "S&P/Fitch/Moody's sovereign rating 2025",
+      "insight": "AA-/Aa3 수준의 투자등급. 재정적자·정치불안으로 등급 하향 압력 존재하나 자금조달 안정적.",
+      "insight_en": "Investment-grade at AA-/Aa3 level. Fiscal deficit and political instability create downgrade pressure, but funding remains stable.",
+      "insight_ai_generated": true,
+      "value": "AA- (S&P) / Aa3 (Moody's), 안정~부정적 전망",
+      "value_en": "AA- (S&P) / Aa3 (Moody's), stable to negative outlook",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null
+    },
+    {
+      "item": "라이선스 취득 가능 여부(외국사)",
+      "category": "shared",
+      "role": "gate",
+      "tier": 1,
+      "source": "ACPR(Autorité de contrôle prudentiel et de résolution), CRD/CRR",
+      "source_en": "ACPR (Autorité de contrôle prudentiel et de résolution), CRD/CRR",
+      "insight": "EU 역내 금융사는 패스포팅으로 진입 가능, 역외사는 ACPR 인가 또는 EU 자회사 설립 필요. 취득 가능.",
+      "insight_en": "EU-based financial firms can enter via passporting; non-EU firms need ACPR authorization or an EU subsidiary. Obtainable.",
+      "insight_ai_generated": true,
+      "value": "취득 가능. EU 패스포팅 또는 ACPR 직접 인가.",
+      "value_en": "Obtainable. EU passporting or direct ACPR authorization.",
+      "gate_result": "PASS",
+      "gate_scope": "operating_model",
+      "segment": null
+    },
+    {
+      "item": "라이선스 체제(세그먼트별)",
+      "category": "shared",
+      "role": "gate",
+      "tier": 1,
+      "source": "Code monétaire et financier, ACPR",
+      "source_en": "Code monétaire et financier, ACPR",
+      "insight": "개인 신차 할부·LOA는 소비자신용(établissement de crédit/financement) 인가 필요. B2B 오퍼레이팅 리스(LLD)는 순수 렌탈로 신용기관 인가 불요할 수 있어 진입장벽이 상대적으로 낮다.",
+      "insight_en": "Retail new-car installment loans and LOA require a consumer-credit (établissement de crédit/financement) license. B2B operating leases (LLD) may not require a credit-institution license as pure rentals, so the entry barrier is relatively lower.",
+      "insight_ai_generated": true,
+      "value": "개인 할부/LOA=신용기관 인가 필요. B2B LLD(오퍼레이팅 리스)=렌탈로 분류 시 인가 부담 경감.",
+      "value_en": "Retail installment/LOA = credit-institution license required. B2B LLD (operating lease) = lighter licensing burden if classified as rental.",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "segment": "개인 신차 / B2B 리스"
+    },
+    {
+      "item": "금리 상한 규제",
+      "category": "shared",
+      "role": "gate",
+      "tier": 1,
+      "source": "Banque de France taux d'usure(분기별 고시)",
+      "source_en": "Banque de France taux d'usure (quarterly publication)",
+      "insight": "소비자신용에 usure(법정 최고금리) 분기별 고시. 개인 신차 할부는 상한 준수 의무. B2B 리스는 usure 비적용으로 가격 자율성 높음.",
+      "insight_en": "Quarterly usure (statutory maximum rate) on consumer credit. Retail new-car installment loans must observe the cap. B2B leasing is exempt from usure, giving high pricing flexibility.",
+      "insight_ai_generated": true,
+      "value": "개인 소비자신용=usure 상한 적용(분기 고시). B2B=비적용.",
+      "value_en": "Retail consumer credit = usure cap applies (quarterly published). B2B = exempt.",
+      "gate_result": "FLAG",
+      "gate_scope": "segment",
+      "segment": "개인 신차"
+    },
+    {
+      "item": "최저자본금",
+      "category": "shared",
+      "role": "score",
+      "tier": 1,
+      "source": "CRR/CRD IV, ACPR 자본요건",
+      "source_en": "CRR/CRD IV, ACPR capital requirements",
+      "insight": "신용기관 초기자본 최소 500만 유로 수준. 자금조달·리스크가중자산 따라 추가 자본 필요.",
+      "insight_en": "Credit-institution initial capital is around €5M minimum. Additional capital required depending on funding and risk-weighted assets.",
+      "insight_ai_generated": true,
+      "value": 5,
+      "unit": "EUR_million_min_capital",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "솔루션 벤더",
+      "category": "it",
+      "role": "score",
+      "tier": 3,
+      "source": "업계 관찰(Sopra Banking, FIS, Alfa Systems, NETSOL)",
+      "source_en": "Industry observation (Sopra Banking, FIS, Alfa Systems, NETSOL)",
+      "insight": "Sopra Banking(프랑스 본사)·Alfa·FIS 등 성숙한 리스·금융 코어 벤더 생태계. 현지 SI 인력 확보 용이.",
+      "insight_en": "Mature lease/finance core vendor ecosystem (Sopra Banking (France HQ), Alfa, FIS). Local SI talent is easy to secure.",
+      "insight_ai_generated": true,
+      "value": "Sopra Banking, Alfa Systems, FIS, NETSOL",
+      "value_en": "Sopra Banking, Alfa Systems, FIS, NETSOL",
+      "unit": "vendor_list",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null
+    },
+    {
+      "item": "솔루션 유형",
+      "category": "it",
+      "role": "score",
+      "tier": 3,
+      "source": "업계 관찰",
+      "source_en": "Industry observation",
+      "insight": "클라우드·SaaS 코어 리스·할부 플랫폼 도입 진전. EU 표준 API 연동 용이.",
+      "insight_en": "Progressing adoption of cloud/SaaS core lease and installment platforms. Easy integration with EU-standard APIs.",
+      "insight_ai_generated": true,
+      "value": "Cloud/SaaS 리스·할부 코어 + 오픈뱅킹 API",
+      "value_en": "Cloud/SaaS lease & installment core + open-banking API",
+      "unit": "solution_type",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null
+    },
+    {
+      "item": "디지털 채널 성숙도",
+      "category": "it",
+      "role": "score",
+      "tier": 2,
+      "source": "European Commission DESI 2024",
+      "source_en": "European Commission DESI 2024",
+      "insight": "온라인 청약·전자서명·딜러 디지털화 모두 성숙. 비대면 금융 청약 확산.",
+      "insight_en": "Online application, e-signature, and dealer digitalization are all mature. Remote finance applications are spreading.",
+      "insight_ai_generated": true,
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null
+    },
+    {
+      "item": "신용정보(CB) 인프라",
+      "category": "it",
+      "role": "score",
+      "tier": 1,
+      "source": "Banque de France FICP/FCC, CNIL",
+      "source_en": "Banque de France FICP/FCC, CNIL",
+      "insight": "프랑스는 포지티브 신용공유 부재(부정적 등록 FICP 중심). 민간 CB가 제한적이라 언더라이팅에 내부 스코어·소득증빙 의존도가 높다.",
+      "insight_en": "France lacks positive credit sharing (centered on negative registration via FICP). Private CBs are limited, so underwriting relies heavily on internal scores and income verification.",
+      "insight_ai_generated": true,
+      "value": 2,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null
+    },
+    {
+      "item": "결제·정산 인프라",
+      "category": "it",
+      "role": "score",
+      "tier": 1,
+      "source": "SEPA, PSD2, Banque de France",
+      "source_en": "SEPA, PSD2, Banque de France",
+      "insight": "SEPA Direct Debit·PSD2 오픈뱅킹으로 결제·정산 인프라 최고 수준. 자동이체 회수 효율 높음.",
+      "insight_en": "Top-tier payment/settlement infrastructure via SEPA Direct Debit and PSD2 open banking. High direct-debit collection efficiency.",
+      "insight_ai_generated": true,
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null
+    },
+    {
+      "item": "디지털 딜러 성숙도",
+      "category": "it",
+      "role": "score",
+      "tier": 3,
+      "source": "업계 관찰, OEM 온라인판매 동향",
+      "source_en": "Industry observation, OEM online-sales trends",
+      "insight": "온라인 견적·예약·전자서명 보편화. OEM 에이전시 모델 전환으로 딜러 디지털 통합 가속.",
+      "insight_en": "Online quotes, reservations, and e-signature are widespread. Dealer digital integration is accelerating with the OEM agency-model shift.",
+      "insight_ai_generated": true,
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null
+    },
+    {
+      "item": "국외이전 제한",
+      "category": "it",
+      "role": "score",
+      "tier": 1,
+      "source": "GDPR Chapter V, CNIL",
+      "source_en": "GDPR Chapter V, CNIL",
+      "insight": "EU 외 이전은 적정성 결정·SCC·BCR 필요. 운영데이터 EU 내 처리 권장으로 IT 아키텍처 설계 제약.",
+      "insight_en": "Non-EU transfers require adequacy decisions, SCC, or BCR. EU-internal processing of operating data is recommended, constraining IT architecture design.",
+      "insight_ai_generated": true,
+      "value": 3,
+      "unit": "restriction_1to5",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "차량회수 절차 용이성",
+      "category": "shared",
+      "role": "score",
+      "tier": 2,
+      "source": "프랑스 민사집행법, 업계 회수 실무",
+      "source_en": "French civil enforcement law, industry recovery practice",
+      "insight": "자력구제(self-help repossession) 불가, 사법절차 필요. 리스·LLD는 소유권 보유로 회수가 상대적으로 용이하나 할부는 법원명령 필요.",
+      "insight_en": "Self-help repossession is not allowed; judicial procedure required. Leasing/LLD recovery is relatively easy via retained ownership, but installment loans require a court order.",
+      "insight_ai_generated": true,
+      "value": 2,
+      "unit": "ease_1to5",
+      "direction": "up",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "법적 회수 소요기간",
+      "category": "shared",
+      "role": "score",
+      "tier": 3,
+      "source": "업계 추정, 프랑스 사법통계",
+      "source_en": "Industry estimates, French judicial statistics",
+      "insight": "사법 회수는 평균 6~12개월 소요. 소비자보호 절차로 장기화 위험. 리스(소유권 기반)는 단축 가능.",
+      "insight_en": "Judicial recovery averages 6-12 months. Consumer-protection procedures risk prolonging it. Leasing (ownership-based) can be shorter.",
+      "insight_ai_generated": true,
+      "value": 9,
+      "unit": "months",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "추심 규제",
+      "category": "shared",
+      "role": "score",
+      "tier": 2,
+      "source": "Code de la consommation, CCD2(EU 2023/2225)",
+      "source_en": "Code de la consommation, CCD2 (EU 2023/2225)",
+      "insight": "소비자보호·추심행위 규제 엄격. 과잉추심 금지, 채무조정 의무 절차 존재. 컴플라이언스 부담 높음.",
+      "insight_en": "Strict consumer-protection and collection-conduct rules. Aggressive collection prohibited; mandatory debt-restructuring procedures exist. High compliance burden.",
+      "insight_ai_generated": true,
+      "value": 2,
+      "unit": "ease_1to5",
+      "direction": "up",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "충당금 규정",
+      "category": "shared",
+      "role": "score",
+      "tier": 1,
+      "source": "IFRS 9, ECB/ACPR 감독기준",
+      "source_en": "IFRS 9, ECB/ACPR supervisory standards",
+      "insight": "IFRS 9 기대신용손실(ECL) 모델 적용. EU 표준으로 예측 가능하나 모델·데이터 요구 높음.",
+      "insight_en": "IFRS 9 expected credit loss (ECL) model applies. Predictable as an EU standard, but model/data requirements are high.",
+      "insight_ai_generated": true,
+      "value": 4,
+      "unit": "stringency_1to5",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "연체 분류 기준",
+      "category": "shared",
+      "role": "score",
+      "tier": 1,
+      "source": "EBA NPE 가이드라인, 90일 연체 기준",
+      "source_en": "EBA NPE guidelines, 90-day past-due threshold",
+      "insight": "EBA 기준 90일 연체 시 부실 분류. EU 공통 기준으로 일관성 높음.",
+      "insight_en": "Default classification at 90+ days past due per EBA. High consistency as a common EU standard.",
+      "insight_ai_generated": true,
+      "value": 4,
+      "unit": "stringency_1to5",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "의무보험 규제",
+      "category": "shared",
+      "role": "score",
+      "tier": 1,
+      "source": "Code des assurances, 의무 제3자 배상책임보험",
+      "source_en": "Code des assurances, mandatory third-party liability insurance",
+      "insight": "모든 차량 제3자 배상책임보험 의무. 리스·할부 차량은 종합보험 요구가 표준.",
+      "insight_en": "Mandatory third-party liability insurance for all vehicles. Comprehensive insurance is standard for leased/financed vehicles.",
+      "insight_ai_generated": true,
+      "value": 3,
+      "unit": "stringency_1to5",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "신용생명보험 규제",
+      "category": "shared",
+      "role": "score",
+      "tier": 1,
+      "source": "Loi Lagarde/Hamon/Lemoine(보험해지 자유화)",
+      "source_en": "Loi Lagarde/Hamon/Lemoine (insurance-cancellation liberalization)",
+      "insight": "신용보험 끼워팔기 금지·자유해지권 강화(Loi Lemoine 2022). 부가상품 수익모델 제약.",
+      "insight_en": "Tying of credit insurance prohibited; free-cancellation rights strengthened (Loi Lemoine 2022). Constrains add-on revenue models.",
+      "insight_ai_generated": true,
+      "value": 2,
+      "unit": "stringency_1to5",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "보험 끼워팔기 규제",
+      "category": "shared",
+      "role": "score",
+      "tier": 1,
+      "source": "Code de la consommation, ACPR/AMF 가이드",
+      "source_en": "Code de la consommation, ACPR/AMF guidance",
+      "insight": "강제 끼워팔기(vente liée) 금지. 보험·금융상품 분리 청약 보장 의무로 크로스셀 설계 제약.",
+      "insight_en": "Forced tying (vente liée) prohibited. Mandatory separate-application option for insurance/finance products constrains cross-sell design.",
+      "insight_ai_generated": true,
+      "value": 2,
+      "unit": "stringency_1to5",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "AI 신용평가 규제",
+      "category": "shared",
+      "role": "score",
+      "tier": 1,
+      "source": "EU AI Act(고위험 신용평가), GDPR Art.22, CNIL",
+      "source_en": "EU AI Act (high-risk credit scoring), GDPR Art. 22, CNIL",
+      "insight": "EU AI Act상 신용평가는 고위험 AI로 분류, 설명가능성·인간개입·편향관리 의무. GDPR 자동화 의사결정 제한과 중첩되어 모델 거버넌스 부담 큼.",
+      "insight_en": "Credit scoring is classified as high-risk AI under the EU AI Act, with explainability, human-intervention, and bias-management obligations. Overlaps with GDPR automated-decision limits, creating a heavy model-governance burden.",
+      "insight_ai_generated": true,
+      "value": 4,
+      "unit": "stringency_1to5",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null
+    },
+    {
+      "item": "EV 보급률",
+      "category": "business",
+      "role": "score",
+      "tier": 2,
+      "source": "ACEA, PFA registration data 2025",
+      "source_en": "ACEA, PFA registration data 2025",
+      "insight": "BEV 신차 등록비중이 빠르게 상승. 보조금 축소에도 ICE 퇴출 로드맵으로 구조적 증가 지속.",
+      "insight_en": "BEV new-registration share is rising fast. Despite subsidy cuts, the ICE phase-out roadmap sustains structural growth.",
+      "insight_ai_generated": true,
+      "value": 18,
+      "unit": "percent_bev_share_new",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 9
+          },
+          {
+            "year": 2022,
+            "value": 13
+          },
+          {
+            "year": 2023,
+            "value": 16
+          },
+          {
+            "year": 2024,
+            "value": 17
+          },
+          {
+            "year": 2025,
+            "value": 18
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 22
+          },
+          {
+            "year": 2027,
+            "value": 27
+          },
+          {
+            "year": 2028,
+            "value": 33
+          },
+          {
+            "year": 2029,
+            "value": 40
+          },
+          {
+            "year": 2030,
+            "value": 48
+          }
+        ],
+        "cagr_hist": 0.189,
+        "cagr_forecast": 0.216,
+        "estimated": true
+      }
+    },
+    {
+      "item": "EV·ICE 잔존가치 리스크",
+      "category": "business",
+      "role": "score",
+      "tier": 3,
+      "source": "Autovista Group, Cox Automotive residual value 추정",
+      "source_en": "Autovista Group, Cox Automotive residual value estimates",
+      "insight": "BEV 잔가 변동성이 ICE 대비 높고 하락세. 리스·LOA 잔가설정 보수화 필요, 리마케팅 역량이 손익을 좌우.",
+      "insight_en": "BEV residual-value volatility is higher than ICE and declining. Conservative residual setting needed for lease/LOA; remarketing capability drives P&L.",
+      "insight_ai_generated": true,
+      "value": 4,
+      "unit": "rv_risk_1to5",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 2
+          },
+          {
+            "year": 2022,
+            "value": 2
+          },
+          {
+            "year": 2023,
+            "value": 3
+          },
+          {
+            "year": 2024,
+            "value": 4
+          },
+          {
+            "year": 2025,
+            "value": 4
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 4
+          },
+          {
+            "year": 2027,
+            "value": 4
+          },
+          {
+            "year": 2028,
+            "value": 3
+          },
+          {
+            "year": 2029,
+            "value": 3
+          },
+          {
+            "year": 2030,
+            "value": 3
+          }
+        ],
+        "cagr_hist": 0.189,
+        "cagr_forecast": -0.069,
+        "estimated": true
+      }
+    },
+    {
+      "item": "해당국 정성 요약",
+      "category": "business",
+      "role": "context",
+      "tier": 2,
+      "source": "컨설턴트 종합(ASF·ACEA·ACPR)",
+      "source_en": "Consultant synthesis (ASF/ACEA/ACPR)",
+      "insight": "고침투·고집중 성숙시장으로 캡티브 장벽이 높다. 진입은 B2B 플릿·중고·구독형 모빌리티 등 틈새 및 파트너십 기반이 현실적.",
+      "insight_en": "A high-penetration, high-concentration mature market with high captive barriers. Realistic entry is niche- and partnership-based (B2B fleet, used, subscription mobility).",
+      "insight_ai_generated": true,
+      "value": "프랑스는 EU 3위 신차시장이자 LOA/LLD 리스 문화가 깊게 자리잡은 시장. Stellantis·Renault 캡티브와 은행계 소비자금융이 지배하며, EV 전환·구독 모빌리티가 신규 성장축. 소비자보호·AI·보험 규제가 강하다.",
+      "value_en": "France is the EU's #3 new-car market with deeply rooted LOA/LLD leasing culture. Dominated by Stellantis/Renault captives and bank-affiliated consumer finance, with EV transition and subscription mobility as new growth axes. Consumer-protection, AI, and insurance regulation are strict.",
+      "context_type": "descriptive"
+    },
+    {
+      "item": "브랜드 Top10",
+      "category": "business",
+      "role": "context",
+      "tier": 2,
+      "source": "PFA/AAA Data 2025 등록통계",
+      "source_en": "PFA/AAA Data 2025 registration statistics",
+      "insight": "자국 브랜드(Renault·Peugeot·Citroën)와 폭스바겐·토요타·다치아가 상위. 다치아의 가성비 수요 강세.",
+      "insight_en": "Domestic brands (Renault, Peugeot, Citroën) plus Volkswagen, Toyota, and Dacia lead. Dacia is strong on value-for-money demand.",
+      "insight_ai_generated": true,
+      "value": [
+        {
+          "rank": 1,
+          "name": "Renault"
+        },
+        {
+          "rank": 2,
+          "name": "Peugeot"
+        },
+        {
+          "rank": 3,
+          "name": "Citroën"
+        },
+        {
+          "rank": 4,
+          "name": "Dacia"
+        },
+        {
+          "rank": 5,
+          "name": "Volkswagen"
+        },
+        {
+          "rank": 6,
+          "name": "Toyota"
+        },
+        {
+          "rank": 7,
+          "name": "Tesla"
+        },
+        {
+          "rank": 8,
+          "name": "BMW"
+        },
+        {
+          "rank": 9,
+          "name": "Mercedes-Benz"
+        },
+        {
+          "rank": 10,
+          "name": "Audi"
+        }
+      ],
+      "context_type": "descriptive"
+    },
+    {
+      "item": "OEM 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "tier": 2,
+      "source": "PFA, ACEA 2025",
+      "source_en": "PFA, ACEA 2025",
+      "insight": "Stellantis·Renault 그룹이 시장 절반 가까이 점유. 폭스바겐·토요타·현대기아가 외국계 상위.",
+      "insight_en": "Stellantis and Renault groups hold nearly half the market. Volkswagen, Toyota, and Hyundai-Kia are the top foreign players.",
+      "insight_ai_generated": true,
+      "value": [
+        {
+          "rank": 1,
+          "name": "Stellantis (Peugeot/Citroën/Opel/Fiat)",
+          "market_share": "~30%"
+        },
+        {
+          "rank": 2,
+          "name": "Renault Group (Renault/Dacia/Alpine)",
+          "market_share": "~25%"
+        },
+        {
+          "rank": 3,
+          "name": "Volkswagen Group",
+          "market_share": "~12%"
+        },
+        {
+          "rank": 4,
+          "name": "Toyota Group",
+          "market_share": "~7%"
+        },
+        {
+          "rank": 5,
+          "name": "Hyundai-Kia",
+          "market_share": "~6%"
+        }
+      ],
+      "context_type": "descriptive"
+    },
+    {
+      "item": "금융사 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "tier": 3,
+      "source": "ASF, 업계 추정 2025",
+      "source_en": "ASF, industry estimates 2025",
+      "insight": "OEM 캡티브 2사와 은행계 소비자금융, Ayvens(플릿 리스 글로벌 1위)가 핵심 플레이어.",
+      "insight_en": "Two OEM captives, bank-affiliated consumer finance, and Ayvens (global #1 in fleet leasing) are the key players.",
+      "insight_ai_generated": true,
+      "value": [
+        {
+          "rank": 1,
+          "name": "Banque PSA Finance/BPF (Stellantis)",
+          "market_share": "~20%"
+        },
+        {
+          "rank": 2,
+          "name": "Mobilize Financial Services (RCI/Renault)",
+          "market_share": "~18%"
+        },
+        {
+          "rank": 3,
+          "name": "Crédit Agricole Consumer Finance",
+          "market_share": "~14%"
+        },
+        {
+          "rank": 4,
+          "name": "Ayvens (ex-ALD/LeasePlan, SG)",
+          "market_share": "~12%"
+        },
+        {
+          "rank": 5,
+          "name": "BNP Paribas Personal Finance (Cetelem)",
+          "market_share": "~10%"
+        }
+      ],
+      "context_type": "descriptive"
+    },
+    {
+      "item": "경쟁사 리스트",
+      "category": "business",
+      "role": "context",
+      "tier": 3,
+      "source": "업계 관찰(글로벌 진출 금융사)",
+      "source_en": "Industry observation (global-expansion finance firms)",
+      "insight": "OEM 캡티브 외 글로벌 리스·은행계 금융사가 다수 진출. 신규 진입은 차별화 채널·파트너십 필요.",
+      "insight_en": "Besides OEM captives, many global lessors and bank-affiliated finance firms operate here. New entrants need differentiated channels and partnerships.",
+      "insight_ai_generated": true,
+      "value": [
+        {
+          "rank": 1,
+          "name": "Ayvens (Société Générale)"
+        },
+        {
+          "rank": 2,
+          "name": "Volkswagen Financial Services"
+        },
+        {
+          "rank": 3,
+          "name": "Mercedes-Benz Mobility"
+        },
+        {
+          "rank": 4,
+          "name": "BMW Financial Services"
+        },
+        {
+          "rank": 5,
+          "name": "Toyota Financial Services / Kinto"
+        },
+        {
+          "rank": 6,
+          "name": "Arval (BNP Paribas)"
+        }
+      ],
+      "context_type": "descriptive"
+    },
+    {
+      "item": "경쟁사 진출 형태",
+      "category": "business",
+      "role": "context",
+      "tier": 3,
+      "source": "업계 관찰",
+      "source_en": "Industry observation",
+      "insight": "OEM 캡티브는 자회사 직접 운영, 글로벌 리스사는 본사·자회사 형태. 은행 파트너십·화이트라벨도 활용.",
+      "insight_en": "OEM captives run direct subsidiaries; global lessors operate via HQ/subsidiaries. Bank partnerships and white-labeling are also used.",
+      "insight_ai_generated": true,
+      "value": "OEM 캡티브=현지 신용기관 자회사. 글로벌 리스(Ayvens/Arval)=본사 직접운영. 외국 은행계=EU 패스포팅·자회사. 화이트라벨·딜러파이낸싱 제휴 다수.",
+      "value_en": "OEM captives = local credit-institution subsidiaries. Global lessors (Ayvens/Arval) = direct HQ operation. Foreign banks = EU passporting/subsidiary. Many white-label and dealer-financing partnerships.",
+      "context_type": "descriptive"
+    },
+    {
+      "item": "경쟁사 금리 범위",
+      "category": "business",
+      "role": "context",
+      "tier": 3,
+      "source": "업계 관찰, 딜러 프로모션 금리",
+      "source_en": "Industry observation, dealer promo rates",
+      "insight": "캡티브 프로모션 금리(0~3.9% APR)와 표준 소비자금융(5~8% APR)이 공존. usure 상한 내 운용.",
+      "insight_en": "Captive promo rates (0-3.9% APR) coexist with standard consumer finance (5-8% APR). Operated within the usure cap.",
+      "insight_ai_generated": true,
+      "value": "개인 신차 할부/LOA: 프로모션 0~3.9%, 표준 5~8% APR. B2B 리스는 자산·신용도별 협상.",
+      "value_en": "Retail new-car installment/LOA: promo 0-3.9%, standard 5-8% APR. B2B leasing negotiated by asset and credit profile.",
+      "context_type": "descriptive"
+    },
+    {
+      "item": "평균 신차가격",
+      "category": "business",
+      "role": "context",
+      "tier": 3,
+      "source": "AAA Data, PFA 평균거래가 추정 2025",
+      "source_en": "AAA Data, PFA average transaction price estimate 2025",
+      "insight": "전동화·SUV화로 평균 거래가격 상승 추세. 약 3.5만 유로 내외.",
+      "insight_en": "Average transaction price trending up on electrification/SUV-ization. Around €35,000.",
+      "insight_ai_generated": true,
+      "value": "약 35,000 EUR (신차 평균 거래가)",
+      "value_en": "Approx. 35,000 EUR (average new-car transaction price)",
+      "context_type": "descriptive"
+    },
+    {
+      "item": "규제기관 식별",
+      "category": "shared",
+      "role": "context",
+      "tier": 1,
+      "source": "ACPR, AMF, CNIL, Banque de France",
+      "source_en": "ACPR, AMF, CNIL, Banque de France",
+      "insight": "건전성·인가는 ACPR, 시장행위는 AMF, 데이터는 CNIL. 소비자신용·usure는 Banque de France 관할.",
+      "insight_en": "Prudential/licensing by ACPR, market conduct by AMF, data by CNIL. Consumer credit and usure fall under Banque de France.",
+      "insight_ai_generated": true,
+      "value": "ACPR(건전성·인가), Banque de France(금리·신용정보 FICP), CNIL(데이터·AI), AMF(증권), DGCCRF(소비자보호)",
+      "value_en": "ACPR (prudential/licensing), Banque de France (rates/credit info FICP), CNIL (data/AI), AMF (securities), DGCCRF (consumer protection)",
+      "context_type": "descriptive"
+    },
+    {
+      "item": "외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "tier": 3,
+      "source": "Reuters, Automotive News Europe, S&P Global Mobility, Moody's",
+      "source_en": "Reuters, Automotive News Europe, S&P Global Mobility, Moody's",
+      "insight": "EV 전환·잔가·규제 강화가 핵심 외부 동인. 진출 시 잔가 헤지와 컴플라이언스 선제 대응 필요.",
+      "insight_en": "EV transition, residuals, and tightening regulation are the key external drivers. Entry requires proactive residual hedging and compliance.",
+      "insight_ai_generated": true,
+      "value": [
+        {
+          "news_category": "geopolitical",
+          "headline": "프랑스 정치·예산 불안정으로 국채금리 스프레드 확대",
+          "headline_en": "France's political/budget instability widens sovereign bond yield spreads",
+          "so_what": "조달비용 상승 위험 — 진출 시 자금조달 구조·헤지 전략 보수적 설계 필요.",
+          "so_what_en": "Funding-cost rise risk — design conservative funding structure and hedging strategy on entry.",
+          "publisher": "Reuters",
+          "pub_date": "2025-09-15",
+          "url": "https://www.reuters.com/world/europe/"
+        },
+        {
+          "news_category": "auto_market",
+          "headline": "프랑스 BEV 보조금 축소에도 2025 신차 등록 EV 비중 상승",
+          "headline_en": "France's EV share of 2025 new registrations rises despite BEV subsidy cuts",
+          "so_what": "EV 리스 수요 지속 — 잔가 리스크 관리형 LLD 상품으로 진입 기회.",
+          "so_what_en": "Sustained EV lease demand — entry opportunity via residual-risk-managed LLD products.",
+          "publisher": "Automotive News Europe",
+          "pub_date": "2025-07-10",
+          "url": "https://europe.autonews.com/"
+        },
+        {
+          "news_category": "auto_finance",
+          "headline": "Ayvens(ALD·LeasePlan) 통합 후 플릿 리스 EV 전환 가속",
+          "headline_en": "Ayvens (ALD/LeasePlan) accelerates fleet-lease EV transition after integration",
+          "so_what": "B2B 리스 경쟁 심화 — 차별화는 EV 잔가·리마케팅·서비스 번들에서 결정.",
+          "so_what_en": "Intensifying B2B lease competition — differentiation decided on EV residuals, remarketing, and service bundles.",
+          "publisher": "S&P Global Mobility",
+          "pub_date": "2025-06-20",
+          "url": "https://www.spglobal.com/mobility/"
+        },
+        {
+          "news_category": "credit_abs",
+          "headline": "유럽 오토 ABS 연체율 완만한 상승, 프랑스 풀은 안정적",
+          "headline_en": "European auto ABS delinquencies edge up; French pools remain stable",
+          "so_what": "ABS 조달 여건 양호 — 자산유동화 기반 자금조달 모델 검토 가능.",
+          "so_what_en": "Favorable ABS funding conditions — securitization-based funding model is viable to consider.",
+          "publisher": "Moody's",
+          "pub_date": "2025-08-05",
+          "url": "https://www.moodys.com/"
+        },
+        {
+          "news_category": "finance",
+          "headline": "ECB 금리 인하 사이클 진입으로 소비자신용 수요 회복 기대",
+          "headline_en": "ECB rate-cut cycle expected to revive consumer-credit demand",
+          "so_what": "APR 하향은 신규취급 회복 신호 — 진입 타이밍으로 2026년 유망.",
+          "so_what_en": "Falling APR signals new-business recovery — 2026 is a promising entry-timing window.",
+          "publisher": "Financial Times",
+          "pub_date": "2025-09-01",
+          "url": "https://www.ft.com/"
+        }
+      ],
+      "context_type": "news"
+    }
+  ],
+  "fetched_at": "2026-06-21T13:29:47+09:00"
+}

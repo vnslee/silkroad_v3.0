@@ -1,0 +1,215 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  silk-road (글로벌 오토파이낸스 진출 진단) — ECS Fargate + ALB.
+  기존 auto-finance 스택을 참조 모델로 한 신규 독립 스택.
+  우리 백엔드는 파일 storage 기반이라 DocumentDB를 두지 않는다(auto-finance와의 핵심 차이).
+  backend(FastAPI:8000) + frontend(nginx:80, /api→localhost:8000 프록시) 단일 task 2컨테이너.
+
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: 기존 VPC (auto-finance와 동일 VPC 재사용 가능) — 예 vpc-09f7890577d5695fa
+  PublicSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: ALB용 퍼블릭 서브넷 2개 이상
+  PrivateSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: ECS task용 프라이빗 서브넷 2개 이상
+  BackendImageUri:
+    Type: String
+    Description: backend ECR 이미지 URI (예 <acct>.dkr.ecr.ap-northeast-2.amazonaws.com/silk-road-backend:<TAG>)
+  FrontendImageUri:
+    Type: String
+    Description: frontend ECR 이미지 URI
+  OpusModel:
+    Type: String
+    Default: global.anthropic.claude-opus-4-8
+    Description: 2차 리서치/챗봇 Bedrock 모델 (global inference profile)
+  BedrockBackend:
+    Type: String
+    Default: legacy
+    AllowedValues: [legacy, mantle]
+    Description: Bedrock SDK 백엔드 (이 환경은 Mantle DNS 미해석 → legacy)
+  DesiredCount:
+    Type: Number
+    Default: 1
+
+Resources:
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /ecs/silk-road
+      RetentionInDays: 14
+
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: silk-road
+
+  # ── IAM ──────────────────────────────────────────────────────
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: { Service: ecs-tasks.amazonaws.com }
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
+  TaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: { Service: ecs-tasks.amazonaws.com }
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: bedrock-invoke
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              # 2차 리서치/챗봇 — Bedrock InvokeModel(스트리밍 포함). 리소스는 광범위 허용(데모).
+              - Effect: Allow
+                Action:
+                  - bedrock:InvokeModel
+                  - bedrock:InvokeModelWithResponseStream
+                Resource: '*'
+
+  # ── 보안 그룹 ────────────────────────────────────────────────
+  AlbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: silk-road ALB - allow HTTP 80 from internet
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  AppSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: silk-road ECS task - allow 80 from ALB only
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref AlbSecurityGroup
+
+  # ── ALB ──────────────────────────────────────────────────────
+  Alb:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: silk-road-alb
+      Type: application
+      Scheme: internet-facing
+      Subnets: !Ref PublicSubnetIds
+      SecurityGroups: [!Ref AlbSecurityGroup]
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: silk-road-tg
+      Port: 80
+      Protocol: HTTP
+      TargetType: ip
+      VpcId: !Ref VpcId
+      HealthCheckPath: /healthz
+      HealthCheckIntervalSeconds: 30
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+      Matcher: { HttpCode: '200' }
+
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref Alb
+      Port: 80
+      Protocol: HTTP
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+
+  # ── ECS Task / Service ───────────────────────────────────────
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: silk-road
+      RequiresCompatibilities: [FARGATE]
+      NetworkMode: awsvpc
+      Cpu: '512'
+      Memory: '1024'
+      ExecutionRoleArn: !GetAtt ExecutionRole.Arn
+      TaskRoleArn: !GetAtt TaskRole.Arn
+      # 빌드 호스트가 arm64(Graviton) — 네이티브 arm64 이미지로 빌드/푸시하므로 Fargate도 ARM64.
+      RuntimePlatform:
+        CpuArchitecture: ARM64
+        OperatingSystemFamily: LINUX
+      ContainerDefinitions:
+        - Name: backend
+          Image: !Ref BackendImageUri
+          Essential: true
+          Environment:
+            - { Name: AWS_REGION, Value: !Ref 'AWS::Region' }
+            - { Name: PORT, Value: '8000' }
+            - { Name: CORS_ORIGINS, Value: '*' }
+            - { Name: OPUS_MODEL, Value: !Ref OpusModel }
+            - { Name: BEDROCK_BACKEND, Value: !Ref BedrockBackend }
+          PortMappings:
+            - { ContainerPort: 8000, Protocol: tcp }
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref LogGroup
+              awslogs-region: !Ref 'AWS::Region'
+              awslogs-stream-prefix: backend
+        - Name: frontend
+          Image: !Ref FrontendImageUri
+          Essential: true
+          DependsOn:
+            - { ContainerName: backend, Condition: START }
+          PortMappings:
+            - { ContainerPort: 80, Protocol: tcp }
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref LogGroup
+              awslogs-region: !Ref 'AWS::Region'
+              awslogs-stream-prefix: frontend
+
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn: Listener
+    Properties:
+      ServiceName: silk-road
+      Cluster: !Ref Cluster
+      TaskDefinition: !Ref TaskDefinition
+      DesiredCount: !Ref DesiredCount
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          Subnets: !Ref PrivateSubnetIds
+          SecurityGroups: [!Ref AppSecurityGroup]
+          AssignPublicIp: DISABLED
+      LoadBalancers:
+        - ContainerName: frontend
+          ContainerPort: 80
+          TargetGroupArn: !Ref TargetGroup
+
+Outputs:
+  AlbUrl:
+    Description: 서비스 진입 URL
+    Value: !Sub 'http://${Alb.DNSName}'
+  ClusterName:
+    Value: !Ref Cluster
+  ServiceName:
+    Value: !GetAtt Service.Name
+  TaskDefArn:
+    Value: !Ref TaskDefinition

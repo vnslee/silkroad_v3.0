@@ -1,0 +1,1658 @@
+{
+  "report_id": "RPT_RGN_APAC_005",
+  "report_type": "type2_region",
+  "title": "Asia-Pacific 권역 퀵윈 순위 보고서",
+  "target": {
+    "region": "APAC",
+    "evaluated_countries": [
+      "AU",
+      "CN",
+      "ID",
+      "IN"
+    ],
+    "baseline_country": "AU"
+  },
+  "generated_at": "2026-06-22T19:32:52.989448",
+  "generated_by": "engine",
+  "data_snapshot_id": "2026-06-22T16:00:00+09:00",
+  "config_version": "1.3",
+  "engine_version": "v1.0",
+  "schema_version": "1.1",
+  "fx": {
+    "base": "KRW",
+    "as_of": "2026-06-01",
+    "rates": {
+      "KRW": 1.0,
+      "EUR": 1450.0,
+      "PLN": 330.0,
+      "GBP": 1680.0,
+      "USD": 1320.0,
+      "CZK": 58.0,
+      "HUF": 3.8,
+      "AUD": 880.0
+    },
+    "note": "기준통화=KRW. 각 통화 1단위당 KRW 환산율. 관리자가 입력하며 스냅샷에 고정됨."
+  },
+  "region_meta": {
+    "region": "Asia-Pacific",
+    "region_ko": "APAC권역",
+    "code": "APAC",
+    "fetched_at": "2026-06-22T16:00:00+09:00",
+    "fetched_by": "aggregator"
+  },
+  "data_quality": {
+    "total_countries": 4,
+    "countries": [
+      "AU",
+      "CN",
+      "ID",
+      "IN"
+    ],
+    "timeseries_coverage_avg": 85.71428571428571,
+    "source_tiers": {
+      "tier1": 84,
+      "tier2": 92,
+      "tier3": 20,
+      "tier4": 0
+    },
+    "country_completeness": {
+      "AU": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "CN": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "ID": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "IN": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      }
+    },
+    "critical_gaps": [],
+    "readiness": {
+      "can_generate": true,
+      "tabs": {
+        "2-0": {
+          "name": "Kill Switch Filter",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "2-1": {
+          "name": "Business Attractiveness",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "2-2": {
+          "name": "IT/Speed-to-Market Similarity",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "2-3": {
+          "name": "Market Background",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        }
+      }
+    }
+  },
+  "tabs": {
+    "tab_2_0_killswitch": {
+      "nature": "status_matrix",
+      "source_flag": "CALC",
+      "gates": [
+        "외국인 지분 한도",
+        "외환·배당 송금 자유도",
+        "데이터 현지화 의무",
+        "국가신용등급"
+      ],
+      "countries": [
+        {
+          "country": "AU",
+          "country_name": "Australia",
+          "pass": true,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "외국인 100% 자동차금융 진출 가능. FIRB 통상 심사(루틴)만 적용, 업종 제한 없음.",
+              "source": "MOFCOM Foreign Investment Law / CBIRC Auto Finance Reg 2008 rev.2018",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "PASS",
+              "value": "자본통제 없음. AUD 완전 태환·배당/로열티 송금 자유.",
+              "source": "SAFE Foreign Exchange Regulations 2025",
+              "tier": 2,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "데이터 현지화 강제 없음. Privacy Act APP 8(국외이전 책임) 적용, 결제데이터 국내저장 의무 없음.",
+              "source": "PIPL 2021 / CSL 2017 / DSL 2021",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "PASS",
+              "value": "AAA (S&P) / Aaa (Moody's) / AAA (Fitch), Stable",
+              "source": "S&P / Moody's / Fitch 2025",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        },
+        {
+          "country": "CN",
+          "country_name": "China",
+          "pass": true,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "Auto FDI 100% 자동(2022 Negative List 해제) / Auto Finance Company 외국 100% 가능 (CBIRC 인가)",
+              "source": "MOFCOM Foreign Investment Law / CBIRC Auto Finance Reg 2008 rev.2018",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "PASS",
+              "value": "SAFE 통제 하 송금 가능. 배당·로열티 SAFE 사전·사후 보고 의무. CNY 변동성·자본통제 가능성 큼.",
+              "source": "SAFE Foreign Exchange Regulations 2025",
+              "tier": 2,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "PIPL 2021 + CSL 2017 + DSL 2021 — 중요 데이터·결제 데이터 국내 저장 의무, 국외 이전 시 CAC 사전 평가",
+              "source": "PIPL 2021 / CSL 2017 / DSL 2021",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "PASS",
+              "value": "A+ (S&P) / A1 (Moody's) / A+ (Fitch), Stable",
+              "source": "S&P / Moody's / Fitch 2025",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        },
+        {
+          "country": "ID",
+          "country_name": "Indonesia",
+          "pass": true,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "Auto FDI 100% 자동 / Multifinance 외국인 지분 85% 한도(OJK 2024)",
+              "source": "BKPM Positive Investment List 2024 / OJK Reg No.35/POJK.05/2018 (rev.2024)",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "PASS",
+              "value": "외환 자유, 송금 가능. 단 BI 보고 의무 + IDR 변동성 큼",
+              "source": "Bank Indonesia Reg No.21/14/PBI/2019 / Foreign Exchange Law",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "PP 71/2019 + UU PDP 2022 — 금융·결제 데이터 국내 저장 의무",
+              "source": "PP 71/2019 / UU 27/2022 PDP",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "PASS",
+              "value": "BBB (S&P) / Baa2 (Moody's) / BBB (Fitch), Stable",
+              "source": "S&P / Moody's / Fitch 2025",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        },
+        {
+          "country": "IN",
+          "country_name": "India",
+          "pass": true,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "Auto FDI 100% 자동승인 / NBFC FDI 100% 자동승인(RBI 가이드라인 충족 시)",
+              "source": "DPIIT FDI Policy 2024 / RBI Master Direction NBFC 2025",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "PASS",
+              "value": "FEMA 1999 하 송금 가능 / RBI 사후 신고 의무, 배당·로열티 자유 (조세 원천징수 후)",
+              "source": "FEMA 1999 / RBI Master Direction Foreign Exchange 2025",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "DPDP Act 2023 + RBI Payment Data Localization (2018) — 결제·금융 데이터 일부 현지화 의무",
+              "source": "DPDP Act 2023 / RBI Circular DPSS.CO.OD No.2785/06.08.005/2017-18",
+              "tier": 2,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "PASS",
+              "value": "BBB- (S&P, 2024.5 stable→positive 상향) / Baa3 (Moody's) / BBB- (Fitch)",
+              "source": "S&P·Moody's·Fitch 2025 Sovereign Ratings",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        }
+      ],
+      "passed": [
+        "AU",
+        "CN",
+        "ID",
+        "IN"
+      ],
+      "failed": [],
+      "passed_count": 4,
+      "failed_count": 0
+    },
+    "tab_2_1_attractiveness": {
+      "nature": "ranking",
+      "source_flag": "CALC",
+      "weights": {
+        "GDP 성장률": 0.2,
+        "자동차 판매대수": 0.15,
+        "시장규모": 0.15,
+        "오토금융 성장률(CAGR)": 0.15,
+        "금융 이용률": 0.15,
+        "금융이용유형": 0.1,
+        "경쟁강도": 0.1
+      },
+      "tier_weights": {
+        "tier1": 1.0,
+        "tier2": 0.85,
+        "tier3": 0.7,
+        "tier4": 0.5,
+        "_note": "출처 신뢰도(Tier)별 점수 가중 배수. Tier1=1.0 고정. Tier2~4는 관리자가 조정 가능. 매력도·IT 유사도 산식에서 항목 가중치에 곱해 effective weight = item_weight × tier_multiplier 로 사용."
+      },
+      "axes": {
+        "GDP 성장률": {
+          "AU": 0.0,
+          "CN": 60.0,
+          "ID": 66.0,
+          "IN": 100.0
+        },
+        "자동차 판매대수": {
+          "AU": 1.3,
+          "CN": 100.0,
+          "ID": 0.0,
+          "IN": 14.6
+        },
+        "시장규모": {
+          "AU": 8.0,
+          "CN": 100.0,
+          "ID": 0.0,
+          "IN": 8.4
+        },
+        "오토금융 성장률(CAGR)": {
+          "AU": 0.0,
+          "CN": 31.8,
+          "ID": 57.3,
+          "IN": 100.0
+        },
+        "금융 이용률": {
+          "AU": 63.6,
+          "CN": 0.0,
+          "ID": 54.5,
+          "IN": 100.0
+        },
+        "금융이용유형": {
+          "AU": 21.7,
+          "CN": 0.0,
+          "ID": 56.5,
+          "IN": 100.0
+        },
+        "경쟁강도": {
+          "AU": 100.0,
+          "CN": 0.0,
+          "ID": 40.0,
+          "IN": 100.0
+        }
+      },
+      "countries": [
+        {
+          "country": "AU",
+          "country_name": "Australia",
+          "attractiveness_score": 21.5,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 1.8,
+              "normalized": 0.0,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 0.0
+            },
+            "자동차 판매대수": {
+              "raw_value": 1200000.0,
+              "normalized": 1.3,
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 0.2
+            },
+            "시장규모": {
+              "raw_value": 34000.0,
+              "normalized": 8.0,
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 1.2
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 3.5,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 0.0
+            },
+            "금융 이용률": {
+              "raw_value": 72.0,
+              "normalized": 63.6,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 8.11
+            },
+            "금융이용유형": {
+              "raw_value": 60.0,
+              "normalized": 21.7,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 1.84
+            },
+            "경쟁강도": {
+              "raw_value": 35.0,
+              "normalized": 100.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 8.5
+            }
+          },
+          "rank": 4
+        },
+        {
+          "country": "CN",
+          "country_name": "China",
+          "attractiveness_score": 49.8,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 4.8,
+              "normalized": 60.0,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 12.0
+            },
+            "자동차 판매대수": {
+              "raw_value": 23500000.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 15.0
+            },
+            "시장규모": {
+              "raw_value": 280000.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 15.0
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 7.0,
+              "normalized": 31.8,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 4.05
+            },
+            "금융 이용률": {
+              "raw_value": 58.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 0.0
+            },
+            "금융이용유형": {
+              "raw_value": 55.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 0.0
+            },
+            "경쟁강도": {
+              "raw_value": 60.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 0.0
+            }
+          },
+          "rank": 2
+        },
+        {
+          "country": "ID",
+          "country_name": "Indonesia",
+          "attractiveness_score": 39.5,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 5.1,
+              "normalized": 66.0,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 13.2
+            },
+            "자동차 판매대수": {
+              "raw_value": 900000.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 0.0
+            },
+            "시장규모": {
+              "raw_value": 12500.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 0.0
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 9.8,
+              "normalized": 57.3,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 7.31
+            },
+            "금융 이용률": {
+              "raw_value": 70.0,
+              "normalized": 54.5,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 6.95
+            },
+            "금융이용유형": {
+              "raw_value": 68.0,
+              "normalized": 56.5,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 4.8
+            },
+            "경쟁강도": {
+              "raw_value": 50.0,
+              "normalized": 40.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 3.4
+            }
+          },
+          "rank": 3
+        },
+        {
+          "country": "IN",
+          "country_name": "India",
+          "attractiveness_score": 72.9,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 6.8,
+              "normalized": 100.0,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 20.0
+            },
+            "자동차 판매대수": {
+              "raw_value": 4200000.0,
+              "normalized": 14.6,
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 2.19
+            },
+            "시장규모": {
+              "raw_value": 35000.0,
+              "normalized": 8.4,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 1.07
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 14.5,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 12.75
+            },
+            "금융 이용률": {
+              "raw_value": 80.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 12.75
+            },
+            "금융이용유형": {
+              "raw_value": 78.0,
+              "normalized": 100.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 8.5
+            },
+            "경쟁강도": {
+              "raw_value": 35.0,
+              "normalized": 100.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 8.5
+            }
+          },
+          "rank": 1
+        }
+      ],
+      "ranking": [
+        {
+          "rank": 1,
+          "country": "IN",
+          "score": 72.9
+        },
+        {
+          "rank": 2,
+          "country": "CN",
+          "score": 49.8
+        },
+        {
+          "rank": 3,
+          "country": "ID",
+          "score": 39.5
+        },
+        {
+          "rank": 4,
+          "country": "AU",
+          "score": 21.5
+        }
+      ],
+      "method": "min-max normalize per axis → effective weight = item_weight × tier_multiplier → weighted average. config: values.biz_attractiveness × tier_weights."
+    },
+    "tab_2_2_it_similarity": {
+      "nature": "score_multiaxis",
+      "source_flag": "CALC",
+      "baseline_country": "AU",
+      "weights": {
+        "솔루션 유형": 0.3,
+        "디지털 채널 성숙도": 0.25,
+        "라이선스 종류": 0.2,
+        "데이터현지화": 0.15,
+        "차량회수 절차": 0.1
+      },
+      "tier_weights": {
+        "tier1": 1.0,
+        "tier2": 0.85,
+        "tier3": 0.7,
+        "tier4": 0.5,
+        "_note": "출처 신뢰도(Tier)별 점수 가중 배수. Tier1=1.0 고정. Tier2~4는 관리자가 조정 가능. 매력도·IT 유사도 산식에서 항목 가중치에 곱해 effective weight = item_weight × tier_multiplier 로 사용."
+      },
+      "countries": [
+        {
+          "country": "AU",
+          "country_name": "Australia",
+          "it_similarity_raw": 98.3,
+          "it_similarity_band": 100,
+          "is_baseline": true,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "글로벌 패키지 + 클라우드 SaaS(AWS·Azure Sydney 리전) 주류. 데이터 현지화 강제 없어 외산 SaaS 자유.",
+              "baseline_value": "글로벌 패키지 + 클라우드 SaaS(AWS·Azure Sydney 리전) 주류. 데이터 현지화 강제 없어 외산 SaaS 자유.",
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.25,
+              "target_value": 5,
+              "baseline_value": 5,
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.17,
+              "target_value": "ASIC Australian Credit License(ACL) 단일 체제 — 소비자신용 전반 포괄(자동차대출·리스·딜러금융).",
+              "baseline_value": "ASIC Australian Credit License(ACL) 단일 체제 — 소비자신용 전반 포괄(자동차대출·리스·딜러금융).",
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "데이터 현지화 강제 없음. Privacy Act APP 8(국외이전 책임) 적용, 결제데이터 국내저장 의무 없음.",
+              "baseline_value": "데이터 현지화 강제 없음. Privacy Act APP 8(국외이전 책임) 적용, 결제데이터 국내저장 의무 없음.",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 4,
+              "baseline_value": 4,
+              "score_raw": 100.0,
+              "score_band": 100
+            }
+          }
+        },
+        {
+          "country": "CN",
+          "country_name": "China",
+          "it_similarity_raw": 68.8,
+          "it_similarity_band": 70,
+          "is_baseline": false,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "자체 코어 + 클라우드 SaaS(Alibaba Cloud·Tencent Cloud) 혼재. 데이터 주권으로 외산 SaaS 제약",
+              "baseline_value": "글로벌 패키지 + 클라우드 SaaS(AWS·Azure Sydney 리전) 주류. 데이터 현지화 강제 없어 외산 SaaS 자유.",
+              "score_raw": 41.3,
+              "score_band": 40
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.25,
+              "target_value": 5,
+              "baseline_value": 5,
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.17,
+              "target_value": "Auto Finance Company(CBIRC, 자동차 대출·리스 전용) / 은행 자동차 사업부 / 컨슈머 파이낸스(CBIRC, 무담보) 3종",
+              "baseline_value": "ASIC Australian Credit License(ACL) 단일 체제 — 소비자신용 전반 포괄(자동차대출·리스·딜러금융).",
+              "score_raw": 32.5,
+              "score_band": 30
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "PIPL 2021 + CSL 2017 + DSL 2021 — 중요 데이터·결제 데이터 국내 저장 의무, 국외 이전 시 CAC 사전 평가",
+              "baseline_value": "데이터 현지화 강제 없음. Privacy Act APP 8(국외이전 책임) 적용, 결제데이터 국내저장 의무 없음.",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 3,
+              "baseline_value": 4,
+              "score_raw": 80.0,
+              "score_band": 80
+            }
+          },
+          "rank": 1
+        },
+        {
+          "country": "ID",
+          "country_name": "Indonesia",
+          "it_similarity_raw": 62.3,
+          "it_similarity_band": 60,
+          "is_baseline": false,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "글로벌 패키지 + 캡티브 자체 코어 + 클라우드 SaaS 확산",
+              "baseline_value": "글로벌 패키지 + 클라우드 SaaS(AWS·Azure Sydney 리전) 주류. 데이터 현지화 강제 없어 외산 SaaS 자유.",
+              "score_raw": 43.7,
+              "score_band": 40
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.2125,
+              "target_value": 4,
+              "baseline_value": 5,
+              "score_raw": 80.0,
+              "score_band": 80
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.17,
+              "target_value": "Multifinance(소비자·B2B 통합 인가, OJK)·은행(BI/OJK)·핀테크 P2P(POJK 77) 3종",
+              "baseline_value": "ASIC Australian Credit License(ACL) 단일 체제 — 소비자신용 전반 포괄(자동차대출·리스·딜러금융).",
+              "score_raw": 30.0,
+              "score_band": 30
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "PP 71/2019 + UU PDP 2022 — 금융·결제 데이터 국내 저장 의무",
+              "baseline_value": "데이터 현지화 강제 없음. Privacy Act APP 8(국외이전 책임) 적용, 결제데이터 국내저장 의무 없음.",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 3,
+              "baseline_value": 4,
+              "score_raw": 80.0,
+              "score_band": 80
+            }
+          },
+          "rank": 2
+        },
+        {
+          "country": "IN",
+          "country_name": "India",
+          "it_similarity_raw": 59.3,
+          "it_similarity_band": 60,
+          "is_baseline": false,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "글로벌 패키지 + 자체 코어 혼재, 클라우드 SaaS 전환 가속",
+              "baseline_value": "글로벌 패키지 + 클라우드 SaaS(AWS·Azure Sydney 리전) 주류. 데이터 현지화 강제 없어 외산 SaaS 자유.",
+              "score_raw": 43.0,
+              "score_band": 40
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.2125,
+              "target_value": 4,
+              "baseline_value": 5,
+              "score_raw": 80.0,
+              "score_band": 80
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.17,
+              "target_value": "소비자 NBFC=RBI 인가(최저자본 INR 100억·NBFC-IFC/MFI 유형) / 은행=별도 / B2B 리스=비규제 사업법인",
+              "baseline_value": "ASIC Australian Credit License(ACL) 단일 체제 — 소비자신용 전반 포괄(자동차대출·리스·딜러금융).",
+              "score_raw": 30.0,
+              "score_band": 30
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "target_value": "DPDP Act 2023 + RBI Payment Data Localization (2018) — 결제·금융 데이터 일부 현지화 의무",
+              "baseline_value": "데이터 현지화 강제 없음. Privacy Act APP 8(국외이전 책임) 적용, 결제데이터 국내저장 의무 없음.",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 2,
+              "baseline_value": 4,
+              "score_raw": 60.0,
+              "score_band": 60
+            }
+          },
+          "rank": 3
+        }
+      ],
+      "ranking": [
+        {
+          "rank": 1,
+          "country": "CN",
+          "score_band": 70
+        },
+        {
+          "rank": 2,
+          "country": "ID",
+          "score_band": 60
+        },
+        {
+          "rank": 3,
+          "country": "IN",
+          "score_band": 60
+        }
+      ],
+      "method": "축별 raw = 수치(100−|Δ|×20) / 범주(텍스트 Jaccard 30+J×65) / gate(동일=90·한쪽 PASS=50) → effective weight = item_weight × tier_multiplier → 가중평균 raw → 10점 구간 반올림.",
+      "note": "10점 구간 표기. 소수점·1점 단위 비교 금지(spec). 동률 시 raw로 타이브레이크. Tier 가중은 대상국 데이터 신뢰도 기준."
+    },
+    "tab_2_3_market_background": {
+      "nature": "ranking",
+      "source_flag": "EXT",
+      "countries": [
+        {
+          "country": "AU",
+          "country_name": "Australia",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "Toyota",
+              "market_share": "18.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Ford",
+              "market_share": "8.5%"
+            },
+            {
+              "rank": 3,
+              "name": "Mazda",
+              "market_share": "8.0%"
+            },
+            {
+              "rank": 4,
+              "name": "Kia",
+              "market_share": "7.5%"
+            },
+            {
+              "rank": 5,
+              "name": "Hyundai",
+              "market_share": "6.5%"
+            }
+          ],
+          "brand_top10": [
+            "Toyota",
+            "Ford",
+            "Mazda",
+            "Kia",
+            "Hyundai",
+            "Mitsubishi",
+            "MG",
+            "Isuzu Ute",
+            "Tesla",
+            "BYD"
+          ],
+          "purchase_pattern": 60,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "Toyota Finance Australia",
+            "Commonwealth Bank Auto",
+            "Westpac/St.George Auto Finance",
+            "Macquarie Leasing",
+            "Pepper Money",
+            "Latitude Financial",
+            "Volkswagen Financial Services Australia",
+            "BMW Financial Services Australia",
+            "Plenti",
+            "Angle Finance"
+          ],
+          "competitor_entry_form": "외국 캡티브 단독 진출(Toyota·VW·BMW Financial Services) + 대형은행 자동차 사업부(CBA·Westpac) + 독립계(Macquarie·Latitude·Pepper) + 핀테크(Plenti). 외국 100% 단독 진출 자유.",
+          "competitor_rates": "신차 APR 약 6~12%(캡티브 프로모 2~5%, 은행 7~9%, 독립·핀테크 9~14%).",
+          "avg_new_car_price": "약 AUD 50,000~55,000(€30,000~33,000). SUV·픽업·EV 믹스로 상승.",
+          "qualitative_summary": "APAC 권역 기준국(baseline). 신차 약 120만대·금융 €34bn·침투율 72%로 매력도 견조하나 규모는 중간급. 외국 100% 지분·자유 송금·데이터 현지화 부재·AAA 등급으로 진입 환경 APAC 최상. ASIC ACL 단일 라이선스·NCC 회수 절차 명확·디지털/CB/결제 인프라 모두 5/5. Toyota Finance·CBA·Westpac·Macquarie·Latitude 경쟁 성숙. 노벨티드 리스 세제혜택·add-on 보험 규제·책임대출 의무가 호주 고유 특성. EV 가속·핀테크가 차별화 기회."
+        },
+        {
+          "country": "CN",
+          "country_name": "China",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "BYD",
+              "market_share": "15.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Geely",
+              "market_share": "9.5%"
+            },
+            {
+              "rank": 3,
+              "name": "Volkswagen",
+              "market_share": "9.0%"
+            },
+            {
+              "rank": 4,
+              "name": "Toyota",
+              "market_share": "7.0%"
+            },
+            {
+              "rank": 5,
+              "name": "Changan",
+              "market_share": "6.5%"
+            }
+          ],
+          "brand_top10": [
+            "BYD",
+            "Geely",
+            "Volkswagen",
+            "Toyota",
+            "Changan",
+            "Wuling",
+            "Tesla",
+            "NIO",
+            "Li Auto",
+            "Xpeng"
+          ],
+          "purchase_pattern": 55,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "SAIC-GMAC",
+            "Volkswagen Finance China",
+            "BYD Auto Finance",
+            "Toyota Motor Finance China",
+            "Ping An Bank Auto Finance",
+            "BMW Automotive Finance",
+            "Mercedes-Benz Auto Finance",
+            "FAW Finance",
+            "Geely Auto Finance",
+            "ICBC Auto Finance"
+          ],
+          "competitor_entry_form": "외국 캡티브 단독 진출 (Volkswagen Finance China·Toyota Motor Finance China·BMW Auto Finance·Mercedes-Benz Auto Finance) + 합작 (Stellantis-CMBC·Renault-Dongfeng) + 현지 캡티브 (BYD·Geely·SAIC) + 은행계 (Ping An·ICBC). 외국 단독 인가 가능하나 자본·거버넌스 부담 매우 큼.",
+          "competitor_rates": "신차 자동차대출 APR 약 4~8% (캡티브 프로모 0~3%, 은행 5~6%, NEV 신규사 6~8%).",
+          "avg_new_car_price": "약 CNY 150,000~180,000 (€19,000~23,000). NEV·SUV로 상승 추세.",
+          "qualitative_summary": "세계 최대 시장(2025 신차 2,350만대)·NEV 52%·금융 €280bn으로 매력도 최상. 그러나 CBIRC 인가 최저자본 €650M·PIPL/CSL 데이터 현지화·SAFE 송금 통제·미중 긴장으로 진입 부담 극대. BYD·NIO 등 현지 NEV 캡티브 압도, EV 잔가 리스크 22pp로 글로벌 최고. 외국 진입은 합작·인수(VW·Stellantis-CMBC) 권장. WeChat Pay·Alipay 디지털 인프라는 세계 최상, 중고차·운용리스 미개척 영역."
+        },
+        {
+          "country": "ID",
+          "country_name": "Indonesia",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "Toyota",
+              "market_share": "32.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Daihatsu",
+              "market_share": "18.0%"
+            },
+            {
+              "rank": 3,
+              "name": "Honda",
+              "market_share": "12.0%"
+            },
+            {
+              "rank": 4,
+              "name": "Mitsubishi",
+              "market_share": "8.5%"
+            },
+            {
+              "rank": 5,
+              "name": "Suzuki",
+              "market_share": "7.0%"
+            }
+          ],
+          "brand_top10": [
+            "Toyota",
+            "Daihatsu",
+            "Honda",
+            "Mitsubishi",
+            "Suzuki",
+            "Hyundai",
+            "Wuling",
+            "Isuzu",
+            "Nissan",
+            "BYD"
+          ],
+          "purchase_pattern": 68,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "Astra Credit Companies",
+            "Adira Finance",
+            "BFI Finance",
+            "Mandiri Tunas Finance",
+            "CIMB Niaga Auto Finance",
+            "Toyota Astra Financial Services",
+            "Hyundai Motor Finance Indonesia",
+            "Bussan Auto Finance",
+            "Mandala Multifinance",
+            "Indomobil Finance"
+          ],
+          "competitor_entry_form": "캡티브 Multifinance(Astra Credit·Toyota Astra·Hyundai Motor Finance Indonesia·Bussan Auto·Indomobil) + 은행계 자회사(Mandiri Tunas·CIMB Niaga Auto·BCA Finance) + 독립 Multifinance(Adira·BFI·Mandala). 외국사 단독 진출 가능 — Hyundai Motor Finance Indonesia(현지법인) 전례.",
+          "competitor_rates": "신차 자동차대출 APR 약 9~14% (은행계 9~10.5%, Multifinance 11~13%, 프로모 캡티브 6~8%).",
+          "avg_new_car_price": "약 IDR 250,000,000~300,000,000 (€14,500~17,500). LMPV·LCGC 견인. EV·SUV 점진 상승.",
+          "qualitative_summary": "동남아 최대 시장(2025 90만대)·5%대 GDP·금융 침투 70%로 매력도 상위. Multifinance 인가 + 외국 지분 85% 한도 + Astra Group 30% 단독 점유 + 금융 데이터 현지화가 진입 부담. QRIS·BI-FAST 디지털 인프라와 EV 가속(LCE 정책)은 단기 차별화 기회. 헌재 2019 판결로 차량 회수 제약, 잔가 리스크 큰 EV 중심 시장 — 보수적 GFV·합작 파트너십 + Multifinance 인가 우선 전략 유효."
+        },
+        {
+          "country": "IN",
+          "country_name": "India",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "Maruti Suzuki",
+              "market_share": "41.0%"
+            },
+            {
+              "rank": 2,
+              "name": "Hyundai",
+              "market_share": "14.5%"
+            },
+            {
+              "rank": 3,
+              "name": "Tata Motors",
+              "market_share": "13.5%"
+            },
+            {
+              "rank": 4,
+              "name": "Mahindra",
+              "market_share": "11.0%"
+            },
+            {
+              "rank": 5,
+              "name": "Toyota",
+              "market_share": "6.5%"
+            }
+          ],
+          "brand_top10": [
+            "Maruti Suzuki",
+            "Hyundai",
+            "Tata Motors",
+            "Mahindra",
+            "Toyota",
+            "Kia",
+            "Honda",
+            "Volkswagen",
+            "MG (SAIC)",
+            "Skoda"
+          ],
+          "purchase_pattern": 78,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "HDFC Bank",
+            "State Bank of India",
+            "ICICI Bank",
+            "Tata Motors Finance",
+            "Mahindra Finance",
+            "Maruti Suzuki Finance",
+            "Toyota Financial Services",
+            "Hyundai Motor Finance",
+            "Kotak Mahindra Prime",
+            "Bajaj Auto Finance"
+          ],
+          "competitor_entry_form": "은행계 (HDFC·SBI·ICICI·Axis·Kotak) + OEM 캡티브 NBFC (Tata Motors Finance·Mahindra Finance·Maruti Suzuki Finance·Hyundai Motor Finance·Toyota Financial Services) + 독립 NBFC (Bajaj Auto Finance·Sundaram Finance·Cholamandalam·Shriram). 외국사는 NBFC 인가 우선 후 합작·인수 통해 진입.",
+          "competitor_rates": "신차 자동차대출 APR 약 9~14% (HDFC·SBI 9~10.5%, NBFC 11~13%, 프로모 캡티브 7~9%).",
+          "avg_new_car_price": "약 INR 1,000,000~1,200,000 (€11,000~13,500). 엔트리 SUV·해치백 견인. 전동화·SUV로 점진 상승.",
+          "qualitative_summary": "세계 3위 자동차 시장(2025 신차 420만대)·G20 최상위 성장(GDP 6.8%)·금융 침투율 80%로 매력도 최상. 그러나 NBFC 인가·자본(€11M)·결제 데이터 현지화·INR 변동성·SARFAESI 미적용 회수 어려움 등 진입 부담 큼. UPI·Aadhaar·Account Aggregator·NACH 디지털 인프라가 차별화 기회. 캡티브 35%로 독립계 진입 여지 있고, 중고차(25%)·운용리스(<1%)는 개척 영역. NBFC 인가 우선·디지털·EV 잔가 보수적 설계가 핵심."
+        }
+      ]
+    },
+    "quickwin": {
+      "nature": "ranking",
+      "source_flag": "CALC",
+      "weights": {
+        "w_biz": 0.6,
+        "w_it": 0.4
+      },
+      "baseline_country": "AU",
+      "rows": [
+        {
+          "country": "AU",
+          "country_name": "Australia",
+          "attractiveness": 21.5,
+          "it_similarity": 98.3,
+          "it_similarity_band": 100,
+          "quickwin_raw": 52.2,
+          "quickwin_band": 50,
+          "is_baseline": true,
+          "killswitch_excluded": false,
+          "excluded": true,
+          "exclusion_reason": "baseline (기준국, 후보 아님)"
+        },
+        {
+          "country": "CN",
+          "country_name": "China",
+          "attractiveness": 49.8,
+          "it_similarity": 68.8,
+          "it_similarity_band": 70,
+          "quickwin_raw": 57.4,
+          "quickwin_band": 60,
+          "is_baseline": false,
+          "killswitch_excluded": false,
+          "excluded": false,
+          "exclusion_reason": null,
+          "rank": 2
+        },
+        {
+          "country": "ID",
+          "country_name": "Indonesia",
+          "attractiveness": 39.5,
+          "it_similarity": 62.3,
+          "it_similarity_band": 60,
+          "quickwin_raw": 48.6,
+          "quickwin_band": 50,
+          "is_baseline": false,
+          "killswitch_excluded": false,
+          "excluded": false,
+          "exclusion_reason": null,
+          "rank": 3
+        },
+        {
+          "country": "IN",
+          "country_name": "India",
+          "attractiveness": 72.9,
+          "it_similarity": 59.3,
+          "it_similarity_band": 60,
+          "quickwin_raw": 67.5,
+          "quickwin_band": 70,
+          "is_baseline": false,
+          "killswitch_excluded": false,
+          "excluded": false,
+          "exclusion_reason": null,
+          "rank": 1
+        }
+      ],
+      "ranking": [
+        {
+          "rank": 1,
+          "country": "IN",
+          "score_band": 70,
+          "attractiveness": 72.9,
+          "it_similarity_band": 60
+        },
+        {
+          "rank": 2,
+          "country": "CN",
+          "score_band": 60,
+          "attractiveness": 49.8,
+          "it_similarity_band": 70
+        },
+        {
+          "rank": 3,
+          "country": "ID",
+          "score_band": 50,
+          "attractiveness": 39.5,
+          "it_similarity_band": 60
+        }
+      ],
+      "note": {
+        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국) 및 킬스위치 탈락국 제외. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline and killswitch failures excluded. Reported in 10-point buckets."
+      }
+    },
+    "top3_country_cards": [
+      {
+        "rank": 1,
+        "country": "IN",
+        "country_name": "India",
+        "quickwin_score_band": 70,
+        "attractiveness": 72.9,
+        "it_similarity_band": 60,
+        "killswitch_pass": true,
+        "market_brief": {
+          "신차_판매대수": 4200000,
+          "금융_이용률_신차": 80,
+          "EV_보급률": 7.5
+        },
+        "competition_brief": {
+          "금융사_Top5": [
+            {
+              "rank": 1,
+              "name": "HDFC Bank",
+              "market_share": "약 17%"
+            },
+            {
+              "rank": 2,
+              "name": "State Bank of India",
+              "market_share": "약 15%"
+            },
+            {
+              "rank": 3,
+              "name": "ICICI Bank",
+              "market_share": "약 11%"
+            },
+            {
+              "rank": 4,
+              "name": "Tata Motors Finance",
+              "market_share": "약 7%"
+            },
+            {
+              "rank": 5,
+              "name": "Mahindra Finance",
+              "market_share": "약 6%"
+            }
+          ],
+          "경쟁사_진출_형태": "은행계 (HDFC·SBI·ICICI·Axis·Kotak) + OEM 캡티브 NBFC (Tata Motors Finance·Mahindra Finance·Maruti Suzuki Finance·Hyundai Motor Finance·Toyota Financial Services) + 독립 NBFC (Bajaj Auto Finance·Sundaram Finance·Cholamandalam·Shriram). 외국사는 NBFC 인가 우선 후 합작·인수 통해 진입."
+        },
+        "top_news": {
+          "news_category": "auto_market",
+          "headline": "인도 2025년 신차 판매 420만대, 일본 추월하며 글로벌 빅3 진입",
+          "headline_en": "India's 2025 new-car sales reach 4.2M — overtakes Japan, enters global top 3",
+          "so_what": "시장 규모 글로벌 3위 확정. 금융 침투 80%로 단위 대출 기회 폭발 — 진입 타이밍 우호적.",
+          "so_what_en": "Confirmed as world's #3 market. 80% finance penetration creates explosive per-loan opportunity — favorable entry timing.",
+          "publisher": "Reuters",
+          "pub_date": "2026-01-08",
+          "url": "https://www.reuters.com/business/autos-transportation/india-2025-car-sales/"
+        },
+        "ai_comment": "매력도 최상위 + 진입 부담 큰 시장. NBFC 인가 + 디지털 + EV 잔가 보수적 전략 권장.",
+        "source_flags": {
+          "rank": "CALC",
+          "score": "CALC",
+          "market": "EXT",
+          "competition": "EXT",
+          "news": "NEWS",
+          "ai_comment": "AI"
+        }
+      },
+      {
+        "rank": 2,
+        "country": "CN",
+        "country_name": "China",
+        "quickwin_score_band": 60,
+        "attractiveness": 49.8,
+        "it_similarity_band": 70,
+        "killswitch_pass": true,
+        "market_brief": {
+          "신차_판매대수": 23500000,
+          "금융_이용률_신차": 58,
+          "EV_보급률": 52
+        },
+        "competition_brief": {
+          "금융사_Top5": [
+            {
+              "rank": 1,
+              "name": "SAIC-GMAC",
+              "market_share": "약 12%"
+            },
+            {
+              "rank": 2,
+              "name": "Volkswagen Finance China",
+              "market_share": "약 11%"
+            },
+            {
+              "rank": 3,
+              "name": "BYD Auto Finance",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 4,
+              "name": "Toyota Motor Finance China",
+              "market_share": "약 9%"
+            },
+            {
+              "rank": 5,
+              "name": "Ping An Bank Auto Finance",
+              "market_share": "약 8%"
+            }
+          ],
+          "경쟁사_진출_형태": "외국 캡티브 단독 진출 (Volkswagen Finance China·Toyota Motor Finance China·BMW Auto Finance·Mercedes-Benz Auto Finance) + 합작 (Stellantis-CMBC·Renault-Dongfeng) + 현지 캡티브 (BYD·Geely·SAIC) + 은행계 (Ping An·ICBC). 외국 단독 인가 가능하나 자본·거버넌스 부담 매우 큼."
+        },
+        "top_news": {
+          "news_category": "electrification",
+          "headline": "중국 NEV 2025 신차 점유 52% — 세계 EV 시장 절반 차지",
+          "headline_en": "China NEV reaches 52% of 2025 new-car sales — half of global EV market",
+          "so_what": "EV 잔가·금융 모델 수요 폭증. 잔가 리스크 22pp로 보수적 GFV 필수.",
+          "so_what_en": "Surging demand for EV residual/finance models. 22pp residual risk demands conservative GFV.",
+          "publisher": "CAAM",
+          "pub_date": "2026-01-25",
+          "url": "http://www.caam.org.cn/"
+        },
+        "ai_comment": "매력도 최상이나 인가·자본·정치 리스크 최상. 합작·인수 + 보수적 EV 잔가 + 중국 데이터 센터 설계 권장.",
+        "source_flags": {
+          "rank": "CALC",
+          "score": "CALC",
+          "market": "EXT",
+          "competition": "EXT",
+          "news": "NEWS",
+          "ai_comment": "AI"
+        }
+      },
+      {
+        "rank": 3,
+        "country": "ID",
+        "country_name": "Indonesia",
+        "quickwin_score_band": 50,
+        "attractiveness": 39.5,
+        "it_similarity_band": 60,
+        "killswitch_pass": true,
+        "market_brief": {
+          "신차_판매대수": 900000,
+          "금융_이용률_신차": 70,
+          "EV_보급률": 4.0
+        },
+        "competition_brief": {
+          "금융사_Top5": [
+            {
+              "rank": 1,
+              "name": "Astra Credit Companies",
+              "market_share": "약 22%"
+            },
+            {
+              "rank": 2,
+              "name": "Adira Finance",
+              "market_share": "약 14%"
+            },
+            {
+              "rank": 3,
+              "name": "BFI Finance",
+              "market_share": "약 11%"
+            },
+            {
+              "rank": 4,
+              "name": "Mandiri Tunas Finance",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 5,
+              "name": "CIMB Niaga Auto Finance",
+              "market_share": "약 8%"
+            }
+          ],
+          "경쟁사_진출_형태": "캡티브 Multifinance(Astra Credit·Toyota Astra·Hyundai Motor Finance Indonesia·Bussan Auto·Indomobil) + 은행계 자회사(Mandiri Tunas·CIMB Niaga Auto·BCA Finance) + 독립 Multifinance(Adira·BFI·Mandala). 외국사 단독 진출 가능 — Hyundai Motor Finance Indonesia(현지법인) 전례."
+        },
+        "top_news": {
+          "news_category": "auto_market",
+          "headline": "인도네시아 2025 신차 90만대 — 동남아 1위 시장 지위 유지",
+          "headline_en": "Indonesia 2025 new-car sales reach 0.9M — retains #1 SE Asia market position",
+          "so_what": "시장 회복으로 금융 침투 기반 견조 — 진입 타이밍 우호적.",
+          "so_what_en": "Market recovery anchors finance penetration — favorable entry timing.",
+          "publisher": "Gaikindo",
+          "pub_date": "2026-01-20",
+          "url": "https://www.gaikindo.or.id/"
+        },
+        "ai_comment": "매력도 상위·인가 부담 큰 시장. 합작 + 디지털 + 보수적 EV 잔가 전략 권장.",
+        "source_flags": {
+          "rank": "CALC",
+          "score": "CALC",
+          "market": "EXT",
+          "competition": "EXT",
+          "news": "NEWS",
+          "ai_comment": "AI"
+        }
+      }
+    ],
+    "executive_summary": {
+      "core_conclusion": {
+        "source_flag": "CALC",
+        "top3": [
+          {
+            "rank": 1,
+            "country": "IN",
+            "score_band": 70,
+            "attractiveness": 72.9,
+            "it_similarity_band": 60
+          },
+          {
+            "rank": 2,
+            "country": "CN",
+            "score_band": 60,
+            "attractiveness": 49.8,
+            "it_similarity_band": 70
+          },
+          {
+            "rank": 3,
+            "country": "ID",
+            "score_band": 50,
+            "attractiveness": 39.5,
+            "it_similarity_band": 60
+          }
+        ],
+        "killswitch_failed_count": 0,
+        "why_top1": {
+          "ko": "인도 — 매력도 72.9, IT유사도 60 구간, 퀵윈 70 구간",
+          "en": "India(IN) — Attractiveness 72.9, IT band 60, Quickwin band 70"
+        }
+      },
+      "ai_cross_insight": {
+        "source_flag": "AI",
+        "insights": [
+          {
+            "ko": "후보국 중 매력도 1위(인도)와 IT유사도 1위(중국)가 일치하지 않음 — 단기 확산(IT 유사)과 시장 잠재력(매력도) 사이 트레이드오프 존재.",
+            "en": "Top attractiveness (IN) and top IT similarity (CN) are different countries — trade-off between fast deployment (IT) and market potential (attractiveness)."
+          },
+          {
+            "ko": "기준국 호주는 이미 시스템 보유국 → 순위에서 제외(B국 시스템 확산의 비교 기준).",
+            "en": "Baseline AU already operates a deployed system — excluded from the ranking (used as the reference for system expansion)."
+          }
+        ]
+      },
+      "external_news_scan": {
+        "source_flag": "NEWS",
+        "items": [
+          {
+            "country": null,
+            "scope": "region",
+            "headline": "중국 EV 업체 BYD·샤오펑, SUV 고급화로 이동하나 공급 과잉 위험",
+            "headline_en": "China's EV makers BYD, Xpeng move SUVs upmarket but risk glut",
+            "so_what": "중국 NEV 캡티브가 고마진 프리미엄으로 이동하지만 짧은 제품 사이클과 할인 경쟁이 수익을 잠식해, 진출 시 잔존가치·여신 손실 변동성을 보수적으로 가정해야 한다.",
+            "so_what_en": "Chinese NEV captives are pushing premium for margin, but short product cycles and discounting erode returns, so entrants should assume conservative residual values and credit-loss volatility.",
+            "publisher": "Nikkei Asia",
+            "date": "2026-06-22",
+            "url": "https://asia.nikkei.com/spotlight/electric-cars-in-china/china-s-ev-makers-byd-xpeng-move-suvs-upmarket-but-risk-glut",
+            "news_category": "auto_market"
+          },
+          {
+            "country": null,
+            "scope": "region",
+            "headline": "BYD, 2021년 이후 첫 연간 순익 감소…해외에서 반전 모색",
+            "headline_en": "BYD posts first annual profit drop since 2021, eyes turnaround overseas",
+            "so_what": "세계 1위 NEV 캡티브 BYD의 2025년 순익이 19% 감소하며 자가금융 여력이 압박받고 있어, 외부 금융사에 제휴·여신 공동 인수의 진입 틈새가 열린다.",
+            "so_what_en": "BYD's 2025 net income fell 19%, pressuring its captive-finance capacity and opening a partnership/co-lending entry window for external lenders.",
+            "publisher": "Nikkei Asia",
+            "date": "2026-03-27",
+            "url": "https://asia.nikkei.com/business/automobiles/electric-vehicles/byd-posts-first-annual-profit-drop-since-2021-eyes-turnaround-overseas",
+            "news_category": "auto_finance"
+          },
+          {
+            "country": null,
+            "scope": "region",
+            "headline": "중국 내수 차 수요 약세 지속, 수출은 강세",
+            "headline_en": "China's domestic car demand stays weak but exports strengthen",
+            "so_what": "4월 내수 -21.6%로 7개월 연속 감소한 반면 EV·PHEV 수출은 111.8% 급증해, 중국 진출은 내수 여신보다 수출 차량·해외 캡티브 동반 진출 관점으로 재설계해야 한다.",
+            "so_what_en": "April retail fell 21.6% (seventh straight drop) while EV/PHEV exports surged 111.8%, so China entry should pivot from domestic lending toward export-linked and overseas-captive co-entry.",
+            "publisher": "Nikkei Asia",
+            "date": "2026-05-11",
+            "url": "https://asia.nikkei.com/business/automobiles/china-s-domestic-car-demand-stays-weak-but-exports-strengthen",
+            "news_category": "auto_market"
+          },
+          {
+            "country": "CN",
+            "scope": "country",
+            "headline": "중국 NEV 2025 신차 점유 52% — 세계 EV 시장 절반 차지",
+            "headline_en": "China NEV reaches 52% of 2025 new-car sales — half of global EV market",
+            "so_what": "EV 잔가·금융 모델 수요 폭증. 잔가 리스크 22pp로 보수적 GFV 필수.",
+            "so_what_en": "Surging demand for EV residual/finance models. 22pp residual risk demands conservative GFV.",
+            "publisher": "CAAM",
+            "date": null
+          },
+          {
+            "country": "ID",
+            "scope": "country",
+            "headline": "인도네시아 2025 신차 90만대 — 동남아 1위 시장 지위 유지",
+            "headline_en": "Indonesia 2025 new-car sales reach 0.9M — retains #1 SE Asia market position",
+            "so_what": "시장 회복으로 금융 침투 기반 견조 — 진입 타이밍 우호적.",
+            "so_what_en": "Market recovery anchors finance penetration — favorable entry timing.",
+            "publisher": "Gaikindo",
+            "date": null
+          },
+          {
+            "country": "IN",
+            "scope": "country",
+            "headline": "인도 2025년 신차 판매 420만대, 일본 추월하며 글로벌 빅3 진입",
+            "headline_en": "India's 2025 new-car sales reach 4.2M — overtakes Japan, enters global top 3",
+            "so_what": "시장 규모 글로벌 3위 확정. 금융 침투 80%로 단위 대출 기회 폭발 — 진입 타이밍 우호적.",
+            "so_what_en": "Confirmed as world's #3 market. 80% finance penetration creates explosive per-loan opportunity — favorable entry timing.",
+            "publisher": "Reuters",
+            "date": null
+          }
+        ],
+        "region_news_count": 3,
+        "note": {
+          "ko": "권역 공통 이슈 3건 + 상위 3개국 헤드라인. '조사 필요' 항목은 제외.",
+          "en": "3 region-wide issues + top-3 country headlines. '조사 필요' (research needed) entries excluded."
+        }
+      }
+    }
+  }
+}

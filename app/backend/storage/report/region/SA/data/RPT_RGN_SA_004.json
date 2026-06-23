@@ -1,0 +1,1216 @@
+{
+  "report_id": "RPT_RGN_SA_004",
+  "report_type": "type2_region",
+  "title": "South America 권역 퀵윈 순위 보고서",
+  "target": {
+    "region": "SA",
+    "evaluated_countries": [
+      "AR",
+      "BR",
+      "CL"
+    ],
+    "baseline_country": "BR"
+  },
+  "generated_at": "2026-06-22T19:32:52.819622",
+  "generated_by": "engine",
+  "data_snapshot_id": "2026-06-22T16:00:00+09:00",
+  "config_version": "1.3",
+  "engine_version": "v1.0",
+  "schema_version": "1.1",
+  "fx": {
+    "base": "KRW",
+    "as_of": "2026-06-01",
+    "rates": {
+      "KRW": 1.0,
+      "EUR": 1450.0,
+      "PLN": 330.0,
+      "GBP": 1680.0,
+      "USD": 1320.0,
+      "CZK": 58.0,
+      "HUF": 3.8,
+      "AUD": 880.0
+    },
+    "note": "기준통화=KRW. 각 통화 1단위당 KRW 환산율. 관리자가 입력하며 스냅샷에 고정됨."
+  },
+  "region_meta": {
+    "region": "South America",
+    "region_ko": "남미권역",
+    "code": "SA",
+    "fetched_at": "2026-06-22T16:00:00+09:00",
+    "fetched_by": "aggregator"
+  },
+  "data_quality": {
+    "total_countries": 3,
+    "countries": [
+      "AR",
+      "BR",
+      "CL"
+    ],
+    "timeseries_coverage_avg": 65.3061224489796,
+    "source_tiers": {
+      "tier1": 57,
+      "tier2": 36,
+      "tier3": 54,
+      "tier4": 0
+    },
+    "country_completeness": {
+      "AR": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "BR": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      },
+      "CL": {
+        "total_items": 49,
+        "target_items": 48,
+        "completeness": 97.95918367346938
+      }
+    },
+    "critical_gaps": [],
+    "readiness": {
+      "can_generate": true,
+      "tabs": {
+        "2-0": {
+          "name": "Kill Switch Filter",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "2-1": {
+          "name": "Business Attractiveness",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "2-2": {
+          "name": "IT/Speed-to-Market Similarity",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "2-3": {
+          "name": "Market Background",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        }
+      }
+    }
+  },
+  "tabs": {
+    "tab_2_0_killswitch": {
+      "nature": "status_matrix",
+      "source_flag": "CALC",
+      "gates": [
+        "외국인 지분 한도",
+        "외환·배당 송금 자유도",
+        "데이터 현지화 의무",
+        "국가신용등급"
+      ],
+      "countries": [
+        {
+          "country": "AR",
+          "country_name": "Argentina",
+          "pass": false,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "100% 허용 (Ley 21.382 외국인투자법, 금융업은 BCRA 사전 인가 필요)",
+              "source": "Ley 21.382 (Inversiones Extranjeras), BCRA 금융기관 인가 규정",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "FLAG",
+              "value": "외환통제(cepo cambiario) 상존, 2024~2025 Milei 단계적 완화. 배당 송금 BCRA 승인·제한, MULC(공식 외환시장) 통한 송금 제약",
+              "source": "BCRA Comunicación 'A' (cepo cambiario), 2024~2025 단계적 완화 조치",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "Ley 25.326(PDPA, 2000) 적용. 강제 현지화 의무 없음 — 국외이전은 적정성/동의 기반. EU 적정성 인정국(2003)",
+              "source": "Ley 25.326 (Protección de Datos Personales), AAIP(정보접근·데이터보호청), EU 적정성 결정 2003/490/EC",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "FLAG",
+              "value": "CCC (S&P) / Caa3 (Moody's) / CCC (Fitch), 2024~2025 일부 상향·전망 개선 (Milei 개혁)",
+              "source": "S&P·Moody's·Fitch 국가신용등급 (2025); 2024 IMF 프로그램·재정흑자 전환으로 전망 개선",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        },
+        {
+          "country": "BR",
+          "country_name": "Brazil",
+          "pass": false,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "100% 허용 (1995 헌법개정 EC 6/1995 이후 자유화, 금융업은 BACEN/CMN 사전 인가 필요)",
+              "source": "Constituição Federal Art. 192 (1995 개정), CMN Resolução 4.122/2012, BACEN",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "FLAG",
+              "value": "외환 통제 일부 (BACEN 등록 외환계약·SISBACEN 통보 필수), IOF 환전 0.38%~3.5% 부과. 배당 0%·이자 15%",
+              "source": "Lei 14.286/2021(신외환법, 2022.12 시행), BACEN Resolução 277",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "LGPD(Lei Geral de Proteção de Dados, GDPR 모델) 적용. 강제 현지화 의무 없음 — 국제이전은 적정성/SCC/BCR",
+              "source": "Lei 13.709/2018 LGPD, ANPD(국가데이터보호청) 가이드",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "FLAG",
+              "value": "BB (S&P, 2024 BB- → BB 상향) / Ba1 (Moody's, 2024 상향) / BB (Fitch, 2024 상향), 안정적",
+              "source": "S&P·Moody's·Fitch 국가신용등급 (2025); 2024 다중기관 상향 사이클",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        },
+        {
+          "country": "CL",
+          "country_name": "Chile",
+          "pass": true,
+          "gates": {
+            "외국인 지분 한도": {
+              "status": "PASS",
+              "value": "100% 허용 (DL 600 외국인투자법 폐지 후 Ley 20.848 신외국인투자법, 내국민대우)",
+              "source": "Ley 20.848(Marco para la Inversión Extranjera Directa, 2015), CMF",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "외환·배당 송금 자유도": {
+              "status": "PASS",
+              "value": "자본·배당 송금 자유 (외환통제 없음, Banco Central 정보 보고만). 배당 35%·이자 4~35% 원천",
+              "source": "Banco Central de Chile, Capítulo XIV Compendio de Normas de Cambios Internacionales(통보 의무만)",
+              "tier": 1,
+              "gate_scope": "country"
+            },
+            "데이터 현지화 의무": {
+              "status": "PASS",
+              "value": "Ley 21.719(2024 신개인정보보호법, GDPR 정합, APDP 신설) 적용. 강제 현지화 없음 — 국제이전 적정성/SCC",
+              "source": "Ley 21.719(2024.12 공포, 2026 시행)·기존 Ley 19.628, Agencia de Protección de Datos Personales(APDP)",
+              "tier": 1,
+              "gate_scope": "operating_model"
+            },
+            "국가신용등급": {
+              "status": "PASS",
+              "value": "A (S&P) / A2 (Moody's) / A- (Fitch), 안정적 — 라틴아메리카 최상위 투자등급",
+              "source": "S&P·Moody's·Fitch 국가신용등급 (2025); 라틴 최고 등급",
+              "tier": 1,
+              "gate_scope": "country"
+            }
+          }
+        }
+      ],
+      "passed": [
+        "CL"
+      ],
+      "failed": [
+        "AR",
+        "BR"
+      ],
+      "passed_count": 1,
+      "failed_count": 2
+    },
+    "tab_2_1_attractiveness": {
+      "nature": "ranking",
+      "source_flag": "CALC",
+      "weights": {
+        "GDP 성장률": 0.2,
+        "자동차 판매대수": 0.15,
+        "시장규모": 0.15,
+        "오토금융 성장률(CAGR)": 0.15,
+        "금융 이용률": 0.15,
+        "금융이용유형": 0.1,
+        "경쟁강도": 0.1
+      },
+      "tier_weights": {
+        "tier1": 1.0,
+        "tier2": 0.85,
+        "tier3": 0.7,
+        "tier4": 0.5,
+        "_note": "출처 신뢰도(Tier)별 점수 가중 배수. Tier1=1.0 고정. Tier2~4는 관리자가 조정 가능. 매력도·IT 유사도 산식에서 항목 가중치에 곱해 effective weight = item_weight × tier_multiplier 로 사용."
+      },
+      "axes": {
+        "GDP 성장률": {
+          "AR": 100.0,
+          "BR": 0.0,
+          "CL": 0.0
+        },
+        "자동차 판매대수": {
+          "AR": 6.7,
+          "BR": 100.0,
+          "CL": 0.0
+        },
+        "시장규모": {
+          "AR": 4.8,
+          "BR": 100.0,
+          "CL": 0.0
+        },
+        "오토금융 성장률(CAGR)": {
+          "AR": 100.0,
+          "BR": 59.3,
+          "CL": 0.0
+        },
+        "금융 이용률": {
+          "AR": 0.0,
+          "BR": 75.0,
+          "CL": 100.0
+        },
+        "금융이용유형": {
+          "AR": 0.0,
+          "BR": 66.7,
+          "CL": 100.0
+        },
+        "경쟁강도": {
+          "AR": 0.0,
+          "BR": 25.0,
+          "CL": 100.0
+        }
+      },
+      "countries": [
+        {
+          "country": "AR",
+          "country_name": "Argentina",
+          "attractiveness_score": 39.9,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 5.5,
+              "normalized": 100.0,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 20.0
+            },
+            "자동차 판매대수": {
+              "raw_value": 450000.0,
+              "normalized": 6.7,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 0.85
+            },
+            "시장규모": {
+              "raw_value": 9000.0,
+              "normalized": 4.8,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 0.5
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 12.9,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 10.5
+            },
+            "금융 이용률": {
+              "raw_value": 45.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 0.0
+            },
+            "금융이용유형": {
+              "raw_value": 45.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 0.0
+            },
+            "경쟁강도": {
+              "raw_value": 50.0,
+              "normalized": 0.0,
+              "weight": 0.1,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.07,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 0.0
+            }
+          },
+          "rank": 2
+        },
+        {
+          "country": "BR",
+          "country_name": "Brazil",
+          "attractiveness_score": 56.1,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 2.4,
+              "normalized": 0.0,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 0.0
+            },
+            "자동차 판매대수": {
+              "raw_value": 2400000.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 12.75
+            },
+            "시장규모": {
+              "raw_value": 45000.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 10.5
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 10.7,
+              "normalized": 59.3,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 6.23
+            },
+            "금융 이용률": {
+              "raw_value": 60.0,
+              "normalized": 75.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 7.88
+            },
+            "금융이용유형": {
+              "raw_value": 55.0,
+              "normalized": 66.7,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 5.67
+            },
+            "경쟁강도": {
+              "raw_value": 45.0,
+              "normalized": 25.0,
+              "weight": 0.1,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.07,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 1.75
+            }
+          },
+          "rank": 1
+        },
+        {
+          "country": "CL",
+          "country_name": "Chile",
+          "attractiveness_score": 32.6,
+          "contributions": {
+            "GDP 성장률": {
+              "raw_value": 2.4,
+              "normalized": 0.0,
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "reverse": false,
+              "source_item": "GDP 성장률",
+              "contribution": 0.0
+            },
+            "자동차 판매대수": {
+              "raw_value": 310000.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.1275,
+              "reverse": false,
+              "source_item": "신차 판매대수",
+              "contribution": 0.0
+            },
+            "시장규모": {
+              "raw_value": 7200.0,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융/리스 시장규모",
+              "contribution": 0.0
+            },
+            "오토금융 성장률(CAGR)": {
+              "raw_value": 7.5,
+              "normalized": 0.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "오토금융 성장률(CAGR)",
+              "contribution": 0.0
+            },
+            "금융 이용률": {
+              "raw_value": 65.0,
+              "normalized": 100.0,
+              "weight": 0.15,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.105,
+              "reverse": false,
+              "source_item": "금융 이용률(신차)",
+              "contribution": 10.5
+            },
+            "금융이용유형": {
+              "raw_value": 60.0,
+              "normalized": 100.0,
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "reverse": false,
+              "source_item": "구매 패턴(할부·리스 비중)",
+              "contribution": 8.5
+            },
+            "경쟁강도": {
+              "raw_value": 30.0,
+              "normalized": 100.0,
+              "weight": 0.1,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.07,
+              "reverse": true,
+              "source_item": "캡티브 강도(점유율)",
+              "contribution": 7.0
+            }
+          },
+          "rank": 3
+        }
+      ],
+      "ranking": [
+        {
+          "rank": 1,
+          "country": "BR",
+          "score": 56.1
+        },
+        {
+          "rank": 2,
+          "country": "AR",
+          "score": 39.9
+        },
+        {
+          "rank": 3,
+          "country": "CL",
+          "score": 32.6
+        }
+      ],
+      "method": "min-max normalize per axis → effective weight = item_weight × tier_multiplier → weighted average. config: values.biz_attractiveness × tier_weights."
+    },
+    "tab_2_2_it_similarity": {
+      "nature": "score_multiaxis",
+      "source_flag": "CALC",
+      "baseline_country": "BR",
+      "weights": {
+        "솔루션 유형": 0.3,
+        "디지털 채널 성숙도": 0.25,
+        "라이선스 종류": 0.2,
+        "데이터현지화": 0.15,
+        "차량회수 절차": 0.1
+      },
+      "tier_weights": {
+        "tier1": 1.0,
+        "tier2": 0.85,
+        "tier3": 0.7,
+        "tier4": 0.5,
+        "_note": "출처 신뢰도(Tier)별 점수 가중 배수. Tier1=1.0 고정. Tier2~4는 관리자가 조정 가능. 매력도·IT 유사도 산식에서 항목 가중치에 곱해 effective weight = item_weight × tier_multiplier 로 사용."
+      },
+      "countries": [
+        {
+          "country": "AR",
+          "country_name": "Argentina",
+          "it_similarity_raw": 63.2,
+          "it_similarity_band": 60,
+          "is_baseline": false,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "은행계 자체 코어(Santander·Galicia·Macro) + 캡티브 자체 + Plan de Ahorro 전용 administradora 시스템 + 현지/글로벌 패키지 혼재",
+              "baseline_value": "현지/글로벌 패키지 혼재 + 은행계 자체 코어(Itaú·Bradesco·Banco do Brasil) + 캡티브 자체 시스템",
+              "score_raw": 56.6,
+              "score_band": 60
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.2125,
+              "target_value": 3,
+              "baseline_value": 5,
+              "score_raw": 60.0,
+              "score_band": 60
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "target_value": "소비자 여신=BCRA EFNB(Compañía Financiera) 인가(S.A.+자본금+BCRA 감독), Plan de Ahorro=IGJ administradora 인가, B2B Leasing=Ley 25.248 등록",
+              "baseline_value": "소비자 여신=SCFI(financeira) 인가(S.A.+자본금 BRL 7M+BACEN 감독), B2B Leasing=SAM(Sociedade de Arrendamento Mercantil) 인가, Consórcio=administradora 인가(BACEN)",
+              "score_raw": 46.2,
+              "score_band": 50
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "Ley 25.326(PDPA, 2000) 적용. 강제 현지화 의무 없음 — 국외이전은 적정성/동의 기반. EU 적정성 인정국(2003)",
+              "baseline_value": "LGPD(Lei Geral de Proteção de Dados, GDPR 모델) 적용. 강제 현지화 의무 없음 — 국제이전은 적정성/SCC/BCR",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 4,
+              "baseline_value": 3,
+              "score_raw": 80.0,
+              "score_band": 80
+            }
+          },
+          "rank": 2
+        },
+        {
+          "country": "BR",
+          "country_name": "Brazil",
+          "it_similarity_raw": 98.3,
+          "it_similarity_band": 100,
+          "is_baseline": true,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "현지/글로벌 패키지 혼재 + 은행계 자체 코어(Itaú·Bradesco·Banco do Brasil) + 캡티브 자체 시스템",
+              "baseline_value": "현지/글로벌 패키지 혼재 + 은행계 자체 코어(Itaú·Bradesco·Banco do Brasil) + 캡티브 자체 시스템",
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.25,
+              "target_value": 5,
+              "baseline_value": 5,
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "target_value": "소비자 여신=SCFI(financeira) 인가(S.A.+자본금 BRL 7M+BACEN 감독), B2B Leasing=SAM(Sociedade de Arrendamento Mercantil) 인가, Consórcio=administradora 인가(BACEN)",
+              "baseline_value": "소비자 여신=SCFI(financeira) 인가(S.A.+자본금 BRL 7M+BACEN 감독), B2B Leasing=SAM(Sociedade de Arrendamento Mercantil) 인가, Consórcio=administradora 인가(BACEN)",
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "LGPD(Lei Geral de Proteção de Dados, GDPR 모델) 적용. 강제 현지화 의무 없음 — 국제이전은 적정성/SCC/BCR",
+              "baseline_value": "LGPD(Lei Geral de Proteção de Dados, GDPR 모델) 적용. 강제 현지화 의무 없음 — 국제이전은 적정성/SCC/BCR",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 3,
+              "baseline_value": 3,
+              "score_raw": 100.0,
+              "score_band": 100
+            }
+          }
+        },
+        {
+          "country": "CL",
+          "country_name": "Chile",
+          "it_similarity_raw": 73.0,
+          "it_similarity_band": 70,
+          "is_baseline": false,
+          "axes": {
+            "솔루션 유형": {
+              "source_item": "솔루션 유형",
+              "weight": 0.3,
+              "tier": 3,
+              "tier_multiplier": 0.7,
+              "effective_weight": 0.21,
+              "target_value": "글로벌 패키지 + 은행계 자체 코어(Santander·BCI·Chile) + 소매금융 자체 시스템(Falabella·Ripley·Tanner) 혼재",
+              "baseline_value": "현지/글로벌 패키지 혼재 + 은행계 자체 코어(Itaú·Bradesco·Banco do Brasil) + 캡티브 자체 시스템",
+              "score_raw": 51.7,
+              "score_band": 50
+            },
+            "디지털 채널 성숙도": {
+              "source_item": "디지털 채널 성숙도",
+              "weight": 0.25,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.25,
+              "target_value": 5,
+              "baseline_value": 5,
+              "score_raw": 100.0,
+              "score_band": 100
+            },
+            "라이선스 종류": {
+              "source_item": "라이선스 체제(세그먼트별)",
+              "weight": 0.2,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.2,
+              "target_value": "은행=CMF 인가(자본금 UF 800,000), 비은행 소비자금융(emisor/operador de crédito)=등록·CMF 감독, 리스=은행 자회사 또는 독립 sociedad anónima",
+              "baseline_value": "소비자 여신=SCFI(financeira) 인가(S.A.+자본금 BRL 7M+BACEN 감독), B2B Leasing=SAM(Sociedade de Arrendamento Mercantil) 인가, Consórcio=administradora 인가(BACEN)",
+              "score_raw": 37.6,
+              "score_band": 40
+            },
+            "데이터현지화": {
+              "source_item": "데이터 현지화 의무",
+              "weight": 0.15,
+              "tier": 1,
+              "tier_multiplier": 1.0,
+              "effective_weight": 0.15,
+              "target_value": "Ley 21.719(2024 신개인정보보호법, GDPR 정합, APDP 신설) 적용. 강제 현지화 없음 — 국제이전 적정성/SCC",
+              "baseline_value": "LGPD(Lei Geral de Proteção de Dados, GDPR 모델) 적용. 강제 현지화 의무 없음 — 국제이전은 적정성/SCC/BCR",
+              "score_raw": 90.0,
+              "score_band": 90
+            },
+            "차량회수 절차": {
+              "source_item": "차량회수 절차 용이성",
+              "weight": 0.1,
+              "tier": 2,
+              "tier_multiplier": 0.85,
+              "effective_weight": 0.085,
+              "target_value": 3,
+              "baseline_value": 3,
+              "score_raw": 100.0,
+              "score_band": 100
+            }
+          },
+          "rank": 1
+        }
+      ],
+      "ranking": [
+        {
+          "rank": 1,
+          "country": "CL",
+          "score_band": 70
+        },
+        {
+          "rank": 2,
+          "country": "AR",
+          "score_band": 60
+        }
+      ],
+      "method": "축별 raw = 수치(100−|Δ|×20) / 범주(텍스트 Jaccard 30+J×65) / gate(동일=90·한쪽 PASS=50) → effective weight = item_weight × tier_multiplier → 가중평균 raw → 10점 구간 반올림.",
+      "note": "10점 구간 표기. 소수점·1점 단위 비교 금지(spec). 동률 시 raw로 타이브레이크. Tier 가중은 대상국 데이터 신뢰도 기준."
+    },
+    "tab_2_3_market_background": {
+      "nature": "ranking",
+      "source_flag": "EXT",
+      "countries": [
+        {
+          "country": "AR",
+          "country_name": "Argentina",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "Toyota",
+              "market_share": "16.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Volkswagen",
+              "market_share": "13.0%"
+            },
+            {
+              "rank": 3,
+              "name": "Fiat",
+              "market_share": "11.0%"
+            },
+            {
+              "rank": 4,
+              "name": "Peugeot",
+              "market_share": "9.5%"
+            },
+            {
+              "rank": 5,
+              "name": "Chevrolet",
+              "market_share": "8.5%"
+            }
+          ],
+          "brand_top10": [
+            "Toyota",
+            "Volkswagen",
+            "Fiat",
+            "Peugeot",
+            "Chevrolet",
+            "Ford",
+            "Renault",
+            "Citroën",
+            "Nissan",
+            "Jeep"
+          ],
+          "purchase_pattern": 45,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "Volkswagen S.A. de Ahorro (Plan Óvalo)",
+            "Toyota Compañía Financiera de Argentina",
+            "Plan Rombo S.A. (Renault)",
+            "FCA Compañía Financiera (Stellantis/Fiat)",
+            "Peugeot/Citroën Plan",
+            "Ford Credit / Plan Ford",
+            "GMAC/Chevrolet Plan",
+            "Santander Río",
+            "Banco Galicia",
+            "BBVA Argentina",
+            "Banco Macro",
+            "Mercado Crédito (Mercado Libre)",
+            "Ualá"
+          ],
+          "competitor_entry_form": "OEM 캡티브가 IGJ administradora de planes de ahorro + BCRA EFNB(Compañía Financiera) 결합 형태(VW Plan Óvalo·Toyota·Plan Rombo·Plan Ford) + 은행계(Santander·Galicia·BBVA·Macro) prenda + 핀테크(Mercado Crédito·Ualá). Leasing은 Ley 25.248 등록",
+          "competitor_rates": "신차 prenda 명목 APR 약 60~90%(2025 디스인플레로 하락 중), Plan de Ahorro 무이자(추첨/입찰)+행정비(cuota administrativa) 약 연 8~15%, Leasing CET 변동",
+          "avg_new_car_price": "약 USD 22,000 (turismos 평균 거래가, 환율·인플레로 ARS 명목가 변동 극심)",
+          "qualitative_summary": "라틴 3위권 자동차 시장(2025 신차 약 45만대, 변동성 큼). 캡티브(VW·Toyota·Stellantis·Ford·GM·Renault)+Plan de Ahorro administradora 약 50%, 은행계(Santander·Galicia·BBVA·Macro) 약 30%. Plan de Ahorro(저축형 공동구매) 약 25%로 신차 판매 대들보, prenda 18%, Leasing 2% 미만. 소비자금융은 BCRA EFNB 인가+IGJ Plan de Ahorro administradora 인가, B2B Leasing은 Ley 25.248 등록. 초고인플레(명목 APR 75%)·외환통제(cepo)·CCC 신용등급이 핵심 리스크. 단 2024~2025 Milei 디스인플레·재정흑자·cepo 완화로 회복 사이클. EU 데이터 적정성 인정국, Veraz/BCRA Central de Deudores CB 견고."
+        },
+        {
+          "country": "BR",
+          "country_name": "Brazil",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "Fiat",
+              "market_share": "13.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Volkswagen",
+              "market_share": "12.8%"
+            },
+            {
+              "rank": 3,
+              "name": "Chevrolet",
+              "market_share": "11.0%"
+            },
+            {
+              "rank": 4,
+              "name": "Toyota",
+              "market_share": "9.2%"
+            },
+            {
+              "rank": 5,
+              "name": "Hyundai",
+              "market_share": "8.5%"
+            }
+          ],
+          "brand_top10": [
+            "Fiat",
+            "Volkswagen",
+            "Chevrolet",
+            "Toyota",
+            "Hyundai",
+            "Jeep",
+            "Renault",
+            "Honda",
+            "Nissan",
+            "Citroën"
+          ],
+          "purchase_pattern": 55,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "Santander Financiamentos",
+            "Banco BV (Banco Votorantim)",
+            "Itaú/Itaucard Financiamentos",
+            "Bradesco Financiamentos",
+            "Banco do Brasil/Ourocard",
+            "Stellantis Financial Services Brasil",
+            "Volkswagen Financial Services Brasil (Banco VW)",
+            "GM Financial Brasil",
+            "Toyota Financial Services Brasil",
+            "Hyundai Capital Brasil",
+            "Banco Honda",
+            "Banco Renault",
+            "Aymoré (Santander)",
+            "Sicredi",
+            "Nubank Autos",
+            "Creditas"
+          ],
+          "competitor_entry_form": "은행계 자회사(Santander·BV·Itaú·Bradesco·BB) + OEM 캡티브(Stellantis FS·VW FS·GM Financial·Toyota·Hyundai Capital) + 핀테크(Nubank·Creditas·C6) + Consórcio administradora(Itaú·Magalu·Embracon). SCFI 또는 SAM 인가 형태",
+          "competitor_rates": "신차 자동차 CDC 평균 APR 약 22~30% (프로모 12~18% 캡티브 한정), Leasing CET 약 20~28%, Consórcio 행정비 약 15~25% (무이자 추첨식)",
+          "avg_new_car_price": "약 BRL 110,000 (USD 22,000, turismos 평균 거래가, EV·SUV 비중 상승)",
+          "qualitative_summary": "라틴아메리카 최대 자동차 시장(2025 신차 240만대, +3%, 글로벌 6위). 캡티브(Stellantis·VW·GM·Toyota·Hyundai·BYD 약 45%)+은행계(Santander·Itaú·Bradesco·BV·BB 약 30%) 양강. CDC 35%·Consórcio 18%(브라질 유일)·Leasing 7% 구조. 소비자금융은 SCFI(BRL 7M, BACEN 12~24개월 인가), B2B Leasing은 ABEL+SAM, Consórcio는 administradora 인가. SELIC 11.75%·평균 APR 26%로 마진 절대값 큼. Pix·SCR·LGPD로 디지털·CB 인프라 우수. BB 신용·외환 등록·복잡세제(34%+IOF+PIS/COFINS)·환율 리스크가 양면."
+        },
+        {
+          "country": "CL",
+          "country_name": "Chile",
+          "oem_top5": [
+            {
+              "rank": 1,
+              "name": "Toyota",
+              "market_share": "12.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Chevrolet",
+              "market_share": "10.0%"
+            },
+            {
+              "rank": 3,
+              "name": "Hyundai",
+              "market_share": "9.5%"
+            },
+            {
+              "rank": 4,
+              "name": "Kia",
+              "market_share": "8.5%"
+            },
+            {
+              "rank": 5,
+              "name": "Suzuki",
+              "market_share": "7.0%"
+            }
+          ],
+          "brand_top10": [
+            "Toyota",
+            "Chevrolet",
+            "Hyundai",
+            "Kia",
+            "Suzuki",
+            "Nissan",
+            "Mitsubishi",
+            "Mazda",
+            "Volkswagen",
+            "MG"
+          ],
+          "purchase_pattern": 60,
+          "purchase_pattern_unit": "%",
+          "competitors": [
+            "Santander Consumer Chile",
+            "Forum Servicios Financieros",
+            "Tanner Servicios Financieros",
+            "Banco BCI",
+            "Banco de Chile",
+            "Banco Estado",
+            "Toyota Financial Services Chile",
+            "GM Financial Chile",
+            "Hyundai/Kia 캡티브(딜러금융)",
+            "Forum (VW/포드 캡티브 제휴)",
+            "Falabella (CMR/Banco Falabella)",
+            "Ripley (Banco Ripley)",
+            "Mercado Pago",
+            "Tenpo"
+          ],
+          "competitor_entry_form": "은행 자회사(Santander Consumer·BCI·Banco de Chile)+전문 소매금융(Tanner·Forum)+소매유통 금융(Falabella·Ripley 백화점 연계)+OEM 캡티브(Toyota FS·GM Financial)+핀테크(Mercado Pago·Tenpo). 비은행은 등록, 은행은 CMF 인가 형태",
+          "competitor_rates": "신차 crédito automotriz 평균 APR 약 11~18% (캡티브 프로모 6~10%, UF 연동 고정금리 일반), Leasing 약 10~16%, 소매금융(Tanner·Forum) 약 15~22%",
+          "avg_new_car_price": "약 CLP 18,000,000 (USD 19,000, turismos 평균 거래가, SUV·중국 브랜드 비중 상승)",
+          "qualitative_summary": "라틴 최개방·최안정 경제, OECD 회원·국가신용등급 A/A2/A-(라틴 최상위). 신차 2025 약 31만대(2022 정점 43만 후 회복), 금융침투 약 65%. 캡티브 약 30%·은행계(Santander·BCI·Chile·Estado) 약 35%·소매금융(Tanner·Forum·Falabella·Ripley) 약 25%. 외환통제 없음·자본송금 자유·법인세 27%·한·칠레 조세조약(이자 4%). CMF 통합감독, 비은행 자동차금융은 등록으로 유연 진입. TMC(금리상한)·대출연계보험 입찰의무가 규제 변수. ClaveÚnica·DICOM·전자세금계산서로 디지털·CB 인프라 EU급, Ley 21.719(2024 GDPR 정합). 평균 APR 약 14%로 BR보다 낮고 예측가능. 구리·리튬 경제 안정."
+        }
+      ]
+    },
+    "quickwin": {
+      "nature": "ranking",
+      "source_flag": "CALC",
+      "weights": {
+        "w_biz": 0.6,
+        "w_it": 0.4
+      },
+      "baseline_country": "BR",
+      "rows": [
+        {
+          "country": "AR",
+          "country_name": "Argentina",
+          "attractiveness": 39.9,
+          "it_similarity": 63.2,
+          "it_similarity_band": 60,
+          "quickwin_raw": 49.2,
+          "quickwin_band": 50,
+          "is_baseline": false,
+          "killswitch_excluded": true,
+          "excluded": true,
+          "exclusion_reason": "killswitch fail"
+        },
+        {
+          "country": "BR",
+          "country_name": "Brazil",
+          "attractiveness": 56.1,
+          "it_similarity": 98.3,
+          "it_similarity_band": 100,
+          "quickwin_raw": 73.0,
+          "quickwin_band": 70,
+          "is_baseline": true,
+          "killswitch_excluded": true,
+          "excluded": true,
+          "exclusion_reason": "baseline (기준국, 후보 아님)"
+        },
+        {
+          "country": "CL",
+          "country_name": "Chile",
+          "attractiveness": 32.6,
+          "it_similarity": 73.0,
+          "it_similarity_band": 70,
+          "quickwin_raw": 48.8,
+          "quickwin_band": 50,
+          "is_baseline": false,
+          "killswitch_excluded": false,
+          "excluded": false,
+          "exclusion_reason": null,
+          "rank": 1
+        }
+      ],
+      "ranking": [
+        {
+          "rank": 1,
+          "country": "CL",
+          "score_band": 50,
+          "attractiveness": 32.6,
+          "it_similarity_band": 70
+        }
+      ],
+      "note": {
+        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국) 및 킬스위치 탈락국 제외. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline and killswitch failures excluded. Reported in 10-point buckets."
+      }
+    },
+    "top3_country_cards": [
+      {
+        "rank": 1,
+        "country": "CL",
+        "country_name": "Chile",
+        "quickwin_score_band": 50,
+        "attractiveness": 32.6,
+        "it_similarity_band": 70,
+        "killswitch_pass": true,
+        "market_brief": {
+          "신차_판매대수": 310000,
+          "금융_이용률_신차": 65,
+          "EV_보급률": 4
+        },
+        "competition_brief": {
+          "금융사_Top5": [
+            {
+              "rank": 1,
+              "name": "Santander Consumer Chile",
+              "market_share": "약 16%"
+            },
+            {
+              "rank": 2,
+              "name": "Forum (Santander)",
+              "market_share": "약 14%"
+            },
+            {
+              "rank": 3,
+              "name": "Tanner Servicios Financieros",
+              "market_share": "약 12%"
+            },
+            {
+              "rank": 4,
+              "name": "Banco BCI / BCI Factoring",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 5,
+              "name": "Banco de Chile",
+              "market_share": "약 9%"
+            }
+          ],
+          "경쟁사_진출_형태": "은행 자회사(Santander Consumer·BCI·Banco de Chile)+전문 소매금융(Tanner·Forum)+소매유통 금융(Falabella·Ripley 백화점 연계)+OEM 캡티브(Toyota FS·GM Financial)+핀테크(Mercado Pago·Tenpo). 비은행은 등록, 은행은 CMF 인가 형태"
+        },
+        "top_news": {
+          "news_category": "auto_market",
+          "headline": "칠레 2025년 신차 판매 약 31만대로 회복세, 2022 정점(43만) 대비 조정 후 반등",
+          "headline_en": "Chile new-car sales recover to ~310K in 2025, rebounding after a correction from the 2022 peak (430K)",
+          "so_what": "시장 회복 신호 — 금융침투 확대 기회. 단 시장 규모 작고 구리·환율 경기 민감. 초기 물량 가정 보수적으로.",
+          "so_what_en": "Market-recovery signal — opportunity to expand finance penetration. But the market is small and copper/FX-cycle sensitive. Keep initial volume assumptions conservative.",
+          "publisher": "Just Auto",
+          "pub_date": "2026-02-12",
+          "url": "https://www.just-auto.com/..."
+        },
+        "ai_comment": "작지만 라틴 최안정·최개방 시장 — 송금자유·투자등급·조세조약·디지털 인프라가 강점. TMC·보험입찰 규제가 가격설계 변수. B2B 리스·소매금융 제휴 우선 → 소비자여신 확장. 광업·물류 플릿 리스 틈새 매력.",
+        "source_flags": {
+          "rank": "CALC",
+          "score": "CALC",
+          "market": "EXT",
+          "competition": "EXT",
+          "news": "NEWS",
+          "ai_comment": "AI"
+        }
+      }
+    ],
+    "executive_summary": {
+      "core_conclusion": {
+        "source_flag": "CALC",
+        "top3": [
+          {
+            "rank": 1,
+            "country": "CL",
+            "score_band": 50,
+            "attractiveness": 32.6,
+            "it_similarity_band": 70
+          }
+        ],
+        "killswitch_failed_count": 2,
+        "why_top1": {
+          "ko": "칠레 — 매력도 32.6, IT유사도 70 구간, 퀵윈 50 구간",
+          "en": "Chile(CL) — Attractiveness 32.6, IT band 70, Quickwin band 50"
+        }
+      },
+      "ai_cross_insight": {
+        "source_flag": "AI",
+        "insights": [
+          {
+            "ko": "후보국 중 매력도 1위(아르헨티나)와 IT유사도 1위(칠레)가 일치하지 않음 — 단기 확산(IT 유사)과 시장 잠재력(매력도) 사이 트레이드오프 존재.",
+            "en": "Top attractiveness (AR) and top IT similarity (CL) are different countries — trade-off between fast deployment (IT) and market potential (attractiveness)."
+          },
+          {
+            "ko": "기준국 브라질은 이미 시스템 보유국 → 순위에서 제외(B국 시스템 확산의 비교 기준).",
+            "en": "Baseline BR already operates a deployed system — excluded from the ranking (used as the reference for system expansion)."
+          },
+          {
+            "ko": "킬스위치 탈락국: 아르헨티나, 브라질 — 규제·신용등급 게이트로 사전 차단(스코어링 제외).",
+            "en": "Killswitch failed: AR, BR — pre-blocked by regulatory/credit-rating gates (excluded from scoring)."
+          }
+        ]
+      },
+      "external_news_scan": {
+        "source_flag": "NEWS",
+        "items": [
+          {
+            "country": null,
+            "scope": "region",
+            "headline": "브라질 중앙은행, SELIC 14.25%로 3회 연속 0.25%p 인하",
+            "headline_en": "Brazil central bank cuts rates for third straight meeting by 25 bps to 14.25%",
+            "so_what": "고금리 기조가 완화되면 신차 할부의 자금조달 비용과 월 상환 부담이 낮아져 자동차금융 수요가 점진적으로 회복된다. 다만 물가가 목표 상단을 웃돌아 추가 인하 속도는 제한적이다.",
+            "so_what_en": "Easing high rates lowers funding costs and monthly installments, gradually reviving auto-finance demand, though above-target inflation limits the pace of further cuts.",
+            "publisher": "Reuters",
+            "date": "2026-06-17",
+            "url": "https://money.usnews.com/investing/news/articles/2026-06-17/brazil-central-bank-cuts-rates-for-third-straight-meeting-by-25-bps",
+            "news_category": "finance"
+          },
+          {
+            "country": null,
+            "scope": "region",
+            "headline": "아르헨티나 5월 물가 2.1%로 둔화, 예상치 하회",
+            "headline_en": "Argentina May inflation slows to 2.1%, below forecasts",
+            "so_what": "월간 물가 둔화는 페소 할부채권의 실질가치 침식과 연체 리스크를 완화해 아르헨티나 자동차금융의 사업성을 점진적으로 개선시킨다. 다만 회복 초기라 진입은 관망이 적절하다.",
+            "so_what_en": "Slowing monthly inflation eases erosion of peso receivables and delinquency risk, gradually improving auto-finance viability, but early-stage recovery favors a wait-and-see entry.",
+            "publisher": "Reuters",
+            "date": "2026-06-10",
+            "url": "https://www.msn.com/en-us/money/markets/argentina-may-inflation-slows-to-21-below-forecasts/ar-AA25q9pb",
+            "news_category": "finance"
+          },
+          {
+            "country": null,
+            "scope": "region",
+            "headline": "아르헨티나 물가 8개월 최저로 둔화, 밀레이에 호재",
+            "headline_en": "Argentina's inflation slows to 8-month low in a boost for President Milei",
+            "so_what": "밀레이 안정화 정책의 정치적 모멘텀이 강화되면 외환통제(cepo) 완화·시장 개방 가속 기대가 커져 외국계 자동차금융사의 중기 진입 환경이 개선될 수 있다.",
+            "so_what_en": "Stronger political momentum for Milei's stabilization raises hopes of further FX-control easing and market opening, improving the mid-term entry environment for foreign auto-finance players.",
+            "publisher": "Associated Press",
+            "date": "2026-06-10",
+            "url": "https://www.msn.com/en-us/money/general/argentina-s-inflation-slows-to-8-month-low-in-a-boost-for-president-milei/ar-AA25pXsX",
+            "news_category": "geopolitical"
+          },
+          {
+            "country": "CL",
+            "scope": "country",
+            "headline": "칠레 2025년 신차 판매 약 31만대로 회복세, 2022 정점(43만) 대비 조정 후 반등",
+            "headline_en": "Chile new-car sales recover to ~310K in 2025, rebounding after a correction from the 2022 peak (430K)",
+            "so_what": "시장 회복 신호 — 금융침투 확대 기회. 단 시장 규모 작고 구리·환율 경기 민감. 초기 물량 가정 보수적으로.",
+            "so_what_en": "Market-recovery signal — opportunity to expand finance penetration. But the market is small and copper/FX-cycle sensitive. Keep initial volume assumptions conservative.",
+            "publisher": "Just Auto",
+            "date": null
+          }
+        ],
+        "region_news_count": 3,
+        "note": {
+          "ko": "권역 공통 이슈 3건 + 상위 3개국 헤드라인. '조사 필요' 항목은 제외.",
+          "en": "3 region-wide issues + top-3 country headlines. '조사 필요' (research needed) entries excluded."
+        }
+      }
+    }
+  }
+}

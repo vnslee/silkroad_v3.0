@@ -1,0 +1,87 @@
+{
+  "region": "North America",
+  "region_ko": "북미권역",
+  "code": "NA",
+  "baseline_country": "US",
+  "schema_version": "1.0",
+  "fetched_at": "2026-06-23T12:00:00+09:00",
+  "fetched_by": "ai",
+  "overall_insight": "북미 권역의 2026년 2분기는 '관세 불확실성 vs. 신용여건 개선'이 공존하는 국면이다. Trump 행정부의 정책 변동성으로 일본계 OEM 등에 최대 400억 달러 비용 우려가 제기되고, 캐나다에서는 관세 후폭풍과 중국 OEM(BYD·Geely·Chery)의 현지 생산 진출 논의가 부상해 공급망·진출 지형이 재편되고 있다. 동시에 Fed는 6월 금리를 동결하고 추가 인하 편향을 제거(연말 3.8% 전망)해 고금리 장기화 신호를 보냈으나, 오토파이낸스 측면에서는 신용여건이 오히려 개선됐다 — Dealertrack 신용가용성 지수가 2022년 4월 이후 최고치(103.7), 승인율 72.4%, 평균 계약금리 10.87%로 하락. 신차 평균금리 9.53%, 월 납입금 753달러로 부담은 여전히 높지만 소득증가·인센티브로 접근성은 소폭 개선됐고, Ally의 60일+ 연체와 순상각이 전년 대비 감소하며 차주 신용 건전성도 양호한 편이다. 진출 관점에서는 신용 사이클이 우호적으로 돌아서는 시점이나, 관세·정책 변동성과 중국 OEM의 시장 진입이 중기 리스크로 병존한다.",
+  "items": [
+    {
+      "item": "권역 외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "context_type": "news",
+      "value": [
+        {
+          "news_category": "geopolitical",
+          "scope": "global",
+          "headline": "Trump 정책 혼선으로 일본계 완성차, 관세·EV·배출규제에 최대 400억 달러 타격 가능",
+          "so_what": "관세·정책 변동성이 북미 진출 OEM의 차량 원가·가격을 흔들어 오토파이낸스 자산가치·LTV 산정에 불확실성을 키운다.",
+          "publisher": "Automotive News",
+          "pub_date": "2026-06-11",
+          "url": "https://www.autonews.com/toyota/an-trump-policy-tariff-ev-impact-japan-carmakers-toyota-nissan-honda-mazda-subaru-0611/"
+        },
+        {
+          "news_category": "geopolitical",
+          "scope": "region",
+          "headline": "캐나다 자동차 주간 5대 이슈: 중국 OEM 현지생산 논의·값비싼 관세 후폭풍",
+          "so_what": "BYD·Geely·Chery의 캐나다 조립공장 진출 논의는 중기적으로 북미 차량 구성·가격대를 바꿔 파이낸스 포트폴리오 전략에 영향을 준다.",
+          "publisher": "Automotive News",
+          "pub_date": "2026-06-19",
+          "url": "https://www.autonews.com/manufacturing/anc-canadian-auto-news-week-june-15-2026/"
+        },
+        {
+          "news_category": "finance",
+          "scope": "region",
+          "headline": "Fed, 추가 완화 편향 제거하고 기준금리 동결 (연말 3.8% 전망)",
+          "so_what": "고금리 장기화 신호로 오토론 조달비용 부담이 지속 — 차입금리·월납입금 압박이 당분간 유지된다.",
+          "publisher": "WardsAuto",
+          "pub_date": "2026-06-18",
+          "url": "https://www.wardsauto.com/news/fed-ends-bias-toward-more-easing-holds-benchmark-rate-steady/823278/"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "5월 가격 하락·소득 증가로 신차 구매 접근성 개선 (평균금리 9.53%, 월납 753달러)",
+          "so_what": "금리 소폭 상승에도 인센티브·소득증가로 접근성이 개선돼 신차 파이낸싱 수요 회복 여지가 있다.",
+          "publisher": "Cox Automotive/Manheim",
+          "pub_date": "2026-06-16",
+          "url": "https://www.coxautoinc.com/insights/may-2026-vai/"
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "region",
+          "headline": "캐나다 EV 프로젝트 좌초로 CA$52억 보조금 공급망 전략에 의문",
+          "so_what": "캐나다 EV 생산·보조금 차질로 EV 잔존가치·리스 상품 설계 불확실성이 커진다.",
+          "publisher": "WardsAuto",
+          "pub_date": "2026-06-05",
+          "url": "https://www.wardsauto.com/news/in-canada-aborted-ev-projects-raise-questions-over-supply-chain-subsidies/822084/"
+        },
+        {
+          "news_category": "auto_finance",
+          "scope": "region",
+          "headline": "5월 오토 신용가용성 상승 — 승인율 개선·수익률 스프레드 축소 (지수 103.7, 2022년 4월 이후 최고)",
+          "so_what": "신용가용성 지수가 최고치, 승인율 72.4%, 계약금리 10.87%로 하락 — 신용 사이클이 대출 우호적으로 전환돼 진출 적기 신호.",
+          "publisher": "Cox Automotive/Manheim",
+          "pub_date": "2026-06-10",
+          "url": "https://www.coxautoinc.com/insights/auto-credit-availability-climbs-in-may-as-approval-rates-improve-yield-spreads-narrow/"
+        },
+        {
+          "news_category": "credit_abs",
+          "scope": "region",
+          "headline": "Ally, 어려운 환경에도 오토 신용 개선 — 1Q 60일+ 연체 8.42억 달러로 감소, 순상각 4.24억 달러로 하락",
+          "so_what": "주요 오토렌더의 연체·순상각이 전년 대비 감소해 차주 신용 건전성이 양호 — 오토론 자산 손실률 전망에 긍정적.",
+          "publisher": "American Banker",
+          "pub_date": "2026-04-17",
+          "url": "https://www.americanbanker.com/news/allys-auto-credit-improves-despite-tough-backdrop"
+        }
+      ],
+      "tier": 3,
+      "source": "화이트리스트(Automotive News · WardsAuto · Cox Automotive/Manheim · American Banker)",
+      "insight": "신용 사이클이 대출 우호적으로 전환(신용가용성 지수 최고·연체 감소)되는 점이 진출에 우호적 신호다. 다만 Trump 관세·정책 변동성과 중국 OEM의 북미 생산 진입이 차량가·잔존가치·포트폴리오에 중기 리스크로 병존한다. credit_abs 등급사(Moody's·S&P·Fitch) 정량 리포트는 접근 차단으로 American Banker 보도로 대체 — 실사 단계에서 등급사 ABS 데이터 보강 필요.",
+      "insight_ai_generated": true
+    }
+  ]
+}

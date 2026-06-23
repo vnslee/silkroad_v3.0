@@ -1,0 +1,147 @@
+<!DOCTYPE html><html class="light" lang="ko" style=""><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>{{PAGE_TITLE}}</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "accent-red": "#C0533F",
+                        "surface-bright": "#F7F8FA",
+                        "on-primary-fixed-variant": "#2C4C86",
+                        "tertiary-fixed": "#F6E7E3",
+                        "primary-fixed-dim": "#6E97D6",
+                        "inverse-surface": "#1F2D45",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#3F6CB4",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "error": "#C0533F",
+                        "on-tertiary-fixed-variant": "#C0533F",
+                        "secondary-fixed": "#EAF0F8",
+                        "tertiary": "#C0533F",
+                        "inverse-primary": "#6E97D6",
+                        "primary-container": "#2C4C86",
+                        "on-primary-container": "#8FA0BD",
+                        "primary-fixed": "#EAF0F8",
+                        "on-secondary-container": "#2C4C86",
+                        "surface-dim": "#dbdad9",
+                        "surface-container-low": "#F7F8FA",
+                        "surface-border": "#E6E9EC",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#EEF0F2",
+                        "surface-container": "#EEF0F2",
+                        "secondary-fixed-dim": "#6E97D6",
+                        "on-tertiary-fixed": "#C0533F",
+                        "surface-variant": "#EEF0F2",
+                        "on-tertiary-container": "#E89380",
+                        "inverse-on-surface": "#F7F8FA",
+                        "outline": "#9AA0A8",
+                        "surface-light": "#F7F8FA",
+                        "text-secondary": "#3B3F46",
+                        "on-primary-fixed": "#101622",
+                        "surface-tint": "#3F6CB4",
+                        "on-secondary-fixed": "#101622",
+                        "on-surface-variant": "#3B3F46",
+                        "on-secondary-fixed-variant": "#2C4C86",
+                        "on-error-container": "#C0533F",
+                        "outline-variant": "#D2D7DE",
+                        "text-disabled": "#9AA0A8",
+                        "secondary-container": "#6E97D6",
+                        "tertiary-fixed-dim": "#E89380",
+                        "on-secondary": "#ffffff",
+                        "background": "#F7F8FA",
+                        "error-container": "#F6E7E3",
+                        "surface": "#F7F8FA",
+                        "on-background": "#14171C",
+                        "text-primary": "#14171C",
+                        "surface-container-high": "#EEF0F2",
+                        "primary": "#101622",
+                        "tertiary-container": "#F6E7E3",
+                        "on-surface": "#14171C"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Pretendard"],
+                        "label-md": ["Pretendard"],
+                        "headline-lg": ["Pretendard"],
+                        "body-sm": ["Pretendard"],
+                        "display-lg": ["Pretendard"],
+                        "label-sm": ["Pretendard"],
+                        "body-lg": ["Pretendard"],
+                        "headline-lg-mobile": ["Pretendard"],
+                        "body-md": ["Pretendard"],
+                        "mono": ["Space Grotesk", "Pretendard", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-shadow-level-3 {
+            box-shadow: 0 12px 24px -4px rgba(20, 23, 28, 0.16);
+        }
+        .custom-shadow-level-2 {
+            box-shadow: 0 4px 8px -2px rgba(20, 23, 28, 0.12);
+        }
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #D2D7DE; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9AA0A8; }
+    </style>
+</head>
+<body class="bg-background font-body-md text-body-md text-on-surface antialiased flex min-h-screen flex-col">
+<div class="flex items-start justify-center min-h-screen w-full px-gutter sm:px-xl lg:px-[64px] py-xl bg-background">
+    <div class="w-full max-w-5xl rounded-xl custom-shadow-level-3 flex flex-col border-surface-border bg-surface-container">
+        <div class="p-lg flex flex-col gap-xl">
+            <!-- KPI summary cards -->
+            {{KPI_CARDS}}
+            <!-- Region map (left) + quick-win ranking (right) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-md items-stretch">
+                {{REGION_MAP}}
+                {{QUICKWIN_TABLE}}
+            </div>
+            <!-- Region AI insight -->
+            {{REGION_INSIGHT}}
+            <!-- Report generation CTA -->
+            {{REPORT_CTA}}
+        </div>
+    </div>
+</div>
+</body></html>

@@ -1,0 +1,69 @@
+{
+  "region": "South America",
+  "region_ko": "남미권역",
+  "code": "SA",
+  "baseline_country": "BR",
+  "schema_version": "1.0",
+  "fetched_at": "2026-06-23T12:00:00+09:00",
+  "fetched_by": "ai",
+  "overall_insight": "2026년 2분기 접근 가능한 화이트리스트 출처에서 남미 권역에 직접적인 환율·오토파이낸스 기사는 거의 확보되지 않았고(Reuters·AP·FT·Bloomberg·Fitch·S&P Global Mobility·Auto Finance News·American Banker 다수가 봇차단/403/페이월), 확인된 신호는 두 가지다. 첫째, Moody's가 2026-06-10 콜롬비아 결선 대선이 향후 정책 경로를 크게 갈라놓을 수 있다고 분석해 남미 정치·국가신용 리스크가 2분기에 부각되었다 — 진출 시 권역 내 정권·정책 변동성에 따른 환율·금리·소비자신용 환경 변화를 시나리오로 반영해야 함을 시사한다. 둘째, Just Auto가 2026-05-20 글로벌 경량차 생산 전망을 하향 조정해, 글로벌 수요 둔화가 남미 신차 판매·할부 볼륨에도 파급될 수 있다. BR·CL·AR 핵심국의 환율(헤알·페소)·리튬·딜린퀀시에 관한 2분기 1차 기사는 본 조사에서 화이트리스트 출처로 확보하지 못했으므로 추가 조사가 필요하다.",
+  "items": [
+    {
+      "item": "권역 외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "context_type": "news",
+      "value": [
+        {
+          "news_category": "geopolitical",
+          "scope": "region",
+          "headline": "콜롬비아 결선 대선, 상반된 향후 정책 경로를 부각",
+          "so_what": "남미 권역 정권교체에 따른 정책·환율·금리 변동성 확대 — 진출 시 권역 국가신용·소비자신용 환경의 시나리오 분기를 반영해야 함.",
+          "publisher": "Moody's",
+          "pub_date": "2026-06-10",
+          "url": "https://www.moodys.com/research/Government-Policy-Colombia-Runoff-presidential-election-highlights-starkly-different-future-Sector-In-Depth--PBC_1486522"
+        },
+        {
+          "news_category": "finance",
+          "scope": "",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "global",
+          "headline": "2026년 글로벌 경량차 생산 전망 하향 조정",
+          "so_what": "글로벌 생산·수요 둔화가 남미 신차 판매·할부 볼륨에도 파급될 수 있어 권역 진출 시 볼륨 가정을 보수적으로 설정해야 함.",
+          "publisher": "Just Auto",
+          "pub_date": "2026-05-20",
+          "url": "https://www.just-auto.com/features/global-light-vehicle-production-forecast-for-2026-gets-a-downgrade/"
+        },
+        {
+          "news_category": "auto_finance",
+          "scope": "",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "credit_abs",
+          "scope": "",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        }
+      ],
+      "tier": 3,
+      "source": "화이트리스트(Moody's · Just Auto)",
+      "insight": "남미 권역은 정치·정책 변동성(콜롬비아 대선)과 글로벌 생산 둔화 파급이 2분기 핵심 신호다. 다만 BR·CL·AR 핵심국 환율·딜린퀀시·ABS 1차 데이터는 화이트리스트 출처 다수 차단(Reuters·AP·FT·Bloomberg·Fitch·S&P)으로 확보 못 함 — finance·auto_finance·credit_abs는 실사 단계 보강 필요.",
+      "insight_ai_generated": true
+    }
+  ]
+}
