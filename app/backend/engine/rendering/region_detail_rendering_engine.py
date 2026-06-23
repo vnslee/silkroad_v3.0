@@ -419,27 +419,25 @@ def region_insight(data):
     if not lead and not cross:
         return ""
 
+    # 리드 결론 + 교차 인사이트를 하나의 줄글(문단)로 합친다.
     lead_html = (
-        '<div class="rounded-lg bg-secondary-fixed/40 p-md mb-md flex gap-sm items-start">'
-        '<span class="material-symbols-outlined text-secondary text-[20px] mt-[1px]">emoji_events</span>'
-        f'<p class="font-body-md text-body-md text-on-surface font-semibold m-0">{rre.esc(lead)}</p></div>'
+        f'<p class="font-body-md text-body-md text-on-surface font-semibold mb-md '
+        f'leading-relaxed m-0">{rre.esc(lead)}</p>'
     ) if lead else ""
 
-    rows = "".join(
-        '<div class="flex gap-md items-start rounded-lg bg-surface-light p-md">'
-        '<span class="font-headline-md text-[16px] leading-[24px] text-secondary font-bold '
-        f'shrink-0 w-6 text-center">{n + 1}</span>'
-        f'<p class="font-body-sm text-body-sm text-on-surface m-0">{rre.esc((i.get("ko") or i.get("en")).strip())}</p>'
-        '</div>' for n, i in enumerate(cross))
-    rows_html = f'<div class="flex flex-col gap-sm">{rows}</div>' if cross else ""
+    paras = "".join(
+        f'<p class="font-body-md text-body-md text-on-surface leading-relaxed m-0">'
+        f'{rre.esc((i.get("ko") or i.get("en")).strip())}</p>'
+        for i in cross)
+    body_html = f'<div class="flex flex-col gap-md">{paras}</div>' if cross else ""
 
     return (
         '<div class="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">'
         '<div class="flex items-center gap-sm mb-md">'
-        '<span class="material-symbols-outlined text-secondary text-[20px]">psychology</span>'
-        '<h3 class="font-headline-md text-[18px] leading-[24px] text-primary font-bold flex-1">권역 인사이트</h3>'
+        '<span class="material-symbols-outlined text-secondary text-[24px]">psychology</span>'
+        '<h3 class="font-headline-md text-[22px] leading-[30px] text-primary font-bold flex-1">권역 인사이트</h3>'
         f'{_src_badge("AI 분석")}</div>'
-        f'{lead_html}{rows_html}</div>')
+        f'{lead_html}{body_html}</div>')
 
 
 # ─────────────────────────────────────────────────────────────────────────────
