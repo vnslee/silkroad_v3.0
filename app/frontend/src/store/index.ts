@@ -13,11 +13,19 @@ export interface JobRef {
   label: string
 }
 
+export type ToastTone = 'info' | 'error'
+export interface Toast {
+  id: number
+  message: string
+  tone: ToastTone
+}
+
 interface AppState {
   activePopup: boolean // §5.2 챗봇 위치 규칙
   activeJobs: JobRef[] // §5.3 프로그레스 카드 노출 판단
   lang: Lang
   chatOpen: boolean // FAB·챗 패널이 공유
+  toast: Toast | null // 일시적 안내(권역 정보 없음 등) — 단일 슬롯, 새 토스트가 기존을 대체
 }
 
 let state: AppState = {
@@ -25,7 +33,10 @@ let state: AppState = {
   activeJobs: [],
   lang: 'ko',
   chatOpen: false,
+  toast: null,
 }
+
+let toastSeq = 0 // 토스트 id 시퀀스(연속 호출 식별용 — Date.now/Math.random 미사용)
 
 const listeners = new Set<() => void>()
 
@@ -56,6 +67,17 @@ export const store = {
   },
   removeJob(jobId: string) {
     setState({ activeJobs: state.activeJobs.filter((j) => j.jobId !== jobId) })
+  },
+
+  // 토스트 — 새 토스트가 기존 슬롯을 대체(중첩 없음). id 반환으로 dismiss 식별.
+  showToast(message: string, tone: ToastTone = 'info'): number {
+    const id = ++toastSeq
+    setState({ toast: { id, message, tone } })
+    return id
+  },
+  // 해당 id가 아직 떠 있을 때만 닫음(다음 토스트가 이미 슬롯을 차지했으면 무시).
+  dismissToast(id: number) {
+    if (state.toast?.id === id) setState({ toast: null })
   },
 }
 

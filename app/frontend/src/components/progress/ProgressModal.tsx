@@ -3,6 +3,7 @@
 import type { JobKind } from '../../api/types'
 import { useJobPolling } from '../../hooks/useJobPolling'
 import { mapStepToBars, overallPercent } from '../../utils/progress'
+import { Icon } from '../common/Icon'
 
 interface Props {
   jobId: string
@@ -10,36 +11,54 @@ interface Props {
   title?: string
   onMinimize?: () => void
   onViewReport?: (reportId: string) => void
+  onDismiss?: () => void
 }
 
-export function ProgressModal({ jobId, kind, title, onMinimize, onViewReport }: Props) {
-  const { step, percent, status, result } = useJobPolling(jobId)
+export function ProgressModal({ jobId, kind, title, onMinimize, onViewReport, onDismiss }: Props) {
+  const { step, percent, status, result, error } = useJobPolling(jobId)
   const bars = step ? mapStepToBars(kind, step, percent) : []
   const total = overallPercent(percent)
   const reportId =
     result && 'report_id' in result ? (result as { report_id: string }).report_id : null
   const done = status === 'succeeded'
+  const failed = status === 'failed'
 
   return (
     <div className="flex flex-col">
       {/* 헤더 */}
       <div className="flex items-center justify-between gap-md border-b border-surface-border px-lg py-md">
         <div className="flex-1">
-          <div className="font-label-md text-label-md font-semibold tracking-[0.08em] text-primary">
-            GENERATING REPORT
+          <div
+            className={`font-label-md text-label-md font-semibold tracking-[0.08em] ${failed ? 'text-error' : 'text-primary'}`}
+          >
+            {failed ? 'REPORT FAILED' : 'GENERATING REPORT'}
           </div>
           <div className="mt-[3px] font-headline-md text-[18px] font-bold">{title ?? '보고서 생성'}</div>
         </div>
-        {onMinimize && (
-          <button
-            onClick={onMinimize}
-            aria-label="최소화"
-            title="최소화"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container"
-          >
-            ▢
-          </button>
-        )}
+        <div className="flex items-center gap-xs">
+          {/* 최소화 — 진행 중에만(완료/실패면 닫기로 정리). */}
+          {onMinimize && !failed && !done && (
+            <button
+              onClick={onMinimize}
+              aria-label="최소화"
+              title="최소화"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <Icon name="remove" className="text-[18px] leading-none" />
+            </button>
+          )}
+          {/* 닫기 — 잡을 정리하고 모달을 닫는다(실패 시 시뮬레이션 재실행 가능). */}
+          {onDismiss && (
+            <button
+              onClick={onDismiss}
+              aria-label="닫기"
+              title="닫기"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-surface-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <Icon name="close" className="text-[18px] leading-none" />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="px-lg py-md">
@@ -90,10 +109,30 @@ export function ProgressModal({ jobId, kind, title, onMinimize, onViewReport }: 
             보고서 열기 →
           </button>
         )}
-        {status === 'failed' && (
-          <p className="mt-md font-body-sm text-body-sm text-on-error-container">
-            진행 중 오류가 발생했습니다.
-          </p>
+        {failed && (
+          <div className="mt-lg rounded-[12px] border border-error/30 bg-error-container/60 p-md">
+            <div className="flex items-start gap-sm">
+              <Icon name="error" filled className="mt-[1px] text-[18px] leading-none text-error" />
+              <div className="flex-1">
+                <p className="font-body-sm text-[13px] font-semibold text-on-error-container">
+                  보고서 생성 중 오류가 발생했습니다.
+                </p>
+                {error && (
+                  <p className="mt-xs break-words font-label-sm text-label-sm text-on-error-container/80">
+                    {error}
+                  </p>
+                )}
+              </div>
+            </div>
+            {onDismiss && (
+              <button
+                onClick={onDismiss}
+                className="mt-md w-full rounded-[10px] bg-primary py-sm text-center font-body-sm text-[13px] font-bold text-on-primary transition-colors hover:bg-inverse-primary"
+              >
+                닫고 다시 시도
+              </button>
+            )}
+          </div>
         )}
       </div>
     </div>

@@ -86,30 +86,43 @@ export const MicroExpander = React.forwardRef<HTMLButtonElement, MicroExpanderPr
             {isLoading ? (
               <motion.span
                 key="spinner"
+                className="flex h-5 w-5 items-center justify-center"
                 initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.2 }}
               >
-                <Icon name="progress_activity" className="animate-spin text-[20px]" />
+                <Icon name="progress_activity" className="animate-spin text-[20px] leading-none" />
               </motion.span>
             ) : (
               <motion.span
                 key="icon"
+                className="flex h-5 w-5 items-center justify-center"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.2 }}
               >
-                {icon ?? <Icon name={iconName ?? 'add'} className="text-[20px]" />}
+                {icon ?? <Icon name={iconName ?? 'add'} className="text-[20px] leading-none" />}
               </motion.span>
             )}
           </AnimatePresence>
         </span>
 
-        <motion.span variants={textVariants} className="pl-0.5 pr-4">
-          {text}
-        </motion.span>
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.span
+              key="label"
+              variants={textVariants}
+              initial="initial"
+              animate="hover"
+              exit="exit"
+              className="pl-0.5 pr-4"
+            >
+              {text}
+            </motion.span>
+          )}
+        </AnimatePresence>
       </motion.button>
     )
   },
