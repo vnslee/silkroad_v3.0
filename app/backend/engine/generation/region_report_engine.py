@@ -981,11 +981,14 @@ class RegionReportEngine:
                 ),
             }
 
-        # B. AI 교차 인사이트 (탭 간 해석) — 기준국 제외하고 후보국 중에서 비교, 양 언어 dict로 반환
+        # B. AI 교차 인사이트 (탭 간 해석) — 후보국 중에서만 비교, 양 언어 dict로 반환.
+        # quickwin과 동일한 후보 집합을 써야 일관됨: 기준국·진출국(운영중)·킬스위치 JV필수국은
+        # 모두 제외(quickwin rows의 excluded 플래그 재활용 — attr/it 랭킹은 자체적으로 안 걸러줌).
         ai_insights: List[Dict[str, str]] = []
         baseline = quickwin.get("baseline_country")
-        attr_rank = {r["country"]: r["rank"] for r in attractiveness["ranking"] if r["country"] != baseline}
-        it_rank = {r["country"]: r["rank"] for r in it_similarity["ranking"] if r["country"] != baseline}
+        candidate_codes = {r["country"] for r in quickwin.get("rows", []) if not r.get("excluded")}
+        attr_rank = {r["country"]: r["rank"] for r in attractiveness["ranking"] if r["country"] in candidate_codes}
+        it_rank = {r["country"]: r["rank"] for r in it_similarity["ranking"] if r["country"] in candidate_codes}
         if attr_rank and it_rank:
             top_attr = min(attr_rank, key=lambda k: attr_rank[k])
             top_it = min(it_rank, key=lambda k: it_rank[k])
@@ -1017,18 +1020,43 @@ class RegionReportEngine:
                     f"excluded from the ranking (used as the reference for system expansion)."
                 ),
             })
-        if killswitch.get("failed"):
-            failed_str = ", ".join(killswitch["failed"])
-            failed_str_ko = ", ".join(self._country_ko(c) for c in killswitch["failed"])
+        # 킬스위치 tier별 인사이트 — 권역내 확신(전 PASS)을 제외한 단계만, 단계별 권고 액션과 함께.
+        # tier별 해석·권고 문구(액션). severity 순서(나쁨→좋음)로 노출.
+        tier_insight_text = {
+            "jv_required": {
+                "ko": ("JV 필수 — {names}: 신용등급·규제 게이트 미충족으로 단독 진출 불가. "
+                       "퀵윈 랭킹에서 제외했으며, 현지 파트너와의 JV로만 진출 검토 권장."),
+                "en": ("JV Required — {names}: credit-rating/regulatory gates unmet, solo entry not viable. "
+                       "Excluded from the quickwin ranking; consider entry only via a local JV partner."),
+            },
+            "jv_recommended": {
+                "ko": ("JV 권고 — {names}: 외환·송금 또는 외국인 지분 제약으로 단독 진출 리스크 큼. "
+                       "랭킹에는 감점 후 포함했으며, 현지 JV 파트너 확보를 우선 검토 권장."),
+                "en": ("JV Recommended — {names}: remittance/ownership constraints raise solo-entry risk. "
+                       "Included in the ranking with a penalty; prioritize securing a local JV partner."),
+            },
+            "external_solution": {
+                "ko": ("외부솔루션 사용 — {names}: 데이터 현지화 의무만 제약. "
+                       "현지 IT·데이터 솔루션 외주로 우회 가능하며 직접 진출 후보로 유효."),
+                "en": ("External Solution — {names}: only data-localization is constrained. "
+                       "Solvable via outsourced local IT/data solutions; remains a viable direct-entry candidate."),
+            },
+        }
+        tier_order = ["jv_required", "jv_recommended", "external_solution"]
+        by_tier: Dict[str, List[str]] = {}
+        for c in killswitch.get("countries", []):
+            tk = c.get("tier")
+            if tk in tier_insight_text:
+                by_tier.setdefault(tk, []).append(c.get("country"))
+        for tk in tier_order:
+            codes = by_tier.get(tk)
+            if not codes:
+                continue
+            names_ko = ", ".join(self._country_ko(c) for c in codes)
+            names_en = ", ".join(codes)
             ai_insights.append({
-                "ko": (
-                    f"킬스위치 탈락국: {failed_str_ko} — "
-                    f"규제·신용등급 게이트로 사전 차단(스코어링 제외)."
-                ),
-                "en": (
-                    f"Killswitch failed: {failed_str} — "
-                    f"pre-blocked by regulatory/credit-rating gates (excluded from scoring)."
-                ),
+                "ko": tier_insight_text[tk]["ko"].format(names=names_ko),
+                "en": tier_insight_text[tk]["en"].format(names=names_en),
             })
 
         # C. 외부 이슈 스캔 (NEWS) — 권역 공통 이슈를 가장 위에, 그 다음 상위 3개국 헤드라인
