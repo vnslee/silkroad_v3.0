@@ -6,9 +6,10 @@
     "country": "PL",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-21T19:11:12.872814",
+  "generated_at": "2026-06-23T19:52:48.394122",
   "schema_version": "1.1",
   "overall_insight": "EU 6위권 자동차 시장이자 중동부 유럽(CEE) 최대 신차 시장. 2025년 신차 등록 약 56만대(SAMAR), 리스(특히 운용리스)가 신규의 70% 이상을 차지하는 리스 주도 구조가 핵심이다. 비용·난이도 드라이버는 명확하다 — 소비자신용은 KNF(금융감독청) 인가(자본금 100만 PLN+감사회+상시 감독)와 2024년 강화된 금리상한(KNF 9%+WIBOR, 비이자 비용 최대 25%+원금의 30%/년)·세금부담세(PIT)가 진입 부담을 키운다. 반면 B2B 리스는 무면허로 즉시 가능하고 ZPL(폴란드 리스협회) 회원사가 시장의 90%+ 점유해 진입이 유연하다. 비즈니스 매력도(EU 6위·CEE 1위, 리스 시장 €25bn+)는 상위권이나, 캡티브(VW FS·Toyota Bank)와 은행계 리스(mLeasing·PKO Leasing·Santander) 양강 구조는 독립계 진입에 가격·디지털 차별화를 요구한다. IT 유사도는 양호 — EU GDPR·SEPA·BIK(신용정보)·PolishAPI(오픈뱅킹)로 NetSol 베이스라인 재사용률 높음. 매력도↔IT 불일치 지점은 차량회수 — 리스는 소유권 기반으로 용이하나 소비자대출 담보회수는 komornik(집행관) 사법 적체로 6~18개월. 다크호스는 EV 보급률 가속(2025 7%대) — 잔가 리스크 관리가 리스 손익 핵심 변수. B2B·운용리스 우선 진입 후 KNF 인가 기반 소비자금융으로 단계적 확장이 유효하다.",
+  "overall_insight_en": "Poland is the EU's #6 auto market and the largest new-car market in Central and Eastern Europe (CEE). About 560,000 new-car registrations in 2025 (SAMAR); a lease-led structure where leasing (especially operating lease) accounts for 70%+ of new financing is the core. Cost/difficulty drivers are clear — consumer credit requires KNF (Financial Supervision Authority) licensing (PLN 1M capital + supervisory board + ongoing supervision), and the 2024-tightened rate caps (KNF 9% + WIBOR; non-interest costs capped at 25% + 30% of principal per year) plus the bank levy (PIT) raise entry burden. By contrast, B2B leasing is unlicensed and immediately available, and ZPL (Polish Leasing Association) members hold 90%+ of the market, making entry flexible. Business attractiveness (EU #6, CEE #1, lease market €25bn+) is top-tier, but the two-tier structure of captives (VW FS, Toyota Bank) and bank-affiliated lessors (mLeasing, PKO Leasing, Santander) requires price and digital differentiation for independent entrants. IT similarity is favorable — EU GDPR, SEPA, BIK (credit bureau), and PolishAPI (open banking) deliver high NetSol baseline reuse. The attractiveness↔IT mismatch is in repossession — leasing is easy thanks to ownership, but consumer-loan collateral recovery takes 6-18 months due to komornik (bailiff) judicial backlogs. The dark horse is accelerating EV adoption (~7% in 2025) — residual-value risk management is the key lever for lease P&L. A staged strategy — B2B/operating-lease entry first, then expansion into consumer finance under KNF licensing — is effective.",
   "country_meta": {
     "country": "Poland",
     "country_ko": "폴란드",
@@ -20,12 +21,12 @@
     "entry_status": "미진출"
   },
   "data_quality": {
-    "completeness_pct": 100.0,
-    "total_items": 48,
+    "completeness_pct": 97.95918367346938,
+    "total_items": 49,
     "target_items": 48,
-    "timeseries_coverage": 64.58333333333334,
+    "timeseries_coverage": 65.3061224489796,
     "source_tiers": {
-      "tier1": 18,
+      "tier1": 19,
       "tier2": 13,
       "tier3": 17,
       "tier4": 0
@@ -43,6 +44,12 @@
           "role": "score",
           "has_timeseries": true,
           "source_tier": 3
+        },
+        {
+          "item": "GDP 성장률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
         },
         {
           "item": "금융 이용률(신차)",
@@ -378,7 +385,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "리스 신차 70%+ — EU 1위(CEE 특이)"
+              "note": "리스 신차 70%+ — EU 1위(CEE 특이)",
+              "note_en": "New-car leasing 70%+ — EU #1 (CEE outlier)"
             },
             {
               "dimension": "렌탈 취급 일치도",
@@ -386,7 +394,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "CFM(운용리스) 30%+ 가속"
+              "note": "CFM(운용리스) 30%+ 가속",
+              "note_en": "CFM (operating lease) 30%+ accelerating"
             },
             {
               "dimension": "플릿 취급 일치도",
@@ -394,7 +403,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "법인 등록 70%+ — 플릿 압도"
+              "note": "법인 등록 70%+ — 플릿 압도",
+              "note_en": "Corporate registrations 70%+ — fleet dominant"
             },
             {
               "dimension": "상품별 비중 유사도",
@@ -402,7 +412,8 @@
               "base_score": 4,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "리스 주도, 할부 비중 낮음"
+              "note": "리스 주도, 할부 비중 낮음",
+              "note_en": "Lease-led, low installment share"
             }
           ],
           "item_similarity": 93.75
@@ -418,7 +429,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "강제 현지화 없음"
+              "note": "강제 현지화 없음",
+              "note_en": "No forced localization"
             },
             {
               "dimension": "국외 이전 허용도",
@@ -426,7 +438,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "EU 역내 자유"
+              "note": "EU 역내 자유",
+              "note_en": "Free within EU"
             },
             {
               "dimension": "동의·보관 규제",
@@ -434,7 +447,8 @@
               "base_score": 4,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "UODO 표준 감독"
+              "note": "UODO 표준 감독",
+              "note_en": "UODO standard supervision"
             },
             {
               "dimension": "GDPR 동등성",
@@ -442,7 +456,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "GDPR 동등(EU)"
+              "note": "GDPR 동등(EU)",
+              "note_en": "GDPR-equivalent (EU)"
             }
           ],
           "item_similarity": 93.75
@@ -458,7 +473,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "KNF 등록 — B2B 리스 무면허"
+              "note": "KNF 등록 — B2B 리스 무면허",
+              "note_en": "KNF registration — B2B leasing unlicensed"
             },
             {
               "dimension": "외국인 취득 가능",
@@ -466,7 +482,8 @@
               "base_score": 5,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "EU 자본자유"
+              "note": "EU 자본자유",
+              "note_en": "EU free movement of capital"
             },
             {
               "dimension": "처리기간(개월)",
@@ -474,7 +491,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "KNF 등록 6~9개월"
+              "note": "KNF 등록 6~9개월",
+              "note_en": "KNF registration 6-9 months"
             },
             {
               "dimension": "최저자본금 수준",
@@ -482,7 +500,8 @@
               "base_score": 4,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "자본 PLN 1M(€230k) — EU 최저급"
+              "note": "자본 PLN 1M(€230k) — EU 최저급",
+              "note_en": "Capital PLN 1M (€230k) — among EU's lowest"
             },
             {
               "dimension": "감독 강도",
@@ -490,7 +509,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "KNF 단일 감독"
+              "note": "KNF 단일 감독",
+              "note_en": "KNF single supervisor"
             }
           ],
           "item_similarity": 80.0
@@ -506,7 +526,8 @@
               "base_score": 4,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "EU 패키지(NETSOL·Sofico) + 현지 SI(Comarch·Asseco)"
+              "note": "EU 패키지(NETSOL·Sofico) + 현지 SI(Comarch·Asseco)",
+              "note_en": "EU packages (NETSOL, Sofico) + local SI (Comarch, Asseco)"
             },
             {
               "dimension": "커스터마이징 자유도",
@@ -514,7 +535,8 @@
               "base_score": 5,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "현지 SI 협력으로 커스텀 양호"
+              "note": "현지 SI 협력으로 커스텀 양호",
+              "note_en": "Good customization via local SI collaboration"
             },
             {
               "dimension": "벤더 종속도",
@@ -522,7 +544,8 @@
               "base_score": 3,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "글로벌+현지 혼합, GB 동등"
+              "note": "글로벌+현지 혼합, GB 동등",
+              "note_en": "Global + local mix, on par with GB"
             },
             {
               "dimension": "멀티테넌시 여부",
@@ -530,7 +553,8 @@
               "base_score": 4,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "표준 멀티테넌시"
+              "note": "표준 멀티테넌시",
+              "note_en": "Standard multi-tenancy"
             }
           ],
           "item_similarity": 93.75
@@ -546,7 +570,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "BLIK 2,000만+ 사용자"
+              "note": "BLIK 2,000만+ 사용자",
+              "note_en": "BLIK 20M+ users"
             },
             {
               "dimension": "비대면 계약 가능",
@@ -554,7 +579,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "PolishAPI 오픈뱅킹, 전자서명 보편"
+              "note": "PolishAPI 오픈뱅킹, 전자서명 보편",
+              "note_en": "PolishAPI open banking, e-signature widespread"
             },
             {
               "dimension": "API 개방도",
@@ -562,7 +588,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "PSD2·PolishAPI 발달"
+              "note": "PSD2·PolishAPI 발달",
+              "note_en": "PSD2/PolishAPI well-developed"
             },
             {
               "dimension": "페이퍼리스 수준",
@@ -570,7 +597,8 @@
               "base_score": 5,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "표준 페이퍼리스, EU 평균"
+              "note": "표준 페이퍼리스, EU 평균",
+              "note_en": "Standard paperless, EU average"
             }
           ],
           "item_similarity": 93.75
@@ -586,7 +614,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "komornik(집행관) 사법 적체"
+              "note": "komornik(집행관) 사법 적체",
+              "note_en": "komornik (bailiff) judicial backlog"
             },
             {
               "dimension": "회수 소요기간(일)",
@@ -594,7 +623,8 @@
               "base_score": 4,
               "gap": 2.0,
               "similarity": 50.0,
-              "note": "평균 12~18개월"
+              "note": "평균 12~18개월",
+              "note_en": "Average 12-18 months"
             },
             {
               "dimension": "자력구제 허용",
@@ -602,7 +632,8 @@
               "base_score": 4,
               "gap": 2.0,
               "similarity": 50.0,
-              "note": "자력구제 제한"
+              "note": "자력구제 제한",
+              "note_en": "Self-help restricted"
             },
             {
               "dimension": "회수율",
@@ -610,7 +641,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "회수율 EU 평균 하회"
+              "note": "회수율 EU 평균 하회",
+              "note_en": "Recovery rate below EU average"
             }
           ],
           "item_similarity": 62.5
@@ -621,9 +653,11 @@
       "evidence_items": [
         {
           "item": "솔루션 유형",
+          "item_en": "Solution Type",
           "category": "it",
           "role": "score",
           "value": "글로벌 패키지 + 은행계 자체 코어(PKO·mBank) + 캡티브 패키지 혼재",
+          "value_en": "Global packages + bank-built core (PKO, mBank) + captive packages, mixed.",
           "unit": "type",
           "direction": "up",
           "axis": "similarity",
@@ -634,15 +668,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "업계",
+          "source_en": "Industry.",
           "insight": "대형 은행계(PKO·mBank·Santander)는 자체 코어, 캡티브·전문 리스사는 글로벌 패키지 사용. EU 표준 아키텍처와 정합.",
+          "insight_en": "Large banks (PKO, mBank, Santander) use proprietary cores; captives and specialized lessors use global packages. Aligned with EU standard architecture.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "디지털 채널 성숙도",
+          "item_en": "Digital Channel Maturity",
           "category": "it",
           "role": "score",
           "value": 5,
+          "value_en": null,
           "unit": "maturity_1to5",
           "direction": "up",
           "axis": "similarity",
@@ -653,15 +691,19 @@
           "timeseries": null,
           "tier": 2,
           "source": "BLIK(현지 결제, 2,000만+ 사용자)·PolishAPI(오픈뱅킹)·mObywatel(전자정부) 보편화",
+          "source_en": "BLIK (local payments, 20M+ users), PolishAPI (open banking), mObywatel (e-government) widespread.",
           "insight": "BLIK 결제(2,000만+ 사용자, EU 톱 핀테크)·PolishAPI 오픈뱅킹·전자서명(qualified signature) 보편화로 디지털 계약 성숙도 EU 최상위권. 완전 디지털 온보딩 가능.",
+          "insight_en": "BLIK payments (20M+ users, EU top fintech), PolishAPI open banking, and qualified e-signature are widespread, putting digital-contracting maturity among the EU's best. Full digital onboarding possible.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "디지털 딜러 성숙도",
+          "item_en": "Digital Dealer Maturity",
           "category": "it",
           "role": "score",
           "value": 4,
+          "value_en": null,
           "unit": "maturity_1to5",
           "direction": "up",
           "axis": "similarity",
@@ -672,15 +714,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "업계 (otomoto.pl·OLX Motors·Carsmile·OEM 온라인 판매)",
+          "source_en": "Industry (otomoto.pl, OLX Motors, Carsmile, OEM online sales).",
           "insight": "otomoto.pl·OLX Motors·Carsmile 등 온라인 딜러금융·OEM 직판 채널 발달. 디지털 리테일 성숙 — 임베디드 금융 연동 기회.",
+          "insight_en": "Online dealer-finance and OEM direct-sales channels (otomoto.pl, OLX Motors, Carsmile) are well-developed. Digital retail is mature — embedded-finance integration opportunity.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "라이선스 체제(세그먼트별)",
+          "item_en": "Licensing Regime (by Segment)",
           "category": "shared",
           "role": "gate",
           "value": "소비자신용=KNF 등록(자본금 PLN 1M+감사회+상시 감독), B2B 리스=인가 부담 없음(상법상 일반 회사)",
+          "value_en": "Consumer credit = KNF registration (PLN 1M capital + supervisory board + ongoing supervision); B2B leasing = no licensing burden (ordinary commercial-law company).",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -691,15 +737,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "KNF, Ustawa o kredycie konsumenckim",
+          "source_en": "KNF, Ustawa o kredycie konsumenckim.",
           "insight": "세그먼트별 규제 강도 차이 매우 큼. 소비자신용은 KNF 등록·자본·감사회로 거버넌스 공수 큼, B2B 리스는 일반 상법 회사로 즉시 운영 가능 — 단계적 진입 전략 권장.",
+          "insight_en": "Regulatory intensity varies greatly by segment. Consumer credit has heavy governance overhead (KNF registration, capital, supervisory board); B2B leasing can operate immediately as an ordinary commercial-law company — staged entry strategy recommended.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "데이터 현지화 의무",
+          "item_en": "Data Localization Requirement",
           "category": "shared",
           "role": "gate",
           "value": "EU GDPR 직접 적용, EU 역내 이전 자유, 강제 현지화 없음",
+          "value_en": "EU GDPR directly applies; free intra-EU transfer; no forced localization.",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -710,15 +760,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "EU GDPR, 폴란드 개인정보보호법(UODO)",
+          "source_en": "EU GDPR, Polish Personal Data Protection Act (UODO).",
           "insight": "EU GDPR 직접 적용, 역내 자유 이전. 강제 현지화 의무 없어 본사(EU) 연동 아키텍처 제약 낮음. 단 UODO 별도 감독 — 한·EU 적정성 결정 활용 가능.",
+          "insight_en": "EU GDPR directly applies, free intra-EU transfer. No forced localization, so low constraint for HQ (EU) connected architecture. Separate UODO supervision — Korea-EU adequacy decision available.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "차량회수 절차 용이성",
+          "item_en": "Repossession Process Ease",
           "category": "shared",
           "role": "score",
           "value": 3,
+          "value_en": null,
           "unit": "ease_1to5",
           "direction": "up",
           "axis": "similarity",
@@ -729,7 +783,9 @@
           "timeseries": null,
           "tier": 2,
           "source": "폴란드 민사소송법, 업계 (리스 소유권 기반 회수)",
+          "source_en": "Polish Code of Civil Procedure, industry (lease ownership-based recovery).",
           "insight": "리스·렌팅은 금융사 소유권 보유로 회수 용이(공증·통지 후 즉시). 소비자 대출 담보회수는 komornik(집행관) 절차로 6~18개월 — 상품별 회수 모듈 분기 필요.",
+          "insight_en": "Leasing and renting are easy (financier holds ownership; immediate after notarization/notice). Consumer-loan collateral recovery via komornik (bailiff) takes 6-18 months — segment-specific recovery modules needed.",
           "insight_ai_generated": true,
           "status": "present"
         }
@@ -738,7 +794,10 @@
     "tab_1_2_decision": {
       "decision": "baseline_system_expansion",
       "similarity_score": 87.1875,
-      "recommendation": "권역 내 확산: GB 시스템(NetSol) 현지화",
+      "recommendation": {
+        "ko": "권역 내 확산: GB 시스템(NetSol) 현지화",
+        "en": "Regional expansion: localize GB system (NetSol)."
+      },
       "base_country": "GB",
       "base_system": "NetSol",
       "region_system_exists": true,
@@ -748,9 +807,11 @@
       "items": [
         {
           "item": "금리 상한 규제",
+          "item_en": "Interest-Rate Cap Regulation",
           "category": "shared",
           "role": "gate",
           "value": "이자상한: NBP 기준금리×2 (2025말 약 10.5%) + WIBOR. 2023.5 신소비자신용법 시행: 비이자 비용 캡 = 원금×25%/년 + 원금×30% 총액 (Ustawa o kredycie konsumenckim 개정)",
+          "value_en": "Interest cap: NBP base rate × 2 (~10.5% at end-2025) + WIBOR. May 2023 new Consumer Credit Act in force: non-interest cost cap = 25% of principal/yr + 30% of principal total (Ustawa o kredycie konsumenckim amendment).",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -761,15 +822,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "Ustawa o kredycie konsumenckim (2023.5 개정), KNF Rekomendacja, NBP",
+          "source_en": "Ustawa o kredycie konsumenckim (May 2023 amendment), KNF Rekomendacja, NBP.",
           "insight": "2023년 강화된 금리상한: 이자 한도 NBP×2(약 10.5%)+WIBOR + 비이자 비용 캡(연 25%+총 30%). 캡티브·은행계 프로모와의 가격경쟁이 마진 압박 — 상품 APR 로직에 동적 상한 분기 필수. B2B 리스는 적용 제외로 자유.",
+          "insight_en": "2023-tightened rate caps: interest limit NBP×2 (~10.5%) + WIBOR + non-interest cost cap (25%/yr + 30% total). Price competition with captive/bank promos pressures margins — dynamic-cap branching is essential in product APR logic. B2B leasing is exempt and therefore free.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "외환·배당 송금 자유도",
+          "item_en": "FX / Dividend Remittance Freedom",
           "category": "shared",
           "role": "gate",
           "value": "외환 통제 없음 (배당/이자 비거주자 원천징수 19~20%, EU 지침·조세조약 면제 가능)",
+          "value_en": "No FX controls (19-20% non-resident WHT on dividends/interest; EU directive/tax-treaty exemptions available).",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -780,15 +845,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "폴란드 외환법, PwC Poland Withholding Taxes",
+          "source_en": "Polish FX Law, PwC Poland Withholding Taxes.",
           "insight": "송금 자유. 배당·이자 원천징수는 EU 지침/한·폴 조세조약으로 0~10%까지 감면 — 본국 회수 장애 없음.",
+          "insight_en": "Free remittance. WHT on dividends/interest can be reduced to 0-10% via EU directives / Korea-Poland tax treaty — no obstacle to repatriation.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "의무보험 규제",
+          "item_en": "Mandatory Insurance Regulation",
           "category": "shared",
           "role": "score",
           "value": "자동차 의무책임보험(OC) 강제, Ustawa o ubezpieczeniach obowiązkowych 2003 / EU 지침 2009/103 적용",
+          "value_en": "Compulsory motor liability insurance (OC), Ustawa o ubezpieczeniach obowiązkowych 2003 / EU Directive 2009/103 applies.",
           "unit": "regime",
           "direction": "down",
           "axis": "similarity",
@@ -799,15 +868,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "Ustawa o ubezpieczeniach obowiązkowych(의무보험법) 2003, EU 자동차보험 지침",
+          "source_en": "Ustawa o ubezpieczeniach obowiązkowych (Compulsory Insurance Act) 2003, EU Motor Insurance Directive.",
           "insight": "차량 책임보험(OC) 의무는 EU 표준과 동일(UFG 보장기금 통합). 베이스라인 보험연동 로직 재사용 가능 — 특화개발 부담 낮음.",
+          "insight_en": "Compulsory motor liability insurance (OC) matches the EU standard (integrated with UFG guarantee fund). Baseline insurance-integration logic is reusable — low specialized-development burden.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "신용생명보험 규제",
+          "item_en": "Credit-Life Insurance Regulation",
           "category": "shared",
           "role": "score",
           "value": "끼워팔기 강제 금지, 별도 동의·대안 제시 의무 (Ustawa o kredycie konsumenckim 2011 + KNF Rekomendacja U)",
+          "value_en": "Tying prohibited; separate consent and alternative-offer obligations (Ustawa o kredycie konsumenckim 2011 + KNF Rekomendacja U).",
           "unit": "regime",
           "direction": "down",
           "axis": "similarity",
@@ -818,7 +891,9 @@
           "timeseries": null,
           "tier": 2,
           "source": "Ustawa o kredycie konsumenckim, KNF Rekomendacja U (보험 끼워팔기 가이드)",
+          "source_en": "Ustawa o kredycie konsumenckim, KNF Rekomendacja U (insurance tying guidance).",
           "insight": "신용생명보험 강제판매 제한 — 동의·대안 제공 의무로 상품 설계 시 옵션화 필요. EU 일반 수준 + KNF가 추가 가이드라인.",
+          "insight_en": "Forced sale of credit life insurance is restricted — consent and alternative-offer obligations require optionality in product design. EU general level + additional KNF guidelines.",
           "insight_ai_generated": true,
           "status": "present"
         }
@@ -826,14 +901,16 @@
     },
     "tab_1_3_tco": {
       "build_cost": 3000.0,
-      "build_months": 10.799999999999999,
-      "annual_subscription": 3822.0,
+      "build_months": 12.0,
+      "annual_subscription": 31467.800000000003,
       "annual_maintenance": 500,
-      "annual_recurring": 4322.0,
+      "annual_recurring": 31967.800000000003,
       "operations_10y": 50000,
-      "system_cost_10y": 46220.0,
-      "total_tco_10y": 96220.0,
+      "system_cost_10y": 322678.0,
+      "total_tco_10y": 372678.0,
       "currency": "EUR",
+      "currency_base": "EUR",
+      "total_tco_10y_eur": 372678.0,
       "similarity_score": 87.1875,
       "similarity_multiplier": 0.6,
       "similarity_band": "80~90",
@@ -844,15 +921,16 @@
           "베이스라인 국가": "GB",
           "베이스라인 솔루션": "NetSol",
           "B 구축비용": 5000,
-          "B 구축기간(개월)": 18,
+          "B 구축기간(개월)": 20,
           "종합 유사도": 87.2,
           "승수 구간": "80~90",
           "적용 승수": 0.6
         },
         "outputs": {
           "신규국 구축비용": 3000.0,
-          "신규국 구축기간(개월)": 10.799999999999999
-        }
+          "신규국 구축기간(개월)": 12.0
+        },
+        "currency": "EUR"
       },
       "expected_contracts": 6290,
       "expected_contracts_breakdown": {
@@ -871,40 +949,82 @@
         "existing_volume": 80,
         "new_volume": 6290,
         "total_volume": 6370,
-        "unit_price": 0.6,
+        "unit_price": 4.94,
         "currency": "EUR",
-        "annual_fee": 3822.0,
+        "annual_fee": 31467.800000000003,
         "note": "All volume repriced at new tier rate"
       },
       "subscription_tiers": [
         {
           "min_volume": 0,
-          "max_volume": 100,
-          "price_per_unit": 1.0,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 101,
-          "max_volume": 200,
-          "price_per_unit": 0.9,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 201,
           "max_volume": 500,
-          "price_per_unit": 0.8,
+          "price_per_unit": 24.7,
           "currency": "EUR"
         },
         {
           "min_volume": 501,
           "max_volume": 1000,
-          "price_per_unit": 0.7,
+          "price_per_unit": 9.88,
           "currency": "EUR"
         },
         {
           "min_volume": 1001,
+          "max_volume": 1500,
+          "price_per_unit": 8.645,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 1501,
+          "max_volume": 2000,
+          "price_per_unit": 7.41,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 2001,
+          "max_volume": 3000,
+          "price_per_unit": 6.175,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 3001,
+          "max_volume": 5000,
+          "price_per_unit": 5.681,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 5001,
+          "max_volume": 10000,
+          "price_per_unit": 4.94,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 10001,
+          "max_volume": 12000,
+          "price_per_unit": 4.693,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 12001,
+          "max_volume": 14000,
+          "price_per_unit": 4.446,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 14001,
+          "max_volume": 20000,
+          "price_per_unit": 4.323,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 20001,
+          "max_volume": 80000,
+          "price_per_unit": 4.076,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 80001,
           "max_volume": 999999,
-          "price_per_unit": 0.6,
+          "price_per_unit": 0.865,
           "currency": "EUR"
         }
       ],
@@ -912,9 +1032,11 @@
       "items": [
         {
           "item": "신차 판매대수",
+          "item_en": "New-Car Sales Units",
           "category": "business",
           "role": "score",
           "value": 560000,
+          "value_en": null,
           "unit": "units",
           "direction": "up",
           "axis": "attractiveness",
@@ -973,15 +1095,19 @@
           },
           "tier": 2,
           "source": "SAMAR/PZPM 2025 (신차 등록 약 56만대, +5.7%; CEPiK 등록부)",
+          "source_en": "SAMAR/PZPM 2025 (new-car registrations ~560K, +5.7%; CEPiK registry).",
           "insight": "2025년 +5.7%로 56만대 — CEE 최대·EU 6위권. 법인 등록이 70%+로 법인 리스가 견인. 건수 산식의 기준 모수.",
+          "insight_en": "+5.7% in 2025 to 560K — largest in CEE, EU #6. Corporate registrations 70%+ drive corporate leasing. Base unit for volume calculations.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "금융 이용률(신차)",
+          "item_en": "Finance Penetration (New Cars)",
           "category": "business",
           "role": "score",
           "value": 78,
+          "value_en": null,
           "unit": "%",
           "direction": "up",
           "axis": "attractiveness",
@@ -1040,15 +1166,19 @@
           },
           "tier": 3,
           "source": "ZPL 2025 (신차 등록의 70%+가 리스 경로); Cetelem Observatorium 추정",
+          "source_en": "ZPL 2025 (70%+ of new-car registrations via leasing); Cetelem Observatorium estimate.",
           "insight": "신차 등록의 70~80%가 리스·할부 등 금융 경유 — EU 최상위권 침투율. 법인 리스 비중이 비정상적으로 큰 구조(B2B 리스 무면허+세제 혜택).",
+          "insight_en": "70-80% of new-car registrations go through finance (leasing, installment) — EU top-tier penetration. Abnormally large corporate-lease share (B2B lease unlicensed + tax benefits).",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "구매 패턴(할부·리스 비중)",
+          "item_en": "Purchase Pattern (Installment vs. Lease Share)",
           "category": "business",
           "role": "score",
           "value": 72,
+          "value_en": null,
           "unit": "%",
           "direction": "up",
           "axis": "attractiveness",
@@ -1059,15 +1189,19 @@
           "timeseries": null,
           "tier": 2,
           "source": "ZPL Branża Leasingowa 2025 (신차의 70%+ 리스, 운용리스 비중 30%+); CFM/렌터카 비중 상승",
+          "source_en": "ZPL Branża Leasingowa 2025 (70%+ of new cars leased, operating-lease share 30%+); rising CFM/rental share.",
           "insight": "신차의 70%+가 리스 경유(금융리스+운용리스), 운용리스(CFM) 30%+로 가속. B2B 무면허 진입 가능 — 시장 진입에 가장 유리한 세그먼트.",
+          "insight_en": "70%+ of new cars go through leasing (finance lease + operating lease), with operating lease (CFM) accelerating past 30%. B2B unlicensed entry possible — the most favorable segment for market entry.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "캡티브 강도(점유율)",
+          "item_en": "Captive Intensity (Market Share)",
           "category": "business",
           "role": "score",
           "value": 35,
+          "value_en": null,
           "unit": "%",
           "direction": "down",
           "axis": "difficulty",
@@ -1078,15 +1212,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "ZPL/업계 추정 (VW FS·Toyota Bank·Stellantis FS 등 OEM 캡티브 약 35%, 은행계 리스 약 55%)",
+          "source_en": "ZPL / industry estimate (OEM captives such as VW FS, Toyota Bank, Stellantis FS ~35%, bank-affiliated lessors ~55%).",
           "insight": "캡티브(VW FS·Toyota Bank·MB·BMW·Stellantis) 약 35%, 은행계 리스(mLeasing·PKO·Santander) 약 55% — 독립계는 약 10%. 캡티브 강도 EU 평균 수준이나 은행계 리스가 강해 독립 신규 진입 시 가격·디지털 차별화 필수.",
+          "insight_en": "Captives (VW FS, Toyota Bank, MB, BMW, Stellantis) ~35%, bank-affiliated lessors (mLeasing, PKO, Santander) ~55% — independents ~10%. Captive intensity is at EU average, but strong bank-affiliated leasing makes price and digital differentiation essential for new independent entrants.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "평균 신차가격",
+          "item_en": "Average New-Car Price",
           "category": "business",
           "role": "context",
           "value": "약 PLN 145,000 (€33,000~34,000, turismos 평균 거래가, 전동화·SUV 비중 상승으로 우상향)",
+          "value_en": "Approx. PLN 145,000 (€33,000-34,000, avg. turismos transaction price, trending up as electrification/SUV mix rises).",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -1097,7 +1235,9 @@
           "timeseries": null,
           "tier": 3,
           "source": "SAMAR/PZPM 2025 평균 거래가 추정, AAA Auto 분석",
+          "source_en": "SAMAR/PZPM 2025 average transaction price estimate, AAA Auto analysis.",
           "insight": "평균 신차 거래가 €33k대(EU 평균 근접), EV·SUV 비중 상승으로 우상향. 건수×평균가 기반 금융 자산규모 산정 모수.",
+          "insight_en": "Average new-car transaction price ~€33k (near EU average), trending up as EV/SUV mix rises. Base for sizing finance assets via volume × average price.",
           "insight_ai_generated": true,
           "status": "present"
         }
@@ -1106,36 +1246,183 @@
     "tab_1_4_market": {
       "items": [
         {
+          "item": "GDP 성장률",
+          "item_en": "GDP Growth Rate",
+          "category": "business",
+          "role": "score",
+          "value": 3.4,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 6.9
+              },
+              {
+                "year": 2022,
+                "value": 5.3
+              },
+              {
+                "year": 2023,
+                "value": 0.1
+              },
+              {
+                "year": 2024,
+                "value": 2.9
+              },
+              {
+                "year": 2025,
+                "value": 3.4
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 3.5
+              },
+              {
+                "year": 2027,
+                "value": 3.3
+              },
+              {
+                "year": 2028,
+                "value": 3.0
+              },
+              {
+                "year": 2029,
+                "value": 2.8
+              },
+              {
+                "year": 2030,
+                "value": 2.7
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 1,
+          "source": "NBP·IMF WEO·European Commission 2025",
+          "source_en": "NBP, IMF WEO, European Commission 2025",
+          "insight": "EU 회복기금·국방투자·민간소비 회복으로 2025년 3.4% 성장. CEE 최대 시장으로 중기 3%대 안정 전망.",
+          "insight_en": "3.4% growth in 2025 driven by EU recovery funds, defense investment, and consumer rebound. Largest CEE market with stable 3%+ medium-term outlook.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "item_en": "Auto Finance Growth Rate (CAGR)",
+          "category": "business",
+          "role": "score",
+          "value": 9.9,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 8.4
+              },
+              {
+                "year": 2022,
+                "value": 9.6
+              },
+              {
+                "year": 2023,
+                "value": 11.8
+              },
+              {
+                "year": 2024,
+                "value": 9.6
+              },
+              {
+                "year": 2025,
+                "value": 8.8
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 8.5
+              },
+              {
+                "year": 2027,
+                "value": 7.8
+              },
+              {
+                "year": 2028,
+                "value": 7.6
+              },
+              {
+                "year": 2029,
+                "value": 7.0
+              },
+              {
+                "year": 2030,
+                "value": 7.1
+              }
+            ],
+            "cagr_hist": 9.9,
+            "cagr_forecast": 7.6,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "ZPL 2025 / Mordor Intelligence Poland Auto Finance Market (CAGR 8~10%대)",
+          "source_en": "ZPL 2025 / Mordor Intelligence Poland Auto Finance Market (CAGR ~8-10%).",
+          "insight": "리스·운용리스 견인으로 두 자릿수 성장 지속. ECB 완화 사이클·EU CEE 자본유입으로 전망 양호.",
+          "insight_en": "Lease/operating-lease driven, sustained double-digit growth. Favorable outlook with ECB easing cycle and EU CEE capital inflows.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
           "item": "금융사 순위(Top 5)",
+          "item_en": "Lessor Ranking (Top 5)",
           "category": "business",
           "role": "context",
           "value": [
             {
               "rank": 1,
               "name": "PKO Leasing",
-              "market_share": "약 18%"
+              "market_share": "약 18%",
+              "market_share_en": "~18%"
             },
             {
               "rank": 2,
               "name": "mLeasing (mBank)",
-              "market_share": "약 14%"
+              "market_share": "약 14%",
+              "market_share_en": "~14%"
             },
             {
               "rank": 3,
               "name": "Santander Leasing",
-              "market_share": "약 11%"
+              "market_share": "약 11%",
+              "market_share_en": "~11%"
             },
             {
               "rank": 4,
               "name": "EFL (Crédit Agricole)",
-              "market_share": "약 9%"
+              "market_share": "약 9%",
+              "market_share_en": "~9%"
             },
             {
               "rank": 5,
               "name": "Volkswagen Financial Services",
-              "market_share": "약 8%"
+              "market_share": "약 8%",
+              "market_share_en": "~8%"
             }
           ],
+          "value_en": null,
           "unit": null,
           "direction": null,
           "axis": null,
@@ -1146,15 +1433,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "ZPL 2025 회원사 순위 / 업계 추정",
+          "source_en": "ZPL 2025 member rankings / industry estimate.",
           "insight": "은행계 리스(PKO·mLeasing·Santander·EFL) 약 52%, 캡티브(VW FS) 8% — 톱5 합산 약 60%. 은행계 집중 구조라 신규 진입은 EV·중고·플릿 틈새 권장.",
+          "insight_en": "Bank-affiliated lessors (PKO, mLeasing, Santander, EFL) ~52%, captive (VW FS) 8% — top-5 combined ~60%. Given the bank-affiliated concentration, new entrants should target EV, used, and fleet niches.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "금융사 점유율(Top 5)",
+          "item_en": "Lessor Market Share (Top 5)",
           "category": "business",
           "role": "score",
           "value": 18,
+          "value_en": null,
           "unit": "%",
           "direction": "down",
           "axis": "difficulty",
@@ -1165,15 +1456,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "ZPL 2025 회원사 순위 (PKO Leasing·mLeasing·Santander Leasing·EFL·VW FS 합산 약 60%)",
+          "source_en": "ZPL 2025 member rankings (PKO Leasing, mLeasing, Santander Leasing, EFL, VW FS combined ~60%).",
           "insight": "PKO Leasing 단독 1위 약 18%, 상위 5사 합산 약 60%로 은행계+캡티브 집중. 신규 진입 시 EV·중고·B2B 틈새(소상공인·플릿) 공략 권장.",
+          "insight_en": "PKO Leasing alone #1 at ~18%, top-5 combined ~60% — bank-affiliated + captive concentration. New entrants should target EV, used, and B2B niches (SMEs, fleet).",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "경쟁사 금리 범위",
+          "item_en": "Competitor Rate Range",
           "category": "business",
           "role": "context",
           "value": "신차 자동차대출 APR 약 9~14% (프로모 0~3% 캡티브 한정), 운용리스 월 임대료 1.0~1.8% (잔가·기간 의존), 소비자신용 평균 APR NBP 통계 약 11%",
+          "value_en": "New-car auto-loan APR ~9-14% (promo 0-3% captive only), operating-lease monthly rate 1.0-1.8% (residual/term dependent), consumer-credit avg APR ~11% per NBP statistics.",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -1184,12 +1479,15 @@
           "timeseries": null,
           "tier": 2,
           "source": "NBP 소비자신용 통계 2025, ZPL, OEM 캡티브 프로모 공시",
+          "source_en": "NBP consumer-credit statistics 2025, ZPL, OEM captive promo disclosures.",
           "insight": "표준 차량대출 APR 9~14%, 캡티브는 0~3% 프로모로 점유. 2023 금리상한(NBP×2+WIBOR 약 18~19%) 내 여유 있으나 캡티브·은행계 프로모와의 가격경쟁이 마진 압박 — 차별화(EV·디지털·중고) 필요.",
+          "insight_en": "Standard auto-loan APR 9-14%, captives capture share with 0-3% promos. Headroom exists within the 2023 rate cap (NBP×2 + WIBOR ~18-19%), but price competition with captive/bank promos pressures margins — differentiation (EV, digital, used) needed.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "OEM 순위(Top 5)",
+          "item_en": "OEM Ranking (Top 5)",
           "category": "business",
           "role": "context",
           "value": [
@@ -1219,6 +1517,7 @@
               "market_share": "6.2%"
             }
           ],
+          "value_en": null,
           "unit": null,
           "direction": null,
           "axis": null,
@@ -1229,15 +1528,19 @@
           "timeseries": null,
           "tier": 2,
           "source": "SAMAR/PZPM 2025 신차 등록 (Toyota 77,280 / Skoda 58,800 / VW 42,560 / Kia 38,640 / Hyundai 34,720, 추정)",
+          "source_en": "SAMAR/PZPM 2025 new-car registrations (Toyota 77,280 / Skoda 58,800 / VW 42,560 / Kia 38,640 / Hyundai 34,720, estimated).",
           "insight": "Toyota 단독 1위 13.8%, 톱5 합산 약 45%. 한국 브랜드 톱5에 2개(Kia·Hyundai 합산 13.1%) — 캡티브·딜러금융 제휴 기회 큼.",
+          "insight_en": "Toyota alone #1 at 13.8%, top-5 combined ~45%. Two Korean brands in the top-5 (Kia + Hyundai combined 13.1%) — strong captive/dealer-finance partnership opportunity.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "EV 보급률",
+          "item_en": "EV Adoption Rate",
           "category": "business",
           "role": "score",
           "value": 7.5,
+          "value_en": null,
           "unit": "%",
           "direction": "up",
           "axis": "attractiveness",
@@ -1296,15 +1599,19 @@
           },
           "tier": 3,
           "source": "PSPA(폴란드 대체연료협회) Licznik Elektromobilności 2025, PZPM/SAMAR (BEV+PHEV 점유율)",
+          "source_en": "PSPA (Polish Alternative Fuels Association) Licznik Elektromobilności 2025, PZPM/SAMAR (BEV+PHEV share).",
           "insight": "2025년 EV(BEV+PHEV) 점유 7.5%로 EU 평균 하회하나 가속 구간(연 30%+ CAGR). Mój Elektryk 보조금·인프라(NaszEAuto) 확장이 견인. 리스 신규는 EV 비중 15%+로 더 높음 — 잔가 모델에 EV 별도 곡선 필수.",
+          "insight_en": "2025 EV (BEV+PHEV) share 7.5%, below EU average but in an accelerating phase (~30%+ CAGR). Mój Elektryk subsidies and infrastructure (NaszEAuto) expansion drive growth. New leasing has higher EV share (15%+) — a separate EV curve is essential in residual-value models.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "EV·ICE 잔존가치 리스크",
+          "item_en": "EV vs. ICE Residual-Value Risk",
           "category": "business",
           "role": "score",
           "value": 58,
+          "value_en": null,
           "unit": "%",
           "direction": "down",
           "axis": "difficulty",
@@ -1363,13 +1670,16 @@
           },
           "tier": 3,
           "source": "Cox Automotive/Manheim 잔가 추정(3년 EV 기준), 폴란드 중고 EV 가격 약세(Eurotax)",
+          "source_en": "Cox Automotive/Manheim residual estimate (3-year EV basis), weak Polish used-EV prices (Eurotax).",
           "insight": "EV 3년 잔가 58% — 서유럽 대비 약세(공급망·인프라 미성숙). ICE 대비 리스 손익 압박. 잔가 보증·바이백 조건 보수적 설계 권장.",
+          "insight_en": "EV 3-year residual 58% — weaker than Western Europe (immature supply chain/infrastructure). Pressures lease P&L vs. ICE. Conservative residual-guarantee/buyback terms recommended.",
           "insight_ai_generated": true,
           "status": "present"
         }
       ],
       "competitors": {
         "item": "경쟁사 리스트",
+        "item_en": "Competitor List",
         "category": "business",
         "role": "context",
         "value": [
@@ -1388,6 +1698,7 @@
           "Alphabet (BMW)",
           "LeasePlan"
         ],
+        "value_en": null,
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1398,14 +1709,18 @@
         "timeseries": null,
         "tier": 3,
         "source": "ZPL 회원사 명단, AERG (운용리스협회) 명단",
+        "source_en": "ZPL member list, AERG (operating-lease association) list.",
         "insight": "은행계+OEM 캡티브+다국적 플릿 리스사 혼재. 한국계 진출 사례 없음 — Kia·Hyundai 캡티브 또는 독립 EFC 자회사로 진입 시 차별화 가능.",
+        "insight_en": "A mix of bank-affiliated, OEM captive, and multinational fleet lessors. No Korean entrants yet — differentiation possible via a Kia/Hyundai captive or an independent EFC subsidiary.",
         "insight_ai_generated": true
       },
       "competitor_entry_form": {
         "item": "경쟁사 진출 형태",
+        "item_en": "Competitor Entry Mode",
         "category": "business",
         "role": "context",
         "value": "은행계 리스 자회사(PKO·mLeasing·Santander·EFL) + OEM 캡티브(VW FS·Toyota Bank·Stellantis FS·BMW·MB) + 다국적 플릿 리스사(Arval·ALD/Ayvens·Alphabet·LeasePlan·Carefleet). KNF 인가 EFC 또는 상법상 Sp. z o.o. 형태가 일반적",
+        "value_en": "Bank-affiliated lease subsidiaries (PKO, mLeasing, Santander, EFL) + OEM captives (VW FS, Toyota Bank, Stellantis FS, BMW, MB) + multinational fleet lessors (Arval, ALD/Ayvens, Alphabet, LeasePlan, Carefleet). KNF-licensed EFC or commercial-law Sp. z o.o. form is typical.",
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1416,11 +1731,14 @@
         "timeseries": null,
         "tier": 3,
         "source": "ZPL, KNF 등록부, 업계",
+        "source_en": "ZPL, KNF registry, industry.",
         "insight": "B2B 리스는 Sp. z o.o.(상법상 유한회사)로 즉시 진입, 소비자금융은 KNF 인가 EFC. 한국계는 미진출 — 톱 10 OEM 중 한국 브랜드 2개 점유율 감안 시 캡티브 또는 독립 EFC 진입 기회.",
+        "insight_en": "B2B leasing enters immediately as a Sp. z o.o. (limited liability company); consumer finance via a KNF-licensed EFC. No Korean entrants — given the two top-10 Korean OEMs' share, a captive or independent EFC entry opportunity exists.",
         "insight_ai_generated": true
       },
       "brand_top10": {
         "item": "브랜드 Top10",
+        "item_en": "Brand Top 10",
         "category": "business",
         "role": "context",
         "value": [
@@ -1435,6 +1753,7 @@
           "Ford",
           "Mercedes-Benz"
         ],
+        "value_en": null,
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1445,11 +1764,14 @@
         "timeseries": null,
         "tier": 2,
         "source": "SAMAR/PZPM 2025 신차 등록 통계 (Toyota 1위 약 14%, Skoda·VW 상위)",
+        "source_en": "SAMAR/PZPM 2025 new-car registration statistics (Toyota #1 ~14%, Skoda/VW leading).",
         "insight": "Toyota 1위(약 14%), Skoda·VW가 독일·체코 인접 효과로 강세. 한국 브랜드(Kia·Hyundai) 합산 톱3급 — 한국 OEM 파트너십 기회. 중국 브랜드(MG·BYD) 급부상.",
+        "insight_en": "Toyota #1 (~14%), Skoda and VW strong via Germany/Czech proximity effects. Korean brands (Kia, Hyundai) combined rank in the top-3 tier — Korean OEM partnership opportunity. Chinese brands (MG, BYD) rising fast.",
         "insight_ai_generated": true
       },
       "news": {
         "item": "외부 이슈 스캔",
+        "item_en": "External Issue Scan",
         "category": "business",
         "role": "context",
         "value": [
@@ -1459,7 +1781,9 @@
             "so_what": "시장 회복·확장으로 금융 침투 기반 견조 — 진입 타이밍 우호적. 법인 등록 비중 70%+로 B2B 리스 우선 전략의 근거 강화.",
             "publisher": "Automotive News Europe",
             "pub_date": "2026-01-22",
-            "url": "https://europe.autonews.com/..."
+            "url": "https://europe.autonews.com/...",
+            "headline_en": "Poland's 2025 new-car registrations reach 560K, +5.7% — reinforcing largest-CEE-market status",
+            "so_what_en": "Market recovery/expansion keeps finance-penetration base solid — entry timing favorable. Corporate registrations 70%+ strengthen the rationale for a B2B-lease-first strategy."
           },
           {
             "news_category": "auto_finance",
@@ -1467,7 +1791,9 @@
             "so_what": "리스 시장 두 자릿수 성장 — B2B/운용리스 진입 매력도 최상. 캡티브 강도 35%로 독립계 진입 여지 있음.",
             "publisher": "S&P Global Mobility",
             "pub_date": "2026-02-15",
-            "url": "https://www.spglobal.com/mobility/..."
+            "url": "https://www.spglobal.com/mobility/...",
+            "headline_en": "Polish Leasing Association (ZPL): 2025 new lease financing tops €25bn, +12% growth",
+            "so_what_en": "Double-digit lease-market growth — top attractiveness for B2B/operating-lease entry. Captive intensity at 35% leaves room for independents."
           },
           {
             "news_category": "auto_market",
@@ -1475,7 +1801,9 @@
             "so_what": "EV 진입 시 잔가·충전 인프라 리스크 노출 큼. 보조금 의존도 높아 정책 변화 모니터링·잔가 보증 조건 보수적 설계 필요.",
             "publisher": "Just Auto",
             "pub_date": "2026-03-18",
-            "url": "https://www.just-auto.com/..."
+            "url": "https://www.just-auto.com/...",
+            "headline_en": "Poland EV adoption tops 7.5%; Mój Elektryk subsidy extension decided",
+            "so_what_en": "EV entry brings strong residual-value and charging-infrastructure risk exposure. High subsidy dependence requires policy-change monitoring and conservative residual-guarantee terms."
           },
           {
             "news_category": "credit_abs",
@@ -1483,7 +1811,9 @@
             "so_what": "연체 안정 신호 — 충당금·심사기준 EU 표준 적용 가능. 진입 초기 신용정책 과도한 보수화 불필요.",
             "publisher": "Moody's",
             "pub_date": "2026-04-10",
-            "url": "https://www.moodys.com/..."
+            "url": "https://www.moodys.com/...",
+            "headline_en": "Poland auto-loan ABS delinquency stays stable at ~0.8%, below CEE average",
+            "so_what_en": "Stable-delinquency signal — EU-standard provisioning and underwriting applicable. No need to over-tighten credit policy at early entry."
           },
           {
             "news_category": "geopolitical",
@@ -1491,7 +1821,9 @@
             "so_what": "조달 변동성 완화 — 차량가·재고금융 부담 감소. 단 동부 국경 지정학 변수는 상시 모니터링 필요.",
             "publisher": "Reuters",
             "pub_date": "2026-05-08",
-            "url": "https://www.reuters.com/..."
+            "url": "https://www.reuters.com/...",
+            "headline_en": "Poland-Ukraine border logistics normalize; auto-parts procurement lead times recover",
+            "so_what_en": "Eased procurement volatility — lower vehicle-price and inventory-finance burden. However, eastern-border geopolitical variables require ongoing monitoring."
           },
           {
             "news_category": "finance",
@@ -1499,9 +1831,12 @@
             "so_what": "조달금리 하향 — 자동차금융 마진·신차 수요에 우호적. 단 비이자 비용 캡(연 25%+30%)이 여전히 마진 압박 요인.",
             "publisher": "Financial Times",
             "pub_date": "2025-12-22",
-            "url": "https://www.ft.com/..."
+            "url": "https://www.ft.com/...",
+            "headline_en": "NBP steps base rate down to 5.25% in 2025, signaling further easing in 2026",
+            "so_what_en": "Lower funding cost — favorable for auto-finance margins and new-car demand. However, the non-interest cost cap (25%/yr + 30%) remains a margin-pressure factor."
           }
         ],
+        "value_en": null,
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1512,14 +1847,18 @@
         "timeseries": null,
         "tier": 3,
         "source": "화이트리스트(Automotive News Europe·S&P Global Mobility·Just Auto·Moody's·Reuters·Financial Times)",
+        "source_en": "Whitelist (Automotive News Europe, S&P Global Mobility, Just Auto, Moody's, Reuters, Financial Times).",
         "insight": "시장 회복·금리 완화·EV 가속은 진입에 우호적이나, 2023 금리상한법과 EV 잔가 리스크가 상품 설계의 양대 제약. 지정학 리스크는 완화 중이나 동부 국경 모니터링 상시.",
+        "insight_en": "Market recovery, rate easing, and EV acceleration are favorable for entry, but the 2023 rate-cap law and EV residual-value risk are the two main product-design constraints. Geopolitical risk is easing, but ongoing monitoring of the eastern border is required.",
         "insight_ai_generated": true
       },
       "regulators": {
         "item": "규제기관 식별",
+        "item_en": "Regulator Identification",
         "category": "shared",
         "role": "context",
         "value": "KNF(금융감독청, 소비자신용·은행·보험 통합 감독) / NBP(중앙은행, 결제·통화) / UOKiK(경쟁소비자보호청) / UODO(개인정보) / Ministerstwo Finansów(재정부, 세제·인가) / ZPL(리스협회 자율규제)",
+        "value_en": "KNF (Financial Supervision Authority; integrated supervision of consumer credit/banking/insurance) / NBP (central bank; payments/currency) / UOKiK (Office of Competition and Consumer Protection) / UODO (data protection) / Ministerstwo Finansów (Ministry of Finance; tax/licensing) / ZPL (Leasing Association self-regulation).",
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1530,14 +1869,18 @@
         "timeseries": null,
         "tier": 1,
         "source": "KNF, NBP, UOKiK, UODO 공식",
+        "source_en": "KNF, NBP, UOKiK, UODO official.",
         "insight": "여신·보험·은행 모두 KNF 단일 감독(EU에서 드문 통합형), 결제·통화는 NBP, 소비자보호는 UOKiK, 데이터는 UODO. 단일 감독청 구조로 컴플라이언스 거버넌스 비교적 단순.",
+        "insight_en": "Lending, insurance, and banking are all under single KNF supervision (an integrated model rare in the EU); payments/currency under NBP, consumer protection under UOKiK, data under UODO. The single-supervisor structure makes compliance governance relatively simple.",
         "insight_ai_generated": false
       },
       "country_summary": {
         "item": "해당국 정성 요약",
+        "item_en": "Country Qualitative Summary",
         "category": "business",
         "role": "context",
         "value": "EU 6위·CEE 1위 자동차 시장(2025 신차 56만대, +5.7%). 리스 주도 구조(신차 70%+) — ZPL 회원사가 시장 90%+. 캡티브(VW FS·Toyota·Stellantis FS 35%)+은행계 리스(PKO·mLeasing·Santander 55%) 양강. 소비자신용은 KNF 인가(PLN 1M)+2023 금리상한법 적용, B2B 리스는 무면허(상법상 즉시 가능). EU GDPR·SEPA·BIK·BLIK·PolishAPI로 IT 재사용성 높음.",
+        "value_en": "EU's 6th-largest and CEE's largest auto market (2025 new-car sales 560K, +5.7%). Lease-led structure (70%+ of new cars) — ZPL members hold 90%+ of the market. A duopoly of captives (VW FS, Toyota, Stellantis FS ~35%) and bank-affiliated lessors (PKO, mLeasing, Santander ~55%). Consumer credit requires KNF licensing (PLN 1M) and is subject to the 2023 rate-cap law; B2B leasing is unlicensed (immediately permissible under commercial law). High IT reusability via EU GDPR, SEPA, BIK, BLIK, and PolishAPI.",
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1548,7 +1891,9 @@
         "timeseries": null,
         "tier": 3,
         "source": "ZPL, SAMAR, PZPM, KNF, Mordor Intelligence",
+        "source_en": "ZPL, SAMAR, PZPM, KNF, Mordor Intelligence.",
         "insight": "B2B 리스·운용리스(CFM)로 빠른 진입 → EV·중고 틈새 → KNF 인가 기반 소비자금융 확장의 단계적 전략 유효. CEE 허브로 활용 가능.",
+        "insight_en": "A staged strategy is effective: rapid entry via B2B leasing / operating lease (CFM) → EV and used niches → expansion into consumer finance under KNF licensing. Usable as a CEE hub.",
         "insight_ai_generated": true
       }
     }

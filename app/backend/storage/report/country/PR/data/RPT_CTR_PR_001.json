@@ -6,7 +6,7 @@
     "country": "PR",
     "base_country": "US"
   },
-  "generated_at": "2026-06-22T19:18:56.240278",
+  "generated_at": "2026-06-23T19:52:48.503644",
   "schema_version": "1.2",
   "overall_insight": "미국 자치령(unincorporated territory)으로 USD 단일통화·미 연방 소비자금융 프레임워크(CFPB·Truth in Lending/Reg Z·Dodd-Frank)가 직접 적용돼 환율·송금 리스크가 사실상 없고 게이트 대부분 PASS다. 비즈니스 규모는 인구 약 320만·연 신차 9만~11만대의 소형 섬 시장이나 자동차 의존도·금융 침투율이 매우 높아(신차 80%대) 단위 시장 매력은 견조하다. 비용·난이도 드라이버는 연방 규제 위에 현지 OCIF(금융기관감독청) 라이선스와 소매할부·소액대출 현지법이 이중으로 얹히는 점, 그리고 PROMESA 재정감독위원회 체제(채무 구조조정 이후)의 재정·준국가 신용 뉘앙스다 — 후자는 FLAG로 둔다. 매력도↔IT 유사도는 대체로 정합적이다 — USD+미 법체계로 시스템·신용정보(TransUnion·Equifax·Experian 미국 CB)·결제 인프라가 미국/EU 베이스라인과 매우 높은 유사도를 보여 NetSol 재사용률이 높다. 다크호스는 자력구제(UCC Art.9형) 기반 채권자 우호적 회수와 높은 연료가로 부상하는 EV이며, 실행 리스크는 소형 규모·Popular/Reliable 과점·재정 취약성이다. 연방+현지 이중 라이선스를 OCIF 중심으로 신속 취득 후 개인 신차 우선, B2B 리스 확장 전략이 유효하다.",
   "overall_insight_en": "A US unincorporated territory using the USD with the US federal consumer-finance framework (CFPB, Truth in Lending/Reg Z, Dodd-Frank) applying directly, so FX and remittance risk is effectively nil and most gates PASS. Business scale is a small island market (~3.2M population, ~90,000-110,000 new cars/yr), but very high car dependence and finance penetration (new-car ~80%) keep unit-market attractiveness solid. Cost/difficulty drivers are the dual layer of local OCIF (financial institutions commissioner) licensing and local retail-installment/small-loan law on top of federal regulation, plus the PROMESA fiscal oversight board regime (post debt restructuring) fiscal and quasi-sovereign credit nuance — the latter is flagged. Attractiveness↔IT similarity is broadly consistent — USD plus the US legal system gives systems, credit information (TransUnion/Equifax/Experian US bureaus), and payment infrastructure very high similarity to the US/EU baseline, so NetSol reuse is high. The dark horse is creditor-friendly recovery via self-help (UCC Art.9-type) and EVs rising on high fuel prices; execution risks are the small scale, the Popular/Reliable oligopoly, and fiscal fragility. Acquiring the federal + local dual license quickly, OCIF-centered, then prioritizing retail new-car finance with B2B lease expansion is a viable strategy.",
@@ -900,15 +900,17 @@
       ]
     },
     "tab_1_3_tco": {
-      "build_cost": 3600.0,
-      "build_months": 12.0,
-      "annual_subscription": 14345.760000000002,
-      "annual_maintenance": 500,
-      "annual_recurring": 14845.760000000002,
-      "operations_10y": 50000,
-      "system_cost_10y": 152057.60000000003,
-      "total_tco_10y": 202057.60000000003,
-      "currency": "EUR",
+      "build_cost": 659.0909090909091,
+      "build_months": 10.799999999999999,
+      "annual_subscription": 0.0,
+      "annual_maintenance": 549.2424242424242,
+      "annual_recurring": 549.2424242424242,
+      "operations_10y": 54924.242424242424,
+      "system_cost_10y": 6151.515151515152,
+      "total_tco_10y": 61075.757575757576,
+      "currency": "USD",
+      "currency_base": "EUR",
+      "total_tco_10y_eur": 55600.0,
       "similarity_score": 81.25,
       "similarity_multiplier": 0.6,
       "similarity_band": "80~90",
@@ -918,16 +920,17 @@
         "inputs": {
           "베이스라인 국가": "US",
           "베이스라인 솔루션": "Salesforce",
-          "B 구축비용": 6000,
-          "B 구축기간(개월)": 20,
+          "B 구축비용": 1098.4848484848485,
+          "B 구축기간(개월)": 18,
           "종합 유사도": 81.2,
           "승수 구간": "80~90",
           "적용 승수": 0.6
         },
         "outputs": {
-          "신규국 구축비용": 3600.0,
-          "신규국 구축기간(개월)": 12.0
-        }
+          "신규국 구축비용": 659.0909090909091,
+          "신규국 구축기간(개월)": 10.799999999999999
+        },
+        "currency": "USD"
       },
       "expected_contracts": 1372,
       "expected_contracts_breakdown": {
@@ -943,41 +946,69 @@
         }
       },
       "subscription_details": {
-        "existing_volume": 80,
+        "applicable": false,
         "new_volume": 1372,
-        "total_volume": 1452,
-        "unit_price": 9.88,
+        "annual_fee": 0,
         "currency": "EUR",
-        "annual_fee": 14345.760000000002,
-        "note": "All volume repriced at new tier rate"
+        "note": "비구독 솔루션 — 구독료는 운영비에 포함"
       },
       "subscription_tiers": [
         {
           "min_volume": 0,
-          "max_volume": 2000,
+          "max_volume": 500,
+          "price_per_unit": 24.7,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 501,
+          "max_volume": 1000,
           "price_per_unit": 9.88,
           "currency": "EUR"
         },
         {
+          "min_volume": 1001,
+          "max_volume": 1500,
+          "price_per_unit": 8.645,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 1501,
+          "max_volume": 2000,
+          "price_per_unit": 7.41,
+          "currency": "EUR"
+        },
+        {
           "min_volume": 2001,
-          "max_volume": 4000,
-          "price_per_unit": 5.928,
+          "max_volume": 3000,
+          "price_per_unit": 6.175,
           "currency": "EUR"
         },
         {
-          "min_volume": 4001,
-          "max_volume": 7500,
-          "price_per_unit": 5.434,
+          "min_volume": 3001,
+          "max_volume": 5000,
+          "price_per_unit": 5.681,
           "currency": "EUR"
         },
         {
-          "min_volume": 7501,
+          "min_volume": 5001,
           "max_volume": 10000,
           "price_per_unit": 4.94,
           "currency": "EUR"
         },
         {
           "min_volume": 10001,
+          "max_volume": 12000,
+          "price_per_unit": 4.693,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 12001,
+          "max_volume": 14000,
+          "price_per_unit": 4.446,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 14001,
           "max_volume": 20000,
           "price_per_unit": 4.323,
           "currency": "EUR"
@@ -985,7 +1016,7 @@
         {
           "min_volume": 20001,
           "max_volume": 80000,
-          "price_per_unit": 4.073,
+          "price_per_unit": 4.076,
           "currency": "EUR"
         },
         {

@@ -109,6 +109,25 @@ def _country_status_map() -> dict:
         return {}
 
 
+def _country_entry_mode_map() -> dict:
+    """internal_latest.json country_assets[ISO2].type → 진출형태(단독법인/JV) 라벨.
+
+    type: 'SA'=단독법인 / 'JV'=합작법인. 기진출국에만 자산이 등록돼 있으므로
+    미진출국은 매핑에 없다(헤더에서 진출형태 배지를 숨김). 실패 시 빈 dict.
+    """
+    label = {"SA": "단독법인", "JV": "JV"}
+    try:
+        with open(config.INTERNAL_LATEST, encoding="utf-8") as f:
+            assets = json.load(f).get("country_assets", {}) or {}
+    except (OSError, ValueError):
+        return {}
+    return {
+        code: label[a["type"]]
+        for code, a in assets.items()
+        if isinstance(a, dict) and a.get("type") in label
+    }
+
+
 def _hyundai_country_names() -> List[str]:
     """현대차 해외사업망 국가 영문명 목록(권역 무관, 평탄화). 실패 시 빈 리스트."""
     try:
@@ -139,6 +158,7 @@ def list_countries() -> List[CountrySummary]:
     if not base.is_dir():
         return out
     status_map = _country_status_map()
+    entry_mode_map = _country_entry_mode_map()
     for d in sorted(p for p in base.iterdir() if p.is_dir()):
         code = d.name
         data = _load_latest_research("country", code) or {}
@@ -162,6 +182,7 @@ def list_countries() -> List[CountrySummary]:
                 status=status_map.get(resolved_code),
                 lon=geo.get("lon"),
                 lat=geo.get("lat"),
+                entry_mode=entry_mode_map.get(resolved_code),
             )
         )
     return out

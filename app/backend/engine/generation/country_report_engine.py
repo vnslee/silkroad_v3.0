@@ -558,6 +558,33 @@ class CountryReportEngine:
         # 표가 비어 있거나 매칭 실패 → 안전 폴백 (재사용 없음 = 100%)
         return {"multiplier": 1.0, "band": "—"}
 
+    def _region_currency(self, country_code: str) -> str:
+        """대상국이 속한 권역의 기준 표시통화. 매핑 없으면 EUR 폴백.
+
+        country → country_to_region → region_currency 순으로 해석.
+        (EU=EUR, NA/SA=USD, APAC=KRW — internal_data.region_currency 참조.)
+        """
+        data = self.internal_data or {}
+        region = (data.get("country_to_region") or {}).get(country_code) \
+            or (data.get("country_to_region") or {}).get(self.normalize_country_code(country_code))
+        return (data.get("region_currency") or {}).get(region, "EUR")
+
+    def _from_eur(self, amount: float, currency: str) -> float:
+        """EUR 금액 → 표시통화 환산 (internal_data.fx 스냅샷 기준).
+
+        TCO는 EUR 작업통화로 계산되고, 표시 단계에서만 권역 기준통화로 환산한다.
+        fx.rates는 KRW 기준(1단위당 KRW)이라 amount × rate["EUR"] ÷ rate[currency].
+        currency가 EUR이거나 환율 미등록이면 원금 그대로 반환.
+        """
+        if not currency or currency == "EUR":
+            return amount
+        rates = ((self.internal_data or {}).get("fx") or {}).get("rates") or {}
+        dst = rates.get(currency)
+        eur = rates.get("EUR")
+        if not dst or not eur:
+            return amount
+        return amount * eur / dst
+
     def calculate_similarity_discount(self, similarity_score: float) -> float:
         """Map similarity score to discount percentage.
 
@@ -765,21 +792,33 @@ class CountryReportEngine:
         # Operations
         operations_10y = self.internal_data.get("operational_cost_10y", {}).get("amount", 50000)
 
-        # Total TCO (명세 산식 4)
+        # Total TCO (명세 산식 4) — 여기까지는 EUR 작업통화로 계산.
         annual_recurring = annual_subscription + maintenance_annual
         system_cost = build_cost + (annual_recurring * 10)
         total_tco = system_cost + operations_10y
 
+        # 표시통화 환산 — 권역 기준통화(EU=EUR, NA/SA=USD, APAC=KRW)로 변환해 노출.
+        # 산식은 EUR로 일관 계산하고, 출력 금액만 권역 통화로 환산한다.
+        disp_ccy = self._region_currency(target_country)
+        c = lambda x: self._from_eur(x, disp_ccy)
+
+        # build_breakdown의 금액도 표시통화로 환산(렌더러가 tco.currency로 표기).
+        build_breakdown["inputs"]["B 구축비용"] = c(base_cost)
+        build_breakdown["outputs"]["신규국 구축비용"] = c(build_cost)
+        build_breakdown["currency"] = disp_ccy
+
         return {
-            "build_cost": build_cost,
+            "build_cost": c(build_cost),
             "build_months": build_months,
-            "annual_subscription": annual_subscription,
-            "annual_maintenance": maintenance_annual,
-            "annual_recurring": annual_recurring,
-            "operations_10y": operations_10y,
-            "system_cost_10y": system_cost,
-            "total_tco_10y": total_tco,
-            "currency": "EUR",
+            "annual_subscription": c(annual_subscription),
+            "annual_maintenance": c(maintenance_annual),
+            "annual_recurring": c(annual_recurring),
+            "operations_10y": c(operations_10y),
+            "system_cost_10y": c(system_cost),
+            "total_tco_10y": c(total_tco),
+            "currency": disp_ccy,
+            "currency_base": "EUR",
+            "total_tco_10y_eur": total_tco,
             "similarity_score": similarity["overall_score"],
             "similarity_multiplier": multiplier,
             "similarity_band": mult_info["band"],
@@ -1069,7 +1108,7 @@ def main():
         if tco_tab.get("is_baseline"):
             print(f"\n[기준국 자가 분석] TCO/결정 트리는 적용되지 않음 (운영 중인 시스템 기준).")
         else:
-            print(f"\n10Y TCO: {tco_tab.get('total_tco_10y', 0):,.0f} EUR")
+            print(f"\n10Y TCO: {tco_tab.get('total_tco_10y', 0):,.0f} {tco_tab.get('currency', 'EUR')}")
         print(f"Similarity Score: {type1_report['tabs']['tab_1_1_similarity']['overall_score']:.1f}")
         rec = type1_report['tabs']['tab_1_2_decision'].get('recommendation')
         if isinstance(rec, dict):

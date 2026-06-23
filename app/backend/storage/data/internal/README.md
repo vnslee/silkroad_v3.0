@@ -43,10 +43,12 @@
 
 | 키 | 타입 | 설명 |
 |---|---|---|
-| `country_assets` | `{ISO2: {solution, build_cost, build_months, reuse_factor}}` | **기진출국**의 시스템·구축비·기간. 유형1 TCO 산식에서 `B 구축비용·기간`으로 사용. |
-| `region_baselines` | `{region: ISO2}` | 권역별 기준국(B국) — `EU=GB, NA=US, APAC=AU`. 권역 보고서에서 IT 유사도 비교 기준. |
+| `country_assets` | `{ISO2: {solution, type, build_cost, build_months, reuse_factor}}` | **기진출국**의 시스템·법인유형·구축비·기간. 유형1 TCO 산식에서 `B 구축비용·기간`으로 사용. `type`은 법인 유형(`"SA"`=단독법인 / `"JV"`=합작법인). `build_cost`는 **EUR 작업통화 기준**(천 EUR 단위; TCO는 EUR로 계산 후 권역 통화로 환산 표시). |
+| `region_baselines` | `{region: ISO2}` | 권역별 기준국(B국) — `EU=GB, NA=US, APAC=AU, SA=BR`. 권역 보고서에서 IT 유사도 비교 기준. |
+| `region_currency` | `{region: 통화코드}` | **권역별 보고서 표시통화** — `EU=EUR, NA=USD, SA=USD, APAC=KRW`. TCO는 EUR로 계산하고 출력 금액만 이 통화로 환산(`fx.rates` 경유). 매핑 없으면 EUR 폴백. |
 | `country_to_region` | `{ISO2: region}` | 국가 → 권역 매핑. 신규 국가 추가 시 여기에 등록. |
-| `country_status` | `{ISO2: "운영중"\|"준비중"\|"미진출"}` | 진출 단계 표시 (UI 용). |
+| `country_status` | `{ISO2: "운영중"\|"준비중"\|"진출예정"\|"미진출"}` | 진출 단계 표시 (UI 용). 허용 값은 `_country_status_values` 배열에 명시. |
+| `_country_status_values` | `["운영중","준비중","진출예정","미진출"]` | `country_status` 가 가질 수 있는 값 목록(문서·검증용 상수). |
 
 ### 2. 베이스라인 채점 (탭1-1 유사도 비교 기준)
 
@@ -204,6 +206,7 @@
 | 탭1-3 산식2 예상 건수 | `country_report_engine.calculate_expected_contracts` | `expected_market_share` |
 | 탭1-3 산식3 구독료 | `country_report_engine.calculate_subscription_fee` | `subscription_tiers`, `existing_total_volume` |
 | 탭1-3 산식4 10년 TCO | `country_report_engine.calculate_tco_10y` | `country_assets`, `maintenance_cost_annual`, `operational_cost_10y`, `hq_build_baseline` |
+| TCO 표시통화 환산 (EUR→권역통화) | `country_report_engine._region_currency` / `_from_eur` | `region_currency`, `country_to_region`, `fx.rates` |
 | 통화 환산 | both engines | `fx.rates`, `fx.as_of` |
 
 ---
