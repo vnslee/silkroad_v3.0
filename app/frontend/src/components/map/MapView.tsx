@@ -13,7 +13,13 @@ import { useT, translate } from '../../i18n/dict'
 import { TopBar } from './TopBar'
 import { Legend } from './Legend'
 import { COUNTRY_COORDS } from './coords'
-import { LAND_COLORS, makeColorResolver, type ColorResolver } from './countryColor'
+import {
+  A2_TO_ATLAS_NAME,
+  LAND_COLORS,
+  makeColorResolver,
+  norm,
+  type ColorResolver,
+} from './countryColor'
 
 interface Props {
   onSelectCountry: (code: string) => void
@@ -52,6 +58,29 @@ const REGIONS6: Region6[] = [
   { key: 'af', label: '아프리카', fill: '#E2DED5', dark: '#3a4048', code: 'AF' },
 ]
 const REGION_BY_KEY: Record<string, Region6> = Object.fromEntries(REGIONS6.map((r) => [r.key, r]))
+
+// 마커 좌표 폴백: 국가코드 → world-atlas 폴리곤 centroid[lon,lat].
+// 좌표 단일 출처는 백엔드 geo(API)지만, 미등록 국가(예: US가 country_geo.json에 없음)는
+// 정적 하드코딩 대신 atlas 폴리곤 중심을 1회 계산해 대표 좌표로 쓴다. A2_TO_ATLAS_NAME으로
+// 코드↔atlas feature.name을 잇는다(정규화 비교). atlas는 정적이라 모듈 로드 시 1회만 계산.
+const ATLAS_CENTROIDS: Record<string, [number, number]> = (() => {
+  const topo = worldData as unknown as Topology
+  const fc = feature(topo, topo.objects.countries as never) as unknown as {
+    features: GeoJSON.Feature[]
+  }
+  const nameToCentroid = new Map<string, [number, number]>()
+  for (const f of fc.features) {
+    const nm = (f.properties as { name?: string } | undefined)?.name
+    if (!nm) continue
+    nameToCentroid.set(norm(nm), d3.geoCentroid(f) as [number, number])
+  }
+  const out: Record<string, [number, number]> = {}
+  for (const [code, atlasName] of Object.entries(A2_TO_ATLAS_NAME)) {
+    const c = nameToCentroid.get(norm(atlasName))
+    if (c) out[code] = c
+  }
+  return out
+})()
 
 // 경위도 centroid로 육지를 6개 권역에 분류(mockup continentOf 동일).
 function classifyRegion(lon: number, lat: number): string {
@@ -117,12 +146,16 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
     () =>
       countries
         .map((c) => {
-          // 좌표는 API(geo 참조)가 단일 출처. 구버전 응답·미등록 국가 폴백으로만 정적 테이블 사용.
-          const lon = c.lon ?? COUNTRY_COORDS[c.code]?.[0]
-          const lat = c.lat ?? COUNTRY_COORDS[c.code]?.[1]
+          // 좌표는 API(geo 참조)가 단일 출처. 구버전 응답·미등록 국가 폴백으로 정적 테이블 →
+          // 그래도 없으면 atlas 폴리곤 centroid(예: US가 geo 미등록일 때)로 마커 표시.
+          const lon = c.lon ?? COUNTRY_COORDS[c.code]?.[0] ?? ATLAS_CENTROIDS[c.code]?.[0]
+          const lat = c.lat ?? COUNTRY_COORDS[c.code]?.[1] ?? ATLAS_CENTROIDS[c.code]?.[1]
           if (lon == null || lat == null) return null
-          // 기진출국(established) = 기준국(is_baseline) / 그 외 = 진출후보국(candidate). AISea mockup 2종 구분.
-          const status: Marker['status'] = c.is_baseline ? 'established' : 'candidate'
+          // 기진출국(established) = 운영중(country_status) 또는 권역 기준국(is_baseline).
+          //   그 외(미진출·진출예정 등) = 진출후보국(candidate). AISea mockup 2종 구분.
+          //   ※ 기준국이 아니어도 운영중이면 기진출 마커로 표시(예: CA — NA 운영중, 기준국은 US).
+          const isEstablished = c.status === '운영중' || c.is_baseline
+          const status: Marker['status'] = isEstablished ? 'established' : 'candidate'
           const m: Marker = {
             code: c.code,
             name: c.name,

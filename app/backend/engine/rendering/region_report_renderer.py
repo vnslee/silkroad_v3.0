@@ -140,6 +140,12 @@ LABELS = {
     "ks_view_evidence": {"ko": "근거 보기", "en": "View evidence"},
     "ks_source":        {"ko": "출처", "en": "Source"},
     "ks_excluded_note": {"ko": "은 이후 스코어링에서 제외", "en": "are excluded from subsequent scoring"},
+    "ks_status_flag":   {"ko": "주의", "en": "FLAG"},
+    "ks_tier_col":      {"ko": "진출 형태", "en": "Entry Mode"},
+    "ks_tier_in_region_confidence": {"ko": "권역내 확신", "en": "In-Region Confidence"},
+    "ks_tier_external_solution":    {"ko": "외부솔루션 사용", "en": "External Solution"},
+    "ks_tier_jv_recommended":       {"ko": "JV 권고", "en": "JV Recommended"},
+    "ks_tier_jv_required":          {"ko": "JV 필수", "en": "JV Required"},
 
     # 매력도 탭
     "attr_ranking_title":     {"ko": "비즈니스 매력도 순위", "en": "Business Attractiveness Ranking"},
@@ -786,6 +792,43 @@ class RegionReportRenderer:
 
     # ------------------------- Tab 2-0 Killswitch ---------------------
 
+    # tier별 색상(severity 기반): 확신=green, 외부솔루션=blue, JV권고=amber, JV필수=red
+    _KS_TIER_STYLE = {
+        "in_region_confidence": ("#e9f3ee", "#4f8a6d"),
+        "external_solution":    ("#e6eef6", "#3a6ea5"),
+        "jv_recommended":       ("#fbf0dd", "#9a6b1e"),
+        "jv_required":          ("#f6e7e3", "#c0533f"),
+    }
+
+    def _ks_tier_pill(self, c: Dict) -> str:
+        """국가 entry → 4단계 tier pill. 라벨은 JSON tier_label(SoT) 우선, 없으면 토큰 폴백."""
+        tier = c.get("tier")
+        bg, fg = self._KS_TIER_STYLE.get(tier, ("#eef0f2", "#3b3f46"))
+        label = c.get("tier_label") or {}
+        if label.get("ko") or label.get("en"):
+            text = self.loc_span(label)
+        else:
+            text = self.t_span(f"ks_tier_{tier}") if tier else "—"
+        return (f'<span class="px-2 py-[2px] rounded-md font-label-sm text-label-sm" '
+                f'style="background:{bg};color:{fg}">{text}</span>')
+
+    def _ks_summary_text(self, ks: Dict, passed: List, failed: List) -> Dict[str, str]:
+        """섹션 요약: tier_summary가 있으면 4단계 분포, 없으면 통과/탈락 폴백."""
+        tier_summary = ks.get("tier_summary") or []
+        if tier_summary:
+            ko = " · ".join(f'{(t.get("label") or {}).get("ko") or t.get("key")} {t.get("count", 0)}개국'
+                            for t in tier_summary)
+            en = " · ".join(f'{(t.get("label") or {}).get("en") or t.get("key")} {t.get("count", 0)}'
+                            for t in tier_summary)
+            return {
+                "ko": f'진출 형태 분류 — {ko}. JV 필수국은 퀵윈 랭킹에서 제외, JV 권고국은 감점 후 포함.',
+                "en": f'Entry-mode classification — {en}. JV-required countries are excluded from the quickwin ranking; JV-recommended are included with a penalty.',
+            }
+        return {
+            "ko": f'통과 {len(passed)}개국 · 탈락 {len(failed)}개국. 탈락국({", ".join(failed) or "없음"})은 이후 스코어링에서 제외.',
+            "en": f'{len(passed)} passed · {len(failed)} failed. Failed countries ({", ".join(failed) or "none"}) are excluded from subsequent scoring.',
+        }
+
     def render_tab_killswitch(self) -> str:
         ks = self.report.get("tabs", {}).get("tab_2_0_killswitch", {}) or {}
         gates: List[str] = ks.get("gates", [])
@@ -805,17 +848,15 @@ class RegionReportRenderer:
                 status = (gate.get("status") or "UNKNOWN").upper()
                 if status == "PASS":
                     pill = '<span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span>'
+                elif status == "FLAG":
+                    pill = f'<span class="px-2 py-[2px] bg-[#fbf0dd] text-[#9a6b1e] rounded-md font-label-sm text-label-sm">△ {self.t_span("ks_status_flag")}</span>'
                 elif status == "FAIL":
                     pill = '<span class="px-2 py-[2px] bg-[#f6e7e3] text-[#c0533f] rounded-md font-label-sm text-label-sm">✕ FAIL</span>'
                 else:
                     pill = '<span class="px-2 py-[2px] bg-surface-container text-text-secondary rounded-md font-label-sm text-label-sm">— UNK</span>'
                 tip = self.esc(gate.get("value") or "")
                 cells.append(f'<td class="py-sm px-sm" title="{tip}">{pill}</td>')
-            country_pill = (
-                f'<span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">{self.t_span("ks_status_pass")}</span>'
-                if passed else
-                f'<span class="px-2 py-[2px] bg-[#f6e7e3] text-[#c0533f] rounded-md font-label-sm text-label-sm">{self.t_span("ks_status_fail")}</span>'
-            )
+            country_pill = self._ks_tier_pill(c)
             rows_html.append(f'''
                 <tr class="border-b border-surface-border {row_class}">
                     <td class="py-sm px-sm font-medium text-primary whitespace-nowrap">
@@ -837,17 +878,13 @@ class RegionReportRenderer:
         for c in countries:
             code = c.get("country")
             country_passed = c.get("pass")
-            badge_pill = (
-                f'<span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">{self.t_span("ks_status_pass")}</span>'
-                if country_passed else
-                f'<span class="px-2 py-[2px] bg-[#f6e7e3] text-[#c0533f] rounded-md font-label-sm text-label-sm">{self.t_span("ks_status_fail")}</span>'
-            )
+            badge_pill = self._ks_tier_pill(c)
             gate_rows = []
             for g in gates:
                 gate = (c.get("gates") or {}).get(g, {})
                 status = (gate.get("status") or "UNKNOWN").upper()
-                status_color = {"PASS": "#4f8a6d", "FAIL": "#c0533f"}.get(status, "#9aa0a8")
-                icon = {"PASS": "○", "FAIL": "✕"}.get(status, "—")
+                status_color = {"PASS": "#4f8a6d", "FLAG": "#9a6b1e", "FAIL": "#c0533f"}.get(status, "#9aa0a8")
+                icon = {"PASS": "○", "FLAG": "△", "FAIL": "✕"}.get(status, "—")
                 source = self.esc(gate.get("source") or "—")
                 tier = gate.get("tier")
                 tier_pill = f'<span class="ml-xs px-[6px] py-[1px] rounded text-[10px] font-semibold" style="background:#eef0f2;color:#3b3f46">Tier {tier}</span>' if tier else ""
@@ -870,11 +907,22 @@ class RegionReportRenderer:
                 </div>''')
             gates_block = "".join(gate_rows) or f'<div class="text-text-secondary text-body-sm py-sm">{self.t_span("no_gate_data")}</div>'
 
-            summary_reason_span = (
-                self.t_span("ks_passed_msg", extra_class="text-label-sm text-text-secondary ml-xs flex-1")
-                if country_passed else
-                self.t_span("ks_failed_msg", extra_class="text-label-sm text-text-secondary ml-xs flex-1")
-            )
+            # tier별 진출 권고 한줄 사유 (없으면 기존 PASS/FAIL 메시지 폴백)
+            _tier_reason = {
+                "in_region_confidence": {"ko": "전 게이트 PASS → 직접 진출", "en": "All gates PASS → direct entry"},
+                "external_solution": {"ko": "데이터 현지화만 제약 → 외부솔루션으로 우회", "en": "Only data-localization flagged → use external solution"},
+                "jv_recommended": {"ko": "송금·지분 제약 → JV 권고 (감점 후 랭킹 포함)", "en": "Remittance/ownership flagged → JV recommended (ranked with penalty)"},
+                "jv_required": {"ko": "신용등급 등 제약 → JV 필수 (랭킹 제외)", "en": "Credit-rating etc. flagged → JV required (excluded from ranking)"},
+            }
+            reason = _tier_reason.get(c.get("tier"))
+            if reason:
+                summary_reason_span = self.loc_span(reason, extra_class="text-label-sm text-text-secondary ml-xs flex-1")
+            else:
+                summary_reason_span = (
+                    self.t_span("ks_passed_msg", extra_class="text-label-sm text-text-secondary ml-xs flex-1")
+                    if country_passed else
+                    self.t_span("ks_failed_msg", extra_class="text-label-sm text-text-secondary ml-xs flex-1")
+                )
             explain_cards.append(f'''
             <details class="bg-surface-container-lowest border border-surface-border rounded-lg shadow-[0_2px_4px_rgba(20,23,28,0.04)] group">
                 <summary class="cursor-pointer list-none px-md py-sm flex items-center gap-sm hover:bg-surface-light rounded-lg">
@@ -898,10 +946,7 @@ class RegionReportRenderer:
                 {self.badge("EXT")} {self.badge("CALC", "status_matrix")}
             </div>
             <p class="font-body-sm text-body-sm text-on-surface-variant -mt-sm">
-                {self.loc_span({
-                    "ko": f'통과 {len(passed)}개국 · 탈락 {len(failed)}개국. 탈락국({", ".join(failed) or "없음"})은 이후 스코어링에서 제외.',
-                    "en": f'{len(passed)} passed · {len(failed)} failed. Failed countries ({", ".join(failed) or "none"}) are excluded from subsequent scoring.',
-                })}
+                {self.loc_span(self._ks_summary_text(ks, passed, failed))}
             </p>
             <div class="bg-surface-container-lowest border border-surface-border rounded-lg p-md shadow-[0_4px_8px_rgba(20,23,28,0.04)] overflow-x-auto">
                 <table class="w-full text-left border-collapse">
@@ -909,7 +954,7 @@ class RegionReportRenderer:
                         <tr class="border-b-2 border-surface-border">
                             <th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">{self.t_span("tbl_country")}</th>
                             {head_cells}
-                            <th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">{self.t_span("tbl_overall")}</th>
+                            <th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">{self.t_span("ks_tier_col")}</th>
                         </tr>
                     </thead>
                     <tbody class="font-body-sm text-body-sm">{rows}</tbody>
