@@ -287,13 +287,47 @@ def market_chart(data):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 경쟁 금융사 Top 3 + 합산 점유율 푸터 (mockup)
+# 경쟁 금융사 Top 5 + 합산 점유율 푸터 (로즈/나이팅게일 차트)
 # ─────────────────────────────────────────────────────────────────────────────
+# 슬라이스 색 — Kinetic Enterprise 팔레트(블루·그린·앰버·레드 + 중립)
+_PIE_COLORS = ["#3F6CB4", "#4F8A6D", "#C08A2E", "#C0533F", "#7A8493"]
+
+
 def _share_pct(s):
     """'약 20%' / '20%' → 20.0 (float), 실패 시 None."""
     import re
     m = re.search(r"(\d+(?:\.\d+)?)", str(s))
     return float(m.group(1)) if m else None
+
+
+def _pie_chart(slices, size=176):
+    """로즈(나이팅게일) 차트 — 각도는 균등(360/N), 반지름은 값에 비례.
+    slices: [(label, value, color)]. 점유율이 클수록 바깥으로 더 길게 뻗는다."""
+    import math
+    cx = cy = size / 2
+    r_max = size / 2
+    n = len(slices)
+    if not n:
+        return ""
+    vmax = max((v for _, v, _ in slices), default=0) or 1
+    r_min = r_max * 0.30  # 가장 작은 값도 최소한 보이도록 안쪽 베이스
+    sweep = 360.0 / n
+    paths, ang = [], -90.0  # 12시 방향에서 시작
+    for _label, value, color in slices:
+        rr = r_min + (r_max - r_min) * (value / vmax)
+        a0 = math.radians(ang)
+        a1 = math.radians(ang + sweep)
+        x0, y0 = cx + rr * math.cos(a0), cy + rr * math.sin(a0)
+        x1, y1 = cx + rr * math.cos(a1), cy + rr * math.sin(a1)
+        large = 1 if sweep > 180 else 0
+        paths.append(
+            f'<path d="M{cx},{cy} L{x0:.2f},{y0:.2f} '
+            f'A{rr:.2f},{rr:.2f} 0 {large} 1 {x1:.2f},{y1:.2f} Z" '
+            f'fill="{color}" stroke="#FFFFFF" stroke-width="1.5"/>')
+        ang += sweep
+    return (f'<svg viewBox="0 0 {size} {size}" width="{size}" height="{size}" '
+            f'class="shrink-0" role="img" aria-label="경쟁 금융사 시장 점유율">'
+            f'{"".join(paths)}</svg>')
 
 
 def competitors_table(data):
@@ -304,31 +338,40 @@ def competitors_table(data):
             break
     if not rows:
         return ""
-    top = rows[:3]
-    body = "".join(
-        '<tr class="border-b border-surface-border last:border-0">'
-        f'<td class="py-[11px] px-md font-mono font-bold text-[14px] text-[#101622] w-8">{rre.esc(r.get("rank", "—"))}</td>'
-        f'<td class="py-[11px] px-md font-body-md text-[14px] text-on-surface break-words">{rre.esc(r.get("name", ""))}</td>'
-        f'<td class="py-[11px] px-md text-right"><span class="font-mono text-[14px] font-bold text-secondary">{rre.esc(r.get("market_share", "—"))}</span></td>'
-        '</tr>' for r in top)
+    top = rows[:5]
+    # 파이 슬라이스 + 범례(점유율 파싱 가능한 행만 파이에 반영)
+    slices = []
+    for i, r in enumerate(top):
+        pct = _share_pct(r.get("market_share"))
+        if pct is not None:
+            slices.append((r.get("name", ""), pct, _PIE_COLORS[i % len(_PIE_COLORS)]))
+    pie = _pie_chart(slices) if slices else ""
+    legend = "".join(
+        '<div class="flex items-center gap-sm py-[7px]">'
+        f'<span class="inline-block w-[11px] h-[11px] rounded-sm shrink-0" '
+        f'style="background:{_PIE_COLORS[i % len(_PIE_COLORS)]}"></span>'
+        f'<span class="font-mono font-bold text-[13px] text-[#101622] w-5 shrink-0">{rre.esc(r.get("rank", i + 1))}</span>'
+        f'<span class="font-body-md text-[13.5px] text-on-surface break-words flex-1 min-w-0">{rre.esc(r.get("name", ""))}</span>'
+        f'<span class="font-mono text-[13.5px] font-bold text-secondary whitespace-nowrap">{rre.esc(r.get("market_share", "—"))}</span>'
+        '</div>' for i, r in enumerate(top))
+    chart_block = (
+        '<div class="flex flex-wrap items-center gap-lg">'
+        f'<div class="flex items-center justify-center">{pie}</div>'
+        f'<div class="flex-1 min-w-[180px]">{legend}</div>'
+        '</div>')
     # 합산 점유율(파싱 가능한 값만)
-    shares = [v for v in (_share_pct(r.get("market_share")) for r in top) if v is not None]
+    shares = [v for _n, v, _c in slices]
     footer = ""
     if shares:
         total = round(sum(shares))
         footer = (
             '<div class="mt-md px-[14px] py-[11px] bg-surface-light rounded-[10px] '
             'font-body-sm text-[12px] text-[#6B7280] leading-relaxed">'
-            f'3사 합산 자동차 금융 시장 점유율 약 <strong class="text-on-surface">{total}%</strong> '
+            f'{len(shares)}사 합산 자동차 금융 시장 점유율 약 <strong class="text-on-surface">{total}%</strong> '
             '— 독립계 캡티브 진입 여지 존재</div>')
     return _card(
-        _card_title("경쟁 금융사 Top 3")
-        + '<table class="w-full border-collapse"><thead>'
-        '<tr class="border-b-2 border-surface-border">'
-        '<th class="py-sm px-md text-left font-label-sm text-[11px] text-outline font-semibold tracking-wider">#</th>'
-        '<th class="py-sm px-md text-left font-label-sm text-[11px] text-outline font-semibold tracking-wider">금융사</th>'
-        '<th class="py-sm px-md text-right font-label-sm text-[11px] text-outline font-semibold tracking-wider">점유율</th>'
-        f'</tr></thead><tbody>{body}</tbody></table>{footer}')
+        _card_title("경쟁 금융사 Top 5")
+        + chart_block + footer)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
