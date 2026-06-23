@@ -123,6 +123,7 @@ def build_entered(snapshot, internal):
             "solution": a.get("solution", "—"),
             "products": a.get("products", []),
             "since": a.get("since", "—"),  # country_assets[*].since
+            "type": a.get("type", ""),     # country_assets[*].type (SA/JV)
         })
     return rows
 
@@ -184,26 +185,6 @@ def kpi_cards(data):
             + card(n_quickwin, "Quick-win 최우선", "#4F8A6D")
             + card(failed, "킬스위치 탈락", "#14171C")
             + '</div>')
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 보고서 생성 CTA — 다크 카드 (mockup, 가로 배치)
-# ─────────────────────────────────────────────────────────────────────────────
-def report_cta(data):
-    en = data.get("region", data.get("code", ""))
-    ko = data.get("region_ko", "")
-    name = ko or en
-    return (
-        '<div class="bg-primary rounded-2xl p-lg text-white flex items-center justify-between gap-lg flex-wrap">'
-        '<div><div class="font-headline-md text-[15px] font-bold">권역 진단 보고서</div>'
-        f'<div class="font-body-sm text-[12.5px] mt-[6px] leading-[1.5]" style="color:#AEB6C4">'
-        f'{rre.esc(name)} 권역 비교 진단 및 Quick-win 매트릭스를 생성합니다.</div></div>'
-        '<div class="flex gap-[9px] shrink-0">'
-        '<div class="rounded-[11px] px-[18px] py-[11px] font-body-sm text-[13.5px] font-semibold whitespace-nowrap cursor-pointer" '
-        'style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)">기존 보고서</div>'
-        '<div class="rounded-[11px] px-[18px] py-[11px] font-body-md text-[14px] font-bold whitespace-nowrap cursor-pointer" '
-        'style="background:#3F6CB4;box-shadow:0 6px 18px rgba(63,108,180,.4)">새 보고서 생성 →</div>'
-        '</div></div>')
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -294,19 +275,32 @@ def _products_cell(products):
         rre.badge(p, "#eaf0f8", "#2c4c86") for p in products) + '</div>'
 
 
+# 법인종류 코드 → (라벨, 배경, 글자색). 미지정은 '—'.
+_ENTITY_TYPE = {
+    "SA": ("단독법인", "#e9f3ee", "#4f8a6d"),
+    "JV": ("JV", "#fbf0e6", "#c08a2e"),
+}
+
+
+def _entity_cell(t):
+    """법인종류(SA/JV) → 배지. 비면 '—'."""
+    label, bg, fg = _ENTITY_TYPE.get((t or "").upper(), (None, None, None))
+    if not label:
+        return '<span class="text-on-surface-variant">—</span>'
+    return rre.badge(label, bg, fg)
+
+
 def entered_list(data):
     rows = data.get("entered_countries", [])
     if not rows:
         return ""
     body = "".join(
         '<tr class="border-b border-surface-border last:border-0 hover:bg-surface-variant transition-colors">'
-        f'<td class="p-sm font-mono text-xs text-on-surface">{rre.esc(r.get("code", ""))}</td>'
         f'<td class="p-sm text-on-surface">{rre.esc(r.get("name_ko", ""))} '
         f'<span class="text-on-surface-variant">{rre.esc(r.get("name_en", ""))}</span></td>'
-        f'<td class="p-sm">{rre.badge(r.get("status", "-"), "#eaf0f8", "#3f6cb4")}</td>'
-        f'<td class="p-sm text-on-surface-variant">{rre.esc(r.get("solution", "—"))}</td>'
+        f'<td class="p-sm">{_entity_cell(r.get("type", ""))}</td>'
+        f'<td class="p-sm text-on-surface-variant">{rre.esc(r.get("since", "—"))}</td>'
         f'<td class="p-sm">{_products_cell(r.get("products", []))}</td>'
-        f'<td class="p-sm text-right text-on-surface-variant">{rre.esc(r.get("since", "—"))}</td>'
         '</tr>' for r in rows)
     return (
         '<div class="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">'
@@ -314,12 +308,10 @@ def entered_list(data):
         '<span class="material-symbols-outlined text-secondary text-[20px]">flag</span>기진출 국가</h3>'
         '<table class="w-full text-left border-collapse font-body-sm text-body-sm">'
         '<thead><tr class="bg-surface-light border-b border-surface-border">'
-        '<th class="p-sm font-label-md text-label-md text-outline font-semibold">Code</th>'
         '<th class="p-sm font-label-md text-label-md text-outline font-semibold">국가</th>'
-        '<th class="p-sm font-label-md text-label-md text-outline font-semibold">상태</th>'
-        '<th class="p-sm font-label-md text-label-md text-outline font-semibold">솔루션</th>'
-        '<th class="p-sm font-label-md text-label-md text-outline font-semibold">상품</th>'
-        '<th class="p-sm font-label-md text-label-md text-outline font-semibold text-right">진출연도</th>'
+        '<th class="p-sm font-label-md text-label-md text-outline font-semibold">법인종류</th>'
+        '<th class="p-sm font-label-md text-label-md text-outline font-semibold">설립연도</th>'
+        '<th class="p-sm font-label-md text-label-md text-outline font-semibold">관리상품</th>'
         f'</tr></thead><tbody>{body}</tbody></table></div>')
 
 
@@ -469,10 +461,10 @@ def render_html(data):
             .replace("{{REGION_EN}}", rre.esc(en))
             .replace("{{REGION_KO}}", rre.esc(ko))
             .replace("{{KPI_CARDS}}", kpi_cards(data))
+            .replace("{{ENTERED_LIST}}", entered_list(data))
             .replace("{{REGION_MAP}}", region_map(data))
             .replace("{{QUICKWIN_TABLE}}", quickwin_table(data))
             .replace("{{REGION_INSIGHT}}", region_insight(data))
-            .replace("{{REPORT_CTA}}", report_cta(data))
             .replace("{{FOOTER_META}}", footer))
 
 

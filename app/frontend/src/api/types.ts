@@ -23,6 +23,8 @@ export interface CountrySummary {
   has_detail: boolean
   has_report: boolean
   status?: string | null
+  // 진출형태(internal country_assets[code].type): '단독법인'|'JV'. 기진출국만, 미진출국은 null.
+  entry_mode?: string | null
 }
 
 export interface RegionSummary {

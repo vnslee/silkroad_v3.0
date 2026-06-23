@@ -1,0 +1,1804 @@
+{
+  "report_id": "RPT_CTR_ID_001",
+  "report_type": "type1_country",
+  "title": "인도네시아 진출 진단 보고서",
+  "target": {
+    "country": "ID",
+    "base_country": "AU"
+  },
+  "generated_at": "2026-06-23T19:52:47.886883",
+  "schema_version": "1.1",
+  "overall_insight": "동남아 최대 자동차 시장(2025 신차 90만대)·5%대 안정 GDP 성장·금융 침투율 70%로 매력도 상위. OJK Multifinance 인가 + 외국 지분 한도 85%(2024 OJK 신규 가이드라인 기준) + IDR 변동성·자본통제 가능성이 진입 부담. Astra Group이 시장 30% 단독 점유 — 비-Astra 진입 전략 필요. 데이터 현지화 의무, BI 결제 데이터 국내 저장 의무 등 IT 아키텍처 제약 존재. 전기차(LCE·Hyundai Ioniq 5 현지생산) 가속과 디지털 신청 채널 확대가 단기 차별화 기회.",
+  "overall_insight_en": "Largest SE Asian auto market (0.9M new cars 2025), stable 5%+ GDP growth, and 70% finance penetration place attractiveness in the upper tier. OJK multifinance licensing, 85% foreign-ownership cap (2024 OJK guidelines), IDR volatility, and potential capital controls add entry friction. Astra Group alone holds ~30% of the market — non-Astra entry strategy required. Data localization and BI payment-data domestic-storage rules constrain IT architecture. EV acceleration (LCE policy, Hyundai Ioniq 5 local production) and digital application channels offer near-term differentiation.",
+  "country_meta": {
+    "country": "Indonesia",
+    "country_ko": "인도네시아",
+    "region": "APAC",
+    "currency": "IDR",
+    "data_year": 2025,
+    "fetched_at": "2026-06-22T00:00:00+09:00",
+    "fetched_by": "ai",
+    "entry_status": "진출예정"
+  },
+  "data_quality": {
+    "completeness_pct": 97.95918367346938,
+    "total_items": 49,
+    "target_items": 48,
+    "timeseries_coverage": 85.71428571428571,
+    "source_tiers": {
+      "tier1": 19,
+      "tier2": 24,
+      "tier3": 6,
+      "tier4": 0
+    },
+    "items_by_category": {
+      "business": [
+        {
+          "item": "오토금융/리스 시장규모",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "GDP 성장률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "금융 이용률(신차)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "금융 이용률(중고차)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "평균 금리/APR",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "신차 판매대수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "캡티브 강도(점유율)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "금융사 점유율(Top 5)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "법인세율",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "이자소득 원천징수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "배당 원천징수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "EV 보급률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "EV·ICE 잔존가치 리스크",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "해당국 정성 요약",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "브랜드 Top10",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "OEM 순위(Top 5)",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "금융사 순위(Top 5)",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "경쟁사 리스트",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "경쟁사 진출 형태",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "경쟁사 금리 범위",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "평균 신차가격",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "외부 이슈 스캔",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 2
+        }
+      ],
+      "shared": [
+        {
+          "item": "외국인 지분 한도",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "외환·배당 송금 자유도",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "국가신용등급",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "라이선스 취득 가능 여부(외국사)",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 2
+        },
+        {
+          "item": "금리 상한 규제",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 2
+        },
+        {
+          "item": "최저자본금",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "법적 회수 소요기간",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "추심 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "충당금 규정",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "연체 분류 기준",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "의무보험 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "신용생명보험 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "보험 끼워팔기 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "AI 신용평가 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "규제기관 식별",
+          "role": "context",
+          "has_timeseries": true,
+          "source_tier": 1
+        }
+      ],
+      "it": [
+        {
+          "item": "솔루션 벤더",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "솔루션 유형",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "신용정보(CB) 인프라",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "결제·정산 인프라",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "디지털 딜러 성숙도",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "국외이전 제한",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        }
+      ]
+    },
+    "critical_gaps": [],
+    "readiness": {
+      "can_generate": true,
+      "tabs": {
+        "1-1": {
+          "name": "Similarity Scoring (vs Baseline)",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-2": {
+          "name": "System Decision Tree",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-3": {
+          "name": "Contract Volume & 10Y TCO",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-4": {
+          "name": "Market & Competition Background",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        }
+      }
+    }
+  },
+  "tabs": {
+    "tab_1_1_similarity": {
+      "overall_score": 69.6875,
+      "axes": {
+        "product": 43.75,
+        "regulatory": 71.42857142857143,
+        "system": 78.125,
+        "risk": 68.75
+      },
+      "items": [
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "axis": "product",
+          "weight": 0.15,
+          "dimensions": [
+            {
+              "dimension": "리스 취급 일치도",
+              "target_score": 2,
+              "base_score": 5,
+              "gap": 3.0,
+              "similarity": 25.0,
+              "note": "리스 2%대 한정",
+              "note_en": ""
+            },
+            {
+              "dimension": "렌탈 취급 일치도",
+              "target_score": 2,
+              "base_score": 4,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "소비자 운용리스 미성숙",
+              "note_en": ""
+            },
+            {
+              "dimension": "플릿 취급 일치도",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "B2B 플릿 한정",
+              "note_en": ""
+            },
+            {
+              "dimension": "상품별 비중 유사도",
+              "target_score": 2,
+              "base_score": 4,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "할부 68% 편중",
+              "note_en": ""
+            }
+          ],
+          "item_similarity": 43.75
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "axis": "regulatory",
+          "weight": 0.1,
+          "dimensions": [
+            {
+              "dimension": "현지 저장 강제",
+              "target_score": 2,
+              "base_score": 5,
+              "gap": 3.0,
+              "similarity": 25.0,
+              "note": "PP71/UU PDP 금융데이터 국내저장",
+              "note_en": ""
+            },
+            {
+              "dimension": "국외 이전 허용도",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "조건부 이전 허용",
+              "note_en": ""
+            },
+            {
+              "dimension": "동의·보관 규제",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "UU PDP 2022 동의 기반",
+              "note_en": ""
+            },
+            {
+              "dimension": "GDPR 동등성",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "PDP 부분 정합",
+              "note_en": ""
+            }
+          ],
+          "item_similarity": 62.5
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "axis": "regulatory",
+          "weight": 0.25,
+          "dimensions": [
+            {
+              "dimension": "취득방식(등록 vs 인가)",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Multifinance 통합 인가(OJK)",
+              "note_en": ""
+            },
+            {
+              "dimension": "외국인 취득 가능",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "외자 Multifinance 허용",
+              "note_en": ""
+            },
+            {
+              "dimension": "처리기간(개월)",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "OJK 인가 수개월",
+              "note_en": ""
+            },
+            {
+              "dimension": "최저자본금 수준",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "중간 자본요건",
+              "note_en": ""
+            },
+            {
+              "dimension": "감독 강도",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "OJK 감독",
+              "note_en": ""
+            }
+          ],
+          "item_similarity": 75.0
+        },
+        {
+          "item": "솔루션 유형",
+          "axis": "system",
+          "weight": 0.2,
+          "dimensions": [
+            {
+              "dimension": "배포형태(패키지/SI/SaaS)",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "글로벌 패키지+캡티브 자체코어 양극화",
+              "note_en": ""
+            },
+            {
+              "dimension": "커스터마이징 자유도",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "클라우드 패키지 확산",
+              "note_en": ""
+            },
+            {
+              "dimension": "벤더 종속도",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "혼합 구조",
+              "note_en": ""
+            },
+            {
+              "dimension": "멀티테넌시 여부",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "SaaS 확산 중",
+              "note_en": ""
+            }
+          ],
+          "item_similarity": 81.25
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "axis": "system",
+          "weight": 0.2,
+          "dimensions": [
+            {
+              "dimension": "온라인 신청 연동",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "QRIS·슈퍼앱 보편",
+              "note_en": ""
+            },
+            {
+              "dimension": "비대면 계약 가능",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "디지털 KYC 활성",
+              "note_en": ""
+            },
+            {
+              "dimension": "API 개방도",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "GoTo/Grab 핀테크 연동",
+              "note_en": ""
+            },
+            {
+              "dimension": "페이퍼리스 수준",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "페이퍼리스 진행",
+              "note_en": ""
+            }
+          ],
+          "item_similarity": 75.0
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "axis": "risk",
+          "weight": 0.1,
+          "dimensions": [
+            {
+              "dimension": "사법절차 필요",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Fiducia 등기 후에도 동의/법원명령",
+              "note_en": ""
+            },
+            {
+              "dimension": "회수 소요기간(일)",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "평균 90~180일",
+              "note_en": ""
+            },
+            {
+              "dimension": "자력구제 허용",
+              "target_score": 2,
+              "base_score": 4,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "헌재 판결로 사적회수 제약",
+              "note_en": ""
+            },
+            {
+              "dimension": "회수율",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "회수율 보통",
+              "note_en": ""
+            }
+          ],
+          "item_similarity": 68.75
+        }
+      ],
+      "method": "dimension_based",
+      "scale": "1~5 per dimension → gap 0=100, gap 4=0",
+      "evidence_items": [
+        {
+          "item": "솔루션 유형",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": "글로벌 패키지 + 캡티브 자체 코어 + 클라우드 SaaS 확산",
+          "value_en": "Global packages + captive proprietary cores + expanding cloud SaaS",
+          "unit": "type",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "Industry research / Salesforce SE Asia 2025",
+          "source_en": "Industry research / Salesforce SE Asia 2025",
+          "insight": "Multifinance 신규 진입자는 클라우드 패키지 선호. 캡티브는 자체 시스템 유지 — 양극화 구조.",
+          "insight_en": "New multifinance entrants prefer cloud packages. Captives maintain proprietary systems — bifurcated landscape.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": 4,
+          "value_en": null,
+          "unit": "maturity_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Bank Indonesia QRIS / Gojek-Tokopedia GoTo Group 2025",
+          "source_en": "Bank Indonesia QRIS / Gojek-Tokopedia GoTo Group 2025",
+          "insight": "QRIS 결제·GoTo·Grab Financial 슈퍼앱 보편. 디지털 신청·KYC 활성 — 4/5.",
+          "insight_en": "QRIS payments, GoTo, and Grab Financial super-apps widespread. Digital application/KYC active — 4/5.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "디지털 딜러 성숙도",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": 3,
+          "value_en": null,
+          "unit": "maturity_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "Gaikindo / Carro Indonesia / Mobil88 Digital 2025",
+          "source_en": "Gaikindo / Carro Indonesia / Mobil88 Digital 2025",
+          "insight": "온라인 검색·예약은 보편, 풀 디지털 구매는 일부 신차 한정. Carro·Mobil88이 임베디드 금융 채널.",
+          "insight_en": "Online search/reservation universal; full digital purchase limited to some new cars. Carro and Mobil88 serve as embedded-finance channels.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "Multifinance(소비자·B2B 통합 인가, OJK)·은행(BI/OJK)·핀테크 P2P(POJK 77) 3종",
+          "value_en": "Three categories: Multifinance (consumer + B2B under OJK), Bank (BI/OJK), Fintech P2P (POJK 77).",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "segment",
+          "segment": "consumer_credit",
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "OJK Reg / POJK 77 (P2P) / UU Perbankan",
+          "source_en": "OJK Reg / POJK 77 (P2P) / UU Perbankan",
+          "insight": "Multifinance가 자동차 금융 주류. 디지털 P2P는 OJK 분리 규제. 진입 전략 시 Multifinance 인가 우선.",
+          "insight_en": "Multifinance is mainstream for auto. Digital P2P under separate OJK regulation. Multifinance license is the priority entry path.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "PP 71/2019 + UU PDP 2022 — 금융·결제 데이터 국내 저장 의무",
+          "value_en": "PP 71/2019 + UU PDP 2022 — financial and payment data must be stored domestically.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "operating_model",
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "PP 71/2019 / UU 27/2022 PDP",
+          "source_en": "PP 71/2019 / UU 27/2022 PDP",
+          "insight": "금융 데이터 국내 저장 의무 — 결제 시스템·CIF는 인도네시아 내 처리. 본사 연동 시 데이터 라우팅 필요.",
+          "insight_en": "Financial data must be stored domestically — payment systems and CIF must run locally. Data routing required for HQ integration.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": 3,
+          "value_en": null,
+          "unit": "ease_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Constitutional Court Decision MK 18/PUU-XVII/2019 / OJK Fiducia Recovery Guidelines",
+          "source_en": "Constitutional Court Decision MK 18/PUU-XVII/2019 / OJK Fiducia Recovery Guidelines",
+          "insight": "헌재 2019년 판결로 사적 회수 제약 — Fiducia 등기 후에도 채무자 동의 또는 법원 명령 필요. 평균 회수 90~180일.",
+          "insight_en": "2019 Constitutional Court ruling restricts private repossession — even with Fiducia registration, debtor consent or court order required. Avg recovery 90-180 days.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_2_decision": {
+      "decision": "baseline_system_expansion",
+      "similarity_score": 69.6875,
+      "recommendation": {
+        "ko": "권역 내 확산: AU 시스템(Self-built) 현지화",
+        "en": "Regional expansion: localize AU system (Self-built)."
+      },
+      "base_country": "AU",
+      "base_system": "Self-built",
+      "region_system_exists": true,
+      "hq_baseline_cost": 8000,
+      "hq_baseline_months": 24,
+      "hq_baseline_currency": "EUR",
+      "items": [
+        {
+          "item": "금리 상한 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "Multifinance 금리 상한 없음(OJK Fair Practices Code 적용). P2P는 일일 0.4% 상한.",
+          "value_en": "No interest cap on Multifinance (OJK Fair Practices Code applies). P2P capped at 0.4%/day.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "segment",
+          "segment": "consumer_credit",
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "OJK Fair Practices / POJK 77",
+          "source_en": "OJK Fair Practices / POJK 77",
+          "insight": "Multifinance 금리 자유. 약탈적 금리 금지. P2P는 별도 상한 — 자동차 금융 무관.",
+          "insight_en": "Multifinance pricing free; predatory rates prohibited. P2P cap separate — irrelevant to auto finance.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "외환·배당 송금 자유도",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "외환 자유, 송금 가능. 단 BI 보고 의무 + IDR 변동성 큼",
+          "value_en": "Free FX and remittance; BI reporting required. High IDR volatility.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "country",
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Bank Indonesia Reg No.21/14/PBI/2019 / Foreign Exchange Law",
+          "source_en": "Bank Indonesia Reg No.21/14/PBI/2019 / Foreign Exchange Law",
+          "insight": "환율·송금 자유로우나 BI 사후 보고 필수. 자본통제 가능성 사례 있음 — IDR 변동성 헤지 필요.",
+          "insight_en": "FX and remittance free with BI post-reporting. Capital controls have precedent — IDR hedging recommended.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "의무보험 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": "Jasa Raharja(국영 인적사고 보험) 강제. 차량 자체 보험은 선택, Multifinance가 끼워팔기 일반.",
+          "value_en": "Jasa Raharja (state-owned personal accident insurance) mandatory. Own-damage optional; multifinance commonly bundles it.",
+          "unit": "regime",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Law No.34/1964 (Jasa Raharja) / OJK Insurance Regulations",
+          "source_en": "Law No.34/1964 (Jasa Raharja) / OJK Insurance Regulations",
+          "insight": "인적사고 보험만 강제, 차량 자체보험은 자율. Multifinance가 의무 끼워팔기 — 진입사도 동일 모델.",
+          "insight_en": "Personal-accident insurance mandatory; own-damage optional. Multifinance commonly tied — new entrants follow same model.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "신용생명보험 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": "OJK 가이드라인 — 강제 끼워팔기 금지, 옵트인·해지권 의무",
+          "value_en": "OJK guidelines — tying prohibited, opt-in and cancellation rights required.",
+          "unit": "regime",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "OJK Reg No.69/POJK.05/2016 (Insurance Marketing)",
+          "source_en": "OJK Reg No.69/POJK.05/2016 (Insurance Marketing)",
+          "insight": "강제 끼워팔기 금지하나 옵트인 모델은 보편. 마진 기여도 큼.",
+          "insight_en": "Tying prohibited but opt-in model widespread. Significant margin contributor.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_3_tco": {
+      "build_cost": 11600000.0,
+      "build_months": 18.0,
+      "annual_subscription": 0.0,
+      "annual_maintenance": 725000.0,
+      "annual_recurring": 725000.0,
+      "operations_10y": 72500000.0,
+      "system_cost_10y": 18850000.0,
+      "total_tco_10y": 91350000.0,
+      "currency": "KRW",
+      "currency_base": "EUR",
+      "total_tco_10y_eur": 63000.0,
+      "similarity_score": 69.6875,
+      "similarity_multiplier": 1.0,
+      "similarity_band": "—",
+      "discount_applied": 0.0,
+      "build_breakdown": {
+        "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",
+        "inputs": {
+          "베이스라인 국가": "AU",
+          "베이스라인 솔루션": "Self-built",
+          "B 구축비용": 11600000.0,
+          "B 구축기간(개월)": 18,
+          "종합 유사도": 69.7,
+          "승수 구간": "—",
+          "적용 승수": 1.0
+        },
+        "outputs": {
+          "신규국 구축비용": 11600000.0,
+          "신규국 구축기간(개월)": 18.0
+        },
+        "currency": "KRW"
+      },
+      "expected_contracts": 8568,
+      "expected_contracts_breakdown": {
+        "value": 8568,
+        "formula": "신차 판매대수 × 금융이용률(신차) × (할부+리스 비중) × 우리사 예상 점유율",
+        "inputs": {
+          "신차 판매대수": 900000,
+          "신차 판매대수(원본값)": 900000.0,
+          "신차 판매대수(단위)": "units",
+          "금융 이용률(신차)_%": 70.0,
+          "구매 패턴(할부·리스 비중)_%": 68.0,
+          "우리사 예상 점유율": 0.02
+        }
+      },
+      "subscription_details": {
+        "applicable": false,
+        "new_volume": 8568,
+        "annual_fee": 0,
+        "currency": "EUR",
+        "note": "비구독 솔루션 — 구독료는 운영비에 포함"
+      },
+      "subscription_tiers": [
+        {
+          "min_volume": 0,
+          "max_volume": 500,
+          "price_per_unit": 24.7,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 501,
+          "max_volume": 1000,
+          "price_per_unit": 9.88,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 1001,
+          "max_volume": 1500,
+          "price_per_unit": 8.645,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 1501,
+          "max_volume": 2000,
+          "price_per_unit": 7.41,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 2001,
+          "max_volume": 3000,
+          "price_per_unit": 6.175,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 3001,
+          "max_volume": 5000,
+          "price_per_unit": 5.681,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 5001,
+          "max_volume": 10000,
+          "price_per_unit": 4.94,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 10001,
+          "max_volume": 12000,
+          "price_per_unit": 4.693,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 12001,
+          "max_volume": 14000,
+          "price_per_unit": 4.446,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 14001,
+          "max_volume": 20000,
+          "price_per_unit": 4.323,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 20001,
+          "max_volume": 80000,
+          "price_per_unit": 4.076,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 80001,
+          "max_volume": 999999,
+          "price_per_unit": 0.865,
+          "currency": "EUR"
+        }
+      ],
+      "existing_total_volume": 80,
+      "items": [
+        {
+          "item": "신차 판매대수",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 900000,
+          "value_en": null,
+          "unit": "units",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 850000
+              },
+              {
+                "year": 2022,
+                "value": 950000
+              },
+              {
+                "year": 2023,
+                "value": 1000000
+              },
+              {
+                "year": 2024,
+                "value": 870000
+              },
+              {
+                "year": 2025,
+                "value": 900000
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 950000
+              },
+              {
+                "year": 2027,
+                "value": 1000000
+              },
+              {
+                "year": 2028,
+                "value": 1050000
+              },
+              {
+                "year": 2029,
+                "value": 1100000
+              },
+              {
+                "year": 2030,
+                "value": 1150000
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 1,
+          "source": "Gaikindo 2025 PV Sales",
+          "source_en": "Gaikindo 2025 PV Sales",
+          "insight": "2025년 승용차 90만대 — 동남아 최대. Toyota·Daihatsu·Mitsubishi 일본계 70%+. 전기차 성장 가속.",
+          "insight_en": "0.9M new PVs in 2025 — largest in SE Asia. Japanese brands (Toyota, Daihatsu, Mitsubishi) 70%+. EV growth accelerating.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융 이용률(신차)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 70,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 65
+              },
+              {
+                "year": 2022,
+                "value": 66
+              },
+              {
+                "year": 2023,
+                "value": 67
+              },
+              {
+                "year": 2024,
+                "value": 69
+              },
+              {
+                "year": 2025,
+                "value": 70
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 71
+              },
+              {
+                "year": 2027,
+                "value": 72
+              },
+              {
+                "year": 2028,
+                "value": 73
+              },
+              {
+                "year": 2029,
+                "value": 74
+              },
+              {
+                "year": 2030,
+                "value": 75
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 2,
+          "source": "OJK / Gaikindo / Mordor Intelligence 2025",
+          "source_en": "OJK / Gaikindo / Mordor Intelligence 2025",
+          "insight": "신차 70%가 금융 조달 — Multifinance 회사 주도. 다운페이먼트 20~30% 표준. 디지털 신청 확산 중.",
+          "insight_en": "70% of new cars financed — multifinance dominant. 20-30% down-payment standard. Digital applications expanding.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 68,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Gaikindo / OJK Multifinance Survey 2025",
+          "source_en": "Gaikindo / OJK Multifinance Survey 2025",
+          "insight": "할부 68%, 리스 2%대 — B2B 플릿 한정. 소비자 운용리스 미성숙. 다운페이먼트 정책이 시장 사이클 결정.",
+          "insight_en": "Installments 68%; lease ~2% (B2B fleet only). Consumer operating lease immature. Down-payment policy drives market cycles.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "캡티브 강도(점유율)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 50,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "OJK / Fitch Multifinance Report 2025",
+          "source_en": "OJK / Fitch Multifinance Report 2025",
+          "insight": "캡티브(Astra Credit·TAF Mandiri·BFI) 약 50%로 강세. Astra Group이 시장 약 30% 단독 — 진입 시 비-Astra 채널 필요.",
+          "insight_en": "Captives (Astra Credit, TAF Mandiri, BFI) ~50%. Astra Group alone holds ~30% — non-Astra channels needed for new entrants.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "평균 신차가격",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": "약 IDR 250,000,000~300,000,000 (€14,500~17,500). LMPV·LCGC 견인. EV·SUV 점진 상승.",
+          "value_en": "Approx. IDR 250-300M (€14,500-17,500). Driven by LMPV/LCGC; gradual rise with EV/SUV mix.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "Gaikindo / Industry pricing data 2025",
+          "source_en": "Gaikindo / Industry pricing data 2025",
+          "insight": "평균 약 €16k — 인도(€12k)와 유럽(€30k) 사이. LCGC·LMPV 저가 모델 중심. EV 신차가 상승 견인.",
+          "insight_en": "Average ~€16k — between India (€12k) and EU (€30k). LCGC/LMPV low-cost models dominant; EV pushes prices up.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_4_market": {
+      "items": [
+        {
+          "item": "GDP 성장률",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 5.1,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 3.7
+              },
+              {
+                "year": 2022,
+                "value": 5.3
+              },
+              {
+                "year": 2023,
+                "value": 5.0
+              },
+              {
+                "year": 2024,
+                "value": 5.0
+              },
+              {
+                "year": 2025,
+                "value": 5.1
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 5.2
+              },
+              {
+                "year": 2027,
+                "value": 5.2
+              },
+              {
+                "year": 2028,
+                "value": 5.3
+              },
+              {
+                "year": 2029,
+                "value": 5.3
+              },
+              {
+                "year": 2030,
+                "value": 5.4
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 1,
+          "source": "Bank Indonesia·BPS·IMF WEO 2025",
+          "source_en": "Bank Indonesia, BPS, IMF WEO 2025",
+          "insight": "2025년 실질 GDP 5.1% — 5%대 안정 성장. 정부 인프라·전기차 투자·내수 견조.",
+          "insight_en": "Real GDP growth of 5.1% in 2025 — stable 5%+ growth. Driven by government infrastructure, EV investment, and robust domestic demand.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 9.8,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 12.0
+              },
+              {
+                "year": 2022,
+                "value": 11.8
+              },
+              {
+                "year": 2023,
+                "value": 9.5
+              },
+              {
+                "year": 2024,
+                "value": 9.5
+              },
+              {
+                "year": 2025,
+                "value": 9.8
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 9.0
+              },
+              {
+                "year": 2027,
+                "value": 8.5
+              },
+              {
+                "year": 2028,
+                "value": 8.0
+              },
+              {
+                "year": 2029,
+                "value": 7.8
+              },
+              {
+                "year": 2030,
+                "value": 7.5
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 2,
+          "source": "Fitch Ratings Indonesia Multifinance 2025 / Mordor Intelligence",
+          "source_en": "Fitch Ratings Indonesia Multifinance 2025 / Mordor Intelligence",
+          "insight": "2021~2025 CAGR 9.8% — 동남아 상위권 성장. 차량 소유율 상승·중산층 확장이 견인.",
+          "insight_en": "9.8% CAGR over 2021-2025 — top-tier growth in SE Asia. Driven by rising vehicle ownership and middle-class expansion.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융사 순위(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": [
+            {
+              "rank": 1,
+              "name": "Astra Credit Companies",
+              "market_share": "약 22%"
+            },
+            {
+              "rank": 2,
+              "name": "Adira Finance",
+              "market_share": "약 14%"
+            },
+            {
+              "rank": 3,
+              "name": "BFI Finance",
+              "market_share": "약 11%"
+            },
+            {
+              "rank": 4,
+              "name": "Mandiri Tunas Finance",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 5,
+              "name": "CIMB Niaga Auto Finance",
+              "market_share": "약 8%"
+            }
+          ],
+          "value_en": null,
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "OJK Multifinance Statistics 2025 / Fitch Ratings",
+          "source_en": "OJK Multifinance Statistics 2025 / Fitch Ratings",
+          "insight": "Astra Credit 단독 22% — 시장 압도. 캡티브+은행계가 상위 5사 분점. 신규 진입자는 디지털·중고차 차별화 필요.",
+          "insight_en": "Astra Credit alone 22% — market dominant. Captives and bank-affiliates split top 5. New entrants need digital/used-car differentiation.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융사 점유율(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 65,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "OJK / Fitch Multifinance Indonesia 2025",
+          "source_en": "OJK / Fitch Multifinance Indonesia 2025",
+          "insight": "상위 5개사 약 65% — 집중도 높음. Astra Credit Companies/Adira/BFI/Mandiri Tunas/CIMB Niaga 5강.",
+          "insight_en": "Top 5 ~65% — high concentration. Astra Credit Companies, Adira, BFI, Mandiri Tunas, CIMB Niaga dominate.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "경쟁사 금리 범위",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": "신차 자동차대출 APR 약 9~14% (은행계 9~10.5%, Multifinance 11~13%, 프로모 캡티브 6~8%).",
+          "value_en": "New auto-loan APR ~9-14% (banks 9-10.5%, multifinance 11-13%, captive promos 6-8%).",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "OJK / Industry pricing data 2025",
+          "source_en": "OJK / Industry pricing data 2025",
+          "insight": "은행계가 최저, Multifinance가 risk-based 상단. 프로모는 캡티브 한정. 진입 시 10~12% 구간 경쟁.",
+          "insight_en": "Banks lowest; multifinance at higher risk-based end. Promos captive-only. New entrants compete in 10-12% range.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "OEM 순위(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": [
+            {
+              "rank": 1,
+              "name": "Toyota",
+              "market_share": "32.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Daihatsu",
+              "market_share": "18.0%"
+            },
+            {
+              "rank": 3,
+              "name": "Honda",
+              "market_share": "12.0%"
+            },
+            {
+              "rank": 4,
+              "name": "Mitsubishi",
+              "market_share": "8.5%"
+            },
+            {
+              "rank": 5,
+              "name": "Suzuki",
+              "market_share": "7.0%"
+            }
+          ],
+          "value_en": null,
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 1,
+          "source": "Gaikindo 2025 PV market share",
+          "source_en": "Gaikindo 2025 PV market share",
+          "insight": "Toyota·Daihatsu 합산 50%+. Astra(Toyota·Daihatsu 모회사)가 OEM·금융 양쪽 지배 — 진입 시 비-Astra 채널 전략 필수.",
+          "insight_en": "Toyota + Daihatsu 50%+. Astra (parent of Toyota and Daihatsu) dominates both OEM and finance — non-Astra channel strategy essential for new entrants.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "EV 보급률",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 4.0,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 0.3
+              },
+              {
+                "year": 2022,
+                "value": 0.8
+              },
+              {
+                "year": 2023,
+                "value": 1.7
+              },
+              {
+                "year": 2024,
+                "value": 2.8
+              },
+              {
+                "year": 2025,
+                "value": 4.0
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 6.0
+              },
+              {
+                "year": 2027,
+                "value": 9.0
+              },
+              {
+                "year": 2028,
+                "value": 13.0
+              },
+              {
+                "year": 2029,
+                "value": 17.0
+              },
+              {
+                "year": 2030,
+                "value": 22.0
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 2,
+          "source": "Gaikindo EV Sales / LCE Policy Document 2024",
+          "source_en": "Gaikindo EV Sales / LCE Policy Document 2024",
+          "insight": "2025년 EV 점유 4% — LCE 정책·Hyundai Ioniq 5 현지생산·Wuling Air EV 견인. 2030년 20%대 목표.",
+          "insight_en": "EV share 4% in 2025 — driven by LCE policy, Hyundai Ioniq 5 local production, and Wuling Air EV. 20%+ target by 2030.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "EV·ICE 잔존가치 리스크",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 18,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "Mobil88 / Carro Resale Data 2025",
+          "source_en": "Mobil88 / Carro Resale Data 2025",
+          "insight": "EV 3년 잔가가 ICE 대비 약 18pp 낮음 — 모델·인프라 미성숙. 잔가 보증·바이백 보수적 설계 필수.",
+          "insight_en": "EV 3-yr residual ~18pp lower than ICE — model/infra immaturity. Conservative residual guarantee and buyback design essential.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ],
+      "competitors": {
+        "item": "경쟁사 리스트",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          "Astra Credit Companies",
+          "Adira Finance",
+          "BFI Finance",
+          "Mandiri Tunas Finance",
+          "CIMB Niaga Auto Finance",
+          "Toyota Astra Financial Services",
+          "Hyundai Motor Finance Indonesia",
+          "Bussan Auto Finance",
+          "Mandala Multifinance",
+          "Indomobil Finance"
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 2,
+        "source": "OJK Multifinance directory 2025",
+        "source_en": "OJK Multifinance directory 2025",
+        "insight": "캡티브·은행계·외국계 다층 구조. Hyundai Motor Finance Indonesia 등 한국계도 진출 — 단독 진출 전례 있음.",
+        "insight_en": "Captive, bank-affiliate, and foreign multi-layered structure. Korean players (e.g., Hyundai Motor Finance Indonesia) have established presence — solo entry precedent.",
+        "insight_ai_generated": true
+      },
+      "competitor_entry_form": {
+        "item": "경쟁사 진출 형태",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": "캡티브 Multifinance(Astra Credit·Toyota Astra·Hyundai Motor Finance Indonesia·Bussan Auto·Indomobil) + 은행계 자회사(Mandiri Tunas·CIMB Niaga Auto·BCA Finance) + 독립 Multifinance(Adira·BFI·Mandala). 외국사 단독 진출 가능 — Hyundai Motor Finance Indonesia(현지법인) 전례.",
+        "value_en": "Captive multifinance (Astra Credit, Toyota Astra, Hyundai Motor Finance Indonesia, Bussan Auto, Indomobil) + bank subsidiaries (Mandiri Tunas, CIMB Niaga Auto, BCA Finance) + independent multifinance (Adira, BFI, Mandala). Foreign solo entry feasible — Hyundai Motor Finance Indonesia (local entity) precedent.",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 2,
+        "source": "OJK / Industry research 2025",
+        "source_en": "OJK / Industry research 2025",
+        "insight": "외국 단독 진출 가능, 단 15% 현지 파트너 의무. 한국계는 KB Finansia Multi Finance 등 진출 전례 활용 가능.",
+        "insight_en": "Foreign solo entry feasible with 15% local-partner requirement. Korean entrants can leverage precedents like KB Finansia Multi Finance.",
+        "insight_ai_generated": true
+      },
+      "brand_top10": {
+        "item": "브랜드 Top10",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          "Toyota",
+          "Daihatsu",
+          "Honda",
+          "Mitsubishi",
+          "Suzuki",
+          "Hyundai",
+          "Wuling",
+          "Isuzu",
+          "Nissan",
+          "BYD"
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 1,
+        "source": "Gaikindo 2025 brand registrations",
+        "source_en": "Gaikindo 2025 brand registrations",
+        "insight": "일본계 5강(Toyota·Daihatsu·Honda·Mitsubishi·Suzuki) 시장 70%+. 한국(Hyundai)·중국(Wuling·BYD) EV 진출 가속.",
+        "insight_en": "Japanese top 5 (Toyota, Daihatsu, Honda, Mitsubishi, Suzuki) hold 70%+. Korea (Hyundai) and China (Wuling, BYD) accelerate EV entry.",
+        "insight_ai_generated": true
+      },
+      "news": {
+        "item": "외부 이슈 스캔",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          {
+            "news_category": "auto_market",
+            "headline": "인도네시아 2025 신차 90만대 — 동남아 1위 시장 지위 유지",
+            "headline_en": "Indonesia 2025 new-car sales reach 0.9M — retains #1 SE Asia market position",
+            "so_what": "시장 회복으로 금융 침투 기반 견조 — 진입 타이밍 우호적.",
+            "so_what_en": "Market recovery anchors finance penetration — favorable entry timing.",
+            "publisher": "Gaikindo",
+            "pub_date": "2026-01-20",
+            "url": "https://www.gaikindo.or.id/"
+          },
+          {
+            "news_category": "electrification",
+            "headline": "인도네시아 LCE 정책 발표 — EV 보조금 + 현지생산 인센티브 2030년 25% 목표",
+            "headline_en": "Indonesia LCE policy announced — EV subsidies + local-production incentives targeting 25% by 2030",
+            "so_what": "EV 잔가·리스 모델 수요 급증 전망. 잔가 보증 보수적 설계 필수.",
+            "so_what_en": "Surging demand for EV residual/lease models expected. Conservative residual guarantee essential.",
+            "publisher": "Jakarta Post",
+            "pub_date": "2026-03-15",
+            "url": "https://www.thejakartapost.com/"
+          },
+          {
+            "news_category": "regulation",
+            "headline": "OJK Multifinance 외국 지분 한도 85% 유지 — 합작 모델 의무 지속",
+            "headline_en": "OJK keeps multifinance foreign ownership cap at 85% — JV model remains mandatory",
+            "so_what": "단독 진출 불가, 현지 파트너 필수. 합작 파트너 선정이 인가 성패의 핵심.",
+            "so_what_en": "Solo entry not allowed; local partner mandatory. Partner selection is key to licensing success.",
+            "publisher": "Bisnis Indonesia",
+            "pub_date": "2026-04-08",
+            "url": "https://www.bisnis.com/"
+          }
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "news",
+        "timeseries": null,
+        "tier": 2,
+        "source": "Gaikindo·Jakarta Post·Bisnis Indonesia (whitelist 2025-2026)",
+        "source_en": "Gaikindo, Jakarta Post, Bisnis Indonesia (whitelist 2025-2026)",
+        "insight": "시장 회복 + EV 가속 + 외국 지분 한도 유지가 3대 이슈. 진입 시점은 우호적이나 합작·잔가 관리 동시 필요.",
+        "insight_en": "Market recovery + EV acceleration + retained foreign ownership cap are the three key issues. Favorable timing, but JV and residual management must run in parallel.",
+        "insight_ai_generated": true
+      },
+      "regulators": {
+        "item": "규제기관 식별",
+        "item_en": null,
+        "category": "shared",
+        "role": "context",
+        "value": "OJK(금융감독청, Multifinance·은행) / Bank Indonesia(중앙은행·결제) / DJP(국세청) / BKPM(투자조정청, FDI) / Kemkominfo(통신부, 데이터)",
+        "value_en": "OJK (Financial Services Authority — multifinance/banking) / Bank Indonesia (central bank, payments) / DJP (Tax) / BKPM (Investment Coordinating Board, FDI) / Kemkominfo (Communications, data).",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 1,
+        "source": "OJK / BI / DJP / BKPM / Kemkominfo Official 2025",
+        "source_en": "OJK / BI / DJP / BKPM / Kemkominfo Official 2025",
+        "insight": "OJK가 Multifinance 인가·감독 핵심. 결제(BI)·데이터(Kemkominfo)·투자(BKPM) 다중 감독.",
+        "insight_en": "OJK is the principal regulator for multifinance licensing. Payments (BI), data (Kemkominfo), and investment (BKPM) form multi-agency oversight.",
+        "insight_ai_generated": true
+      },
+      "country_summary": {
+        "item": "해당국 정성 요약",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": "동남아 최대 시장(2025 90만대)·5%대 GDP·금융 침투 70%로 매력도 상위. Multifinance 인가 + 외국 지분 85% 한도 + Astra Group 30% 단독 점유 + 금융 데이터 현지화가 진입 부담. QRIS·BI-FAST 디지털 인프라와 EV 가속(LCE 정책)은 단기 차별화 기회. 헌재 2019 판결로 차량 회수 제약, 잔가 리스크 큰 EV 중심 시장 — 보수적 GFV·합작 파트너십 + Multifinance 인가 우선 전략 유효.",
+        "value_en": "Largest SE Asian market (0.9M new cars 2025), 5%+ GDP, 70% finance penetration — top-tier attractiveness. Multifinance licensing, 85% foreign-ownership cap, Astra Group ~30% concentration, and financial data localization add entry friction. QRIS/BI-FAST digital infra and EV acceleration (LCE policy) offer near-term differentiation. 2019 Constitutional Court ruling constrains repossession; EV-heavy market with residual risk — conservative GFV, local JV partnerships, and multifinance-license-first strategy is effective.",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 1,
+        "source": "Synthesized from OJK, Gaikindo, Bank Indonesia, IMF, Fitch 2025",
+        "source_en": "Synthesized from OJK, Gaikindo, Bank Indonesia, IMF, Fitch 2025",
+        "insight": "매력도 상위·인가 부담 큰 시장. 합작 + 디지털 + 보수적 EV 잔가 전략 권장.",
+        "insight_en": "Upper-tier attractiveness with significant licensing burden. JV + digital + conservative EV GFV recommended.",
+        "insight_ai_generated": true
+      }
+    }
+  }
+}

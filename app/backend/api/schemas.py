@@ -28,6 +28,8 @@ class CountrySummary(BaseModel):
     has_report: bool = False
     # 진출 상태(internal_latest.json country_status): 운영중·준비중·미진출. 없으면 None.
     status: Optional[str] = None
+    # 진출형태(internal_latest.json country_assets[code].type): 단독법인·JV. 기진출국만, 미진출국은 None.
+    entry_mode: Optional[str] = None
 
 
 class RegionSummary(BaseModel):

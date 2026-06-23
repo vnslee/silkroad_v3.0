@@ -28,6 +28,10 @@ interface CatalogItem {
   region?: string
   isBaseline: boolean
   hasReport: boolean
+  // 진출 상태(internal country_status): '운영중'|'미진출'|'진출예정'|'준비중' 등. 없으면 undefined.
+  status?: string
+  // 진출형태(internal country_assets 보유 여부) — 값이 있으면 기진출국.
+  entryMode?: string
 }
 
 export default function DetailView({ domain, code, mode }: Props) {
@@ -55,6 +59,8 @@ export default function DetailView({ domain, code, mode }: Props) {
             region: 'region' in x ? (x.region ?? undefined) : undefined,
             isBaseline: 'is_baseline' in x ? x.is_baseline : false,
             hasReport: x.has_report,
+            status: 'status' in x ? (x.status ?? undefined) : undefined,
+            entryMode: 'entry_mode' in x ? (x.entry_mode ?? undefined) : undefined,
           })),
         )
       })
@@ -110,12 +116,19 @@ export default function DetailView({ domain, code, mode }: Props) {
 
   const isCountry = domain === 'country'
   const meta = catalog.find((c) => c.code === code)
-  const status = meta?.isBaseline ? '기준국' : meta?.hasReport ? '진출' : '진출예정'
+  // 진출 상태 — 백엔드 country_detail 엔진과 동일 기준: country_status(meta.status) 우선,
+  // 없으면 country_assets 보유(meta.entryMode) → '기진출', 둘 다 없으면 '미진출'. (hasReport 무관)
+  const status = meta?.isBaseline
+    ? '기준국'
+    : meta?.status ?? (meta?.entryMode ? '기진출' : '미진출')
+  // 색: 운영중/기진출=초록, 미진출=레드, 그 외(진출예정·준비중 등)=중립. (detail 엔진 _status_badge와 일치)
   const statusStyle = meta?.isBaseline
     ? 'bg-secondary-fixed text-on-secondary-fixed-variant'
-    : meta?.hasReport
+    : status === '운영중' || status === '기진출'
       ? 'bg-success-container text-success border border-success/30'
-      : 'bg-surface-container text-on-surface-variant'
+      : status === '미진출'
+        ? 'bg-error-container text-error border border-error/30'
+        : 'bg-surface-container text-on-surface-variant'
 
   // 대상 선택 옵션
   const targetOptions: SelectOption[] = catalog.map((c) => ({
@@ -177,9 +190,12 @@ export default function DetailView({ domain, code, mode }: Props) {
               />
             </div>
             <div className="mt-xs flex items-center gap-sm">
-              <span className={`inline-flex items-center rounded px-2 py-0.5 font-label-sm text-label-sm ${statusStyle}`}>
-                {status}
-              </span>
+              {/* 진출 상태 배지는 국가에만 해당 — 권역은 진출 상태 개념이 없어 미표시. */}
+              {isCountry && (
+                <span className={`inline-flex items-center rounded px-2 py-0.5 font-label-sm text-label-sm ${statusStyle}`}>
+                  {status}
+                </span>
+              )}
               <span className="font-label-sm text-label-sm text-outline">
                 {isCountry ? `Region: ${meta?.region ?? '-'}` : '권역'}
               </span>
