@@ -132,6 +132,8 @@
         <div class="p-lg flex flex-col gap-xl">
             <!-- KPI summary cards -->
             {{KPI_CARDS}}
+            <!-- 기진출(운영중) 국가 — 법인종류 / 설립연도 / 관리상품 -->
+            {{ENTERED_LIST}}
             <!-- Region map (left) + quick-win ranking (right) -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-md items-stretch">
                 {{REGION_MAP}}
@@ -139,8 +141,6 @@
             </div>
             <!-- Region AI insight -->
             {{REGION_INSIGHT}}
-            <!-- Report generation CTA -->
-            {{REPORT_CTA}}
         </div>
     </div>
 </div>
