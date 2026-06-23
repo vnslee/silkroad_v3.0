@@ -6,7 +6,7 @@
     "country": "CA",
     "base_country": "US"
   },
-  "generated_at": "2026-06-22T19:16:55.496767",
+  "generated_at": "2026-06-23T22:17:24.587544",
   "schema_version": "1.2",
   "overall_insight": "성숙한 G7 자동차금융 시장으로, 2025년 신차 판매 약 188만대(DesRosiers/GAC)·금융침투율 80%+의 고침투·고신뢰 환경이다. 비즈니스 매력도는 안정성(AAA/Aaa 국가신용·낮은 APR)이 핵심이나 성장률은 한 자릿수 초중반으로 멕시코 대비 완만하다. 비용·난이도 드라이버는 연방-주 이중 규제 — OSFI(연방 건전성)와 주별 소비자신용·면허 체제(특히 Quebec 소비자보호법·언어 의무)가 진입 복잡도를 키운다. 단 외국인 지분 제한 없음(Investment Canada Act 심사 임계만)·외환 자유로 게이트는 대부분 PASS. IT 유사도는 북미 권역에서 매우 높다 — Equifax/TransUnion 양강 CB·Interac/EFT 결제·전자서명·고도화된 디지털 채널로 베이스라인 재사용률이 멕시코보다 높다. 매력도↔IT 불일치 지점은 차량회수 — 주별로 법원명령 요구(자력구제 제한) 편차가 커 리스크 모듈 분기가 필요하다. 다크호스는 EV 가속(연방 iZEV+ZEV mandate 2026+)·강한 캡티브(Toyota·Honda·Ford·GM)와 은행계(Scotiabank·RBC·TD) 공존 구조다. B2B 리스 우선 진입 후 주별 소비자신용 확장 또는 한국 OEM 캡티브 연계 전략이 유효하다.",
   "overall_insight_en": "A mature G7 auto-finance market — ~1.88M new-car sales in 2025 (DesRosiers/GAC) with 80%+ finance penetration, a high-penetration, high-trust environment. Business attractiveness hinges on stability (AAA/Aaa sovereign credit, low APR), but growth is in the low single digits — moderate versus Mexico. Cost/difficulty drivers are the federal-provincial dual regulation — OSFI (federal prudential) and province-by-province consumer-credit/licensing regimes (notably Quebec's consumer-protection law and language obligations) raise entry complexity. However, with no foreign-ownership limit (only an Investment Canada Act review threshold) and free FX, most gates PASS. IT similarity is very high in North America — the Equifax/TransUnion duopoly CB, Interac/EFT payments, e-signature, and advanced digital channels give higher baseline reuse than Mexico. The attractiveness↔IT mismatch is repossession — wide provincial variation in court-order requirements (limited self-help) requires a per-province risk-module branch. The dark horse is EV acceleration (federal iZEV + ZEV mandate 2026+) and a strong-captive (Toyota·Honda·Ford·GM) and bank-led (Scotiabank·RBC·TD) coexistence structure. A B2B-lease-first entry followed by per-province consumer-credit expansion, or a Korean OEM captive linkage, is a viable strategy.",
@@ -900,15 +900,17 @@
       ]
     },
     "tab_1_3_tco": {
-      "build_cost": 3600.0,
-      "build_months": 12.0,
-      "annual_subscription": 103299.426,
-      "annual_maintenance": 500,
-      "annual_recurring": 103799.426,
-      "operations_10y": 50000,
-      "system_cost_10y": 1041594.26,
-      "total_tco_10y": 1091594.26,
-      "currency": "EUR",
+      "build_cost": 659.0909090909091,
+      "build_months": 10.799999999999999,
+      "annual_subscription": 0.0,
+      "annual_maintenance": 549.2424242424242,
+      "annual_recurring": 549.2424242424242,
+      "operations_10y": 54924.242424242424,
+      "system_cost_10y": 6151.515151515152,
+      "total_tco_10y": 61075.757575757576,
+      "currency": "USD",
+      "currency_base": "EUR",
+      "total_tco_10y_eur": 55600.0,
       "similarity_score": 83.75,
       "similarity_multiplier": 0.6,
       "similarity_band": "80~90",
@@ -918,16 +920,17 @@
         "inputs": {
           "베이스라인 국가": "US",
           "베이스라인 솔루션": "Salesforce",
-          "B 구축비용": 6000,
-          "B 구축기간(개월)": 20,
+          "B 구축비용": 1098.4848484848485,
+          "B 구축기간(개월)": 18,
           "종합 유사도": 83.8,
           "승수 구간": "80~90",
           "적용 승수": 0.6
         },
         "outputs": {
-          "신규국 구축비용": 3600.0,
-          "신규국 구축기간(개월)": 12.0
-        }
+          "신규국 구축비용": 659.0909090909091,
+          "신규국 구축기간(개월)": 10.799999999999999
+        },
+        "currency": "USD"
       },
       "expected_contracts": 25282,
       "expected_contracts_breakdown": {
@@ -943,41 +946,69 @@
         }
       },
       "subscription_details": {
-        "existing_volume": 80,
+        "applicable": false,
         "new_volume": 25282,
-        "total_volume": 25362,
-        "unit_price": 4.073,
+        "annual_fee": 0,
         "currency": "EUR",
-        "annual_fee": 103299.426,
-        "note": "All volume repriced at new tier rate"
+        "note": "비구독 솔루션 — 구독료는 운영비에 포함"
       },
       "subscription_tiers": [
         {
           "min_volume": 0,
-          "max_volume": 2000,
+          "max_volume": 500,
+          "price_per_unit": 24.7,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 501,
+          "max_volume": 1000,
           "price_per_unit": 9.88,
           "currency": "EUR"
         },
         {
+          "min_volume": 1001,
+          "max_volume": 1500,
+          "price_per_unit": 8.645,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 1501,
+          "max_volume": 2000,
+          "price_per_unit": 7.41,
+          "currency": "EUR"
+        },
+        {
           "min_volume": 2001,
-          "max_volume": 4000,
-          "price_per_unit": 5.928,
+          "max_volume": 3000,
+          "price_per_unit": 6.175,
           "currency": "EUR"
         },
         {
-          "min_volume": 4001,
-          "max_volume": 7500,
-          "price_per_unit": 5.434,
+          "min_volume": 3001,
+          "max_volume": 5000,
+          "price_per_unit": 5.681,
           "currency": "EUR"
         },
         {
-          "min_volume": 7501,
+          "min_volume": 5001,
           "max_volume": 10000,
           "price_per_unit": 4.94,
           "currency": "EUR"
         },
         {
           "min_volume": 10001,
+          "max_volume": 12000,
+          "price_per_unit": 4.693,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 12001,
+          "max_volume": 14000,
+          "price_per_unit": 4.446,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 14001,
           "max_volume": 20000,
           "price_per_unit": 4.323,
           "currency": "EUR"
@@ -985,7 +1016,7 @@
         {
           "min_volume": 20001,
           "max_volume": 80000,
-          "price_per_unit": 4.073,
+          "price_per_unit": 4.076,
           "currency": "EUR"
         },
         {

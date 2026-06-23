@@ -29,6 +29,7 @@ interface CatalogItem {
   baseline?: string
   isBaseline: boolean
   hasReport: boolean
+  entryMode?: string
 }
 
 export default function ReportView({ domain, code, reportId, mode }: Props) {
@@ -54,6 +55,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
             baseline: 'baseline_country' in x ? (x.baseline_country ?? undefined) : undefined,
             isBaseline: 'is_baseline' in x ? x.is_baseline : false,
             hasReport: x.has_report,
+            entryMode: 'entry_mode' in x ? (x.entry_mode ?? undefined) : undefined,
           })),
         )
       })
@@ -89,14 +91,27 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   const name = meta?.name ?? code
   const title = isCountry ? `${name} 진출 진단 보고서` : `${name} 퀵윈 분석`
 
-  // 진출 상태 배지(참조 헤더의 미진출/진출/기준국 배지)
-  const status = meta?.isBaseline ? '기준국' : meta?.hasReport ? '진출' : '미진출'
-  const statusIcon = meta?.isBaseline ? 'star' : meta?.hasReport ? 'check_circle' : 'explore'
+  // 진출여부 배지(참조 헤더의 미진출/진출/기준국 배지) — 진출형태(단독법인/JV)는 기진출국만 존재.
+  const entered = isCountry ? !!meta?.entryMode : meta?.hasReport
+  const status = meta?.isBaseline ? '기준국' : entered ? '진출' : '미진출'
+  // 진출형태(단독법인/JV) — 진출 상태일 때만 배지 옆에 덧붙인다. 미진출은 숨김.
+  const entryMode = isCountry && entered ? meta?.entryMode : undefined
+  const statusIcon = meta?.isBaseline ? 'star' : entered ? 'check_circle' : 'explore'
   const statusStyle = meta?.isBaseline
     ? 'bg-secondary-fixed text-on-secondary-fixed-variant border-secondary-fixed-dim'
-    : meta?.hasReport
+    : entered
       ? 'bg-success-container text-success border-success/30'
       : 'bg-surface-container text-text-secondary border-surface-border'
+
+  // 생성일 — ISO 타임스탬프를 날짜+시:분(YYYY-MM-DD HH:MM)까지만 표시.
+  const generatedLabel = (() => {
+    const raw = current?.generated_at
+    if (!raw) return undefined
+    const d = new Date(raw)
+    if (Number.isNaN(d.getTime())) return raw.slice(0, 16).replace('T', ' ')
+    const p = (n: number) => String(n).padStart(2, '0')
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`
+  })()
 
   const targetOptions: SelectOption[] = catalog.map((c) => ({
     value: c.code,
@@ -183,10 +198,10 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
                   </span>
                 }
               />
-              {current?.generated_at && (
+              {generatedLabel && (
                 <>
                   <span className="h-1 w-1 rounded-full bg-surface-border" />
-                  <span className="font-label-sm text-label-sm text-text-secondary">Generated: {current.generated_at}</span>
+                  <span className="font-label-sm text-label-sm text-text-secondary">Generated: {generatedLabel}</span>
                 </>
               )}
               {meta?.baseline && (
@@ -202,6 +217,12 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
                 <Icon name={statusIcon} className="text-[12px]" />
                 {status}
               </span>
+              {entryMode && (
+                <span className="inline-flex items-center gap-xs rounded-full border border-secondary-fixed-dim bg-secondary-fixed px-2 py-[2px] font-label-sm text-label-sm uppercase tracking-wide text-on-secondary-fixed-variant">
+                  <Icon name="apartment" className="text-[12px]" />
+                  {entryMode}
+                </span>
+              )}
             </div>
           </div>
         </div>

@@ -17,10 +17,10 @@
     ],
     "baseline_country": "GB"
   },
-  "generated_at": "2026-06-22T19:29:10.156490",
+  "generated_at": "2026-06-23T23:20:05.065433",
   "generated_by": "engine",
   "data_snapshot_id": "2026-06-22T16:00:00+09:00",
-  "config_version": "1.4",
+  "config_version": "1.2",
   "engine_version": "v1.0",
   "schema_version": "1.1",
   "fx": {
@@ -158,6 +158,11 @@
           "country": "AT",
           "country_name": "Austria",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -193,6 +198,11 @@
           "country": "DK",
           "country_name": "Denmark",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -228,6 +238,11 @@
           "country": "ES",
           "country_name": "Spain",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -263,6 +278,11 @@
           "country": "FR",
           "country_name": "France",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -298,6 +318,11 @@
           "country": "GB",
           "country_name": "United Kingdom",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -333,6 +358,11 @@
           "country": "IT",
           "country_name": "Italy",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -368,6 +398,11 @@
           "country": "NL",
           "country_name": "Netherlands",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -403,6 +438,11 @@
           "country": "PL",
           "country_name": "Poland",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -438,6 +478,11 @@
           "country": "PT",
           "country_name": "Portugal",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -483,7 +528,48 @@
       ],
       "failed": [],
       "passed_count": 9,
-      "failed_count": 0
+      "failed_count": 0,
+      "tier_counts": {
+        "in_region_confidence": 9
+      },
+      "tier_summary": [
+        {
+          "key": "jv_required",
+          "label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
+          "severity": 1,
+          "count": 0
+        },
+        {
+          "key": "jv_recommended",
+          "label": {
+            "ko": "JV 권고",
+            "en": "JV Recommended"
+          },
+          "severity": 2,
+          "count": 0
+        },
+        {
+          "key": "external_solution",
+          "label": {
+            "ko": "외부솔루션 사용",
+            "en": "External Solution"
+          },
+          "severity": 3,
+          "count": 0
+        },
+        {
+          "key": "in_region_confidence",
+          "label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "severity": 4,
+          "count": 9
+        }
+      ]
     },
     "tab_2_1_attractiveness": {
       "nature": "ranking",
@@ -2688,9 +2774,16 @@
           "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
-          "rank": 7
+          "rank": 6
         },
         {
           "country": "DK",
@@ -2702,6 +2795,13 @@
           "quickwin_band": 60,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 2
@@ -2716,6 +2816,13 @@
           "quickwin_band": 60,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 3
@@ -2730,9 +2837,15 @@
           "quickwin_band": 30,
           "is_baseline": false,
           "killswitch_excluded": false,
-          "excluded": false,
-          "exclusion_reason": null,
-          "rank": 8
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": true,
+          "excluded": true,
+          "exclusion_reason": "진출국 (이미 운영중, 후보 아님)"
         },
         {
           "country": "GB",
@@ -2744,6 +2857,13 @@
           "quickwin_band": 80,
           "is_baseline": true,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": true,
           "excluded": true,
           "exclusion_reason": "baseline (기준국, 후보 아님)"
         },
@@ -2757,9 +2877,15 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": false,
-          "excluded": false,
-          "exclusion_reason": null,
-          "rank": 6
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": true,
+          "excluded": true,
+          "exclusion_reason": "진출국 (이미 운영중, 후보 아님)"
         },
         {
           "country": "NL",
@@ -2771,6 +2897,13 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 4
@@ -2785,6 +2918,13 @@
           "quickwin_band": 70,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 1
@@ -2799,6 +2939,13 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
           "rank": 5
@@ -2842,29 +2989,15 @@
         },
         {
           "rank": 6,
-          "country": "IT",
-          "score_band": 50,
-          "attractiveness": 36.4,
-          "it_similarity_band": 60
-        },
-        {
-          "rank": 7,
           "country": "AT",
           "score_band": 40,
           "attractiveness": 26.5,
           "it_similarity_band": 70
-        },
-        {
-          "rank": 8,
-          "country": "FR",
-          "score_band": 30,
-          "attractiveness": 8.9,
-          "it_similarity_band": 60
         }
       ],
       "note": {
-        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국) 및 킬스위치 탈락국 제외. 10점 구간 표기.",
-        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline and killswitch failures excluded. Reported in 10-point buckets."
+        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets."
       }
     },
     "top3_country_cards": [
@@ -2876,6 +3009,11 @@
         "attractiveness": 76.6,
         "it_similarity_band": 70,
         "killswitch_pass": true,
+        "killswitch_tier": "in_region_confidence",
+        "killswitch_tier_label": {
+          "ko": "권역내 확신",
+          "en": "In-Region Confidence"
+        },
         "market_brief": {
           "신차_판매대수": 560000,
           "금융_이용률_신차": 78,
@@ -2944,6 +3082,11 @@
         "attractiveness": 54.8,
         "it_similarity_band": 70,
         "killswitch_pass": true,
+        "killswitch_tier": "in_region_confidence",
+        "killswitch_tier_label": {
+          "ko": "권역내 확신",
+          "en": "In-Region Confidence"
+        },
         "market_brief": {
           "신차_판매대수": 170000,
           "금융_이용률_신차": 80,
@@ -3007,6 +3150,11 @@
         "attractiveness": 55.8,
         "it_similarity_band": 70,
         "killswitch_pass": true,
+        "killswitch_tier": "in_region_confidence",
+        "killswitch_tier_label": {
+          "ko": "권역내 확신",
+          "en": "In-Region Confidence"
+        },
         "market_brief": {
           "신차_판매대수": 1148650,
           "금융_이용률_신차": 60,
@@ -3090,8 +3238,11 @@
           }
         ],
         "killswitch_failed_count": 0,
+        "killswitch_tier_counts": {
+          "in_region_confidence": 9
+        },
         "why_top1": {
-          "ko": "Poland(PL) — 매력도 76.6, IT유사도 70 구간, 퀵윈 70 구간",
+          "ko": "폴란드 — 매력도 76.6, IT유사도 70 구간, 퀵윈 70 구간",
           "en": "Poland(PL) — Attractiveness 76.6, IT band 70, Quickwin band 70"
         }
       },
