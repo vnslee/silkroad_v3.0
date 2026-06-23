@@ -1,6 +1,6 @@
 {
-  "version": "1.1",
-  "updated_at": "2026-06-23T00:00:00+09:00",
+  "version": "1.2",
+  "updated_at": "2026-06-23T12:00:00+09:00",
   "country_assets": {
     "GB": {
       "solution": "NetSol",
@@ -17,6 +17,18 @@
       "reuse_factor": 0.7
     },
     "US": {
+      "solution": "Salesforce",
+      "type": "SA",
+      "products": [
+        "오토론",
+        "리스"
+      ],
+      "since": 1989,
+      "build_cost": 1000,
+      "build_months": 18,
+      "reuse_factor": 0.5
+    },
+    "CA": {
       "solution": "Salesforce",
       "type": "SA",
       "products": [
@@ -119,7 +131,7 @@
     "HU": "미진출",
     "FR": "운영중",
     "IT": "운영중",
-    "CA": "미진출",
+    "CA": "운영중",
     "MX": "미진출",
     "NZ": "미진출",
     "JP": "미진출",
@@ -945,5 +957,53 @@
       "max_difficulty": 65
     },
     "note": "퀵윈 = 게이트 통과 + 점수 임계 충족. ease = (100 - difficulty). 베이스라인 재사용률(유사도) 최우선 가중."
+  },
+  "killswitch_tier_rules": {
+    "gates": ["외국인 지분 한도", "외환·배당 송금 자유도", "데이터 현지화 의무", "국가신용등급"],
+    "fail_statuses": ["FAIL", "FLAG", "UNKNOWN"],
+    "tiers": [
+      {
+        "key": "jv_required",
+        "label_ko": "JV 필수",
+        "label_en": "JV Required",
+        "severity": 1,
+        "trigger": { "any_fail": ["국가신용등급"] },
+        "fallback": true,
+        "eligible": false,
+        "quickwin_penalty": null,
+        "killswitch_excluded": true
+      },
+      {
+        "key": "jv_recommended",
+        "label_ko": "JV 권고",
+        "label_en": "JV Recommended",
+        "severity": 2,
+        "trigger": { "any_fail": ["외환·배당 송금 자유도", "외국인 지분 한도"] },
+        "eligible": true,
+        "quickwin_penalty": 10,
+        "killswitch_excluded": false
+      },
+      {
+        "key": "external_solution",
+        "label_ko": "외부솔루션 사용",
+        "label_en": "External Solution",
+        "severity": 3,
+        "trigger": { "only_fail": ["데이터 현지화 의무"] },
+        "eligible": true,
+        "quickwin_penalty": 0,
+        "killswitch_excluded": false
+      },
+      {
+        "key": "in_region_confidence",
+        "label_ko": "권역내 확신",
+        "label_en": "In-Region Confidence",
+        "severity": 4,
+        "trigger": { "all_pass": true },
+        "eligible": true,
+        "quickwin_penalty": 0,
+        "killswitch_excluded": false
+      }
+    ],
+    "note": "킬스위치 4단계 분류. PASS 외(FLAG·UNKNOWN 포함) 게이트 조합으로 진출 형태 판정. severity 낮을수록 위험; 다중 FLAG 시 가장 나쁜 tier 적용. trigger: all_pass(전 PASS) / only_fail(정확히 그 게이트만 not-PASS) / any_fail(나열 중 하나라도 not-PASS) / fallback(미매치 시). eligible=false면 퀵윈 제외(killswitch_excluded=true). quickwin_penalty는 banding 전 quickwin_raw에서 차감."
   }
 }

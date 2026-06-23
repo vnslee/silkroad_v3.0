@@ -160,6 +160,7 @@
 | `similarity_brackets` | `[{min, max, discount}]` | 유사도 → discount 매핑 (`calculate_similarity_discount`) |
 | `similarity_multiplier_table` | `[{min, max, multiplier, band}]` | **유형1 탭1-3 산식1** — 유사도 → B 구축비용·기간에 곱하는 승수 (50%~100%) |
 | `decision_thresholds` | `{expansion_min_score, hq_build_min_score}` | **유형1 탭1-2** — 시스템 결정 트리 임계값 (≥70 확산, ≥50 본사구축, 그 외 외부솔루션) |
+| `killswitch_tier_rules` | `{gates, fail_statuses, tiers:[{key, label_ko, label_en, severity, trigger, fallback, eligible, quickwin_penalty, killswitch_excluded}]}` | **유형2 탭2-0** — 킬스위치 게이트 조합 → 진출 형태 4단계(권역내 확신·외부솔루션·JV권고·JV필수) 분류. `trigger`=`all_pass`/`only_fail`/`any_fail`/`fallback`, severity 낮을수록 위험(worst-first 평가). `eligible=false`(JV필수)면 퀵윈 랭킹 제외, `quickwin_penalty`는 banding 전 감점. (`compute_killswitch`/`_classify_killswitch_tier`/`compute_quickwin`) |
 
 ### 5. TCO·비용 파라미터 (유형1 전용)
 
@@ -198,7 +199,8 @@
 |---|---|---|
 | 탭2-1 매력도 = Σ(정규화 × 유효가중치) | `region_report_engine.compute_attractiveness` | `values.biz_attractiveness`, `tier_weights` |
 | 탭2-2 IT 유사도 = Σ(raw × 유효가중치) | `region_report_engine.compute_it_similarity` | `values.it_readiness`, `tier_weights` |
-| 퀵윈 = 매력도 × w_biz + IT × w_it | `region_report_engine.compute_quickwin` | `values.report_blend` |
+| 퀵윈 = 매력도 × w_biz + IT × w_it | `region_report_engine.compute_quickwin` | `values.report_blend`, `killswitch_tier_rules` |
+| 탭2-0 킬스위치 4단계 분류 | `region_report_engine.compute_killswitch` / `_classify_killswitch_tier` | `killswitch_tier_rules` |
 | 기준국 식별 | `region_report_engine._baseline_country_code` | `region_baselines` |
 | 탭1-1 유사도 (디멘전 채점) | `country_report_engine.calculate_similarity_score` | `baseline_scoring`, `values.similarity_axis_weights` (있을 시) |
 | 탭1-2 시스템 결정 | `country_report_engine.determine_system_decision` | `decision_thresholds`, `country_assets`, `hq_build_baseline` |
@@ -276,6 +278,7 @@
 | `similarity_multiplier_table` | 빈 표 → multiplier 1.0 (재사용 없음) |
 | `expected_market_share` | 0.02 (=2%) |
 | `region_baselines.{region}` | "GB" |
+| `killswitch_tier_rules` 통째 | 엔진 내장 기본 4단계 규칙(`DEFAULT_KILLSWITCH_TIER_RULES`) 사용 — JV필수만 랭킹 제외, JV권고 10점 감점 |
 
 폴백이 작동한다 ≠ 의도된 결과. 변경 후 보고서를 확인해 폴백이 발동했는지 점검할 것.
 
