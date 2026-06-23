@@ -18,6 +18,8 @@ interface AppState {
   activeJobs: JobRef[] // §5.3 프로그레스 카드 노출 판단
   lang: Lang
   chatOpen: boolean // FAB·챗 패널이 공유
+  // 카탈로그(국가/권역) 갱신 신호. 리서치 완료 시 증가 → 지도가 마커를 재조회한다.
+  countriesVersion: number
 }
 
 let state: AppState = {
@@ -25,6 +27,7 @@ let state: AppState = {
   activeJobs: [],
   lang: 'ko',
   chatOpen: false,
+  countriesVersion: 0,
 }
 
 const listeners = new Set<() => void>()
@@ -57,6 +60,8 @@ export const store = {
   removeJob(jobId: string) {
     setState({ activeJobs: state.activeJobs.filter((j) => j.jobId !== jobId) })
   },
+  // 리서치 완료 등으로 카탈로그가 바뀌었을 때 호출 → 구독 중인 지도가 마커를 재조회.
+  refreshCountries: () => setState({ countriesVersion: state.countriesVersion + 1 }),
 }
 
 export function useStore<T>(selector: (s: AppState) => T): T {

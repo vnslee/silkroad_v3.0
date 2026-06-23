@@ -10,15 +10,25 @@ import threading
 import uuid
 from typing import Dict, Optional, Union
 
-from ..schemas import DetailJobResult, JobResult, JobStatus, ResearchJobResult
+from ..schemas import (
+    AgentProgress,
+    DetailJobResult,
+    JobResult,
+    JobStatus,
+    ResearchJobResult,
+)
 
-# step → percent 고정 매핑. 보고서 잡(generating/rendering)·리서치 잡(calling_bedrock/saving) 공용.
+# step → percent 고정 매핑. 보고서/상세 잡과, agents[]가 없는 리서치 잡(권역 종합 등)용.
+# agents[]가 있는 리서치 잡은 _recompute_research_percent로 4 agent 평균(0~80) + 단계(80~100).
 _STEP_PERCENT = {
     "queued": 0,
     "generating": 40,
     "rendering": 80,
     "calling_bedrock": 40,
-    "saving": 80,
+    "members_progress": 55,  # region: 멤버 국가 선행 조사 구간(progress가 명시 percent 전달)
+    "region_synth": 70,      # region: 권역 종합 리서치 진입
+    "result_gen": 85,
+    "saving": 90,
     "done": 100,
 }
 
@@ -44,8 +54,42 @@ class JobManager:
     def start(self, job_id: str) -> None:
         self._set(job_id, status="running", step="generating")
 
-    def set_progress(self, job_id: str, step: str, message: Optional[str] = None) -> None:
-        self._set(job_id, step=step, message=message)
+    def set_progress(
+        self,
+        job_id: str,
+        step: str,
+        message: Optional[str] = None,
+        *,
+        percent: Optional[int] = None,
+    ) -> None:
+        self._set(job_id, step=step, message=message, percent=percent)
+
+    def init_agents(self, job_id: str, agents: list) -> None:
+        """리서치 잡의 분야 agent 목록 초기화. agents: [(key, label), ...]."""
+        with self._lock:
+            job = self._jobs.get(job_id)
+            if job is None:
+                return
+            job.agents = [
+                AgentProgress(key=k, label=lbl, status="queued", percent=0)
+                for k, lbl in agents
+            ]
+            self._recompute_research_percent(job)
+
+    def set_agent_progress(
+        self, job_id: str, key: str, status: str, percent: int
+    ) -> None:
+        """분야 agent 한 개의 상태/진행률 갱신(스레드 안전 — 4개 워커가 동시 호출)."""
+        with self._lock:
+            job = self._jobs.get(job_id)
+            if job is None:
+                return
+            for a in job.agents:
+                if a.key == key:
+                    a.status = status  # type: ignore[assignment]
+                    a.percent = max(0, min(100, percent))
+                    break
+            self._recompute_research_percent(job)
 
     def succeed(
         self, job_id: str, result: Union[JobResult, ResearchJobResult, DetailJobResult]
@@ -72,6 +116,7 @@ class JobManager:
         status: Optional[str] = None,
         step: Optional[str] = None,
         message: Optional[str] = None,
+        percent: Optional[int] = None,
         result: Optional[Union[JobResult, ResearchJobResult, DetailJobResult]] = None,
     ) -> None:
         with self._lock:
@@ -83,10 +128,28 @@ class JobManager:
             if step is not None:
                 job.step = step  # type: ignore[assignment]
                 job.percent = _STEP_PERCENT.get(step, job.percent)
+            # 명시 percent가 오면 step 고정 매핑보다 우선(region 멤버 진행 구간 등).
+            if percent is not None:
+                job.percent = max(0, min(100, percent))
             if message is not None:
                 job.message = message
             if result is not None:
                 job.result = result
+            # agents[]가 있는 리서치 잡은 step 고정 매핑 대신 agent 평균식으로 덮어쓴다.
+            # (region 잡은 agents가 없으므로 위 step/percent가 그대로 유지된다.)
+            if job.agents:
+                self._recompute_research_percent(job)
+
+    def _recompute_research_percent(self, job: JobStatus) -> None:
+        """전체 percent = 4 agent 평균 × 0.8 + 후속단계(result_gen/saving/done) × 0.2.
+
+        반드시 self._lock 보유 상태에서 호출(내부 헬퍼)."""
+        if not job.agents:
+            return
+        avg = sum(a.percent for a in job.agents) / len(job.agents)
+        # 후속 단계 비중(0~100): result_gen 50, saving 80, done 100, 그 외 0.
+        tail = {"result_gen": 50, "saving": 80, "done": 100}.get(job.step, 0)
+        job.percent = int(round(avg * 0.8 + tail * 0.2))
 
 
 # 프로세스 전역 단일 인스턴스

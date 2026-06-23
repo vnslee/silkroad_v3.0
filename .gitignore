@@ -21,6 +21,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Frontend build output (배포 시 Dockerfile이 빌드 — 추적하지 않음)
+app/frontend/dist/
+
 # OS / Editor
 .DS_Store
 Thumbs.db

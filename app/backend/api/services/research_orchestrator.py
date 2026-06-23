@@ -10,7 +10,7 @@ from typing import List, Optional
 
 from .. import config
 from ..schemas import ResearchJobResult
-from . import research_agent, storage_resolver
+from . import prompt_loader, research_agent, storage_resolver
 from .job_manager import job_manager
 
 _log = config.get_logger("research_orchestrator")
@@ -27,10 +27,20 @@ def run_research_job(
     """백그라운드 실행 엔트리. 잡 상태를 전이시키며 리서치 수행."""
     try:
         job_manager.start(job_id)
+        # country 잡만 분야 agent 프로그레스바(market/regulatory/system/product)를 쓴다.
+        # region 잡은 '멤버 선행 → 권역 종합' 흐름이라 agent 평균식이 맞지 않으므로
+        # step 기반 진행률(_STEP_PERCENT)을 쓴다(init_agents 생략).
+        if domain == "country":
+            job_manager.init_agents(
+                job_id, [(k, prompt_loader.FIELD_LABELS[k]) for k in prompt_loader.FIELDS]
+            )
         job_manager.set_progress(job_id, "calling_bedrock", "리서치 시작")
 
-        def progress(step: str, message: str) -> None:
-            job_manager.set_progress(job_id, step, message)
+        def progress(step: str, message: str, percent: Optional[int] = None) -> None:
+            job_manager.set_progress(job_id, step, message, percent=percent)
+
+        def agent_progress(key: str, status: str, percent: int) -> None:
+            job_manager.set_agent_progress(job_id, key, status, percent)
 
         result = research_agent.run(
             domain,
@@ -39,6 +49,7 @@ def run_research_job(
             member_codes=member_codes,
             region=region,
             progress_cb=progress,
+            agent_cb=agent_progress,
         )
         job_manager.succeed(
             job_id,

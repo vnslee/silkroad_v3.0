@@ -17,6 +17,8 @@ DATA_DIR = STORAGE_BASE / "data"
 RESEARCH_DIR = DATA_DIR / "research"
 INTERNAL_LATEST = DATA_DIR / "internal" / "internal_latest.json"
 HYUNDAI_WORLDWIDE = DATA_DIR / "internal" / "hyundai_worldwide.json"
+# 국가 지오/메타 참조(마커 좌표·국가명·권역·ISO numeric)의 단일 출처.
+GEO_COUNTRY = DATA_DIR / "geo" / "country_geo.json"
 REPORT_DIR = STORAGE_BASE / "report"
 DETAIL_DIR = STORAGE_BASE / "detail"
 
@@ -28,16 +30,52 @@ ENGINE_RENDERING = BACKEND_DIR / "engine" / "rendering"
 PROJECT_ROOT = BACKEND_DIR.parent.parent
 PDF_SCRIPT = PROJECT_ROOT / ".claude" / "skills" / "report-pdf" / "scripts" / "html_to_pdf.py"
 
-# ── Bedrock 리서치 구성 (2차) ───────────────────────────────────
-# 자격증명은 boto3 표준 체인(env·profile·role). 별도 API Key 불필요(SigV4).
-BEDROCK_REGION = os.environ.get("BEDROCK_REGION", "ap-northeast-2")
-# 모델 ID: on-demand(`anthropic.claude-opus-4-8`)는 inference profile 필요 →
-# global cross-region inference profile(`global.` 접두사)을 기본으로 둔다. env override 가능.
-BEDROCK_MODEL = os.environ.get("BEDROCK_MODEL", "global.anthropic.claude-opus-4-8")
-# 클라이언트 백엔드: "mantle"(Messages-API Bedrock, output_config 지원) | "legacy"(bedrock-runtime InvokeModel).
-# Mantle 엔드포인트 미가용 환경(DNS 미해석)에서는 legacy로 폴백. 자동 폴백도 지원.
-BEDROCK_BACKEND = os.environ.get("BEDROCK_BACKEND", "legacy")
+# ── LLM 리서치 구성 (2차) ───────────────────────────────────────
+BEDROCK_REGION = os.environ.get("BEDROCK_REGION", os.environ.get("AWS_REGION", "ap-northeast-2"))
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
+# Claude Platform on AWS 워크스페이스 ID(aws 백엔드 필수).
+ANTHROPIC_AWS_WORKSPACE_ID = os.environ.get("ANTHROPIC_AWS_WORKSPACE_ID")
+
+# 클라이언트 백엔드:
+#   "api"    — first-party Anthropic API(ANTHROPIC_API_KEY). 웹검색 ✅. 가장 간단.
+#   "aws"    — Claude Platform on AWS(AnthropicAWS, SigV4 + workspace_id). 웹검색 ✅.
+#   "mantle" — Messages-API Bedrock(output_config 지원, 웹검색 ❌).
+#   "legacy" — bedrock-runtime InvokeModel(웹검색 ❌).
+# ⚠️ 웹검색 서버툴은 api/aws 에서만 동작 — Amazon Bedrock(mantle/legacy)은 미지원.
+
+
+def _auto_backend() -> str:
+    """가용 자격증명으로 백엔드 자동 선택. 명시 BEDROCK_BACKEND가 있으면 그걸 우선.
+
+    우선순위: first-party 키(웹검색O) > Platform on AWS workspace(웹검색O) >
+    Bedrock(CLAUDE_CODE_USE_BEDROCK/AWS_REGION, 웹검색X). 아무것도 없으면 api(에러는 호출 시).
+    """
+    explicit = os.environ.get("BEDROCK_BACKEND")
+    if explicit:
+        return explicit
+    if ANTHROPIC_API_KEY:
+        return "api"
+    if ANTHROPIC_AWS_WORKSPACE_ID:
+        return "aws"
+    if os.environ.get("CLAUDE_CODE_USE_BEDROCK") or os.environ.get("AWS_REGION"):
+        return "legacy"
+    return "api"
+
+
+BEDROCK_BACKEND = _auto_backend()
+# 모델 ID: api/aws는 bare ID, Bedrock(mantle/legacy)은 `global.anthropic.` 접두사.
+_DEFAULT_MODEL = (
+    "claude-opus-4-8"
+    if BEDROCK_BACKEND in ("api", "aws")
+    else "global.anthropic.claude-opus-4-8"
+)
+BEDROCK_MODEL = os.environ.get("BEDROCK_MODEL", _DEFAULT_MODEL)
 RESEARCH_MAX_TOKENS = int(os.environ.get("RESEARCH_MAX_TOKENS", "16000"))
+
+
+def web_search_supported() -> bool:
+    """현재 백엔드가 웹검색 서버툴을 지원하는지(Bedrock 계열은 미지원)."""
+    return BEDROCK_BACKEND in ("api", "aws")
 # 리서치 프롬프트·스키마 명세 위치(self-locate). 명세=실행 단일출처(Q3=A).
 RESEARCH_SPEC_DIR = PROJECT_ROOT / "architecture" / "research"
 

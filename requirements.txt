@@ -1,0 +1,11 @@
+# silk-road 백엔드 의존성 (ROADMAP 1·2차). 현재 설치 버전 고정.
+# anthropic[aws]: Claude Platform on AWS(AnthropicAWS) — 4-agent 딥리서치 웹검색에 필요.
+anthropic[aws]==0.109.2
+fastapi==0.128.8
+uvicorn==0.39.0
+boto3
+pydantic==2.13.4
+Jinja2
+requests
+# 보고서 HTML→PDF(report-pdf 스킬). 시스템 pango/cairo 의존.
+weasyprint==66.0
