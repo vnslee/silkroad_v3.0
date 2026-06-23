@@ -18,6 +18,7 @@ from ..schemas import (
     RegionSummary,
     ReportRef,
 )
+from . import geo_reference
 
 _NNN_RE = re.compile(r"_(\d{3})$")
 
@@ -141,17 +142,26 @@ def list_countries() -> List[CountrySummary]:
     for d in sorted(p for p in base.iterdir() if p.is_dir()):
         code = d.name
         data = _load_latest_research("country", code) or {}
+        geo = geo_reference.get_country(code) or {}
         resolved_code = data.get("code", code)
+        # research JSON 메타가 비어 있으면(에이전트 생성국 등) geo 참조로 보강한다.
+        # 국가명은 코드와 같으면(=메타 미채움) geo 이름으로 대체.
+        name = data.get("country") or code
+        if name == code and geo.get("name"):
+            name = geo["name"]
         out.append(
             CountrySummary(
                 code=resolved_code,
-                name=data.get("country", code),
-                name_ko=data.get("country_ko"),
-                region=data.get("region"),
+                name=name,
+                name_ko=data.get("country_ko") or geo.get("name_ko"),
+                region=data.get("region") or geo.get("region"),
                 is_baseline=bool(data.get("is_baseline", False)),
                 has_detail=_has_detail("country", code),
                 has_report=_has_report("country", code),
+                # 진출 상태(v3 map-colors) + 마커 좌표(v2 geo) 둘 다 채운다.
                 status=status_map.get(resolved_code),
+                lon=geo.get("lon"),
+                lat=geo.get("lat"),
             )
         )
     return out

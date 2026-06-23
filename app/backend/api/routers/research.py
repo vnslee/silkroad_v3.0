@@ -11,7 +11,7 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException, Path
 
 from ..config import TARGET_ID_PATTERN
 from ..schemas import JobCreatedResponse, ResearchTriggerRequest
-from ..services import storage_resolver
+from ..services import research_policy, storage_resolver
 from ..services.job_manager import job_manager
 from ..services.research_orchestrator import run_research_job
 
@@ -35,6 +35,10 @@ def trigger_country_research(
     body: ResearchTriggerRequest = ResearchTriggerRequest(),
 ) -> JobCreatedResponse:
     target = code.upper()
+    # 정책: 보유국 재수행 또는 보유 권역 소속국 신규 추가만 허용.
+    allowed, reason = research_policy.country_research_allowed(target)
+    if not allowed:
+        raise HTTPException(status_code=403, detail=reason)
     job_id = job_manager.create_job(
         "research", {"domain": "country", "target_id": target}
     )
@@ -64,6 +68,10 @@ def trigger_region_research(
     body: ResearchTriggerRequest = ResearchTriggerRequest(),
 ) -> JobCreatedResponse:
     target = region.upper()
+    # 정책: 권역 신규 리서치/추가는 지원하지 않는다(보유 권역만 운용).
+    allowed, reason = research_policy.research_allowed("region", target)
+    if not allowed:
+        raise HTTPException(status_code=403, detail=reason)
     members = [c.upper() for c in body.member_codes]
     _validate_member_codes(members)
     job_id = job_manager.create_job(

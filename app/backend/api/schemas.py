@@ -11,9 +11,11 @@ from pydantic import BaseModel, Field
 
 Domain = Literal["country", "region"]
 JobState = Literal["queued", "running", "succeeded", "failed"]
-# 리서치 잡 step(calling_bedrock/saving)을 추가. 기존 보고서 잡 step은 불변(BR-COMPAT-1).
+# 리서치 잡 step(calling_bedrock/result_gen/saving)을 추가. 기존 보고서 잡 step은 불변(BR-COMPAT-1).
 JobStep = Literal[
-    "queued", "generating", "rendering", "calling_bedrock", "saving", "done"
+    "queued", "generating", "rendering", "calling_bedrock",
+    "members_progress", "region_synth",  # region 리서치 전용 단계
+    "result_gen", "saving", "done",
 ]
 
 
@@ -28,6 +30,9 @@ class CountrySummary(BaseModel):
     has_report: bool = False
     # 진출 상태(internal_latest.json country_status): 운영중·준비중·미진출. 없으면 None.
     status: Optional[str] = None
+    # 지도 마커 좌표(geo 참조). 좌표가 있으면 프론트가 마커를 자동 표시한다.
+    lon: Optional[float] = None
+    lat: Optional[float] = None
 
 
 class RegionSummary(BaseModel):
@@ -109,6 +114,15 @@ class JobCreatedResponse(BaseModel):
     status_url: str
 
 
+class AgentProgress(BaseModel):
+    """분야 agent(상품·규제·시스템·시장)별 진행률 — 리서치 잡 프로그레스바 per-agent 표시."""
+
+    key: str  # market | regulatory | system | product
+    label: str
+    status: JobState = "queued"
+    percent: int = 0
+
+
 class JobStatus(BaseModel):
     job_id: str
     kind: str = "report"
@@ -120,6 +134,8 @@ class JobStatus(BaseModel):
     result: Optional[Union[JobResult, ResearchJobResult, DetailJobResult]] = None
     error: Optional[str] = None
     params: Dict[str, str] = Field(default_factory=dict)
+    # 리서치 잡의 분야 agent별 진행률. 보고서/상세 잡은 빈 리스트(BR-COMPAT).
+    agents: List[AgentProgress] = Field(default_factory=list)
 
 
 # ── 리서치 (FR-1·4) ─────────────────────────────────────────────
@@ -144,14 +160,29 @@ class ChatRequest(BaseModel):
     member_codes: Optional[List[str]] = None
 
 
+ChatIntent = Literal["qa", "research", "report"]
+# 챗봇 액션 칩 키(프론트가 선택지로 노출). summary=상세요약, research=리서치 수행,
+# re_research=리서치 재수행, report=보고서 생성, re_report=보고서 재생성.
+ChatAction = Literal["summary", "research", "re_research", "report", "re_report"]
+
+
 class ChatResponse(BaseModel):
     answer: Optional[str] = None
     needs_research: bool = False
+    needs_report: bool = False
+    # auto_trigger=True면 사용자의 명시적 의도(보유국 재리서치·보유국 보고서 생성)이므로
+    # 프론트가 확인 없이 즉시 트리거. False면(데이터 없음 등) 사용자에게 먼저 묻는다.
+    auto_trigger: bool = False
     research_suggestion: Optional[str] = None
     missing_codes: List[str] = Field(default_factory=list)
-    # 질문에서 식별한 대상(§6.5) — 프론트가 리서치 트리거 대상으로 사용.
+    # 질문에서 식별한 대상(§6.5) — 프론트가 리서치/보고서 트리거 대상으로 사용.
     resolved_domain: Optional[Domain] = None
     resolved_target_id: Optional[str] = None
+    # 대상 상태 + 노출할 선택지(상세요약/리서치/보고서). 프론트가 칩으로 렌더.
+    intent: ChatIntent = "qa"
+    exists: bool = False
+    has_report: bool = False
+    actions: List[ChatAction] = Field(default_factory=list)
 
 
 # ── 룰셋 설정 (FR-6) ────────────────────────────────────────────

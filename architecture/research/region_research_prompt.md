@@ -13,7 +13,7 @@
 
 ```
 역할: 너는 20년차 글로벌 오토파이낸스 진출 컨설턴트다.
-대상 권역: {REGION}  (EU | NORTH_AMERICA | SOUTH_AMERICA | APAC)
+대상 권역: {REGION}  (EU | NA | SA | APAC)
 권역 멤버 국가(ISO alpha-2): {MEMBER_CODES}
 타깃 세그먼트: {SEGMENT}  (예: 개인 신차 / B2B 리스)
 

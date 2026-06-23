@@ -1,0 +1,190 @@
+{
+  "schema_version": "1.0",
+  "description": "국가 지오/메타 참조 — 마커 좌표·국가명(영/한)·권역·ISO numeric의 단일 출처. 신규 리서치 국가는 research_agent가 자동 upsert한다.",
+  "countries": {
+    "AR": {
+      "name": "Argentina",
+      "name_ko": "아르헨티나",
+      "region": "SOUTH_AMERICA",
+      "lon": -63.62,
+      "lat": -38.42,
+      "iso_numeric": null
+    },
+    "AT": {
+      "name": "Austria",
+      "name_ko": "오스트리아",
+      "region": "EU",
+      "lon": 14.55,
+      "lat": 47.52,
+      "iso_numeric": "040"
+    },
+    "BR": {
+      "name": "Brazil",
+      "name_ko": "브라질",
+      "region": "SOUTH_AMERICA",
+      "lon": -51.93,
+      "lat": -14.24,
+      "iso_numeric": "076"
+    },
+    "CA": {
+      "name": "Canada",
+      "name_ko": "캐나다",
+      "region": "NORTH_AMERICA",
+      "lon": -106.35,
+      "lat": 56.13,
+      "iso_numeric": null
+    },
+    "CL": {
+      "name": "Chile",
+      "name_ko": "칠레",
+      "region": "SOUTH_AMERICA",
+      "lon": -71.54,
+      "lat": -35.68,
+      "iso_numeric": null
+    },
+    "CN": {
+      "name": "China",
+      "name_ko": "중국",
+      "region": "APAC",
+      "lon": 104.2,
+      "lat": 35.86,
+      "iso_numeric": null
+    },
+    "DK": {
+      "name": "Denmark",
+      "name_ko": "덴마크",
+      "region": "EU",
+      "lon": 9.5,
+      "lat": 56.26,
+      "iso_numeric": "208"
+    },
+    "ES": {
+      "name": "Spain",
+      "name_ko": "스페인",
+      "region": "EU",
+      "lon": -3.75,
+      "lat": 40.46,
+      "iso_numeric": "724"
+    },
+    "FR": {
+      "name": "France",
+      "name_ko": "프랑스",
+      "region": "EU",
+      "lon": 2.21,
+      "lat": 46.23,
+      "iso_numeric": null
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "name_ko": "영국",
+      "region": "EU",
+      "lon": -3.44,
+      "lat": 55.38,
+      "iso_numeric": "826"
+    },
+    "ID": {
+      "name": "Indonesia",
+      "name_ko": "인도네시아",
+      "region": "APAC",
+      "lon": 113.92,
+      "lat": -0.79,
+      "iso_numeric": null
+    },
+    "IN": {
+      "name": "India",
+      "name_ko": "인도",
+      "region": "APAC",
+      "lon": 78.96,
+      "lat": 20.59,
+      "iso_numeric": null
+    },
+    "IT": {
+      "name": "Italy",
+      "name_ko": "이탈리아",
+      "region": "EU",
+      "lon": 12.57,
+      "lat": 41.87,
+      "iso_numeric": "380"
+    },
+    "MX": {
+      "name": "Mexico",
+      "name_ko": "멕시코",
+      "region": "NORTH_AMERICA",
+      "lon": -102.55,
+      "lat": 23.63,
+      "iso_numeric": "484"
+    },
+    "NG": {
+      "name": "Nigeria",
+      "name_ko": "나이지리아",
+      "region": "AFRICA",
+      "lon": 8.68,
+      "lat": 9.08,
+      "iso_numeric": "566"
+    },
+    "NL": {
+      "name": "Netherlands",
+      "name_ko": "네덜란드",
+      "region": "EU",
+      "lon": 5.29,
+      "lat": 52.13,
+      "iso_numeric": "528"
+    },
+    "PL": {
+      "name": "Poland",
+      "name_ko": "폴란드",
+      "region": "EU",
+      "lon": 19.15,
+      "lat": 51.92,
+      "iso_numeric": "616"
+    },
+    "PR": {
+      "name": "Puerto Rico",
+      "name_ko": "푸에르토리코",
+      "region": "NORTH_AMERICA",
+      "lon": -66.59,
+      "lat": 18.22,
+      "iso_numeric": null
+    },
+    "PT": {
+      "name": "Portugal",
+      "name_ko": "포르투갈",
+      "region": "EU",
+      "lon": -8.22,
+      "lat": 39.4,
+      "iso_numeric": "620"
+    },
+    "KE": {
+      "name": "Kenya",
+      "name_ko": "케냐",
+      "region": "AFRICA",
+      "lon": 37.9062,
+      "lat": -0.0236,
+      "iso_numeric": "404"
+    },
+    "ZA": {
+      "name": "South Africa",
+      "name_ko": "남아프리카 공화국",
+      "region": "AFRICA",
+      "lon": 24.0,
+      "lat": -29.0,
+      "iso_numeric": "710"
+    },
+    "ET": {
+      "name": "Ethiopia",
+      "name_ko": "에티오피아",
+      "region": "AFRICA",
+      "lon": 39.7823,
+      "lat": 9.145,
+      "iso_numeric": "231"
+    },
+    "GH": {
+      "name": "Ghana",
+      "name_ko": "가나",
+      "region": "AFRICA",
+      "lon": -1.0232,
+      "lat": 7.9465,
+      "iso_numeric": "288"
+    }
+  }
+}

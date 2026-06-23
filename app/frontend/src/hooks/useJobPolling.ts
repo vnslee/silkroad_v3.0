@@ -2,7 +2,7 @@
 // 고정 간격(1.5s) + terminal(succeeded/failed) 중단 + 언마운트 정리 + 네트워크 3회 재시도(Q2=A).
 import { useEffect, useRef, useState } from 'react'
 import { api, ApiError } from '../api/client'
-import type { JobResultUnion, JobState, JobStep } from '../api/types'
+import type { AgentProgress, JobResultUnion, JobState, JobStep } from '../api/types'
 
 const INTERVAL_MS = 1500
 const MAX_RETRY = 3
@@ -13,6 +13,7 @@ export interface JobPollingState {
   percent: number
   result: JobResultUnion | null
   error: string | null
+  agents: AgentProgress[]
 }
 
 const IDLE: JobPollingState = {
@@ -21,6 +22,7 @@ const IDLE: JobPollingState = {
   percent: 0,
   result: null,
   error: null,
+  agents: [],
 }
 
 interface Options {
@@ -55,6 +57,7 @@ export function useJobPolling(jobId: string | null, opts: Options = {}): JobPoll
           percent: job.percent,
           result: job.result ?? null,
           error: job.error ?? null,
+          agents: job.agents ?? [],
         })
         if (job.status === 'succeeded') {
           cbRef.current.onDone?.(job.result ?? null)
