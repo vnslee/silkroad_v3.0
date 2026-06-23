@@ -176,8 +176,8 @@ def kpi_cards(data):
         return (
             '<div class="bg-surface-container-lowest border border-surface-border rounded-[14px] '
             'p-md text-center">'
-            f'<div class="font-mono text-[30px] font-bold leading-none" style="color:{color}">{value}</div>'
-            f'<div class="font-body-sm text-[12px] text-[#6B7280] mt-1">{rre.esc(label)}</div></div>')
+            f'<div class="font-mono text-[34px] font-bold leading-none" style="color:{color}">{value}</div>'
+            f'<div class="font-body-md text-[14px] text-[#6B7280] mt-[6px]">{rre.esc(label)}</div></div>')
 
     return ('<div class="grid grid-cols-3 gap-sm">'
             + card(n_candidates, "분석 후보국", "#3F6CB4")
@@ -234,7 +234,7 @@ def _region_card(region, svg_inner, view_box, aria, extra_class=""):
         for c, _fg, lbl in _MAP_STATE.values())
     return (
         '<div class="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">'
-        '<h3 class="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">'
+        '<h3 class="font-headline-md text-[20px] leading-[28px] text-primary font-bold mb-md flex items-center gap-sm">'
         '<span class="material-symbols-outlined text-secondary text-[20px]">map</span>권역 지도</h3>'
         '<div class="flex-1 flex items-center justify-center min-h-[260px]">'
         f'<svg viewBox="{view_box}" preserveAspectRatio="xMidYMid meet" '
@@ -310,9 +310,9 @@ def entered_list(data):
         '</tr>' for r in rows)
     return (
         '<div class="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">'
-        '<h3 class="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">'
+        '<h3 class="font-headline-md text-[20px] leading-[28px] text-primary font-bold mb-md flex items-center gap-sm">'
         '<span class="material-symbols-outlined text-secondary text-[20px]">flag</span>기진출 국가</h3>'
-        '<table class="w-full text-left border-collapse font-body-sm text-body-sm">'
+        '<table class="w-full text-left border-collapse font-body-md text-body-md">'
         '<thead><tr class="bg-surface-light border-b border-surface-border">'
         '<th class="p-sm font-label-md text-label-md text-outline font-semibold">Code</th>'
         '<th class="p-sm font-label-md text-label-md text-outline font-semibold">국가</th>'
@@ -347,9 +347,9 @@ def quickwin_table(data):
         '</tr>' for r in rows)
     return (
         '<div class="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">'
-        '<h3 class="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">'
+        '<h3 class="font-headline-md text-[20px] leading-[28px] text-primary font-bold mb-md flex items-center gap-sm">'
         '<span class="material-symbols-outlined text-secondary text-[20px]">leaderboard</span>진출 예정국 Quick-Win 순위</h3>'
-        '<table class="w-full text-left border-collapse font-body-sm text-body-sm">'
+        '<table class="w-full text-left border-collapse font-body-md text-body-md">'
         '<thead><tr class="bg-surface-light border-b border-surface-border">'
         '<th class="p-sm font-label-md text-label-md text-outline font-semibold">#</th>'
         '<th class="p-sm font-label-md text-label-md text-outline font-semibold">국가</th>'
@@ -388,7 +388,7 @@ def news_panel(data):
                 'custom-shadow-level-2 flex flex-col h-full">'
                 '<div class="flex items-center gap-sm mb-md">'
                 '<span class="material-symbols-outlined text-secondary text-[20px]">newspaper</span>'
-                '<h3 class="font-headline-md text-[18px] leading-[24px] text-primary font-bold flex-1">외부 뉴스 스캔</h3></div>'
+                '<h3 class="font-headline-md text-[20px] leading-[28px] text-primary font-bold flex-1">외부 뉴스 스캔</h3></div>'
                 '<p class="font-body-sm text-body-sm text-on-surface-variant">표시할 뉴스가 없습니다.</p></div>')
     items = []
     for n in news:
@@ -412,7 +412,7 @@ def news_panel(data):
         '<div class="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">'
         '<div class="flex items-center gap-sm mb-md">'
         '<span class="material-symbols-outlined text-secondary text-[20px]">newspaper</span>'
-        '<h3 class="font-headline-md text-[18px] leading-[24px] text-primary font-bold flex-1">외부 뉴스 스캔</h3>'
+        '<h3 class="font-headline-md text-[20px] leading-[28px] text-primary font-bold flex-1">외부 뉴스 스캔</h3>'
         f'{_src_badge("NEWS")}</div>'
         f'<div class="flex-1 overflow-y-auto max-h-[320px] pr-xs">{"".join(items)}</div></div>')
 
@@ -429,15 +429,15 @@ def region_insight(data):
 
     lead_html = (
         '<div class="rounded-lg bg-secondary-fixed/40 p-md mb-md flex gap-sm items-start">'
-        '<span class="material-symbols-outlined text-secondary text-[20px] mt-[1px]">emoji_events</span>'
-        f'<p class="font-body-md text-body-md text-on-surface font-semibold m-0">{rre.esc(lead)}</p></div>'
+        '<span class="material-symbols-outlined text-secondary text-[22px] mt-[1px]">emoji_events</span>'
+        f'<p class="font-body-lg text-body-lg text-on-surface font-semibold m-0">{rre.esc(lead)}</p></div>'
     ) if lead else ""
 
     rows = "".join(
         '<div class="flex gap-md items-start rounded-lg bg-surface-light p-md">'
-        '<span class="font-headline-md text-[16px] leading-[24px] text-secondary font-bold '
-        f'shrink-0 w-6 text-center">{n + 1}</span>'
-        f'<p class="font-body-sm text-body-sm text-on-surface m-0">{rre.esc((i.get("ko") or i.get("en")).strip())}</p>'
+        '<span class="font-headline-md text-[18px] leading-[28px] text-secondary font-bold '
+        f'shrink-0 w-7 text-center">{n + 1}</span>'
+        f'<p class="font-body-md text-body-md text-on-surface m-0">{rre.esc((i.get("ko") or i.get("en")).strip())}</p>'
         '</div>' for n, i in enumerate(cross))
     rows_html = f'<div class="flex flex-col gap-sm">{rows}</div>' if cross else ""
 
@@ -445,7 +445,7 @@ def region_insight(data):
         '<div class="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">'
         '<div class="flex items-center gap-sm mb-md">'
         '<span class="material-symbols-outlined text-secondary text-[20px]">psychology</span>'
-        '<h3 class="font-headline-md text-[18px] leading-[24px] text-primary font-bold flex-1">권역 인사이트</h3>'
+        '<h3 class="font-headline-md text-[20px] leading-[28px] text-primary font-bold flex-1">권역 인사이트</h3>'
         f'{_src_badge("AI 분석")}</div>'
         f'{lead_html}{rows_html}</div>')
 

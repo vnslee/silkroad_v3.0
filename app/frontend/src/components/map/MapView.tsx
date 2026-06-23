@@ -76,6 +76,12 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
   const lang = useStore((s) => s.lang)
   const langRef = useRef(lang)
   langRef.current = lang
+  // 데이터가 있는(상세 진입 가능) 권역 코드 집합 — 클릭 시에만 참조(effect 재실행 회피용 ref).
+  const availableRegionsRef = useRef<Set<string>>(new Set())
+  availableRegionsRef.current = useMemo(
+    () => new Set(regions.map((r) => r.code.toUpperCase())),
+    [regions],
+  )
   const t = useT()
   // 리서치 완료 시 증가 → 카탈로그(마커) 재조회 트리거.
   const countriesVersion = useStore((s) => s.countriesVersion)
@@ -240,8 +246,15 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
       .on('click', (_e: MouseEvent, d) => {
         const reg = featRegion.get(d) ?? 'ap'
         const info = REGION_BY_KEY[reg]
+        const code = info?.code ?? reg.toUpperCase()
+        // 데이터 없는 권역(아프리카·중동 등)은 hover만 허용하고 상세 팝업 진입은 막되,
+        // 무반응으로 보이지 않게 안내 토스트를 띄운다.
+        if (!availableRegionsRef.current.has(code.toUpperCase())) {
+          store.showToast('권역 정보가 없습니다.', 'info')
+          return
+        }
         setNotif(false)
-        onSelectRegion(info?.code ?? reg.toUpperCase())
+        onSelectRegion(code)
       })
 
     // 마커 — AISea 블루 펄스 링 + 흰 점

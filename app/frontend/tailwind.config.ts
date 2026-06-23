@@ -123,6 +123,7 @@ export default {
         chrome: '10',
         overlay: '20',
         popup: '30',
+        progress: '35', // 진행 알림(카드·PS2 모달) — 상세/보고서 팝업(popup) 위, 챗 아래
         chat: '40',
         toast: '50',
       },

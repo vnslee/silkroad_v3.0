@@ -13,6 +13,13 @@ export interface JobRef {
   label: string
 }
 
+export type ToastTone = 'info' | 'error'
+export interface Toast {
+  id: number
+  message: string
+  tone: ToastTone
+}
+
 interface AppState {
   activePopup: boolean // §5.2 챗봇 위치 규칙
   activeJobs: JobRef[] // §5.3 프로그레스 카드 노출 판단
@@ -20,6 +27,7 @@ interface AppState {
   chatOpen: boolean // FAB·챗 패널이 공유
   // 카탈로그(국가/권역) 갱신 신호. 리서치 완료 시 증가 → 지도가 마커를 재조회한다.
   countriesVersion: number
+  toast: Toast | null // 일시적 안내(권역 정보 없음 등) — 단일 슬롯, 새 토스트가 기존을 대체
 }
 
 let state: AppState = {
@@ -28,7 +36,10 @@ let state: AppState = {
   lang: 'ko',
   chatOpen: false,
   countriesVersion: 0,
+  toast: null,
 }
+
+let toastSeq = 0 // 토스트 id 시퀀스(연속 호출 식별용 — Date.now/Math.random 미사용)
 
 const listeners = new Set<() => void>()
 
@@ -62,6 +73,17 @@ export const store = {
   },
   // 리서치 완료 등으로 카탈로그가 바뀌었을 때 호출 → 구독 중인 지도가 마커를 재조회.
   refreshCountries: () => setState({ countriesVersion: state.countriesVersion + 1 }),
+
+  // 토스트 — 새 토스트가 기존 슬롯을 대체(중첩 없음). id 반환으로 dismiss 식별.
+  showToast(message: string, tone: ToastTone = 'info'): number {
+    const id = ++toastSeq
+    setState({ toast: { id, message, tone } })
+    return id
+  },
+  // 해당 id가 아직 떠 있을 때만 닫음(다음 토스트가 이미 슬롯을 차지했으면 무시).
+  dismissToast(id: number) {
+    if (state.toast?.id === id) setState({ toast: null })
+  },
 }
 
 export function useStore<T>(selector: (s: AppState) => T): T {

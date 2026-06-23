@@ -8,6 +8,7 @@ import { GlobeIntro } from './components/map/GlobeIntro'
 import { MapView } from './components/map/MapView'
 import { ChatWidget } from './components/chat/ChatWidget'
 import { ProgressPanel } from './components/progress/ProgressPanel'
+import { Toast } from './components/common/Toast'
 
 // 라우트 화면 코드 스플리팅(NFR Q3=A)
 const DetailView = lazy(() => import('./components/detail/DetailView'))
@@ -92,6 +93,7 @@ export default function App() {
 
       <ProgressPanel />
       <ChatWidget />
+      <Toast />
     </div>
   )
 }
