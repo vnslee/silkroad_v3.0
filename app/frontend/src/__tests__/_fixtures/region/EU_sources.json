@@ -14,6 +14,56 @@
     "NL",
     "PT"
   ],
+  "member_names": {
+    "ES": {
+      "name": "Spain",
+      "name_ko": "스페인"
+    },
+    "PL": {
+      "name": "Poland",
+      "name_ko": "폴란드"
+    },
+    "CZ": {
+      "name": "Czechia",
+      "name_ko": "체코"
+    },
+    "HU": {
+      "name": "Hungary",
+      "name_ko": "헝가리"
+    },
+    "DE": {
+      "name": "Germany",
+      "name_ko": "독일"
+    },
+    "FR": {
+      "name": "France",
+      "name_ko": "프랑스"
+    },
+    "IT": {
+      "name": "Italy",
+      "name_ko": "이탈리아"
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "name_ko": "영국"
+    },
+    "AT": {
+      "name": "Austria",
+      "name_ko": "오스트리아"
+    },
+    "DK": {
+      "name": "Denmark",
+      "name_ko": "덴마크"
+    },
+    "NL": {
+      "name": "Netherlands",
+      "name_ko": "네덜란드"
+    },
+    "PT": {
+      "name": "Portugal",
+      "name_ko": "포르투갈"
+    }
+  },
   "country_assets": {
     "DE": {
       "solution": "Self-built",

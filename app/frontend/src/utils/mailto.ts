@@ -25,10 +25,10 @@ export function buildMailtoUrl(input: MailtoInput): string {
   if (input.createdAt) lines.push(`· 생성일시: ${input.createdAt}`)
   lines.push(`· 요약: ${input.summary}`)
   lines.push('')
-  lines.push(`▶ 보고서(HTML): ${toAbsolute(input.htmlUrl)}`)
+  lines.push(`▶ 보고서 보기: ${toAbsolute(input.htmlUrl)}`)
   if (input.pdfUrl) lines.push(`▶ PDF: ${toAbsolute(input.pdfUrl)}`)
   lines.push('')
-  lines.push('※ 메일 첨부는 지원되지 않습니다. PDF가 필요하면 위 링크에서 내려받아 첨부해 주세요.')
+  lines.push('※ 메일 첨부는 지원되지 않습니다. 위 링크에서 보고서를 확인해 주세요.')
 
   let body = lines.join('\n')
   if (body.length > MAX_BODY) body = body.slice(0, MAX_BODY - 1) + '…'

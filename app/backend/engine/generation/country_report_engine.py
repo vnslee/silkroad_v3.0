@@ -1115,23 +1115,7 @@ def main():
             rec = rec.get('ko') or rec.get('en')
         print(f"Decision: {rec}")
 
-        # 자동으로 렌더러까지 호출해서 HTML 생성
-        try:
-            import sys as _sys
-            from pathlib import Path as _Path
-            renderer_dir = _Path(__file__).resolve().parent.parent / "rendering"
-            if str(renderer_dir) not in _sys.path:
-                _sys.path.insert(0, str(renderer_dir))
-            from country_report_renderer import CountryReportRenderer  # type: ignore
-
-            renderer = CountryReportRenderer(type1_path)
-            if renderer.load_report():
-                html_path = renderer.save_html()
-                print(f"🖼  HTML rendered: {html_path}")
-            else:
-                print("⚠️  렌더링용 보고서 JSON 로드 실패 — HTML 생성 건너뜀.")
-        except Exception as render_err:
-            print(f"⚠️  HTML 자동 렌더 실패: {render_err}")
+        # 보고서 화면은 React(ReportView)가 이 JSON으로 직접 렌더한다 — 서버측 HTML 렌더 없음.
         return 0
     else:
         print("\n⚠️  Data gaps exist but report generated for review")

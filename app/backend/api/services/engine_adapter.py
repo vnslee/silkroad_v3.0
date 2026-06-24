@@ -6,7 +6,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 from .. import config
 from . import storage_resolver
@@ -57,59 +56,5 @@ def generate_report_json(domain: str, target_id: str) -> str:
     return str(path)
 
 
-def render_report_html(domain: str, report_json_path: str) -> str:
-    """report renderer 호출 → HTML 절대경로 반환.
-
-    region 엔진은 렌더러를 자동 호출하지 않으므로 여기서 항상 명시 렌더(Q5=A 흡수).
-    country도 동일 경로를 거친다(외부 대칭).
-    """
-    if domain == "country":
-        from country_report_renderer import CountryReportRenderer  # type: ignore
-
-        renderer = CountryReportRenderer(report_json_path)
-    else:
-        from region_report_renderer import RegionReportRenderer  # type: ignore
-
-        renderer = RegionReportRenderer(report_json_path)
-
-    if not renderer.load_report():
-        raise EngineError(f"리포트 JSON 로드 실패: {report_json_path}")
-    html_path = renderer.save_html()
-    _log.info("rendered report html: %s", html_path)
-    return str(html_path)
-
-
-def render_detail_html(domain: str, target_id: str, version: Optional[str] = None) -> str:
-    """detail 렌더러 함수형 render() 호출 → 출력 HTML 절대경로 반환(self-locate).
-
-    디스크에 DTL_<ID>_nnn.html 캐시 파일을 생성한다(CLI·비동기 잡용)."""
-    if domain == "country":
-        import country_detail_rendering_engine as cdr  # type: ignore
-
-        return str(cdr.render(target_id, version))
-    import region_detail_rendering_engine as rdr  # type: ignore
-
-    return str(rdr.render(target_id, version))
-
-
-def render_detail_html_str(domain: str, target_id: str, version: Optional[str] = None) -> str:
-    """detail 렌더러 → HTML 문자열 반환(파일 미생성, API 실시간 렌더용).
-
-    매 요청 최신 데이터로 렌더하되 디스크 캐시(DTL_<ID>_nnn.html)는 쌓지 않는다."""
-    if domain == "country":
-        import country_detail_rendering_engine as cdr  # type: ignore
-
-        return str(cdr.render_to_string(target_id, version))
-    import region_detail_rendering_engine as rdr  # type: ignore
-
-    return str(rdr.render_to_string(target_id, version))
-
-
-def build_region_detail_data(target_id: str, version: Optional[str] = None) -> dict:
-    """권역 상세(P2) — React 프론트용 3-소스 병합 JSON dict 반환(표현 전용).
-
-    리서치 스냅샷+퀵윈 보고서+internal 룰셋을 병합한 결과(KPI·기진출·후보 퀵윈·지도
-    members·인사이트)를 담는다. 계산은 엔진이 수행하고 여기선 그대로 전달."""
-    import region_detail_rendering_engine as rdr  # type: ignore
-
-    return dict(rdr.build_detail_data(target_id, version))
+# 상세화면(P1/P2)·보고서(PR1/PR2) 화면은 모두 React가 리포트/리서치 JSON으로 직접 렌더한다.
+# 서버측 HTML 렌더(렌더 엔진)는 더 이상 사용하지 않으므로 어댑터는 generation(JSON 생성)만 노출.

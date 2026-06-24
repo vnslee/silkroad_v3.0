@@ -7,6 +7,7 @@ import type {
   RegionCandidateCountry,
   RegionEnteredCountry,
 } from '../reports/types'
+import { buildRegionMapGeometry } from './regionMapGeo'
 
 interface Props {
   data: RegionDetailData
@@ -18,18 +19,6 @@ const MAP_STATE: Record<string, { fill: string; fg: string; label: string }> = {
   운영중: { fill: '#3f6cb4', fg: '#ffffff', label: '운영중' },
   준비중: { fill: '#6e97d6', fg: '#101622', label: '준비중' },
   미진출: { fill: '#eef0f2', fg: '#3b3f46', label: '미진출/후보' },
-}
-
-// 권역별 도형 지도 좌표(viewBox 0 10 82 76) — region_detail_rendering_engine _MAP_COORDS와 동일.
-const MAP_COORDS: Record<string, Record<string, [number, number]>> = {
-  EU: {
-    GB: [20, 26], DK: [44, 18], NL: [37, 35], DE: [50, 40],
-    PL: [68, 32], CZ: [60, 47], HU: [72, 53], AT: [57, 57],
-    FR: [30, 55], IT: [52, 70], ES: [22, 76], PT: [10, 74],
-  },
-  NA: {
-    CA: [40, 24], US: [38, 46], MX: [30, 68], PR: [62, 70],
-  },
 }
 
 // 점수(0-100) → 신호색. render_helpers.score_color와 동일.
@@ -125,8 +114,7 @@ function ProductsCell({ products }: { products: string[] }) {
 function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
-      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">
-        <span className="material-symbols-outlined text-secondary text-[20px]">flag</span>
+      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md">
         기진출 국가
       </h3>
       <table className="w-full text-left border-collapse font-body-sm text-body-sm">
@@ -145,7 +133,10 @@ function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
               className="border-b border-surface-border last:border-0 hover:bg-surface-variant transition-colors"
             >
               <td className="p-sm text-on-surface">
-                {r.name_ko} <span className="text-on-surface-variant">{r.name_en}</span>
+                {r.name_ko}
+                {r.name_en && r.name_en !== r.name_ko && (
+                  <span className="text-on-surface-variant"> {r.name_en}</span>
+                )}
               </td>
               <td className="p-sm">
                 <EntityCell type={r.type} />
@@ -163,46 +154,60 @@ function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
 }
 
 function RegionMap({ code, members }: { code: string; members: RegionDetailData['map']['members'] }) {
-  // 도형 노드 지도(viewBox 0 10 82 76). 좌표 없는 권역은 격자 폴백 — region-agnostic.
-  const coords = MAP_COORDS[code] ?? {}
-  const fallback = (i: number): [number, number] => {
-    const cols = 4
-    return [12 + (i % cols) * 26, 18 + Math.floor(i / cols) * 24]
-  }
+  // 실제 국경(world-atlas 50m)을 권역 멤버 bbox 에 fit 해 클로즈업. 진출상태별 채움.
+  // atlas 매칭 0건(미등록 권역)이면 안내 폴백.
+  const W = 360
+  const H = 300
+  const geo = buildRegionMapGeometry(members, W, H)
+  const statusByCode = Object.fromEntries(members.map((m) => [m.code, m.status]))
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
-      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">
-        <span className="material-symbols-outlined text-secondary text-[20px]">map</span>
+      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md">
         권역 지도
       </h3>
-      <div className="flex-1 flex items-center justify-center min-h-[260px]">
-        <svg
-          viewBox="0 10 82 76"
-          preserveAspectRatio="xMidYMid meet"
-          className="w-full h-full max-h-[300px]"
-          role="img"
-          aria-label={`${code} 권역 진출 상태 지도`}
-        >
-          {members.map((m, i) => {
-            const [x, y] = coords[m.code] ?? fallback(i)
-            const st = MAP_STATE[m.status] ?? MAP_STATE['미진출']
-            return (
-              <g key={m.code}>
-                <circle cx={x} cy={y} r="6.4" fill={st.fill} stroke="#f7f8fa" strokeWidth="1" />
-                <text
-                  x={x}
-                  y={y + 2.1}
-                  textAnchor="middle"
-                  fontSize="4.4"
-                  fontWeight="700"
-                  fill={st.fg}
-                >
-                  {m.code}
-                </text>
-              </g>
-            )
-          })}
-        </svg>
+      <div className="flex-1 flex items-center justify-center min-h-[380px]">
+        {geo ? (
+          <svg
+            viewBox={geo.viewBox}
+            preserveAspectRatio="xMidYMid meet"
+            className="w-full h-full"
+            role="img"
+            aria-label={`${code} 권역 진출 상태 지도`}
+          >
+            {geo.shapes.map((s) => {
+              const st = MAP_STATE[statusByCode[s.code]] ?? MAP_STATE['미진출']
+              const fs = Math.max(7, Math.min(13, geo.width * 0.035))
+              return (
+                <g key={s.code}>
+                  <path
+                    d={s.d}
+                    fill={st.fill}
+                    stroke="#ffffff"
+                    strokeWidth="0.7"
+                    strokeLinejoin="round"
+                  />
+                  <text
+                    x={s.label[0]}
+                    y={s.label[1] + fs * 0.34}
+                    textAnchor="middle"
+                    fontSize={fs}
+                    fontWeight="700"
+                    fill={st.fg}
+                    paintOrder="stroke"
+                    stroke="rgba(255,255,255,0.85)"
+                    strokeWidth={fs * 0.16}
+                  >
+                    {s.code}
+                  </text>
+                </g>
+              )
+            })}
+          </svg>
+        ) : (
+          <p className="font-body-sm text-body-sm text-on-surface-variant text-center">
+            이 권역의 지도 데이터를 표시할 수 없습니다.
+          </p>
+        )}
       </div>
       <div className="flex flex-wrap gap-md mt-md pt-md border-t border-surface-border">
         {Object.values(MAP_STATE).map((s) => (
@@ -222,8 +227,7 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
 function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
-      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">
-        <span className="material-symbols-outlined text-secondary text-[20px]">leaderboard</span>
+      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md">
         진출 예정국 Quick-Win 순위
       </h3>
       <table className="w-full text-left border-collapse font-body-sm text-body-sm">
@@ -284,13 +288,15 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
 }
 
 function RegionInsight({ es }: { es: RegionDetailData['executive_summary'] }) {
-  const lead = es?.core_conclusion?.why_top1?.ko?.trim() ?? ''
+  // 기준국(top1·why_top1) 얘기는 제외 — AI 교차 인사이트만 본문으로.
   const cross = (es?.ai_cross_insight?.insights ?? []).filter((i) => i.ko || i.en)
-  if (!lead && cross.length === 0) return null
+  // 마지막 라인: 해당 권역 뉴스 1건(권역 스코프 우선, 없으면 첫 항목).
+  const newsItems = es?.external_news_scan?.items ?? []
+  const news = newsItems.find((n) => n.scope === 'region') ?? newsItems[0]
+  if (cross.length === 0 && !news) return null
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
       <div className="flex items-center gap-sm mb-md">
-        <span className="material-symbols-outlined text-secondary text-[24px]">psychology</span>
         <h3 className="font-headline-md text-[22px] leading-[30px] text-primary font-bold flex-1">
           권역 인사이트
         </h3>
@@ -298,11 +304,6 @@ function RegionInsight({ es }: { es: RegionDetailData['executive_summary'] }) {
           AI 분석
         </span>
       </div>
-      {lead && (
-        <p className="font-body-md text-body-md text-on-surface font-semibold mb-md leading-relaxed m-0">
-          {lead}
-        </p>
-      )}
       {cross.length > 0 && (
         <div className="flex flex-col gap-md">
           {cross.map((i, idx) => (
@@ -311,6 +312,44 @@ function RegionInsight({ es }: { es: RegionDetailData['executive_summary'] }) {
             </p>
           ))}
         </div>
+      )}
+      {news && <RegionNewsLine news={news} hasAbove={cross.length > 0} />}
+    </div>
+  )
+}
+
+// 권역 인사이트 마지막 라인 — 해당 권역 뉴스 1건(헤드라인 + 출처·날짜). url 있으면 링크.
+function RegionNewsLine({
+  news,
+  hasAbove,
+}: {
+  news: NonNullable<RegionDetailData['executive_summary']>['external_news_scan']['items'][number]
+  hasAbove: boolean
+}) {
+  const meta = [news.publisher, news.date].filter(Boolean).join(' · ')
+  const headline = (news.headline || '').trim()
+  if (!headline) return null
+  return (
+    <div className={hasAbove ? 'mt-md pt-md border-t border-surface-border' : ''}>
+      <div className="flex items-center gap-xs mb-1">
+        <span className="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full whitespace-nowrap">
+          권역 뉴스
+        </span>
+        {meta && (
+          <span className="font-label-sm text-label-sm text-outline truncate">{meta}</span>
+        )}
+      </div>
+      {news.url ? (
+        <a
+          href={news.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-body-md text-body-md text-on-surface leading-relaxed hover:text-secondary hover:underline"
+        >
+          {headline}
+        </a>
+      ) : (
+        <p className="font-body-md text-body-md text-on-surface leading-relaxed m-0">{headline}</p>
       )}
     </div>
   )

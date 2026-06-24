@@ -52,9 +52,15 @@ export function buildRegionDetail(
   const assets = sources.country_assets ?? {}
   const members = sources.members ?? []
 
-  // 스냅샷 countries[] → 국가명 해석(별칭 고려). 없으면 코드 폴백.
+  // 국가명 해석(별칭 고려): geo 참조(member_names)를 베이스로 깔고, 스냅샷 countries[]로 덮어쓴다.
+  // 스냅샷에 없는 기진출국(예: DE)도 geo 이름이 채워져 코드 중복("DE DE")을 막는다.
   const koByCode: Record<string, string> = {}
   const enByCode: Record<string, string> = {}
+  for (const [code, n] of Object.entries(sources.member_names ?? {})) {
+    const gb = alias(code)
+    if (n.name_ko) koByCode[gb] = n.name_ko
+    if (n.name) enByCode[gb] = n.name
+  }
   for (const c of snapshot.countries ?? []) {
     const gb = alias(c.code ?? '')
     if (c.country_ko) koByCode[gb] = c.country_ko
@@ -69,7 +75,8 @@ export function buildRegionDetail(
       return {
         code: gb,
         name_ko: koByCode[gb] ?? gb,
-        name_en: enByCode[gb] ?? gb,
+        // 영문명 없으면 빈 값 — 컴포넌트가 "DE DE"처럼 코드를 두 번 찍지 않도록(코드 중복 방지).
+        name_en: enByCode[gb] ?? '',
         status: status[gb] ?? '-',
         solution: a.solution ?? '—',
         products: a.products ?? [],
