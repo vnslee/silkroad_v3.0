@@ -99,18 +99,46 @@ _REGION_ALIASES: dict[str, str] = {
 }
 
 
+def _alias_in(alias: str, text: str) -> bool:
+    """별칭이 텍스트에 '독립 단어'로 등장하는지. 부분 문자열 오탐을 막는다.
+
+    한글은 \\b 단어경계가 동작하지 않아, 한글 별칭은 양옆에 한글(가-힣)이 붙어
+    더 긴 단어의 일부가 된 경우를 배제한다(예: "국가나"의 "가나", "이탈리아인"의
+    "이탈리아"). 영문 별칭은 알파벳 경계로 판정.
+    """
+    start = 0
+    while True:
+        idx = text.find(alias, start)
+        if idx < 0:
+            return False
+        before = text[idx - 1] if idx > 0 else ""
+        after = text[idx + len(alias)] if idx + len(alias) < len(text) else ""
+        # 별칭 종류에 따른 경계 문자 판정.
+        # 한글 별칭: 앞 글자만 검사한다. 한국어는 명사 뒤에 조사가 공백 없이 붙으므로
+        # (가나"에"·가나"를") 뒷 글자가 한글이어도 정상이다. 반면 앞 글자가 한글이면
+        # 더 긴 단어의 꼬리("국가"+"나"→가나)일 가능성이 높아 오탐으로 배제한다.
+        if re.search(r"[가-힣]", alias):
+            ok = not re.match(r"[가-힣]", before or "")
+        else:
+            ok = not ((before and before.isalpha()) or (after and after.isalpha()))
+        if ok:
+            return True
+        start = idx + 1
+
+
 def _match_alias(message: str) -> Optional[tuple]:
     """질문 텍스트에서 국가/권역명을 직접 매칭. 국가 우선, 가장 긴 별칭 우선.
 
     LLM 분류를 보강하는 결정적 폴백 — Bedrock 오류·found=false 시에도 대상을 잡는다.
+    단어 경계를 존중해 부분 문자열 오탐("국가나"→가나)을 막는다.
     """
     low = message.lower()
     # 가장 긴 별칭부터 검사(부분 문자열 오탐 최소화).
     for alias in sorted(_COUNTRY_ALIASES, key=len, reverse=True):
-        if alias in low:
+        if _alias_in(alias, low):
             return "country", _COUNTRY_ALIASES[alias]
     for alias in sorted(_REGION_ALIASES, key=len, reverse=True):
-        if alias in low:
+        if _alias_in(alias, low):
             return "region", _REGION_ALIASES[alias]
     return None
 
@@ -154,6 +182,8 @@ _RESOLVE_SYSTEM = (
     "국가는 ISO 3166-1 alpha-2 대문자 코드(예: 스페인→ES, 독일→DE, 이탈리아→IT)로, "
     "권역은 권역 코드(예: 유럽→EU, 북미→NA, 아시아태평양→APAC, 남미→SA, 중동→ME, 아프리카→AF)로 반환하라. "
     "질문에 명시적 국가/권역이 없으면 found=false 로 답하라. "
+    "'국가', '권역', '나라', '어디', '검토 중인 곳'처럼 구체적 이름 없는 일반 명사만 "
+    "있으면 절대 코드를 추측하지 말고 반드시 found=false 로 답하라. "
     "국가와 권역이 모두 언급되면 더 구체적인 국가를 우선한다. "
     "단, '권역 리서치'·'권역 분석'처럼 권역 단위 작업을 명시하면 권역을 우선한다.\n"
     "의도(intent)는 다음 중 하나로 분류하라: "
@@ -165,6 +195,12 @@ _RESOLVE_SYSTEM = (
 
 # '권역' 단위 작업 명시 신호 — 이때는 함께 언급된 개별 국가보다 권역을 우선한다.
 _REGION_INTENT_RE = re.compile(r"권역|region")
+
+# 구체 이름 없는 일반 지칭어 — 이 표현만 있고 별칭 매칭도 없으면 LLM이 코드를 환각해도
+# 신뢰하지 않고 되묻는다(예: "검토 중인 국가나 권역을 조사하고 싶어요" → GH 환각 방지).
+_GENERIC_TARGET_RE = re.compile(
+    r"국가|권역|나라|어디|어느\s*곳|검토\s*중인\s*곳|관심\s*있는\s*곳|country|region"
+)
 
 _RESOLVE_SCHEMA = {
     "type": "object",
@@ -198,7 +234,7 @@ def resolve_target(
     if _REGION_INTENT_RE.search(message.lower()):
         low = message.lower()
         for alias in sorted(_REGION_ALIASES, key=len, reverse=True):
-            if alias in low:
+            if _alias_in(alias, low):
                 _log.info("권역 의도 감지 — 권역 우선: %s", _REGION_ALIASES[alias])
                 return "region", _REGION_ALIASES[alias], None
     countries = storage_resolver.list_countries()
@@ -214,7 +250,8 @@ def resolve_target(
         f"[최근 대화]\n{recent}\n\n"
         f"[현재 질문]\n{message}\n\n"
         "위 질문이 가리키는 국가/권역과 의도를 식별해 JSON으로만 답하라. "
-        "보유 목록에 없어도 표준 코드로 추론해 반환하라."
+        "구체적 국가/권역명이 실제로 언급된 경우에만 코드를 반환하고(보유 목록에 없어도 무방), "
+        "구체적 이름이 없으면 found=false 로 답하라(추측 금지)."
     )
     try:
         out = bedrock_client.generate_structured(
@@ -227,6 +264,11 @@ def resolve_target(
             if intent not in ("qa", "research", "report"):
                 intent = None
             if domain in ("country", "region") and target_id:
+                # 환각 가드: 메시지에 구체 국가/권역명(별칭)이 전혀 없는데 일반 지칭어
+                # ("국가/권역/나라/어디")만 있으면 LLM 코드를 믿지 않고 되묻는다.
+                if _GENERIC_TARGET_RE.search(message) and not _match_alias(message):
+                    _log.info("일반 지칭어만 있고 별칭 매칭 없음 — LLM 환각(%s) 무시, 되묻기", target_id)
+                    return None
                 return domain, target_id, intent
     except bedrock_client.BedrockError as exc:
         _log.warning("LLM 대상/의도 추출 실패 — 결정적 매칭으로 폴백: %s", exc)

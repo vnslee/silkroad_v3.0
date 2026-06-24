@@ -196,7 +196,17 @@ export function ChatWidget() {
       if (resolved.domain !== target.domain || resolved.id !== target.id) {
         setTarget(resolved)
       }
+      // 아래 분기(관점/트리거/확인)는 각자 research_suggestion을 표시한다. 어디에도
+      // 안 걸리는 차단성 응답(needs_* 모두 false·answer 없음)은 여기서 폴백 표시해야
+      // 침묵하지 않는다 — 예: 보유 권역 밖 국가 거절(_country_research_blocked).
+      const willHandleSuggestion =
+        resp.needs_perspective ||
+        resp.auto_trigger ||
+        resp.needs_research ||
+        resp.needs_report
       if (resp.answer) pushAssistant(resp.answer)
+      else if (resp.research_suggestion && !willHandleSuggestion)
+        pushAssistant(resp.research_suggestion)
       else setTyping(false)
 
       // 관점 선택 필요(senario.md) → 질문을 보관하고 관점 칩 노출. 선택 시 그 관점으로 재전송.
