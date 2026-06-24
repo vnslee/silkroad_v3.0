@@ -22,6 +22,20 @@ _lock = threading.Lock()
 _cache: Optional[dict] = None
 _cache_mtime: float = -1.0
 
+# 좌표 폴백 테이블(code → (lon, lat)). geo 엔트리에 좌표가 없거나 신규 리서치 국가의
+# LLM 좌표 해석이 실패한 경우의 안전망 — 지도 마커가 좌표 누락으로 사라지지 않게 보장한다.
+# (구 프론트 정적 테이블 COUNTRY_COORDS/ATLAS_CENTROIDS가 담당하던 좌표 지식을 백엔드로
+#  이관한 것 — 좌표 단일 출처는 geo이고, 이 표는 그 보강용.) 대표 중심 좌표 기준.
+_FALLBACK_COORDS: Dict[str, tuple] = {
+    "AR": (-63.62, -38.42), "AT": (14.55, 47.52), "AU": (134.0, -25.6),
+    "BR": (-51.93, -14.24), "CA": (-106.35, 56.13), "CL": (-71.54, -35.68),
+    "CN": (104.2, 35.86), "DK": (9.5, 56.26), "ES": (-3.75, 40.46),
+    "FR": (2.21, 46.23), "GB": (-3.44, 55.38), "ID": (113.92, -0.79),
+    "IN": (78.96, 20.59), "IT": (12.57, 41.87), "MX": (-102.55, 23.63),
+    "NL": (5.29, 52.13), "PL": (19.15, 51.92), "PR": (-66.59, 18.22),
+    "PT": (-8.22, 39.4), "US": (-98.5, 39.8),
+}
+
 
 def _empty_doc() -> dict:
     return {
@@ -62,6 +76,24 @@ def get_country(code: str) -> Optional[dict]:
 def all_countries() -> Dict[str, dict]:
     """전체 국가 geo 엔트리 사본(코드→엔트리)."""
     return dict(_load().get("countries", {}))
+
+
+def resolve_coords(code: str) -> tuple:
+    """국가 코드 → (lon, lat). 좌표 보장의 단일 진입점.
+
+    우선순위: ① geo 엔트리 좌표 → ② 폴백 테이블(_FALLBACK_COORDS). 둘 다 없으면
+    (None, None). 마커 자동 표시를 위해 list_countries·research_agent가 이를 통해
+    좌표를 채운다 — 프론트는 더 이상 정적 좌표 폴백을 두지 않는다.
+    """
+    code = code.upper()
+    geo = get_country(code) or {}
+    lon, lat = geo.get("lon"), geo.get("lat")
+    if lon is not None and lat is not None:
+        return (lon, lat)
+    fallback = _FALLBACK_COORDS.get(code)
+    if fallback is not None:
+        return fallback
+    return (lon, lat)
 
 
 def upsert_country(

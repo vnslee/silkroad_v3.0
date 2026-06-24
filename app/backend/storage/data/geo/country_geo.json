@@ -185,6 +185,22 @@
       "lon": -1.0232,
       "lat": 7.9465,
       "iso_numeric": "288"
+    },
+    "US": {
+      "name": "United States of America",
+      "name_ko": "미국",
+      "region": "NORTH_AMERICA",
+      "lon": -98.5,
+      "lat": 39.8,
+      "iso_numeric": "840"
+    },
+    "AU": {
+      "name": "Australia",
+      "name_ko": "호주",
+      "region": "APAC",
+      "lon": 134.0,
+      "lat": -25.6,
+      "iso_numeric": "036"
     }
   }
 }

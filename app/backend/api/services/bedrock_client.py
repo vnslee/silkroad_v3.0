@@ -181,7 +181,11 @@ def generate_text(
     context: Optional[str] = None,
     history: Optional[List[dict]] = None,
 ) -> str:
-    """챗봇용 자유 텍스트 호출(구조화 없음, Q4=A). 무상태(history는 인자 전달)."""
+    """챗봇용 자유 텍스트 호출(구조화 없음, Q4=A). 무상태(history는 인자 전달).
+
+    간단한 답변이므로 CHAT_MODEL(Sonnet)을 쓴다 — 리서치·분류(generate_structured)는
+    BEDROCK_MODEL(Opus) 유지.
+    """
     client = get_client()
     messages: List[dict] = []
     for turn in history or []:
@@ -189,7 +193,7 @@ def generate_text(
     user_content = message if not context else f"[참고 컨텍스트]\n{context}\n\n[질문]\n{message}"
     messages.append({"role": "user", "content": user_content})
     kwargs = {
-        "model": config.BEDROCK_MODEL,
+        "model": config.CHAT_MODEL,
         "max_tokens": config.RESEARCH_MAX_TOKENS,
         "messages": messages,
     }

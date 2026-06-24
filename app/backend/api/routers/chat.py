@@ -41,7 +41,8 @@ def chat(req: ChatRequest) -> ChatResponse:
             return chatbot.ask_for_target()
         # (식별 실패지만 후속질문이면 프론트가 보낸 직전 target 유지 — 대화 연속성)
         resp = chatbot.handle(
-            domain, target, req.message, history=req.history, member_codes=members
+            domain, target, req.message, history=req.history,
+            member_codes=members, perspective=req.perspective,
         )
         # 식별한 대상을 응답에 실어 프론트가 리서치/보고서 트리거 대상으로 쓰게 한다.
         resp.resolved_domain = domain
