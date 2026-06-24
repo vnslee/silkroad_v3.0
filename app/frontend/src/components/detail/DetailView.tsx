@@ -15,7 +15,8 @@ import { useT } from '../../i18n/dict'
 import type { EntryMode } from '../../app/route'
 import { CountryDetail } from '../details/CountryDetail'
 import { RegionDetail } from '../details/RegionDetail'
-import type { CountryDetailData, RegionDetailData } from '../reports/types'
+import type { CountryDetailData, RegionDetailData, RegionReportData } from '../reports/types'
+import { buildRegionDetail, type RegionResearchSnapshot } from '../../utils/regionDetail'
 
 interface Props {
   domain: Domain
@@ -129,16 +130,48 @@ export default function DetailView({ domain, code, mode }: Props) {
     setLoading(true)
     setError(null)
 
-    // JSON 데이터를 직접 fetch (detail 경로에서 리서치 JSON 사용)
+    // 리서치 스냅샷 JSON (detail 경로) — country는 그대로, region은 병합 입력으로 사용.
     const detailPath = paths.detail(domain, code, version)
-    fetch(detailPath)
+    const fetchSnapshot = fetch(detailPath).then((res) => {
+      if (!res.ok) throw new Error(`Failed to load detail: ${res.statusText}`)
+      return res.json()
+    })
+
+    if (domain === 'country') {
+      fetchSnapshot
+        .then((data) => {
+          if (cancelled) return
+          setDetailData(data)
+          setLoading(false)
+        })
+        .catch((e) => {
+          if (cancelled) return
+          setError(String(e))
+          setLoading(false)
+        })
+      return () => {
+        cancelled = true
+      }
+    }
+
+    // region(P2): 3-소스 병합 — 리서치 스냅샷 + 원시 internal(detail-sources) + 최신 퀵윈 보고서.
+    // 보고서는 없을 수 있으므로(미생성) 실패해도 null로 진행(후보/인사이트만 빈 값).
+    const fetchSources = api.getRegionDetailSources(code)
+    const fetchReport = api
+      .listReports(domain, code)
       .then((res) => {
-        if (!res.ok) throw new Error(`Failed to load detail: ${res.statusText}`)
-        return res.json()
+        const latest = res.reports[res.reports.length - 1]
+        if (!latest) return null
+        return api.getReportJson<RegionReportData>(domain, code, latest.report_id)
       })
-      .then((data) => {
+      .catch(() => null)
+
+    Promise.all([fetchSnapshot, fetchSources, fetchReport])
+      .then(([snapshot, sources, report]) => {
         if (cancelled) return
-        setDetailData(data)
+        setDetailData(
+          buildRegionDetail(snapshot as RegionResearchSnapshot, sources, report ?? null),
+        )
         setLoading(false)
       })
       .catch((e) => {

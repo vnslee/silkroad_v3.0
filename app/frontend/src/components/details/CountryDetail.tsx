@@ -37,34 +37,11 @@ export function CountryDetail({ data, className = '' }: Props) {
 
   const bullets = toBullets(data.overall_insight).slice(0, 6)
 
-  const statusLabel = data.is_baseline ? '기준국' : '미진출'
-  const statusStyle = data.is_baseline
-    ? 'bg-secondary-fixed text-on-secondary-fixed-variant'
-    : 'bg-surface-container text-on-surface-variant'
-
   return (
     <div className={`flex-1 bg-background flex items-start justify-center p-md ${className}`}>
       <div className="relative z-chrome max-w-5xl w-full mx-auto border border-surface-border rounded-xl card-shadow flex flex-col bg-surface-container-lowest">
         <div className="p-lg flex flex-col gap-xl">
-          {/* 헤더: 국가명 + 상태 배지 */}
-          <div className="flex items-center gap-sm flex-wrap">
-            <span
-              className="material-symbols-outlined text-primary text-[28px]"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            >
-              public
-            </span>
-            <h2 className="font-headline-lg text-headline-lg text-primary">{data.country}</h2>
-            <span className="font-body-lg text-body-lg text-on-surface-variant">
-              {data.country_ko}
-            </span>
-            <span
-              className={`ml-auto inline-flex items-center rounded-full px-3 py-0.5 font-label-sm text-label-sm uppercase tracking-wide ${statusStyle}`}
-            >
-              {statusLabel}
-            </span>
-          </div>
-
+          {/* 국가명·상태 배지는 DetailView 헤더 chrome에 이미 노출 — 바디 중복 제거 */}
           {/* 본문 2열 */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
             {/* 좌: 차트 + 경쟁사 */}

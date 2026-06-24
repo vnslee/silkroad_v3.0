@@ -514,14 +514,47 @@ export interface CountryDetailData {
   items: DetailItem[]
 }
 
-// P2 - 권역 상세
+// P2 - 권역 상세 (백엔드 build_detail_data 3-소스 병합 결과)
+// region_detail_rendering_engine.build_detail_data() 산출 JSON과 1:1.
+export interface RegionEnteredCountry {
+  code: string
+  name_ko: string
+  name_en: string
+  status: string
+  solution: string
+  products: string[]
+  since: number | string
+  type: string // 'SA' | 'JV' | ''
+}
+export interface RegionCandidateCountry {
+  quick_win_rank: number
+  code: string
+  name_ko: string
+  similarity: number
+  attractiveness: number
+  composite_score: number
+  quick_win: boolean
+  quadrant: string
+}
+export interface RegionMapMember {
+  code: string
+  status: string // '운영중' | '준비중' | '미진출'
+}
 export interface RegionDetailData {
   region: string
   region_ko: string
   code: string
-  baseline_country: string
-  fetched_at: string
-  countries: CountryDetailData[]
+  schema_version?: string | null
+  fetched_at?: string | null
+  kpi: {
+    candidates: number
+    quickwin: number
+    killswitch_failed: number
+  }
+  entered_countries: RegionEnteredCountry[]
+  candidate_countries: RegionCandidateCountry[]
+  map: { members: RegionMapMember[] }
+  executive_summary: RegionExecutiveSummary
 }
 
 export interface DetailItem {

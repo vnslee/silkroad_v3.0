@@ -152,6 +152,35 @@ def map_color_data() -> MapColorData:
     )
 
 
+def _load_internal() -> dict:
+    """internal_latest.json 전체 로드. 실패 시 빈 dict(그레이스풀)."""
+    try:
+        with open(config.INTERNAL_LATEST, encoding="utf-8") as f:
+            return json.load(f) or {}
+    except (OSError, ValueError):
+        return {}
+
+
+def region_detail_sources(region: str) -> dict:
+    """권역 상세(P2)용 원시 internal 데이터를 그대로 제공(엔진 의존 없음).
+
+    프론트가 3-소스 병합(리서치+퀵윈 보고서+internal)을 직접 수행할 수 있도록,
+    해당 권역 소속국의 country_assets·country_status만 추려 반환한다.
+    계산·병합은 하지 않는다(원시 JSON 패스스루).
+    """
+    internal = _load_internal()
+    c2r = internal.get("country_to_region", {}) or {}
+    assets = internal.get("country_assets", {}) or {}
+    status = internal.get("country_status", {}) or {}
+    members = [code for code, reg in c2r.items() if reg == region]
+    return {
+        "region": region,
+        "members": members,  # 권역 소속국(ISO alpha-2) 코드 목록 — 지도/기진출 판정용
+        "country_assets": {c: assets[c] for c in members if c in assets},
+        "country_status": {c: status[c] for c in members if c in status},
+    }
+
+
 def list_countries() -> List[CountrySummary]:
     base = config.RESEARCH_DIR / "country"
     out: List[CountrySummary] = []

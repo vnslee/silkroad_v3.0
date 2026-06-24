@@ -43,6 +43,21 @@ export interface RegionSummary {
   has_report: boolean
 }
 
+// 권역 상세(P2) 3-소스 병합용 원시 internal 데이터 — /api/regions/{r}/detail-sources 와 1:1.
+// country_assets[code]: { solution, type('SA'|'JV'), products[], since } (기진출국만 존재).
+export interface RegionAssetEntry {
+  solution?: string
+  type?: string
+  products?: string[]
+  since?: number | string
+}
+export interface RegionDetailSources {
+  region: string
+  members: string[] // 권역 소속국(ISO alpha-2)
+  country_assets: Record<string, RegionAssetEntry>
+  country_status: Record<string, string> // ISO alpha-2 → '운영중'|'준비중'|'미진출'
+}
+
 // 지도 채색 데이터 — 백엔드 /api/map-colors (schemas.MapColorData) 와 1:1.
 export interface MapColorData {
   country_status: Record<string, string> // ISO alpha-2 → '운영중'|'미진출'|...

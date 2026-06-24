@@ -1,60 +1,67 @@
-// RegionDetail (P2) — 권역 상세 정보 화면
-// mockup: architecture/.../02_region_detail.html (Kinetic Enterprise).
-// 레이아웃: 헤더(권역명) + 2열(권역 지도 SVG + 국가 목록) + 권역 인사이트.
-// 퀵윈 점수·판정은 권역 보고서(report) 산출물이라 리서치 JSON엔 없음 → 보유국/후보국 구분과
-// baseline 표시까지만 표현(점수 임의 생성 금지).
-import type { RegionDetailData, CountryDetailData } from '../reports/types'
+// RegionDetail (P2) — 권역 상세 정보 화면.
+// 디자인 참조: region_detail_rendering_engine.py 산출 HTML(DTL_<REGION>_NNN.html) 구조.
+// 구성(스펙 §4 P2): KPI 3카드 → 기진출 국가 → (권역 지도 + 진출예정국 Quick-Win 순위) → 권역 인사이트.
+// 데이터는 프론트에서 3-소스 병합(buildRegionDetail) — 표현만 담당(렌더링 엔진 미사용).
+import type {
+  RegionDetailData,
+  RegionCandidateCountry,
+  RegionEnteredCountry,
+} from '../reports/types'
 
 interface Props {
   data: RegionDetailData
   className?: string
 }
 
-// mockup 지도 좌표(EU 기준) — 코드별 viewBox(0 10 82 76) 좌표. 없으면 그리드 폴백.
-const EU_COORDS: Record<string, { x: number; y: number }> = {
-  ES: { x: 22, y: 76 },
-  PL: { x: 68, y: 32 },
-  CZ: { x: 60, y: 47 },
-  HU: { x: 72, y: 53 },
-  DE: { x: 50, y: 40 },
-  FR: { x: 30, y: 55 },
-  IT: { x: 52, y: 70 },
-  GB: { x: 20, y: 26 },
-  AT: { x: 57, y: 57 },
-  DK: { x: 44, y: 18 },
-  NL: { x: 37, y: 35 },
-  PT: { x: 10, y: 74 },
+// 진출상태 → 지도 노드 색(채움/글자) + 범례 라벨. render_helpers _MAP_STATE와 동일.
+const MAP_STATE: Record<string, { fill: string; fg: string; label: string }> = {
+  운영중: { fill: '#3f6cb4', fg: '#ffffff', label: '운영중' },
+  준비중: { fill: '#6e97d6', fg: '#101622', label: '준비중' },
+  미진출: { fill: '#eef0f2', fg: '#3b3f46', label: '미진출/후보' },
 }
 
-const OPERATING = '#14181C'
-const CANDIDATE = '#e6e3db'
+// 권역별 도형 지도 좌표(viewBox 0 10 82 76) — region_detail_rendering_engine _MAP_COORDS와 동일.
+const MAP_COORDS: Record<string, Record<string, [number, number]>> = {
+  EU: {
+    GB: [20, 26], DK: [44, 18], NL: [37, 35], DE: [50, 40],
+    PL: [68, 32], CZ: [60, 47], HU: [72, 53], AT: [57, 57],
+    FR: [30, 55], IT: [52, 70], ES: [22, 76], PT: [10, 74],
+  },
+  NA: {
+    CA: [40, 24], US: [38, 46], MX: [30, 68], PR: [62, 70],
+  },
+}
 
-function bullets(text: string): string[] {
-  if (!text) return []
-  return text
-    .split(/(?<=[.。])\s+/)
-    .map((s) => s.trim())
-    .filter((s) => s.length > 4)
+// 점수(0-100) → 신호색. render_helpers.score_color와 동일.
+function scoreColor(v: number): string {
+  return v >= 70 ? '#4f8a6d' : v >= 50 ? '#3f6cb4' : v >= 35 ? '#c08a2e' : '#c0533f'
+}
+
+// 법인종류(SA/JV) → 라벨·색. region_detail_rendering_engine _ENTITY_TYPE와 동일.
+const ENTITY_TYPE: Record<string, { label: string; bg: string; fg: string }> = {
+  SA: { label: '단독법인', bg: '#e9f3ee', fg: '#4f8a6d' },
+  JV: { label: 'JV', bg: '#fbf0e6', fg: '#c08a2e' },
+}
+
+function Badge({ text, bg, fg }: { text: string; bg: string; fg: string }) {
+  return (
+    <span
+      className="inline-block px-2 py-0.5 rounded font-label-sm text-label-sm whitespace-nowrap"
+      style={{ background: bg, color: fg }}
+    >
+      {text}
+    </span>
+  )
 }
 
 export function RegionDetail({ data, className = '' }: Props) {
-  const countries = data.countries || []
-  const baselineCode = data.baseline_country
-
-  // 좌표 보유 국가만 지도에 표시(없으면 균등 그리드 배치).
-  const mapped = countries.map((c, i) => {
-    const coord = EU_COORDS[c.code] ?? {
-      x: 14 + (i % 5) * 16,
-      y: 22 + Math.floor(i / 5) * 22,
-    }
-    const isOperating = c.is_baseline || c.code === baselineCode
-    return { c, coord, isOperating }
-  })
-
-  // 인사이트: baseline 국가의 overall_insight를 권역 요약으로 사용(없으면 첫 국가).
-  const insightSrc =
-    countries.find((c) => c.is_baseline || c.code === baselineCode) ?? countries[0]
-  const regionBullets = bullets(insightSrc?.overall_insight ?? '').slice(0, 4)
+  const kpi = data.kpi ?? { candidates: 0, quickwin: 0, killswitch_failed: 0 }
+  const entered = data.entered_countries ?? []
+  const candidates = [...(data.candidate_countries ?? [])].sort(
+    (a, b) => (a.quick_win_rank ?? 999) - (b.quick_win_rank ?? 999),
+  )
+  const members = data.map?.members ?? []
+  const es = data.executive_summary
 
   return (
     <div
@@ -62,165 +69,255 @@ export function RegionDetail({ data, className = '' }: Props) {
     >
       <div className="w-full max-w-5xl rounded-xl custom-shadow-level-3 flex flex-col border-surface-border bg-surface-container">
         <div className="p-lg flex flex-col gap-xl">
-          {/* 제목 */}
-          <div className="flex items-center gap-sm flex-wrap">
-            <span
-              className="material-symbols-outlined text-primary text-[28px]"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            >
-              public
-            </span>
-            <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">
-              {data.region}
-            </h2>
-            <span className="font-body-lg text-body-lg text-on-surface-variant">
-              {data.region_ko}
-            </span>
+          {/* 제목(권역명)은 DetailView 헤더 chrome에 이미 노출 — 바디 중복 제거 */}
+          {/* KPI 3카드 */}
+          <div className="grid grid-cols-3 gap-sm">
+            <KpiCard value={kpi.candidates} label="분석 후보국" color="#3F6CB4" />
+            <KpiCard value={kpi.quickwin} label="Quick-win 최우선" color="#4F8A6D" />
+            <KpiCard value={kpi.killswitch_failed} label="킬스위치 탈락" color="#14171C" />
           </div>
 
-          {/* 지도 + 국가 목록 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-md items-stretch">
-            {/* 권역 지도 */}
-            <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
-              <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">
-                <span className="material-symbols-outlined text-secondary text-[20px]">map</span>
-                권역 지도
-              </h3>
-              <div className="flex-1 flex items-center justify-center min-h-[260px]">
-                <svg
-                  viewBox="0 10 82 76"
-                  preserveAspectRatio="xMidYMid meet"
-                  className="w-full h-full max-h-[300px]"
-                  role="img"
-                  aria-label={`${data.code} 권역 진출 상태 지도`}
-                >
-                  {mapped.map(({ c, coord, isOperating }) => (
-                    <g key={c.code}>
-                      <circle
-                        cx={coord.x}
-                        cy={coord.y}
-                        r="6.4"
-                        fill={isOperating ? OPERATING : CANDIDATE}
-                        stroke="#fbf9f4"
-                        strokeWidth="1"
-                      />
-                      <text
-                        x={coord.x}
-                        y={coord.y + 2.1}
-                        textAnchor="middle"
-                        fontSize="4.4"
-                        fontWeight="700"
-                        fill={isOperating ? '#ffffff' : '#3a4048'}
-                      >
-                        {c.code}
-                      </text>
-                    </g>
-                  ))}
-                </svg>
-              </div>
-              <div className="flex flex-wrap gap-md mt-md pt-md border-t border-surface-border">
-                <LegendDot color={OPERATING} label="운영중(기준국)" />
-                <LegendDot color={CANDIDATE} label="미진출/후보" />
-              </div>
-            </div>
+          {/* 기진출 국가 */}
+          {entered.length > 0 && <EnteredList rows={entered} />}
 
-            {/* 국가 목록 */}
-            <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
-              <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">
-                <span className="material-symbols-outlined text-secondary text-[20px]">
-                  leaderboard
-                </span>
-                권역 구성 국가 ({countries.length})
-              </h3>
-              <table className="w-full text-left border-collapse font-body-sm text-body-sm">
-                <thead>
-                  <tr className="bg-surface-light border-b border-surface-border">
-                    <th className="p-sm font-label-md text-label-md text-outline font-semibold">
-                      국가
-                    </th>
-                    <th className="p-sm font-label-md text-label-md text-outline font-semibold">
-                      통화
-                    </th>
-                    <th className="p-sm font-label-md text-label-md text-outline font-semibold text-right">
-                      상태
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {countries.map((c: CountryDetailData) => {
-                    const isOperating = c.is_baseline || c.code === baselineCode
-                    return (
-                      <tr
-                        key={c.code}
-                        className="border-b border-surface-border last:border-0 hover:bg-surface-variant transition-colors"
-                      >
-                        <td className="p-sm text-on-surface whitespace-nowrap">
-                          {c.country_ko}{' '}
-                          <span className="font-mono text-xs text-on-surface-variant">
-                            {c.code}
-                          </span>
-                        </td>
-                        <td className="p-sm text-on-surface-variant">{c.currency}</td>
-                        <td className="p-sm text-right">
-                          <span
-                            className="px-2 py-1 rounded-md font-label-sm text-label-sm whitespace-nowrap"
-                            style={
-                              isOperating
-                                ? { background: '#eef9c9', color: '#404d00' }
-                                : { background: '#f2f0e9', color: '#3a4048' }
-                            }
-                          >
-                            {isOperating ? '기준국' : '후보'}
-                          </span>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
+          {/* 권역 지도 + 진출예정국 Quick-Win 순위 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-md items-stretch">
+            <RegionMap code={data.code} members={members} />
+            {candidates.length > 0 && <QuickwinTable rows={candidates} />}
           </div>
 
           {/* 권역 인사이트 */}
-          {regionBullets.length > 0 && (
-            <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
-              <div className="flex items-center gap-sm mb-md">
-                <span className="material-symbols-outlined text-secondary text-[20px]">
-                  psychology
-                </span>
-                <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold flex-1">
-                  권역 인사이트
-                </h3>
-                <span className="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full whitespace-nowrap">
-                  AI 분석
-                </span>
-              </div>
-              <div className="flex flex-col gap-sm">
-                {regionBullets.map((b, i) => (
-                  <div
-                    key={i}
-                    className="flex gap-md items-start rounded-lg bg-surface-light p-md"
-                  >
-                    <span className="font-headline-md text-[16px] leading-[24px] text-secondary font-bold shrink-0 w-6 text-center">
-                      {i + 1}
-                    </span>
-                    <p className="font-body-sm text-body-sm text-on-surface m-0">{b}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          <RegionInsight es={es} />
         </div>
       </div>
     </div>
   )
 }
 
-function LegendDot({ color, label }: { color: string; label: string }) {
+function KpiCard({ value, label, color }: { value: number; label: string; color: string }) {
   return (
-    <span className="flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant">
-      <span className="inline-block w-3 h-3 rounded-full" style={{ background: color }} />
-      {label}
-    </span>
+    <div className="bg-surface-container-lowest border border-surface-border rounded-[14px] p-md text-center">
+      <div className="font-mono text-[30px] font-bold leading-none" style={{ color }}>
+        {value}
+      </div>
+      <div className="font-body-sm text-[12px] text-[#6B7280] mt-1">{label}</div>
+    </div>
+  )
+}
+
+function EntityCell({ type }: { type: string }) {
+  const e = ENTITY_TYPE[(type || '').toUpperCase()]
+  if (!e) return <span className="text-on-surface-variant">—</span>
+  return <Badge text={e.label} bg={e.bg} fg={e.fg} />
+}
+
+function ProductsCell({ products }: { products: string[] }) {
+  if (!products?.length) return <span className="text-on-surface-variant">—</span>
+  return (
+    <div className="flex flex-wrap gap-1">
+      {products.map((p, i) => (
+        <Badge key={i} text={p} bg="#eaf0f8" fg="#2c4c86" />
+      ))}
+    </div>
+  )
+}
+
+function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
+  return (
+    <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
+      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">
+        <span className="material-symbols-outlined text-secondary text-[20px]">flag</span>
+        기진출 국가
+      </h3>
+      <table className="w-full text-left border-collapse font-body-sm text-body-sm">
+        <thead>
+          <tr className="bg-surface-light border-b border-surface-border">
+            <Th>국가</Th>
+            <Th>법인종류</Th>
+            <Th>설립연도</Th>
+            <Th>관리상품</Th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr
+              key={r.code}
+              className="border-b border-surface-border last:border-0 hover:bg-surface-variant transition-colors"
+            >
+              <td className="p-sm text-on-surface">
+                {r.name_ko} <span className="text-on-surface-variant">{r.name_en}</span>
+              </td>
+              <td className="p-sm">
+                <EntityCell type={r.type} />
+              </td>
+              <td className="p-sm text-on-surface-variant">{r.since ?? '—'}</td>
+              <td className="p-sm">
+                <ProductsCell products={r.products} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function RegionMap({ code, members }: { code: string; members: RegionDetailData['map']['members'] }) {
+  // 도형 노드 지도(viewBox 0 10 82 76). 좌표 없는 권역은 격자 폴백 — region-agnostic.
+  const coords = MAP_COORDS[code] ?? {}
+  const fallback = (i: number): [number, number] => {
+    const cols = 4
+    return [12 + (i % cols) * 26, 18 + Math.floor(i / cols) * 24]
+  }
+  return (
+    <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
+      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">
+        <span className="material-symbols-outlined text-secondary text-[20px]">map</span>
+        권역 지도
+      </h3>
+      <div className="flex-1 flex items-center justify-center min-h-[260px]">
+        <svg
+          viewBox="0 10 82 76"
+          preserveAspectRatio="xMidYMid meet"
+          className="w-full h-full max-h-[300px]"
+          role="img"
+          aria-label={`${code} 권역 진출 상태 지도`}
+        >
+          {members.map((m, i) => {
+            const [x, y] = coords[m.code] ?? fallback(i)
+            const st = MAP_STATE[m.status] ?? MAP_STATE['미진출']
+            return (
+              <g key={m.code}>
+                <circle cx={x} cy={y} r="6.4" fill={st.fill} stroke="#f7f8fa" strokeWidth="1" />
+                <text
+                  x={x}
+                  y={y + 2.1}
+                  textAnchor="middle"
+                  fontSize="4.4"
+                  fontWeight="700"
+                  fill={st.fg}
+                >
+                  {m.code}
+                </text>
+              </g>
+            )
+          })}
+        </svg>
+      </div>
+      <div className="flex flex-wrap gap-md mt-md pt-md border-t border-surface-border">
+        {Object.values(MAP_STATE).map((s) => (
+          <span
+            key={s.label}
+            className="flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant"
+          >
+            <span className="inline-block w-3 h-3 rounded-full" style={{ background: s.fill }} />
+            {s.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
+  return (
+    <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
+      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md flex items-center gap-sm">
+        <span className="material-symbols-outlined text-secondary text-[20px]">leaderboard</span>
+        진출 예정국 Quick-Win 순위
+      </h3>
+      <table className="w-full text-left border-collapse font-body-sm text-body-sm">
+        <thead>
+          <tr className="bg-surface-light border-b border-surface-border">
+            <Th>#</Th>
+            <Th>국가</Th>
+            <Th>종합점수</Th>
+            <Th>판정</Th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => {
+            const v = r.composite_score ?? 0
+            const col = scoreColor(v)
+            return (
+              <tr
+                key={r.code}
+                className="border-b border-surface-border last:border-0 hover:bg-surface-variant transition-colors"
+              >
+                <td className="p-sm font-label-md text-label-md text-primary font-bold">
+                  {r.quick_win_rank ?? '—'}
+                </td>
+                <td className="p-sm text-on-surface whitespace-nowrap">
+                  {r.name_ko}{' '}
+                  <span className="font-mono text-xs text-on-surface-variant">{r.code}</span>
+                </td>
+                <td className="p-sm">
+                  <div className="flex items-center gap-xs min-w-[88px]">
+                    <div className="flex-1 w-full h-base bg-surface-border rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{ width: `${Math.max(0, Math.min(100, v))}%`, background: col }}
+                      />
+                    </div>
+                    <span
+                      className="font-label-md text-label-md font-semibold w-7 text-right shrink-0"
+                      style={{ color: col }}
+                    >
+                      {Math.round(v * 10) / 10}
+                    </span>
+                  </div>
+                </td>
+                <td className="p-sm">
+                  <Badge
+                    text={r.quick_win ? '퀵윈' : r.quadrant || '-'}
+                    bg={r.quick_win ? '#e9f3ee' : '#eef0f2'}
+                    fg={r.quick_win ? '#4f8a6d' : '#3b3f46'}
+                  />
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function RegionInsight({ es }: { es: RegionDetailData['executive_summary'] }) {
+  const lead = es?.core_conclusion?.why_top1?.ko?.trim() ?? ''
+  const cross = (es?.ai_cross_insight?.insights ?? []).filter((i) => i.ko || i.en)
+  if (!lead && cross.length === 0) return null
+  return (
+    <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
+      <div className="flex items-center gap-sm mb-md">
+        <span className="material-symbols-outlined text-secondary text-[24px]">psychology</span>
+        <h3 className="font-headline-md text-[22px] leading-[30px] text-primary font-bold flex-1">
+          권역 인사이트
+        </h3>
+        <span className="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full whitespace-nowrap">
+          AI 분석
+        </span>
+      </div>
+      {lead && (
+        <p className="font-body-md text-body-md text-on-surface font-semibold mb-md leading-relaxed m-0">
+          {lead}
+        </p>
+      )}
+      {cross.length > 0 && (
+        <div className="flex flex-col gap-md">
+          {cross.map((i, idx) => (
+            <p key={idx} className="font-body-md text-body-md text-on-surface leading-relaxed m-0">
+              {(i.ko || i.en)!.trim()}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function Th({ children }: { children: React.ReactNode }) {
+  return (
+    <th className="p-sm font-label-md text-label-md text-outline font-semibold">{children}</th>
   )
 }
