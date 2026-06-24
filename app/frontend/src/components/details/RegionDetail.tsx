@@ -13,17 +13,21 @@ import type {
 } from '../reports/types'
 import { buildRegionMapGeometry } from './regionMapGeo'
 import { Flag } from '../reports/region/shared'
+import { useT, valueLabel } from '../../i18n/dict'
+import { useLang, pickLang } from '../../i18n/locale'
+import type { Lang } from '../../store'
 
 interface Props {
   data: RegionDetailData
   className?: string
 }
 
-// 진출상태 → 지도 노드 색(채움/글자) + 범례 라벨. render_helpers _MAP_STATE와 동일.
-const MAP_STATE: Record<string, { fill: string; fg: string; label: string }> = {
-  운영중: { fill: '#3f6cb4', fg: '#ffffff', label: '운영중' },
-  준비중: { fill: '#6e97d6', fg: '#101622', label: '준비중' },
-  미진출: { fill: '#eef0f2', fg: '#3b3f46', label: '미진출/후보' },
+// 진출상태 → 지도 노드 색(채움/글자) + 범례 라벨 키. render_helpers _MAP_STATE와 동일.
+// 키(운영중/준비중/미진출)는 데이터 status 매칭용이라 한국어 고정. labelKey는 화면 표시 라벨의 i18n 키(범례에서 t()로 변환).
+const MAP_STATE: Record<string, { fill: string; fg: string; labelKey: string }> = {
+  운영중: { fill: '#3f6cb4', fg: '#ffffff', labelKey: 'rdtl.map.state.active' },
+  준비중: { fill: '#6e97d6', fg: '#101622', labelKey: 'rdtl.map.state.preparing' },
+  미진출: { fill: '#eef0f2', fg: '#3b3f46', labelKey: 'rdtl.map.state.none' },
 }
 
 // 점수(0-100) → 신호색. render_helpers.score_color와 동일.
@@ -49,6 +53,8 @@ function Badge({ text, bg, fg }: { text: string; bg: string; fg: string }) {
 }
 
 export function RegionDetail({ data, className = '' }: Props) {
+  const t = useT()
+  const lang = useLang()
   const kpi = data.kpi ?? { candidates: 0, quickwin: 0, killswitch_failed: 0 }
   const entered = data.entered_countries ?? []
   const candidates = [...(data.candidate_countries ?? [])].sort(
@@ -67,17 +73,17 @@ export function RegionDetail({ data, className = '' }: Props) {
         <div className="p-lg flex flex-col gap-xl">
           {/* 제목(권역명)은 DetailView 헤더 chrome에 이미 노출 — 바디 중복 제거 */}
           {/* 권역 인사이트 — 최상단. 뉴스 제외, AI 교차 인사이트만 최대 5줄 */}
-          <RegionInsight es={es} baseline={data.baseline_country} />
+          <RegionInsight es={es} baseline={data.baseline_country} lang={lang} />
 
           {/* KPI 3카드 */}
           <div className="grid grid-cols-3 gap-sm">
-            <KpiCard value={kpi.candidates} label="분석 후보국" color="#3F6CB4" />
-            <KpiCard value={kpi.quickwin} label="Quick-win 최우선" color="#4F8A6D" />
-            <KpiCard value={kpi.killswitch_failed} label="킬스위치 탈락" color="#14171C" />
+            <KpiCard value={kpi.candidates} label={t('rdtl.kpi.candidates')} color="#3F6CB4" />
+            <KpiCard value={kpi.quickwin} label={t('rdtl.kpi.quickwin')} color="#4F8A6D" />
+            <KpiCard value={kpi.killswitch_failed} label={t('rdtl.kpi.killswitchFailed')} color="#14171C" />
           </div>
 
           {/* 기진출 국가 */}
-          {entered.length > 0 && <EnteredList rows={entered} />}
+          {entered.length > 0 && <EnteredList rows={entered} lang={lang} />}
 
           {/* 권역 지도(시장규모 버블·진출상태) + 시장 추세 매트릭스(A) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-md items-stretch">
@@ -108,36 +114,39 @@ function KpiCard({ value, label, color }: { value: number; label: string; color:
   )
 }
 
-function EntityCell({ type }: { type: string }) {
+function EntityCell({ type, lang }: { type: string; lang: Lang }) {
   const e = ENTITY_TYPE[(type || '').toUpperCase()]
   if (!e) return <span className="text-on-surface-variant">—</span>
-  return <Badge text={e.label} bg={e.bg} fg={e.fg} />
+  // 법인종류 라벨도 언어별로(단독법인 → SA). 매핑 없으면 원본 유지.
+  return <Badge text={valueLabel('entityMode', e.label, lang)} bg={e.bg} fg={e.fg} />
 }
 
-function ProductsCell({ products }: { products: string[] }) {
+function ProductsCell({ products, lang }: { products: string[]; lang: Lang }) {
   if (!products?.length) return <span className="text-on-surface-variant">—</span>
   return (
     <div className="flex flex-wrap gap-1">
       {products.map((p, i) => (
-        <Badge key={i} text={p} bg="#eaf0f8" fg="#2c4c86" />
+        // 상품명도 언어별로(오토론 → Auto loan). 매핑 없으면 원본 유지.
+        <Badge key={i} text={valueLabel('product', p, lang)} bg="#eaf0f8" fg="#2c4c86" />
       ))}
     </div>
   )
 }
 
-function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
+function EnteredList({ rows, lang }: { rows: RegionEnteredCountry[]; lang: Lang }) {
+  const t = useT()
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
       <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
-        기진출 국가
+        {t('rdtl.entered.title')}
       </h3>
       <table className="w-full text-left border-collapse font-body-sm text-body-sm">
         <thead>
           <tr className="bg-surface-light border-b border-surface-border">
-            <Th>국가</Th>
-            <Th>법인종류</Th>
-            <Th>설립연도</Th>
-            <Th>관리상품</Th>
+            <Th>{t('rdtl.col.country')}</Th>
+            <Th>{t('rdtl.entered.entityType')}</Th>
+            <Th>{t('rdtl.entered.since')}</Th>
+            <Th>{t('rdtl.entered.products')}</Th>
           </tr>
         </thead>
         <tbody>
@@ -150,19 +159,27 @@ function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
                 <span className="flex items-center gap-xs">
                   <Flag code={r.code} />
                   <span>
-                    {r.name_ko}
-                    {r.name_en && r.name_en !== r.name_ko && (
-                      <span className="text-on-surface-variant"> {r.name_en}</span>
-                    )}
+                    {(() => {
+                      const primary = pickLang(lang, r.name_ko, r.name_en)
+                      const secondary = lang === 'en' ? r.name_ko : r.name_en
+                      return (
+                        <>
+                          {primary}
+                          {secondary && secondary !== primary && (
+                            <span className="text-on-surface-variant"> {secondary}</span>
+                          )}
+                        </>
+                      )
+                    })()}
                   </span>
                 </span>
               </td>
               <td className="p-sm">
-                <EntityCell type={r.type} />
+                <EntityCell type={r.type} lang={lang} />
               </td>
               <td className="p-sm text-on-surface-variant">{r.since ?? '—'}</td>
               <td className="p-sm">
-                <ProductsCell products={r.products} />
+                <ProductsCell products={r.products} lang={lang} />
               </td>
             </tr>
           ))}
@@ -175,23 +192,24 @@ function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
 // ── 시계열 추세 패널(A) — 멤버국 × (시장규모·EV) 스파크라인. 보고서엔 없는 "추세" 관점.
 // 단위·축이 국가마다 달라도 각 셀은 자기 시계열만 그리므로 정규화 불필요(상대 모양·CAGR만 본다).
 function MarketTrendPanel({ rows }: { rows: RegionMemberTrend[] }) {
+  const t = useT()
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
       <div className="flex items-center gap-sm mb-md">
         <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold flex-1">
-          시장 추세 (5년)
+          {t('rdtl.trend.title')}
         </h3>
         <span className="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full whitespace-nowrap">
-          시장규모·EV
+          {t('rdtl.trend.tag')}
         </span>
       </div>
       <div className="flex-1 overflow-x-auto">
         <table className="w-full text-left border-collapse font-body-sm text-body-sm">
           <thead>
             <tr className="bg-surface-light border-b border-surface-border">
-              <Th>국가</Th>
-              <Th>오토금융 시장규모</Th>
-              <Th>EV 보급률</Th>
+              <Th>{t('rdtl.col.country')}</Th>
+              <Th>{t('rdtl.trend.marketSize')}</Th>
+              <Th>{t('rdtl.trend.evRate')}</Th>
             </tr>
           </thead>
           <tbody>
@@ -216,7 +234,7 @@ function MarketTrendPanel({ rows }: { rows: RegionMemberTrend[] }) {
         </table>
       </div>
       <p className="font-label-sm text-label-sm text-outline mt-md pt-md border-t border-surface-border m-0">
-        실선 = 실적(history), 점선 = 전망(forecast). CAGR은 실적 구간 연복리 성장률.
+        {t('rdtl.trend.note')}
       </p>
     </div>
   )
@@ -324,6 +342,7 @@ function RegionMap({
   // atlas 매칭 0건(미등록 권역)이면 안내 폴백.
   // 지도 영역의 실제 크기를 ResizeObserver 로 측정해 그 비율로 projection 을 fit —
   // 패널이 넓든 좁든 letterbox 여백 없이 지도가 영역을 꽉 채운다.
+  const t = useT()
   const areaRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ w: 360, h: 380 })
   // 연결선(기진출→후보) 토글 — 자산 재사용 매핑이 있을 때만 노출.
@@ -363,7 +382,7 @@ function RegionMap({
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
       <div className="flex items-center gap-sm mb-md">
         <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold flex-1">
-          권역 지도
+          {t('rdtl.map.title')}
         </h3>
         {hasLinks && (
           <button
@@ -377,7 +396,7 @@ function RegionMap({
                 : { color: '#3b3f46' }
             }
           >
-            자산 연결 {showLinks ? '끄기' : '보기'}
+            {t('rdtl.map.assetLink')} {showLinks ? t('rdtl.map.hide') : t('rdtl.map.show')}
           </button>
         )}
       </div>
@@ -475,18 +494,18 @@ function RegionMap({
           </svg>
         ) : (
           <p className="font-body-sm text-body-sm text-on-surface-variant text-center">
-            이 권역의 지도 데이터를 표시할 수 없습니다.
+            {t('rdtl.map.noData')}
           </p>
         )}
       </div>
       <div className="flex flex-wrap items-center gap-md mt-md pt-md border-t border-surface-border">
         {Object.values(MAP_STATE).map((s) => (
           <span
-            key={s.label}
+            key={s.labelKey}
             className="flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant"
           >
             <span className="inline-block w-3 h-3 rounded-full" style={{ background: s.fill }} />
-            {s.label}
+            {t(s.labelKey)}
           </span>
         ))}
         {krwMax > 0 && (
@@ -495,7 +514,7 @@ function RegionMap({
               className="inline-block w-3 h-3 rounded-full"
               style={{ background: 'rgba(20,23,28,0.14)', border: '1px solid rgba(20,23,28,0.25)' }}
             />
-            버블 = 시장규모
+            {t('rdtl.map.bubbleLegend')}
           </span>
         )}
       </div>
@@ -504,18 +523,20 @@ function RegionMap({
 }
 
 function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
+  const t = useT()
+  const lang = useLang()
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
       <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
-        진출 예정국 Quick-Win 순위
+        {t('rdtl.quickwin.title')}
       </h3>
       <table className="w-full text-left border-collapse font-body-sm text-body-sm">
         <thead>
           <tr className="bg-surface-light border-b border-surface-border">
             <Th>#</Th>
-            <Th>국가</Th>
-            <Th align="center">종합점수</Th>
-            <Th>판정</Th>
+            <Th>{t('rdtl.col.country')}</Th>
+            <Th align="center">{t('rdtl.quickwin.score')}</Th>
+            <Th>{t('rdtl.quickwin.verdict')}</Th>
           </tr>
         </thead>
         <tbody>
@@ -557,7 +578,7 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
                 </td>
                 <td className="p-sm">
                   <Badge
-                    text={r.quick_win ? '퀵윈' : r.quadrant || '-'}
+                    text={r.quick_win ? t('rdtl.quickwin.badge') : valueLabel('quadrant', r.quadrant, lang) || '-'}
                     bg={r.quick_win ? '#e9f3ee' : '#eef0f2'}
                     fg={r.quick_win ? '#4f8a6d' : '#3b3f46'}
                   />
@@ -574,17 +595,20 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
 function RegionInsight({
   es,
   baseline,
+  lang,
 }: {
   es: RegionDetailData['executive_summary']
   baseline?: string
+  lang: Lang
 }) {
+  const t = useT()
   // 기준국(top1·why_top1) 얘기는 제외 — AI 교차 인사이트만 본문으로.
   // 보고서 SummaryTab과 동일하게 기준국 언급 항목('기준국'·'baseline'·'(코드)')도 제외.
   const crossAll = (es?.ai_cross_insight?.insights ?? []).filter((i) => {
-    const ko = i.ko || i.en || ''
-    if (!ko) return false
-    if (/기준국|baseline/i.test(ko)) return false
-    if (baseline && ko.includes(`(${baseline})`)) return false
+    const text = pickLang(lang, i.ko, i.en) || i.ko || i.en || ''
+    if (!text) return false
+    if (/기준국|baseline/i.test(text)) return false
+    if (baseline && text.includes(`(${baseline})`)) return false
     return true
   })
   // 인사이트는 5줄 이내로 — 교차 인사이트 상위 5건만. 각 줄은 1행으로 클램프(line-clamp-1).
@@ -604,11 +628,11 @@ function RegionInsight({
           className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] flex-1"
           style={{ color: '#C8F051', letterSpacing: '.1em' }}
         >
-          권역 진단 · AI 교차 인사이트
+          {t('rdtl.insight.eyebrow')}
         </div>
         {hiddenCount > 0 && (
           <span className="font-label-sm text-label-sm whitespace-nowrap" style={{ color: 'rgba(255,255,255,.55)' }}>
-            +{hiddenCount}건 (보고서)
+            {t('rdtl.insight.hidden').replace('{n}', String(hiddenCount))}
           </span>
         )}
       </div>
@@ -620,20 +644,23 @@ function RegionInsight({
           className="w-6 h-6 shrink-0 object-contain"
         />
         <h3 className="text-[clamp(18.7px,calc(16.5px_+_0.611vw),25.3px)] font-bold leading-none text-white m-0">
-          권역 인사이트
+          {t('rdtl.insight.title')}
         </h3>
       </div>
       <div className="flex flex-col gap-sm [&_strong]:text-white">
-        {cross.map((i, idx) => (
-          <p
-            key={idx}
-            className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0 line-clamp-1"
-            style={{ color: 'rgba(255,255,255,.9)' }}
-            title={(i.ko || i.en)!.trim()}
-          >
-            {(i.ko || i.en)!.trim()}
-          </p>
-        ))}
+        {cross.map((i, idx) => {
+          const txt = (pickLang(lang, i.ko, i.en) || i.ko || i.en || '').trim()
+          return (
+            <p
+              key={idx}
+              className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0 line-clamp-1"
+              style={{ color: 'rgba(255,255,255,.9)' }}
+              title={txt}
+            >
+              {txt}
+            </p>
+          )
+        })}
       </div>
     </div>
   )

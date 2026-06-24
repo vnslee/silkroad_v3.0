@@ -1,6 +1,9 @@
 // 매력도 탭 — 비즈니스 매력도 순위 / 항목 기여분(스택 막대) / 국가별 산식.
 import type { RegionReportData, RegionAttrCountry } from '../types'
 import { countryKo, Flag, scoreBarColor, normBarColor, SourcePill } from './shared'
+import { useT } from '../../../i18n/dict'
+import { useLang } from '../../../i18n/locale'
+import type { Lang } from '../../../store'
 
 // 항목(축)별 스택 막대 색 — 7개 항목이 서로 또렷이 구분되도록 색상환을 넓게 배치
 // (기존엔 4개가 동일 #2f6be0이라 구분 불가). 보고서 톤(블루 베이스 + 앰버 포인트) 유지.
@@ -14,17 +17,25 @@ const AXIS_COLORS: Record<string, string> = {
   경쟁강도: '#8159c9', // 퍼플
 }
 
+// 국가명 표시 — en이면 country_name(영문) 우선, 없으면 코드. ko면 한글 매핑.
+function nameOf(lang: Lang, code: string, nameEn?: string): string {
+  if (lang === 'en') return nameEn ?? code
+  return countryKo(code, nameEn)
+}
+
 export function AttractivenessTab({ data }: { data: RegionReportData }) {
   const at = data.tabs.tab_2_1_attractiveness
   const axisOrder = Object.keys(at.weights)
   const weightsNote = axisOrder.map((k) => `${k} ${at.weights[k]}`).join(', ')
+  const t = useT()
+  const lang = useLang()
 
   return (
     <section className="flex flex-col gap-xl">
       {/* 순위 막대 */}
       <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-lg shadow-[0_4px_8px_rgba(20,23,28,0.04)]">
         <div className="flex items-center gap-sm mb-md border-b border-surface-border pb-sm">
-          <h2 className="font-headline-md text-headline-md text-primary m-0">비즈니스 매력도 순위</h2>
+          <h2 className="font-headline-md text-headline-md text-primary m-0">{t('rattr.bizRank')}</h2>
           <SourcePill flag="CALC" suffix="· ranking · 0~100" />
         </div>
         <div className="flex flex-col gap-sm">
@@ -33,7 +44,7 @@ export function AttractivenessTab({ data }: { data: RegionReportData }) {
               <div className="col-span-3 flex items-center gap-xs">
                 <span className="font-label-sm text-label-sm text-text-secondary w-5 text-right">#{r.rank}</span>
                 <Flag code={r.country} />
-                <span className="font-label-md text-label-md text-primary">{countryKo(r.country)}</span>
+                <span className="font-label-md text-label-md text-primary">{nameOf(lang, r.country)}</span>
               </div>
               <div className="col-span-7">
                 <div className="w-full h-4 bg-surface-container rounded-full overflow-hidden">
@@ -50,7 +61,7 @@ export function AttractivenessTab({ data }: { data: RegionReportData }) {
       <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-lg shadow-[0_4px_8px_rgba(20,23,28,0.04)]">
         <div className="flex items-center justify-between mb-md border-b border-surface-border pb-sm flex-wrap gap-sm">
           <div className="flex items-center gap-sm">
-            <h2 className="font-headline-md text-headline-md text-primary m-0">항목 기여분</h2>
+            <h2 className="font-headline-md text-headline-md text-primary m-0">{t('rattr.contribution')}</h2>
             <SourcePill flag="CALC" suffix="· composition" />
           </div>
           <div className="flex flex-wrap gap-md">
@@ -75,7 +86,7 @@ export function AttractivenessTab({ data }: { data: RegionReportData }) {
               <div key={c.country} className="grid grid-cols-12 items-center gap-sm">
                 <div className="col-span-3 flex items-center gap-xs">
                   <Flag code={c.country} />
-                  <span className="font-label-md text-label-md text-primary">{countryKo(c.country, c.country_name)}</span>
+                  <span className="font-label-md text-label-md text-primary">{nameOf(lang, c.country, c.country_name)}</span>
                 </div>
                 <div className="col-span-7">
                   <div className="w-full h-4 bg-surface-container rounded overflow-hidden flex">
@@ -98,17 +109,17 @@ export function AttractivenessTab({ data }: { data: RegionReportData }) {
             )
           })}
         </div>
-        <p className="mt-md text-label-sm text-text-secondary">가중치: {weightsNote}</p>
+        <p className="mt-md text-label-sm text-text-secondary">{t('rattr.weight')}: {weightsNote}</p>
       </div>
 
       {/* 국가별 산식 */}
       <div>
-        <h3 className="font-label-md text-label-md uppercase tracking-wider text-text-secondary mb-sm">국가별 점수 산식</h3>
+        <h3 className="font-label-md text-label-md uppercase tracking-wider text-text-secondary mb-sm">{t('rattr.scoreFormula')}</h3>
         <div className="flex flex-col gap-sm">
           {[...at.countries]
             .sort((a, b) => b.attractiveness_score - a.attractiveness_score)
             .map((c) => (
-              <CountryFormula key={c.country} country={c} axisOrder={axisOrder} />
+              <CountryFormula key={c.country} country={c} axisOrder={axisOrder} lang={lang} />
             ))}
         </div>
       </div>
@@ -116,7 +127,8 @@ export function AttractivenessTab({ data }: { data: RegionReportData }) {
   )
 }
 
-function CountryFormula({ country, axisOrder }: { country: RegionAttrCountry; axisOrder: string[] }) {
+function CountryFormula({ country, axisOrder, lang }: { country: RegionAttrCountry; axisOrder: string[]; lang: Lang }) {
+  const t = useT()
   return (
     <details className="bg-surface-container-lowest border border-surface-border rounded-lg shadow-[0_2px_4px_rgba(20,23,28,0.04)] group">
       <summary className="cursor-pointer list-none px-md py-sm flex items-center gap-sm hover:bg-surface-light rounded-lg">
@@ -125,13 +137,13 @@ function CountryFormula({ country, axisOrder }: { country: RegionAttrCountry; ax
         </span>
         <Flag code={country.country} />
         <span className="font-label-md text-label-md text-primary">
-          {countryKo(country.country, country.country_name)} <span className="text-text-secondary font-normal">({country.country_name})</span>
+          {nameOf(lang, country.country, country.country_name)} <span className="text-text-secondary font-normal">({country.country_name})</span>
         </span>
         <span className="text-2xl font-bold ml-xs" style={{ color: scoreBarColor(country.attractiveness_score) }}>
           {country.attractiveness_score}
         </span>
         <span className="text-label-sm text-text-secondary flex-1">/100 — 항목별 정규화×가중치 합산</span>
-        <span className="font-label-sm text-label-sm text-secondary">산식 보기</span>
+        <span className="font-label-sm text-label-sm text-secondary">{t('rattr.viewFormula')}</span>
       </summary>
       <div className="px-md pb-md pt-xs">
         <div className="bg-surface-light border border-surface-border rounded-md p-sm mb-sm font-body-sm text-on-surface-variant">
@@ -149,11 +161,11 @@ function CountryFormula({ country, axisOrder }: { country: RegionAttrCountry; ax
                     <span className="font-label-md text-label-md text-primary">{axis}</span>
                     {ctr.reverse ? (
                       <span className="px-[6px] py-[1px] rounded text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold" style={{ background: '#f7e4e0', color: '#c0533f' }}>
-                        高=惡 역점수
+                        {t('rattr.reverseScore')}
                       </span>
                     ) : (
                       <span className="px-[6px] py-[1px] rounded text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold" style={{ background: '#e9f3ee', color: '#4f8a6d' }}>
-                        高=好 정점수
+                        {t('rattr.normalScore')}
                       </span>
                     )}
                     <span className="px-[6px] py-[1px] rounded text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold" style={{ background: '#eef0f2', color: '#3a4048' }}>
@@ -161,27 +173,27 @@ function CountryFormula({ country, axisOrder }: { country: RegionAttrCountry; ax
                     </span>
                     <SourcePill flag="EXT" />
                   </div>
-                  <div className="text-label-sm text-text-secondary mt-xs">조사항목: {ctr.source_item}</div>
+                  <div className="text-label-sm text-text-secondary mt-xs">{t('rattr.surveyItem')}: {ctr.source_item}</div>
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-label-sm text-text-secondary">기여</div>
+                  <div className="text-label-sm text-text-secondary">{t('rattr.contributionCol')}</div>
                   <div className="font-semibold text-primary">{ctr.contribution}</div>
                 </div>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-sm text-body-sm">
                 <div>
-                  <div className="text-label-sm text-text-secondary">조사값</div>
+                  <div className="text-label-sm text-text-secondary">{t('rattr.surveyValue')}</div>
                   <div className="text-primary font-medium">{ctr.raw_value}</div>
                 </div>
                 <div>
-                  <div className="text-label-sm text-text-secondary">정규화 (0~100)</div>
+                  <div className="text-label-sm text-text-secondary">{t('rattr.normalized')}</div>
                   <div className="text-primary font-medium">{ctr.normalized}</div>
                   <div className="w-full h-2 bg-surface-container rounded-full overflow-hidden mt-xs">
                     <div className="h-full rounded-full" style={{ width: `${ctr.normalized}%`, background: normBarColor(ctr.normalized) }} />
                   </div>
                 </div>
                 <div>
-                  <div className="text-label-sm text-text-secondary">유효 가중치</div>
+                  <div className="text-label-sm text-text-secondary">{t('rattr.effectiveWeight')}</div>
                   <div className="text-primary font-medium">
                     {ctr.weight} × {ctr.tier_multiplier} = <strong>{ctr.effective_weight}</strong>
                   </div>

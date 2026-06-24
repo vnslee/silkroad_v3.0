@@ -2,6 +2,7 @@
 // 화면 컴포넌트는 모드 무지(Q2=A); 컨테이너만 사이즈/노출/외곽 크롬 결정.
 // 고정 높이를 줘서 자식의 h-full(iframe·flex)이 0으로 접히지 않게 한다. Esc·포커스 트랩(AR-3).
 import { useEffect, useRef } from 'react'
+import { useT } from '../../i18n/dict'
 
 interface Props {
   onClose: () => void
@@ -10,10 +11,13 @@ interface Props {
   /** 태그 배지 배경색 클래스(기본 bg-primary). */
   tagClass?: string
   title?: string
+  /** 상단 스트립 우측(닫기 버튼 앞)에 붙는 추가 요소(예: 룰셋 화면의 한/영 토글). */
+  headerExtra?: React.ReactNode
   children: React.ReactNode
 }
 
-export function PopupContainer({ onClose, tag, tagClass = 'bg-primary', title, children }: Props) {
+export function PopupContainer({ onClose, tag, tagClass = 'bg-primary', title, headerExtra, children }: Props) {
+  const t = useT()
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -57,10 +61,11 @@ export function PopupContainer({ onClose, tag, tagClass = 'bg-primary', title, c
             )}
           </div>
           <div className="flex items-center gap-sm">
+            {headerExtra}
             <button
               type="button"
               onClick={onClose}
-              aria-label="닫기"
+              aria-label={t('shell.closeAria')}
               className="flex h-8 w-8 items-center justify-center rounded-lg text-text-secondary transition-colors hover:bg-surface-container"
             >
               <span className="text-[17px] leading-none">✕</span>

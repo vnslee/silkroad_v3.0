@@ -1,6 +1,9 @@
 // 킬스위치 탭 — 게이트 × 국가 매트릭스. 진출 형태(tier) 4단계 분류 + 게이트 PASS/FLAG/FAIL.
 import type { RegionKillswitchCountry, RegionReportData } from '../types'
 import { countryKo, Flag, SourcePill } from './shared'
+import { useT } from '../../../i18n/dict'
+import { useLang, pickLang } from '../../../i18n/locale'
+import type { Lang } from '../../../store'
 
 // 진출 형태별 색상(배경, 글자) — region_report_renderer._KS_TIER_STYLE 이식.
 const TIER_STYLE: Record<string, { bg: string; fg: string }> = {
@@ -27,17 +30,20 @@ function gateStyle(status: string): { bg: string; fg: string; icon: string } {
 export function KillswitchTab({ data }: { data: RegionReportData }) {
   const ks = data.tabs.tab_2_0_killswitch
   const gates = ks.gates
+  const t = useT()
+  const lang = useLang()
+  const ctrLabel = t('rks.countries')
 
   // tier_summary가 있으면 분포 문구(JV 필수 N · JV 권고 M …), 없으면 통과/탈락 폴백.
   const summary =
     ks.tier_summary && ks.tier_summary.length > 0
-      ? ks.tier_summary.map((t) => `${t.label.ko} ${t.count}개국`).join(' · ')
+      ? ks.tier_summary.map((s) => `${pickLang(lang, s.label.ko, s.label.en)} ${s.count}${ctrLabel}`).join(' · ')
       : null
 
   return (
     <section className="flex flex-col gap-lg">
       <div className="flex items-center gap-sm">
-        <h2 className="font-headline-md text-headline-md text-primary m-0">킬스위치 매트릭스</h2>
+        <h2 className="font-headline-md text-headline-md text-primary m-0">{t('rks.matrix')}</h2>
         <SourcePill flag="EXT" />
         <SourcePill flag="CALC" suffix="· status_matrix" />
       </div>
@@ -55,22 +61,30 @@ export function KillswitchTab({ data }: { data: RegionReportData }) {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b-2 border-surface-border">
-              <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">국가</th>
+              <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">{t('rks.col.country')}</th>
               {gates.map((g) => (
                 <th key={g} className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase whitespace-nowrap">
                   {g}
                 </th>
               ))}
-              <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase whitespace-nowrap">진출 형태</th>
+              <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase whitespace-nowrap">{t('rks.col.entryForm')}</th>
             </tr>
           </thead>
           <tbody className="font-body-sm text-body-sm">
-            {ks.countries.map((c) => (
-              <tr key={c.country} className="border-b border-surface-border">
+            {ks.countries.map((c) => {
+              // 게이트 중 PASS가 아닌 항목(FLAG·FAIL·UNKNOWN 등)이 하나라도 있으면 행에 음영.
+              const hasNonPass = gates.some((g) => (c.gates[g]?.status ?? 'PASS') !== 'PASS')
+              return (
+              <tr
+                key={c.country}
+                className="border-b border-surface-border"
+                style={hasNonPass ? { background: '#faf3f1' } : undefined}
+              >
                 <td className="py-sm px-sm font-medium text-primary whitespace-nowrap">
                   <span className="inline-flex items-center gap-xs">
                     <Flag code={c.country} />
-                    {countryKo(c.country, c.country_name)} <span className="text-text-secondary">({c.country_name})</span>
+                    {lang === 'en' ? c.country_name : countryKo(c.country, c.country_name)}{' '}
+                    <span className="text-text-secondary">({c.country_name})</span>
                   </span>
                 </td>
                 {gates.map((g) => {
@@ -82,10 +96,11 @@ export function KillswitchTab({ data }: { data: RegionReportData }) {
                   )
                 })}
                 <td className="py-sm px-sm whitespace-nowrap">
-                  <TierPill country={c} />
+                  <TierPill country={c} lang={lang} />
                 </td>
               </tr>
-            ))}
+              )
+            })}
           </tbody>
         </table>
       </div>
@@ -94,10 +109,11 @@ export function KillswitchTab({ data }: { data: RegionReportData }) {
 }
 
 // 진출 형태 pill — tier가 있으면 4단계 색상 라벨, 없으면(구버전) 통과/탈락 폴백.
-function TierPill({ country }: { country: RegionKillswitchCountry }) {
+function TierPill({ country, lang }: { country: RegionKillswitchCountry; lang: Lang }) {
+  const t = useT()
   if (country.tier) {
     const style = TIER_STYLE[country.tier] ?? { bg: '#eef0f2', fg: '#6b7280' }
-    const label = country.tier_label?.ko ?? country.tier
+    const label = country.tier_label ? pickLang(lang, country.tier_label.ko, country.tier_label.en) : country.tier
     return (
       <span
         className="px-2 py-[2px] rounded-md font-label-sm text-label-sm"
@@ -112,15 +128,16 @@ function TierPill({ country }: { country: RegionKillswitchCountry }) {
       className="px-2 py-[2px] rounded-md font-label-sm text-label-sm"
       style={country.pass ? { background: '#e9f3ee', color: '#4f8a6d' } : { background: '#f7e4e0', color: '#c0533f' }}
     >
-      {country.pass ? '통과' : '탈락'}
+      {country.pass ? t('rks.pass') : t('rks.fail')}
     </span>
   )
 }
 
 function GateBadge({ status }: { status: string }) {
+  const t = useT()
   const s = gateStyle(status)
   const text =
-    status === 'PASS' ? '○ PASS' : status === 'FLAG' ? '△ 주의' : status === 'FAIL' ? '✕ FAIL' : `${s.icon} ${status}`
+    status === 'PASS' ? '○ PASS' : status === 'FLAG' ? `△ ${t('rks.flag')}` : status === 'FAIL' ? '✕ FAIL' : `${s.icon} ${status}`
   return (
     <span
       className="px-2 py-[2px] rounded-md font-label-sm text-label-sm whitespace-nowrap"

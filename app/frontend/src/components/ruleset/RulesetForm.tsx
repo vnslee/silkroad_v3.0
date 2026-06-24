@@ -11,23 +11,50 @@ import type { RulesetPayload, RulesetSaveResult, RulesetVersionInfo } from '../.
 import { clamp, isSumOne, sumWeights } from './validation'
 import { SaveSuccessModal } from './SaveSuccessModal'
 import { Icon } from '../common/Icon'
+import { useT } from '../../i18n/dict'
 
-// 계수/임계 키 → 한글 라벨(없으면 키 그대로). 화면 가독성용.
-const LABELS: Record<string, string> = {
-  // report_blend
-  w_biz: '사업매력도 비중',
-  w_it: 'IT 준비도 비중',
-  // decision_thresholds
-  expansion_min_score: '확산 임계 (≥ → B시스템 확산)',
-  hq_build_min_score: '본사 구축 임계 (≥ → 자체구축)',
-  // tier_weights
-  tier1: 'Tier 1 · 최상위 출처',
-  tier2: 'Tier 2 · 신뢰 출처',
-  tier3: 'Tier 3 · 일반 출처',
-  tier4: 'Tier 4 · 보조 출처',
+// 항목 키 → dict 슬러그('rs.lbl.<slug>') 매핑. 영문 ID 키는 키==슬러그, 한글 데이터 키는
+// 별도 슬러그로 매핑한다(룰셋 JSON 키가 한글이라 영어 전환 시 번역 필요). 표에 안 보이는
+// 메타 키(_note 등)는 매핑하지 않아 자연히 키 그대로 — 화면에 노출되는 항목만 번역.
+const KEY_SLUG: Record<string, string> = {
+  // report_blend / decision_thresholds / tier_weights — 영문 ID 키(키==슬러그)
+  w_biz: 'w_biz',
+  w_it: 'w_it',
+  expansion_min_score: 'expansion_min_score',
+  hq_build_min_score: 'hq_build_min_score',
+  tier1: 'tier1',
+  tier2: 'tier2',
+  tier3: 'tier3',
+  tier4: 'tier4',
+  // biz_attractiveness
+  'GDP 성장률': 'gdp_growth',
+  자동차판매대수: 'car_sales',
+  자동차판매: 'car_sales',
+  '자동차 판매대수': 'car_sales',
+  시장규모: 'market_size',
+  '오토금융 성장률(CAGR)': 'autofin_cagr',
+  '금융 이용률': 'fin_penetration',
+  금융이용유형: 'fin_type',
+  경쟁강도: 'competition',
+  // it_readiness
+  '솔루션 유형': 'solution_type',
+  '디지털 채널 성숙도': 'digital_maturity',
+  '라이선스 종류': 'license_type',
+  데이터현지화: 'data_localization',
+  '차량회수 절차': 'repossession',
+  // similarity_item_weights
+  '구매 패턴(할부·리스 비중)': 'purchase_pattern',
+  '라이선스 체제(세그먼트별)': 'license_regime',
+  '데이터 현지화 의무': 'data_localization_duty',
+  '차량회수 절차 용이성': 'repossession_ease',
 }
 
-const lbl = (k: string) => LABELS[k] ?? k
+// 키 → 표시 라벨. dict에 슬러그가 있으면 번역, 없으면 키 그대로(화면 가독성용).
+type TFn = (key: string) => string
+const makeLbl = (t: TFn) => (k: string) => {
+  const slug = KEY_SLUG[k]
+  return slug ? t(`rs.lbl.${slug}`) : k
+}
 
 // 스택 바·바 채움색 — AISea 팔레트(잉크블랙 + 지역색 패밀리).
 const PALETTE = ['#14181C', '#2f6be0', '#34D399', '#FBBF24', '#FB7185', '#3a4048', '#92b4ff']
@@ -49,6 +76,8 @@ type WeightKey =
   | 'decision_thresholds'
 
 export default function RulesetForm() {
+  const t = useT()
+  const lbl = makeLbl(t)
   const [data, setData] = useState<RulesetPayload | null>(null)
   const [loadError, setLoadError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
@@ -75,9 +104,7 @@ export default function RulesetForm() {
         setData(d)
         setSelectedVersion(d.version ?? '')
       })
-      .catch((e) =>
-        alive && setLoadError(e instanceof ApiError ? e.message : '룰셋을 불러오지 못했습니다.'),
-      )
+      .catch((e) => alive && setLoadError(e instanceof ApiError ? e.message : t('rs.loadError')))
     refreshVersions()
     return () => {
       alive = false
@@ -105,7 +132,7 @@ export default function RulesetForm() {
       setData(loaded)
       setSelectedVersion(version)
     } catch (e) {
-      setSaveError(e instanceof ApiError ? e.message : `버전 v${version}을 불러오지 못했습니다.`)
+      setSaveError(e instanceof ApiError ? e.message : t('rs.versionLoadError').replace('{v}', version))
     }
   }
 
@@ -136,7 +163,7 @@ export default function RulesetForm() {
       setSelectedVersion(out.version)
       await refreshVersions() // 새 버전 스냅샷을 드롭다운에 반영
     } catch (e) {
-      setSaveError(e instanceof ApiError ? e.message : '저장에 실패했습니다.')
+      setSaveError(e instanceof ApiError ? e.message : t('rs.saveError'))
     } finally {
       setSaving(false)
     }
@@ -145,7 +172,7 @@ export default function RulesetForm() {
   if (loadError) {
     return (
       <div className="mx-auto max-w-4xl p-lg">
-        <h2 className="mb-md text-headline-lg text-on-surface">룰셋 설정</h2>
+        <h2 className="mb-md text-headline-lg text-on-surface">{t('rs.title')}</h2>
         <p className="rounded-md bg-error-container px-md py-sm text-body-md text-on-error-container">
           {loadError}
         </p>
@@ -156,7 +183,7 @@ export default function RulesetForm() {
     return (
       <div className="flex items-center gap-sm p-xl text-on-surface-variant">
         <Icon name="progress_activity" className="animate-spin text-[20px]" />
-        룰셋을 불러오는 중…
+        {t('rs.loading')}
       </div>
     )
   }
@@ -170,18 +197,19 @@ export default function RulesetForm() {
             <Icon name="tune" className="text-[24px]" />
           </span>
           <div>
-            <h2 className="text-headline-md font-bold text-on-surface">룰셋 설정</h2>
-            <p className="text-body-sm text-on-surface-variant">보고서 생성에 쓰이는 가중치·계수</p>
+            <h2 className="text-headline-md font-bold text-on-surface">{t('rs.title')}</h2>
+            <p className="text-body-sm text-on-surface-variant">{t('rs.subtitle')}</p>
           </div>
         </div>
         <div className="flex items-center gap-md">
+          {/* 한/영 토글은 상위 컨테이너 상단 스트립(headerExtra)에 둔다 — App.tsx ruleset 분기. */}
           <label className="flex items-center gap-sm text-body-sm text-on-surface-variant">
             <Icon name="history" className="text-[18px]" />
             <select
               className="rounded-md border border-surface-border bg-surface-container-lowest px-sm py-xs text-body-md text-on-surface focus:border-primary focus:outline-none"
               value={selectedVersion}
               onChange={(e) => onSelectVersion(e.target.value)}
-              aria-label="룰셋 버전 선택"
+              aria-label={t('rs.versionAria')}
             >
               {/* 현재 로드된 버전이 목록에 없을 수도 있어 안전하게 옵션 보강 */}
               {!versions.some((v) => v.version === selectedVersion) && selectedVersion && (
@@ -190,7 +218,7 @@ export default function RulesetForm() {
               {versions.map((v) => (
                 <option key={v.file} value={v.version}>
                   v{v.version}
-                  {v.is_latest ? ' (최신)' : ''}
+                  {v.is_latest ? t('rs.versionLatest') : ''}
                 </option>
               ))}
             </select>
@@ -201,7 +229,7 @@ export default function RulesetForm() {
             onClick={onSave}
           >
             <Icon name={saving ? 'progress_activity' : 'save'} className={`text-[18px] ${saving ? 'animate-spin' : ''}`} />
-            {saving ? '저장 중…' : '저장'}
+            {saving ? t('rs.saving') : t('rs.save')}
           </button>
         </div>
       </div>
@@ -209,14 +237,14 @@ export default function RulesetForm() {
       {invalidGroups.length > 0 && (
         <p className="mb-md flex items-center gap-sm rounded-md bg-error-container px-md py-sm text-body-sm text-on-error-container">
           <Icon name="error" className="text-[18px]" />
-          합이 100%가 아닌 가중치 그룹이 있어 저장할 수 없습니다. 각 그룹의 <strong>정규화</strong> 버튼으로 맞출 수 있습니다.
+          {t('rs.invalidGroups')}
         </p>
       )}
 
       {!isViewingLatest && (
         <p className="mb-md flex items-center gap-sm rounded-md bg-secondary-fixed px-md py-sm text-body-sm text-on-secondary-container">
           <Icon name="info" className="text-[18px]" />
-          과거 버전 <strong>v{selectedVersion}</strong>을 보고 있습니다. 저장하면 새 버전으로 기록됩니다.
+          {t('rs.pastVersion').replace('{v}', selectedVersion)}
         </p>
       )}
 
@@ -224,14 +252,12 @@ export default function RulesetForm() {
       <div className="grid grid-cols-1 gap-lg lg:grid-cols-2">
         {/* 좌열 — ① 점수 가중치 */}
         <section className="flex flex-col gap-lg">
-          <SectionLabel
-            no="①"
-            title="점수 가중치"
-            desc="각 그룹의 합이 100%(1.0)가 되어야 저장할 수 있습니다."
-          />
+          <SectionLabel no="①" title={t('rs.section1.title')} desc={t('rs.section1.desc')} />
           <WeightGroup
-            title="사업매력도 항목 가중치"
-            hint="매력도 점수 산식 항목 비중 (values.biz_attractiveness)"
+            t={t}
+            lbl={lbl}
+            title={t('rs.grp.biz.title')}
+            hint={t('rs.grp.biz.hint')}
             group="biz_attractiveness"
             values={data.biz_attractiveness}
             sumOne
@@ -239,8 +265,10 @@ export default function RulesetForm() {
             onReplace={setGroup}
           />
           <WeightGroup
-            title="IT 준비도 항목 가중치"
-            hint="IT 준비도 점수 산식 항목 비중 (values.it_readiness)"
+            t={t}
+            lbl={lbl}
+            title={t('rs.grp.it.title')}
+            hint={t('rs.grp.it.hint')}
             group="it_readiness"
             values={data.it_readiness}
             sumOne
@@ -248,8 +276,10 @@ export default function RulesetForm() {
             onReplace={setGroup}
           />
           <WeightGroup
-            title="보고서 종합 점수 혼합비"
-            hint="매력도 ↔ IT 종합 점수 가중 (values.report_blend)"
+            t={t}
+            lbl={lbl}
+            title={t('rs.grp.blend.title')}
+            hint={t('rs.grp.blend.hint')}
             group="report_blend"
             values={data.report_blend}
             sumOne
@@ -257,8 +287,10 @@ export default function RulesetForm() {
             onReplace={setGroup}
           />
           <WeightGroup
-            title="유사도 항목 가중치"
-            hint="종합 유사도 산정 항목 비중 (similarity_item_weights)"
+            t={t}
+            lbl={lbl}
+            title={t('rs.grp.sim.title')}
+            hint={t('rs.grp.sim.hint')}
             group="similarity_item_weights"
             values={data.similarity_item_weights}
             axes={data.similarity_item_axes}
@@ -270,10 +302,12 @@ export default function RulesetForm() {
 
         {/* 우열 — ② 임계값·계수 */}
         <section className="flex flex-col gap-lg">
-          <SectionLabel no="②" title="임계값·계수" desc="출처 신뢰 배수와 시스템 전략 분기 기준값." />
+          <SectionLabel no="②" title={t('rs.section2.title')} desc={t('rs.section2.desc')} />
           <WeightGroup
-            title="출처 신뢰 계수 (Tier)"
-            hint="출처 신뢰도별 점수 가중 배수 (0~1.0). Tier 1은 1.0 고정 권장"
+            t={t}
+            lbl={lbl}
+            title={t('rs.grp.tier.title')}
+            hint={t('rs.grp.tier.hint')}
             group="tier_weights"
             values={data.tier_weights}
             min={0}
@@ -284,8 +318,10 @@ export default function RulesetForm() {
             onReplace={setGroup}
           />
           <WeightGroup
-            title="시스템 결정 임계값"
-            hint="유사도 기반 시스템 전략 분기 (0~100점)"
+            t={t}
+            lbl={lbl}
+            title={t('rs.grp.decision.title')}
+            hint={t('rs.grp.decision.hint')}
             group="decision_thresholds"
             values={data.decision_thresholds}
             min={0}
@@ -326,6 +362,8 @@ function SectionLabel({ no, title, desc }: { no: string; title: string; desc: st
 
 // ── 가중치/계수 그룹 카드 ─────────────────────────────────────────
 function WeightGroup({
+  t,
+  lbl,
   title,
   hint,
   group,
@@ -340,6 +378,8 @@ function WeightGroup({
   onReplace,
   hideKeys,
 }: {
+  t: TFn
+  lbl: (k: string) => string
   title: string
   hint?: string
   group: WeightKey
@@ -391,17 +431,17 @@ function WeightGroup({
               }`}
             >
               <Icon name={valid ? 'check_circle' : 'error'} className="text-[16px]" />
-              합 {pct(total)}
+              {t('rs.sumBadge').replace('{pct}', pct(total))}
             </span>
             <button
               type="button"
               onClick={normalize}
               disabled={valid}
               className="flex items-center gap-xs rounded-full border border-surface-border px-sm py-xs text-label-md text-on-surface-variant transition hover:bg-surface-container disabled:cursor-not-allowed disabled:opacity-40"
-              title="합이 100%가 되도록 비율을 자동 보정합니다"
+              title={t('rs.normalizeTitle')}
             >
               <Icon name="balance" className="text-[16px]" />
-              정규화
+              {t('rs.normalize')}
             </button>
           </div>
         )}
@@ -425,6 +465,7 @@ function WeightGroup({
         {keys.map((k, i) => (
           <WeightRow
             key={k}
+            valueAria={t('rs.valueAria')}
             label={lbl(k)}
             sub={axes?.[k]}
             value={values[k]}
@@ -456,6 +497,7 @@ function WeightRow({
   unit,
   onChange,
   ariaLabel,
+  valueAria,
 }: {
   label: string
   sub?: string
@@ -468,6 +510,7 @@ function WeightRow({
   unit?: string
   onChange: (value: number) => void
   ariaLabel: string
+  valueAria: string
 }) {
   const fillPct = max > min ? ((value - min) / (max - min)) * 100 : 0
 
@@ -525,7 +568,7 @@ function WeightRow({
           value={percent ? display : Math.round(value * 100) / 100}
           onChange={(e) => onInput(Number(e.target.value))}
           className="w-14 rounded border border-surface-border bg-surface-container-lowest px-xs py-0.5 text-right text-body-sm tabular-nums text-on-surface focus:border-primary focus:outline-none"
-          aria-label={`${ariaLabel} 값`}
+          aria-label={`${ariaLabel} ${valueAria}`}
         />
         <span className="w-6 text-left text-label-sm text-on-surface-variant">
           {percent ? '%' : unit ?? ''}

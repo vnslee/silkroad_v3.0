@@ -13,6 +13,8 @@ import { HeaderSelect, type SelectOption } from '../common/HeaderSelect'
 import { HeaderEmblem } from '../common/HeaderEmblem'
 import { MicroExpander } from '../ui/micro-expander'
 import { useT } from '../../i18n/dict'
+import { LangProvider } from '../../i18n/locale'
+import { useStore } from '../../store'
 import type { EntryMode } from '../../app/route'
 import { CountryReport } from '../reports/CountryReport'
 import { RegionReport } from '../reports/RegionReport'
@@ -48,6 +50,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   // 인쇄 모드 — PDF 버튼을 누르면 모든 탭을 펼쳐 렌더한 뒤 브라우저 인쇄를 띄운다.
   const [printMode, setPrintMode] = useState(false)
   const t = useT()
+  const lang = useStore((s) => s.lang)
 
   // PDF — 서버 변환(weasyprint) 대신 화면(React 보고서)을 브라우저 인쇄로 저장.
   //   ① printMode=true → 모든 탭을 펼친 보고서를 Portal로 body 직속(#print-root)에 렌더
@@ -173,7 +176,9 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   const meta = catalog.find((c) => c.code === code)
   const isCountry = domain === 'country'
   const name = meta?.name ?? code
-  const title = isCountry ? `${name} 진출 진단 보고서` : `${name} 퀵윈 분석`
+  const title = isCountry
+    ? t('report.title.country').replace('{name}', name)
+    : t('report.title.region').replace('{name}', name)
 
   // 진출여부 배지(참조 헤더의 미진출/진출/기준국 배지) — 진출형태(단독법인/JV)는 기진출국만 존재.
   const entered = isCountry ? !!meta?.entryMode : meta?.hasReport
@@ -346,10 +351,12 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
           </div>
         )}
         {reportData && !loading && (
-          <FxProvider fx={fx}>
-            {domain === 'country' && <CountryReport data={reportData as CountryReportData} />}
-            {domain === 'region' && <RegionReport data={reportData as RegionReportData} />}
-          </FxProvider>
+          <LangProvider value={lang}>
+            <FxProvider fx={fx}>
+              {domain === 'country' && <CountryReport data={reportData as CountryReportData} />}
+              {domain === 'region' && <RegionReport data={reportData as RegionReportData} />}
+            </FxProvider>
+          </LangProvider>
         )}
       </div>
 
@@ -358,15 +365,17 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
       {printMode &&
         reportData &&
         createPortal(
-          <FxProvider fx={fx}>
-            <div className="content-scale">
-            {domain === 'country' ? (
-              <CountryReport data={reportData as CountryReportData} printMode />
-            ) : (
-              <RegionReport data={reportData as RegionReportData} printMode />
-            )}
-            </div>
-          </FxProvider>,
+          <LangProvider value={lang}>
+            <FxProvider fx={fx}>
+              <div className="content-scale">
+              {domain === 'country' ? (
+                <CountryReport data={reportData as CountryReportData} printMode />
+              ) : (
+                <RegionReport data={reportData as RegionReportData} printMode />
+              )}
+              </div>
+            </FxProvider>
+          </LangProvider>,
           getPrintRoot(),
         )}
     </div>

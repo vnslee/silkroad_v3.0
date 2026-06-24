@@ -3,6 +3,7 @@
 // 디자인 source of truth: mockup 03_country_report.html (Kinetic Enterprise 팔레트).
 import { useState } from 'react'
 import type { CountryReportData } from './types'
+import { useT } from '../../i18n/dict'
 import { SummaryTab } from './country/SummaryTab'
 import { SimilarityTab } from './country/SimilarityTab'
 import { DecisionTreeTab } from './country/DecisionTreeTab'
@@ -17,11 +18,11 @@ interface Props {
 }
 
 const TABS = [
-  { id: 'summary', label: '요약' },
-  { id: 'similarity', label: '유사도 점수' },
-  { id: 'decision', label: '시스템 결정 트리' },
-  { id: 'tco', label: 'TCO · 구독료' },
-  { id: 'market', label: '시장·경쟁 배경' },
+  { id: 'summary', labelKey: 'rpt.tab.summary' },
+  { id: 'similarity', labelKey: 'rpt.tab.similarity' },
+  { id: 'decision', labelKey: 'rpt.tab.decision' },
+  { id: 'tco', labelKey: 'rpt.tab.tco' },
+  { id: 'market', labelKey: 'rpt.tab.market' },
 ] as const
 
 // 탭 id → 콘텐츠 컴포넌트(인쇄 시 전체 펼침에 재사용).
@@ -42,6 +43,7 @@ function TabContent({ id, data }: { id: (typeof TABS)[number]['id']; data: Count
 
 export function CountryReport({ data, className = '', printMode = false }: Props) {
   const [activeTab, setActiveTab] = useState<(typeof TABS)[number]['id']>('summary')
+  const t = useT()
 
   // 인쇄 모드 — 모든 탭을 섹션 제목과 함께 세로로 펼쳐 렌더(탭별 새 페이지는 print CSS가 처리).
   if (printMode) {
@@ -51,7 +53,7 @@ export function CountryReport({ data, className = '', printMode = false }: Props
           {TABS.map((tab) => (
             <section key={tab.id} className="report-print-section">
               <h2 className="report-print-heading font-headline-md text-headline-md text-primary mb-md">
-                {tab.label}
+                {t(tab.labelKey)}
               </h2>
               <TabContent id={tab.id} data={data} />
             </section>
@@ -66,7 +68,7 @@ export function CountryReport({ data, className = '', printMode = false }: Props
       <div className="max-w-[min(92vw,1920px)] mx-auto">
         {/* 탭 네비게이션 (sticky 칩) */}
         <div className="bg-surface-container-lowest border border-surface-border rounded-xl px-sm py-[6px] mb-xl sticky top-0 z-chrome card-shadow">
-          <div className="flex gap-xs overflow-x-auto" role="tablist" aria-label="보고서 섹션">
+          <div className="flex gap-xs overflow-x-auto" role="tablist" aria-label={t('rpt.sections')}>
             {TABS.map((tab) => {
               const active = activeTab === tab.id
               return (
@@ -80,7 +82,7 @@ export function CountryReport({ data, className = '', printMode = false }: Props
                     active ? 'bg-primary text-on-primary' : 'text-text-secondary hover:bg-surface-container'
                   }`}
                 >
-                  {tab.label}
+                  {t(tab.labelKey)}
                 </button>
               )
             })}

@@ -3,18 +3,24 @@ import type { CountryReportData } from '../types'
 import { DecisionTreeSvg, DecisionSidePanel, Panel, intComma, locText, fixed } from './shared'
 import { Money, useFx } from '../Money'
 import { krwCompact } from '../../../utils/currency'
+import { useT } from '../../../i18n/dict'
+import { useLang } from '../../../i18n/locale'
 
 export function SummaryTab({ data }: { data: CountryReportData }) {
   const sim = data.tabs.tab_1_1_similarity
   const dec = data.tabs.tab_1_2_decision
   const tco = data.tabs.tab_1_3_tco
   const score = sim.overall_score
-  const countryKo = data.country_meta.country_ko
+  const t = useT()
+  const lang = useLang()
+  // 영어 모드면 국가명도 영문(country)으로 — 한국어면 한글명.
+  const countryKo = lang === 'en' ? data.country_meta.country : data.country_meta.country_ko
   const countryCode = data.target.country
   const baseCode = data.target.base_country
-  // 베이스라인 국가 한글명 — 데이터엔 코드만 있어 GB→영국 등 간이 매핑.
-  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아' }
-  const baseKo = baseKoMap[baseCode] ?? baseCode
+  // 베이스라인 국가명 — 데이터엔 코드만 있어 간이 매핑(ko/en).
+  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아', AU: '호주', CL: '칠레' }
+  const baseEnMap: Record<string, string> = { GB: 'UK', US: 'USA', DE: 'Germany', FR: 'France', IT: 'Italy', AU: 'Australia', CL: 'Chile' }
+  const baseKo = (lang === 'en' ? baseEnMap[baseCode] : baseKoMap[baseCode]) ?? baseCode
   const flag = countryCode.toLowerCase()
 
   // 기준국·이미 진출(운영중)한 국가는 TCO/구축 산식이 없어 build_months 등이 null → KPI 분기.
@@ -31,23 +37,23 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
   // APAC(apac_dual)은 외부솔루션·자체구축을 양쪽 동등 제시 — 분기 없음.
   const decisionLabel =
     dec.decision === 'apac_dual'
-      ? '외부솔루션 · 자체구축(양쪽 검토)'
+      ? t('sum.dec.apac')
       : dec.decision === 'baseline_system_expansion'
-        ? `권역 내 확산 (${baseKo} 시스템)`
+        ? t('sum.dec.expansion').replace('{base}', baseKo)
         : dec.decision === 'hq_build'
-          ? '본사 자체구축'
+          ? t('sum.dec.hq')
           : dec.decision === 'external_solution'
-            ? '외부솔루션'
-            : `권역 내 확산 (${baseKo} 시스템)` // 폴백(구버전 데이터)
+            ? t('sum.dec.ext')
+            : t('sum.dec.expansion').replace('{base}', baseKo) // 폴백(구버전 데이터)
   // 우측 패널 제목 — 결정별로 바뀐다(구독료/본사구축/외부솔루션).
   const sidePanelTitle =
     dec.decision === 'apac_dual'
-      ? '해당국 외부솔루션'
+      ? t('sum.side.apac')
       : dec.decision === 'external_solution'
-        ? '추천 외부솔루션'
+        ? t('sum.side.ext')
         : dec.decision === 'hq_build'
-          ? '본사 구축 예상 비용'
-          : '구독료 구간표'
+          ? t('sum.side.hq')
+          : t('sum.side.sub')
 
   const sub = tco.subscription_details ?? ({} as typeof tco.subscription_details)
   const buildMonths = tco.build_months ?? 0
@@ -60,14 +66,14 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
     18
   const monthsSaved = baseMonths - buildMonths
   const monthsSavedPct = baseMonths ? Math.round((monthsSaved / baseMonths) * 100) : 0
-  const recommendationText = locText(dec.recommendation)
+  const recommendationText = locText(dec.recommendation, lang)
 
   // 워터폴 KPI: 구축 / 구독료(10Y) / 유지보수(10Y) / 운영비(10Y) / 총TCO
   const wf = [
-    { label: '구축비', value: tco.build_cost },
-    { label: '구독료(10Y)', value: tco.annual_subscription * 10 },
-    { label: '유지보수(10Y)', value: tco.annual_maintenance * 10 },
-    { label: '운영비(10Y)', value: tco.operations_10y },
+    { label: t('sum.wf.build'), value: tco.build_cost },
+    { label: t('sum.wf.sub'), value: tco.annual_subscription * 10 },
+    { label: t('sum.wf.maint'), value: tco.annual_maintenance * 10 },
+    { label: t('sum.wf.ops'), value: tco.operations_10y },
   ]
   const total = tco.total_tco_10y
 
@@ -79,7 +85,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
         style={{ background: 'linear-gradient(120deg,#14181C,#1f262d)' }}
       >
         <div className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mb-sm" style={{ color: '#C8F051', letterSpacing: '.1em' }}>
-          국가 진단 보고서 · IT 유사도
+          {t('sum.hero.eyebrow')}
         </div>
         <div className="flex items-start justify-between gap-lg flex-wrap">
           <div className="flex-1 min-w-0" style={{ minWidth: 280 }}>
@@ -95,27 +101,26 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
             </div>
             <div className="flex flex-col gap-sm">
               <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
-                <strong className="text-white">{countryKo}({countryCode})</strong>의 종합 유사도는 베이스라인{' '}
-                <strong className="text-white">{baseKo}({baseCode})</strong> 대비{' '}
-                <strong className="text-white">{fixed(score)}점/100</strong>으로, 이에 따라 시스템 결정은{' '}
-                <strong className="text-white">{decisionLabel}</strong>(으)로 권고됩니다.
+                {t('sum.hero.line1')
+                  .replace('{country}', `${countryKo}(${countryCode})`)
+                  .replace('{base}', `${baseKo}(${baseCode})`)
+                  .replace('{score}', fixed(score))
+                  .replace('{decision}', decisionLabel)}
               </p>
               {isBaselineDeployed ? (
                 <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
-                  {isBaselineSelf
-                    ? `${countryKo}(${countryCode})은(는) 이미 시스템이 배포된 권역 기준국으로, 신규 구축·TCO 산정 대상이 아닙니다.`
-                    : `${countryKo}(${countryCode})은(는) 이미 진출(운영중)한 국가로, 신규 구축·TCO 산정 대상이 아닙니다.`}
+                  {(isBaselineSelf ? t('sum.hero.baselineSelf') : t('sum.hero.deployed')).replace('{country}', `${countryKo}(${countryCode})`)}
                 </p>
               ) : (
                 <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
-                  예상 10년 TCO는 <strong className="text-white"><Money value={total} currency={tco.currency} inline subClassName="text-white/70" /></strong>이며, 구축 기간은 약{' '}
-                  <strong className="text-white">{fixed(tco.build_months)}개월</strong>, 예상 신규 계약은{' '}
-                  <strong className="text-white">{intComma(tco.expected_contracts)}건/년</strong>으로 추정됩니다.
+                  {t('sum.hero.tcoPre')}{' '}
+                  <strong className="text-white"><Money value={total} currency={tco.currency} inline subClassName="text-white/70" /></strong>
+                  {t('sum.hero.tcoMid').replace('{months}', fixed(tco.build_months)).replace('{contracts}', intComma(tco.expected_contracts))}
                 </p>
               )}
               {recommendationText && (
                 <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
-                  결론적으로, {recommendationText}을(를) 권고합니다.
+                  {t('sum.hero.conclusion').replace('{rec}', recommendationText)}
                 </p>
               )}
             </div>
@@ -125,7 +130,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
               {fixed(score)}
             </div>
             <div className="font-body-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mt-1" style={{ color: '#AEB6C4' }}>
-              IT 유사도 점수
+              {t('sum.itSimScore')}
             </div>
             <div
               className="mt-sm rounded-[9px] px-[14px] py-[6px] font-body-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] font-semibold inline-block"
@@ -141,7 +146,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between mb-md">
-            <span className="font-headline-md text-headline-md text-primary tracking-tight">유사도 점수</span>
+            <span className="font-headline-md text-headline-md text-primary tracking-tight">{t('sum.kpi.simScore')}</span>
           </div>
           <div className="flex-1 flex items-center justify-center">
             <ScoreDonut score={score} />
@@ -150,11 +155,11 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
 
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between mb-md">
-            <span className="font-headline-md text-headline-md text-primary tracking-tight">예상 10년 TCO</span>
+            <span className="font-headline-md text-headline-md text-primary tracking-tight">{t('sum.kpi.tco')}</span>
           </div>
           <div className="flex-1 flex items-center">
             {isBaselineDeployed ? (
-              <p className="font-body-sm text-body-sm text-text-secondary">{isBaselineSelf ? '기준국' : '운영국가'} — 신규 TCO 산정 대상 아님</p>
+              <p className="font-body-sm text-body-sm text-text-secondary">{(isBaselineSelf ? t('sum.baselineLabel') : t('sum.operatingLabel'))} — {t('sum.noTco')}</p>
             ) : (
               <WaterfallMini steps={wf} total={total} currency={tco.currency} />
             )}
@@ -163,11 +168,11 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
 
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between mb-md">
-            <span className="font-headline-md text-headline-md text-primary tracking-tight">예상 구축 기간</span>
+            <span className="font-headline-md text-headline-md text-primary tracking-tight">{t('sum.kpi.buildMonths')}</span>
           </div>
           {isBaselineDeployed ? (
             <div className="flex-1 flex items-center">
-              <p className="font-body-sm text-body-sm text-text-secondary">{isBaselineSelf ? '기준국' : '운영국가'} — 구축 기간 해당 없음</p>
+              <p className="font-body-sm text-body-sm text-text-secondary">{(isBaselineSelf ? t('sum.baselineLabel') : t('sum.operatingLabel'))} — {t('sum.noBuild')}</p>
             </div>
           ) : (
             <>
@@ -175,18 +180,9 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
                 <BuildBars targetMonths={buildMonths} baseMonths={baseMonths} targetKo={countryKo} baseKo={baseKo} />
               </div>
               <p className="font-label-sm text-label-sm text-text-secondary mt-sm">
-                {isApacFixed ? (
-                  <>
-                    기준국 <strong className="text-primary">{baseKo}</strong> 자산 기준 대략 비용 (유사도 승수 미적용)
-                  </>
-                ) : (
-                  <>
-                    베이스라인 대비{' '}
-                    <strong className="text-primary">
-                      {fixed(monthsSaved)}M ({monthsSavedPct}%) 단축
-                    </strong>
-                  </>
-                )}
+                {isApacFixed
+                  ? t('sum.buildNoteApac').replace('{base}', baseKo)
+                  : t('sum.buildNote').replace('{months}', fixed(monthsSaved)).replace('{pct}', String(monthsSavedPct))}
               </p>
             </>
           )}
@@ -196,11 +192,10 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
       {/* 결정트리(8/12) + 구독료표(4/12), 종합 인사이트(12/12) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-stretch">
         <div className="lg:col-span-8 flex flex-col gap-xl">
-          <Panel title="시스템 결정 트리" className="flex-1">
+          <Panel title={t('sum.decisionTree')} className="flex-1">
             {isBaselineDeployed ? (
               <p className="font-body-md text-body-md text-on-surface-variant">
-                {recommendationText ||
-                  `${countryKo}은(는) 이미 시스템이 운영 중인 국가로, 신규 진출 결정 트리는 적용되지 않습니다.`}
+                {recommendationText || t('sum.noDecisionTree').replace('{country}', countryKo)}
               </p>
             ) : (
               <DecisionTreeSvg
@@ -236,9 +231,9 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
           </Panel>
         </div>
         <div className="lg:col-span-12">
-          <Panel title="국가 종합 인사이트">
+          <Panel title={t('sum.overallInsight')}>
             <ul className="flex flex-col gap-sm list-none p-0 m-0">
-              {splitSentences(data.overall_insight).map((sentence, i) => (
+              {splitSentences(lang === 'en' && data.overall_insight_en ? data.overall_insight_en : data.overall_insight).map((sentence, i) => (
                 <li key={i} className="flex items-start gap-sm">
                   <span className="material-symbols-outlined text-primary text-[clamp(13.6px,calc(12px_+_0.444vw),18.4px)] mt-[2px]">arrow_right</span>
                   <span className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
@@ -295,13 +290,14 @@ function ScoreDonut({ score }: { score: number }) {
 // TCO 워터폴(KPI) — 누적 막대, 마지막 총합 강조
 function WaterfallMini({ steps, total, currency }: { steps: { label: string; value: number }[]; total: number; currency: string }) {
   const fx = useFx()
+  const t = useT()
   const W = 360
   const H = 240
   const top = 16
   const bottom = 216
   const max = total || 1
   const scale = (bottom - top) / max
-  const bars = [...steps, { label: '10년 TCO', value: total, isTotal: true as const }]
+  const bars = [...steps, { label: t('sum.wf.total'), value: total, isTotal: true as const }]
   let cum = 0
   const barW = 42.24
   const gap = 64

@@ -14,9 +14,13 @@ import {
   parseShare,
   dash,
 } from './shared'
+import { useT } from '../../../i18n/dict'
+import { useLang, pickLang } from '../../../i18n/locale'
 
 export function MarketTab({ data }: { data: CountryReportData }) {
   const m = data.tabs.tab_1_4_market
+  const t = useT()
+  const lang = useLang()
   const find = (name: string): ReportItem | undefined => m.items.find((it) => it.item === name)
 
   const finItem = find('금융사 순위(Top 5)')
@@ -28,37 +32,37 @@ export function MarketTab({ data }: { data: CountryReportData }) {
   return (
     <div className="flex flex-col gap-xl">
       {/* 국가 정성 요약 */}
-      <Panel icon="summarize" title="국가 정성 요약">
-        <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-md">{dash(m.country_summary.value)}</p>
-        {m.country_summary.insight && <InsightBox>{m.country_summary.insight}</InsightBox>}
+      <Panel icon="summarize" title={t('mkt.qualSummary')}>
+        <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-md">{dash(pickLang(lang, m.country_summary.value, m.country_summary.value_en))}</p>
+        {m.country_summary.insight && <InsightBox>{pickLang(lang, m.country_summary.insight, m.country_summary.insight_en)}</InsightBox>}
       </Panel>
 
       {/* 금융사 Top5 / OEM Top5 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
-        {finItem && <RankingPanel icon="account_balance" title="금융사 Top 5 (점유율 · 캡티브 강도)" item={finItem} />}
-        {oemItem && <RankingPanel icon="directions_car" title="OEM Top 5 (점유율 · 캡티브 보유)" item={oemItem} />}
+        {finItem && <RankingPanel icon="account_balance" title={t('mkt.finTop5')} item={finItem} />}
+        {oemItem && <RankingPanel icon="directions_car" title={t('mkt.oemTop5')} item={oemItem} />}
       </div>
 
       {/* EV 보급률 · 잔존가치 추이 */}
       {(evItem?.timeseries || rvItem?.timeseries) && (
         <Panel
           icon="battery_charging_full"
-          title="EV 보급률 · EV/ICE 잔존가치 추이"
+          title={t('mkt.evTrend')}
           right={
             <div className="flex items-center gap-md">
               <span className="flex items-center gap-xs">
                 <span className="w-3 h-3 rounded-full" style={{ background: '#14181C' }} />
-                <span className="font-label-sm text-label-sm text-text-secondary">EV 보급률</span>
+                <span className="font-label-sm text-label-sm text-text-secondary">{t('mkt.evRate')}</span>
               </span>
               <span className="flex items-center gap-xs">
                 <span className="w-3 h-3 rounded-full" style={{ background: '#c0533f' }} />
-                <span className="font-label-sm text-label-sm text-text-secondary">EV/ICE 잔존가치(3년)</span>
+                <span className="font-label-sm text-label-sm text-text-secondary">{t('mkt.evResidual')}</span>
               </span>
             </div>
           }
         >
           <DualLineChart ev={evItem?.timeseries ?? null} rv={rvItem?.timeseries ?? null} />
-          <p className="font-label-sm text-label-sm text-text-secondary mt-xs">실선=과거, 점선=전망 · 단위: %</p>
+          <p className="font-label-sm text-label-sm text-text-secondary mt-xs">{t('mkt.lineLegend')}</p>
         </Panel>
       )}
 
@@ -66,8 +70,8 @@ export function MarketTab({ data }: { data: CountryReportData }) {
       {rateItem && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
           <div className="lg:col-span-8">
-            <Panel icon="percent" title="경쟁사 금리 범위">
-              <RateRangeChart text={dash(rateItem.value)} />
+            <Panel icon="percent" title={t('mkt.rateRange')}>
+              <RateRangeChart text={dash(pickLang(lang, rateItem.value, rateItem.value_en))} />
             </Panel>
           </div>
           <div className="lg:col-span-4" />
@@ -85,11 +89,11 @@ export function MarketTab({ data }: { data: CountryReportData }) {
       </div>
 
       {/* 규제기관 */}
-      <Panel icon="policy" title="규제기관">
-        <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-sm">{dash(m.regulators.value)}</p>
+      <Panel icon="policy" title={t('mkt.regulators')}>
+        <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-sm">{dash(pickLang(lang, m.regulators.value, m.regulators.value_en))}</p>
         {m.regulators.insight && (
           <div className="bg-surface-container/60 p-sm rounded-md border-l-4 border-primary">
-            <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{m.regulators.insight}</p>
+            <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{pickLang(lang, m.regulators.insight, m.regulators.insight_en)}</p>
           </div>
         )}
       </Panel>
@@ -98,7 +102,7 @@ export function MarketTab({ data }: { data: CountryReportData }) {
       <NewsPanel news={m.news} />
 
       {/* 시장·경쟁 핵심 지표(원천 데이터) */}
-      <Panel icon="leaderboard" title="시장·경쟁 핵심 지표 (원천 데이터)">
+      <Panel icon="leaderboard" title={t('mkt.keyMetrics')}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
           {m.items.map((it, i) => (
             <MarketMetricCard key={i} item={it} />
@@ -111,6 +115,8 @@ export function MarketTab({ data }: { data: CountryReportData }) {
 
 // 금융사/OEM Top5 랭킹 패널
 function RankingPanel({ icon, title, item }: { icon: string; title: string; item: ReportItem }) {
+  const t = useT()
+  const lang = useLang()
   const rows: { rank: number; name: string; share: number }[] = Array.isArray(item.value)
     ? item.value.map((r: any) => ({ rank: r.rank, name: r.name, share: parseShare(r.market_share) }))
     : []
@@ -122,7 +128,7 @@ function RankingPanel({ icon, title, item }: { icon: string; title: string; item
       title={title}
       right={
         <div className="text-right">
-          <div className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">Top 5 누적 점유율</div>
+          <div className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">{t('mkt.top5cum')}</div>
           <div className="font-headline-md text-headline-md text-primary">
             {top5sum.toFixed(1)}
             <span className="font-body-sm text-body-sm text-text-secondary">%</span>
@@ -133,9 +139,9 @@ function RankingPanel({ icon, title, item }: { icon: string; title: string; item
       <table className="w-full">
         <thead>
           <tr className="text-text-secondary border-b border-surface-container-highest">
-            <th className="py-xs pr-sm text-left font-label-sm text-label-sm uppercase">순위 · 기업</th>
-            <th className="py-xs px-sm text-left font-label-sm text-label-sm uppercase">점유율</th>
-            <th className="py-xs pl-sm text-right font-label-sm text-label-sm uppercase">값</th>
+            <th className="py-xs pr-sm text-left font-label-sm text-label-sm uppercase">{t('mkt.rankCompany')}</th>
+            <th className="py-xs px-sm text-left font-label-sm text-label-sm uppercase">{t('mkt.share')}</th>
+            <th className="py-xs pl-sm text-right font-label-sm text-label-sm uppercase">{t('mkt.value')}</th>
           </tr>
         </thead>
         <tbody>
@@ -169,7 +175,7 @@ function RankingPanel({ icon, title, item }: { icon: string; title: string; item
       </table>
       {item.insight && (
         <div className="mt-md">
-          <InsightBox>{item.insight}</InsightBox>
+          <InsightBox>{pickLang(lang, item.insight, item.insight_en)}</InsightBox>
         </div>
       )}
     </Panel>
@@ -185,13 +191,15 @@ function classifyCompetitor(name: string): 'bank' | 'oem_captive' | 'fleet_lease
   if (['santander', 'cetelem', 'bnp', 'caixa', 'sabadell', 'ca auto', 'credit agricole', 'barclays', 'hsbc'].some((k) => n.includes(k))) return 'bank'
   return 'specialty'
 }
-const GROUP_META: Record<string, { label: string; icon: string }> = {
-  bank: { label: '은행계 자회사', icon: 'account_balance' },
-  oem_captive: { label: 'OEM 캡티브', icon: 'directions_car' },
-  fleet_lease: { label: '플릿/렌팅 리스사', icon: 'garage' },
-  specialty: { label: '전문 여신사·기타', icon: 'store' },
+const GROUP_META: Record<string, { labelKey: string; icon: string }> = {
+  bank: { labelKey: 'mkt.grp.bank', icon: 'account_balance' },
+  oem_captive: { labelKey: 'mkt.grp.oem', icon: 'directions_car' },
+  fleet_lease: { labelKey: 'mkt.grp.fleet', icon: 'garage' },
+  specialty: { labelKey: 'mkt.grp.specialty', icon: 'store' },
 }
 function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; entryForm: ReportItem }) {
+  const t = useT()
+  const lang = useLang()
   const list: string[] = Array.isArray(competitors.value) ? competitors.value.map(String) : []
   const groups: Record<string, string[]> = { bank: [], oem_captive: [], fleet_lease: [], specialty: [] }
   list.forEach((c) => groups[classifyCompetitor(c)].push(c))
@@ -199,15 +207,15 @@ function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; 
   return (
     <Panel
       icon="groups"
-      title="경쟁사 현황 (유형별)"
-      right={<span className="font-label-sm text-label-sm text-text-secondary">총 {list.length}개사</span>}
+      title={t('mkt.competitors')}
+      right={<span className="font-label-sm text-label-sm text-text-secondary">{t('mkt.totalFirms').replace('{n}', String(list.length))}</span>}
     >
       <div className="bg-surface p-sm rounded-md border border-surface-container-highest mb-md">
         <div className="flex items-center gap-xs mb-xs">
           <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">flag</span>
-          <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">진출 형태</span>
+          <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">{t('mkt.entryForm')}</span>
         </div>
-        <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{dash(entryForm.value)}</p>
+        <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{dash(pickLang(lang, entryForm.value, entryForm.value_en))}</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
         {visible.map(([key, members]) => (
@@ -215,9 +223,9 @@ function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; 
             <div className="flex items-center justify-between mb-xs">
               <div className="flex items-center gap-xs">
                 <span className="material-symbols-outlined text-primary text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">{GROUP_META[key].icon}</span>
-                <span className="font-label-md text-label-md text-primary uppercase tracking-wider">{GROUP_META[key].label}</span>
+                <span className="font-label-md text-label-md text-primary uppercase tracking-wider">{t(GROUP_META[key].labelKey)}</span>
               </div>
-              <span className="font-label-sm text-label-sm text-text-secondary">{members.length}개</span>
+              <span className="font-label-sm text-label-sm text-text-secondary">{members.length}{t('mkt.countSuffix')}</span>
             </div>
             <div className="flex flex-wrap gap-xs">
               {members.map((mem, i) => (
@@ -231,7 +239,7 @@ function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; 
       </div>
       {competitors.insight && (
         <div className="mt-md">
-          <InsightBox>{competitors.insight}</InsightBox>
+          <InsightBox>{pickLang(lang, competitors.insight, competitors.insight_en)}</InsightBox>
         </div>
       )}
     </Panel>
@@ -240,12 +248,17 @@ function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; 
 
 // 브랜드 Top10 (2열 카드)
 function BrandTop10Panel({ brand }: { brand: ReportItem }) {
-  const list: string[] = Array.isArray(brand.value) ? brand.value.map(String) : []
+  const t = useT()
+  const lang = useLang()
+  // value는 문자열 배열(["Toyota", ...]) 또는 객체 배열([{rank, name}, ...]) 둘 다 올 수 있다.
+  const list: string[] = Array.isArray(brand.value)
+    ? brand.value.map((v: any) => (v && typeof v === 'object' ? String(v.name ?? '') : String(v)))
+    : []
   return (
     <Panel
       icon="directions_car"
-      title="브랜드 Top 10"
-      right={<span className="font-label-sm text-label-sm text-text-secondary">신차 등록 순위</span>}
+      title={t('mkt.brandTop10')}
+      right={<span className="font-label-sm text-label-sm text-text-secondary">{t('mkt.newCarReg')}</span>}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-sm">
         {list.map((name, i) => {
@@ -264,7 +277,7 @@ function BrandTop10Panel({ brand }: { brand: ReportItem }) {
       </div>
       {brand.insight && (
         <div className="mt-md">
-          <InsightBox>{brand.insight}</InsightBox>
+          <InsightBox>{pickLang(lang, brand.insight, brand.insight_en)}</InsightBox>
         </div>
       )}
     </Panel>
@@ -274,9 +287,11 @@ function BrandTop10Panel({ brand }: { brand: ReportItem }) {
 // 외부 이슈 스캔(뉴스)
 const NEWS_CAT_STYLE = 'bg-orange-100 text-orange-700 border border-orange-200'
 function NewsPanel({ news }: { news: ReportItem }) {
+  const t = useT()
+  const lang = useLang()
   const entries: NewsEntry[] = Array.isArray(news.value) ? news.value : []
   return (
-    <Panel icon="newspaper" title="외부 이슈 스캔">
+    <Panel icon="newspaper" title={t('mkt.newsScan')}>
       <div className="flex flex-col gap-md">
         {entries.map((n, i) => {
           // headline/publisher 비어있으면 "미확보" 경고 박스
@@ -287,7 +302,7 @@ function NewsPanel({ news }: { news: ReportItem }) {
                   <span className="material-symbols-outlined text-yellow-700 text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">warning</span>
                   <span className="font-label-md text-label-md text-yellow-800 uppercase">{n.news_category}</span>
                 </div>
-                <p className="font-body-sm text-body-sm text-yellow-700">관련 화이트리스트 이슈 미확보 — 실사 단계 보강 필요</p>
+                <p className="font-body-sm text-body-sm text-yellow-700">{t('mkt.newsMissing')}</p>
               </div>
             )
           }
@@ -299,17 +314,17 @@ function NewsPanel({ news }: { news: ReportItem }) {
                   {n.publisher} · {n.pub_date}
                 </span>
               </div>
-              <h4 className="font-label-md text-label-md text-text-primary leading-relaxed m-0">{n.headline}</h4>
+              <h4 className="font-label-md text-label-md text-text-primary leading-relaxed m-0">{pickLang(lang, n.headline, n.headline_en)}</h4>
               <div className="bg-surface-container/60 p-sm rounded-md border-l-4 border-primary">
                 <div className="flex items-center gap-xs mb-xs">
                   <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">psychology</span>
                   <span className="font-label-sm text-label-sm text-primary uppercase">So What</span>
                 </div>
-                <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{n.so_what}</p>
+                <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{pickLang(lang, n.so_what, n.so_what_en)}</p>
               </div>
               {n.url && (
                 <a className="text-primary underline" href={n.url} target="_blank" rel="noopener noreferrer">
-                  원문
+                  {t('mkt.original')}
                 </a>
               )}
             </div>
@@ -318,7 +333,7 @@ function NewsPanel({ news }: { news: ReportItem }) {
       </div>
       {news.insight && (
         <div className="mt-md">
-          <InsightBox label="종합 인사이트">{news.insight}</InsightBox>
+          <InsightBox label={t('mkt.overallInsight')}>{pickLang(lang, news.insight, news.insight_en)}</InsightBox>
         </div>
       )}
     </Panel>

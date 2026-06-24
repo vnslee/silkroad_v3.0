@@ -6,7 +6,12 @@ export interface ScatterPoint {
   attractiveness: number
   it_similarity: number // raw (0~100)
   is_baseline?: boolean
+  is_top1?: boolean // 매력도(퀵윈) 순위 1위 — 강조 색
 }
+
+// 후보국 점 색 — 1위는 라임그린으로 강조, 나머지는 기본 코럴.
+const POINT_COLOR = '#c0533f'
+const TOP1_COLOR = '#4f8a6d'
 
 const PLOT_X0 = 40
 const PLOT_W = 360
@@ -48,8 +53,17 @@ export function ScatterChart({ points }: { points: ScatterPoint[] }) {
             const cy = py(p.it_similarity)
             return (
               <g key={p.country}>
-                <circle cx={cx} cy={cy} r="7" fill="#c0533f" stroke="#FFFFFF" strokeWidth="1.5" />
-                <text x={cx + 12} y={cy + 4} fontSize="11" fill="#14181C" fontWeight="600">{p.country}</text>
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={p.is_top1 ? 8.5 : 7}
+                  fill={p.is_top1 ? TOP1_COLOR : POINT_COLOR}
+                  stroke="#FFFFFF"
+                  strokeWidth={p.is_top1 ? 2 : 1.5}
+                />
+                <text x={cx + 12} y={cy + 4} fontSize="11" fill="#14181C" fontWeight={p.is_top1 ? 700 : 600}>
+                  {p.country}{p.is_top1 ? ' ★' : ''}
+                </text>
               </g>
             )
           })}
@@ -76,7 +90,11 @@ export function ScatterChart({ points }: { points: ScatterPoint[] }) {
         </div>
         <div className="mt-sm pt-xs border-t border-surface-border flex items-center gap-md text-label-sm text-text-secondary flex-wrap">
           <span className="flex items-center gap-xs">
-            <span className="inline-block w-3 h-3 rounded-full border border-white" style={{ background: '#c0533f' }} />
+            <span className="inline-block w-3 h-3 rounded-full border border-white" style={{ background: TOP1_COLOR }} />
+            <span>1위 후보국 ★</span>
+          </span>
+          <span className="flex items-center gap-xs">
+            <span className="inline-block w-3 h-3 rounded-full border border-white" style={{ background: POINT_COLOR }} />
             <span>후보국</span>
           </span>
           <span className="flex items-center gap-xs">

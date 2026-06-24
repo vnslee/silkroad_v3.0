@@ -5,12 +5,13 @@ import { useEffect, useState } from 'react'
 import { api } from '../../api/client'
 import { paths } from '../../api/paths'
 import type { CountrySummary, Domain, RegionSummary } from '../../api/types'
-import { store } from '../../store'
+import { store, useStore } from '../../store'
+import { LangProvider } from '../../i18n/locale'
 import { Icon } from '../common/Icon'
 import { HeaderSelect, type SelectOption } from '../common/HeaderSelect'
 import { HeaderEmblem } from '../common/HeaderEmblem'
 import { MicroExpander } from '../ui/micro-expander'
-import { useT } from '../../i18n/dict'
+import { useT, statusLabel } from '../../i18n/dict'
 import type { EntryMode } from '../../app/route'
 import { CountryDetail } from '../details/CountryDetail'
 import { RegionDetail } from '../details/RegionDetail'
@@ -57,6 +58,7 @@ export default function DetailView({ domain, code, mode }: Props) {
   const [countryReport, setCountryReport] = useState<CountryReportData | null>(null)
   const [loading, setLoading] = useState(false)
   const t = useT()
+  const lang = useStore((s) => s.lang)
 
   // 카탈로그(대상 선택용)
   useEffect(() => {
@@ -214,13 +216,14 @@ export default function DetailView({ domain, code, mode }: Props) {
   // 대상 선택 옵션
   const targetOptions: SelectOption[] = catalog.map((c) => ({
     value: c.code,
-    label: c.nameKo ? `${c.nameKo} (${c.name})` : c.name,
+    // 영문 모드: 영문명만. 한글 모드: "한글명 (영문명)".
+    label: lang !== 'en' && c.nameKo ? `${c.nameKo} (${c.name})` : c.name,
     sub: c.code,
   }))
   // 버전 옵션(최신 + 렌더본 ID들). value/label 모두 렌더 ID(DTL_<ID>_NNN).
   const versionOptions: SelectOption[] = [
-    { value: '', label: '최신 (latest)', sub: '기본' },
-    ...versions.map((v) => ({ value: v, label: v, sub: '렌더본' })),
+    { value: '', label: t('dtl.ver.latest'), sub: t('dtl.ver.latestSub') },
+    ...versions.map((v) => ({ value: v, label: v, sub: t('dtl.ver.rendered') })),
   ]
 
   const goTarget = (newCode: string) => {
@@ -263,7 +266,8 @@ export default function DetailView({ domain, code, mode }: Props) {
                 trigger={
                   <span className="flex items-baseline gap-sm">
                     <span className="font-headline-lg text-headline-lg text-primary">{meta?.name ?? code}</span>
-                    {meta?.nameKo && (
+                    {/* 한글 보조 표기는 한글 모드에서만 — 영문 모드는 영문명만. */}
+                    {lang !== 'en' && meta?.nameKo && (
                       <span className="font-body-lg text-body-lg text-on-surface-variant">{meta.nameKo}</span>
                     )}
                   </span>
@@ -274,11 +278,11 @@ export default function DetailView({ domain, code, mode }: Props) {
               {/* 진출 상태 배지는 국가에만 해당 — 권역은 진출 상태 개념이 없어 미표시. */}
               {isCountry && (
                 <span className={`inline-flex items-center rounded px-2 py-0.5 font-label-sm text-label-sm ${statusStyle}`}>
-                  {status}
+                  {statusLabel(status, lang)}
                 </span>
               )}
               <span className="font-label-sm text-label-sm text-outline">
-                {isCountry ? `Region: ${meta?.region ?? '-'}` : '권역'}
+                {isCountry ? `${t('map.regionPrefix')}: ${meta?.region ?? '-'}` : t('map.regionPrefix')}
               </span>
               {/* 데이터 버전 선택 */}
               <span className="font-label-sm text-label-sm text-outline">·</span>
@@ -290,7 +294,7 @@ export default function DetailView({ domain, code, mode }: Props) {
                 trigger={
                   <span className="flex items-center gap-xs font-label-sm text-label-sm text-secondary">
                     <Icon name="history" className="text-[14px]" />
-                    {version ?? '최신'}
+                    {version ?? t('dtl.ver.latestShort')}
                   </span>
                 }
               />
@@ -336,12 +340,12 @@ export default function DetailView({ domain, code, mode }: Props) {
           </div>
         )}
         {!error && ready && !loading && detailData && (
-          <>
+          <LangProvider value={lang}>
             {domain === 'country' && (
               <CountryDetail
                 data={detailData as CountryDetailData}
                 report={countryReport}
-                entryStatus={status}
+                entryStatus={statusLabel(status, lang)}
                 entryStatusStyle={statusStyle}
                 entered={Boolean(meta?.entryMode)}
                 entrySolution={meta?.solution}
@@ -349,15 +353,20 @@ export default function DetailView({ domain, code, mode }: Props) {
                 entrySince={meta?.since}
                 baselineNameKo={
                   countryReport
-                    ? (catalog.find(
-                        (c) => c.code === countryReport.tabs.tab_1_2_decision.base_country,
-                      )?.nameKo ?? undefined)
+                    ? (() => {
+                        const b = catalog.find(
+                          (c) => c.code === countryReport.tabs.tab_1_2_decision.base_country,
+                        )
+                        if (!b) return undefined
+                        // 영문 모드: 영문명(name) 우선, 없으면 한글명 폴백. 한글 모드: 한글명.
+                        return (lang === 'en' ? b.name : b.nameKo) ?? b.nameKo ?? undefined
+                      })()
                     : undefined
                 }
               />
             )}
             {domain === 'region' && <RegionDetail data={detailData as RegionDetailData} />}
-          </>
+          </LangProvider>
         )}
       </div>
     </div>
