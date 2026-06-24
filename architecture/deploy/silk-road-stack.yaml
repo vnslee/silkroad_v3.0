@@ -30,6 +30,19 @@ Parameters:
     Default: legacy
     AllowedValues: [legacy, mantle]
     Description: Bedrock SDK 백엔드 (이 환경은 Mantle DNS 미해석 → legacy)
+  WebSearchProvider:
+    Type: String
+    Default: gateway
+    AllowedValues: [gateway, server_tool, off]
+    Description: 리서치 웹검색 제공자 (gateway=AgentCore Gateway 선검색)
+  GatewaySearchUrl:
+    Type: String
+    Default: https://gateway-web-search-rdxcntzg00.gateway.bedrock-agentcore.us-east-1.amazonaws.com
+    Description: AgentCore WebSearch 게이트웨이 URL (us-east-1, cross-region 호출). 빈 값이면 게이트웨이 경로 비활성
+  GatewaySearchArn:
+    Type: String
+    Default: arn:aws:bedrock-agentcore:us-east-1:970227532419:gateway/gateway-web-search-rdxcntzg00
+    Description: 위 게이트웨이 ARN (InvokeGateway 권한 스코프용)
   DesiredCount:
     Type: Number
     Default: 1
@@ -79,6 +92,12 @@ Resources:
                   - bedrock:InvokeModel
                   - bedrock:InvokeModelWithResponseStream
                 Resource: '*'
+              # 리서치 웹검색 — AgentCore Gateway WebSearch(us-east-1, cross-region) MCP 호출.
+              # 서울 task가 NAT egress로 us-east-1 공인 엔드포인트에 SigV4 서명 호출한다.
+              - Effect: Allow
+                Action:
+                  - bedrock-agentcore:InvokeGateway
+                Resource: !Ref GatewaySearchArn
 
   # ── 보안 그룹 ────────────────────────────────────────────────
   AlbSecurityGroup:
@@ -162,6 +181,11 @@ Resources:
             - { Name: CORS_ORIGINS, Value: '*' }
             - { Name: OPUS_MODEL, Value: !Ref OpusModel }
             - { Name: BEDROCK_BACKEND, Value: !Ref BedrockBackend }
+            # 리서치 웹검색 — AgentCore Gateway 선검색(us-east-1 cross-region).
+            - { Name: WEB_SEARCH_PROVIDER, Value: !Ref WebSearchProvider }
+            - { Name: GATEWAY_SEARCH_REGION, Value: us-east-1 }
+            - { Name: GATEWAY_SEARCH_URL, Value: !Ref GatewaySearchUrl }
+            - { Name: GATEWAY_SEARCH_ARN, Value: !Ref GatewaySearchArn }
           PortMappings:
             - { ContainerPort: 8000, Protocol: tcp }
           LogConfiguration:

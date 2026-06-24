@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "description": "도메인 → 신뢰도 티어 매핑. WebSearch 선검색의 도메인 필터(allowed_domains)와 사후 티어 태깅에 쓴다. 3 신뢰 티어(T1/T2/T3)는 리서치 스키마의 정수 tier(1~4)로 매핑된다: T1->1, T2->2, T3->3,4. 운영자가 코드 수정 없이 편집한다. 점수 가중(tier->multiplier)은 internal_latest.json.tier_weights가 소유(여긴 도메인 분류만).",
+  "notes": {
+    "matching": "URL 호스트의 접미사 매칭. 'gov'는 *.gov(미국)·*.go.kr 류를 모두 잡지 못하므로 대표 정부/규제 도메인을 명시 나열한다. 'imf.org'는 host가 imf.org 또는 *.imf.org면 매치.",
+    "T3_policy": "T3는 교차검증 전용이며 단독 인용 금지(is_citable_alone=false). T1/T2 주장 보강에만 사용한다.",
+    "wildcard": "선행 '*.' 은 서브도메인 와일드카드를 의미한다(예: '*.gov' → 임의의 .gov 호스트)."
+  },
+  "tiers": {
+    "T1": [
+      "*.gov",
+      "*.gov.uk",
+      "*.go.kr",
+      "*.europa.eu",
+      "ec.europa.eu",
+      "eba.europa.eu",
+      "ecb.europa.eu",
+      "esma.europa.eu",
+      "bis.org",
+      "imf.org",
+      "worldbank.org",
+      "oecd.org",
+      "bankofengland.co.uk",
+      "federalreserve.gov",
+      "sec.gov",
+      "eur-lex.europa.eu",
+      "moodys.com",
+      "spglobal.com",
+      "fitchratings.com"
+    ],
+    "T2": [
+      "reuters.com",
+      "bloomberg.com",
+      "apnews.com",
+      "ft.com",
+      "wsj.com",
+      "nikkei.com",
+      "asia.nikkei.com",
+      "acea.auto",
+      "automotivenews.com",
+      "europe.autonews.com",
+      "just-auto.com",
+      "wardsauto.com",
+      "automobilwoche.de",
+      "autofinancenews.net",
+      "americanbanker.com",
+      "coxautoinc.com",
+      "manheim.com"
+    ],
+    "T3": [
+      "wikipedia.org",
+      "statista.com",
+      "tradingeconomics.com"
+    ]
+  }
+}

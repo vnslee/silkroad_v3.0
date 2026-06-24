@@ -16,7 +16,14 @@ from typing import Callable, List, Optional
 from pydantic import ValidationError
 
 from .. import config
-from . import bedrock_client, geo_reference, prompt_loader, storage_resolver
+from . import (
+    bedrock_client,
+    credibility,
+    gateway_search,
+    geo_reference,
+    prompt_loader,
+    storage_resolver,
+)
 
 _log = config.get_logger("research_agent")
 
@@ -45,6 +52,92 @@ AgentCb = Optional[Callable[[str, str, int], None]]
 
 # 딥리서치 effort(웹검색 + adaptive thinking).
 _RESEARCH_EFFORT = "high"
+
+# 분야별 선검색 질의 템플릿({country}=영문 국가명). 필드 페르소나 범위에 맞춰 fan-out.
+_FIELD_QUERIES = {
+    "market": [
+        "{country} auto finance market size penetration rate",
+        "{country} new car sales auto loan APR interest rate",
+        "{country} captive auto finance market share EV residual value",
+    ],
+    "regulatory": [
+        "{country} auto finance license foreign ownership regulation",
+        "{country} consumer credit law repossession collection rules",
+        "{country} data localization financial services regulation",
+    ],
+    "system": [
+        "{country} credit bureau payment infrastructure auto finance",
+        "{country} digital lending dealer financing platform maturity",
+    ],
+    "product": [
+        "{country} car loan lease rental fleet financing mix",
+        "{country} auto leasing vs installment purchase share",
+    ],
+}
+# 선검색 단계 캡 — 쿼리당 결과 수(넓게 받아 코드가 티어로 거른다). WebSearch 도구는
+# 도메인 필터 인자가 없어(실측), 넓게 검색→사후 티어 태깅·필터하는 구조다.
+_PREFETCH_RESULTS_PER_QUERY = 15
+
+
+def _prefetch_sources(field: str, country_name: str, region: str) -> list:
+    """Gateway WebSearch로 분야별 선검색 → 신뢰 티어 출처만 태깅·디둡해 반환.
+
+    쿼리당 1회 넓게 검색하고, 결과를 실제 도메인의 신뢰 티어(T1/T2/T3)로 태깅한다.
+    어느 티어 목록에도 없는 도메인은 제외(티어 강제 = 코드 소유). 호출 실패는 비치명.
+    """
+    templates = _FIELD_QUERIES.get(field, [])
+    by_url: dict = {}
+    for tmpl in templates:
+        query = tmpl.format(country=country_name)
+        try:
+            results = gateway_search.web_search(
+                query, max_results=_PREFETCH_RESULTS_PER_QUERY
+            )
+        except gateway_search.GatewaySearchError as exc:
+            _log.warning("선검색 실패(field=%s, q=%r): %s", field, query, exc)
+            continue
+        for r in results:
+            url = (r.get("url") or "").strip()
+            if not url or url in by_url:
+                continue
+            tier_int = credibility.tier_of_domain(url)
+            if tier_int is None:
+                continue  # 어느 티어에도 없는 도메인 → 제외(티어 강제)
+            r = dict(r)
+            r["tier"] = tier_int
+            by_url[url] = r
+    sources = list(by_url.values())
+    sources.sort(key=lambda s: s.get("tier", 9))  # 신뢰도 높은(tier 낮은) 순
+    _log.info("분야 %s 선검색: %d개 검증 출처", field, len(sources))
+    return sources
+
+
+def _apply_tier_policy(items: list, sources: list) -> list:
+    """LLM이 만든 items의 tier를 인용 출처 기준으로 보정하고, T3 단독 지지 item은 FLAG.
+
+    - source 문자열에 검증 출처 URL이 포함되면 그 출처의 tier로 item.tier를 보정.
+    - 인용 출처가 단독 인용 불가(T3=tier≥3)뿐이면 estimated:true·so_what="조사 필요"로
+      플래그(삭제하지 않음 — 스키마의 FLAG 의미와 일치).
+    """
+    if not items:
+        return items
+    src_by_url = {(s.get("url") or "").strip(): s for s in sources if s.get("url")}
+    for it in items:
+        if not isinstance(it, dict):
+            continue
+        cited = it.get("source") or ""
+        matched_tiers = [
+            s["tier"] for url, s in src_by_url.items() if url and url in cited
+        ]
+        if matched_tiers:
+            best = min(matched_tiers)  # 가장 신뢰도 높은 인용 출처
+            it["tier"] = best
+            # 단독 인용 가능 출처(T1/T2)가 하나도 없으면 FLAG.
+            if not any(credibility.is_citable_alone(t) for t in matched_tiers):
+                it["estimated"] = True
+                if not it.get("so_what"):
+                    it["so_what"] = "조사 필요"
+    return items
 
 
 class ResearchError(RuntimeError):
@@ -80,17 +173,28 @@ def _validate(domain: str, data: dict) -> str:
 
 
 def _run_field(field: str, target_id: str, region: str, segment: Optional[str]) -> list:
-    """단일 분야 agent — 웹검색 딥리서치로 자기 담당 items[]만 반환."""
-    prompt = prompt_loader.load_country_field_prompt(field, target_id, region, segment)
+    """단일 분야 agent — 딥리서치로 자기 담당 items[]만 반환.
+
+    gateway 모드: 코드가 티어별 도메인 필터로 선검색 → 검증 출처를 프롬프트에 주입 →
+    LLM은 검색 없이 그 출처만 인용 → 사후 tier 보정·T3 FLAG. server_tool 모드: 기존
+    Anthropic 웹검색 서버툴 경로(web_search=True) 유지.
+    """
+    gateway = config.gateway_search_enabled()
+    sources = _prefetch_sources(field, target_id, region) if gateway else None
+    prompt = prompt_loader.load_country_field_prompt(
+        field, target_id, region, segment, sources=sources
+    )
     data = bedrock_client.generate_structured(
         prompt,
         prompt_loader.country_json_schema(),
-        web_search=True,
+        web_search=not gateway,  # gateway 모드면 모델 자율 검색 끔(코드가 이미 검색)
         effort=_RESEARCH_EFFORT,
     )
     items = data.get("items") or []
     if not isinstance(items, list):
         raise ResearchError(f"분야 {field} 출력의 items가 배열이 아님")
+    if gateway:
+        items = _apply_tier_policy(items, sources or [])
     return items
 
 
@@ -286,11 +390,18 @@ def run(
     if progress_cb:
         # 권역 종합 리서치 진입(70%). 단일 LLM 호출이라 내부 세분 진행은 없다.
         progress_cb("region_synth", f"권역 {target_id} 종합 리서치", 70)
-    prompt = prompt_loader.load_region_prompt(target_id, members, segment)
+    gateway = config.gateway_search_enabled()
+    # 권역 레벨 선검색 — market 질의 템플릿을 권역명으로 재사용(저충실도, region 명세 잠정).
+    region_sources = (
+        _prefetch_sources("market", target_id, target_id) if gateway else None
+    )
+    prompt = prompt_loader.load_region_prompt(
+        target_id, members, segment, sources=region_sources
+    )
     data = bedrock_client.generate_structured(
         prompt,
         prompt_loader.region_json_schema(),
-        web_search=True,
+        web_search=not gateway,
         effort=_RESEARCH_EFFORT,
     )
     data.setdefault("code", target_id)

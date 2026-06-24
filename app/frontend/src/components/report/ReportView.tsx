@@ -29,6 +29,7 @@ interface CatalogItem {
   nameKo?: string
   region?: string
   baseline?: string
+  
   isBaseline: boolean
   hasReport: boolean
   entryMode?: string
