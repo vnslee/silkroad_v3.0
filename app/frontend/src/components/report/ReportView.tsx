@@ -1,6 +1,6 @@
-// ReportView(C7, FR-5) — 보고서 HTML iframe embed + chrome(원본 보고서 헤더 형식 재현).
+// ReportView(C7, FR-5) — 보고서 React 컴포넌트 렌더링 (iframe 제거).
 // 헤더: 국기 + [국가/권역 선택] + Report ID·생성일 + [보고서 버전 선택] + 이름 + PDF·메일.
-// 본문(탭·차트·표·레이더)만 iframe(렌더 엔진 HTML) — chrome은 전부 프론트(PIPELINE §5).
+// 본문은 React 컴포넌트로 직접 렌더링 (CountryReport / RegionReport).
 import { useEffect, useState } from 'react'
 import { api } from '../../api/client'
 import { paths } from '../../api/paths'
@@ -9,10 +9,12 @@ import { buildMailtoUrl } from '../../utils/mailto'
 import { Icon } from '../common/Icon'
 import { HeaderSelect, type SelectOption } from '../common/HeaderSelect'
 import { HeaderEmblem } from '../common/HeaderEmblem'
-import { fitEmbeddedHtml } from '../common/fitEmbeddedHtml'
 import { MicroExpander } from '../ui/micro-expander'
 import { useT } from '../../i18n/dict'
 import type { EntryMode } from '../../app/route'
+import { CountryReport } from '../reports/CountryReport'
+import { RegionReport } from '../reports/RegionReport'
+import type { CountryReportData, RegionReportData } from '../reports/types'
 
 interface Props {
   domain: Domain
@@ -36,6 +38,8 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   const [selected, setSelected] = useState<string | undefined>(reportId)
   const [error, setError] = useState<string | null>(null)
   const [catalog, setCatalog] = useState<CatalogItem[]>([])
+  const [reportData, setReportData] = useState<CountryReportData | RegionReportData | null>(null)
+  const [loading, setLoading] = useState(false)
   const t = useT()
 
   // 카탈로그(대상 선택용)
@@ -82,6 +86,40 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
       cancelled = true
     }
   }, [domain, code, reportId])
+
+  // 보고서 JSON 데이터 로드
+  useEffect(() => {
+    if (!selected) {
+      setReportData(null)
+      return
+    }
+
+    let cancelled = false
+    setLoading(true)
+    setError(null)
+
+    // JSON 데이터를 직접 fetch
+    const jsonPath = paths.reportJson(domain, code, selected)
+    fetch(jsonPath)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to load report: ${res.statusText}`)
+        return res.json()
+      })
+      .then((data) => {
+        if (cancelled) return
+        setReportData(data)
+        setLoading(false)
+      })
+      .catch((e) => {
+        if (cancelled) return
+        setError(String(e))
+        setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [domain, code, selected])
 
   const current = reports.find((r) => r.report_id === selected)
   const meta = catalog.find((c) => c.code === code)
@@ -227,15 +265,25 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
         </div>
       </div>
 
-      {/* 본문 — iframe(렌더 엔진 HTML) */}
-      <iframe
-        key={`${code}-${selected}`}
-        title={`${title} 본문`}
-        src={paths.reportHtml(domain, code, selected)}
-        className="min-h-0 w-full flex-1 border-0 bg-surface"
-        loading="lazy"
-        onLoad={fitEmbeddedHtml}
-      />
+      {/* 본문 — React 컴포넌트로 렌더링 */}
+      <div className="flex-1 overflow-auto bg-surface">
+        {loading && (
+          <div className="flex h-full items-center justify-center">
+            <p className="text-gray-500">보고서를 불러오는 중...</p>
+          </div>
+        )}
+        {error && !loading && (
+          <div className="flex h-full items-center justify-center">
+            <p className="text-red-600">{error}</p>
+          </div>
+        )}
+        {reportData && !loading && (
+          <>
+            {domain === 'country' && <CountryReport data={reportData as CountryReportData} />}
+            {domain === 'region' && <RegionReport data={reportData as RegionReportData} />}
+          </>
+        )}
+      </div>
     </div>
   )
 }

@@ -1,30 +1,34 @@
 ---
-name: Kinetic Enterprise
+name: AISea
 colors:
-  surface: '#fbf9f9'
-  surface-dim: '#dbdad9'
-  surface-bright: '#fbf9f9'
+  surface: '#EDEBE4'
+  surface-dim: '#dcd9cf'
+  surface-bright: '#fbf9f4'
   surface-container-lowest: '#ffffff'
-  surface-container-low: '#f5f3f3'
-  surface-container: '#efeded'
-  surface-container-high: '#e9e8e7'
-  surface-container-highest: '#e3e2e2'
-  on-surface: '#1b1c1c'
-  on-surface-variant: '#434751'
-  inverse-surface: '#303031'
-  inverse-on-surface: '#f2f0f0'
-  outline: '#747782'
-  outline-variant: '#c4c6d2'
-  surface-tint: '#395da2'
-  primary: '#00204e'
+  surface-container-low: '#f7f6f1'
+  surface-container: '#f2f0e9'
+  surface-container-high: '#ebe9e1'
+  surface-container-highest: '#e6e3db'
+  on-surface: '#14181C'
+  on-surface-variant: '#3a4048'
+  inverse-surface: '#14181C'
+  inverse-on-surface: '#EDEBE4'
+  outline: '#9AA0A6'
+  outline-variant: '#E6E3DB'
+  surface-tint: '#C8F051'
+  primary: '#14181C'
   on-primary: '#ffffff'
-  primary-container: '#003478'
-  on-primary-container: '#7d9fe9'
-  inverse-primary: '#aec6ff'
-  secondary: '#005db7'
+  primary-container: '#1f262d'
+  on-primary-container: '#d7dadd'
+  inverse-primary: '#C8F051'
+  accent: '#C8F051'
+  on-accent: '#14181C'
+  accent-container: '#eef9c9'
+  on-accent-container: '#2c3500'
+  secondary: '#3a4048'
   on-secondary: '#ffffff'
-  secondary-container: '#599bfe'
-  on-secondary-container: '#003268'
+  secondary-container: '#dfe2e5'
+  on-secondary-container: '#1b2026'
   tertiary: '#4d000a'
   on-tertiary: '#ffffff'
   tertiary-container: '#750015'
@@ -33,47 +37,52 @@ colors:
   on-error: '#ffffff'
   error-container: '#ffdad6'
   on-error-container: '#93000a'
-  primary-fixed: '#d8e2ff'
-  primary-fixed-dim: '#aec6ff'
-  on-primary-fixed: '#001a43'
-  on-primary-fixed-variant: '#1c4489'
-  secondary-fixed: '#d6e3ff'
-  secondary-fixed-dim: '#a9c7ff'
-  on-secondary-fixed: '#001b3d'
-  on-secondary-fixed-variant: '#00468c'
+  primary-fixed: '#eef9c9'
+  primary-fixed-dim: '#dcf2a3'
+  on-primary-fixed: '#2c3500'
+  on-primary-fixed-variant: '#404d00'
+  secondary-fixed: '#dfe2e5'
+  secondary-fixed-dim: '#c3c8cd'
+  on-secondary-fixed: '#14181C'
+  on-secondary-fixed-variant: '#3a4048'
   tertiary-fixed: '#ffdad8'
   tertiary-fixed-dim: '#ffb3b1'
   on-tertiary-fixed: '#410007'
   on-tertiary-fixed-variant: '#92001c'
-  background: '#fbf9f9'
-  on-background: '#1b1c1c'
-  surface-variant: '#e3e2e2'
-  surface-light: '#F8F9FA'
-  surface-border: '#DCDCDC'
-  text-primary: '#000000'
-  text-secondary: '#555555'
-  text-disabled: '#BEBEBE'
+  background: '#EDEBE4'
+  on-background: '#14181C'
+  surface-variant: '#e6e3db'
+  surface-light: '#F7F6F1'
+  surface-border: '#E6E3DB'
+  text-primary: '#14181C'
+  text-secondary: '#3a4048'
+  text-disabled: '#9AA0A6'
   accent-red: '#E63946'
+  region-na: '#4F8BFF'
+  region-sa: '#34D399'
+  region-me: '#FBBF24'
+  region-eu: '#C8F051'
+  region-apac: '#FB7185'
 typography:
   display-lg:
-    fontFamily: Hanken Grotesk
+    fontFamily: Space Grotesk
     fontSize: 48px
     fontWeight: '700'
     lineHeight: 56px
     letterSpacing: -0.02em
   headline-lg:
-    fontFamily: Hanken Grotesk
+    fontFamily: Space Grotesk
     fontSize: 32px
     fontWeight: '700'
     lineHeight: 40px
     letterSpacing: -0.01em
   headline-lg-mobile:
-    fontFamily: Hanken Grotesk
+    fontFamily: Space Grotesk
     fontSize: 24px
     fontWeight: '700'
     lineHeight: 32px
   headline-md:
-    fontFamily: Hanken Grotesk
+    fontFamily: Space Grotesk
     fontSize: 24px
     fontWeight: '600'
     lineHeight: 32px
@@ -104,11 +113,11 @@ typography:
     fontWeight: '500'
     lineHeight: 14px
 rounded:
-  sm: 0.25rem
-  DEFAULT: 0.5rem
-  md: 0.75rem
-  lg: 1rem
-  xl: 1.5rem
+  sm: 0.5rem
+  DEFAULT: 0.75rem
+  md: 1rem
+  lg: 1.25rem
+  xl: 1.875rem
   full: 9999px
 spacing:
   base: 4px
@@ -124,21 +133,21 @@ spacing:
 
 ## Brand & Style
 
-The design system is engineered for a premium financial environment that balances institutional stability with technological agility. It targets high-stakes corporate and personal finance users who demand precision and reliability. 
+The **AISea** design system is engineered for a modern, data-driven enterprise environment that pairs editorial warmth with technological energy. It targets analysts and executives navigating complex global-expansion intelligence, and balances approachable warmth with analytical precision.
 
-The aesthetic is **Corporate / Modern**, characterized by a rigorous information hierarchy, expansive use of whitespace, and a sophisticated color application. It avoids visual clutter, favoring a flat design language that uses subtle tonal layers and precise geometry to guide the user's focus through complex data-heavy interfaces. The emotional response is one of confidence, transparency, and architectural order.
+The aesthetic is **Modern Enterprise / Data Storytelling**, characterized by a warm beige canvas, high-contrast ink-black structure, and a single electric lime-green accent reserved for action and emphasis. It mixes a light beige working surface with deliberate dark "hero" zones (ink-black cards, the dashboard map) to create rhythm and focus. Generous rounding (16–30px) and glassmorphism soften the interface, while a tight Space Grotesk display face gives headings a confident, technical voice.
 
 ## Colors
 
-The palette is anchored by a deep Navy Primary (`#003478`), symbolizing authority and heritage. A secondary "Digital Blue" (`#2F79D9`) is utilized for interactive elements and highlights to ensure the interface feels modern rather than static. 
+The palette is anchored by **Ink Black Primary** (`#14181C`) — used for text, headings, structural emphasis and dark hero surfaces — paired with a warm **Beige background** (`#EDEBE4`) and pure white cards. The signature **Lime-Green Accent** (`#C8F051`) is reserved exclusively for *fill* actions: primary buttons, the selected navigation state, key highlights, and emphasis markers. Because lime-green is bright and fails contrast as a text color, it is never used for body text — text on a lime surface is always Ink Black (`#14181C`).
 
-A vibrant Red is reserved exclusively for high-priority alerts, critical actions, and selective brand accents, ensuring its impact is not diluted. The background environment uses a high-contrast White and a Light Gray (`#F8F9FA`) to differentiate between the canvas and nested surface containers. Text is strictly tiered to ensure legibility, using deep blacks for headers and softened grays for metadata.
+Region hues encode geography across the map, emblems, and charts: NA `#4F8BFF`, SA `#34D399`, ME `#FBBF24`, EU `#C8F051`, APAC `#FB7185`. Diagnostic signal colors (Success green, Warning amber, Danger/Error red) are preserved as data-meaning colors independent of theme. Text is tiered with Ink Black for headers and softened grays (`#3a4048`, `#9AA0A6`) for metadata.
 
 ## Typography
 
-This design system utilizes **Hanken Grotesk** for its exceptional clarity and professional weight distribution. The type scale is optimized for high-density data interfaces where legibility at small sizes is paramount. 
+This design system pairs **Space Grotesk** (display — headings and emphasis, tight tracking, technical character) with **Hanken Grotesk** (body — exceptional clarity at small sizes) and **Pretendard** (Korean fallback). The type scale is optimized for high-density data interfaces where legibility at small sizes is paramount.
 
-Headlines use a tighter letter-spacing and heavier weights to create a strong visual anchor. Body text is set with generous line heights to facilitate long-form reading of financial reports. Labels and captions utilize semi-bold weights and slight tracking to remain distinct even at 11px-12px.
+Headlines use Space Grotesk with tighter letter-spacing and heavier weights to create a strong visual anchor. Body text is set in Hanken Grotesk with generous line heights to facilitate long-form reading of reports. Labels and captions utilize semi-bold weights and slight tracking to remain distinct even at 11px-12px.
 
 ## Layout & Spacing
 
@@ -152,49 +161,50 @@ Horizontal spacing between related elements (like an icon and its label) should 
 
 ## Elevation & Depth
 
-Hierarchy is established through **Tonal Layering** supplemented by **Ambient Shadows**. 
+Hierarchy is established through **Tonal Layering** supplemented by **Ambient Shadows** (ink-black tinted) and **Glassmorphism** on dark zones.
 
-1. **Level 0 (Base):** Pure white background for primary content areas.
-2. **Level 1 (Surface):** Light gray (#F8F9FA) for secondary sidebars or navigation bars, often separated by a 1px border (#DCDCDC).
-3. **Level 2 (Cards):** White surfaces with a soft, 12% opacity navy-tinted shadow (8px blur, 4px Y-offset).
-4. **Level 3 (Popups/Modals):** High-elevation surfaces with a 16% opacity shadow (24px blur, 12px Y-offset) to indicate immediate interaction priority.
+1. **Level 0 (Base):** Warm beige (#EDEBE4) canvas for primary content areas.
+2. **Level 1 (Surface):** Light beige (#F7F6F1) for secondary sidebars or navigation bars, often separated by a 1px border (#E6E3DB).
+3. **Level 2 (Cards):** White surfaces with a soft, 12% opacity ink-tinted shadow `rgba(12,16,22,0.12)` (8px blur, 4px Y-offset).
+4. **Level 3 (Popups/Modals):** High-elevation surfaces with an 18% opacity ink-tinted shadow (24px blur, 12px Y-offset) to indicate immediate interaction priority.
 
-Backdrop blurs (8px - 12px) are used behind modals to maintain context while focusing the user on the task at hand.
+Dark hero zones (ink-black cards, dashboard map) use glassmorphism: semi-transparent ink fills `rgba(20,24,28,.62)` with hairline `rgba(255,255,255,.09)` borders. Backdrop blurs (8px - 12px) are used behind modals and the header to maintain context while focusing the user on the task at hand.
 
 ## Shapes
 
-The shape language reflects the system's "Kinetic" nature—precise but approachable. 
+The shape language is rounded and approachable, reflecting AISea's editorial-meets-technical character.
 
-- **Standard Components:** Buttons and input fields use a consistent 8px radius.
-- **Containment:** Standard cards and content modules use 8px.
-- **Overlays:** Modals, popups, and dialogs use a more pronounced 12px radius to soften their impact on the interface.
+- **Standard Components:** Buttons and input fields use a 16px radius.
+- **Containment:** Standard cards and content modules use 16–20px; large hero cards up to 30px.
+- **Overlays:** Modals, popups, and dialogs use a pronounced 20–30px radius to soften their impact on the interface.
 - **Status Markers:** Small badges and tags are fully rounded (pill-shaped) to distinguish them from interactive buttons.
 
 ## Components
 
 ### Buttons
-- **Primary:** Solid Primary Navy background with White text. 8px radius. Subtle scale-down effect (0.98) on click.
-- **Outline:** 1px border using Primary Navy, transparent background. Text in Primary Navy.
-- **Text:** No border or background. Primary Navy text. Used for secondary navigation or "Cancel" actions.
+- **Primary (Accent):** Solid Lime-Green (#C8F051) background with Ink-Black text (#14181C). ~20–30px radius. Subtle translate on hover.
+- **Solid (Ink):** Solid Ink-Black background with White text. Used for high-contrast primary actions on light surfaces.
+- **Outline:** 1px border using Ink Black, transparent background. Text in Ink Black.
+- **Text:** No border or background. Ink Black text. Used for secondary navigation or "Cancel" actions.
 
 ### Inputs
-- Height: 48px for standard, 40px for dense.
-- Style: 1px border (#DCDCDC) with 8px radius. Focus state uses a 2px Primary Navy border and a subtle blue outer glow.
+- Height: 46px for standard, 40px for dense.
+- Style: 1px border (#E6E3DB) with 16–24px radius. Focus state uses a 2px Ink-Black border (lime-green is avoided on focus rings for contrast).
 
 ### Badges & Status
 - Small, uppercase label text.
-- Use Semantic colors: Success (Green), Warning (Amber), Error (Red/Accent), Info (Secondary Blue). Backgrounds should be 10-15% opacity of the semantic color.
+- Use Semantic colors: Success (Green), Warning (Amber), Error (Red/Accent). Highlight/Info badges use lime-green fill with ink-black text. Backgrounds should be 10-16% opacity of the accent/semantic color.
 
 ### Progress Bars
-- 4px height for subtle tracking, 8px for major steps.
-- Track: Light gray (#DCDCDC). 
-- Indicator: Gradient from Primary Navy to Secondary Blue to indicate movement and advancement.
+- 6px–9px height.
+- Track: Beige (#EDEBE4 / #e6e3db).
+- Indicator: Lime-Green (#C8F051) for emphasis, or Ink Black for neutral data, with smooth `cubic-bezier(.2,.7,.3,1)` width transition.
 
 ### Modals & Popups
-- 12px corner radius.
-- Centered on screen with a dark, semi-transparent backdrop (40% opacity Navy).
-- Header includes a clear title in `headline-md` and a close icon in the top right.
+- 20–30px corner radius.
+- Centered on screen with a dark, semi-transparent backdrop. `aisea-pop` entrance animation.
+- Header includes a clear title in `headline-md` (Space Grotesk) and a close icon in the top right.
 
 ### Cards
-- White background, 1px border (#DCDCDC), and Level 2 shadow.
+- White background, 1px border (#E6E3DB), and Level 2 ink-tinted shadow. Dark hero cards use ink-black fills with lime-green accents.
 - Inner padding should follow the `lg` (24px) spacing token.

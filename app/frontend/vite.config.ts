@@ -12,10 +12,10 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  // 프론트는 `/app/` 경로에서 서빙된다(백엔드 StaticFiles mount + nginx Dockerfile 모두 /app 하위에 dist 배치).
-  // 자산 URL이 /app/assets/... 로 생성되도록 base 고정. nginx도 dist를 /usr/share/nginx/html/app 에 두고
-  // `location /app/`로 서빙해야 경로가 맞는다(루트 서빙 시 /app/assets/*가 index.html로 fallback → CSS MIME 오류).
-  base: '/app/',
+  // base 상대경로(`./`) — 자산을 index.html 위치 기준 상대로 참조한다.
+  // code-editor 포트 프록시(`/ports/8000/app/` 처럼 경로 prefix가 붙는 환경)에서도
+  // 자산 URL이 현재 경로를 따라가도록 보장(절대경로 `/app/`는 prefix 밖으로 나가 404).
+  base: './',
   server: {
     // 원격/프록시 도메인(CloudFront 등)으로 dev 서버에 접속할 때 호스트 차단 해제.
     // 로컬 데모/터널 환경 편의용 — 프로덕션은 nginx(Dockerfile)로 서빙하므로 영향 없음.

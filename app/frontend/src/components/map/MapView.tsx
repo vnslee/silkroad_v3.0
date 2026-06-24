@@ -41,13 +41,15 @@ interface Region6 {
   dark: string
   code: string
 }
+// 지역색(AISea): NA #4F8BFF / SA #34D399 / ME #FBBF24 / EU #C8F051 / APAC #FB7185.
+// fill=hover 채움(연한 파스텔), dark=툴팁 배경(어두운 톤, 흰 텍스트 대비).
 const REGIONS6: Region6[] = [
-  { key: 'na', label: '북아메리카', fill: '#BFD0EC', dark: '#2C4C86', code: 'NA' },
-  { key: 'sa', label: '남아메리카', fill: '#C8E0D2', dark: '#2E6B4E', code: 'SA' },
-  { key: 'eu', label: '유럽', fill: '#C9D2EE', dark: '#3A4C9A', code: 'EU' },
-  { key: 'me', label: '중동', fill: '#EAD9B8', dark: '#8A6A1E', code: 'ME' },
-  { key: 'ap', label: '아시아·태평양', fill: '#CBC7EC', dark: '#5A4C9A', code: 'APAC' },
-  { key: 'af', label: '아프리카', fill: '#EBCFC2', dark: '#8A4A24', code: 'AF' },
+  { key: 'na', label: '북아메리카', fill: '#CBDDFF', dark: '#1f4ea8', code: 'NA' },
+  { key: 'sa', label: '남아메리카', fill: '#C2F0DE', dark: '#157a55', code: 'SA' },
+  { key: 'eu', label: '유럽', fill: '#E4F6B8', dark: '#5c6f12', code: 'EU' },
+  { key: 'me', label: '중동', fill: '#FDEABF', dark: '#946a08', code: 'ME' },
+  { key: 'ap', label: '아시아·태평양', fill: '#FED2D8', dark: '#bc3a4d', code: 'APAC' },
+  { key: 'af', label: '아프리카', fill: '#E2DED5', dark: '#3a4048', code: 'AF' },
 ]
 const REGION_BY_KEY: Record<string, Region6> = Object.fromEntries(REGIONS6.map((r) => [r.key, r]))
 
@@ -192,7 +194,7 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
       .attr('class', 'land')
       .attr('d', path as never)
       .attr('fill', featBaseFill)
-      .attr('stroke', '#F4F6F8')
+      .attr('stroke', '#EDEBE4')
       .attr('stroke-width', 0.6)
       .style('cursor', 'pointer')
 
@@ -248,10 +250,10 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
       .attr('role', 'button')
       .attr('aria-label', (d) => `${d.name} 선택`)
       .on('mouseenter', (e: MouseEvent, d) =>
-        showTip(e, markerLabel(d), d.status === 'established' ? '#1B3451' : '#3F6CB4'),
+        showTip(e, markerLabel(d), d.status === 'established' ? '#14181C' : '#5c6f12'),
       )
       .on('mousemove', (e: MouseEvent, d) =>
-        showTip(e, markerLabel(d), d.status === 'established' ? '#1B3451' : '#3F6CB4'),
+        showTip(e, markerLabel(d), d.status === 'established' ? '#14181C' : '#5c6f12'),
       )
       .on('mouseleave', () => setTip(null))
       .on('click', (_e, d) => {
@@ -263,34 +265,34 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
     // mockup(컨테이너 실치수 렌더)의 체감 크기에 맞춘다. stroke도 동일 비율 축소.
     const MS = 0.5
 
-    // ── 기진출국(established): 네이비 3중 고정 링(펄스 없음, 안정) ──
+    // ── 기진출국(established): 잉크블랙 3중 고정 링(펄스 없음, 안정) ──
     const established = node.filter((d) => d.status === 'established')
     // 외곽 후광(반투명)
-    established.append('circle').attr('r', 8 * MS).attr('fill', 'rgba(27,52,81,0.15)')
-    // 메인 원(네이비 + 흰 테두리)
+    established.append('circle').attr('r', 8 * MS).attr('fill', 'rgba(20,24,28,0.15)')
+    // 메인 원(잉크블랙 + 흰 테두리)
     established
       .append('circle')
       .attr('r', 5 * MS)
-      .attr('fill', '#1B3451')
+      .attr('fill', '#14181C')
       .attr('stroke', '#fff')
       .attr('stroke-width', 1.8 * MS)
     // 중심 흰 점
     established.append('circle').attr('r', 1.8 * MS).attr('fill', '#fff')
 
-    // ── 진출후보국(candidate): 블루 펄스 링 + 블루 중심 핀 ──
+    // ── 진출후보국(candidate): 라임그린 펄스 링 + 라임그린 핀(잉크 테두리로 대비 보강) ──
     const candidate = node.filter((d) => d.status === 'candidate')
     candidate
       .append('circle')
       .attr('r', 6 * MS)
-      .attr('fill', '#3F6CB4')
+      .attr('fill', '#C8F051')
       .style('transform-box', 'fill-box')
       .style('transform-origin', 'center')
       .style('animation', 'aisea-pulse 2.4s ease-out infinite')
     candidate
       .append('circle')
       .attr('r', 4 * MS)
-      .attr('fill', '#3F6CB4')
-      .attr('stroke', '#fff')
+      .attr('fill', '#C8F051')
+      .attr('stroke', '#14181C')
       .attr('stroke-width', 1.5 * MS)
 
     // 줌/패닝(1~6배) — translateExtent로 지도 영역 밖(공백)으로 끌려나가지 않게 제한.
@@ -328,7 +330,7 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
   return (
     <div
       className="relative h-full w-full"
-      style={{ background: 'radial-gradient(120% 120% at 50% 0%, #f7f8fa 0%, #ebeef1 100%)' }}
+      style={{ background: 'radial-gradient(120% 120% at 50% 0%, #f4f2ea 0%, #e3e0d6 100%)' }}
     >
       <TopBar
         countries={countries}

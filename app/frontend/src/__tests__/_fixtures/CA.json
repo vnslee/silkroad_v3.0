@@ -1,0 +1,1865 @@
+{
+  "report_id": "RPT_CTR_CA_001",
+  "report_type": "type1_country",
+  "title": "캐나다 진출 진단 보고서",
+  "target": {
+    "country": "CA",
+    "base_country": "US"
+  },
+  "generated_at": "2026-06-22T19:16:55.496767",
+  "schema_version": "1.2",
+  "overall_insight": "성숙한 G7 자동차금융 시장으로, 2025년 신차 판매 약 188만대(DesRosiers/GAC)·금융침투율 80%+의 고침투·고신뢰 환경이다. 비즈니스 매력도는 안정성(AAA/Aaa 국가신용·낮은 APR)이 핵심이나 성장률은 한 자릿수 초중반으로 멕시코 대비 완만하다. 비용·난이도 드라이버는 연방-주 이중 규제 — OSFI(연방 건전성)와 주별 소비자신용·면허 체제(특히 Quebec 소비자보호법·언어 의무)가 진입 복잡도를 키운다. 단 외국인 지분 제한 없음(Investment Canada Act 심사 임계만)·외환 자유로 게이트는 대부분 PASS. IT 유사도는 북미 권역에서 매우 높다 — Equifax/TransUnion 양강 CB·Interac/EFT 결제·전자서명·고도화된 디지털 채널로 베이스라인 재사용률이 멕시코보다 높다. 매력도↔IT 불일치 지점은 차량회수 — 주별로 법원명령 요구(자력구제 제한) 편차가 커 리스크 모듈 분기가 필요하다. 다크호스는 EV 가속(연방 iZEV+ZEV mandate 2026+)·강한 캡티브(Toyota·Honda·Ford·GM)와 은행계(Scotiabank·RBC·TD) 공존 구조다. B2B 리스 우선 진입 후 주별 소비자신용 확장 또는 한국 OEM 캡티브 연계 전략이 유효하다.",
+  "overall_insight_en": "A mature G7 auto-finance market — ~1.88M new-car sales in 2025 (DesRosiers/GAC) with 80%+ finance penetration, a high-penetration, high-trust environment. Business attractiveness hinges on stability (AAA/Aaa sovereign credit, low APR), but growth is in the low single digits — moderate versus Mexico. Cost/difficulty drivers are the federal-provincial dual regulation — OSFI (federal prudential) and province-by-province consumer-credit/licensing regimes (notably Quebec's consumer-protection law and language obligations) raise entry complexity. However, with no foreign-ownership limit (only an Investment Canada Act review threshold) and free FX, most gates PASS. IT similarity is very high in North America — the Equifax/TransUnion duopoly CB, Interac/EFT payments, e-signature, and advanced digital channels give higher baseline reuse than Mexico. The attractiveness↔IT mismatch is repossession — wide provincial variation in court-order requirements (limited self-help) requires a per-province risk-module branch. The dark horse is EV acceleration (federal iZEV + ZEV mandate 2026+) and a strong-captive (Toyota·Honda·Ford·GM) and bank-led (Scotiabank·RBC·TD) coexistence structure. A B2B-lease-first entry followed by per-province consumer-credit expansion, or a Korean OEM captive linkage, is a viable strategy.",
+  "country_meta": {
+    "country": "Canada",
+    "country_ko": "캐나다",
+    "region": "NORTH_AMERICA",
+    "currency": "CAD",
+    "data_year": 2025,
+    "fetched_at": "2026-06-21T21:00:00+09:00",
+    "fetched_by": "ai",
+    "entry_status": "미진출"
+  },
+  "data_quality": {
+    "completeness_pct": 97.95918367346938,
+    "total_items": 49,
+    "target_items": 48,
+    "timeseries_coverage": 65.3061224489796,
+    "source_tiers": {
+      "tier1": 19,
+      "tier2": 12,
+      "tier3": 18,
+      "tier4": 0
+    },
+    "items_by_category": {
+      "business": [
+        {
+          "item": "오토금융/리스 시장규모",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "GDP 성장률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "금융 이용률(신차)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "금융 이용률(중고차)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "평균 금리/APR",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "신차 판매대수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "캡티브 강도(점유율)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "금융사 점유율(Top 5)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "법인세율",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "이자소득 원천징수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "배당 원천징수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "EV 보급률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "EV·ICE 잔존가치 리스크",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "해당국 정성 요약",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "브랜드 Top10",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 2
+        },
+        {
+          "item": "OEM 순위(Top 5)",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 2
+        },
+        {
+          "item": "금융사 순위(Top 5)",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "경쟁사 리스트",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "경쟁사 진출 형태",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "경쟁사 금리 범위",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 2
+        },
+        {
+          "item": "평균 신차가격",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "외부 이슈 스캔",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        }
+      ],
+      "shared": [
+        {
+          "item": "외국인 지분 한도",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "외환·배당 송금 자유도",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "국가신용등급",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "라이선스 취득 가능 여부(외국사)",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "금리 상한 규제",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "최저자본금",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "법적 회수 소요기간",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "추심 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "충당금 규정",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "연체 분류 기준",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "의무보험 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "신용생명보험 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "보험 끼워팔기 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "AI 신용평가 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "규제기관 식별",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 1
+        }
+      ],
+      "it": [
+        {
+          "item": "솔루션 벤더",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "솔루션 유형",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "신용정보(CB) 인프라",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "결제·정산 인프라",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "디지털 딜러 성숙도",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "국외이전 제한",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        }
+      ]
+    },
+    "critical_gaps": [],
+    "readiness": {
+      "can_generate": true,
+      "tabs": {
+        "1-1": {
+          "name": "Similarity Scoring (vs Baseline)",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-2": {
+          "name": "System Decision Tree",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-3": {
+          "name": "Contract Volume & 10Y TCO",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-4": {
+          "name": "Market & Competition Background",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        }
+      }
+    }
+  },
+  "tabs": {
+    "tab_1_1_similarity": {
+      "overall_score": 83.75,
+      "axes": {
+        "product": 87.5,
+        "regulatory": 87.5,
+        "system": 84.375,
+        "risk": 62.5
+      },
+      "items": [
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "axis": "product",
+          "weight": 0.15,
+          "dimensions": [
+            {
+              "dimension": "리스 취급 일치도",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "Lease 22%로 멕시코 대비 높음",
+              "note_en": "Lease 22%, higher than Mexico"
+            },
+            {
+              "dimension": "렌탈 취급 일치도",
+              "target_score": 4,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "단기렌탈·구독 성장",
+              "note_en": "Short-term rental·subscription growth"
+            },
+            {
+              "dimension": "플릿 취급 일치도",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "법인 플릿리스 성숙",
+              "note_en": "Corporate fleet leasing mature"
+            },
+            {
+              "dimension": "상품별 비중 유사도",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "대출+리스 균형 베이스라인 근접",
+              "note_en": "Loan + lease balance close to baseline"
+            }
+          ],
+          "item_similarity": 87.5
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "axis": "regulatory",
+          "weight": 0.1,
+          "dimensions": [
+            {
+              "dimension": "현지 저장 강제",
+              "target_score": 5,
+              "base_score": 5,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "PIPEDA 강제 현지화 없음",
+              "note_en": "PIPEDA has no forced localization"
+            },
+            {
+              "dimension": "국외 이전 허용도",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "동의/계약 기반, Quebec 영향평가",
+              "note_en": "Consent/contract-based, Quebec impact assessment"
+            },
+            {
+              "dimension": "동의·보관 규제",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "Quebec Law 25로 GDPR급 강화",
+              "note_en": "Strengthened to GDPR-grade by Quebec Law 25"
+            },
+            {
+              "dimension": "GDPR 동등성",
+              "target_score": 4,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "PIPEDA 적정성·Law 25 GDPR 근접",
+              "note_en": "PIPEDA adequacy·Law 25 close to GDPR"
+            }
+          ],
+          "item_similarity": 93.75
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "axis": "regulatory",
+          "weight": 0.25,
+          "dimensions": [
+            {
+              "dimension": "취득방식(등록 vs 인가)",
+              "target_score": 4,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "여신회사 등록형, OSFI 인가 면제",
+              "note_en": "Finance-company registration type, OSFI-authorization exempt"
+            },
+            {
+              "dimension": "외국인 취득 가능",
+              "target_score": 5,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "ICA 심사 외 100% 허용",
+              "note_en": "100% allowed apart from ICA review"
+            },
+            {
+              "dimension": "처리기간(개월)",
+              "target_score": 4,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "주별 등록 1~3개월",
+              "note_en": "Per-province registration 1-3 months"
+            },
+            {
+              "dimension": "최저자본금 수준",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "여신회사 자본 요건 경량",
+              "note_en": "Light finance-company capital requirements"
+            },
+            {
+              "dimension": "감독 강도",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "연방-주 이중·13개 주 분산",
+              "note_en": "Federal-provincial dual, dispersed across 13 provinces"
+            }
+          ],
+          "item_similarity": 85.0
+        },
+        {
+          "item": "솔루션 유형",
+          "axis": "system",
+          "weight": 0.2,
+          "dimensions": [
+            {
+              "dimension": "배포형태(패키지/SI/SaaS)",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "북미 표준 패키지·SaaS 정합",
+              "note_en": "North American standard package·SaaS fit"
+            },
+            {
+              "dimension": "커스터마이징 자유도",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "defi/CGI 자유도 양호",
+              "note_en": "Good flexibility with defi/CGI"
+            },
+            {
+              "dimension": "벤더 종속도",
+              "target_score": 3,
+              "base_score": 2,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "글로벌+북미 혼합",
+              "note_en": "Global + North American mix"
+            },
+            {
+              "dimension": "멀티테넌시 여부",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "SaaS 멀티테넌시 지원",
+              "note_en": "SaaS multi-tenancy supported"
+            }
+          ],
+          "item_similarity": 81.25
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "axis": "system",
+          "weight": 0.2,
+          "dimensions": [
+            {
+              "dimension": "온라인 신청 연동",
+              "target_score": 5,
+              "base_score": 5,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "온라인 신청·심사 표준화",
+              "note_en": "Online application·underwriting standardized"
+            },
+            {
+              "dimension": "비대면 계약 가능",
+              "target_score": 5,
+              "base_score": 5,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "전자서명(UECA) 보편",
+              "note_en": "E-signature (UECA) universal"
+            },
+            {
+              "dimension": "API 개방도",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Open Banking 도입 중(2025~)",
+              "note_en": "Open Banking adoption underway (2025+)"
+            },
+            {
+              "dimension": "페이퍼리스 수준",
+              "target_score": 5,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "페이퍼리스 거의 완성",
+              "note_en": "Paperless nearly complete"
+            }
+          ],
+          "item_similarity": 87.5
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "axis": "risk",
+          "weight": 0.1,
+          "dimensions": [
+            {
+              "dimension": "사법절차 필요",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "주별 법원명령 요구 편차",
+              "note_en": "Per-province court-order requirement varies"
+            },
+            {
+              "dimension": "회수 소요기간(일)",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "평균 60~150일",
+              "note_en": "Average 60-150 days"
+            },
+            {
+              "dimension": "자력구제 허용",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "PPSA 자력구제 일부 허용·Quebec 제한",
+              "note_en": "PPSA self-help partly allowed·Quebec restricts"
+            },
+            {
+              "dimension": "회수율",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "성숙시장 회수율 양호",
+              "note_en": "Good recovery rate in a mature market"
+            }
+          ],
+          "item_similarity": 62.5
+        }
+      ],
+      "method": "dimension_based",
+      "scale": "1~5 per dimension → gap 0=100, gap 4=0",
+      "evidence_items": [
+        {
+          "item": "솔루션 유형",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": "글로벌 패키지 + 은행계 자체 코어(RBC·TD·Scotiabank) + 캡티브 자체 시스템(북미 공유)",
+          "value_en": "Global packages + bank proprietary cores (RBC·TD·Scotiabank) + captive proprietary systems (shared across North America)",
+          "unit": "type",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "업계",
+          "source_en": "Industry",
+          "insight": "대형 은행계(RBC·TD·Scotiabank·BMO)는 자체 코어, 캡티브는 북미 통합 시스템(미국과 공유), 중소 여신사는 SaaS(defi·CGI). 북미 표준 아키텍처로 베이스라인 정합성 높음.",
+          "insight_en": "Large banks (RBC·TD·Scotiabank·BMO) use proprietary cores, captives use North American integrated systems (shared with the US), and small/mid lenders use SaaS (defi·CGI). High baseline fit under a North American standard architecture.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": 5,
+          "value_en": null,
+          "unit": "maturity_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Interac e-Transfer, EFT, 전자서명(PIPEDA/UECA), Open Banking 프레임워크(2025 도입 중)",
+          "source_en": "Interac e-Transfer, EFT, e-signature (PIPEDA/UECA), Open Banking framework (rolling out 2025)",
+          "insight": "Interac/EFT 즉시이체·전자서명 보편·온라인 신청 표준 — G7 최상위 디지털 인프라. 비대면 계약·페이퍼리스 성숙. Open Banking 도입 진행(2025~)으로 API 개방 확대.",
+          "insight_en": "Interac/EFT instant transfer, universal e-signature, and standard online applications — top-tier G7 digital infrastructure. Remote contracting and paperless processes are mature. Open Banking adoption underway (2025+) expanding API openness.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "디지털 딜러 성숙도",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": 4,
+          "value_en": null,
+          "unit": "maturity_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "업계 (Clutch·Canada Drives·AutoTrader.ca·CarGurus·Tesla 직판)",
+          "source_en": "Industry (Clutch·Canada Drives·AutoTrader.ca·CarGurus·Tesla direct sales)",
+          "insight": "Clutch·Canada Drives(온라인 중고차)·AutoTrader.ca·CarGurus 등 디지털 채널 발달. OEM 직판(Tesla)·임베디드 금융 연동 성숙. 미국 채널과 사실상 동일 — 재사용 양호.",
+          "insight_en": "Well-developed digital channels — Clutch·Canada Drives (online used cars)·AutoTrader.ca·CarGurus. OEM direct sales (Tesla) and embedded-finance integration are mature. Effectively identical to US channels — good reuse.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "소비자/B2B 자동차금융=비은행 여신회사(finance company) 형태로 OSFI 건전성 인가 불필요(예금 미수취 시), 주별 소비자신용 등록·면허만 / 은행 인가(OSFI, 자본 CAD 5M+)는 별도 옵션",
+          "value_en": "Consumer/B2B auto finance = as a non-bank finance company, no OSFI prudential authorization required (if non-deposit-taking), only per-province consumer-credit registration/licensing / bank authorization (OSFI, capital CAD 5M+) is a separate option.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "segment",
+          "segment": "consumer_credit",
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Bank Act, OSFI 가이드, 주별 Consumer Protection / Cost of Credit Disclosure Act",
+          "source_en": "Bank Act, OSFI guidance, provincial Consumer Protection / Cost of Credit Disclosure Act",
+          "insight": "예금 미수취 여신회사는 OSFI 인가 면제 — 진입 유연. 다만 주별 소비자신용 등록(13개 주·준주)·Quebec 언어/소비자보호로 멕시코 SOFOM ENR보다 다층적. 단일 면허 없음이 부담.",
+          "insight_en": "Non-deposit-taking finance companies are exempt from OSFI authorization — flexible entry. But per-province consumer-credit registration (13 provinces/territories) and Quebec language/consumer-protection make it more layered than Mexico's SOFOM ENR. The absence of a single license is a burden.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "PIPEDA(연방 개인정보보호법) 적용. 강제 현지화 의무 없음(연방). 단 Quebec Law 25(2023~)·BC/AB 공공부문 일부 제한. 국외이전은 동의/계약",
+          "value_en": "PIPEDA (federal privacy law) applies. No forced localization (federal). However, Quebec Law 25 (2023+) and some BC/AB public-sector limits. Cross-border transfer via consent/contract.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "operating_model",
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "PIPEDA, Quebec Law 25(2023), OPC(연방 개인정보보호위원회)",
+          "source_en": "PIPEDA, Quebec Law 25 (2023), OPC (federal Office of the Privacy Commissioner)",
+          "insight": "PIPEDA로 강제 현지화 없음 — 본사(미국·한국) 연동 아키텍처 가능. 단 Quebec Law 25(GDPR급)는 국외이전 영향평가·통지 의무 강화 — 이중주의 필요.",
+          "insight_en": "No forced localization under PIPEDA — HQ (US/Korea) connected architecture is feasible. However, Quebec Law 25 (GDPR-grade) strengthens cross-border transfer impact-assessment and notice obligations — dual-track attention needed.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": 3,
+          "value_en": null,
+          "unit": "ease_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "주별 Personal Property Security Act(PPSA) / Quebec Civil Code, 업계 (주별 회수 절차 상이)",
+          "source_en": "Provincial Personal Property Security Act (PPSA) / Quebec Civil Code, industry (recovery procedures vary by province)",
+          "insight": "PPSA 기반 담보권 행사로 회수 가능하나 주별 편차 큼 — 일부 주(예 Quebec·일부는 법원명령/자력구제 제한, BC·ON는 PPSA seizure). 평균 60~150일. 리스는 소유권 기반으로 더 빠름. 멕시코와 유사한 주별 분기 필요.",
+          "insight_en": "Recovery is possible via PPSA security-interest enforcement, but provincial variation is wide — some provinces (e.g. Quebec, and some require court orders / limit self-help, while BC·ON allow PPSA seizure). Average 60-150 days. Leasing is faster on an ownership basis. Per-province branching needed, similar to Mexico.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_2_decision": {
+      "decision": "baseline_system_expansion",
+      "similarity_score": 83.75,
+      "recommendation": {
+        "ko": "권역 내 확산: US 시스템(Salesforce) 현지화",
+        "en": "Regional expansion: localize US system (Salesforce)."
+      },
+      "base_country": "US",
+      "base_system": "Salesforce",
+      "region_system_exists": true,
+      "hq_baseline_cost": 8000,
+      "hq_baseline_months": 24,
+      "hq_baseline_currency": "EUR",
+      "items": [
+        {
+          "item": "금리 상한 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "연방 형법(Criminal Code) criminal rate of interest 상한 — 2025년부터 연 35% APR로 하향(기존 47% EAR). 주별 추가 공시(Cost of Credit Disclosure)",
+          "value_en": "Federal Criminal Code criminal rate of interest cap — lowered to 35% APR per year from 2025 (previously 47% EAR). Per-province additional disclosure (Cost of Credit Disclosure).",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "segment",
+          "segment": "consumer_credit",
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Criminal Code s.347 (2025 개정: 상한 35% APR), 주별 Cost of Credit Disclosure Act",
+          "source_en": "Criminal Code s.347 (2025 amendment: cap 35% APR), provincial Cost of Credit Disclosure Act",
+          "insight": "형법상 금리상한 35% APR(2025 하향) — 자동차금융 평균 8%보다 충분히 높아 실무 제약 미미. 주별 비용공시 의무는 EU 동등. 멕시코(상한 없음)보다 명시적이나 영향 작음.",
+          "insight_en": "Criminal-rate ceiling 35% APR (lowered in 2025) — well above the ~8% auto-finance average, so practical constraint is minimal. Per-province cost-disclosure obligations are on par with the EU. More explicit than Mexico (no cap) but low impact.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "외환·배당 송금 자유도",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "외환 완전 자유, 자본통제 없음. 배당 25%(조약 5%)·비특수관계 이자 면제. USMCA로 미국 송금 자유도 우수",
+          "value_en": "Fully free FX, no capital controls. Dividend 25% (treaty 5%), arm's-length interest exempt. USMCA gives strong remittance freedom to the US.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "country",
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Bank of Canada, Income Tax Act, 한·캐 조세조약, USMCA",
+          "source_en": "Bank of Canada, Income Tax Act, Korea-Canada tax treaty, USMCA",
+          "insight": "외환 송금 완전 자유, 통제 없음. 배당 25%→조약 5%, 비특수관계 이자 면제로 본국 회수 환경 우수. 멕시코 대비 안정성 우월.",
+          "insight_en": "Fully free FX remittance, no controls. Dividend 25%→5% under treaty, arm's-length interest exempt — excellent repatriation environment. Superior stability versus Mexico.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "의무보험 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": "자동차 의무책임보험(주별 강제). 일부 주 공영보험(BC ICBC·SK·MB), 나머지 민영. 대인배상 의무",
+          "value_en": "Compulsory auto liability insurance (mandatory by province). Some provinces have public insurance (BC ICBC·SK·MB), the rest private. Third-party liability mandatory.",
+          "unit": "regime",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "주별 자동차보험법 (BC ICBC, Ontario Insurance Act 등), OSFI/주 보험감독",
+          "source_en": "Provincial auto-insurance acts (BC ICBC, Ontario Insurance Act, etc.), OSFI / provincial insurance supervision",
+          "insight": "자동차 책임보험 전 주 강제. 일부 주(BC·SK·MB)는 공영 단일보험, 나머지 민영 경쟁. 리스·금융 차량은 종합보험 표준 — 주별 공영/민영 분기로 보험연동 로직 일부 보정.",
+          "insight_en": "Compulsory auto liability insurance in all provinces. Some provinces (BC·SK·MB) run a single public insurer, the rest are private-competitive. Comprehensive insurance is standard for leased/financed vehicles — insurance-integration logic needs partial public/private branching by province.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "신용생명보험 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": "끼워팔기(tied selling) 제한 (Bank Act s.459.1, 주별 보험법). 신용생명보험 옵션 제공·분리구매 보장",
+          "value_en": "Tied-selling restriction (Bank Act s.459.1, provincial insurance laws). Credit-life-insurance option offering and standalone purchase guaranteed.",
+          "unit": "regime",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Bank Act s.459.1, 주별 Insurance Act, FCAC 가이드",
+          "source_en": "Bank Act s.459.1, provincial Insurance Acts, FCAC guidance",
+          "insight": "tied selling(강제 끼워팔기) 금지 — 신용생명보험 옵션·분리구매 보장. EU IDD 동등 수준. 베이스라인 컴플라이언스 재사용 가능.",
+          "insight_en": "Tied selling is prohibited — credit-life-insurance options and standalone purchase are guaranteed. On par with EU IDD. Baseline compliance is reusable.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_3_tco": {
+      "build_cost": 3600.0,
+      "build_months": 12.0,
+      "annual_subscription": 103299.426,
+      "annual_maintenance": 500,
+      "annual_recurring": 103799.426,
+      "operations_10y": 50000,
+      "system_cost_10y": 1041594.26,
+      "total_tco_10y": 1091594.26,
+      "currency": "EUR",
+      "similarity_score": 83.75,
+      "similarity_multiplier": 0.6,
+      "similarity_band": "80~90",
+      "discount_applied": 0.4,
+      "build_breakdown": {
+        "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",
+        "inputs": {
+          "베이스라인 국가": "US",
+          "베이스라인 솔루션": "Salesforce",
+          "B 구축비용": 6000,
+          "B 구축기간(개월)": 20,
+          "종합 유사도": 83.8,
+          "승수 구간": "80~90",
+          "적용 승수": 0.6
+        },
+        "outputs": {
+          "신규국 구축비용": 3600.0,
+          "신규국 구축기간(개월)": 12.0
+        }
+      },
+      "expected_contracts": 25282,
+      "expected_contracts_breakdown": {
+        "value": 25282,
+        "formula": "신차 판매대수 × 금융이용률(신차) × (할부+리스 비중) × 우리사 예상 점유율",
+        "inputs": {
+          "신차 판매대수": 1880000,
+          "신차 판매대수(원본값)": 1880000.0,
+          "신차 판매대수(단위)": "units",
+          "금융 이용률(신차)_%": 82.0,
+          "구매 패턴(할부·리스 비중)_%": 82.0,
+          "우리사 예상 점유율": 0.02
+        }
+      },
+      "subscription_details": {
+        "existing_volume": 80,
+        "new_volume": 25282,
+        "total_volume": 25362,
+        "unit_price": 4.073,
+        "currency": "EUR",
+        "annual_fee": 103299.426,
+        "note": "All volume repriced at new tier rate"
+      },
+      "subscription_tiers": [
+        {
+          "min_volume": 0,
+          "max_volume": 2000,
+          "price_per_unit": 9.88,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 2001,
+          "max_volume": 4000,
+          "price_per_unit": 5.928,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 4001,
+          "max_volume": 7500,
+          "price_per_unit": 5.434,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 7501,
+          "max_volume": 10000,
+          "price_per_unit": 4.94,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 10001,
+          "max_volume": 20000,
+          "price_per_unit": 4.323,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 20001,
+          "max_volume": 80000,
+          "price_per_unit": 4.073,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 80001,
+          "max_volume": 999999,
+          "price_per_unit": 0.865,
+          "currency": "EUR"
+        }
+      ],
+      "existing_total_volume": 80,
+      "items": [
+        {
+          "item": "신차 판매대수",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 1880000,
+          "value_en": null,
+          "unit": "units",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 1640000
+              },
+              {
+                "year": 2022,
+                "value": 1490000
+              },
+              {
+                "year": 2023,
+                "value": 1660000
+              },
+              {
+                "year": 2024,
+                "value": 1850000
+              },
+              {
+                "year": 2025,
+                "value": 1880000
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 1920000
+              },
+              {
+                "year": 2027,
+                "value": 1950000
+              },
+              {
+                "year": 2028,
+                "value": 1970000
+              },
+              {
+                "year": 2029,
+                "value": 1990000
+              },
+              {
+                "year": 2030,
+                "value": 2010000
+              }
+            ],
+            "cagr_hist": 3.5,
+            "cagr_forecast": 1.4,
+            "estimated": true
+          },
+          "tier": 2,
+          "source": "DesRosiers Automotive Consultants / Global Automakers of Canada(GAC) 2025 (신차 등록 약 188만대)",
+          "source_en": "DesRosiers Automotive Consultants / Global Automakers of Canada (GAC) 2025 (~1.88M new-car registrations)",
+          "insight": "2025년 약 188만대 — 팬데믹·공급망 충격 후 회복. 2017 정점(205만)에 근접. 건수 산식 기준 모수로 금융침투율·우리사 점유율과 결합.",
+          "insight_en": "~1.88M units in 2025 — recovery after pandemic/supply-chain shocks. Approaching the 2017 peak (2.05M). Base unit for volume calculations, combined with finance penetration and our share.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융 이용률(신차)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 82,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 80
+              },
+              {
+                "year": 2022,
+                "value": 80
+              },
+              {
+                "year": 2023,
+                "value": 81
+              },
+              {
+                "year": 2024,
+                "value": 82
+              },
+              {
+                "year": 2025,
+                "value": 82
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 83
+              },
+              {
+                "year": 2027,
+                "value": 83
+              },
+              {
+                "year": 2028,
+                "value": 84
+              },
+              {
+                "year": 2029,
+                "value": 84
+              },
+              {
+                "year": 2030,
+                "value": 85
+              }
+            ],
+            "cagr_hist": 0.6,
+            "cagr_forecast": 0.7,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "DesRosiers Automotive / J.D. Power Canada 2025 (신차의 80%+가 금융·리스 경유)",
+          "source_en": "DesRosiers Automotive / J.D. Power Canada 2025 (80%+ of new cars via finance/lease)",
+          "insight": "신차 등록의 82%가 금융 경유 — 멕시코(65%) 대비 고침투 성숙시장. 대출 중심 + 리스(Lease) 약 20%+ 혼재.",
+          "insight_en": "82% of new-car registrations go through finance — a high-penetration mature market vs Mexico (65%). Loan-centric + lease (~20%+) mix.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 82,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "DesRosiers / CFLA 2025 (할부대출 약 60%·리스(Lease) 약 22%)",
+          "source_en": "DesRosiers / CFLA 2025 (installment loans ~60%, lease ~22%)",
+          "insight": "신차의 82%가 금융 경유 — 할부대출 60% + 리스 22%. 리스 비중이 멕시코(15%)·BR 대비 높아 베이스라인 리스 상품 정합성 우수.",
+          "insight_en": "82% of new cars go through finance — installment loans 60% + lease 22%. Lease share is higher than Mexico (15%) and BR, so baseline lease-product fit is excellent.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "캡티브 강도(점유율)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 55,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "CFLA 2025 (Toyota Credit·Honda Financial·Ford Credit·GM Financial·VW Finance 합산 약 55%)",
+          "source_en": "CFLA 2025 (Toyota Credit·Honda Financial·Ford Credit·GM Financial·VW Finance combine ~55%)",
+          "insight": "캡티브 강세 — Toyota Credit Canada·Honda Financial·Ford Credit·GM Financial·VW Finance 합산 약 55%. 은행계(Scotiabank·RBC·TD Auto Finance) 약 35%, 기타 10%. 멕시코(60%)보다 다소 낮고 은행계 비중 큼.",
+          "insight_en": "Strong captives — Toyota Credit Canada·Honda Financial·Ford Credit·GM Financial·VW Finance combine for ~55%. Banks (Scotiabank·RBC·TD Auto Finance) ~35%, others 10%. Slightly lower than Mexico (60%) with a larger bank share.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "평균 신차가격",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": "약 CAD 45,000 (USD 33,000, 평균 거래가, 픽업·SUV·EV로 우상향)",
+          "value_en": "~CAD 45,000 (USD 33,000, average transaction price, trending up with pickups·SUVs·EVs)",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 3,
+          "source": "DesRosiers 2025 평균 거래가 추정 / J.D. Power",
+          "source_en": "DesRosiers 2025 average-transaction-price estimate / J.D. Power",
+          "insight": "평균 신차 거래가 약 CAD 45k(USD 33k)로 멕시코(USD 22.5k) 대비 높음 — EU 평균(€30k) 상회. 픽업·SUV·EV 비중 큼. 고가차 비중으로 여신 단가·잔가 익스포저 큼.",
+          "insight_en": "Average new-car transaction price ~CAD 45k (USD 33k) — higher than Mexico (USD 22.5k) and above the EU average (€30k). High pickup/SUV/EV mix. High-value mix means large lending-ticket and residual exposure.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_4_market": {
+      "items": [
+        {
+          "item": "GDP 성장률",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 1.6,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 5.3
+              },
+              {
+                "year": 2022,
+                "value": 3.8
+              },
+              {
+                "year": 2023,
+                "value": 1.2
+              },
+              {
+                "year": 2024,
+                "value": 1.3
+              },
+              {
+                "year": 2025,
+                "value": 1.6
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 1.9
+              },
+              {
+                "year": 2027,
+                "value": 2.0
+              },
+              {
+                "year": 2028,
+                "value": 2.0
+              },
+              {
+                "year": 2029,
+                "value": 1.9
+              },
+              {
+                "year": 2030,
+                "value": 1.9
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 1,
+          "source": "Bank of Canada·Statistics Canada·IMF WEO 2025",
+          "source_en": "Bank of Canada, Statistics Canada, IMF WEO 2025",
+          "insight": "주택·소비 회복으로 2025년 1.6% 성장. BoC 완화 사이클과 이민 둔화 영향이 상쇄. 중기 2% 안정 전망.",
+          "insight_en": "1.6% growth in 2025 driven by housing and consumer recovery. BoC easing offset by slower immigration. Stable 2% medium-term outlook.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 5.0,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 4.0
+              },
+              {
+                "year": 2022,
+                "value": 5.1
+              },
+              {
+                "year": 2023,
+                "value": 6.1
+              },
+              {
+                "year": 2024,
+                "value": 4.6
+              },
+              {
+                "year": 2025,
+                "value": 4.4
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 3.7
+              },
+              {
+                "year": 2027,
+                "value": 3.5
+              },
+              {
+                "year": 2028,
+                "value": 3.4
+              },
+              {
+                "year": 2029,
+                "value": 3.4
+              },
+              {
+                "year": 2030,
+                "value": 3.2
+              }
+            ],
+            "cagr_hist": 5.0,
+            "cagr_forecast": 3.5,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "CFLA 2025, Mordor Intelligence Canada Auto Finance",
+          "source_en": "CFLA 2025, Mordor Intelligence Canada Auto Finance",
+          "insight": "한 자릿수 초중반 성장. BoC 인하 사이클·EV 전환 견인하나 성숙시장 특성상 완만. 인구 증가(이민)는 중기 수요 지지.",
+          "insight_en": "Low single-digit growth. BoC easing cycle and EV transition pull, but moderate given a mature market. Population growth (immigration) supports medium-term demand.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융사 순위(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": [
+            {
+              "rank": 1,
+              "name": "Scotiabank (Auto Finance)",
+              "market_share": "약 16%"
+            },
+            {
+              "rank": 2,
+              "name": "TD Auto Finance",
+              "market_share": "약 14%"
+            },
+            {
+              "rank": 3,
+              "name": "Ford Credit Canada",
+              "market_share": "약 11%"
+            },
+            {
+              "rank": 4,
+              "name": "Toyota Credit Canada",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 5,
+              "name": "GM Financial Canada",
+              "market_share": "약 9%"
+            }
+          ],
+          "value_en": null,
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 3,
+          "source": "CFLA 2025 / 은행·캡티브 공시 추정",
+          "source_en": "CFLA 2025 / bank·captive disclosure estimate",
+          "insight": "은행계(Scotiabank·TD) 양강 + 캡티브(Ford·Toyota·GM) 균형. 톱5 합산 약 60% — 멕시코 캡티브 압도 구조와 달리 은행계 강세. 신규 진입은 EV·플릿·중고차 틈새.",
+          "insight_en": "Banks (Scotiabank·TD) lead alongside balanced captives (Ford·Toyota·GM). Top-5 combine for ~60% — bank-led, unlike Mexico's captive-dominated structure. New entrants target EV·fleet·used-car niches.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융사 점유율(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 16,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "CFLA 2025 (Scotiabank Auto 약 16%, TD Auto Finance 14%, Ford Credit 11%, Toyota Credit 10%, GM Financial 9%)",
+          "source_en": "CFLA 2025 (Scotiabank Auto ~16%, TD Auto Finance 14%, Ford Credit 11%, Toyota Credit 10%, GM Financial 9%)",
+          "insight": "Scotiabank(Roadside/지표상 자동차여신 1위 약 16%)·TD Auto Finance가 은행계 양강. 톱5 합산 약 60% 캡티브·은행계 집중 — 신규 진입은 중고차·EV·플릿 틈새.",
+          "insight_en": "Scotiabank (#1 in auto lending by metrics, ~16%) and TD Auto Finance lead among banks. Top-5 combine for ~60% — captive/bank concentration; new entrants target used-car·EV·fleet niches.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "경쟁사 금리 범위",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": "신차 자동차대출 APR 평균 약 6~9% (캡티브 프로모 0~3.99% 한정), 리스 월납 CAD 400~700, 중고차 APR 8~13%. 형법 상한 35% APR",
+          "value_en": "New-car auto-loan APR averages ~6-9% (captive promos 0-3.99% only), lease monthly CAD 400-700, used-car APR 8-13%. Criminal-rate cap 35% APR.",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "Bank of Canada 2025, J.D. Power Canada, OEM 캡티브 프로모",
+          "source_en": "Bank of Canada 2025, J.D. Power Canada, OEM captive promos",
+          "insight": "표준 신차 APR 6~9%, 캡티브 프로모 0~3.99%. BoC 2.75% 영향으로 하향. 멕시코(12~18%) 대비 낮은 마진 환경 — 가격경쟁·서비스 차별화 필요. 한국 캡티브 프로모 경쟁력 확보 가능.",
+          "insight_en": "Standard new-car APR 6-9%, captive promos 0-3.99%. Trending down on the 2.75% BoC rate. A lower-margin environment than Mexico (12-18%) — price competition and service differentiation needed. Korean captives can secure promo competitiveness.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "OEM 순위(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": [
+            {
+              "rank": 1,
+              "name": "Ford",
+              "market_share": "13.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Toyota",
+              "market_share": "12.8%"
+            },
+            {
+              "rank": 3,
+              "name": "General Motors (Chevrolet/GMC)",
+              "market_share": "11.5%"
+            },
+            {
+              "rank": 4,
+              "name": "Honda",
+              "market_share": "9.5%"
+            },
+            {
+              "rank": 5,
+              "name": "Hyundai",
+              "market_share": "8.0%"
+            }
+          ],
+          "value_en": null,
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "DesRosiers / GAC 2025 신차 등록",
+          "source_en": "DesRosiers / GAC 2025 new-car registrations",
+          "insight": "Ford·Toyota·GM 톱3. Hyundai 5위·Kia 톱7권으로 한국 OEM 합산 약 14% 톱3급. 한국 OEM 캡티브 강화 매력 — 현대캐피탈/기아 진출 시너지 검토.",
+          "insight_en": "Ford·Toyota·GM top-3. Hyundai #5·Kia in the top-7, so Korean OEMs combine for ~14%, top-3 class. Attractive for strengthening Korean OEM captives — assess Hyundai Capital/Kia entry synergies.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "EV 보급률",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 13,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 5.2
+              },
+              {
+                "year": 2022,
+                "value": 7.0
+              },
+              {
+                "year": 2023,
+                "value": 10.8
+              },
+              {
+                "year": 2024,
+                "value": 12.5
+              },
+              {
+                "year": 2025,
+                "value": 13.0
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 16.0
+              },
+              {
+                "year": 2027,
+                "value": 20.0
+              },
+              {
+                "year": 2028,
+                "value": 26.0
+              },
+              {
+                "year": 2029,
+                "value": 33.0
+              },
+              {
+                "year": 2030,
+                "value": 40.0
+              }
+            ],
+            "cagr_hist": 25.7,
+            "cagr_forecast": 25.2,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "Statistics Canada / S&P Global Mobility 2025 (ZEV 신차 점유 약 13%), 연방 iZEV·Quebec/BC 인센티브",
+          "source_en": "Statistics Canada / S&P Global Mobility 2025 (ZEV new-car share ~13%), federal iZEV·Quebec/BC incentives",
+          "insight": "2025년 ZEV(BEV+PHEV) 신차 점유 약 13% — 멕시코(7%) 대비 높음. 연방 iZEV+주 인센티브·ZEV mandate(2026 20%→2035 100%)로 가속. 리스 잔가 모델에 EV 별도 곡선 필수.",
+          "insight_en": "2025 ZEV (BEV+PHEV) new-car share ~13% — higher than Mexico (7%). Accelerated by federal iZEV + provincial incentives and the ZEV mandate (2026 20% → 2035 100%). A separate EV curve is essential for lease residual-value models.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "EV·ICE 잔존가치 리스크",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 56,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 63
+              },
+              {
+                "year": 2022,
+                "value": 62
+              },
+              {
+                "year": 2023,
+                "value": 60
+              },
+              {
+                "year": 2024,
+                "value": 58
+              },
+              {
+                "year": 2025,
+                "value": 56
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 54
+              },
+              {
+                "year": 2027,
+                "value": 53
+              },
+              {
+                "year": 2028,
+                "value": 52
+              },
+              {
+                "year": 2029,
+                "value": 51
+              },
+              {
+                "year": 2030,
+                "value": 50
+              }
+            ],
+            "cagr_hist": -2.9,
+            "cagr_forecast": -2.3,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "Canadian Black Book 잔가 지수 / Cox Automotive Canada 추정(3년 EV 기준)",
+          "source_en": "Canadian Black Book residual index / Cox Automotive Canada estimate (3-year EV basis)",
+          "insight": "EV 3년 잔가 56%로 하락 추세 — ICE 대비 리스 손익 압박. ZEV mandate·중국/테슬라 가격경쟁으로 향후 추가 압박. 잔가 보증·바이백 보수적 설계 권장.",
+          "insight_en": "EV 3-year residual at 56% and declining — pressures lease P&L versus ICE. Further pressure ahead from the ZEV mandate and China/Tesla price competition. Conservative residual guarantees/buyback design recommended.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ],
+      "competitors": {
+        "item": "경쟁사 리스트",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          "Scotiabank Auto Finance",
+          "TD Auto Finance",
+          "Ford Credit Canada",
+          "Toyota Credit Canada",
+          "GM Financial Canada",
+          "Honda Financial Services Canada",
+          "Volkswagen Finance Canada",
+          "RBC Royal Bank Auto",
+          "BMO Auto Finance",
+          "Nissan Canada Finance",
+          "Hyundai Auto Canada (HCCA)",
+          "Kia Finance Canada",
+          "BMW Financial Services Canada",
+          "Mercedes-Benz Financial Canada",
+          "iA Auto Finance",
+          "Santander Consumer (Canada)"
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 3,
+        "source": "CFLA, 업계 공시",
+        "source_en": "CFLA, industry disclosures",
+        "insight": "은행계+캡티브+독립계(iA·Santander) 혼재. 한국 Hyundai/Kia 캡티브 존재 — 점유 강화·통합 운영 매력. 중고차 디지털(Clutch)·플릿 협력도 진입 옵션.",
+        "insight_en": "Mix of banks + captives + independents (iA·Santander). Korean Hyundai/Kia captives present — attractive for share-strengthening and integrated operations. Used-car digital (Clutch) and fleet partnerships are also entry options.",
+        "insight_ai_generated": true
+      },
+      "competitor_entry_form": {
+        "item": "경쟁사 진출 형태",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": "OEM 캡티브(Ford Credit·Toyota Credit·GM Financial·Honda FS·VW Finance·Hyundai·Kia) + 은행계 자동차여신부문(Scotiabank·TD·RBC·BMO) + 독립 여신사(iA Auto·Santander Consumer). 비은행 여신회사(finance company) 또는 은행 인가 형태",
+        "value_en": "OEM captives (Ford Credit·Toyota Credit·GM Financial·Honda FS·VW Finance·Hyundai·Kia) + bank auto-lending arms (Scotiabank·TD·RBC·BMO) + independent lenders (iA Auto·Santander Consumer). As non-bank finance companies or bank-authorized entities.",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 3,
+        "source": "CFLA, OSFI, 업계",
+        "source_en": "CFLA, OSFI, industry",
+        "insight": "OEM 캡티브는 예금 미수취 여신회사로 진출(OSFI 인가 면제)·주별 소비자신용 등록. 한국 Hyundai/Kia 사례. 진출 형태 유연하나 주별 등록·Quebec 언어 의무 다층적.",
+        "insight_en": "OEM captives enter as non-deposit-taking finance companies (OSFI-exempt) with per-province consumer-credit registration. The Korean Hyundai/Kia case. Entry form is flexible but per-province registration and Quebec language obligations are layered.",
+        "insight_ai_generated": true
+      },
+      "brand_top10": {
+        "item": "브랜드 Top10",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          "Ford",
+          "Toyota",
+          "Honda",
+          "Chevrolet (GM)",
+          "Hyundai",
+          "Kia",
+          "Nissan",
+          "Volkswagen",
+          "Ram (Stellantis)",
+          "Mazda"
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 2,
+        "source": "DesRosiers / GAC 2025 신차 등록 통계",
+        "source_en": "DesRosiers / GAC 2025 new-car registration statistics",
+        "insight": "Ford(F-150 픽업)·Toyota·Honda 강세. 한국 브랜드(Hyundai 5위·Kia 6위) 합산 톱3급으로 점유 우수. 픽업·SUV 비중 높아 평균가·잔가 모델에 차종 믹스 반영 필요.",
+        "insight_en": "Ford (F-150 pickup)·Toyota·Honda lead. Korean brands (Hyundai #5·Kia #6) combine into a top-3-class share. High pickup/SUV mix requires reflecting vehicle mix in average-price/residual models.",
+        "insight_ai_generated": true
+      },
+      "news": {
+        "item": "외부 이슈 스캔",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          {
+            "news_category": "auto_market",
+            "headline": "캐나다 2025년 신차 판매 약 188만대로 회복세, 2017 정점 근접",
+            "headline_en": "Canada 2025 new-car sales recover to ~1.88M, approaching the 2017 peak",
+            "so_what": "성숙시장 회복 신호 — 금융침투 82% 기반 안정 수요. 한국 OEM(현대·기아) 톱5+로 캡티브 강화 매력.",
+            "so_what_en": "Mature-market recovery signal — stable demand on 82% finance penetration. Korean OEMs (Hyundai·Kia) in the top-5+ make captive strengthening attractive.",
+            "publisher": "Automotive News",
+            "pub_date": "2026-01-15",
+            "url": "https://www.autonews.com/..."
+          },
+          {
+            "news_category": "auto_market",
+            "headline": "캐나다 ZEV mandate 2026년 신차 20% 의무화 시행 임박, EV 판매 13%대",
+            "headline_en": "Canada's ZEV mandate (2026 20% new-car requirement) nears implementation, EV sales ~13%",
+            "so_what": "ZEV 의무화로 EV 비중 급증 — 리스 잔가·EV 전용 상품 정교화 필수. 캡티브 진입 시 EV 보조 프로그램 연계 기회.",
+            "so_what_en": "ZEV mandate spikes EV share — lease residual and EV-specific products must be refined. Opportunity to link EV-subsidy programs on captive entry.",
+            "publisher": "WardsAuto",
+            "pub_date": "2026-03-10",
+            "url": "https://www.wardsauto.com/..."
+          },
+          {
+            "news_category": "auto_finance",
+            "headline": "캐나다 자동차금융 BoC 인하 사이클로 APR 8%대 하향, 캡티브 0% 프로모 확대",
+            "headline_en": "Canada auto finance: APR falls to ~8% on the BoC easing cycle, captive 0% promos expand",
+            "so_what": "조달비용 인하·캡티브 프로모 경쟁 — 마진 압박. 신규 진입은 가격 외 디지털·서비스 차별화 필요.",
+            "so_what_en": "Lower funding cost and captive-promo competition — margin pressure. New entrants need digital/service differentiation beyond price.",
+            "publisher": "Auto Finance News",
+            "pub_date": "2026-02-20",
+            "url": "https://www.autofinancenews.net/..."
+          },
+          {
+            "news_category": "credit_abs",
+            "headline": "캐나다 prime auto loan ABS 딜린퀀시 1%대 안정 유지, 우량 풀 견조",
+            "headline_en": "Canada prime auto-loan ABS delinquency holds steady at ~1%, prime pools robust",
+            "so_what": "G7 최저 수준 연체 — 충당금 부담 작음. 진입 초기 신용정책 보수화 불필요, 우량 시장 진입 우호.",
+            "so_what_en": "Lowest-in-G7 delinquency — light provisioning burden. No need to over-tighten credit policy at entry; favorable quality-market entry.",
+            "publisher": "DBRS Morningstar / S&P",
+            "pub_date": "2026-04-12",
+            "url": "https://www.spglobal.com/..."
+          },
+          {
+            "news_category": "geopolitical",
+            "headline": "미·캐 관세·USMCA 재검토 시그널, 캐나다 對美 자동차 무역 변수",
+            "headline_en": "US-Canada tariff·USMCA review signals — a variable for Canada's auto trade with the US",
+            "so_what": "관세·USMCA 재검토는 차량가·공급망 영향 모니터링 — 자동차금융 사업 자체 영향은 제한적이나 차량가 변동에 LTV·잔가 가정 보수화.",
+            "so_what_en": "Tariff/USMCA review affects vehicle prices and supply chains — monitor; direct impact on auto finance is limited, but make LTV/residual assumptions conservative for price swings.",
+            "publisher": "Reuters",
+            "pub_date": "2026-05-28",
+            "url": "https://www.reuters.com/..."
+          },
+          {
+            "news_category": "finance",
+            "headline": "Bank of Canada 2025말 정책금리 2.75%, 2026 추가 인하 시그널",
+            "headline_en": "Bank of Canada policy rate 2.75% at end-2025, signaling further 2026 cuts",
+            "so_what": "저금리 환경 지속 — 조달비용 우호이나 자동차여신 마진 압축. 펀딩 효율·예대 구조 설계 중요.",
+            "so_what_en": "Continued low-rate environment — favorable funding cost but compresses auto-lending margin. Funding efficiency and deposit-loan structure design matter.",
+            "publisher": "Wall Street Journal",
+            "pub_date": "2025-12-20",
+            "url": "https://www.wsj.com/..."
+          }
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "news",
+        "timeseries": null,
+        "tier": 3,
+        "source": "화이트리스트(Automotive News·WardsAuto·Auto Finance News·S&P Global·Reuters·Wall Street Journal)",
+        "source_en": "Whitelist (Automotive News·WardsAuto·Auto Finance News·S&P Global·Reuters·Wall Street Journal)",
+        "insight": "성숙·안정·저연체·EV 가속·저금리 환경이 우호 vs 마진 압박·관세/USMCA 변수·ZEV mandate 잔가 리스크. 우량 시장 진입 + EV/플릿 상품 정교화 + 한국 OEM 캡티브 연계 권장.",
+        "insight_en": "A supportive environment of maturity, stability, low delinquency, EV acceleration, and low rates vs margin pressure, tariff/USMCA variables, and ZEV-mandate residual risk. Recommend entering this quality market + refining EV/fleet products + linking with Korean OEM captives.",
+        "insight_ai_generated": true
+      },
+      "regulators": {
+        "item": "규제기관 식별",
+        "item_en": null,
+        "category": "shared",
+        "role": "context",
+        "value": "OSFI(연방 건전성 감독, 은행·보험) / Bank of Canada(중앙은행, 결제·통화) / FCAC(연방소비자금융청, 시장행위) / OPC(연방 개인정보보호위원회) / 주별 소비자보호청 + Quebec OPC·AMF(금융시장감독청) / Competition Bureau",
+        "value_en": "OSFI (federal prudential supervision, banks·insurance) / Bank of Canada (central bank, payments·currency) / FCAC (Financial Consumer Agency of Canada, market conduct) / OPC (federal Office of the Privacy Commissioner) / provincial consumer-protection agencies + Quebec OPC·AMF (financial markets authority) / Competition Bureau",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 1,
+        "source": "OSFI, Bank of Canada, FCAC, OPC, Quebec AMF 공식",
+        "source_en": "OSFI, Bank of Canada, FCAC, OPC, Quebec AMF official",
+        "insight": "OSFI(건전성)+FCAC(시장행위)+BoC(결제)가 연방 감독, 데이터는 OPC, 소비자신용·면허는 주별(Quebec은 AMF·OPC 별도). 연방-주 이중·13개 주 분산이 멕시코(CNBV 단일)·EU 대비 복잡 — 다주 진출 시 컴플라이언스 매핑 필수.",
+        "insight_en": "OSFI (prudential) + FCAC (market conduct) + BoC (payments) for federal supervision, OPC for data, and per-province consumer credit/licensing (Quebec via AMF·OPC separately). Federal-provincial dual and 13-province dispersion is more complex than Mexico (single CNBV) or the EU — compliance mapping essential for multi-province entry.",
+        "insight_ai_generated": false
+      },
+      "country_summary": {
+        "item": "해당국 정성 요약",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": "G7 성숙 자동차금융 시장(2025 신차 약 188만대, 금융침투 82%). AAA/Aaa 국가신용·외환 자유·외국인 100% 허용으로 안정성 최상위. 캡티브(Toyota·Honda·Ford·GM·VW 약 55%)+은행계(Scotiabank·RBC·TD·BMO 약 35%) 공존. 연방 OSFI 건전성 + 주별 소비자신용·면허(Quebec 최엄격)·이중언어(EN/FR) 의무가 진입 복잡도. Equifax/TransUnion CB·Interac/EFT 결제·전자서명·IFRS 9로 IT 인프라 G7 최상위. EV(ZEV 13%)·ZEV mandate 가속, 차량회수 주별 편차가 리스크.",
+        "value_en": "Mature G7 auto-finance market (2025 new cars ~1.88M, finance penetration 82%). AAA/Aaa sovereign credit, free FX, and 100% foreign ownership make stability top-tier. Captive (Toyota·Honda·Ford·GM·VW ~55%) + bank-led (Scotiabank·RBC·TD·BMO ~35%) coexistence. Federal OSFI prudential supervision + per-province consumer credit/licensing (Quebec strictest) + bilingual (EN/FR) obligations drive entry complexity. Equifax/TransUnion CB, Interac/EFT payments, e-signature, and IFRS 9 make IT infrastructure top-tier G7. EV (ZEV 13%) and the ZEV mandate accelerate; per-province repossession variation is the risk.",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 3,
+        "source": "CFLA, DesRosiers, OSFI, Statistics Canada, S&P Global Mobility",
+        "source_en": "CFLA, DesRosiers, OSFI, Statistics Canada, S&P Global Mobility",
+        "insight": "안정성·고침투·IT 정합성에서 북미 최우호 환경이나 연방-주 이중규제·Quebec 특수성이 비용 드라이버. B2B 리스·플릿 우선 진입 후 주별 소비자신용 확장, 또는 한국 OEM(현대·기아) 캡티브 연계 전략 유효.",
+        "insight_en": "The most favorable North American environment in stability, high penetration, and IT fit, but federal-provincial dual regulation and Quebec specificity are cost drivers. B2B lease/fleet first then per-province consumer-credit expansion, or a Korean OEM (Hyundai/Kia) captive linkage, is a viable strategy.",
+        "insight_ai_generated": true
+      }
+    }
+  }
+}

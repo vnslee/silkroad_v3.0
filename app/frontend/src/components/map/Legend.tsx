@@ -24,11 +24,11 @@ export function Legend() {
       ))}
       <span className="h-3 w-px bg-surface-border" aria-hidden />
       <span className="flex items-center gap-xs">
-        <span className="h-[11px] w-[11px] rounded-full border-[1.5px] border-white bg-[#1B3451] shadow-[0_0_0_1.5px_#1B3451]" />
+        <span className="h-[11px] w-[11px] rounded-full border-[1.5px] border-white bg-[#14181C] shadow-[0_0_0_1.5px_#14181C]" />
         {t('legend.established')}
       </span>
       <span className="flex items-center gap-xs">
-        <span className="h-[11px] w-[11px] rounded-full border-[1.5px] border-white bg-primary shadow-[0_0_0_1.5px_#3F6CB4]" />
+        <span className="h-[11px] w-[11px] rounded-full border-[1.5px] border-[#14181C] bg-accent shadow-[0_0_0_1.5px_#C8F051]" />
         {t('legend.candidate')}
       </span>
     </div>

@@ -111,7 +111,7 @@ export function ChatWidget() {
         type="button"
         aria-label={t('chat.openAria')}
         onClick={() => store.setChatOpen(true)}
-        className="absolute bottom-[26px] right-[78px] z-chat flex h-[52px] animate-aisea-slide items-center gap-md rounded-full bg-primary-container pl-[18px] pr-[20px] text-on-primary shadow-[0_10px_30px_rgba(20,23,28,0.28)] transition-colors hover:bg-aisea-dark-2"
+        className="absolute bottom-[26px] right-[78px] z-chat flex h-[52px] animate-aisea-slide items-center gap-md rounded-full bg-primary-container pl-[18px] pr-[20px] text-on-primary shadow-[0_10px_30px_rgba(20,23,28,0.28)] transition-colors hover:bg-primary"
       >
         <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-primary">
           <span className="block h-[11px] w-[13px] rounded-[4px] border-2 border-white" />

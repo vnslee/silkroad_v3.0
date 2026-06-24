@@ -1,9 +1,11 @@
 import type { Config } from 'tailwindcss'
 
-// AISea(architecture/design/AISea/AISea.dc.html) 비주얼 언어를 시맨틱 Tailwind 토큰으로 매핑.
-// 셸 전반이 시맨틱 클래스(text-on-surface, bg-primary 등)를 쓰므로 hex만 AISea로 리매핑하면
+// AISea(architecture/design/stitch/DESIGN.md) 비주얼 언어를 시맨틱 Tailwind 토큰으로 매핑.
+// 셸 전반이 시맨틱 클래스(text-on-surface, bg-primary 등)를 쓰므로 hex만 리매핑하면
 // 손대지 않은 위치도 자동으로 온브랜드가 된다. raw hex 직접 사용은 지양(시맨틱 클래스 우선).
-// 팔레트 출처: AISea 블루 #3F6CB4 / 다크 #101622 / 상태 #4F8A6D·#C08A2E·#C0533F.
+// 팔레트 출처(DESIGN.md): 잉크블랙 primary #14181C / 라임그린 accent #C8F051 / 베이지 배경 #EDEBE4.
+// 핵심: 라임그린은 밝아 텍스트 대비가 약하므로 '면(fill) 액션'(accent)에만 쓰고,
+//       텍스트·제목·보더 강조는 잉크블랙(primary)으로 둔다(접근성).
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
@@ -16,77 +18,88 @@ export default {
     },
     extend: {
       colors: {
-        // ── 면(surface) — 앱 배경 #EEF0F2, 카드 흰색, 옅은 면 #F7F8FA/#F2F5FA ──
-        surface: '#ffffff',
-        'surface-dim': '#dbe0e6',
-        'surface-bright': '#ffffff',
+        // ── 면(surface) — 앱 배경 베이지 #EDEBE4, 카드 흰색, 베이지 톤 위계 ──
+        surface: '#EDEBE4',
+        'surface-dim': '#dcd9cf',
+        'surface-bright': '#fbf9f4',
         'surface-container-lowest': '#ffffff',
-        'surface-container-low': '#f7f8fa',
-        'surface-container': '#f2f5fa',
-        'surface-container-high': '#e8edf4',
-        'surface-container-highest': '#dce6f5',
-        'on-surface': '#14171c',
-        'on-surface-variant': '#6b7280',
-        'inverse-surface': '#101622',
-        'inverse-on-surface': '#f2f5fa',
-        outline: '#9aa0a8',
-        'outline-variant': '#e6e9ec',
-        'surface-tint': '#3f6cb4',
-        // ── 브랜드/액션 블루 ──
-        primary: '#3f6cb4',
+        'surface-container-low': '#f7f6f1',
+        'surface-container': '#f2f0e9',
+        'surface-container-high': '#ebe9e1',
+        'surface-container-highest': '#e6e3db',
+        'on-surface': '#14181C',
+        'on-surface-variant': '#3a4048',
+        'inverse-surface': '#14181C',
+        'inverse-on-surface': '#EDEBE4',
+        outline: '#9AA0A6',
+        'outline-variant': '#E6E3DB',
+        'surface-tint': '#C8F051',
+        // ── 브랜드/액션 — 잉크블랙 primary + 라임그린 accent ──
+        primary: '#14181C',
         'on-primary': '#ffffff',
-        'primary-container': '#101622', // 다크 헤더·CTA 카드·FAB
-        'on-primary-container': '#aebdd6',
-        'inverse-primary': '#6e97d6',
-        secondary: '#3f6cb4',
+        'primary-container': '#1f262d',
+        'on-primary-container': '#d7dadd',
+        'inverse-primary': '#C8F051',
+        // accent: 라임그린 — 버튼·선택 등 '면 액션'에만(텍스트는 on-accent 잉크블랙)
+        accent: '#C8F051',
+        'on-accent': '#14181C',
+        'accent-container': '#eef9c9',
+        'on-accent-container': '#2c3500',
+        // secondary: 잉크 그레이(보조 액션·링크). 라임그린 대비 약점 회피.
+        secondary: '#3a4048',
         'on-secondary': '#ffffff',
-        'secondary-container': '#6e97d6',
-        'on-secondary-container': '#1c3a66',
-        tertiary: '#4f8a6d',
+        'secondary-container': '#dfe2e5',
+        'on-secondary-container': '#1b2026',
+        tertiary: '#4d000a',
         'on-tertiary': '#ffffff',
-        'tertiary-container': '#e9f3ee',
-        'on-tertiary-container': '#3c7359',
-        error: '#c0533f',
+        'tertiary-container': '#750015',
+        'on-tertiary-container': '#ff7576',
+        error: '#ba1a1a',
         'on-error': '#ffffff',
-        'error-container': '#f7e1dc',
-        'on-error-container': '#8c3424',
-        // fixed 계열 — 옅은 블루 강조(배지·하이라이트)
-        'primary-fixed': '#eaf0f8',
-        'primary-fixed-dim': '#cbd9ee',
-        'on-primary-fixed': '#1c3a66',
-        'on-primary-fixed-variant': '#3f6cb4',
-        'secondary-fixed': '#eaf0f8',
-        'secondary-fixed-dim': '#cbd9ee',
-        'on-secondary-fixed': '#1c3a66',
-        'on-secondary-fixed-variant': '#3f6cb4',
-        'tertiary-fixed': '#e9f3ee',
-        'tertiary-fixed-dim': '#c7e3d6',
-        'on-tertiary-fixed': '#2c5544',
-        'on-tertiary-fixed-variant': '#3c7359',
-        background: '#eef0f2',
-        'on-background': '#14171c',
-        'surface-variant': '#f2f5fa',
-        'surface-light': '#f7f8fa',
-        'surface-border': '#e6e9ec',
-        'text-primary': '#14171c',
-        'text-secondary': '#6b7280',
-        'text-disabled': '#9aa0a8',
-        'accent-red': '#c0533f',
-        // ── 상태색(AISea 진단 신호) ──
-        success: '#4f8a6d',
-        'success-container': '#e9f3ee',
-        warn: '#c08a2e',
-        'warn-container': '#f6edda',
-        danger: '#c0533f',
-        'danger-container': '#f7e1dc',
-        // AISea 다크 면(보고서/챗 헤더 그라디언트 보조)
-        'aisea-dark': '#101622',
-        'aisea-dark-2': '#1f2d45',
+        'error-container': '#ffdad6',
+        'on-error-container': '#93000a',
+        // fixed 계열 — 라임그린 옅은 강조(배지·하이라이트)
+        'primary-fixed': '#eef9c9',
+        'primary-fixed-dim': '#dcf2a3',
+        'on-primary-fixed': '#2c3500',
+        'on-primary-fixed-variant': '#404d00',
+        'secondary-fixed': '#dfe2e5',
+        'secondary-fixed-dim': '#c3c8cd',
+        'on-secondary-fixed': '#14181C',
+        'on-secondary-fixed-variant': '#3a4048',
+        'tertiary-fixed': '#ffdad8',
+        'tertiary-fixed-dim': '#ffb3b1',
+        'on-tertiary-fixed': '#410007',
+        'on-tertiary-fixed-variant': '#92001c',
+        background: '#EDEBE4',
+        'on-background': '#14181C',
+        'surface-variant': '#e6e3db',
+        'surface-light': '#F7F6F1',
+        'surface-border': '#E6E3DB',
+        'text-primary': '#14181C',
+        'text-secondary': '#3a4048',
+        'text-disabled': '#9AA0A6',
+        'accent-red': '#E63946',
+        // ── 지역색(AISea) — 지도·엠블럼·차트 권역 구분 ──
+        'region-na': '#4F8BFF',
+        'region-sa': '#34D399',
+        'region-me': '#FBBF24',
+        'region-eu': '#C8F051',
+        'region-apac': '#FB7185',
+        // ── 상태색(진단 신호) — 데이터 의미색, 테마와 무관하게 보존 ──
+        success: '#137333',
+        'success-container': '#e6f4ea',
+        warn: '#b06000',
+        'warn-container': '#fef7e0',
+        danger: '#c5221f',
+        'danger-container': '#fce8e6',
       },
       fontFamily: {
-        sans: ['Pretendard', 'system-ui', 'sans-serif'],
-        // 전체 Pretendard 통일(사용자 요청) — mono 도 Pretendard.
-        mono: ['Pretendard', 'system-ui', 'sans-serif'],
+        // 본문: 라틴/숫자 Hanken Grotesk, 한글 Pretendard 자동 fallback.
+        sans: ['Hanken Grotesk', 'Pretendard', 'system-ui', 'sans-serif'],
+        // 제목/강조: AISea Space Grotesk(테크 무드) → Hanken → Pretendard fallback.
+        display: ['Space Grotesk', 'Hanken Grotesk', 'Pretendard', 'sans-serif'],
+        mono: ['Hanken Grotesk', 'Pretendard', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
@@ -111,11 +124,12 @@ export default {
         'margin-desktop': '48px',
       },
       borderRadius: {
-        sm: '0.25rem',
-        DEFAULT: '0.5rem',
-        md: '0.75rem',
-        lg: '1rem',
-        xl: '1.5rem',
+        // AISea는 16~30px로 더 둥글다(현 8/12px → 상향).
+        sm: '0.5rem', // 8px
+        DEFAULT: '0.75rem', // 12px
+        md: '1rem', // 16px
+        lg: '1.25rem', // 20px
+        xl: '1.875rem', // 30px
         full: '9999px',
       },
       zIndex: {
