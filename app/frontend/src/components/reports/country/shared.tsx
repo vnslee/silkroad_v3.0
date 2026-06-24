@@ -112,7 +112,6 @@ export function CaptiveChip() {
       className="inline-flex items-center gap-xs bg-secondary-container/30 text-secondary border border-secondary/40 px-2 py-[1px] rounded-full font-label-sm text-label-sm"
       title={t('report.captive.title')}
     >
-      <span className="material-symbols-outlined text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)]">verified</span>
       <span>{t('report.captive')}</span>
     </span>
   )
@@ -139,18 +138,15 @@ export function TierBadge({ tier }: { tier?: number }) {
 export function InsightBox({
   children,
   label,
-  icon = 'lightbulb',
 }: {
   children: ReactNode
   label?: string
-  icon?: string
 }) {
   const t = useT()
   const lbl = label ?? t('report.insight')
   return (
     <div className="bg-surface-container/60 p-sm rounded-md border-l-4 border-primary">
       <div className="flex items-center gap-xs mb-xs">
-        <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">{icon}</span>
         <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">{lbl}</span>
       </div>
       <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{children}</p>
@@ -166,7 +162,6 @@ export function EvidenceAccordion({ source, insight, ai }: { source?: string; in
     <details className="border-t border-surface-container-highest pt-sm group">
       <summary className="flex items-center justify-between gap-xs cursor-pointer list-none">
         <div className="flex items-center gap-xs">
-          <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">info</span>
           <span className="font-label-sm text-label-sm text-text-secondary uppercase">{t('report.evidenceInsight')}</span>
           {ai && (
             <span className="bg-purple-100 text-purple-700 border border-purple-200 px-2 py-0.5 rounded-full font-label-sm text-label-sm uppercase">
@@ -182,7 +177,6 @@ export function EvidenceAccordion({ source, insight, ai }: { source?: string; in
         {source && (
           <div>
             <div className="flex items-center gap-xs mb-xs">
-              <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">source</span>
               <span className="font-label-sm text-label-sm text-text-secondary uppercase">{t('report.evidence')}</span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{source}</p>
@@ -535,19 +529,16 @@ export function DecisionTreeSvg({
         <div className="grid grid-cols-3 gap-lg">
           <div className={`dt-branch-card dt-branch-b ${isB ? cardActive : cardIdle}`} style={isB ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
-              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isB ? 'text-primary' : 'text-text-secondary'}`}>expand_circle_down</span>
               <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isB ? 'text-primary' : 'text-text-secondary'}`}>{t('dt.expansion')}</span>
             </div>
           </div>
           <div className={`dt-branch-card dt-branch-ext ${isEXT ? cardActive : cardIdle}`} style={isEXT ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
-              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>extension</span>
               <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>{t('dt.external')}</span>
             </div>
           </div>
           <div className={`dt-branch-card dt-branch-hq ${isHQ ? cardActive : cardIdle}`} style={isHQ ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
-              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>domain</span>
               <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>{t('dt.hqBuild')}</span>
             </div>
           </div>
@@ -605,7 +596,6 @@ function DecisionTreeSvgApac() {
           <div className="dt-branch-card dt-branch-ext" >
             <div className={cardActive} style={cardActiveShadow}>
               <div className="flex items-center justify-center gap-xs">
-                <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-primary">extension</span>
                 <span className="font-semibold font-body-md text-body-md uppercase tracking-wider text-primary">{t('dt.external')}</span>
               </div>
             </div>
@@ -613,7 +603,6 @@ function DecisionTreeSvgApac() {
           <div className="dt-branch-card dt-branch-int">
             <div className={cardActive} style={cardActiveShadow}>
               <div className="flex items-center justify-center gap-xs">
-                <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-primary">domain</span>
                 <span className="font-semibold font-body-md text-body-md uppercase tracking-wider text-primary">{t('dt.apac.int')}</span>
               </div>
             </div>
@@ -713,6 +702,12 @@ interface DecisionSidePanelProps {
   subscription: SubTierTableProps
   /** APAC(아시아) — hq_build 결정을 '내재화'로 표기. */
   isApac?: boolean
+  /** 구독제 솔루션 여부. false면 권역 확산이라도 구독료 구간표 대신 구축비용·기간을 표시. */
+  isSubscription?: boolean
+  /** 비구독(권역 확산) 시 표시할 신규국 구축비용·기간. */
+  buildCost?: number
+  buildMonths?: number
+  buildCurrency?: string
 }
 export function DecisionSidePanel({
   decision,
@@ -723,6 +718,10 @@ export function DecisionSidePanel({
   hqBaselineCurrency = 'EUR',
   subscription,
   isApac = false,
+  isSubscription = true,
+  buildCost,
+  buildMonths,
+  buildCurrency = 'EUR',
 }: DecisionSidePanelProps) {
   const t = useT()
   if (decision === 'external_solution' || decision === 'apac_dual') {
@@ -800,6 +799,30 @@ export function DecisionSidePanel({
       </div>
     )
   }
-  // 기본: 권역 확산 — 구독료 구간표
+  // 기본: 권역 확산 — 구독제면 구독료 구간표, 비구독이면 구축비용·기간(TCO 탭과 일관).
+  if (!isSubscription) {
+    return (
+      <div className="flex flex-col gap-sm">
+        <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+          비구독 솔루션 — 구독료 구간 대신 신규국 예상 구축비용·기간을 제시합니다. 구독료는 운영비에 포함됩니다.
+        </p>
+        <div className="flex flex-col gap-xs font-body-md text-body-md">
+          <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-primary/10 border-l-4 border-primary">
+            <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축비용</span>
+            <span className="text-primary font-bold font-body-lg text-body-lg">
+              <Money value={buildCost ?? 0} currency={buildCurrency} inline />
+            </span>
+          </div>
+          <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-surface-container border border-outline-variant">
+            <span className="text-text-secondary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축기간</span>
+            <span className="text-text-primary font-bold font-body-md text-body-md">{fixed(buildMonths)} 개월</span>
+          </div>
+        </div>
+        <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
+          * 자세한 산식은 TCO · 구독료 탭을 참조하세요.
+        </p>
+      </div>
+    )
+  }
   return <SubscriptionTierTable {...subscription} />
 }

@@ -45,7 +45,10 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
           : dec.decision === 'external_solution'
             ? t('sum.dec.ext')
             : t('sum.dec.expansion').replace('{base}', baseKo) // 폴백(구버전 데이터)
-  // 우측 패널 제목 — 결정별로 바뀐다(구독료/본사구축/외부솔루션).
+  // 구독제(EU/NetSol) 여부 — is_subscription 우선, 구버전 데이터는 구독료 티어 존재로 추론.
+  // 비구독(미주 권역 확산 등)이면 구독료 구간표 대신 구축비용·기간을 노출(TCO 탭과 일관).
+  const isSubscription = tco.is_subscription ?? (tco.subscription_tiers?.length ?? 0) > 0
+  // 우측 패널 제목 — 결정별로 바뀐다(구독료/구축비용/본사구축/외부솔루션).
   const sidePanelTitle =
     dec.decision === 'apac_dual'
       ? t('sum.side.apac')
@@ -53,7 +56,9 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
         ? t('sum.side.ext')
         : dec.decision === 'hq_build'
           ? t('sum.side.hq')
-          : t('sum.side.sub')
+          : isSubscription
+            ? t('sum.side.sub')
+            : t('sum.side.build')
 
   const sub = tco.subscription_details ?? ({} as typeof tco.subscription_details)
   const buildMonths = tco.build_months ?? 0
@@ -214,6 +219,10 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
           <Panel title={sidePanelTitle} className="flex-1">
             <DecisionSidePanel
               decision={dec.decision}
+              isSubscription={isSubscription}
+              buildCost={tco.build_cost}
+              buildMonths={tco.build_months}
+              buildCurrency={tco.currency}
               externalCandidates={dec.external_candidates}
               externalSolutionSummary={dec.external_solution_summary}
               hqBaselineCost={dec.hq_baseline_cost}
@@ -235,7 +244,6 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
             <ul className="flex flex-col gap-sm list-none p-0 m-0">
               {splitSentences(lang === 'en' && data.overall_insight_en ? data.overall_insight_en : data.overall_insight).map((sentence, i) => (
                 <li key={i} className="flex items-start gap-sm">
-                  <span className="material-symbols-outlined text-primary text-[clamp(13.6px,calc(12px_+_0.444vw),18.4px)] mt-[2px]">arrow_right</span>
                   <span className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
                     {sentence}
                   </span>

@@ -19,7 +19,19 @@
       "Bash(git log:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(lsof -nP -iTCP -sTCP:LISTEN)",
+      "Read(//private/tmp/claude-501/bundled-skills/**)",
+      "Bash(curl -s \"http://localhost:8000/api/country/PR/reports/RPT_CTR_PR_002/json\")",
+      "Bash(curl -s \"http://localhost:8000/api/country/PR/reports\")",
+      "Bash(curl -s \"http://localhost:8000/api/countries\")",
+      "Bash(curl -s \"http://localhost:8000/api/countries/PR/reports\")",
+      "Bash(curl -s \"http://localhost:8000/api/countries/PR/reports/RPT_CTR_PR_002/json\")",
+      "Bash(curl -s \"http://localhost:8000/api/countries/CL/reports\")",
+      "Bash(curl -s \"http://localhost:8000/api/countries/PR/reports/RPT_CTR_PR_002/json\" -o src/__tests__/_pr_nonsub_fixture.json)",
+      "Bash(npx vitest *)"
     ]
   }
 }

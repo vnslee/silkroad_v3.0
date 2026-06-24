@@ -212,7 +212,6 @@ function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; 
     >
       <div className="bg-surface p-sm rounded-md border border-surface-container-highest mb-md">
         <div className="flex items-center gap-xs mb-xs">
-          <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">flag</span>
           <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">{t('mkt.entryForm')}</span>
         </div>
         <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{dash(pickLang(lang, entryForm.value, entryForm.value_en))}</p>
@@ -222,7 +221,6 @@ function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; 
           <div key={key} className="p-sm bg-surface-container-low rounded-lg border border-surface-container-highest">
             <div className="flex items-center justify-between mb-xs">
               <div className="flex items-center gap-xs">
-                <span className="material-symbols-outlined text-primary text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">{GROUP_META[key].icon}</span>
                 <span className="font-label-md text-label-md text-primary uppercase tracking-wider">{t(GROUP_META[key].labelKey)}</span>
               </div>
               <span className="font-label-sm text-label-sm text-text-secondary">{members.length}{t('mkt.countSuffix')}</span>
@@ -299,7 +297,6 @@ function NewsPanel({ news }: { news: ReportItem }) {
             return (
               <div key={i} className="p-md bg-yellow-50 border border-yellow-200 rounded-lg">
                 <div className="flex items-center gap-xs mb-xs">
-                  <span className="material-symbols-outlined text-yellow-700 text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">warning</span>
                   <span className="font-label-md text-label-md text-yellow-800 uppercase">{n.news_category}</span>
                 </div>
                 <p className="font-body-sm text-body-sm text-yellow-700">{t('mkt.newsMissing')}</p>
@@ -317,7 +314,6 @@ function NewsPanel({ news }: { news: ReportItem }) {
               <h4 className="font-label-md text-label-md text-text-primary leading-relaxed m-0">{pickLang(lang, n.headline, n.headline_en)}</h4>
               <div className="bg-surface-container/60 p-sm rounded-md border-l-4 border-primary">
                 <div className="flex items-center gap-xs mb-xs">
-                  <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">psychology</span>
                   <span className="font-label-sm text-label-sm text-primary uppercase">So What</span>
                 </div>
                 <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{pickLang(lang, n.so_what, n.so_what_en)}</p>
