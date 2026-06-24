@@ -94,6 +94,11 @@ export function MapView({
   const restReadyRef = useRef(false)
   const focusRef = useRef<Props['focus']>(null)
   focusRef.current = focus
+  // 진입 모핑 완료 여부 — 완료 후 재빌드는 desiredRef(아래)를 즉시 반영해 위치를 잃지 않게 한다.
+  const entryDoneRef = useRef(false)
+  // '지도가 있어야 할 목표 줌'. 데이터 늦은 도착으로 재빌드돼도 이 값을 새 g에 즉시 적용 →
+  // 포커스/복귀 상태가 항상 일관(작게 굳거나 안 돌아오는 문제 해소). null=아직 미정(최초).
+  const desiredRef = useRef<d3.ZoomTransform | null>(null)
   const [countries, setCountries] = useState<CountrySummary[]>([])
   const [regions, setRegions] = useState<RegionSummary[]>([])
   const [mapColors, setMapColors] = useState<MapColorData | null>(null)
@@ -379,17 +384,15 @@ export function MapView({
 
     // ── 팝업 포커스 줌 — 국가=마커 좌표 중심 확대, 권역=해당 권역 육지 bounds로 fit, null=rest 복귀.
     //   상세 팝업이 오른쪽을 덮으므로 대상을 화면 왼쪽으로 살짝 치우치게(왼쪽 1/3 지점) 둔다.
-    focusFnRef.current = (f) => {
-      const z = zoomRef.current
-      if (!z) return
-      let target = rest
+    // target만 계산(부수효과 없음) — 국가=마커 중심 확대, 권역=육지 bounds fit, null/실패=rest.
+    const computeTarget = (f: Props['focus']): d3.ZoomTransform => {
       if (f?.domain === 'country') {
         const m = markers.find((mk) => mk.code === f.id.toUpperCase())
         const p = m ? projection([m.lon, m.lat]) : null
         if (p) {
           const k = 2.6
           // 대상을 화면 가로 35% 지점에 두어 우측 팝업과 겹치지 않게.
-          target = d3.zoomIdentity.translate(width * 0.35, cy).scale(k).translate(-p[0], -p[1])
+          return d3.zoomIdentity.translate(width * 0.35, cy).scale(k).translate(-p[0], -p[1])
         }
       } else if (f?.domain === 'region') {
         const key = REGION_KEY_BY_CODE[f.id.toUpperCase()] ?? f.id.toLowerCase()
@@ -402,9 +405,22 @@ export function MapView({
             x0 = Math.min(x0, bb[0][0]); y0 = Math.min(y0, bb[0][1])
             x1 = Math.max(x1, bb[1][0]); y1 = Math.max(y1, bb[1][1])
           }
-          if (Number.isFinite(x0)) target = transformForBounds([[x0, y0], [x1, y1]], 4)
+          if (Number.isFinite(x0)) return transformForBounds([[x0, y0], [x1, y1]], 4)
         }
       }
+      return rest
+    }
+
+    // ── 팝업 포커스 줌 ── focus 변경 시 호출. 목표를 desiredRef에 기록하고 그쪽으로 트랜지션.
+    focusFnRef.current = (f) => {
+      const z = zoomRef.current
+      if (!z) return
+      // 포커스/복귀가 한 번이라도 적용되면 진입 모핑은 끝난 것으로 간주 — 게이트를 연다.
+      // (진입 줌을 클릭으로 가로채 .on('end')가 안 불려도 복귀가 막히지 않도록.)
+      restReadyRef.current = true
+      entryDoneRef.current = true
+      const target = computeTarget(f)
+      desiredRef.current = target // 재빌드 시 이 목표를 즉시 반영(위치 유실 방지)
       z.svg.transition().duration(900).ease(d3.easeCubicInOut).call(z.zoom.transform, target)
     }
 
@@ -429,25 +445,32 @@ export function MapView({
         .call(zoom.transform, rest)
         .on('end', () => {
           restReadyRef.current = true
+          entryDoneRef.current = true
+          if (!desiredRef.current) desiredRef.current = rest
           // 진입 중 팝업이 이미 열려 있었다면(딥링크 등) 안착 직후 포커스 적용.
           if (focusRef.current) focusFnRef.current?.(focusRef.current)
         })
+    } else if (entryDoneRef.current) {
+      // 진입 완료 후 데이터 늦은 도착으로 재빌드 → 새 g에 '있어야 할 목표'(desiredRef)를 즉시 반영.
+      // 현재(애니메이션 중간) transform을 읽어 굳히면 작은 배율로 멈추는 버그가 생기므로 목표 기준.
+      svg.call(zoom.transform, desiredRef.current ?? rest)
     } else if (enteredOnce.current) {
-      // 진입 애니메이션 도중/이후 데이터 늦은 도착으로 재빌드 → 새 g에 '현재 transform'을 그대로
-      // 재적용(rest로 스냅하지 않음). 진행 중 트랜지션이면 다음 zoom 이벤트가 이어서 갱신한다.
+      // 진입 모핑이 아직 진행 중인데 재빌드 → 진행 중 트랜지션이 이어서 새 g를 갱신하도록 둔다.
       const cur = d3.zoomTransform(svg.node() as SVGSVGElement)
       g.attr('transform', cur.toString())
     } else {
       // 딥링크·reduced-motion·최초 정적 진입 → 정지 배율을 즉시 적용(애니메이션 없음).
       svg.call(zoom.transform, rest)
       restReadyRef.current = true
+      entryDoneRef.current = true
+      desiredRef.current = rest
     }
   }, [markers, colorOf, onSelectCountry, onSelectRegion, enterAnim, enterScale])
 
   // 팝업 포커스 — focus 변경 시 빌드 effect가 만든 줌 함수 호출.
-  // 진입 모핑이 진행 중일 때(restReadyRef=false)는 포커스/복귀를 미룬다(진입 줌 끊김 방지) —
-  // 안착 후 transition.on('end')에서 focusRef로 한 번 따라잡는다. focus가 있으면 진입을 가로채도
-  // 무방하니 즉시 적용(팝업 우선).
+  // 진입 모핑 진행 중(restReadyRef=false)에 focus==null이면(=아직 팝업 안 연 최초 상태) 미뤄
+  // 진입 줌이 끊기지 않게 한다. focus가 있으면(클릭) 진입을 가로채고 즉시 포커스(팝업 우선).
+  // markers 갱신(늦은 데이터)으로 재실행돼도 현재 focus 기준으로 다시 맞춰주므로 안전(멱등).
   useEffect(() => {
     if (focus == null && !restReadyRef.current) return
     focusFnRef.current?.(focus)
