@@ -315,3 +315,186 @@ def _last_json_text(message) -> Optional[str]:
         except json.JSONDecodeError:
             continue
     return texts[-1]
+
+
+# ── 챗봇 tool-use 에이전트 루프 (C12) ───────────────────────────────
+# 규칙기반 골격(정규식 의도분류 + 별칭 dict + if-else)을 대체. LLM이 도구를 호출하며
+# 대상 식별·조회·제안을 수행한다. legacy 백엔드 호환(output_config 미사용, tools만).
+def _all_text(message) -> str:
+    """응답의 모든 text 블록을 이어붙여 최종 답변으로 반환."""
+    return "".join(
+        getattr(b, "text", "") or ""
+        for b in (getattr(message, "content", []) or [])
+        if getattr(b, "type", None) == "text"
+    )
+
+
+def _tool_use_blocks(message) -> List[dict]:
+    """응답 content에서 tool_use 블록만 추출 → [{id, name, input}]."""
+    out: List[dict] = []
+    for b in getattr(message, "content", []) or []:
+        if getattr(b, "type", None) == "tool_use":
+            out.append(
+                {
+                    "id": getattr(b, "id", None),
+                    "name": getattr(b, "name", None),
+                    "input": getattr(b, "input", None) or {},
+                }
+            )
+    return out
+
+
+def _serialize_content(message) -> list:
+    """assistant 응답 content를 다음 요청에 재전송할 dict 형태로 직렬화.
+
+    text·tool_use 블록만 보낸다(thinking 등 기타 블록은 생략 — 챗봇 루프엔 불필요).
+    """
+    blocks: list = []
+    for b in getattr(message, "content", []) or []:
+        btype = getattr(b, "type", None)
+        if btype == "text":
+            blocks.append({"type": "text", "text": getattr(b, "text", "") or ""})
+        elif btype == "tool_use":
+            blocks.append(
+                {
+                    "type": "tool_use",
+                    "id": getattr(b, "id", None),
+                    "name": getattr(b, "name", None),
+                    "input": getattr(b, "input", None) or {},
+                }
+            )
+    return blocks
+
+
+def run_agent(
+    messages: list,
+    tools: List[dict],
+    system: str,
+    tool_executor,
+    max_iters: Optional[int] = None,
+    stop_on: Optional[set] = None,
+) -> "tuple[str, list]":
+    """tool-use 에이전트 루프 → (최종 답변 텍스트, tool_trace).
+
+    stop_reason=="tool_use"면 모든 tool_use 블록을 tool_executor(name, input)로 실행하고
+    tool_result를 user 메시지로 붙여 재호출한다. end_turn이면 최종 text를 반환한다.
+    tool_trace = [{name, input, result}] — 호출부가 needs_research 등 플래그 조립에 쓴다.
+    legacy 호환: output_config 미사용, tools만 전달. max_iters로 무한 루프를 막는다.
+
+    stop_on: 이 집합에 속한 tool이 호출되면 그 즉시 루프를 멈춘다(tool_result 미전송).
+    관점 되묻기(request_perspective)처럼 '답변 생성 전 분기'가 필요한 신호 tool에 쓴다 —
+    불필요한 최종 답변 생성을 막아 토큰을 아낀다.
+
+    messages는 호출부가 넘긴 리스트를 변형하지 않도록 복사해 쓴다.
+    """
+    client = get_client()
+    iters = max_iters or config.CHAT_AGENT_MAX_ITERS
+    stop_on = stop_on or set()
+    convo = list(messages)
+    trace: List[dict] = []
+    kwargs: dict = {
+        "model": config.CHAT_MODEL,
+        "max_tokens": config.CHAT_MAX_TOKENS,
+        "system": system,
+        "tools": tools,
+    }
+    try:
+        for _ in range(iters):
+            with client.messages.stream(messages=convo, **kwargs) as stream:
+                message = stream.get_final_message()
+            if getattr(message, "stop_reason", None) != "tool_use":
+                return _all_text(message), trace
+            calls = _tool_use_blocks(message)
+            # 조기 종료 신호 tool — 실행 결과를 돌려주지 않고 즉시 멈춘다.
+            stop_calls = [c for c in calls if c["name"] in stop_on]
+            if stop_calls:
+                for call in stop_calls:
+                    trace.append({"name": call["name"], "input": call["input"], "result": None})
+                return _all_text(message), trace
+            # tool_use → 실행하고 tool_result를 붙여 재호출.
+            convo.append({"role": "assistant", "content": _serialize_content(message)})
+            results = []
+            for call in calls:
+                result = tool_executor(call["name"], call["input"])
+                trace.append({"name": call["name"], "input": call["input"], "result": result})
+                results.append(
+                    {
+                        "type": "tool_result",
+                        "tool_use_id": call["id"],
+                        "content": json.dumps(result, ensure_ascii=False),
+                    }
+                )
+            convo.append({"role": "user", "content": results})
+        # 반복 한도 초과 — 마지막 메시지 텍스트라도 반환(빈 문자열일 수 있음).
+        _log.warning("에이전트 루프 max_iters(%d) 초과 — 부분 답변 반환", iters)
+        return _all_text(message), trace
+    except Exception as exc:  # noqa: BLE001 — SDK 예외 다양
+        raise BedrockError(f"에이전트 루프 실패: {exc}") from exc
+
+
+def stream_agent(
+    messages: list,
+    tools: List[dict],
+    system: str,
+    tool_executor,
+    max_iters: Optional[int] = None,
+    stop_on: Optional[set] = None,
+):
+    """tool-use 에이전트 루프를 스트리밍 실행하는 제너레이터(SSE용).
+
+    run_agent와 같은 루프지만, 각 턴의 텍스트 델타를 실시간으로 yield해 답변이 타이핑되듯
+    흐르게 한다(time-to-first-token 단축). 이벤트 종류:
+      {"type": "status", "tool": <name>}  — 도구 호출 직전(분석 중 표시)
+      {"type": "token", "text": <delta>}  — 답변 텍스트 델타
+      {"type": "final", "text": <full>, "trace": [...]}  — 종료(플래그 조립용)
+
+    텍스트 델타는 들어오는 대로 흘린다 — 도구 호출 턴에 짧은 preamble 텍스트가 섞일 수
+    있으나(자연스러운 에이전트 화법) 대개 도구 턴은 텍스트가 거의 없다. 최종 답변은 마지막
+    턴에 한 번에 흘러나온다. stop_on tool이 호출되면 토큰 없이 즉시 final로 종료한다.
+    """
+    client = get_client()
+    iters = max_iters or config.CHAT_AGENT_MAX_ITERS
+    stop_on = stop_on or set()
+    convo = list(messages)
+    trace: List[dict] = []
+    kwargs: dict = {
+        "model": config.CHAT_MODEL,
+        "max_tokens": config.CHAT_MAX_TOKENS,
+        "system": system,
+        "tools": tools,
+    }
+    try:
+        for _ in range(iters):
+            with client.messages.stream(messages=convo, **kwargs) as stream:
+                for delta in stream.text_stream:
+                    if delta:
+                        yield {"type": "token", "text": delta}
+                message = stream.get_final_message()
+            if getattr(message, "stop_reason", None) != "tool_use":
+                yield {"type": "final", "text": _all_text(message), "trace": trace}
+                return
+            calls = _tool_use_blocks(message)
+            stop_calls = [c for c in calls if c["name"] in stop_on]
+            if stop_calls:
+                for call in stop_calls:
+                    trace.append({"name": call["name"], "input": call["input"], "result": None})
+                yield {"type": "final", "text": _all_text(message), "trace": trace}
+                return
+            convo.append({"role": "assistant", "content": _serialize_content(message)})
+            results = []
+            for call in calls:
+                yield {"type": "status", "tool": call["name"]}
+                result = tool_executor(call["name"], call["input"])
+                trace.append({"name": call["name"], "input": call["input"], "result": result})
+                results.append(
+                    {
+                        "type": "tool_result",
+                        "tool_use_id": call["id"],
+                        "content": json.dumps(result, ensure_ascii=False),
+                    }
+                )
+            convo.append({"role": "user", "content": results})
+        _log.warning("에이전트 스트림 max_iters(%d) 초과", iters)
+        yield {"type": "final", "text": _all_text(message), "trace": trace}
+    except Exception as exc:  # noqa: BLE001
+        raise BedrockError(f"에이전트 스트림 실패: {exc}") from exc

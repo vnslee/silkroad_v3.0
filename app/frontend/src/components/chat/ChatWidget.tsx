@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { api } from '../../api/client'
-import type { ChatAction, ChatFlow, ChatTurn, Domain, JobKind, Perspective } from '../../api/types'
+import type { ChatAction, ChatFlow, ChatResponse, ChatTurn, Domain, JobKind, Perspective } from '../../api/types'
 import { useStore, store } from '../../store'
 import { useJobPolling } from '../../hooks/useJobPolling'
 import { useT } from '../../i18n/dict'
@@ -172,23 +172,39 @@ export function ChatWidget() {
     await runChat(text, next, undefined)
   }
 
-  // 실제 API 호출 + 응답 처리. send(새 질문)와 관점 칩 재전송이 공유한다.
+  // 실제 API 호출 + 응답 처리(SSE 스트림). send(새 질문)와 관점 칩 재전송이 공유한다.
   // perspective가 있으면 사용자 버블을 추가하지 않고(이미 질문은 보냈으므로) 그 관점으로만 답한다.
+  // 토큰은 스트리밍 버블에 누적하고, done 이벤트의 플래그로 칩·트리거를 분기한다(기존 로직 보존).
   async function runChat(text: string, history: ChatTurn[], perspective?: Perspective) {
     setTyping(true)
     setActions([])
     setSummaryAsk(null)
     setPerspectiveAsk(null)
     setSuggestions([])
-    try {
-      const resp = await api.chat({
-        domain: target.domain,
-        target_id: target.id,
-        message: text,
-        history,
-        perspective,
+    // 스트리밍 버블 — 첫 토큰 도착 시 생성하고 이후 델타를 누적한다.
+    let streamingIdx = -1
+    let acc = ''
+    const ensureBubble = () => {
+      if (streamingIdx >= 0) return
+      setTyping(false)
+      setTurns((prev) => {
+        streamingIdx = prev.length
+        return [...prev, { role: 'assistant', content: '' }]
       })
-      // 백엔드가 질문에서 식별한 대상을 다음 턴 대상으로 반영(ES 고정 버그 방지, §6.5).
+    }
+    const appendToken = (chunk: string) => {
+      ensureBubble()
+      acc += chunk
+      setTurns((prev) => {
+        if (streamingIdx < 0 || streamingIdx >= prev.length) return prev
+        const next = [...prev]
+        next[streamingIdx] = { role: 'assistant', content: acc }
+        return next
+      })
+    }
+
+    const onDone = (resp: ChatResponse) => {
+      // 백엔드가 식별한 대상을 다음 턴 대상으로 반영(ES 고정 버그 방지, §6.5).
       const resolved =
         resp.resolved_domain && resp.resolved_target_id
           ? { domain: resp.resolved_domain, id: resp.resolved_target_id }
@@ -196,10 +212,33 @@ export function ChatWidget() {
       if (resolved.domain !== target.domain || resolved.id !== target.id) {
         setTarget(resolved)
       }
-      if (resp.answer) pushAssistant(resp.answer)
-      else setTyping(false)
 
-      // 관점 선택 필요(senario.md) → 질문을 보관하고 관점 칩 노출. 선택 시 그 관점으로 재전송.
+      // 답변 텍스트 확정 — done.answer가 스트림 누적과 다르면 done 값을 신뢰(권위).
+      // 스트림 토큰이 없었는데 done.answer가 있으면 새 버블로 표시.
+      if (resp.answer && resp.answer !== acc) {
+        if (streamingIdx >= 0) {
+          setTurns((prev) => {
+            const next = [...prev]
+            next[streamingIdx] = { role: 'assistant', content: resp.answer as string }
+            return next
+          })
+        } else {
+          pushAssistant(resp.answer)
+        }
+      } else if (!resp.answer && streamingIdx >= 0 && !acc) {
+        // 답변 없는 분기(관점/트리거 등)인데 빈 버블이 생겼으면 제거.
+        setTurns((prev) => prev.filter((_, i) => i !== streamingIdx))
+      }
+      setTyping(false)
+
+      // 어디에도 안 걸리는 차단성 응답(needs_* 모두 false·answer 없음)은 제안 문구를 표시.
+      const willHandleSuggestion =
+        resp.needs_perspective || resp.auto_trigger || resp.needs_research || resp.needs_report
+      if (!resp.answer && resp.research_suggestion && !willHandleSuggestion) {
+        pushAssistant(resp.research_suggestion)
+      }
+
+      // 관점 선택 필요(senario.md) → 질문을 보관하고 관점 칩 노출.
       if (resp.needs_perspective) {
         setPerspectiveAsk(text)
         if (resp.research_suggestion) pushAssistant(resp.research_suggestion)
@@ -215,21 +254,25 @@ export function ChatWidget() {
         startResearch({ domain: resolved.domain, id: resolved.id, missingCodes: resp.missing_codes })
       } else if (resp.needs_research || resp.needs_report) {
         // 확인 필요(미보유국 등) → 제안 문구 + 예/아니오 칩.
-        setPending({
-          domain: resolved.domain,
-          id: resolved.id,
-          missingCodes: resp.missing_codes,
-        })
+        setPending({ domain: resolved.domain, id: resolved.id, missingCodes: resp.missing_codes })
         if (resp.research_suggestion) pushAssistant(resp.research_suggestion)
       }
 
-      // 보유국 QA → 선택지 칩 노출(상세요약/리서치 재수행/보고서).
+      // 보유국 QA → 선택지 칩 + 후속 추천 질문.
       setActions(resp.actions ?? [])
-      // 답변과 함께 받은 후속 추천 질문(senario.md 틀 안) → 탐색용 칩.
       setSuggestions(resp.suggested_prompts ?? [])
-    } catch (e) {
-      pushAssistant(`${t('chat.error')}${String(e)}`)
     }
+
+    await api.chatStream(
+      { domain: target.domain, target_id: target.id, message: text, history, perspective },
+      {
+        onToken: appendToken,
+        onDone,
+        onError: (detail) => {
+          if (streamingIdx < 0) pushAssistant(`${t('chat.error')}${detail}`)
+        },
+      },
+    )
   }
 
   function startResearch(p: Pending) {

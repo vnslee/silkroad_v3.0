@@ -191,6 +191,16 @@ export interface ChatResponse {
   suggested_prompts?: string[]
 }
 
+// 챗봇 SSE 스트림(POST /api/chat/stream) 이벤트 핸들러.
+// onToken: 답변 토큰 델타(타이핑 효과), onStatus: 도구 호출 중(분석 표시),
+// onDone: 종료(플래그·칩이 담긴 ChatResponse), onError: 오류.
+export interface ChatStreamHandlers {
+  onToken?: (text: string) => void
+  onStatus?: (tool: string) => void
+  onDone: (resp: ChatResponse) => void
+  onError?: (detail: string) => void
+}
+
 // 챗봇 흐름·선택지 명세(GET /api/chat/flow). 텍스트는 i18n 키만 — dict.ts로 한/영 변환.
 export interface ChatFlow {
   version?: string
