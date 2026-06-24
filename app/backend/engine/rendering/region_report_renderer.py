@@ -739,7 +739,7 @@ class RegionReportRenderer:
         return f'''
         <div>
             <h2 class="font-headline-md text-headline-md text-primary mb-md" data-i18n="summary_top3_title" data-en="Quickwin Ranking (Top 3)">퀵윈 순위 (Top 3)</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-md items-end max-w-3xl mx-auto">{"".join(cols)}</div>
+            <div class="podium-grid grid grid-cols-1 md:grid-cols-3 gap-md items-end max-w-3xl mx-auto">{"".join(cols)}</div>
         </div>'''
 
     def _render_summary_ranking(self) -> str:
@@ -1823,7 +1823,7 @@ class RegionReportRenderer:
                 {sub_label}
             </button>''')
         return f'''
-        <div class="bg-surface-container-lowest border border-surface-border rounded-xl p-sm mb-xl sticky top-0 z-10 card-shadow">
+        <div class="tabs-nav bg-surface-container-lowest border border-surface-border rounded-xl p-sm mb-xl sticky top-0 z-10 card-shadow">
             <div class="flex gap-sm overflow-x-auto">{"".join(parts)}</div>
         </div>'''
 
@@ -1927,19 +1927,18 @@ class RegionReportRenderer:
 
         /* ───────── Print / PDF export ───────── */
         @media print {{
-            @page {{ size: A4 landscape; margin: 10mm 12mm 12mm 12mm; }}
+            @page {{ size: A4 portrait; margin: 10mm 12mm 12mm 12mm; }}
             html, body {{
                 background: #ffffff !important;
                 color: #000000 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }}
-            /* Hide UI chrome */
-            .no-print, .tab-button, header button, footer button {{ display: none !important; }}
+            /* Hide UI chrome (탭 네비 컨테이너째 숨김 — 빈 첫 페이지 방지) */
+            .no-print, .tabs-nav, .tab-button, header button, footer button {{ display: none !important; }}
             .sticky {{ position: static !important; }}
-            /* Show all tab content stacked */
-            .tab-content {{ display: block !important; break-before: page; }}
-            .tab-content:first-of-type {{ break-before: auto; }}
+            /* 모든 탭을 펼쳐 연속 흐름으로 출력(탭별 강제 페이지 나눔 없음 — 화면 스크롤처럼 이어짐) */
+            .tab-content {{ display: block !important; }}
             /* Add tab title before each panel (KO 기본 · html[lang=en]일 때 EN) */
             .tab-content[id="tab-summary"]::before        {{ content: "요약"; }}
             .tab-content[id="tab-killswitch"]::before     {{ content: "킬스위치"; }}
@@ -1961,12 +1960,18 @@ class RegionReportRenderer:
                 margin-bottom: 16px;
             }}
             /* Force-open all accordions */
-            details {{ break-inside: avoid; }}
+            details {{ break-inside: auto; }}
             details > summary {{ list-style: none; }}
             details > summary::-webkit-details-marker {{ display: none; }}
             details > summary .material-symbols-outlined {{ display: none; }}
-            /* Cards: avoid breaking awkwardly */
-            section > div, .grid > div {{ break-inside: avoid; }}
+            /* 화면처럼 자연스럽게 흐르게 — 카드를 페이지에 강제로 가두지 않음(빈 공간/한 요소당 한 페이지 방지).
+               제목·표 헤더만 끊김 방지하고, 나머지는 페이지 경계에서 자연스럽게 넘어가게 둔다. */
+            h1, h2, h3, h4 {{ break-after: avoid; }}
+            tr, img {{ break-inside: avoid; }}
+            /* 차트 SVG: 인쇄 폭이 넓어지면 viewBox 비율대로 과도하게 키 커져 빈 페이지처럼 보임 → 높이 제한 */
+            svg {{ max-height: 320px !important; height: auto; }}
+            /* 포디움(퀵윈 Top3): md:grid-cols-3 반응형이 인쇄에선 안 걸려 세로로 쌓이는 문제 → 3열 강제 */
+            .podium-grid {{ display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }}
             /* Shrink shadows for cleaner print */
             * {{ box-shadow: none !important; }}
             /* Drop hover transitions */

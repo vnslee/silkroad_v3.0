@@ -2937,7 +2937,7 @@ class CountryReportRenderer:
             '''
 
         return f'''
-        <div class="bg-surface-container-lowest border border-surface-border rounded-xl px-sm py-[6px] mb-xl sticky top-0 z-10 card-shadow">
+        <div class="tabs-nav bg-surface-container-lowest border border-surface-border rounded-xl px-sm py-[6px] mb-xl sticky top-0 z-10 card-shadow">
             <div class="flex gap-xs overflow-x-auto">
                 {tabs_html}
             </div>
@@ -3138,21 +3138,26 @@ class CountryReportRenderer:
         .card-shadow {{ box-shadow: 0 4px 8px rgba(20, 23, 28, 0.04); }}
         details > summary::-webkit-details-marker {{ display: none; }}
         details > summary {{ list-style: none; }}
+        /* 인쇄/PDF 시 배경색·차트 색을 강제 유지(브라우저 기본은 배경 생략) */
+        html, body, * {{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }}
         @media print {{
-            @page {{ size: A3 landscape; margin: 12mm; }}
+            @page {{ size: A4 portrait; margin: 12mm; }}
             body {{ background: #ffffff; }}
-            .no-print, header button, .tab-button {{ display: none !important; }}
-            /* 인쇄 시 모든 탭 펼침 */
+            .no-print, .tabs-nav, header button, .tab-button {{ display: none !important; }}
+            /* 인쇄 시 모든 탭 펼침 — 탭별 강제 페이지 나눔 없이 화면처럼 연속 흐름 */
             .tab-content {{ display: block !important; }}
-            .tab-content + .tab-content {{ page-break-before: always; }}
             /* 아코디언 모두 펼침 */
             details {{ display: block !important; }}
             details > summary {{ display: none !important; }}
             details > *:not(summary) {{ display: block !important; }}
             /* sticky 비활성화 */
             .sticky {{ position: static !important; }}
-            /* 카드 페이지 내에서 잘리지 않게 */
-            section, .card-shadow {{ break-inside: avoid; page-break-inside: avoid; }}
+            /* 화면처럼 자연스럽게 흐르게 — 카드를 페이지에 강제로 가두지 않음(한 요소당 한 페이지/빈 공간 방지).
+               제목·표 행·이미지만 끊김 방지하고 나머지는 페이지 경계에서 자연스럽게 넘어가게 둔다. */
+            h1, h2, h3, h4 {{ break-after: avoid; }}
+            tr, img {{ break-inside: avoid; }}
+            /* 차트 SVG: 인쇄 폭이 넓어지면 viewBox 비율대로 과도하게 키 커져 빈 페이지처럼 보임 → 높이 제한 */
+            svg {{ max-height: 320px !important; height: auto; }}
             .card-shadow {{ box-shadow: none !important; }}
         }}
         .tab-content {{ display: none; }}

@@ -6,7 +6,7 @@
     "country": "FR",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-23T22:17:25.267108",
+  "generated_at": "2026-06-24T10:17:33.929753",
   "schema_version": "1.1",
   "overall_insight": "프랑스는 EU 3위 신차 시장이자 캡티브 금융(특히 Stellantis·Renault 계열)의 본거지로, 개인 신차 할부·B2B 리스 모두 성숙한 고침투 시장이다. 비즈니스 매력도(시장규모·금융이용률·EV 보급)는 높으나, 진입 난이도 드라이버는 EU CCD2/소비자보호 규제, 추심·회수 절차의 사법 의존성, 그리고 PSD2·GDPR 기반 데이터·AI 신용평가 규제다. IT 유사도는 EU 표준(SEPA·PSD2·오픈뱅킹)에 높게 정렬되어 베이스라인 대비 양호하나, 비즈니스 매력도 대비 회수 실행 리스크(평균 회수기간 장기)가 엇갈리는 지점이다. 다크호스는 B2B 오퍼레이팅 리스·플릿 시장으로 Ayvens(구 ALD·LeasePlan) 본사가 있어 경쟁이 치열하지만 EV 전환 수요가 폭발적이다. 리스크 플래그는 EV 잔가 변동성과 ICE 단계적 퇴출에 따른 잔가 손익으로, 잔가 헤지·리마케팅 역량 없이는 B2B 리스 마진이 압박받는다. 외국사 라이선스는 ACPR 인가 및 EU 패스포팅으로 취득 가능해 국가 게이트는 대체로 PASS다.",
   "overall_insight_en": "France is the EU's #3 new-car market and the home of major captive finance arms (notably Stellantis and Renault groups), a mature, high-penetration market for both retail new-car installment loans and B2B leasing. Business attractiveness (market size, finance penetration, EV adoption) is high, but entry-difficulty drivers are EU CCD2/consumer-protection regulation, the judicial dependency of collection/repossession procedures, and PSD2/GDPR-based data and AI credit-scoring rules. IT similarity is highly aligned with EU standards (SEPA, PSD2, open banking), favorable vs. baseline, but the divergence point vs. business attractiveness is recovery-execution risk (long average recovery period). The dark horse is the B2B operating-lease/fleet market — Ayvens (ex-ALD/LeasePlan) is headquartered here, so competition is fierce but EV-transition demand is explosive. The risk flags are EV residual-value volatility and residual P&L from the ICE phase-out — without residual hedging and remarketing capabilities, B2B lease margins come under pressure. Foreign licensing is obtainable via ACPR authorization and EU passporting, so the country gate broadly PASSes.",
@@ -366,7 +366,7 @@
   },
   "tabs": {
     "tab_1_1_similarity": {
-      "overall_score": 90.3125,
+      "overall_score": 90.31250000000001,
       "axes": {
         "product": 93.75,
         "regulatory": 92.85714285714286,
@@ -793,7 +793,7 @@
     },
     "tab_1_2_decision": {
       "decision": "baseline_system_expansion",
-      "similarity_score": 90.3125,
+      "similarity_score": 90.31250000000001,
       "recommendation": {
         "ko": "권역 내 확산: GB 시스템(NetSol) 현지화",
         "en": "Regional expansion: localize GB system (NetSol)."
@@ -911,7 +911,7 @@
       "currency": "EUR",
       "currency_base": "EUR",
       "total_tco_10y_eur": 77260.0,
-      "similarity_score": 90.3125,
+      "similarity_score": 90.31250000000001,
       "similarity_multiplier": 0.5,
       "similarity_band": "90~100",
       "discount_applied": 0.4,

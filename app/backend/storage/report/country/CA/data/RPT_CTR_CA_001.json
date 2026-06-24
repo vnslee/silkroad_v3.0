@@ -6,7 +6,7 @@
     "country": "CA",
     "base_country": "US"
   },
-  "generated_at": "2026-06-23T22:17:24.587544",
+  "generated_at": "2026-06-24T10:17:33.731343",
   "schema_version": "1.2",
   "overall_insight": "성숙한 G7 자동차금융 시장으로, 2025년 신차 판매 약 188만대(DesRosiers/GAC)·금융침투율 80%+의 고침투·고신뢰 환경이다. 비즈니스 매력도는 안정성(AAA/Aaa 국가신용·낮은 APR)이 핵심이나 성장률은 한 자릿수 초중반으로 멕시코 대비 완만하다. 비용·난이도 드라이버는 연방-주 이중 규제 — OSFI(연방 건전성)와 주별 소비자신용·면허 체제(특히 Quebec 소비자보호법·언어 의무)가 진입 복잡도를 키운다. 단 외국인 지분 제한 없음(Investment Canada Act 심사 임계만)·외환 자유로 게이트는 대부분 PASS. IT 유사도는 북미 권역에서 매우 높다 — Equifax/TransUnion 양강 CB·Interac/EFT 결제·전자서명·고도화된 디지털 채널로 베이스라인 재사용률이 멕시코보다 높다. 매력도↔IT 불일치 지점은 차량회수 — 주별로 법원명령 요구(자력구제 제한) 편차가 커 리스크 모듈 분기가 필요하다. 다크호스는 EV 가속(연방 iZEV+ZEV mandate 2026+)·강한 캡티브(Toyota·Honda·Ford·GM)와 은행계(Scotiabank·RBC·TD) 공존 구조다. B2B 리스 우선 진입 후 주별 소비자신용 확장 또는 한국 OEM 캡티브 연계 전략이 유효하다.",
   "overall_insight_en": "A mature G7 auto-finance market — ~1.88M new-car sales in 2025 (DesRosiers/GAC) with 80%+ finance penetration, a high-penetration, high-trust environment. Business attractiveness hinges on stability (AAA/Aaa sovereign credit, low APR), but growth is in the low single digits — moderate versus Mexico. Cost/difficulty drivers are the federal-provincial dual regulation — OSFI (federal prudential) and province-by-province consumer-credit/licensing regimes (notably Quebec's consumer-protection law and language obligations) raise entry complexity. However, with no foreign-ownership limit (only an Investment Canada Act review threshold) and free FX, most gates PASS. IT similarity is very high in North America — the Equifax/TransUnion duopoly CB, Interac/EFT payments, e-signature, and advanced digital channels give higher baseline reuse than Mexico. The attractiveness↔IT mismatch is repossession — wide provincial variation in court-order requirements (limited self-help) requires a per-province risk-module branch. The dark horse is EV acceleration (federal iZEV + ZEV mandate 2026+) and a strong-captive (Toyota·Honda·Ford·GM) and bank-led (Scotiabank·RBC·TD) coexistence structure. A B2B-lease-first entry followed by per-province consumer-credit expansion, or a Korean OEM captive linkage, is a viable strategy.",
@@ -18,7 +18,7 @@
     "data_year": 2025,
     "fetched_at": "2026-06-21T21:00:00+09:00",
     "fetched_by": "ai",
-    "entry_status": "미진출"
+    "entry_status": "운영중"
   },
   "data_quality": {
     "completeness_pct": 97.95918367346938,
@@ -366,7 +366,7 @@
   },
   "tabs": {
     "tab_1_1_similarity": {
-      "overall_score": 83.75,
+      "overall_score": 83.75000000000001,
       "axes": {
         "product": 87.5,
         "regulatory": 87.5,
@@ -793,7 +793,7 @@
     },
     "tab_1_2_decision": {
       "decision": "baseline_system_expansion",
-      "similarity_score": 83.75,
+      "similarity_score": 83.75000000000001,
       "recommendation": {
         "ko": "권역 내 확산: US 시스템(Salesforce) 현지화",
         "en": "Regional expansion: localize US system (Salesforce)."
@@ -911,7 +911,7 @@
       "currency": "USD",
       "currency_base": "EUR",
       "total_tco_10y_eur": 55600.0,
-      "similarity_score": 83.75,
+      "similarity_score": 83.75000000000001,
       "similarity_multiplier": 0.6,
       "similarity_band": "80~90",
       "discount_applied": 0.4,

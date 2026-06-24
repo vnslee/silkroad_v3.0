@@ -6,7 +6,7 @@
     "country": "DK",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-23T22:17:25.005571",
+  "generated_at": "2026-06-24T10:17:33.849847",
   "schema_version": "1.1",
   "overall_insight": "EU 16위 자동차 시장이자 EU에서 가장 특수한 자동차 세제 구조를 가진 국가. 2025년 신차 등록 약 17만대(De Danske Bilimportører)로 규모는 작으나 BEV(순수전기차) 점유 60%+로 EU 1위(노르웨이 다음 글로벌 2위). 비용·난이도 드라이버는 명확하다 — 자동차 등록세(Registreringsafgift, ICE 차량 약 90~150%의 사실상 사용 금지급 세율)가 시장을 BEV·소형·중고차로 강제 전환시킨 구조다. 소비자 자동차금융은 Finanstilsynet(FSA) 인가 finansieringsselskab(자본금 DKK 8M)+APR 상한(2020 Lov om forbrugslån 강화, 비카드 신용 사실상 금지 — 35% APR + 100% TCC 상한)이라는 이중 규제가 진입 부담의 핵심이다. 반면 B2B 운용리스(operationel leasing)는 FSA 인가 면제·Finans og Leasing 자율규제로 진입 매우 유연. 비즈니스 매력도는 시장규모 작음·소비자대출 사실상 금지로 단독 진입 매력 제한적이나, BEV 침투 EU 1위·플릿 리스 비중 EU 톱급이라 EV 운용리스 전문 진입 전략이 유효하다. 캡티브(VW·Toyota·Stellantis)와 다국적 리스사(Ayvens·Arval·LeasePlan) 양강 약 70% 점유. IT 유사도는 매우 높음 — EU GDPR·SEPA·NemKonto(국가 은행계좌)·MitID(전자인증)·RKI(신용정보) 등 인프라 EU 최상위. 매력도↔IT 불일치 지점은 차량 등록세 — 진입 시 잔가 모델·중고 EV 가격에 큰 영향. 다크호스는 사용리스(brugtleasing) 시장 — 등록세 회피 구조로 급성장 중. EV·플릿·중고리스 우선 진입, 소비자금융은 사실상 진입 비매력.",
   "overall_insight_en": "Denmark is the EU's 16th-largest auto market and has the bloc's most distinctive vehicle tax structure. With ~170,000 new registrations in 2025 (De Danske Bilimportorer), scale is small, but BEV (pure electric) share exceeds 60% — #1 in the EU (#2 globally after Norway). Cost/difficulty drivers are clear — the vehicle registration tax (Registreringsafgift, effectively prohibitive ~90-150% on ICE cars) has forced the market toward BEV, small, and used vehicles. Consumer auto finance faces a dual regulatory burden: Finanstilsynet (FSA)-licensed finansieringsselskab (DKK 8M capital) + an APR cap (tightened by the 2020 Lov om forbrugslan, which effectively bans non-card credit — 35% APR + 100% TCC cap). By contrast, B2B operating leasing (operationel leasing) is FSA-license-exempt under Finans og Leasing self-regulation, making entry very flexible. Business attractiveness is limited for standalone entry given the small market and effective consumer-credit ban, but with EU-leading BEV penetration and EU-top-tier fleet-lease share, an EV operating-lease specialist entry strategy is viable. Captives (VW, Toyota, Stellantis) and multinational lessors (Ayvens, Arval, LeasePlan) split ~70% of the market. IT similarity is very high — infrastructure such as EU GDPR, SEPA, NemKonto (national bank account), MitID (e-ID), and RKI (credit bureau) ranks among the EU's best. The attractiveness vs IT mismatch is the vehicle registration tax — it heavily affects residual-value models and used-EV pricing on entry. The dark horse is the used-lease (brugtleasing) market, growing rapidly as a registration-tax-avoidance structure. Prioritize EV, fleet, and used-lease entry; consumer finance is effectively unattractive to enter.",
@@ -366,7 +366,7 @@
   },
   "tabs": {
     "tab_1_1_similarity": {
-      "overall_score": 90.625,
+      "overall_score": 90.62500000000001,
       "axes": {
         "product": 87.5,
         "regulatory": 87.5,
@@ -793,7 +793,7 @@
     },
     "tab_1_2_decision": {
       "decision": "baseline_system_expansion",
-      "similarity_score": 90.625,
+      "similarity_score": 90.62500000000001,
       "recommendation": {
         "ko": "권역 내 확산: GB 시스템(NetSol) 현지화",
         "en": "Regional expansion: localize GB system (NetSol)."
@@ -911,7 +911,7 @@
       "currency": "EUR",
       "currency_base": "EUR",
       "total_tco_10y_eur": 194436.8,
-      "similarity_score": 90.625,
+      "similarity_score": 90.62500000000001,
       "similarity_multiplier": 0.5,
       "similarity_band": "90~100",
       "discount_applied": 0.4,

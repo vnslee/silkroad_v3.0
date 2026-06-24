@@ -11,10 +11,10 @@
     ],
     "baseline_country": "BR"
   },
-  "generated_at": "2026-06-23T22:18:23.564599",
+  "generated_at": "2026-06-24T10:17:34.677375",
   "generated_by": "engine",
   "data_snapshot_id": "2026-06-22T16:00:00+09:00",
-  "config_version": "1.1",
+  "config_version": "1.2",
   "engine_version": "v1.0",
   "schema_version": "1.1",
   "fx": {
@@ -116,6 +116,11 @@
           "country": "AR",
           "country_name": "Argentina",
           "pass": false,
+          "tier": "jv_required",
+          "tier_label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -151,6 +156,11 @@
           "country": "BR",
           "country_name": "Brazil",
           "pass": false,
+          "tier": "jv_required",
+          "tier_label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -186,6 +196,11 @@
           "country": "CL",
           "country_name": "Chile",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -226,7 +241,49 @@
         "BR"
       ],
       "passed_count": 1,
-      "failed_count": 2
+      "failed_count": 2,
+      "tier_counts": {
+        "jv_required": 2,
+        "in_region_confidence": 1
+      },
+      "tier_summary": [
+        {
+          "key": "jv_required",
+          "label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
+          "severity": 1,
+          "count": 2
+        },
+        {
+          "key": "jv_recommended",
+          "label": {
+            "ko": "JV 권고",
+            "en": "JV Recommended"
+          },
+          "severity": 2,
+          "count": 0
+        },
+        {
+          "key": "external_solution",
+          "label": {
+            "ko": "외부솔루션 사용",
+            "en": "External Solution"
+          },
+          "severity": 3,
+          "count": 0
+        },
+        {
+          "key": "in_region_confidence",
+          "label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "severity": 4,
+          "count": 1
+        }
+      ]
     },
     "tab_2_1_attractiveness": {
       "nature": "ranking",
@@ -1010,9 +1067,15 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": true,
+          "killswitch_tier": "jv_required",
+          "killswitch_tier_label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": true,
-          "exclusion_reason": "killswitch fail"
+          "exclusion_reason": "killswitch: jv_required (랭킹 제외)"
         },
         {
           "country": "BR",
@@ -1024,6 +1087,12 @@
           "quickwin_band": 70,
           "is_baseline": true,
           "killswitch_excluded": true,
+          "killswitch_tier": "jv_required",
+          "killswitch_tier_label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
+          "quickwin_penalty": 0,
           "already_entered": true,
           "excluded": true,
           "exclusion_reason": "baseline (기준국, 후보 아님)"
@@ -1038,6 +1107,12 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
@@ -1054,8 +1129,8 @@
         }
       ],
       "note": {
-        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·킬스위치 탈락국 제외. 10점 구간 표기.",
-        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and killswitch failures excluded. Reported in 10-point buckets."
+        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets."
       }
     },
     "top3_country_cards": [
@@ -1067,6 +1142,11 @@
         "attractiveness": 32.6,
         "it_similarity_band": 70,
         "killswitch_pass": true,
+        "killswitch_tier": "in_region_confidence",
+        "killswitch_tier_label": {
+          "ko": "권역내 확신",
+          "en": "In-Region Confidence"
+        },
         "market_brief": {
           "신차_판매대수": 310000,
           "금융_이용률_신차": 65,
@@ -1136,6 +1216,10 @@
           }
         ],
         "killswitch_failed_count": 2,
+        "killswitch_tier_counts": {
+          "jv_required": 2,
+          "in_region_confidence": 1
+        },
         "why_top1": {
           "ko": "칠레 — 매력도 32.6, IT유사도 70 구간, 퀵윈 50 구간",
           "en": "Chile(CL) — Attractiveness 32.6, IT band 70, Quickwin band 50"

@@ -1,7 +1,7 @@
 // ReportView(C7, FR-5) — 보고서 HTML iframe embed + chrome(원본 보고서 헤더 형식 재현).
 // 헤더: 국기 + [국가/권역 선택] + Report ID·생성일 + [보고서 버전 선택] + 이름 + PDF·메일.
 // 본문(탭·차트·표·레이더)만 iframe(렌더 엔진 HTML) — chrome은 전부 프론트(PIPELINE §5).
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { api } from '../../api/client'
 import { paths } from '../../api/paths'
 import type { CountrySummary, Domain, RegionSummary, ReportRef } from '../../api/types'
@@ -37,7 +37,18 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   const [selected, setSelected] = useState<string | undefined>(reportId)
   const [error, setError] = useState<string | null>(null)
   const [catalog, setCatalog] = useState<CatalogItem[]>([])
+  const iframeRef = useRef<HTMLIFrameElement>(null)
   const t = useT()
+
+  // PDF — 서버 변환(weasyprint) 대신 보고서 iframe을 브라우저 인쇄로 띄운다.
+  //   iframe은 동일 출처(/api/...)라 contentWindow.print()로 본문만 인쇄 → 사용자가
+  //   인쇄 대화상자에서 'PDF로 저장' 선택. 화면(크롬 렌더)과 100% 동일하게 저장된다.
+  const handlePrintPdf = () => {
+    const win = iframeRef.current?.contentWindow
+    if (!win) return
+    win.focus()
+    win.print()
+  }
 
   // 카탈로그(대상 선택용)
   useEffect(() => {
@@ -231,13 +242,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
             variant="outline"
             iconName="picture_as_pdf"
             text={t('action.pdf')}
-            onClick={() => {
-              // 다운로드 — 프로그램적 앵커 클릭(MicroExpander는 button이라 href 미지원).
-              const a = document.createElement('a')
-              a.href = paths.reportPdf(domain, code, selected)
-              a.download = ''
-              a.click()
-            }}
+            onClick={handlePrintPdf}
           />
           <MicroExpander
             variant="default"
@@ -251,6 +256,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
       {/* 본문 — iframe(렌더 엔진 HTML) */}
       <iframe
         key={`${code}-${selected}`}
+        ref={iframeRef}
         title={`${title} 본문`}
         src={paths.reportHtml(domain, code, selected)}
         className="min-h-0 w-full flex-1 border-0 bg-surface"

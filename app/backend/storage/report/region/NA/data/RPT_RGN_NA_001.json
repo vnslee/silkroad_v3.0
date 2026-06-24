@@ -12,10 +12,10 @@
     ],
     "baseline_country": "US"
   },
-  "generated_at": "2026-06-23T22:18:23.453117",
+  "generated_at": "2026-06-24T10:17:34.594414",
   "generated_by": "engine",
   "data_snapshot_id": "2026-06-22T16:00:00+09:00",
-  "config_version": "1.1",
+  "config_version": "1.2",
   "engine_version": "v1.0",
   "schema_version": "1.1",
   "fx": {
@@ -123,6 +123,11 @@
           "country": "US",
           "country_name": "United States",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -158,6 +163,11 @@
           "country": "CA",
           "country_name": "Canada",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -193,6 +203,11 @@
           "country": "MX",
           "country_name": "Mexico",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -228,6 +243,11 @@
           "country": "PR",
           "country_name": "Puerto Rico",
           "pass": false,
+          "tier": "jv_required",
+          "tier_label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -269,7 +289,49 @@
         "PR"
       ],
       "passed_count": 3,
-      "failed_count": 1
+      "failed_count": 1,
+      "tier_counts": {
+        "in_region_confidence": 3,
+        "jv_required": 1
+      },
+      "tier_summary": [
+        {
+          "key": "jv_required",
+          "label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
+          "severity": 1,
+          "count": 1
+        },
+        {
+          "key": "jv_recommended",
+          "label": {
+            "ko": "JV 권고",
+            "en": "JV Recommended"
+          },
+          "severity": 2,
+          "count": 0
+        },
+        {
+          "key": "external_solution",
+          "label": {
+            "ko": "외부솔루션 사용",
+            "en": "External Solution"
+          },
+          "severity": 3,
+          "count": 0
+        },
+        {
+          "key": "in_region_confidence",
+          "label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "severity": 4,
+          "count": 3
+        }
+      ]
     },
     "tab_2_1_attractiveness": {
       "nature": "ranking",
@@ -1288,6 +1350,12 @@
           "quickwin_band": 90,
           "is_baseline": true,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": true,
           "excluded": true,
           "exclusion_reason": "baseline (기준국, 후보 아님)"
@@ -1302,10 +1370,15 @@
           "quickwin_band": 60,
           "is_baseline": false,
           "killswitch_excluded": false,
-          "already_entered": false,
-          "excluded": false,
-          "exclusion_reason": null,
-          "rank": 1
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": true,
+          "excluded": true,
+          "exclusion_reason": "진출국 (이미 운영중, 후보 아님)"
         },
         {
           "country": "MX",
@@ -1317,10 +1390,16 @@
           "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확신",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
-          "rank": 2
+          "rank": 1
         },
         {
           "country": "PR",
@@ -1332,21 +1411,20 @@
           "quickwin_band": 50,
           "is_baseline": false,
           "killswitch_excluded": true,
+          "killswitch_tier": "jv_required",
+          "killswitch_tier_label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": true,
-          "exclusion_reason": "killswitch fail"
+          "exclusion_reason": "killswitch: jv_required (랭킹 제외)"
         }
       ],
       "ranking": [
         {
           "rank": 1,
-          "country": "CA",
-          "score_band": 60,
-          "attractiveness": 45.8,
-          "it_similarity_band": 70
-        },
-        {
-          "rank": 2,
           "country": "MX",
           "score_band": 40,
           "attractiveness": 28.1,
@@ -1354,82 +1432,24 @@
         }
       ],
       "note": {
-        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·킬스위치 탈락국 제외. 10점 구간 표기.",
-        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and killswitch failures excluded. Reported in 10-point buckets."
+        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets."
       }
     },
     "top3_country_cards": [
       {
         "rank": 1,
-        "country": "CA",
-        "country_name": "Canada",
-        "quickwin_score_band": 60,
-        "attractiveness": 45.8,
-        "it_similarity_band": 70,
-        "killswitch_pass": true,
-        "market_brief": {
-          "신차_판매대수": 1880000,
-          "금융_이용률_신차": 82,
-          "EV_보급률": 13
-        },
-        "competition_brief": {
-          "금융사_Top5": [
-            {
-              "rank": 1,
-              "name": "Scotiabank (Auto Finance)",
-              "market_share": "약 16%"
-            },
-            {
-              "rank": 2,
-              "name": "TD Auto Finance",
-              "market_share": "약 14%"
-            },
-            {
-              "rank": 3,
-              "name": "Ford Credit Canada",
-              "market_share": "약 11%"
-            },
-            {
-              "rank": 4,
-              "name": "Toyota Credit Canada",
-              "market_share": "약 10%"
-            },
-            {
-              "rank": 5,
-              "name": "GM Financial Canada",
-              "market_share": "약 9%"
-            }
-          ],
-          "경쟁사_진출_형태": "OEM 캡티브(Ford Credit·Toyota Credit·GM Financial·Honda FS·VW Finance·Hyundai·Kia) + 은행계 자동차여신부문(Scotiabank·TD·RBC·BMO) + 독립 여신사(iA Auto·Santander Consumer). 비은행 여신회사(finance company) 또는 은행 인가 형태"
-        },
-        "top_news": {
-          "news_category": "auto_market",
-          "headline": "캐나다 2025년 신차 판매 약 188만대로 회복세, 2017 정점 근접",
-          "headline_en": "Canada 2025 new-car sales recover to ~1.88M, approaching the 2017 peak",
-          "so_what": "성숙시장 회복 신호 — 금융침투 82% 기반 안정 수요. 한국 OEM(현대·기아) 톱5+로 캡티브 강화 매력.",
-          "so_what_en": "Mature-market recovery signal — stable demand on 82% finance penetration. Korean OEMs (Hyundai·Kia) in the top-5+ make captive strengthening attractive.",
-          "publisher": "Automotive News",
-          "pub_date": "2026-01-15",
-          "url": "https://www.autonews.com/..."
-        },
-        "ai_comment": "안정성·고침투·IT 정합성에서 북미 최우호 환경이나 연방-주 이중규제·Quebec 특수성이 비용 드라이버. B2B 리스·플릿 우선 진입 후 주별 소비자신용 확장, 또는 한국 OEM(현대·기아) 캡티브 연계 전략 유효.",
-        "source_flags": {
-          "rank": "CALC",
-          "score": "CALC",
-          "market": "EXT",
-          "competition": "EXT",
-          "news": "NEWS",
-          "ai_comment": "AI"
-        }
-      },
-      {
-        "rank": 2,
         "country": "MX",
         "country_name": "Mexico",
         "quickwin_score_band": 40,
         "attractiveness": 28.1,
         "it_similarity_band": 60,
         "killswitch_pass": true,
+        "killswitch_tier": "in_region_confidence",
+        "killswitch_tier_label": {
+          "ko": "권역내 확신",
+          "en": "In-Region Confidence"
+        },
         "market_brief": {
           "신차_판매대수": 1530000,
           "금융_이용률_신차": 65,
@@ -1492,13 +1512,6 @@
         "top3": [
           {
             "rank": 1,
-            "country": "CA",
-            "score_band": 60,
-            "attractiveness": 45.8,
-            "it_similarity_band": 70
-          },
-          {
-            "rank": 2,
             "country": "MX",
             "score_band": 40,
             "attractiveness": 28.1,
@@ -1506,9 +1519,13 @@
           }
         ],
         "killswitch_failed_count": 1,
+        "killswitch_tier_counts": {
+          "in_region_confidence": 3,
+          "jv_required": 1
+        },
         "why_top1": {
-          "ko": "캐나다 — 매력도 45.8, IT유사도 70 구간, 퀵윈 60 구간",
-          "en": "Canada(CA) — Attractiveness 45.8, IT band 70, Quickwin band 60"
+          "ko": "멕시코 — 매력도 28.1, IT유사도 60 구간, 퀵윈 40 구간",
+          "en": "Mexico(MX) — Attractiveness 28.1, IT band 60, Quickwin band 40"
         }
       },
       "ai_cross_insight": {
@@ -1566,16 +1583,6 @@
             "date": "2026-06-16",
             "url": "https://www.coxautoinc.com/insights/may-2026-vai/",
             "news_category": "auto_finance"
-          },
-          {
-            "country": "CA",
-            "scope": "country",
-            "headline": "캐나다 2025년 신차 판매 약 188만대로 회복세, 2017 정점 근접",
-            "headline_en": "Canada 2025 new-car sales recover to ~1.88M, approaching the 2017 peak",
-            "so_what": "성숙시장 회복 신호 — 금융침투 82% 기반 안정 수요. 한국 OEM(현대·기아) 톱5+로 캡티브 강화 매력.",
-            "so_what_en": "Mature-market recovery signal — stable demand on 82% finance penetration. Korean OEMs (Hyundai·Kia) in the top-5+ make captive strengthening attractive.",
-            "publisher": "Automotive News",
-            "date": null
           },
           {
             "country": "MX",

@@ -6,7 +6,7 @@
     "country": "NL",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-23T22:17:26.091440",
+  "generated_at": "2026-06-24T10:17:34.171798",
   "schema_version": "1.1",
   "overall_insight": "EU 9위 자동차 시장이자 글로벌 리스 허브. 2025년 신차 등록 약 38만대(BOVAG/RAI Vereniging)로 규모는 중소이나 운용리스(operational lease) 침투율 EU 1위(법인 신차 70%+) 구조가 핵심이다. 비용·난이도 드라이버는 명확하다 — 소비자 자동차금융은 AFM(금융시장청)+DNB(중앙은행) 이중 감독 하 Wft 인가(소비자신용=금융서비스법 Art. 2:60, 자본금 €730k+)와 강력한 사용자금리 상한(Wck 35a: 법정이자 + 12pp 절대 한도, 2025년 약 16~17%)가 진입 부담의 핵심이다. 반면 B2B 운용리스(operationele leasing)는 Wft 인가 면제(VRL/NVL 자율규제) 구조라 진입이 매우 유연하다. 비즈니스 매력도는 시장규모는 EU 중위권이나 리스 침투율·EV 보급률(2025 BEV 신규 등록 35%+, EU 톱) 최상위로 단위경제 양호. 캡티브(VW FS·Stellantis·Toyota)와 다국적 리스사(Ayvens/ALD·LeasePlan·Arval·Athlon) 양강 구조로 약 75% 점유 — 독립계 진입은 EV·중고·SME 플릿 틈새 공략 필요. IT 유사도는 매우 높음 — EU GDPR·SEPA·iDEAL(현지 결제 EU 톱)·BKR(신용정보)·DigiD(전자인증) 등 인프라 EU 최상위로 NetSol 베이스라인 재사용률 극대화. 매력도↔IT 불일치 지점은 차량회수 — 리스는 소유권 기반으로 매우 용이(평균 30~60일)하나 소비자대출은 deurwaarder(집행관) 절차 6~12개월. 다크호스는 BEV 시장 35%+로 잔가 리스크 EU 최대 노출 — 잔가 보증·세컨드 라이프 모델이 리스 손익 핵심 변수. 운용리스·플릿 우선 진입 후 Wft Art. 2:60 인가 기반 소비자금융으로 단계적 확장이 유효하며, 네덜란드는 EU 리스 본사 허브로 활용 가능(Holding 회사·조세 효율).",
   "overall_insight_en": "The EU's #9 auto market and a global leasing hub. With ~380,000 new-car registrations in 2025 (BOVAG/RAI Vereniging), scale is mid-small, but the structure centers on the EU's #1 operational-lease penetration (70%+ of corporate new cars). Cost/difficulty drivers are clear — for consumer auto finance, Wft licensing (consumer credit = Financial Supervision Act Art. 2:60, capital €730k+) under dual AFM (market conduct) + DNB (central bank) supervision and a strict borrowing-rate cap (Wck 35a: statutory interest + 12pp absolute ceiling, ~16-17% in 2025) are the core entry burdens. By contrast, B2B operational leasing (operationele leasing) is Wft-exempt (VRL/NVL self-regulation), so entry is highly flexible. Business attractiveness: market size is mid-tier in the EU, but lease penetration and EV adoption (2025 BEV new registrations 35%+, EU top) are best-in-class, so unit economics are sound. Captives (VW FS, Stellantis, Toyota) and multinational lessors (Ayvens/ALD, LeasePlan, Arval, Athlon) form a two-tier structure holding ~75% — independent entrants must target EV, used, and SME-fleet niches. IT similarity is very high — infrastructure such as EU GDPR, SEPA, iDEAL (EU's top local payment), BKR (credit bureau), and DigiD (e-authentication) is EU best-in-class, maximizing NetSol baseline reuse. The attractiveness↔IT mismatch is repossession — leases are very easy via ownership (avg. 30-60 days), but consumer loans require a deurwaarder (bailiff) process of 6-12 months. The dark horse is the 35%+ BEV market with the EU's largest residual-value risk exposure — residual guarantees and second-life models are key levers for lease P&L. Entering via operational lease/fleet first, then expanding stepwise into consumer finance under Wft Art. 2:60 licensing, is effective; the Netherlands can also serve as an EU leasing-HQ hub (holding company, tax efficiency).",
@@ -366,7 +366,7 @@
   },
   "tabs": {
     "tab_1_1_similarity": {
-      "overall_score": 90.3125,
+      "overall_score": 90.31250000000001,
       "axes": {
         "product": 93.75,
         "regulatory": 83.92857142857143,
@@ -793,7 +793,7 @@
     },
     "tab_1_2_decision": {
       "decision": "baseline_system_expansion",
-      "similarity_score": 90.3125,
+      "similarity_score": 90.31250000000001,
       "recommendation": {
         "ko": "권역 내 확산: GB 시스템(NetSol) 현지화",
         "en": "Regional expansion: localize GB system (NetSol)."
@@ -911,7 +911,7 @@
       "currency": "EUR",
       "currency_base": "EUR",
       "total_tco_10y_eur": 256335.0,
-      "similarity_score": 90.3125,
+      "similarity_score": 90.31250000000001,
       "similarity_multiplier": 0.5,
       "similarity_band": "90~100",
       "discount_applied": 0.4,

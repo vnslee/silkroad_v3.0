@@ -68,19 +68,18 @@
 
         /* ───────── Print / PDF export ───────── */
         @media print {
-            @page { size: A4 landscape; margin: 10mm 12mm 12mm 12mm; }
+            @page { size: A4 portrait; margin: 10mm 12mm 12mm 12mm; }
             html, body {
                 background: #ffffff !important;
                 color: #000000 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            /* Hide UI chrome */
-            .no-print, .tab-button, header button, footer button { display: none !important; }
+            /* Hide UI chrome (탭 네비 컨테이너째 숨김 — 빈 첫 페이지 방지) */
+            .no-print, .tabs-nav, .tab-button, header button, footer button { display: none !important; }
             .sticky { position: static !important; }
-            /* Show all tab content stacked */
-            .tab-content { display: block !important; break-before: page; }
-            .tab-content:first-of-type { break-before: auto; }
+            /* 모든 탭을 펼쳐 연속 흐름으로 출력(탭별 강제 페이지 나눔 없음 — 화면 스크롤처럼 이어짐) */
+            .tab-content { display: block !important; }
             /* Add tab title before each panel (KO 기본 · html[lang=en]일 때 EN) */
             .tab-content[id="tab-summary"]::before        { content: "요약"; }
             .tab-content[id="tab-killswitch"]::before     { content: "킬스위치"; }
@@ -102,12 +101,18 @@
                 margin-bottom: 16px;
             }
             /* Force-open all accordions */
-            details { break-inside: avoid; }
+            details { break-inside: auto; }
             details > summary { list-style: none; }
             details > summary::-webkit-details-marker { display: none; }
             details > summary .material-symbols-outlined { display: none; }
-            /* Cards: avoid breaking awkwardly */
-            section > div, .grid > div { break-inside: avoid; }
+            /* 화면처럼 자연스럽게 흐르게 — 카드를 페이지에 강제로 가두지 않음(빈 공간/한 요소당 한 페이지 방지).
+               제목·표 헤더만 끊김 방지하고, 나머지는 페이지 경계에서 자연스럽게 넘어가게 둔다. */
+            h1, h2, h3, h4 { break-after: avoid; }
+            tr, img { break-inside: avoid; }
+            /* 차트 SVG: 인쇄 폭이 넓어지면 viewBox 비율대로 과도하게 키 커져 빈 페이지처럼 보임 → 높이 제한 */
+            svg { max-height: 320px !important; height: auto; }
+            /* 포디움(퀵윈 Top3): md:grid-cols-3 반응형이 인쇄에선 안 걸려 세로로 쌓이는 문제 → 3열 강제 */
+            .podium-grid { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
             /* Shrink shadows for cleaner print */
             * { box-shadow: none !important; }
             /* Drop hover transitions */
@@ -120,7 +125,7 @@
     <main class="flex-1 px-gutter sm:px-xl lg:px-[64px] py-xl">
         <div class="max-w-7xl mx-auto">
             
-        <div class="bg-surface-container-lowest border border-surface-border rounded-xl p-sm mb-xl sticky top-0 z-10 card-shadow">
+        <div class="tabs-nav bg-surface-container-lowest border border-surface-border rounded-xl p-sm mb-xl sticky top-0 z-10 card-shadow">
             <div class="flex gap-sm overflow-x-auto">
             <button class="tab-button active flex items-center gap-xs px-md py-sm rounded-lg font-label-md text-label-md uppercase tracking-wider transition-colors hover:bg-surface-container text-text-secondary"
                     data-tab="tab-summary">
@@ -179,7 +184,7 @@
             
         <div>
             <h2 class="font-headline-md text-headline-md text-primary mb-md" data-i18n="summary_top3_title" data-en="Quickwin Ranking (Top 3)">퀵윈 순위 (Top 3)</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-md items-end max-w-3xl mx-auto">
+            <div class="podium-grid grid grid-cols-1 md:grid-cols-3 gap-md items-end max-w-3xl mx-auto">
                 <div class="flex flex-col items-center justify-end pt-lg">
                     <div class="w-full h-12 rounded-t-md opacity-20" style="background:#3f6cb4"></div>
                 </div>
@@ -361,7 +366,7 @@
                 <span class="inline-flex items-center gap-1 px-2 py-[2px] rounded-full text-[10px] font-semibold tracking-wide" style="background:#eef0f2;color:#3b3f46" data-i18n="engine_msg" data-en="External">외부조사</span> <span class="inline-flex items-center gap-1 px-2 py-[2px] rounded-full text-[10px] font-semibold tracking-wide" style="background:#e9f3ee;color:#4f8a6d" data-i18n="engine_msg" data-en="Calculated · status_matrix">계산값 · status_matrix</span>
             </div>
             <p class="font-body-sm text-body-sm text-on-surface-variant -mt-sm">
-                <span data-i18n="engine_msg" data-en="1 passed · 2 failed. Failed countries (AR, BR) are excluded from subsequent scoring.">통과 1개국 · 탈락 2개국. 탈락국(AR, BR)은 이후 스코어링에서 제외.</span>
+                <span data-i18n="engine_msg" data-en="Entry-mode classification — JV Required 2 · JV Recommended 0 · External Solution 0 · In-Region Confidence 1. JV-required countries are excluded from the quickwin ranking; JV-recommended are included with a penalty.">진출 형태 분류 — JV 필수 2개국 · JV 권고 0개국 · 외부솔루션 사용 0개국 · 권역내 확신 1개국. JV 필수국은 퀵윈 랭킹에서 제외, JV 권고국은 감점 후 포함.</span>
             </p>
             <div class="bg-surface-container-lowest border border-surface-border rounded-lg p-md shadow-[0_4px_8px_rgba(20,23,28,0.04)] overflow-x-auto">
                 <table class="w-full text-left border-collapse">
@@ -369,7 +374,7 @@
                         <tr class="border-b-2 border-surface-border">
                             <th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase"><span data-i18n="tbl_country" data-en="Country">국가</span></th>
                             <th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase whitespace-nowrap">외국인 지분 한도</th><th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase whitespace-nowrap">외환·배당 송금 자유도</th><th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase whitespace-nowrap">데이터 현지화 의무</th><th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase whitespace-nowrap">국가신용등급</th>
-                            <th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase"><span data-i18n="tbl_overall" data-en="Overall">종합</span></th>
+                            <th class="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase"><span data-i18n="ks_tier_col" data-en="Entry Mode">진출 형태</span></th>
                         </tr>
                     </thead>
                     <tbody class="font-body-sm text-body-sm">
@@ -380,8 +385,8 @@
                             아르헨티나 <span class="text-text-secondary">(Argentina)</span>
                         </span>
                     </td>
-                    <td class="py-sm px-sm" title="100% 허용 (Ley 21.382 외국인투자법, 금융업은 BCRA 사전 인가 필요)"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="외환통제(cepo cambiario) 상존, 2024~2025 Milei 단계적 완화. 배당 송금 BCRA 승인·제한, MULC(공식 외환시장) 통한 송금 제약"><span class="px-2 py-[2px] bg-surface-container text-text-secondary rounded-md font-label-sm text-label-sm">— UNK</span></td><td class="py-sm px-sm" title="Ley 25.326(PDPA, 2000) 적용. 강제 현지화 의무 없음 — 국외이전은 적정성/동의 기반. EU 적정성 인정국(2003)"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="CCC (S&amp;P) / Caa3 (Moody&#x27;s) / CCC (Fitch), 2024~2025 일부 상향·전망 개선 (Milei 개혁)"><span class="px-2 py-[2px] bg-surface-container text-text-secondary rounded-md font-label-sm text-label-sm">— UNK</span></td>
-                    <td class="py-sm px-sm"><span class="px-2 py-[2px] bg-[#f6e7e3] text-[#c0533f] rounded-md font-label-sm text-label-sm"><span data-i18n="ks_status_fail" data-en="FAIL">탈락</span></span></td>
+                    <td class="py-sm px-sm" title="100% 허용 (Ley 21.382 외국인투자법, 금융업은 BCRA 사전 인가 필요)"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="외환통제(cepo cambiario) 상존, 2024~2025 Milei 단계적 완화. 배당 송금 BCRA 승인·제한, MULC(공식 외환시장) 통한 송금 제약"><span class="px-2 py-[2px] bg-[#fbf0dd] text-[#9a6b1e] rounded-md font-label-sm text-label-sm">△ <span data-i18n="ks_status_flag" data-en="FLAG">주의</span></span></td><td class="py-sm px-sm" title="Ley 25.326(PDPA, 2000) 적용. 강제 현지화 의무 없음 — 국외이전은 적정성/동의 기반. EU 적정성 인정국(2003)"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="CCC (S&amp;P) / Caa3 (Moody&#x27;s) / CCC (Fitch), 2024~2025 일부 상향·전망 개선 (Milei 개혁)"><span class="px-2 py-[2px] bg-[#fbf0dd] text-[#9a6b1e] rounded-md font-label-sm text-label-sm">△ <span data-i18n="ks_status_flag" data-en="FLAG">주의</span></span></td>
+                    <td class="py-sm px-sm"><span class="px-2 py-[2px] rounded-md font-label-sm text-label-sm" style="background:#f6e7e3;color:#c0533f"><span data-i18n="engine_msg" data-en="JV Required">JV 필수</span></span></td>
                 </tr>
 
                 <tr class="border-b border-surface-border bg-surface-light text-text-secondary">
@@ -391,8 +396,8 @@
                             브라질 <span class="text-text-secondary">(Brazil)</span>
                         </span>
                     </td>
-                    <td class="py-sm px-sm" title="100% 허용 (1995 헌법개정 EC 6/1995 이후 자유화, 금융업은 BACEN/CMN 사전 인가 필요)"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="외환 통제 일부 (BACEN 등록 외환계약·SISBACEN 통보 필수), IOF 환전 0.38%~3.5% 부과. 배당 0%·이자 15%"><span class="px-2 py-[2px] bg-surface-container text-text-secondary rounded-md font-label-sm text-label-sm">— UNK</span></td><td class="py-sm px-sm" title="LGPD(Lei Geral de Proteção de Dados, GDPR 모델) 적용. 강제 현지화 의무 없음 — 국제이전은 적정성/SCC/BCR"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="BB (S&amp;P, 2024 BB- → BB 상향) / Ba1 (Moody&#x27;s, 2024 상향) / BB (Fitch, 2024 상향), 안정적"><span class="px-2 py-[2px] bg-surface-container text-text-secondary rounded-md font-label-sm text-label-sm">— UNK</span></td>
-                    <td class="py-sm px-sm"><span class="px-2 py-[2px] bg-[#f6e7e3] text-[#c0533f] rounded-md font-label-sm text-label-sm"><span data-i18n="ks_status_fail" data-en="FAIL">탈락</span></span></td>
+                    <td class="py-sm px-sm" title="100% 허용 (1995 헌법개정 EC 6/1995 이후 자유화, 금융업은 BACEN/CMN 사전 인가 필요)"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="외환 통제 일부 (BACEN 등록 외환계약·SISBACEN 통보 필수), IOF 환전 0.38%~3.5% 부과. 배당 0%·이자 15%"><span class="px-2 py-[2px] bg-[#fbf0dd] text-[#9a6b1e] rounded-md font-label-sm text-label-sm">△ <span data-i18n="ks_status_flag" data-en="FLAG">주의</span></span></td><td class="py-sm px-sm" title="LGPD(Lei Geral de Proteção de Dados, GDPR 모델) 적용. 강제 현지화 의무 없음 — 국제이전은 적정성/SCC/BCR"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="BB (S&amp;P, 2024 BB- → BB 상향) / Ba1 (Moody&#x27;s, 2024 상향) / BB (Fitch, 2024 상향), 안정적"><span class="px-2 py-[2px] bg-[#fbf0dd] text-[#9a6b1e] rounded-md font-label-sm text-label-sm">△ <span data-i18n="ks_status_flag" data-en="FLAG">주의</span></span></td>
+                    <td class="py-sm px-sm"><span class="px-2 py-[2px] rounded-md font-label-sm text-label-sm" style="background:#f6e7e3;color:#c0533f"><span data-i18n="engine_msg" data-en="JV Required">JV 필수</span></span></td>
                 </tr>
 
                 <tr class="border-b border-surface-border ">
@@ -403,7 +408,7 @@
                         </span>
                     </td>
                     <td class="py-sm px-sm" title="100% 허용 (DL 600 외국인투자법 폐지 후 Ley 20.848 신외국인투자법, 내국민대우)"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="자본·배당 송금 자유 (외환통제 없음, Banco Central 정보 보고만). 배당 35%·이자 4~35% 원천"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="Ley 21.719(2024 신개인정보보호법, GDPR 정합, APDP 신설) 적용. 강제 현지화 없음 — 국제이전 적정성/SCC"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td><td class="py-sm px-sm" title="A (S&amp;P) / A2 (Moody&#x27;s) / A- (Fitch), 안정적 — 라틴아메리카 최상위 투자등급"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm">○ PASS</span></td>
-                    <td class="py-sm px-sm"><span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm"><span data-i18n="ks_status_pass" data-en="PASS">통과</span></span></td>
+                    <td class="py-sm px-sm"><span class="px-2 py-[2px] rounded-md font-label-sm text-label-sm" style="background:#e9f3ee;color:#4f8a6d"><span data-i18n="engine_msg" data-en="In-Region Confidence">권역내 확신</span></span></td>
                 </tr></tbody>
                 </table>
             </div>
@@ -416,8 +421,8 @@
                     <span class="material-symbols-outlined text-[20px] text-text-secondary transition-transform group-open:rotate-90">chevron_right</span>
                     <img src="https://flagcdn.com/w80/ar.png" class="w-5 h-4 object-cover rounded-sm" alt="">
                     <span class="font-label-md text-label-md text-primary">아르헨티나 <span class="text-text-secondary font-normal">(Argentina)</span></span>
-                    <span class="px-2 py-[2px] bg-[#f6e7e3] text-[#c0533f] rounded-md font-label-sm text-label-sm"><span data-i18n="ks_status_fail" data-en="FAIL">탈락</span></span>
-                    <span class="text-label-sm text-text-secondary ml-xs flex-1" data-i18n="ks_failed_msg" data-en="One or more gates FAIL → excluded from scoring">한 개 이상의 게이트 FAIL → 스코어링 제외</span>
+                    <span class="px-2 py-[2px] rounded-md font-label-sm text-label-sm" style="background:#f6e7e3;color:#c0533f"><span data-i18n="engine_msg" data-en="JV Required">JV 필수</span></span>
+                    <span class="text-label-sm text-text-secondary ml-xs flex-1" data-i18n="engine_msg" data-en="Credit-rating etc. flagged → JV required (excluded from ranking)">신용등급 등 제약 → JV 필수 (랭킹 제외)</span>
                     <span class="font-label-sm text-label-sm text-secondary" data-i18n="ks_view_evidence" data-en="View evidence">근거 보기</span>
                 </summary>
                 <div class="px-md pb-md pt-xs">
@@ -439,7 +444,7 @@
                 </div>
                 <div class="border-b border-surface-border last:border-b-0 py-sm">
                     <div class="flex items-start gap-sm">
-                        <span class="text-xl font-bold shrink-0" style="color:#9aa0a8;width:24px;text-align:center">—</span>
+                        <span class="text-xl font-bold shrink-0" style="color:#9a6b1e;width:24px;text-align:center">△</span>
                         <div class="flex-1">
                             <div class="flex items-center gap-xs flex-wrap mb-xs">
                                 <span class="font-label-md text-label-md text-primary">외환·배당 송금 자유도</span>
@@ -469,7 +474,7 @@
                 </div>
                 <div class="border-b border-surface-border last:border-b-0 py-sm">
                     <div class="flex items-start gap-sm">
-                        <span class="text-xl font-bold shrink-0" style="color:#9aa0a8;width:24px;text-align:center">—</span>
+                        <span class="text-xl font-bold shrink-0" style="color:#9a6b1e;width:24px;text-align:center">△</span>
                         <div class="flex-1">
                             <div class="flex items-center gap-xs flex-wrap mb-xs">
                                 <span class="font-label-md text-label-md text-primary">국가신용등급</span>
@@ -490,8 +495,8 @@
                     <span class="material-symbols-outlined text-[20px] text-text-secondary transition-transform group-open:rotate-90">chevron_right</span>
                     <img src="https://flagcdn.com/w80/br.png" class="w-5 h-4 object-cover rounded-sm" alt="">
                     <span class="font-label-md text-label-md text-primary">브라질 <span class="text-text-secondary font-normal">(Brazil)</span></span>
-                    <span class="px-2 py-[2px] bg-[#f6e7e3] text-[#c0533f] rounded-md font-label-sm text-label-sm"><span data-i18n="ks_status_fail" data-en="FAIL">탈락</span></span>
-                    <span class="text-label-sm text-text-secondary ml-xs flex-1" data-i18n="ks_failed_msg" data-en="One or more gates FAIL → excluded from scoring">한 개 이상의 게이트 FAIL → 스코어링 제외</span>
+                    <span class="px-2 py-[2px] rounded-md font-label-sm text-label-sm" style="background:#f6e7e3;color:#c0533f"><span data-i18n="engine_msg" data-en="JV Required">JV 필수</span></span>
+                    <span class="text-label-sm text-text-secondary ml-xs flex-1" data-i18n="engine_msg" data-en="Credit-rating etc. flagged → JV required (excluded from ranking)">신용등급 등 제약 → JV 필수 (랭킹 제외)</span>
                     <span class="font-label-sm text-label-sm text-secondary" data-i18n="ks_view_evidence" data-en="View evidence">근거 보기</span>
                 </summary>
                 <div class="px-md pb-md pt-xs">
@@ -513,7 +518,7 @@
                 </div>
                 <div class="border-b border-surface-border last:border-b-0 py-sm">
                     <div class="flex items-start gap-sm">
-                        <span class="text-xl font-bold shrink-0" style="color:#9aa0a8;width:24px;text-align:center">—</span>
+                        <span class="text-xl font-bold shrink-0" style="color:#9a6b1e;width:24px;text-align:center">△</span>
                         <div class="flex-1">
                             <div class="flex items-center gap-xs flex-wrap mb-xs">
                                 <span class="font-label-md text-label-md text-primary">외환·배당 송금 자유도</span>
@@ -543,7 +548,7 @@
                 </div>
                 <div class="border-b border-surface-border last:border-b-0 py-sm">
                     <div class="flex items-start gap-sm">
-                        <span class="text-xl font-bold shrink-0" style="color:#9aa0a8;width:24px;text-align:center">—</span>
+                        <span class="text-xl font-bold shrink-0" style="color:#9a6b1e;width:24px;text-align:center">△</span>
                         <div class="flex-1">
                             <div class="flex items-center gap-xs flex-wrap mb-xs">
                                 <span class="font-label-md text-label-md text-primary">국가신용등급</span>
@@ -564,8 +569,8 @@
                     <span class="material-symbols-outlined text-[20px] text-text-secondary transition-transform group-open:rotate-90">chevron_right</span>
                     <img src="https://flagcdn.com/w80/cl.png" class="w-5 h-4 object-cover rounded-sm" alt="">
                     <span class="font-label-md text-label-md text-primary">칠레 <span class="text-text-secondary font-normal">(Chile)</span></span>
-                    <span class="px-2 py-[2px] bg-[#e9f3ee] text-[#4f8a6d] rounded-md font-label-sm text-label-sm"><span data-i18n="ks_status_pass" data-en="PASS">통과</span></span>
-                    <span class="text-label-sm text-text-secondary ml-xs flex-1" data-i18n="ks_passed_msg" data-en="All gates PASS → included in regional scoring">모든 게이트 PASS → 권역 스코어링 포함</span>
+                    <span class="px-2 py-[2px] rounded-md font-label-sm text-label-sm" style="background:#e9f3ee;color:#4f8a6d"><span data-i18n="engine_msg" data-en="In-Region Confidence">권역내 확신</span></span>
+                    <span class="text-label-sm text-text-secondary ml-xs flex-1" data-i18n="engine_msg" data-en="All gates PASS → direct entry">전 게이트 PASS → 직접 진출</span>
                     <span class="font-label-sm text-label-sm text-secondary" data-i18n="ks_view_evidence" data-en="View evidence">근거 보기</span>
                 </summary>
                 <div class="px-md pb-md pt-xs">
@@ -1674,7 +1679,7 @@
                     <td class="py-sm px-sm text-text-secondary">70</td>
                 </tr></tbody>
                         </table>
-                        <p class="mt-sm text-label-sm text-text-secondary"><span data-i18n="engine_msg" data-en="Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and killswitch failures excluded. Reported in 10-point buckets.">퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·킬스위치 탈락국 제외. 10점 구간 표기.</span></p>
+                        <p class="mt-sm text-label-sm text-text-secondary"><span data-i18n="engine_msg" data-en="Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets.">퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.</span></p>
                     </div>
                 </div>
                 <div class="lg:col-span-5">

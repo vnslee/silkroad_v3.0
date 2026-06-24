@@ -6,7 +6,7 @@
     "country": "PL",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-23T22:17:26.211057",
+  "generated_at": "2026-06-24T10:17:34.247974",
   "schema_version": "1.1",
   "overall_insight": "EU 6위권 자동차 시장이자 중동부 유럽(CEE) 최대 신차 시장. 2025년 신차 등록 약 56만대(SAMAR), 리스(특히 운용리스)가 신규의 70% 이상을 차지하는 리스 주도 구조가 핵심이다. 비용·난이도 드라이버는 명확하다 — 소비자신용은 KNF(금융감독청) 인가(자본금 100만 PLN+감사회+상시 감독)와 2024년 강화된 금리상한(KNF 9%+WIBOR, 비이자 비용 최대 25%+원금의 30%/년)·세금부담세(PIT)가 진입 부담을 키운다. 반면 B2B 리스는 무면허로 즉시 가능하고 ZPL(폴란드 리스협회) 회원사가 시장의 90%+ 점유해 진입이 유연하다. 비즈니스 매력도(EU 6위·CEE 1위, 리스 시장 €25bn+)는 상위권이나, 캡티브(VW FS·Toyota Bank)와 은행계 리스(mLeasing·PKO Leasing·Santander) 양강 구조는 독립계 진입에 가격·디지털 차별화를 요구한다. IT 유사도는 양호 — EU GDPR·SEPA·BIK(신용정보)·PolishAPI(오픈뱅킹)로 NetSol 베이스라인 재사용률 높음. 매력도↔IT 불일치 지점은 차량회수 — 리스는 소유권 기반으로 용이하나 소비자대출 담보회수는 komornik(집행관) 사법 적체로 6~18개월. 다크호스는 EV 보급률 가속(2025 7%대) — 잔가 리스크 관리가 리스 손익 핵심 변수. B2B·운용리스 우선 진입 후 KNF 인가 기반 소비자금융으로 단계적 확장이 유효하다.",
   "overall_insight_en": "Poland is the EU's #6 auto market and the largest new-car market in Central and Eastern Europe (CEE). About 560,000 new-car registrations in 2025 (SAMAR); a lease-led structure where leasing (especially operating lease) accounts for 70%+ of new financing is the core. Cost/difficulty drivers are clear — consumer credit requires KNF (Financial Supervision Authority) licensing (PLN 1M capital + supervisory board + ongoing supervision), and the 2024-tightened rate caps (KNF 9% + WIBOR; non-interest costs capped at 25% + 30% of principal per year) plus the bank levy (PIT) raise entry burden. By contrast, B2B leasing is unlicensed and immediately available, and ZPL (Polish Leasing Association) members hold 90%+ of the market, making entry flexible. Business attractiveness (EU #6, CEE #1, lease market €25bn+) is top-tier, but the two-tier structure of captives (VW FS, Toyota Bank) and bank-affiliated lessors (mLeasing, PKO Leasing, Santander) requires price and digital differentiation for independent entrants. IT similarity is favorable — EU GDPR, SEPA, BIK (credit bureau), and PolishAPI (open banking) deliver high NetSol baseline reuse. The attractiveness↔IT mismatch is in repossession — leasing is easy thanks to ownership, but consumer-loan collateral recovery takes 6-18 months due to komornik (bailiff) judicial backlogs. The dark horse is accelerating EV adoption (~7% in 2025) — residual-value risk management is the key lever for lease P&L. A staged strategy — B2B/operating-lease entry first, then expansion into consumer finance under KNF licensing — is effective.",
@@ -366,7 +366,7 @@
   },
   "tabs": {
     "tab_1_1_similarity": {
-      "overall_score": 87.1875,
+      "overall_score": 87.18750000000001,
       "axes": {
         "product": 93.75,
         "regulatory": 83.92857142857143,
@@ -793,7 +793,7 @@
     },
     "tab_1_2_decision": {
       "decision": "baseline_system_expansion",
-      "similarity_score": 87.1875,
+      "similarity_score": 87.18750000000001,
       "recommendation": {
         "ko": "권역 내 확산: GB 시스템(NetSol) 현지화",
         "en": "Regional expansion: localize GB system (NetSol)."
@@ -911,7 +911,7 @@
       "currency": "EUR",
       "currency_base": "EUR",
       "total_tco_10y_eur": 372678.0,
-      "similarity_score": 87.1875,
+      "similarity_score": 87.18750000000001,
       "similarity_multiplier": 0.6,
       "similarity_band": "80~90",
       "discount_applied": 0.4,
