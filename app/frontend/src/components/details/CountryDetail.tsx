@@ -98,7 +98,7 @@ export function CountryDetail({
 
   return (
     <div className={`flex-1 bg-background flex items-start justify-center p-md ${className}`}>
-      <div className="relative z-chrome max-w-5xl w-full mx-auto border border-surface-border rounded-xl card-shadow flex flex-col bg-surface-container-lowest">
+      <div className="relative z-chrome max-w-[min(92vw,1760px)] w-full mx-auto border border-surface-border rounded-xl card-shadow flex flex-col bg-surface-container-lowest">
         <div className="p-lg flex flex-col gap-xl">
           {/* 국가명·상태 배지는 DetailView 헤더 chrome에 이미 노출 — 바디 중복 제거 */}
           {/* 본문 2열 */}

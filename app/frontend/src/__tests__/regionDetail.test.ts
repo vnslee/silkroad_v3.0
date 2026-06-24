@@ -14,9 +14,12 @@ describe('buildRegionDetail (EU 3-소스 병합)', () => {
     expect(data.region).toBeTruthy()
   })
 
-  it('지도 멤버 = 권역 소속국 12개, 운영중 4개', () => {
-    expect(data.map.members).toHaveLength(12)
-    expect(data.map.members.filter((m) => m.status === '운영중')).toHaveLength(4)
+  it('지도 멤버 = 리서치 데이터 보유국 9개(CZ·HU·DE 제외), 운영중 3개', () => {
+    // 멤버 12개 중 리서치 items 없는 CZ·HU·DE는 지도에서 제외(데이터 없는 국가 비표시).
+    expect(data.map.members).toHaveLength(9)
+    expect(data.map.members.some((m) => m.code === 'DE')).toBe(false)
+    // 운영중 4개(DE/FR/IT/GB) 중 DE 제외 → 지도엔 FR/IT/GB 3개.
+    expect(data.map.members.filter((m) => m.status === '운영중')).toHaveLength(3)
   })
 
   it('기진출 국가 = 운영중 4개(DE/FR/IT/GB), 자산 포함', () => {
@@ -56,6 +59,53 @@ describe('buildRegionDetail (EU 3-소스 병합)', () => {
     expect(noReport.candidate_countries).toHaveLength(0)
     expect(noReport.kpi.candidates).toBe(0)
     expect(noReport.entered_countries).toHaveLength(4) // internal만으로 산출
-    expect(noReport.map.members).toHaveLength(12)
+    expect(noReport.map.members).toHaveLength(9) // 리서치 보유국만(보고서 무관)
+  })
+
+  // ── A: 시계열 추세(상세화면 전용, 보고서 미사용)
+  it('trends — 시계열 보유 멤버국만, 시장규모·EV·CAGR 추출', () => {
+    expect(data.trends.length).toBeGreaterThan(0)
+    const at = data.trends.find((t) => t.code === 'AT')
+    expect(at).toBeTruthy()
+    expect(at!.market?.history.length).toBeGreaterThanOrEqual(2)
+    expect(at!.market?.forecast.length).toBeGreaterThan(0) // forecast도 추출
+    expect(at!.ev?.history.length).toBeGreaterThanOrEqual(2)
+    // CAGR은 수치(상승 시장이면 양수)
+    expect(typeof at!.market?.cagr).toBe('number')
+    expect(at!.market!.cagr!).toBeGreaterThan(0)
+  })
+
+  it('trends — 시장규모 KRW 정규화(fx 있으면 양수, 없으면 null)', () => {
+    const at = data.trends.find((t) => t.code === 'AT')
+    expect(at!.market_krw_bn).not.toBeNull()
+    expect(at!.market_krw_bn!).toBeGreaterThan(0)
+    // 보고서(fx) 없으면 정규화 불가 → null
+    const noReport = buildRegionDetail(snapshot as any, sources as any, null)
+    const atNo = noReport.trends.find((t) => t.code === 'AT')
+    expect(atNo?.market_krw_bn ?? null).toBeNull()
+  })
+
+  it('지도 멤버에 market_krw_bn 전달(버블용)', () => {
+    const at = data.map.members.find((m) => m.code === 'AT')
+    expect(at).toBeTruthy()
+    expect(at!.market_krw_bn).not.toBeNull()
+  })
+
+  // ── B: 자산 재사용 매핑(상세화면 전용)
+  it('asset_reuse — 기진출 거점별 유사도 Top3 후보 매핑', () => {
+    // 기진출 4국 중 솔루션 보유국만(후보 있을 때). 각 매핑은 후보 Top3 이하.
+    expect(data.asset_reuse.length).toBeGreaterThan(0)
+    for (const r of data.asset_reuse) {
+      expect(r.matches.length).toBeGreaterThan(0)
+      expect(r.matches.length).toBeLessThanOrEqual(3)
+      // 유사도 내림차순
+      const sims = r.matches.map((m) => m.similarity)
+      expect([...sims].sort((a, b) => b - a)).toEqual(sims)
+    }
+  })
+
+  it('asset_reuse — 보고서(후보) 없으면 빈 배열', () => {
+    const noReport = buildRegionDetail(snapshot as any, sources as any, null)
+    expect(noReport.asset_reuse).toHaveLength(0)
   })
 })

@@ -12,6 +12,7 @@ import {
   EvidenceAccordion,
   hasCaptiveHint,
   parseShare,
+  dash,
 } from './shared'
 
 export function MarketTab({ data }: { data: CountryReportData }) {
@@ -28,7 +29,7 @@ export function MarketTab({ data }: { data: CountryReportData }) {
     <div className="flex flex-col gap-xl">
       {/* 국가 정성 요약 */}
       <Panel icon="summarize" title="국가 정성 요약">
-        <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-md">{String(m.country_summary.value)}</p>
+        <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-md">{dash(m.country_summary.value)}</p>
         {m.country_summary.insight && <InsightBox>{m.country_summary.insight}</InsightBox>}
       </Panel>
 
@@ -66,7 +67,7 @@ export function MarketTab({ data }: { data: CountryReportData }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
           <div className="lg:col-span-8">
             <Panel icon="percent" title="경쟁사 금리 범위">
-              <RateRangeChart text={String(rateItem.value)} />
+              <RateRangeChart text={dash(rateItem.value)} />
             </Panel>
           </div>
           <div className="lg:col-span-4" />
@@ -85,7 +86,7 @@ export function MarketTab({ data }: { data: CountryReportData }) {
 
       {/* 규제기관 */}
       <Panel icon="policy" title="규제기관">
-        <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-sm">{String(m.regulators.value)}</p>
+        <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-sm">{dash(m.regulators.value)}</p>
         {m.regulators.insight && (
           <div className="bg-surface-container/60 p-sm rounded-md border-l-4 border-primary">
             <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{m.regulators.insight}</p>
@@ -206,7 +207,7 @@ function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; 
           <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">flag</span>
           <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">진출 형태</span>
         </div>
-        <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{String(entryForm.value)}</p>
+        <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{dash(entryForm.value)}</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
         {visible.map(([key, members]) => (

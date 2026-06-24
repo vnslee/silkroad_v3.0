@@ -154,8 +154,19 @@ class ResearchResult:
         self.schema_version = schema_version
 
 
+# 국가 리서치가 반드시 포함해야 하는 핵심 item(다운스트림 리포트 엔진 탭 1-4가 required로
+# 기대 — country_report_engine.py). 프롬프트(country_research_prompt.md)에 조사 항목이 있어도
+# LLM 비결정성으로 빠질 수 있어, 저장 전에 존재를 검증한다(GDP 누락→화면 undefined 회귀 방지).
+_REQUIRED_COUNTRY_ITEMS = ("GDP 성장률",)
+
+
+def _norm_item(name: str) -> str:
+    """item명 비교용 정규화 — 공백 제거(LLM의 'GDP성장률' 등 사소한 표기차에 견고)."""
+    return "".join((name or "").split())
+
+
 def _validate(domain: str, data: dict) -> str:
-    """L3 관대 검증. 필수 핵심키 누락·items 비어있음만 실패. 반환: schema_version."""
+    """L3 관대 검증. 필수 핵심키 누락·items 비어있음·핵심 item 누락만 실패. 반환: schema_version."""
     model = prompt_loader.validation_model(domain)
     try:
         obj = model.model_validate(data)
@@ -163,8 +174,13 @@ def _validate(domain: str, data: dict) -> str:
         raise ResearchError(f"스키마 검증 실패: {exc}") from exc
 
     if domain == "country":
-        if not data.get("items"):
+        items = data.get("items")
+        if not items:
             raise ResearchError("items가 비어있음(최소 1개 필요)")
+        present = {_norm_item(it.get("item", "")) for it in items if isinstance(it, dict)}
+        missing = [req for req in _REQUIRED_COUNTRY_ITEMS if _norm_item(req) not in present]
+        if missing:
+            raise ResearchError(f"핵심 필수 item 누락: {', '.join(missing)}")
     else:  # region
         countries = data.get("countries") or []
         if not countries:

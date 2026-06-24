@@ -1,7 +1,7 @@
 // IT/순위 탭 — IT 유사도 히트맵 / 퀵윈 종합순위 / 산점도 / 상위 3개국 프로파일 /
 // 국가별 IT 유사도 산식 / 국가별 퀵윈 산식.
 import type { RegionReportData, RegionITCountry, RegionQuickwinRow, RegionTop3Card } from '../types'
-import { countryKo, Flag, itBandStyle, quickwinBandColor, SourcePill } from './shared'
+import { countryKo, dash, Flag, itBandStyle, quickwinBandColor, SourcePill } from './shared'
 import { ScatterChart, type ScatterPoint } from './ScatterChart'
 
 export function ITTab({ data }: { data: RegionReportData }) {
@@ -425,11 +425,11 @@ function ITFormula({ country, axisOrder, baselineName }: { country: RegionITCoun
               <div className="grid grid-cols-1 md:grid-cols-3 gap-sm text-body-sm">
                 <div className="bg-surface-light rounded p-xs">
                   <div className="text-label-sm text-text-secondary mb-xs">기준국 {baselineName}</div>
-                  <div className="text-primary">{String(a.baseline_value)}</div>
+                  <div className="text-primary">{dash(a.baseline_value)}</div>
                 </div>
                 <div className="bg-surface-light rounded p-xs">
                   <div className="text-label-sm text-text-secondary mb-xs">대상국 {country.country_name}</div>
-                  <div className="text-primary">{String(a.target_value)}</div>
+                  <div className="text-primary">{dash(a.target_value)}</div>
                 </div>
                 <div className="rounded p-xs" style={{ background: 'rgba(63,108,180,0.06)' }}>
                   <span className="text-label-sm text-text-secondary mb-xs">밴드 점수</span>

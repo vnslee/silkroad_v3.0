@@ -65,7 +65,7 @@ export function RegionReport({ data, className = '', printMode = false }: Props)
 
   return (
     <main className={`px-gutter sm:px-xl lg:px-[64px] py-xl ${className}`}>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[min(92vw,1920px)] mx-auto">
         {/* sticky 탭 네비 */}
         <div className="bg-surface-container-lowest border border-surface-border rounded-xl p-sm mb-xl sticky top-0 z-10 card-shadow">
           <div className="flex gap-sm overflow-x-auto" role="tablist" aria-label="권역 보고서 탭">

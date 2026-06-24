@@ -63,7 +63,7 @@ export function CountryReport({ data, className = '', printMode = false }: Props
 
   return (
     <div className={`px-gutter sm:px-xl lg:px-[64px] py-xl ${className}`}>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[min(92vw,1920px)] mx-auto">
         {/* 탭 네비게이션 (sticky 칩) */}
         <div className="bg-surface-container-lowest border border-surface-border rounded-xl px-sm py-[6px] mb-xl sticky top-0 z-chrome card-shadow">
           <div className="flex gap-xs overflow-x-auto" role="tablist" aria-label="보고서 섹션">

@@ -570,6 +570,43 @@ export interface RegionCandidateCountry {
 export interface RegionMapMember {
   code: string
   status: string // '운영중' | '준비중' | '미진출'
+  /** 통화 정규화 시장규모(KRW 십억). 지도 버블 크기용. fx(report) 없으면 null. */
+  market_krw_bn?: number | null
+}
+
+// ── 상세화면 전용(보고서 미사용) 데이터 — 시계열 추세(A)·자산 재사용(B).
+// 한 지표의 시계열(history+forecast) — 시장규모·EV 보급률 등.
+export interface RegionTrendMetric {
+  metric: string
+  unit: string
+  direction: string // 'up' | 'down' — 높을수록 좋은 방향
+  history: { year: number; value: number }[]
+  forecast: { year: number; value: number }[]
+  latest: number
+  /** history 첫·끝값 기준 CAGR(%). 계산 불가 시 null. */
+  cagr: number | null
+}
+// 멤버국 1개의 추세 패널 데이터(시장규모·EV).
+export interface RegionMemberTrend {
+  code: string
+  name_ko: string
+  market: RegionTrendMetric | null
+  ev: RegionTrendMetric | null
+  /** 통화 정규화 시장규모(KRW 십억). 지도 버블·국가간 비교용. fx 없으면 null. */
+  market_krw_bn: number | null
+}
+// 기진출 거점 → 유사도 높은 후보 매핑(자산 재사용 관점).
+export interface RegionAssetReuse {
+  from_code: string
+  from_name_ko: string
+  solution: string
+  type: string // 'SA' | 'JV' | ''
+  matches: {
+    code: string
+    name_ko: string
+    similarity: number
+    quick_win: boolean
+  }[]
 }
 export interface RegionDetailData {
   region: string
@@ -587,6 +624,10 @@ export interface RegionDetailData {
   entered_countries: RegionEnteredCountry[]
   candidate_countries: RegionCandidateCountry[]
   map: { members: RegionMapMember[] }
+  /** 멤버국 시계열 추세(A) — timeseries 보유국만. 보고서엔 없는 데이터. */
+  trends: RegionMemberTrend[]
+  /** 기진출 자산 ↔ 후보 재사용 매핑(B) — 기진출국 없으면 빈 배열. */
+  asset_reuse: RegionAssetReuse[]
   executive_summary: RegionExecutiveSummary
 }
 

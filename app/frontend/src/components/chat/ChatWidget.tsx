@@ -213,6 +213,13 @@ export function ChatWidget() {
         setTarget(resolved)
       }
 
+      // 백엔드가 답변 대신 분기(관점 되묻기·리서치/보고서 트리거)를 택하면 answer=None이다.
+      // 이때 모델이 규칙을 어기고 답변을 흘렸어도(스트림 누적 acc) 그 버블은 '새어 나온' 답이므로
+      // 버린다 — 분기 응답은 질문(+선택지 칩) 하나로만 보여 '질문 뒤 또 질문'을 막는다(§6.5).
+      const isBlockingBranch =
+        !resp.answer &&
+        (resp.needs_perspective || resp.auto_trigger || resp.needs_research || resp.needs_report)
+
       // 답변 텍스트 확정 — done.answer가 스트림 누적과 다르면 done 값을 신뢰(권위).
       // 스트림 토큰이 없었는데 done.answer가 있으면 새 버블로 표시.
       if (resp.answer && resp.answer !== acc) {
@@ -225,8 +232,8 @@ export function ChatWidget() {
         } else {
           pushAssistant(resp.answer)
         }
-      } else if (!resp.answer && streamingIdx >= 0 && !acc) {
-        // 답변 없는 분기(관점/트리거 등)인데 빈 버블이 생겼으면 제거.
+      } else if ((!resp.answer && streamingIdx >= 0 && !acc) || (isBlockingBranch && streamingIdx >= 0)) {
+        // 빈 버블이거나, 분기 응답인데 답변이 새어 나온 버블이면 제거.
         setTurns((prev) => prev.filter((_, i) => i !== streamingIdx))
       }
       setTyping(false)

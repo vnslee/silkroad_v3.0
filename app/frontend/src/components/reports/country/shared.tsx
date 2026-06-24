@@ -53,6 +53,15 @@ export function fixed(value: number | null | undefined, digits = 1, dash = '—'
   return value.toFixed(digits)
 }
 
+/**
+ * 임의 스칼라값을 표시 문자열로 안전 변환 — null/undefined면 '—'(리서치 데이터 필드
+ * 누락 시 화면에 "undefined"가 그대로 노출되던 회귀 방지). 빈 String(...) 대체용.
+ */
+export function dash(value: unknown, fallback = '—'): string {
+  if (value === null || value === undefined) return fallback
+  return String(value)
+}
+
 /** 캡티브 금융사/OEM 화이트리스트 (백엔드 _CAPTIVE_HINTS 이식) */
 const CAPTIVE_HINTS = [
   'Toyota', 'Volkswagen', 'VW', 'BMW', 'Mercedes-Benz', 'Mercedes', 'Audi',
@@ -198,7 +207,7 @@ function ItemValue({ item }: { item: ReportItem }) {
   }
   return (
     <div className="font-body-md text-body-md text-primary text-right max-w-[55%] font-semibold">
-      {String(value)}
+      {dash(value)}
     </div>
   )
 }
