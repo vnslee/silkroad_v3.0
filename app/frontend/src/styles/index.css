@@ -157,6 +157,26 @@
   animation: marker-radar 2.4s ease-out infinite;
 }
 
+/* ───────── 메인 월드맵 "살아있는" 은은한 모션 ─────────
+   A. 마커 staggered ripple — 각 마커 뒤 링이 바깥으로 퍼지며 사라짐(무한).
+      transform(scale)+opacity만 사용(GPU). 마커별 animation-delay는 인라인으로 차등 부여. */
+@keyframes map-ripple {
+  0% {
+    opacity: 0.13;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+.map-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-ripple 2.4s ease-out infinite;
+  pointer-events: none; /* 링이 마커 클릭/hover를 가로채지 않게 */
+}
+
 /* 챗봇 타이핑 인디케이터(답변 대기) — 점 3개 펄스 */
 @keyframes typing {
   0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }

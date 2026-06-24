@@ -87,6 +87,15 @@ export function ExpandableSearch({
         if (showList && activeIdx >= 0 && suggestions[activeIdx]) pick(suggestions[activeIdx])
         else onSubmit()
       }}
+      // 마우스 오버 시 펼침, 떼면 접힘 — 단 입력값이 있거나 입력창 포커스 중이면 유지.
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => {
+        // 입력값이 없으면 접는다 — 자동 포커스가 걸려 있어도 blur 후 닫음(타이핑 중이면 마우스를 올려둔 상태이므로 유지됨).
+        if (!value.trim()) {
+          inputRef.current?.blur()
+          setOpen(false)
+        }
+      }}
       className={cn(
         'relative flex h-[38px] items-center rounded-full',
         'border border-surface-border bg-surface-container-lowest',
