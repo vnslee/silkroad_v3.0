@@ -1,6 +1,6 @@
 {
-  "region": "North America",
-  "region_ko": "북미권역",
+  "region": "Americas",
+  "region_ko": "미주권역",
   "code": "NA",
   "baseline_country": "US",
   "schema_version": "1.0",
@@ -76,6 +76,51 @@
           "publisher": "American Banker",
           "pub_date": "2026-04-17",
           "url": "https://www.americanbanker.com/news/allys-auto-credit-improves-despite-tough-backdrop"
+        },
+        {
+          "news_category": "geopolitical",
+          "scope": "region",
+          "headline": "콜롬비아 결선 대선, 상반된 향후 정책 경로를 부각",
+          "so_what": "남미 권역 정권교체에 따른 정책·환율·금리 변동성 확대 — 진출 시 권역 국가신용·소비자신용 환경의 시나리오 분기를 반영해야 함.",
+          "publisher": "Moody's",
+          "pub_date": "2026-06-10",
+          "url": "https://www.moodys.com/research/Government-Policy-Colombia-Runoff-presidential-election-highlights-starkly-different-future-Sector-In-Depth--PBC_1486522"
+        },
+        {
+          "news_category": "finance",
+          "scope": "",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "auto_market",
+          "scope": "global",
+          "headline": "2026년 글로벌 경량차 생산 전망 하향 조정",
+          "so_what": "글로벌 생산·수요 둔화가 남미 신차 판매·할부 볼륨에도 파급될 수 있어 권역 진출 시 볼륨 가정을 보수적으로 설정해야 함.",
+          "publisher": "Just Auto",
+          "pub_date": "2026-05-20",
+          "url": "https://www.just-auto.com/features/global-light-vehicle-production-forecast-for-2026-gets-a-downgrade/"
+        },
+        {
+          "news_category": "auto_finance",
+          "scope": "",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "credit_abs",
+          "scope": "",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
         }
       ],
       "tier": 3,

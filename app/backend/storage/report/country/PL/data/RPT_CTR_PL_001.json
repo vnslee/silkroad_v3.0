@@ -6,7 +6,7 @@
     "country": "PL",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-24T16:31:52.477627",
+  "generated_at": "2026-06-24T20:56:46.877453",
   "schema_version": "1.1",
   "overall_insight": "EU 6위권 자동차 시장이자 중동부 유럽(CEE) 최대 신차 시장. 2025년 신차 등록 약 56만대(SAMAR), 리스(특히 운용리스)가 신규의 70% 이상을 차지하는 리스 주도 구조가 핵심이다. 비용·난이도 드라이버는 명확하다 — 소비자신용은 KNF(금융감독청) 인가(자본금 100만 PLN+감사회+상시 감독)와 2024년 강화된 금리상한(KNF 9%+WIBOR, 비이자 비용 최대 25%+원금의 30%/년)·세금부담세(PIT)가 진입 부담을 키운다. 반면 B2B 리스는 무면허로 즉시 가능하고 ZPL(폴란드 리스협회) 회원사가 시장의 90%+ 점유해 진입이 유연하다. 비즈니스 매력도(EU 6위·CEE 1위, 리스 시장 €25bn+)는 상위권이나, 캡티브(VW FS·Toyota Bank)와 은행계 리스(mLeasing·PKO Leasing·Santander) 양강 구조는 독립계 진입에 가격·디지털 차별화를 요구한다. IT 유사도는 양호 — EU GDPR·SEPA·BIK(신용정보)·PolishAPI(오픈뱅킹)로 NetSol 베이스라인 재사용률 높음. 매력도↔IT 불일치 지점은 차량회수 — 리스는 소유권 기반으로 용이하나 소비자대출 담보회수는 komornik(집행관) 사법 적체로 6~18개월. 다크호스는 EV 보급률 가속(2025 7%대) — 잔가 리스크 관리가 리스 손익 핵심 변수. B2B·운용리스 우선 진입 후 KNF 인가 기반 소비자금융으로 단계적 확장이 유효하다.",
   "overall_insight_en": "Poland is the EU's #6 auto market and the largest new-car market in Central and Eastern Europe (CEE). About 560,000 new-car registrations in 2025 (SAMAR); a lease-led structure where leasing (especially operating lease) accounts for 70%+ of new financing is the core. Cost/difficulty drivers are clear — consumer credit requires KNF (Financial Supervision Authority) licensing (PLN 1M capital + supervisory board + ongoing supervision), and the 2024-tightened rate caps (KNF 9% + WIBOR; non-interest costs capped at 25% + 30% of principal per year) plus the bank levy (PIT) raise entry burden. By contrast, B2B leasing is unlicensed and immediately available, and ZPL (Polish Leasing Association) members hold 90%+ of the market, making entry flexible. Business attractiveness (EU #6, CEE #1, lease market €25bn+) is top-tier, but the two-tier structure of captives (VW FS, Toyota Bank) and bank-affiliated lessors (mLeasing, PKO Leasing, Santander) requires price and digital differentiation for independent entrants. IT similarity is favorable — EU GDPR, SEPA, BIK (credit bureau), and PolishAPI (open banking) deliver high NetSol baseline reuse. The attractiveness↔IT mismatch is in repossession — leasing is easy thanks to ownership, but consumer-loan collateral recovery takes 6-18 months due to komornik (bailiff) judicial backlogs. The dark horse is accelerating EV adoption (~7% in 2025) — residual-value risk management is the key lever for lease P&L. A staged strategy — B2B/operating-lease entry first, then expansion into consumer finance under KNF licensing — is effective.",
@@ -805,7 +805,7 @@
         "expansion_min_score": 75.0,
         "hq_build_min_score": 35.0
       },
-      "hq_baseline_cost": 8000,
+      "hq_baseline_cost": 8000000,
       "hq_baseline_months": 24,
       "hq_baseline_currency": "EUR",
       "items": [
@@ -904,29 +904,30 @@
       ]
     },
     "tab_1_3_tco": {
-      "build_cost": 3000.0,
+      "build_cost": 3000000.0,
       "build_months": 12.0,
       "annual_subscription": 31467.800000000003,
-      "annual_maintenance": 500,
-      "annual_recurring": 31967.800000000003,
+      "annual_maintenance": 540000.0,
+      "maintenance_rate": 0.18,
+      "annual_recurring": 571467.8,
       "operations_10y": 50000,
-      "system_cost_10y": 322678.0,
-      "total_tco_10y": 372678.0,
+      "system_cost_10y": 8714678.0,
+      "total_tco_10y": 8764678.0,
       "currency": "EUR",
       "currency_base": "EUR",
-      "total_tco_10y_eur": 372678.0,
+      "total_tco_10y_eur": 8764678.0,
       "similarity_score": 87.1875,
       "similarity_multiplier": 0.6,
       "similarity_band": "80~90",
       "build_method": "baseline_reuse",
       "hq_build_reference": {
-        "build_cost": 8000,
+        "build_cost": 8000000,
         "build_months": 24,
-        "build_cost_eur": 8000,
+        "build_cost_eur": 8000000,
         "currency": "EUR",
-        "delta_vs_applied": 5000.0,
+        "delta_vs_applied": 5000000.0,
         "is_applied": false,
-        "note": "본사 자체구축 시 기본 비용/기간 (참고용)"
+        "note": "본사 자체구축 시 기본 비용/기간 (참고용, EUR 절대값)"
       },
       "discount_applied": 0.4,
       "build_breakdown": {
@@ -934,14 +935,14 @@
         "inputs": {
           "베이스라인 국가": "GB",
           "베이스라인 솔루션": "NetSol",
-          "B 구축비용": 5000,
+          "B 구축비용": 5000000,
           "B 구축기간(개월)": 20,
           "종합 유사도": 87.2,
           "승수 구간": "80~90",
           "적용 승수": 0.6
         },
         "outputs": {
-          "신규국 구축비용": 3000.0,
+          "신규국 구축비용": 3000000.0,
           "신규국 구축기간(개월)": 12.0
         },
         "currency": "EUR"
@@ -959,6 +960,7 @@
           "우리사 예상 점유율": 0.02
         }
       },
+      "is_subscription": true,
       "subscription_details": {
         "existing_volume": 80,
         "new_volume": 6290,
@@ -1264,7 +1266,7 @@
           "item_en": "GDP Growth Rate",
           "category": "business",
           "role": "score",
-          "value": 3.4,
+          "value": 3.6,
           "value_en": null,
           "unit": "%",
           "direction": "up",
@@ -1285,37 +1287,37 @@
               },
               {
                 "year": 2023,
-                "value": 0.1
+                "value": 0.2
               },
               {
                 "year": 2024,
-                "value": 2.9
+                "value": 3.0
               },
               {
                 "year": 2025,
-                "value": 3.4
+                "value": 3.6
               }
             ],
             "forecast": [
               {
                 "year": 2026,
-                "value": 3.5
-              },
-              {
-                "year": 2027,
                 "value": 3.3
               },
               {
+                "year": 2027,
+                "value": 2.4
+              },
+              {
                 "year": 2028,
-                "value": 3.0
+                "value": 2.6
               },
               {
                 "year": 2029,
-                "value": 2.8
+                "value": 2.6
               },
               {
                 "year": 2030,
-                "value": 2.7
+                "value": 2.5
               }
             ],
             "estimated": true

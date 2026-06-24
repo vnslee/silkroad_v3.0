@@ -12,7 +12,7 @@
     "NG": {
       "name": "Nigeria",        // world-atlas 표기 영문명(마커 매칭·표기)
       "name_ko": "나이지리아",   // 한글 국가명
-      "region": "AFRICA",       // EU|NORTH_AMERICA|SOUTH_AMERICA|APAC|MIDDLE_EAST|AFRICA
+      "region": "AFRICA",       // EU|NORTH_AMERICA|APAC|MIDDLE_EAST|AFRICA  // NORTH_AMERICA=미주(남·북미 통합)
       "lon": 8.68,              // 대표 중심 경도(마커 좌표)
       "lat": 9.08,              // 대표 중심 위도
       "iso_numeric": "566"      // ISO 3166-1 numeric(권역 폴리곤 매칭용, 선택)

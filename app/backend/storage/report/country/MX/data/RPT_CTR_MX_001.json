@@ -6,7 +6,7 @@
     "country": "MX",
     "base_country": "US"
   },
-  "generated_at": "2026-06-24T16:31:52.467353",
+  "generated_at": "2026-06-24T20:56:46.652874",
   "schema_version": "1.1",
   "overall_insight": "라틴아메리카 2위·북미 통합 가치사슬의 핵심 자동차 시장. 2025년 신차 등록 약 153만대(AMDA/INEGI)로 코로나 이전(2016 1.6M) 회복 임박, 글로벌 톱10권. 비즈니스 매력도는 USMCA 통합·니어쇼어링(nearshoring)·자동차 생산 글로벌 5위로 인구 1.3억 매크로 우위. 비용·난이도 드라이버는 명확하다 — 소비자 자동차금융은 CNBV(국가은행증권위원회) 인가 SOFOM(Sociedad Financiera de Objeto Múltiple) ER 등록(자본금 약 MXN 50M)+CONDUSEF·Banxico CAT(Costo Anual Total) 분기 평균 모니터링·고금리(Banxico 9.5% 2025말)가 핵심이다. 반면 SOFOM ENR(비규제)은 CNBV 인가 면제로 진입 매우 유연(단 CONDUSEF 등록·SHCP UIF 자금세탁 보고는 필수). 캡티브(GM·Nissan·VW·Ford·Stellantis·Toyota·Hyundai)와 은행계(BBVA·Santander·Banorte) 양강 약 70% 점유, 캡티브가 EU 대비 매우 강함(자동차금융의 60%+가 OEM 캡티브). IT 유사도는 중간 — CoDi/DiMo(현지 즉시결제, Pix급은 아니나 성장)·Buró de Crédito(신용정보)·e.firma(전자서명) 인프라 양호하나, 라틴 특화 시스템(SOFOM·CAT·USMCA 세제)이 필요해 NetSol 베이스라인 직접 재사용은 55%대. 매력도↔IT 불일치 지점은 차량회수 — Leasing/SOFOM은 fideicomiso(신탁) 구조로 비교적 빠르나(평균 90~180일) 사법지역 편차 큼. 다크호스는 USMCA 니어쇼어링·EV 가속(2025 7%+)·핀테크 Ley Fintech 2018(중남미 최초 핀테크법) — 한국 OEM(현대·기아) 진출 매력 높음. SOFOM 우선 진입 → 은행 인가 단계 확장 또는 한국 OEM 캡티브 진출 전략 유효.",
   "overall_insight_en": "Latin America's #2 and a core auto market in the integrated North American value chain. 2025 new-car registrations ~1.53M units (AMDA/INEGI) approach pre-COVID levels (2016: 1.6M), keeping it in the global top 10. Business attractiveness rests on USMCA integration, nearshoring, #5 global auto production, and a 130M-population macro edge. Cost/difficulty drivers are clear — consumer auto finance hinges on CNBV (National Banking and Securities Commission)-licensed SOFOM (Sociedad Financiera de Objeto Multiple) ER registration (capital ~MXN 50M) + CONDUSEF/Banxico CAT (Costo Anual Total) quarterly average monitoring and high rates (Banxico 9.5% end-2025). By contrast, SOFOM ENR (unregulated) is exempt from CNBV authorization, making entry highly flexible (though CONDUSEF registration and SHCP UIF anti-money-laundering reporting are mandatory). Captives (GM, Nissan, VW, Ford, Stellantis, Toyota, Hyundai) and banks (BBVA, Santander, Banorte) hold ~70% combined, with captives far stronger than in the EU (60%+ of auto finance is OEM captive). IT similarity is medium — CoDi/DiMo (local instant payments, not Pix-scale but growing), Buro de Credito (credit information), and e.firma (e-signature) infrastructure are solid, but Latin-specific systems (SOFOM, CAT, USMCA taxation) are required, so direct reuse of the NetSol baseline is ~55%. The attractiveness↔IT mismatch is repossession — Leasing/SOFOM use fideicomiso (trust) structures that are relatively fast (avg. 90-180 days) but vary widely by jurisdiction. Dark horses are USMCA nearshoring, EV acceleration (2025 7%+), and the Ley Fintech 2018 (Latin America's first fintech law) — high entry appeal for Korean OEMs (Hyundai/Kia). A SOFOM-first entry → staged expansion to a banking license, or a Korean OEM captive entry, is a valid strategy.",
@@ -805,9 +805,9 @@
         "expansion_min_score": 75.0,
         "hq_build_min_score": 35.0
       },
-      "hq_baseline_cost": 8000,
+      "hq_baseline_cost": 8787878.787878787,
       "hq_baseline_months": 24,
-      "hq_baseline_currency": "EUR",
+      "hq_baseline_currency": "USD",
       "items": [
         {
           "item": "금리 상한 규제",
@@ -904,42 +904,43 @@
       ]
     },
     "tab_1_3_tco": {
-      "build_cost": 8787.878787878788,
+      "build_cost": 8787878.787878787,
       "build_months": 24,
       "annual_subscription": 0.0,
-      "annual_maintenance": 549.2424242424242,
-      "annual_recurring": 549.2424242424242,
+      "annual_maintenance": 1581818.1818181819,
+      "maintenance_rate": 0.18,
+      "annual_recurring": 1581818.1818181819,
       "operations_10y": 54924.242424242424,
-      "system_cost_10y": 14280.30303030303,
-      "total_tco_10y": 69204.54545454546,
+      "system_cost_10y": 24606060.606060605,
+      "total_tco_10y": 24660984.848484848,
       "currency": "USD",
       "currency_base": "EUR",
-      "total_tco_10y_eur": 63000,
+      "total_tco_10y_eur": 22450000.0,
       "similarity_score": 74.375,
       "similarity_multiplier": 1.0,
       "similarity_band": "70~80",
       "build_method": "hq_build",
       "hq_build_reference": {
-        "build_cost": 8787.878787878788,
+        "build_cost": 8787878.787878787,
         "build_months": 24,
-        "build_cost_eur": 8000,
+        "build_cost_eur": 8000000,
         "currency": "USD",
         "delta_vs_applied": 0.0,
         "is_applied": true,
-        "note": "본사 자체구축 시 기본 비용/기간 (참고용)"
+        "note": "본사 자체구축 시 기본 비용/기간 (참고용, EUR 절대값)"
       },
       "discount_applied": 0.3,
       "build_breakdown": {
         "formula": "구축비용/기간 = 본사 자체구축 표준(hq_build_baseline) — 내재화 결정이므로 재사용 승수 미적용",
         "inputs": {
           "구축 방식": "내재화(본사 자체구축)",
-          "본사 자체구축 비용": 8787.878787878788,
+          "본사 자체구축 비용": 8787878.787878787,
           "본사 자체구축 기간(개월)": 24,
           "종합 유사도": 74.4,
           "적용 승수": 1.0
         },
         "outputs": {
-          "신규국 구축비용": 8787.878787878788,
+          "신규국 구축비용": 8787878.787878787,
           "신규국 구축기간(개월)": 24
         },
         "currency": "USD"
@@ -957,6 +958,7 @@
           "우리사 예상 점유율": 0.02
         }
       },
+      "is_subscription": false,
       "subscription_details": {
         "applicable": false,
         "new_volume": 11934,
@@ -964,80 +966,7 @@
         "currency": "EUR",
         "note": "비구독 솔루션 — 구독료는 운영비에 포함"
       },
-      "subscription_tiers": [
-        {
-          "min_volume": 0,
-          "max_volume": 500,
-          "price_per_unit": 24.7,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 501,
-          "max_volume": 1000,
-          "price_per_unit": 9.88,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 1001,
-          "max_volume": 1500,
-          "price_per_unit": 8.645,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 1501,
-          "max_volume": 2000,
-          "price_per_unit": 7.41,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 2001,
-          "max_volume": 3000,
-          "price_per_unit": 6.175,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 3001,
-          "max_volume": 5000,
-          "price_per_unit": 5.681,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 5001,
-          "max_volume": 10000,
-          "price_per_unit": 4.94,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 10001,
-          "max_volume": 12000,
-          "price_per_unit": 4.693,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 12001,
-          "max_volume": 14000,
-          "price_per_unit": 4.446,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 14001,
-          "max_volume": 20000,
-          "price_per_unit": 4.323,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 20001,
-          "max_volume": 80000,
-          "price_per_unit": 4.076,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 80001,
-          "max_volume": 999999,
-          "price_per_unit": 0.865,
-          "currency": "EUR"
-        }
-      ],
+      "subscription_tiers": [],
       "existing_total_volume": 80,
       "items": [
         {

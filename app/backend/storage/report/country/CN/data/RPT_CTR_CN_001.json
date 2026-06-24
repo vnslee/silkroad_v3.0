@@ -6,7 +6,7 @@
     "country": "CN",
     "base_country": "AU"
   },
-  "generated_at": "2026-06-24T16:31:52.426633",
+  "generated_at": "2026-06-24T20:56:45.541107",
   "schema_version": "1.1",
   "overall_insight": "세계 최대 자동차 시장(2025 신차 2,350만대)·NEV 50%+ 점유·금융 시장 €280bn 규모로 매력도 최상. 그러나 외국 자동차금융 진출 환경 어려움 — CBIRC Auto Finance Company 인가 + 외국 단독 가능 단 자본·거버넌스 부담↑, 데이터 현지화(개인정보보호법 PIPL + CSL) + 자본 통제 + 미·중 긴장으로 운영 리스크 큼. BYD·NIO·Geely 등 현지 NEV 캡티브 압도 — 외국 진입 여지 좁음. EV·중고차·소비자 운용리스가 단기 차별화 기회. 단독 인가보다는 합작·인수(VW Finance·Stellantis-CMBC 등 사례) 전략 권장.",
   "overall_insight_en": "World's largest auto market (23.5M new cars 2025), NEV share 50%+, and €280B finance market place attractiveness at the top. However, the foreign auto-finance entry environment is challenging — CBIRC Auto Finance Company licensing, foreign solo entry allowed but with heavy capital/governance burden, data localization (PIPL + CSL), capital controls, and US-China tensions add operational risk. Local NEV captives (BYD, NIO, Geely) dominate — limited room for foreign entrants. EV, used cars, and consumer operating lease offer near-term differentiation. JV/acquisition strategy (e.g., VW Finance, Stellantis-CMBC) preferred over standalone licensing.",
@@ -1127,7 +1127,7 @@
           "item_en": null,
           "category": "business",
           "role": "score",
-          "value": 4.8,
+          "value": 5.0,
           "value_en": null,
           "unit": "%",
           "direction": "up",
@@ -1140,15 +1140,15 @@
             "history": [
               {
                 "year": 2021,
-                "value": 8.4
+                "value": 8.6
               },
               {
                 "year": 2022,
-                "value": 3.0
+                "value": 3.1
               },
               {
                 "year": 2023,
-                "value": 5.2
+                "value": 5.4
               },
               {
                 "year": 2024,
@@ -1156,36 +1156,36 @@
               },
               {
                 "year": 2025,
-                "value": 4.8
+                "value": 5.0
               }
             ],
             "forecast": [
               {
                 "year": 2026,
-                "value": 4.5
+                "value": 4.4
               },
               {
                 "year": 2027,
-                "value": 4.3
-              },
-              {
-                "year": 2028,
-                "value": 4.2
-              },
-              {
-                "year": 2029,
                 "value": 4.0
               },
               {
+                "year": 2028,
+                "value": 4.0
+              },
+              {
+                "year": 2029,
+                "value": 3.7
+              },
+              {
                 "year": 2030,
-                "value": 3.8
+                "value": 3.3
               }
             ],
             "estimated": true
           },
           "tier": 1,
-          "source": "PBoC·NBS·IMF WEO 2025",
-          "source_en": "PBoC, NBS, IMF WEO 2025",
+          "source": "NBS(중국국가통계국)·PBoC·IMF WEO 2025",
+          "source_en": "NBS, PBoC, IMF WEO 2025",
           "insight": "2025년 실질 GDP 4.8% — 5%대 목표 하회. 부동산 침체·수출 둔화·인구 감소로 중기 4%대 안정. 정부 부양책 의존.",
           "insight_en": "Real GDP 4.8% in 2025 — below 5% target. Property downturn, slower exports, and demographic decline stabilize medium-term around 4%. Government stimulus-dependent.",
           "insight_ai_generated": true,

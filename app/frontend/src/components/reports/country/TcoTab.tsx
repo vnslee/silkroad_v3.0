@@ -17,7 +17,7 @@ const MULT_TABLE: { band: string; mult: number }[] = [
 export function TcoTab({ data }: { data: CountryReportData }) {
   const tco = data.tabs.tab_1_3_tco
   const dec = data.tabs.tab_1_2_decision
-  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아' }
+  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아', AU: '호주' }
   const baseKo = baseKoMap[data.target.base_country] ?? data.target.base_country
 
   // 기준국·이미 진출(운영중)한 국가·TCO 미산정 보고서는 build_breakdown 등이 없어 산식 렌더 불가 → 안내 대체.
@@ -41,11 +41,15 @@ export function TcoTab({ data }: { data: CountryReportData }) {
   }
 
   const mult = Math.round((tco.similarity_multiplier ?? 0) * 100)
+  // APAC — 기준국(AU) 자산 고정값(유사도 승수 미적용). 승수 KPI·셀을 노출하지 않는다.
+  const isApacFixed = tco.build_method === 'apac_fixed'
   const bd = tco.build_breakdown
   const bi = bd.inputs
   const ec = tco.expected_contracts_breakdown.inputs
-  // 표시통화 — 엔진이 이미 환산한 금액. 기호/단위만 입힌다(EU=EUR, NA/SA=USD, APAC=KRW).
+  // 표시통화 — 엔진이 이미 환산한 금액. 기호/단위만 입힌다(EU=EUR, NA=USD, APAC=KRW).
   const ccy = tco.currency ?? 'EUR'
+  // 구독제(EU/NetSol) 여부 — is_subscription 우선, 구버전 데이터는 구독료 티어 존재로 추론.
+  const isSubscription = tco.is_subscription ?? (tco.subscription_tiers?.length ?? 0) > 0
 
   return (
     <div className="flex flex-col gap-xl">
@@ -54,10 +58,36 @@ export function TcoTab({ data }: { data: CountryReportData }) {
         <Kpi label="총 10년 TCO" icon="payments" value={<Money value={tco.total_tco_10y} currency={tco.currency} />} />
         <Kpi label="예상 구축 기간" icon="schedule" value={`${tco.build_months.toFixed(1)}M`} />
         <Kpi label="예상 계약건수" icon="fact_check" value={`${intComma(tco.expected_contracts)} 건`} />
-        <Kpi label="유사도 승수" icon="percent" value={`${mult}%`} sub={`구간 ${tco.similarity_band}`} />
+        {isApacFixed ? (
+          <Kpi label="구축비 기준" icon="account_balance" value="기준국 자산" sub="유사도 승수 미적용" />
+        ) : (
+          <Kpi label="유사도 승수" icon="percent" value={`${mult}%`} sub={`구간 ${tco.similarity_band}`} />
+        )}
       </div>
 
-      {/* 구축비용·기간 산식 — 내재화(hq_build)와 확산(baseline_reuse)에 따라 입력 셀이 다르다. */}
+      {/* APAC은 산식 없이 기준국(호주) 자체구축 비용·기간만 — 외부 솔루션 비교 기준값. */}
+      {isApacFixed ? (
+        <Panel icon="build" title="구축비용·기간 (기준국 자체구축 기준)">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-sm">
+            <FormulaCell
+              label="구축비용"
+              big={<Money value={bi['기준국 구축비용'] ?? tco.build_cost} currency={bd.currency ?? tco.currency} />}
+              small={`기준국 ${bi['기준국 솔루션'] ? `${baseKo} · ${bi['기준국 솔루션']}` : baseKo} 자체구축`}
+              highlight
+            />
+            <FormulaCell
+              label="구축기간"
+              big={`${bi['기준국 구축기간(개월)'] ?? tco.build_months}M`}
+              small={`기준국 ${baseKo} 자체구축`}
+              highlight
+            />
+          </div>
+          <p className="mt-md font-label-sm text-label-sm text-text-secondary">
+            APAC은 유사도 승수를 적용하지 않고, 기준국({baseKo})의 자체구축 비용·기간을 그대로 사용합니다. 외부 솔루션 도입 비용과 비교하기 위한 기준값입니다.
+          </p>
+        </Panel>
+      ) : (
+      /* 구축비용·기간 산식 — 내재화(hq_build)와 확산(baseline_reuse)에 따라 입력 셀이 다르다. */
       <Panel icon="build" title="구축비용·기간 산식">
         <div className="bg-surface-container p-md rounded-lg border-l-4 border-primary mb-md font-body-sm text-body-sm text-on-surface-variant">
           {bd.formula ?? '구축비용/기간 = 베이스라인(B) 값 × 유사도 승수'}
@@ -82,6 +112,7 @@ export function TcoTab({ data }: { data: CountryReportData }) {
         )}
         {tco.hq_build_reference && <HqBuildCompare tco={tco} ccy={ccy} />}
       </Panel>
+      )}
 
       {/* 예상 계약건수 산식 */}
       <Panel icon="function" title="예상 계약건수 산식">
@@ -135,15 +166,26 @@ export function TcoTab({ data }: { data: CountryReportData }) {
         </div>
       </div>
 
-      {/* 구독료 구간 스텝차트 + 승수표 */}
+      {/* 구독제(EU/NetSol)면 구독료 구간 스텝차트, 비구독(비유럽 등)이면 기준국 구축비 비교 + 승수표 */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
         <div className="lg:col-span-7">
-          <Panel icon="stairs" title="구독료 구간 (전체 소급)">
-            <StepChart tco={tco} />
-            <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
-              X=누적 계약건수, Y=건당 단가 · 누적 증가 시 자동 하향 (전 물량 소급)
-            </p>
-          </Panel>
+          {isSubscription ? (
+            <Panel icon="stairs" title="구독료 구간 (전체 소급)">
+              <StepChart tco={tco} />
+              <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
+                X=누적 계약건수, Y=건당 단가 · 누적 증가 시 자동 하향 (전 물량 소급)
+              </p>
+            </Panel>
+          ) : (
+            <Panel icon="build" title={isApacFixed ? `구축비용·기간 (기준국 ${baseKo} 자체구축)` : '구축비용 비교 (기준국 → 신규국)'}>
+              <BaselineBuildCompare tco={tco} ccy={ccy} baseKo={baseKo} />
+              <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
+                {isApacFixed
+                  ? `APAC은 승수를 적용하지 않고 기준국(${baseKo}) 자체구축 비용·기간을 그대로 사용합니다. 외부 솔루션 도입 비용과 비교하기 위한 기준값입니다.`
+                  : '비구독 솔루션 — 구독료 대신 기준국(B) 구축비용 대비 신규국 구축비용을 비교합니다. 구독료는 운영비에 포함됩니다.'}
+              </p>
+            </Panel>
+          )}
         </div>
         <div className="lg:col-span-5">
           <Panel icon="percent" title="유사도 → TCO 승수">
@@ -153,6 +195,11 @@ export function TcoTab({ data }: { data: CountryReportData }) {
             {tco.build_method === 'hq_build' && (
               <div className="bg-surface-container p-sm rounded-lg border-l-4 border-primary mb-sm font-label-sm text-label-sm text-on-surface-variant">
                 내재화(본사 자체구축) 결정이라 재사용 승수는 구축비에 적용되지 않습니다. 아래 표는 참고용입니다.
+              </div>
+            )}
+            {isApacFixed && (
+              <div className="bg-surface-container p-sm rounded-lg border-l-4 border-primary mb-sm font-label-sm text-label-sm text-on-surface-variant">
+                APAC은 기준국({baseKo}) 자체구축 값을 그대로 사용하므로 유사도 승수가 적용되지 않습니다. 아래 표는 참고용입니다.
               </div>
             )}
             <table className="w-full">
@@ -269,6 +316,64 @@ function HqBuildCompare({ tco, ccy }: { tco: CountryReportData['tabs']['tab_1_3_
           이 국가는 확산(재사용)으로 산정됐습니다. 위 내재화 금액은 본사 자체구축 표준 기준선(참고용)입니다.
         </p>
       )}
+    </div>
+  )
+}
+
+// 비구독(비유럽 등) 국가용 — 구독료 구간 대신 기준국(B) 구축비용 → 신규국 구축비용 비교.
+// 확산(재사용)이면 B 구축비 × 유사도 승수, 내재화면 본사 자체구축 표준값.
+function BaselineBuildCompare({
+  tco,
+  ccy,
+  baseKo,
+}: {
+  tco: CountryReportData['tabs']['tab_1_3_tco']
+  ccy: string
+  baseKo: string
+}) {
+  const bi = tco.build_breakdown.inputs
+  const isHq = tco.build_method === 'hq_build'
+  const isApac = tco.build_method === 'apac_fixed'
+  // APAC: 기준국(호주) 자체구축 값 그대로(승수 미적용) — 비교 자체가 없으니 단일 기준값만.
+  if (isApac) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-sm">
+        <FormulaCell
+          label="구축비용"
+          big={money(bi['기준국 구축비용'] ?? tco.build_cost, ccy)}
+          small={`기준국 ${baseKo} 자체구축`}
+          highlight
+        />
+        <FormulaCell
+          label="구축기간"
+          big={`${bi['기준국 구축기간(개월)'] ?? tco.build_months}M`}
+          small={`기준국 ${baseKo} 자체구축`}
+          highlight
+        />
+      </div>
+    )
+  }
+  // 확산: B 구축비용 / 내재화: 본사 자체구축 비용 (둘 다 신규국 산출 전 기준값)
+  const baseCost = isHq ? bi['본사 자체구축 비용'] : bi['B 구축비용']
+  const baseLabel = isHq ? '본사 자체구축 비용' : `${baseKo}(기준국) 구축비용`
+  const baseSmall = isHq ? '내재화 표준' : (bi['베이스라인 솔루션'] ?? 'internal.json')
+  const delta = tco.build_cost - (baseCost ?? 0)
+  const deltaLabel =
+    Math.abs(delta) < 1
+      ? '동일'
+      : delta < 0
+        ? `${money(delta, ccy)} (절감)`
+        : `+${money(delta, ccy)} (증가)`
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-sm">
+      <FormulaCell label={baseLabel} big={money(baseCost ?? 0, ccy)} small={baseSmall} />
+      <FormulaCell
+        label="신규국 구축비용"
+        big={money(tco.build_cost, ccy)}
+        small={`${tco.build_months.toFixed(1)}M · ${isHq ? '내재화' : `유사도 승수 ${Math.round((tco.similarity_multiplier ?? 0) * 100)}%`}`}
+        highlight
+      />
+      <FormulaCell label="차액" big={deltaLabel} small="신규국 − 기준국" />
     </div>
   )
 }

@@ -42,7 +42,8 @@ _COUNTRY_META_SCHEMA = {
     "required": ["country", "country_ko", "region", "lon", "lat"],
 }
 # region 값은 프론트 지도 권역 분류 키와 정합해야 한다(MapView REGIONS6 / geo region).
-_REGION_ENUM = ("EU", "NORTH_AMERICA", "SOUTH_AMERICA", "APAC", "MIDDLE_EAST", "AFRICA")
+# 미주(Americas) 통합: 남·북미는 모두 NORTH_AMERICA(미주, 코드 NA)로 반환한다.
+_REGION_ENUM = ("EU", "NORTH_AMERICA", "APAC", "MIDDLE_EAST", "AFRICA")
 
 # progress_cb(step, message) — research_orchestrator가 JobManager에 위임.
 # progress_cb(step, message, percent=None) — percent 명시 시 step 매핑 대신 직접 사용.

@@ -140,13 +140,13 @@
       "item": "GDP 성장률",
       "category": "business",
       "role": "score",
-      "value": 4.8,
+      "value": 5.0,
       "unit": "%",
       "direction": "up",
       "axis": "attractiveness",
       "tier": 1,
-      "source": "PBoC·NBS·IMF WEO 2025",
-      "source_en": "PBoC, NBS, IMF WEO 2025",
+      "source": "NBS(중국국가통계국)·PBoC·IMF WEO 2025",
+      "source_en": "NBS, PBoC, IMF WEO 2025",
       "insight": "2025년 실질 GDP 4.8% — 5%대 목표 하회. 부동산 침체·수출 둔화·인구 감소로 중기 4%대 안정. 정부 부양책 의존.",
       "insight_en": "Real GDP 4.8% in 2025 — below 5% target. Property downturn, slower exports, and demographic decline stabilize medium-term around 4%. Government stimulus-dependent.",
       "insight_ai_generated": true,
@@ -154,15 +154,15 @@
         "history": [
           {
             "year": 2021,
-            "value": 8.4
+            "value": 8.6
           },
           {
             "year": 2022,
-            "value": 3.0
+            "value": 3.1
           },
           {
             "year": 2023,
-            "value": 5.2
+            "value": 5.4
           },
           {
             "year": 2024,
@@ -170,29 +170,29 @@
           },
           {
             "year": 2025,
-            "value": 4.8
+            "value": 5.0
           }
         ],
         "forecast": [
           {
             "year": 2026,
-            "value": 4.5
+            "value": 4.4
           },
           {
             "year": 2027,
-            "value": 4.3
-          },
-          {
-            "year": 2028,
-            "value": 4.2
-          },
-          {
-            "year": 2029,
             "value": 4.0
           },
           {
+            "year": 2028,
+            "value": 4.0
+          },
+          {
+            "year": 2029,
+            "value": 3.7
+          },
+          {
             "year": 2030,
-            "value": 3.8
+            "value": 3.3
           }
         ],
         "estimated": true

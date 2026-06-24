@@ -59,6 +59,69 @@
       "insight_ai_generated": true
     },
     {
+      "item": "GDP 성장률",
+      "item_en": "GDP Growth Rate",
+      "category": "business",
+      "role": "score",
+      "value": 1.0,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 4.6
+          },
+          {
+            "year": 2022,
+            "value": 2.7
+          },
+          {
+            "year": 2023,
+            "value": 1.6
+          },
+          {
+            "year": 2024,
+            "value": 2.0
+          },
+          {
+            "year": 2025,
+            "value": 1.0
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 1.9
+          },
+          {
+            "year": 2027,
+            "value": 2.1
+          },
+          {
+            "year": 2028,
+            "value": 2.2
+          },
+          {
+            "year": 2029,
+            "value": 2.0
+          },
+          {
+            "year": 2030,
+            "value": 1.9
+          }
+        ],
+        "estimated": true
+      },
+      "tier": 1,
+      "source": "한국은행, 통계청, IMF WEO 2025",
+      "source_en": "Bank of Korea, Statistics Korea, IMF WEO 2025",
+      "insight": "2025년 1.0% 저성장 — 내수 부진·건설 투자 위축·수출 둔화가 겹침. 중기 2%대 잠재성장 복귀 전망(IMF WEO).",
+      "insight_en": "Low growth of 1.0% in 2025 amid weak domestic demand, slumping construction investment, and slowing exports. Medium-term return to ~2% potential growth (IMF WEO).",
+      "insight_ai_generated": false
+    },
+    {
       "item": "솔루션 벤더",
       "category": "it",
       "role": "score",

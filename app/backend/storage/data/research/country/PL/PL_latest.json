@@ -147,7 +147,7 @@
       "item_en": "GDP Growth Rate",
       "category": "business",
       "role": "score",
-      "value": 3.4,
+      "value": 3.6,
       "unit": "%",
       "direction": "up",
       "axis": "attractiveness",
@@ -163,37 +163,37 @@
           },
           {
             "year": 2023,
-            "value": 0.1
+            "value": 0.2
           },
           {
             "year": 2024,
-            "value": 2.9
+            "value": 3.0
           },
           {
             "year": 2025,
-            "value": 3.4
+            "value": 3.6
           }
         ],
         "forecast": [
           {
             "year": 2026,
-            "value": 3.5
-          },
-          {
-            "year": 2027,
             "value": 3.3
           },
           {
+            "year": 2027,
+            "value": 2.4
+          },
+          {
             "year": 2028,
-            "value": 3.0
+            "value": 2.6
           },
           {
             "year": 2029,
-            "value": 2.8
+            "value": 2.6
           },
           {
             "year": 2030,
-            "value": 2.7
+            "value": 2.5
           }
         ],
         "estimated": true

@@ -10,19 +10,22 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
   const baseKo = baseKoMap[data.target.base_country] ?? data.target.base_country
   const sub = tco.subscription_details ?? ({} as NonNullable<typeof tco.subscription_details>)
 
-  // APAC(아시아) — 권역 확산 분기 없이 내재화/외부솔루션 2지선. hq_build를 '내재화'로 표기.
+  // APAC(아시아) — 권역 확산·유사도 분기 없이 외부솔루션·자체구축(내재화)을 양쪽 동등 제시(decision="apac_dual").
   const isApac = dec.is_apac === true
+  const isApacDual = dec.decision === 'apac_dual'
 
-  // 우측 패널 제목/아이콘 — 결정별로 바뀐다.
-  const sidePanelTitle =
-    dec.decision === 'external_solution'
+  // 우측 패널 제목/아이콘 — 결정별로 바뀐다. APAC(양쪽 제시)은 외부솔루션 후보를 노출.
+  const sidePanelTitle = isApacDual
+    ? '해당국 외부솔루션'
+    : dec.decision === 'external_solution'
       ? '추천 외부솔루션'
       : dec.decision === 'hq_build'
         ? isApac
           ? '내재화 예상 비용'
           : '본사 구축 예상 비용'
         : '구독료 구간표'
-  const sidePanelIcon = dec.decision === 'external_solution' ? 'extension' : dec.decision === 'hq_build' ? 'domain' : 'payments'
+  const sidePanelIcon =
+    isApacDual || dec.decision === 'external_solution' ? 'extension' : dec.decision === 'hq_build' ? 'domain' : 'payments'
 
   // 기준국·이미 진출(운영중)한 국가는 신규 진출 결정 트리가 적용되지 않음 → 권고 안내로 대체.
   const isAlreadyDeployed =
@@ -53,7 +56,6 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
             expansionMin={dec.thresholds?.expansion_min_score}
             hqBuildMin={dec.thresholds?.hq_build_min_score}
             isApac={isApac}
-            apacMin={dec.thresholds?.apac_internalization_min_score}
           />
         </Panel>
       </div>
@@ -63,6 +65,7 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
             decision={dec.decision}
             isApac={isApac}
             externalCandidates={dec.external_candidates}
+            externalSolutionSummary={dec.external_solution_summary}
             hqBaselineCost={dec.hq_baseline_cost}
             hqBaselineMonths={dec.hq_baseline_months}
             hqBaselineCurrency={dec.hq_baseline_currency}

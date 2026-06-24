@@ -500,46 +500,40 @@ class CountryReportEngine:
         hq_build_min = float(thresholds.get("hq_build_min_score", 50))
 
         # 본사 자체구축 기준비용은 EUR로 저장돼 있다. TCO 탭과 동일하게 권역
-        # 표시통화(EU=EUR, NA/SA=USD, APAC=KRW)로 환산해 내려보낸다(화면 정합).
+        # 표시통화(EU=EUR, NA=USD, APAC=KRW)로 환산해 내려보낸다(화면 정합).
         # region 미지정 시 EUR 폴백(환산 없음) → 기존 동작 유지.
         disp_ccy = (self.internal_data.get("region_currency") or {}).get(region, "EUR") if region else "EUR"
         hq_baseline_cost_disp = self._from_eur(hq_baseline.get("cost", 0), disp_ccy)
 
-        # APAC(아시아) — 권역 내 확산 경로가 없다. 유사도 단일 임계값으로
-        # 내재화(hq_build) / 외부솔루션 2지선만 가른다. region_system_exists 무시.
+        # APAC(아시아) — 권역 내 확산 경로도, 유사도 임계값 분기도 적용하지 않는다.
+        # region_system_exists·유사도 무관하게 항상 '외부솔루션'과 '자체구축(내재화)'
+        # 두 경로를 동등하게 함께 제시한다(decision="apac_dual"). 어느 한쪽을 추천으로
+        # 강조하지 않는다 — 의사결정은 사용자 몫. 양쪽 정보(외부솔루션 후보 + 자체구축
+        # 예상 비용/기간)를 모두 결과에 싣는다.
         if region == "APAC":
-            apac_min = float(thresholds.get("apac_internalization_min_score", 50))
-            if similarity_score >= apac_min:
-                decision = "hq_build"  # 내재화(표시 라벨), 다운스트림은 hq_build 로직 재사용
-                recommendation = {
-                    "ko": "내재화 추천 (유사도 충분 → 본사 내재화 구축)",
-                    "en": "Internalization recommended (sufficient similarity → in-house build).",
-                }
-            else:
-                decision = "external_solution"
-                recommendation = {
-                    "ko": "현지 외부솔루션 2~3종 추천 (내재화 기준 미달)",
-                    "en": "Recommend 2-3 local external solutions (below internalization threshold).",
-                }
             result = {
-                "decision": decision,
+                "decision": "apac_dual",
                 "is_apac": True,
                 "similarity_score": similarity_score,
-                "recommendation": recommendation,
+                "recommendation": {
+                    "ko": "외부솔루션 도입과 본사 자체구축(내재화) 두 경로를 함께 검토합니다 (권역 확산·유사도 분기 미적용).",
+                    "en": "Review both external-solution adoption and in-house build (internalization) (no regional-expansion or similarity branching).",
+                },
                 "base_country": base_country,
                 "base_system": base_solution,
                 "region_system_exists": region_system_exists,
                 "thresholds": {
                     "expansion_min_score": expansion_min,
                     "hq_build_min_score": hq_build_min,
-                    "apac_internalization_min_score": apac_min,
                 },
+                # 자체구축(내재화) 예상 비용/기간 — 본사 자체구축 기준선(표시통화 환산).
                 "hq_baseline_cost": hq_baseline_cost_disp,
                 "hq_baseline_months": hq_baseline.get("months", 0),
                 "hq_baseline_currency": disp_ccy,
+                # 외부솔루션 후보 + 시장 요약(솔루션 유형·벤더 패턴) — 항상 함께 제시.
+                "external_candidates": self._extract_external_candidates(),
+                "external_solution_summary": self._extract_external_solution_summary(),
             }
-            if decision == "external_solution":
-                result["external_candidates"] = self._extract_external_candidates()
             return result
 
         # Stage 1 — does the region already have a deployed system?
@@ -584,10 +578,11 @@ class CountryReportEngine:
             "hq_baseline_months": hq_baseline.get("months", 0),
             "hq_baseline_currency": disp_ccy
         }
-        # 외부솔루션 결정 시 — 리서치 '솔루션 벤더' 항목을 추천 후보 리스트로 담는다.
-        # (비용 산식은 데이터에 없어 '별도 견적'으로 표기. 화면은 후보명만 노출.)
+        # 외부솔루션 결정 시 — 리서치 '솔루션 벤더' 항목을 추천 후보 리스트로 담고,
+        # 솔루션 유형·벤더 패턴 요약을 곁들인다. (비용 산식은 데이터에 없어 '별도 견적'으로 표기.)
         if decision == "external_solution":
             result["external_candidates"] = self._extract_external_candidates()
+            result["external_solution_summary"] = self._extract_external_solution_summary()
         return result
 
     def _extract_external_candidates(self) -> List[Dict[str, Any]]:
@@ -602,14 +597,47 @@ class CountryReportEngine:
         if not isinstance(raw, str) or not raw.strip():
             return []
         import re as _re
-        # 괄호 안 토큰 우선 추출, 없으면 전체 문자열 사용
-        groups = _re.findall(r"[（(]([^（）()]+)[）)]", raw)
-        segment = groups[0] if groups else raw
-        names = [t.strip() for t in _re.split(r"[/,、·]+", segment) if t.strip()]
+        # value 패턴 예: "글로벌(Pennant/Nucleus/Misys) + 인도 SI(TCS·Wipro) 혼재. ..."
+        # → 괄호 앞 라벨(글로벌/현지 SI 등)을 벤더 구분(category)으로, 괄호 안을 벤더명으로 분해.
+        # 라벨+괄호 쌍을 순서대로 찾는다. 라벨은 직전 구분자(+ , 。 .)~괄호 사이 토큰.
+        pairs = _re.findall(r"([^+()（）.,。]*?)\s*[（(]([^（）()]+)[）)]", raw)
         candidates: List[Dict[str, Any]] = []
-        for name in names[:3]:
-            candidates.append({"name": name, "cost_note": "별도 견적"})
-        return candidates
+        for label, inside in pairs:
+            category = label.strip(" ·,/、") or None
+            for name in _re.split(r"[/,、·]+", inside):
+                name = name.strip()
+                if name:
+                    candidates.append({
+                        "name": name,
+                        "category": category,   # 글로벌 / 인도 SI 등 — 벤더 구분
+                        "cost_note": "별도 견적",
+                    })
+        # 괄호가 전혀 없으면 전체 문자열을 구분자로 분해(라벨 없음).
+        if not candidates:
+            for name in _re.split(r"[/,、·]+", raw):
+                name = name.strip()
+                if name:
+                    candidates.append({"name": name, "category": None, "cost_note": "별도 견적"})
+        return candidates[:5]
+
+    def _extract_external_solution_summary(self) -> Optional[Dict[str, Any]]:
+        """외부솔루션 후보 목록에 곁들일 시장 요약(솔루션 유형·벤더 패턴).
+
+        리서치 '솔루션 유형'·'솔루션 벤더' 항목의 insight/value를 한 줄 요약으로 모은다.
+        없으면 None(프론트는 요약 영역 자체를 생략).
+        """
+        sol_type = self._extract_item_detail("솔루션 유형") or {}
+        vendor = self._extract_item_detail("솔루션 벤더") or {}
+        summary = {
+            "solution_type": sol_type.get("value"),
+            "solution_type_insight": sol_type.get("insight"),
+            "vendor_pattern": vendor.get("insight") or vendor.get("value"),
+            "source": vendor.get("source") or sol_type.get("source"),
+        }
+        # 의미 있는 값이 하나도 없으면 None.
+        if not any(v for k, v in summary.items() if k != "source"):
+            return None
+        return summary
 
     def calculate_similarity_multiplier(self, similarity_score: float) -> Dict[str, Any]:
         """명세서 산식 1 — 종합 유사도 → TCO 적용 승수%.
@@ -639,7 +667,7 @@ class CountryReportEngine:
         """대상국이 속한 권역의 기준 표시통화. 매핑 없으면 EUR 폴백.
 
         country → country_to_region → region_currency 순으로 해석.
-        (EU=EUR, NA/SA=USD, APAC=KRW — internal_data.region_currency 참조.)
+        (EU=EUR, NA=USD, APAC=KRW — internal_data.region_currency 참조.)
         """
         data = self.internal_data or {}
         region = (data.get("country_to_region") or {}).get(country_code) \
@@ -823,16 +851,45 @@ class CountryReportEngine:
 
         # Get base country build info
         base_info = self.internal_data.get("country_assets", {}).get(base_country, {})
-        base_cost = base_info.get("build_cost", 5000)
+        # build_cost는 EUR 절대값(country_assets에 절대 EUR로 저장). 폴백도 절대 EUR 자릿수.
+        base_cost = base_info.get("build_cost", 5000000)
         base_months = base_info.get("build_months", 18)
+
+        # APAC(아시아)는 유사도 승수를 적용하지 않는다 — 자체구축 '대략 비용'으로
+        # 기준국(AU) country_assets 의 build_cost/build_months 를 고정값 그대로 쓴다.
+        country_to_region = (self.internal_data or {}).get("country_to_region") or {}
+        target_region = (
+            country_to_region.get(self.normalize_country_code(target_country))
+            or country_to_region.get(target_country)
+        )
+        is_apac = (target_region == "APAC") or (decision == "apac_dual")
 
         is_hq_build = decision == "hq_build"
 
-        if is_hq_build:
+        if is_apac:
+            # 기준국(AU) 자산 고정값 — 유사도 승수 미적용(대략 비용).
+            build_cost = base_cost
+            build_months = base_months
+            build_breakdown = {
+                "formula": "구축비용/기간 = 기준국(AU) country_assets 고정값 — APAC는 유사도 승수 미적용(대략 비용)",
+                "inputs": {
+                    "구축 방식": "자체구축(내재화)",
+                    "기준국": base_country,
+                    "기준국 솔루션": base_info.get("solution"),
+                    "기준국 구축비용": base_cost,
+                    "기준국 구축기간(개월)": base_months,
+                    "적용 승수": 1.0,
+                },
+                "outputs": {
+                    "신규국 구축비용": build_cost,
+                    "신규국 구축기간(개월)": build_months,
+                },
+            }
+        elif is_hq_build:
             # 내재화(본사 자체구축) — 베이스국 시스템을 재사용하지 않으므로 유사도 승수를
             # 적용하지 않고, 본사 자체구축 표준 비용/기간(hq_build_baseline)을 그대로 쓴다.
             hq_baseline = self.internal_data.get("hq_build_baseline", {}) or {}
-            hq_cost = hq_baseline.get("cost", 8000)
+            hq_cost = hq_baseline.get("cost", 8000000)  # EUR 절대값
             hq_months = hq_baseline.get("months", 24)
             build_cost = hq_cost
             build_months = hq_months
@@ -893,8 +950,10 @@ class CountryReportEngine:
             }
             annual_subscription = 0
 
-        # Maintenance
-        maintenance_annual = self.internal_data.get("maintenance_cost_annual", {}).get("amount", 500)
+        # Maintenance — 연 유지보수비 = 신규국 구축비 × maintenance_rate(구축비 대비 연율).
+        # build_cost가 EUR 절대값이므로 rate 산식이 현실적 규모로 복원된다.
+        maintenance_rate = self.internal_data.get("maintenance_rate", 0.18)
+        maintenance_annual = build_cost * maintenance_rate
 
         # Operations
         operations_10y = self.internal_data.get("operational_cost_10y", {}).get("amount", 50000)
@@ -904,13 +963,15 @@ class CountryReportEngine:
         system_cost = build_cost + (annual_recurring * 10)
         total_tco = system_cost + operations_10y
 
-        # 표시통화 환산 — 권역 기준통화(EU=EUR, NA/SA=USD, APAC=KRW)로 변환해 노출.
+        # 표시통화 환산 — 권역 기준통화(EU=EUR, NA=USD, APAC=KRW)로 변환해 노출.
         # 산식은 EUR로 일관 계산하고, 출력 금액만 권역 통화로 환산한다.
         disp_ccy = self._region_currency(target_country)
         c = lambda x: self._from_eur(x, disp_ccy)
 
         # build_breakdown의 금액도 표시통화로 환산(렌더러가 tco.currency로 표기).
-        if is_hq_build:
+        if is_apac:
+            build_breakdown["inputs"]["기준국 구축비용"] = c(base_cost)
+        elif is_hq_build:
             build_breakdown["inputs"]["본사 자체구축 비용"] = c(build_breakdown["inputs"]["본사 자체구축 비용"])
         else:
             build_breakdown["inputs"]["B 구축비용"] = c(base_cost)
@@ -921,7 +982,7 @@ class CountryReportEngine:
         # 확산 국가에서는 "실제 적용 구축비(재사용) vs 내재화로 했다면" 비교의 기준이 되고,
         # 내재화 국가에서는 실제 적용값과 동일하다.
         hq_ref = self.internal_data.get("hq_build_baseline", {}) or {}
-        hq_ref_cost_eur = hq_ref.get("cost", 8000)
+        hq_ref_cost_eur = hq_ref.get("cost", 8000000)  # EUR 절대값
         hq_ref_months = hq_ref.get("months", 24)
         hq_build_reference = {
             "build_cost": c(hq_ref_cost_eur),
@@ -930,7 +991,7 @@ class CountryReportEngine:
             "currency": disp_ccy,
             # 적용 구축비 대비 내재화 기준선의 차액(표시통화). 양수면 내재화가 더 비쌈.
             "delta_vs_applied": c(hq_ref_cost_eur) - c(build_cost),
-            "is_applied": is_hq_build,  # 이 국가의 실제 적용 방식이 내재화인지
+            "is_applied": is_hq_build or is_apac,  # 실제 적용 방식이 내재화/자체구축인지
             "note": hq_ref.get("note", "본사 자체구축 시 기본 비용/기간 (참고용)"),
         }
 
@@ -939,6 +1000,8 @@ class CountryReportEngine:
             "build_months": build_months,
             "annual_subscription": c(annual_subscription),
             "annual_maintenance": c(maintenance_annual),
+            # 유지보수 산식 추적값 — 연 유지보수비 = 신규국 구축비 × maintenance_rate.
+            "maintenance_rate": maintenance_rate,
             "annual_recurring": c(annual_recurring),
             "operations_10y": c(operations_10y),
             "system_cost_10y": c(system_cost),
@@ -947,17 +1010,20 @@ class CountryReportEngine:
             "currency_base": "EUR",
             "total_tco_10y_eur": total_tco,
             "similarity_score": similarity["overall_score"],
-            # 내재화는 재사용 승수를 적용하지 않으므로 실효 승수 1.0을 노출(확산은 산식 승수 그대로).
-            "similarity_multiplier": 1.0 if is_hq_build else multiplier,
+            # 내재화/APAC은 재사용 승수를 적용하지 않으므로 실효 승수 1.0을 노출(확산은 산식 승수 그대로).
+            "similarity_multiplier": 1.0 if (is_hq_build or is_apac) else multiplier,
             "similarity_band": mult_info["band"],
-            "build_method": "hq_build" if is_hq_build else "baseline_reuse",
+            "build_method": "apac_fixed" if is_apac else ("hq_build" if is_hq_build else "baseline_reuse"),
             "hq_build_reference": hq_build_reference,
             "discount_applied": discount,
             "build_breakdown": build_breakdown,
             "expected_contracts": expected_volume,
             "expected_contracts_breakdown": expected if isinstance(expected, dict) else None,
+            "is_subscription": is_subscription,
             "subscription_details": subscription,
-            "subscription_tiers": self.internal_data.get("subscription_tiers", []),
+            # 구독료 티어표는 구독제 솔루션(현재 EU 권역만)에서만 노출한다.
+            # 비구독 권역은 기준국 구축비만 보여주므로 티어표를 출력하지 않는다(렌더러가 그리지 않도록 빈 리스트).
+            "subscription_tiers": self.internal_data.get("subscription_tiers", []) if is_subscription else [],
             "existing_total_volume": self.internal_data.get("existing_total_volume", 0),
         }
 

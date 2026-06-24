@@ -240,7 +240,7 @@ class RulesetPayload(BaseModel):
 
     GET 응답이자 PUT 요청 본문(같은 형태). 비어 있는 dict는 PUT에서 미변경으로 본다.
     similarity_item_axes는 읽기 전용 메타(weight 저장 시 axis 보존용).
-    ※ quick_win_rules·maintenance_rate는 엔진 산식 미사용이라 노출하지 않는다(router 주석 참조).
+    ※ quick_win_rules는 엔진 산식 미사용, maintenance_rate는 TCO 산식4에서 사용하나 편집 UI 미노출(router 주석 참조).
     """
 
     version: Optional[str] = None

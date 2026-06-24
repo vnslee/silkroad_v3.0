@@ -4,16 +4,16 @@
   "title": "브라질 진출 진단 보고서",
   "target": {
     "country": "BR",
-    "base_country": "BR"
+    "base_country": "US"
   },
-  "generated_at": "2026-06-24T16:31:52.411001",
+  "generated_at": "2026-06-24T20:56:45.203395",
   "schema_version": "1.1",
   "overall_insight": "라틴아메리카 최대 자동차 시장이자 글로벌 6위권. 2025년 신차 등록 약 240만대(FENABRAVE)로 회복세 강하며, 금융 침투율(약 60%·CDC=Crédito Direto ao Consumidor+CSC+Leasing+Consórcio 합산)은 EU 평균과 동등하다. 비즈니스 매력도는 시장규모·인구 2.1억으로 글로벌 톱이나, 비용·난이도 드라이버는 매우 강하다 — 소비자 자동차금융은 BACEN(중앙은행) 인가 SCFI(Sociedade de Crédito, Financiamento e Investimento, '파이낸시에라' financeira) 등록(자본금 BRL 7M·BACEN 감독 강함)과 IOF(금융거래세 0.38%+일별 0.0082%·연 3%)·고금리(SELIC 11.75% 2025말)·복잡한 세제(PIS/COFINS·CSLL·ICMS 등)가 핵심이다. 반면 B2B 리스(arrendamento mercantil)·Consórcio(공동구매조합)는 ANEF·ABEL 자율규제로 진입 유연. 캡티브(GM·Stellantis·VW·Toyota·BYD)와 은행계(Banco do Brasil·Itaú·Bradesco·Santander) 양강 약 75% 점유. IT 유사도는 중간 — Pix(현지 즉시결제 EU iDEAL급)·BACEN SCR(신용정보)·gov.br(전자인증) 등 인프라 글로벌 톱급으로 디지털 채널 성숙도 높으나, 라틴아메리카 특화 시스템(Consórcio·CDC·Leasing·IOF 처리)이 필요해 NetSol 베이스라인 직접 재사용은 50%대로 제한. 매력도↔IT 불일치 지점은 차량회수 — 리스·Consórcio는 소유권 기반 용이하나 CDC 담보회수는 alienação fiduciária(신탁양도) 절차로 빠른 편이나 사법지역 편차 큼. 다크호스는 Pix·BNPL·EV(2025 BEV 점유 5%+) — 디지털 전환 가속. 결제 인프라 우수+세제·규제 복잡함의 양면. 한국 OEM(현대·기아 캡티브) 또는 BACEN 인가 SCFI 형태로 진입, ABEL 자율규제 Leasing 우선 → CDC 단계 확장 전략 유효.",
   "overall_insight_en": "Latin America's largest auto market and globally a top-6. 2025 new-vehicle registrations of ~2.4M units (FENABRAVE) show a strong recovery, and finance penetration (~60%, summing CDC=Crédito Direto ao Consumidor + CSC + Leasing + Consórcio) is on par with the EU average. Business attractiveness is global top-tier on market size and a 210M population, but cost/difficulty drivers are very strong — consumer auto finance requires BACEN (central bank) authorization as an SCFI (Sociedade de Crédito, Financiamento e Investimento, a 'financeira') registration (capital BRL 7M, strong BACEN supervision), plus IOF (financial transaction tax 0.38% + 0.0082%/day, ~3%/yr), high rates (SELIC 11.75% end-2025), and a complex tax system (PIS/COFINS, CSLL, ICMS, etc.) are central. By contrast, B2B leasing (arrendamento mercantil) and Consórcio (group-purchase consortia) are flexible to enter under ANEF/ABEL self-regulation. Captives (GM, Stellantis, VW, Toyota, BYD) and banks (Banco do Brasil, Itaú, Bradesco, Santander) together hold ~75%. IT similarity is medium — infrastructure like Pix (local instant payment, EU iDEAL-grade), BACEN SCR (credit info), and gov.br (e-authentication) is global top-tier with high digital-channel maturity, but Latin America-specific systems (Consórcio, CDC, Leasing, IOF processing) are needed, limiting direct reuse of the NetSol baseline to ~50%. The attractiveness↔IT mismatch is in repossession — leasing/Consórcio are easy thanks to ownership, while CDC collateral recovery via alienação fiduciária (fiduciary transfer) is relatively fast but varies widely by judicial district. Dark horses are Pix, BNPL, and EV (2025 BEV share 5%+) — accelerating digital transformation. Two-sided: excellent payment infrastructure vs. complex tax/regulation. Entry via a Korean OEM (Hyundai/Kia captive) or a BACEN-authorized SCFI, prioritizing ABEL self-regulated Leasing → staged expansion into CDC is a valid strategy.",
   "country_meta": {
     "country": "Brazil",
     "country_ko": "브라질",
-    "region": "SOUTH_AMERICA",
+    "region": "NORTH_AMERICA",
     "currency": "BRL",
     "data_year": 2025,
     "fetched_at": "2026-06-21T20:00:00+09:00",
@@ -366,16 +366,290 @@
   },
   "tabs": {
     "tab_1_1_similarity": {
-      "overall_score": 100.0,
+      "overall_score": 80.0,
       "axes": {
-        "system": 100.0,
-        "product": 100.0,
-        "regulatory": 100.0,
-        "risk": 100.0
+        "product": 75.0,
+        "regulatory": 83.92857142857143,
+        "system": 84.375,
+        "risk": 56.25
       },
-      "items": [],
-      "method": "self_baseline",
-      "note": "베이스라인 국가 자기 자신 — 유사도 100점 적용",
+      "items": [
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "axis": "product",
+          "weight": 0.15,
+          "dimensions": [
+            {
+              "dimension": "리스 취급 일치도",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Leasing 신차 7% — 매우 낮음",
+              "note_en": "Leasing only 7% of new cars — very low"
+            },
+            {
+              "dimension": "렌탈 취급 일치도",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "단기렌탈 일부 존재(Localiza·Movida)",
+              "note_en": "Some short-term rental exists (Localiza, Movida)"
+            },
+            {
+              "dimension": "플릿 취급 일치도",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "플릿 일부, 캡티브 압도",
+              "note_en": "Some fleet, captives dominate"
+            },
+            {
+              "dimension": "상품별 비중 유사도",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "CDC 35%+Consórcio 18%(브라질 유일) 구조로 GB와 큰 차이",
+              "note_en": "CDC 35% + Consórcio 18% (Brazil-unique) structure differs greatly from GB"
+            }
+          ],
+          "item_similarity": 75.0
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "axis": "regulatory",
+          "weight": 0.1,
+          "dimensions": [
+            {
+              "dimension": "현지 저장 강제",
+              "target_score": 5,
+              "base_score": 5,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "LGPD — 강제 현지화 없음",
+              "note_en": "LGPD — no forced localization"
+            },
+            {
+              "dimension": "국외 이전 허용도",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "국제이전 적정성/SCC, EU 동등",
+              "note_en": "International transfer via adequacy/SCC, EU-equivalent"
+            },
+            {
+              "dimension": "동의·보관 규제",
+              "target_score": 4,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "LGPD·ANPD 표준",
+              "note_en": "LGPD/ANPD standard"
+            },
+            {
+              "dimension": "GDPR 동등성",
+              "target_score": 5,
+              "base_score": 3,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "LGPD가 GDPR 직접 모델 — 동등성 높음",
+              "note_en": "LGPD is directly modeled on GDPR — high equivalence"
+            }
+          ],
+          "item_similarity": 81.25
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "axis": "regulatory",
+          "weight": 0.25,
+          "dimensions": [
+            {
+              "dimension": "취득방식(등록 vs 인가)",
+              "target_score": 2,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "SCFI(BACEN) 인가 필수 — 부담 큼",
+              "note_en": "SCFI (BACEN) authorization mandatory — heavy burden"
+            },
+            {
+              "dimension": "외국인 취득 가능",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "1995 개헌 이후 100% 허용",
+              "note_en": "100% allowed since the 1995 amendment"
+            },
+            {
+              "dimension": "처리기간(개월)",
+              "target_score": 2,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "BACEN 인가 12~24개월",
+              "note_en": "BACEN authorization 12-24 months"
+            },
+            {
+              "dimension": "최저자본금 수준",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "자본 BRL 7M(USD 1.4M) — EU 평균보다 낮음",
+              "note_en": "Capital BRL 7M (USD 1.4M) — lower than the EU average"
+            },
+            {
+              "dimension": "감독 강도",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "BACEN·CMN 통합 감독",
+              "note_en": "BACEN/CMN integrated supervision"
+            }
+          ],
+          "item_similarity": 85.0
+        },
+        {
+          "item": "솔루션 유형",
+          "axis": "system",
+          "weight": 0.2,
+          "dimensions": [
+            {
+              "dimension": "배포형태(패키지/SI/SaaS)",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "라틴 특화 시스템(Consórcio·IOF) 필요로 NetSol 직접 재사용 50%대",
+              "note_en": "Latin-specific systems (Consórcio/IOF) needed → NetSol direct reuse ~50%"
+            },
+            {
+              "dimension": "커스터마이징 자유도",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Stefanini·TOTVS 등 현지 SI 의존도 큼",
+              "note_en": "Heavy dependence on local SI (Stefanini, TOTVS, etc.)"
+            },
+            {
+              "dimension": "벤더 종속도",
+              "target_score": 2,
+              "base_score": 2,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "글로벌 패키지 + 라틴 SI 혼합, 종속도 높음",
+              "note_en": "Global packages + Latin SI mix, high lock-in"
+            },
+            {
+              "dimension": "멀티테넌시 여부",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "멀티테넌시 부분 지원",
+              "note_en": "Partial multi-tenancy support"
+            }
+          ],
+          "item_similarity": 68.75
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "axis": "system",
+          "weight": 0.2,
+          "dimensions": [
+            {
+              "dimension": "온라인 신청 연동",
+              "target_score": 5,
+              "base_score": 5,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "Pix 1.5억 사용자 — 글로벌 톱급",
+              "note_en": "Pix 150M users — global top-tier"
+            },
+            {
+              "dimension": "비대면 계약 가능",
+              "target_score": 5,
+              "base_score": 5,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "gov.br·Open Finance Brasil 보편화",
+              "note_en": "gov.br, Open Finance Brasil ubiquitous"
+            },
+            {
+              "dimension": "API 개방도",
+              "target_score": 5,
+              "base_score": 5,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "BACEN Open Finance 가장 진보",
+              "note_en": "BACEN Open Finance is the most advanced"
+            },
+            {
+              "dimension": "페이퍼리스 수준",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "페이퍼리스 진행 중, 일부 종이 절차 잔존",
+              "note_en": "Paperless underway, some paper steps remain"
+            }
+          ],
+          "item_similarity": 100.0
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "axis": "risk",
+          "weight": 0.1,
+          "dimensions": [
+            {
+              "dimension": "사법절차 필요",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "alienação fiduciária(신탁양도) 사법절차 빠름",
+              "note_en": "alienação fiduciária (fiduciary transfer) judicial process is fast"
+            },
+            {
+              "dimension": "회수 소요기간(일)",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "평균 60~180일 — EU 평균 우월",
+              "note_en": "Average 60-180 days — better than the EU average"
+            },
+            {
+              "dimension": "자력구제 허용",
+              "target_score": 2,
+              "base_score": 5,
+              "gap": 3.0,
+              "similarity": 25.0,
+              "note": "자력구제 제한적, busca e apreensão 사법",
+              "note_en": "Self-help limited, busca e apreensão is judicial"
+            },
+            {
+              "dimension": "회수율",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "사법지역 편차 큼",
+              "note_en": "Large judicial-district variation"
+            }
+          ],
+          "item_similarity": 56.25
+        }
+      ],
+      "method": "dimension_based",
+      "scale": "1~5 per dimension → gap 0=100, gap 4=0",
       "evidence_items": [
         {
           "item": "솔루션 유형",
@@ -518,16 +792,16 @@
       ]
     },
     "tab_1_2_decision": {
-      "is_baseline": true,
+      "is_baseline": false,
       "is_already_deployed": true,
-      "decision": "baseline_already_deployed",
+      "decision": "already_deployed",
       "recommendation": {
-        "ko": "BR는 권역 기준국 — 시스템(현지 SI)이 이미 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
-        "en": "BR is the regional baseline — system (현지 SI) is already operational. The new-entry decision tree does not apply."
+        "ko": "BR는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
+        "en": "BR is already an operational market — the system is live. The new-entry decision tree does not apply."
       },
-      "similarity_score": 100.0,
-      "base_country": "BR",
-      "base_system": "현지 SI",
+      "similarity_score": 80.0,
+      "base_country": "US",
+      "base_system": "Salesforce",
       "region_system_exists": true,
       "thresholds": {
         "expansion_min_score": 75.0,
@@ -629,11 +903,11 @@
       ]
     },
     "tab_1_3_tco": {
-      "is_baseline": true,
+      "is_baseline": false,
       "is_already_deployed": true,
       "message": {
-        "ko": "BR는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
-        "en": "BR is the regional baseline — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
+        "ko": "BR는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
+        "en": "BR is already an operational market — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
       },
       "currency": "BRL",
       "items": [

@@ -35,8 +35,8 @@ interface Marker {
   status: 'established' | 'candidate'
 }
 
-// 6개 권역 정의(AISea mockup REGIONS6). key=대륙 분류 키, fill=hover 채움색, dark=툴팁 배경,
-// code=백엔드 권역 라우트 코드(데이터 있는 권역만 매칭, ME/AF는 데이터 없을 수 있음).
+// 권역 정의(AISea mockup REGIONS6 기반, 미주 통합으로 남·북미를 'na'로 합쳐 5개). key=대륙 분류 키,
+// fill=hover 채움색, dark=툴팁 배경, code=백엔드 권역 라우트 코드(데이터 있는 권역만 매칭, ME/AF는 데이터 없을 수 있음).
 interface Region6 {
   key: string
   label: string
@@ -44,11 +44,11 @@ interface Region6 {
   dark: string
   code: string
 }
-// 지역색(AISea): NA #4F8BFF / SA #34D399 / ME #FBBF24 / EU #C8F051 / APAC #FB7185.
+// 지역색(AISea): NA(미주) #4F8BFF / ME #FBBF24 / EU #C8F051 / APAC #FB7185.
 // fill=hover 채움(연한 파스텔), dark=툴팁 배경(어두운 톤, 흰 텍스트 대비).
+// 미주(Americas) 통합: 남·북미는 단일 권역 'na'(미주, code NA)로 묶는다.
 const REGIONS6: Region6[] = [
-  { key: 'na', label: '북아메리카', fill: '#CBDDFF', dark: '#1f4ea8', code: 'NA' },
-  { key: 'sa', label: '남아메리카', fill: '#C2F0DE', dark: '#157a55', code: 'SA' },
+  { key: 'na', label: '미주', fill: '#CBDDFF', dark: '#1f4ea8', code: 'NA' },
   { key: 'eu', label: '유럽', fill: '#E4F6B8', dark: '#5c6f12', code: 'EU' },
   { key: 'me', label: '중동', fill: '#FDEABF', dark: '#946a08', code: 'ME' },
   { key: 'ap', label: '아시아·태평양', fill: '#FED2D8', dark: '#bc3a4d', code: 'APAC' },
@@ -60,12 +60,13 @@ const REGION_KEY_BY_CODE: Record<string, string> = Object.fromEntries(
   REGIONS6.map((r) => [r.code, r.key]),
 )
 
-// 경위도 centroid로 육지를 6개 권역에 분류(mockup continentOf 동일).
+// 경위도 centroid로 육지를 권역에 분류(mockup continentOf 기반).
+// 미주(Americas) 통합: 남·북미(서반구 아메리카 대륙)는 모두 'na'(미주)로 귀속.
 function classifyRegion(lon: number, lat: number): string {
   if (lon >= 34 && lon <= 63 && lat >= 12 && lat <= 43) return 'me'
   if (lon >= -25 && lon <= 45 && lat >= 36) return 'eu'
   if (lat < 37 && lon >= -20 && lon <= 52) return 'af'
-  if (lon <= -30 && lat < 13) return 'sa'
+  if (lon <= -30 && lat < 13) return 'na' // 구 남미 → 미주
   if (lon >= -170 && lon <= -30 && lat >= 12) return 'na'
   return 'ap'
 }

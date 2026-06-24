@@ -40,26 +40,19 @@ export function ScatterChart({ points }: { points: ScatterPoint[] }) {
         {/* Axis labels */}
         <text x="220" y="285" textAnchor="middle" fontSize="11" fill="#3a4048">매력도 →</text>
         <text x="20" y="140" textAnchor="middle" fontSize="11" fill="#3a4048" transform="rotate(-90 20 140)">IT 유사도 →</text>
-        {/* Points */}
-        {points.map((p) => {
-          const cx = px(p.attractiveness)
-          const cy = py(p.it_similarity)
-          if (p.is_baseline) {
+        {/* Points — 기준국(B)은 비교용 마커를 그리지 않는다(후보국만 표시). */}
+        {points
+          .filter((p) => !p.is_baseline)
+          .map((p) => {
+            const cx = px(p.attractiveness)
+            const cy = py(p.it_similarity)
             return (
               <g key={p.country}>
-                <circle cx={cx} cy={cy} r="9" fill="#FFFFFF" stroke="#2f6be0" strokeWidth="2.5" />
-                <text x={cx} y={cy + 4} textAnchor="middle" fontSize="13" fill="#2f6be0" fontWeight="bold">★</text>
-                <text x={cx + 12} y={cy + 4} fontSize="11" fill="#2f6be0" fontWeight="600">{p.country} (B)</text>
+                <circle cx={cx} cy={cy} r="7" fill="#c0533f" stroke="#FFFFFF" strokeWidth="1.5" />
+                <text x={cx + 12} y={cy + 4} fontSize="11" fill="#14181C" fontWeight="600">{p.country}</text>
               </g>
             )
-          }
-          return (
-            <g key={p.country}>
-              <circle cx={cx} cy={cy} r="7" fill="#c0533f" stroke="#FFFFFF" strokeWidth="1.5" />
-              <text x={cx + 12} y={cy + 4} fontSize="11" fill="#14181C" fontWeight="600">{p.country}</text>
-            </g>
-          )
-        })}
+          })}
       </svg>
 
       <div className="mt-md p-sm bg-surface-light border border-surface-border rounded-md">
@@ -85,15 +78,6 @@ export function ScatterChart({ points }: { points: ScatterPoint[] }) {
           <span className="flex items-center gap-xs">
             <span className="inline-block w-3 h-3 rounded-full border border-white" style={{ background: '#c0533f' }} />
             <span>후보국</span>
-          </span>
-          <span className="flex items-center gap-xs">
-            <span
-              className="inline-block w-3 h-3 rounded-full bg-white border-2"
-              style={{ borderColor: '#2f6be0', fontSize: 'clamp(6.8px, calc(6px + 0.222vw), 9.2px)', lineHeight: '8px', textAlign: 'center', color: '#2f6be0' }}
-            >
-              ★
-            </span>
-            <span>기준국 (비교용)</span>
           </span>
           <span className="flex items-center gap-xs">
             <span className="inline-block w-2 h-2 rounded-full opacity-60" style={{ background: '#9aa0a6' }} />

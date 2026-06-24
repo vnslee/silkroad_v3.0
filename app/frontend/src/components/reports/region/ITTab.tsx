@@ -8,12 +8,15 @@ export function ITTab({ data }: { data: RegionReportData }) {
   const it = data.tabs.tab_2_2_it_similarity
   const qw = data.tabs.quickwin
   const cards = data.tabs.top3_country_cards
-  const baselineName = countryKo(it.baseline_country, it.baseline_country)
+  // APAC — 기준국 미적용, IT 성숙도 절대점수. baseline 행/라벨/별표를 모두 숨긴다.
+  const isAbsolute = it.mode === 'absolute'
+  const metricLabel = isAbsolute ? 'IT 성숙도' : 'IT 유사도'
+  const baselineName = it.baseline_country ? countryKo(it.baseline_country, it.baseline_country) : ''
   const axisOrder = Object.keys(it.weights)
 
-  // 히트맵 행 정렬: 후보(밴드 내림차순) → 기준국 하단.
+  // 히트맵 행 정렬: 후보(밴드 내림차순) → 기준국 하단(절대점수 모드는 기준국 행 없음).
   const candidates = it.countries.filter((c) => !c.is_baseline).sort((a, b) => b.it_similarity_raw - a.it_similarity_raw)
-  const baselineRow = it.countries.find((c) => c.is_baseline)
+  const baselineRow = isAbsolute ? undefined : it.countries.find((c) => c.is_baseline)
 
   const points: ScatterPoint[] = qw.rows.map((r) => ({
     country: r.country,
@@ -31,15 +34,19 @@ export function ITTab({ data }: { data: RegionReportData }) {
       <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-lg shadow-[0_4px_8px_rgba(20,23,28,0.04)]">
         <div className="flex items-center justify-between gap-sm mb-md border-b border-surface-border pb-sm flex-wrap">
           <div className="flex items-center gap-sm">
-            <h2 className="font-headline-md text-headline-md text-primary m-0">IT 유사도 히트맵</h2>
-            <span className="text-label-sm text-text-secondary">vs 기준국 {it.countries.find((c) => c.is_baseline)?.country_name ?? it.baseline_country}</span>
+            <h2 className="font-headline-md text-headline-md text-primary m-0">{metricLabel} 히트맵</h2>
+            {!isAbsolute && (
+              <span className="text-label-sm text-text-secondary">vs 기준국 {it.countries.find((c) => c.is_baseline)?.country_name ?? it.baseline_country}</span>
+            )}
             <SourcePill flag="CALC" suffix="· 10점 구간" />
           </div>
           <BandLegend />
         </div>
         <Heatmap axisOrder={axisOrder} candidates={candidates} baselineRow={baselineRow} />
         <p className="mt-md text-label-sm text-text-secondary">
-          정렬: 종합 점수 내림차순 · 기준국은 비교용으로 하단 표시. 셀 호버 시 raw 값 확인.
+          {isAbsolute
+            ? '정렬: 종합 점수 내림차순 · 각국 IT 성숙도 절대점수. 셀 호버 시 raw 값 확인.'
+            : '정렬: 종합 점수 내림차순 · 기준국은 비교용으로 하단 표시. 셀 호버 시 raw 값 확인.'}
         </p>
       </div>
 
@@ -86,7 +93,7 @@ export function ITTab({ data }: { data: RegionReportData }) {
         <div className="lg:col-span-5">
           <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-lg shadow-[0_4px_8px_rgba(20,23,28,0.04)] h-full">
             <div className="flex items-center gap-sm mb-md border-b border-surface-border pb-sm">
-              <h2 className="font-headline-md text-headline-md text-primary m-0">매력도 × IT 유사도</h2>
+              <h2 className="font-headline-md text-headline-md text-primary m-0">매력도 × {metricLabel}</h2>
               <SourcePill flag="CALC" suffix="· 2축" />
             </div>
             <ScatterChart points={points} />
@@ -110,12 +117,12 @@ export function ITTab({ data }: { data: RegionReportData }) {
         </div>
       </div>
 
-      {/* 국가별 IT 유사도 산식 */}
+      {/* 국가별 IT 성숙도/유사도 산식 */}
       <div>
-        <h3 className="font-label-md text-label-md uppercase tracking-wider text-text-secondary mb-sm">국가별 IT 유사도 산식</h3>
+        <h3 className="font-label-md text-label-md uppercase tracking-wider text-text-secondary mb-sm">국가별 {metricLabel} 산식</h3>
         <div className="flex flex-col gap-sm">
           {orderedForFormula(it.countries).map((c) => (
-            <ITFormula key={c.country} country={c} axisOrder={axisOrder} baselineName={baselineName} />
+            <ITFormula key={c.country} country={c} axisOrder={axisOrder} baselineName={baselineName} isAbsolute={isAbsolute} />
           ))}
         </div>
       </div>
@@ -374,7 +381,7 @@ function Top3ProfileCard({ card }: { card: RegionTop3Card }) {
 }
 
 // ── 국가별 IT 유사도 산식 ─────────────────────────────────────────────────
-function ITFormula({ country, axisOrder, baselineName }: { country: RegionITCountry; axisOrder: string[]; baselineName: string }) {
+function ITFormula({ country, axisOrder, baselineName, isAbsolute = false }: { country: RegionITCountry; axisOrder: string[]; baselineName: string; isAbsolute?: boolean }) {
   const band = country.it_similarity_band
   const bandColor = band >= 80 ? '#4f8a6d' : band >= 60 ? '#2f6be0' : '#c08a2e'
   return (
@@ -394,9 +401,18 @@ function ITFormula({ country, axisOrder, baselineName }: { country: RegionITCoun
       </summary>
       <div className="px-md pb-md pt-xs">
         <div className="bg-surface-light border border-surface-border rounded-md p-sm mb-sm font-body-sm text-on-surface-variant">
-          축별 raw 점수 = (수치 1~5) 100−|Δ|×20 / (범주·라이선스/솔루션) 텍스트 토큰 Jaccard 유사도 30+J×65 (완전 일치=100) / (gate)
-          동일=90·한쪽 PASS=50·기타=30. 유효가중치 = 항목 가중치 × Tier 멀티플라이어(대상국 데이터 신뢰도 기준, Tier1=1.0 고정). 종합 =
-          Σ(raw × 유효가중치) ÷ Σ(유효가중치) → 10점 구간 반올림.
+          {isAbsolute ? (
+            <>
+              축별 raw 점수 = (수치 1~5) value/5×100 / (gate) PASS=100·FAIL=30 / (범주·라이선스/솔루션) 값 보유=70. 유효가중치 = 항목 가중치 ×
+              Tier 멀티플라이어(대상국 데이터 신뢰도 기준, Tier1=1.0 고정). 종합 = Σ(raw × 유효가중치) ÷ Σ(유효가중치) → 10점 구간 반올림.
+            </>
+          ) : (
+            <>
+              축별 raw 점수 = (수치 1~5) 100−|Δ|×20 / (범주·라이선스/솔루션) 텍스트 토큰 Jaccard 유사도 30+J×65 (완전 일치=100) / (gate)
+              동일=90·한쪽 PASS=50·기타=30. 유효가중치 = 항목 가중치 × Tier 멀티플라이어(대상국 데이터 신뢰도 기준, Tier1=1.0 고정). 종합 =
+              Σ(raw × 유효가중치) ÷ Σ(유효가중치) → 10점 구간 반올림.
+            </>
+          )}
         </div>
         {axisOrder.map((axis) => {
           const a = country.axes[axis]
@@ -422,11 +438,13 @@ function ITFormula({ country, axisOrder, baselineName }: { country: RegionITCoun
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-sm text-body-sm">
-                <div className="bg-surface-light rounded p-xs">
-                  <div className="text-label-sm text-text-secondary mb-xs">기준국 {baselineName}</div>
-                  <div className="text-primary">{dash(a.baseline_value)}</div>
-                </div>
+              <div className={`grid grid-cols-1 ${isAbsolute ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-sm text-body-sm`}>
+                {!isAbsolute && (
+                  <div className="bg-surface-light rounded p-xs">
+                    <div className="text-label-sm text-text-secondary mb-xs">기준국 {baselineName}</div>
+                    <div className="text-primary">{dash(a.baseline_value)}</div>
+                  </div>
+                )}
                 <div className="bg-surface-light rounded p-xs">
                   <div className="text-label-sm text-text-secondary mb-xs">대상국 {country.country_name}</div>
                   <div className="text-primary">{dash(a.target_value)}</div>

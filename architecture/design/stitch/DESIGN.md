@@ -141,7 +141,7 @@ The aesthetic is **Modern Enterprise / Data Storytelling**, characterized by a w
 
 The palette is anchored by **Ink Black Primary** (`#14181C`) — used for text, headings, structural emphasis and dark hero surfaces — paired with a warm **Beige background** (`#EDEBE4`) and pure white cards. The signature **Lime-Green Accent** (`#C8F051`) is reserved exclusively for *fill* actions: primary buttons, the selected navigation state, key highlights, and emphasis markers. Because lime-green is bright and fails contrast as a text color, it is never used for body text — text on a lime surface is always Ink Black (`#14181C`).
 
-Region hues encode geography across the map, emblems, and charts: NA `#4F8BFF`, SA `#34D399`, ME `#FBBF24`, EU `#C8F051`, APAC `#FB7185`. Diagnostic signal colors (Success green, Warning amber, Danger/Error red) are preserved as data-meaning colors independent of theme. Text is tiered with Ink Black for headers and softened grays (`#3a4048`, `#9AA0A6`) for metadata.
+Region hues encode geography across the map, emblems, and charts: NA (Americas) `#4F8BFF`, ME `#FBBF24`, EU `#C8F051`, APAC `#FB7185`. Diagnostic signal colors (Success green, Warning amber, Danger/Error red) are preserved as data-meaning colors independent of theme. Text is tiered with Ink Black for headers and softened grays (`#3a4048`, `#9AA0A6`) for metadata.
 
 ## Typography
 

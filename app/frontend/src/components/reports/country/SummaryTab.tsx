@@ -28,25 +28,36 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
   const isBaselineSelf = dec.is_baseline || dec.decision === 'baseline_already_deployed'
 
   // 시스템 결정 라벨 — 엔진 decision 기준(하드코딩 금지). 요약 헤더/뱃지에서 공용.
+  // APAC(apac_dual)은 외부솔루션·자체구축을 양쪽 동등 제시 — 분기 없음.
   const decisionLabel =
-    dec.decision === 'baseline_system_expansion'
-      ? `권역 내 확산 (${baseKo} 시스템)`
-      : dec.decision === 'hq_build'
-        ? '본사 자체구축'
-        : dec.decision === 'external_solution'
-          ? '외부솔루션'
-          : `권역 내 확산 (${baseKo} 시스템)` // 폴백(구버전 데이터)
+    dec.decision === 'apac_dual'
+      ? '외부솔루션 · 자체구축(양쪽 검토)'
+      : dec.decision === 'baseline_system_expansion'
+        ? `권역 내 확산 (${baseKo} 시스템)`
+        : dec.decision === 'hq_build'
+          ? '본사 자체구축'
+          : dec.decision === 'external_solution'
+            ? '외부솔루션'
+            : `권역 내 확산 (${baseKo} 시스템)` // 폴백(구버전 데이터)
   // 우측 패널 제목 — 결정별로 바뀐다(구독료/본사구축/외부솔루션).
   const sidePanelTitle =
-    dec.decision === 'external_solution'
-      ? '추천 외부솔루션'
-      : dec.decision === 'hq_build'
-        ? '본사 구축 예상 비용'
-        : '구독료 구간표'
+    dec.decision === 'apac_dual'
+      ? '해당국 외부솔루션'
+      : dec.decision === 'external_solution'
+        ? '추천 외부솔루션'
+        : dec.decision === 'hq_build'
+          ? '본사 구축 예상 비용'
+          : '구독료 구간표'
 
   const sub = tco.subscription_details ?? ({} as typeof tco.subscription_details)
   const buildMonths = tco.build_months ?? 0
-  const baseMonths = tco.build_breakdown?.inputs?.['B 구축기간(개월)'] ?? tco.build_breakdown?.inputs?.['B 구축기간'] ?? 18
+  // APAC — 기준국(AU) 자산 고정값(승수 미적용). 베이스라인 대비 '단축' 개념이 없다.
+  const isApacFixed = tco.build_method === 'apac_fixed'
+  const baseMonths =
+    tco.build_breakdown?.inputs?.['B 구축기간(개월)'] ??
+    tco.build_breakdown?.inputs?.['B 구축기간'] ??
+    tco.build_breakdown?.inputs?.['기준국 구축기간(개월)'] ??
+    18
   const monthsSaved = baseMonths - buildMonths
   const monthsSavedPct = baseMonths ? Math.round((monthsSaved / baseMonths) * 100) : 0
   const recommendationText = locText(dec.recommendation)
@@ -143,7 +154,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
           </div>
           <div className="flex-1 flex items-center">
             {isBaselineDeployed ? (
-              <p className="font-body-sm text-body-sm text-text-secondary">기준국 — 신규 TCO 산정 대상 아님</p>
+              <p className="font-body-sm text-body-sm text-text-secondary">{isBaselineSelf ? '기준국' : '운영국가'} — 신규 TCO 산정 대상 아님</p>
             ) : (
               <WaterfallMini steps={wf} total={total} currency={tco.currency} />
             )}
@@ -156,7 +167,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
           </div>
           {isBaselineDeployed ? (
             <div className="flex-1 flex items-center">
-              <p className="font-body-sm text-body-sm text-text-secondary">기준국 — 구축 기간 해당 없음</p>
+              <p className="font-body-sm text-body-sm text-text-secondary">{isBaselineSelf ? '기준국' : '운영국가'} — 구축 기간 해당 없음</p>
             </div>
           ) : (
             <>
@@ -164,10 +175,18 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
                 <BuildBars targetMonths={buildMonths} baseMonths={baseMonths} targetKo={countryKo} baseKo={baseKo} />
               </div>
               <p className="font-label-sm text-label-sm text-text-secondary mt-sm">
-                베이스라인 대비{' '}
-                <strong className="text-primary">
-                  {fixed(monthsSaved)}M ({monthsSavedPct}%) 단축
-                </strong>
+                {isApacFixed ? (
+                  <>
+                    기준국 <strong className="text-primary">{baseKo}</strong> 자산 기준 대략 비용 (유사도 승수 미적용)
+                  </>
+                ) : (
+                  <>
+                    베이스라인 대비{' '}
+                    <strong className="text-primary">
+                      {fixed(monthsSaved)}M ({monthsSavedPct}%) 단축
+                    </strong>
+                  </>
+                )}
               </p>
             </>
           )}
@@ -191,6 +210,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
                 regionSystemExists={dec.region_system_exists}
                 expansionMin={dec.thresholds?.expansion_min_score}
                 hqBuildMin={dec.thresholds?.hq_build_min_score}
+                isApac={dec.is_apac === true}
               />
             )}
           </Panel>
@@ -200,6 +220,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
             <DecisionSidePanel
               decision={dec.decision}
               externalCandidates={dec.external_candidates}
+              externalSolutionSummary={dec.external_solution_summary}
               hqBaselineCost={dec.hq_baseline_cost}
               hqBaselineMonths={dec.hq_baseline_months}
               hqBaselineCurrency={dec.hq_baseline_currency}
