@@ -655,7 +655,6 @@ function RegionInsight({
               key={idx}
               className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0 line-clamp-1"
               style={{ color: 'rgba(255,255,255,.9)' }}
-              title={txt}
             >
               {txt}
             </p>
