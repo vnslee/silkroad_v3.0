@@ -1,9 +1,10 @@
 // RegionReport (PR2) — 권역 퀵윈 분석 보고서.
 // mockup 04_region_report.html 구조 그대로: sticky 탭 네비 + 탭별 콘텐츠.
 // 헤더 chrome(대상/버전 선택·PDF·메일)은 ReportView가 담당하므로 여기선 본문만 렌더.
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { RegionReportData } from './types'
 import { useT } from '../../i18n/dict'
+import { scrollReportToTop } from './scrollReportToTop'
 import { SummaryTab } from './region/SummaryTab'
 import { KillswitchTab } from './region/KillswitchTab'
 import { AttractivenessTab } from './region/AttractivenessTab'
@@ -46,8 +47,15 @@ function TabContent({ id, data }: { id: TabId; data: RegionReportData }) {
 
 export function RegionReport({ data, className = '', printMode = false }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>('summary')
+  const navRef = useRef<HTMLDivElement>(null)
   const t = useT()
   const tabs = TAB_DEFS.map((d) => ({ id: d.id, label: t(d.labelKey), sub: t(d.subKey) }))
+
+  // 탭 전환 시 스크롤을 맨 위로(이전 탭에서 내린 위치가 유지되지 않게).
+  const changeTab = (id: TabId) => {
+    setActiveTab(id)
+    scrollReportToTop(navRef.current)
+  }
 
   // 인쇄 모드 — 모든 탭을 섹션 제목과 함께 세로로 펼쳐 렌더(탭별 새 페이지는 print CSS가 처리).
   if (printMode) {
@@ -71,7 +79,7 @@ export function RegionReport({ data, className = '', printMode = false }: Props)
     <main className={`px-gutter sm:px-xl lg:px-[64px] py-xl ${className}`}>
       <div className="max-w-[min(92vw,1920px)] mx-auto">
         {/* sticky 탭 네비 */}
-        <div className="bg-surface-container-lowest border border-surface-border rounded-xl p-sm mb-xl sticky top-0 z-10 card-shadow">
+        <div ref={navRef} className="bg-surface-container-lowest border border-surface-border rounded-xl p-sm mb-xl sticky top-0 z-10 card-shadow">
           <div className="flex gap-sm overflow-x-auto" role="tablist" aria-label="권역 보고서 탭">
             {tabs.map((t) => {
               const active = activeTab === t.id
@@ -81,7 +89,7 @@ export function RegionReport({ data, className = '', printMode = false }: Props)
                   type="button"
                   role="tab"
                   aria-selected={active}
-                  onClick={() => setActiveTab(t.id)}
+                  onClick={() => changeTab(t.id)}
                   className={`flex items-center gap-xs px-md py-sm rounded-lg font-label-md text-label-md uppercase tracking-wider whitespace-nowrap transition-colors ${
                     active
                       ? 'bg-primary text-on-primary'

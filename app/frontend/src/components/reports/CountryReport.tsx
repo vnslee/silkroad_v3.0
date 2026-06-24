@@ -1,9 +1,10 @@
 // CountryReport (PR1) — 국가 진출 진단 보고서 본문(탭+콘텐츠).
 // 헤더 chrome(국가 선택·PDF·메일)은 ReportView가 담당. 여기는 본문만 렌더.
 // 디자인 source of truth: mockup 03_country_report.html (Kinetic Enterprise 팔레트).
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { CountryReportData } from './types'
 import { useT } from '../../i18n/dict'
+import { scrollReportToTop } from './scrollReportToTop'
 import { SummaryTab } from './country/SummaryTab'
 import { SimilarityTab } from './country/SimilarityTab'
 import { DecisionTreeTab } from './country/DecisionTreeTab'
@@ -43,7 +44,14 @@ function TabContent({ id, data }: { id: (typeof TABS)[number]['id']; data: Count
 
 export function CountryReport({ data, className = '', printMode = false }: Props) {
   const [activeTab, setActiveTab] = useState<(typeof TABS)[number]['id']>('summary')
+  const navRef = useRef<HTMLDivElement>(null)
   const t = useT()
+
+  // 탭 전환 시 스크롤을 맨 위로(이전 탭에서 내린 위치가 유지되지 않게).
+  const changeTab = (id: (typeof TABS)[number]['id']) => {
+    setActiveTab(id)
+    scrollReportToTop(navRef.current)
+  }
 
   // 인쇄 모드 — 모든 탭을 섹션 제목과 함께 세로로 펼쳐 렌더(탭별 새 페이지는 print CSS가 처리).
   if (printMode) {
@@ -67,7 +75,7 @@ export function CountryReport({ data, className = '', printMode = false }: Props
     <div className={`px-gutter sm:px-xl lg:px-[64px] py-xl ${className}`}>
       <div className="max-w-[min(92vw,1920px)] mx-auto">
         {/* 탭 네비게이션 (sticky 칩) */}
-        <div className="bg-surface-container-lowest border border-surface-border rounded-xl px-sm py-[6px] mb-xl sticky top-0 z-chrome card-shadow">
+        <div ref={navRef} className="bg-surface-container-lowest border border-surface-border rounded-xl px-sm py-[6px] mb-xl sticky top-0 z-chrome card-shadow">
           <div className="flex gap-xs overflow-x-auto" role="tablist" aria-label={t('rpt.sections')}>
             {TABS.map((tab) => {
               const active = activeTab === tab.id
@@ -77,7 +85,7 @@ export function CountryReport({ data, className = '', printMode = false }: Props
                   type="button"
                   role="tab"
                   aria-selected={active}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => changeTab(tab.id)}
                   className={`flex items-center gap-xs px-[14px] py-sm rounded-[9px] text-[clamp(11.05px,calc(9.75px_+_0.361vw),14.95px)] font-semibold whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${
                     active ? 'bg-primary text-on-primary' : 'text-text-secondary hover:bg-surface-container'
                   }`}
