@@ -153,12 +153,17 @@ export interface ChatTurn {
   content: string
 }
 
+// 답변 관점(senario.md): 비즈니스/시스템/Both.
+export type Perspective = 'business' | 'system' | 'both'
+
 export interface ChatRequest {
   domain: Domain
   target_id: string
   message: string
   history?: ChatTurn[]
   member_codes?: string[]
+  // 답변 관점(senario.md). 미지정이면 백엔드가 관점을 되묻는다(needs_perspective).
+  perspective?: Perspective
 }
 
 export type ChatIntent = 'qa' | 'research' | 'report'
@@ -168,6 +173,8 @@ export interface ChatResponse {
   answer?: string | null
   needs_research: boolean
   needs_report: boolean
+  // 관점(비즈니스/시스템/Both) 선택이 필요함(senario.md). 프론트가 관점 칩을 노출.
+  needs_perspective?: boolean
   // 명시적 의도(보유국 재리서치·보고서 생성)면 확인 없이 즉시 트리거.
   auto_trigger: boolean
   research_suggestion?: string | null

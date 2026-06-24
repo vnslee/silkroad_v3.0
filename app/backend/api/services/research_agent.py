@@ -237,13 +237,19 @@ def _resolve_country_meta(target_id: str, region: str) -> dict:
     resolved_region = region or meta.get("region") or geo.get("region") or ""
     if resolved_region not in _REGION_ENUM and meta.get("region") in _REGION_ENUM:
         resolved_region = meta["region"]
+    lon = geo.get("lon") if geo.get("lon") is not None else meta.get("lon")
+    lat = geo.get("lat") if geo.get("lat") is not None else meta.get("lat")
+    # 좌표 보장: geo·LLM 둘 다 좌표를 못 주면 서버측 폴백 테이블로 채운다.
+    # (마커 자동 표시가 좌표 누락으로 실패하지 않게 — 좌표 단일 출처는 geo_reference.)
+    if lon is None or lat is None:
+        lon, lat = geo_reference.resolve_coords(target_id)
     return {
         "country": geo.get("name") or meta.get("country") or target_id,
         "country_ko": geo.get("name_ko") or meta.get("country_ko"),
         "region": resolved_region,
         "currency": geo.get("currency") or meta.get("currency"),
-        "lon": geo.get("lon") if geo.get("lon") is not None else meta.get("lon"),
-        "lat": geo.get("lat") if geo.get("lat") is not None else meta.get("lat"),
+        "lon": lon,
+        "lat": lat,
         "iso_numeric": geo.get("iso_numeric") or meta.get("iso_numeric"),
     }
 

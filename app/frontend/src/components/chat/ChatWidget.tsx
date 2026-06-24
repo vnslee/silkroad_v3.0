@@ -4,7 +4,7 @@
 // 로직(§6.5): 의도(qa/research/report) 기반 트리거·선택지 칩·상세요약 분기·권역 리서치 가드.
 import { useEffect, useRef, useState } from 'react'
 import { api } from '../../api/client'
-import type { ChatAction, ChatTurn, Domain, JobKind } from '../../api/types'
+import type { ChatAction, ChatTurn, Domain, JobKind, Perspective } from '../../api/types'
 import { useStore, store } from '../../store'
 import { useJobPolling } from '../../hooks/useJobPolling'
 import { useT } from '../../i18n/dict'
@@ -26,6 +26,20 @@ const ACTION_LABEL_KEY: Record<ChatAction, string> = {
 
 const QUICK_PROMPT_KEYS = ['chat.quick.spain', 'chat.quick.euQuickwin']
 
+// 초기 선택지(senario.md Case1/2/3) — 라벨 키 → 보낼 프롬프트 키.
+const CASE_PROMPTS: { label: string; prompt: string }[] = [
+  { label: 'chat.case.addCountry', prompt: 'chat.case.addCountry.prompt' },
+  { label: 'chat.case.explore', prompt: 'chat.case.explore.prompt' },
+  { label: 'chat.case.ask', prompt: 'chat.case.ask.prompt' },
+]
+
+// 관점 선택 칩(senario.md — 비즈니스/시스템/Both).
+const PERSPECTIVES: { value: Perspective; key: string }[] = [
+  { value: 'business', key: 'chat.perspective.business' },
+  { value: 'system', key: 'chat.perspective.system' },
+  { value: 'both', key: 'chat.perspective.both' },
+]
+
 export function ChatWidget() {
   const t = useT()
   const open = useStore((s) => s.chatOpen)
@@ -43,6 +57,8 @@ export function ChatWidget() {
   const [actions, setActions] = useState<ChatAction[]>([])
   // 상세 요약 분기 대기 — 사용자가 '상세 화면' vs '요약' 중 선택.
   const [summaryAsk, setSummaryAsk] = useState<{ domain: Domain; id: string } | null>(null)
+  // 관점 선택 대기(senario.md) — 직전 질문을 보관했다가 관점 선택 시 그 관점으로 재전송.
+  const [perspectiveAsk, setPerspectiveAsk] = useState<string | null>(null)
   // 챗봇 상단 진행 팝업: 리서치/보고서 트리거 시 잡 진행률을 챗봇 위에 표시.
   const [activeJob, setActiveJob] = useState<
     { jobId: string; kind: JobKind; label: string } | null
@@ -94,15 +110,24 @@ export function ChatWidget() {
     const next: ChatTurn[] = [...turns, { role: 'user', content: text }]
     setTurns(next)
     setInput('')
+    // 새 질문이므로 관점 선택은 매 턴 다시 묻는다(senario.md).
+    await runChat(text, next, undefined)
+  }
+
+  // 실제 API 호출 + 응답 처리. send(새 질문)와 관점 칩 재전송이 공유한다.
+  // perspective가 있으면 사용자 버블을 추가하지 않고(이미 질문은 보냈으므로) 그 관점으로만 답한다.
+  async function runChat(text: string, history: ChatTurn[], perspective?: Perspective) {
     setTyping(true)
     setActions([])
     setSummaryAsk(null)
+    setPerspectiveAsk(null)
     try {
       const resp = await api.chat({
         domain: target.domain,
         target_id: target.id,
         message: text,
-        history: next,
+        history,
+        perspective,
       })
       // 백엔드가 질문에서 식별한 대상을 다음 턴 대상으로 반영(ES 고정 버그 방지, §6.5).
       const resolved =
@@ -114,6 +139,13 @@ export function ChatWidget() {
       }
       if (resp.answer) pushAssistant(resp.answer)
       else setTyping(false)
+
+      // 관점 선택 필요(senario.md) → 질문을 보관하고 관점 칩 노출. 선택 시 그 관점으로 재전송.
+      if (resp.needs_perspective) {
+        setPerspectiveAsk(text)
+        if (resp.research_suggestion) pushAssistant(resp.research_suggestion)
+        return
+      }
 
       // 명시적 의도(보유국 재리서치/보고서 생성) → 확인 없이 즉시 트리거.
       if (resp.auto_trigger && resp.needs_report) {
@@ -189,6 +221,14 @@ export function ChatWidget() {
     if (action === 'report' || action === 're_report') {
       startReport(target.domain, target.id)
     }
+  }
+
+  // 관점 칩 선택(senario.md) → 보관한 질문을 그 관점으로 재전송(사용자 버블 추가 없음).
+  function onPerspective(p: Perspective) {
+    const text = perspectiveAsk
+    setPerspectiveAsk(null)
+    if (!text) return
+    runChat(text, turns, p)
   }
 
   // 상세 요약 분기: 상세 화면 열기 / 챗봇에서 요약 받기.
@@ -308,6 +348,21 @@ export function ChatWidget() {
             </div>
           )}
 
+          {/* 관점 선택(senario.md): 비즈니스 / 시스템 / 둘 다 */}
+          {perspectiveAsk && !activeJob && !pending && (
+            <div className="flex flex-wrap gap-sm">
+              {PERSPECTIVES.map((p) => (
+                <button
+                  key={p.value}
+                  className="rounded-full bg-primary px-md py-sm font-label-md text-label-md text-on-primary"
+                  onClick={() => onPerspective(p.value)}
+                >
+                  {t(p.key)}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* 상세 요약 분기: 상세 화면 / 요약 */}
           {summaryAsk && !activeJob && (
             <div className="flex gap-sm">
@@ -327,7 +382,7 @@ export function ChatWidget() {
           )}
 
           {/* 선택지 칩(보유국 QA): 상세요약 / 리서치(재)수행 / 보고서(재)생성 */}
-          {actions.length > 0 && !pending && !summaryAsk && !activeJob && (
+          {actions.length > 0 && !pending && !summaryAsk && !perspectiveAsk && !activeJob && (
             <div className="flex flex-wrap gap-xs">
               {actions.map((a) => (
                 <button
@@ -345,17 +400,31 @@ export function ChatWidget() {
         {/* 하단: 퀵프롬프트 + 입력 */}
         <div className="flex-none border-t border-surface-border bg-surface-container-lowest px-md py-sm">
           {turns.length <= 1 && (
-            <div className="mb-sm flex flex-wrap gap-xs">
-              {QUICK_PROMPT_KEYS.map((q) => (
-                <button
-                  key={q}
-                  onClick={() => send(t(q))}
-                  className="rounded-[9px] bg-primary-fixed px-md py-xs font-body-sm text-[12px] font-medium leading-snug text-primary transition-colors hover:bg-primary-fixed-dim"
-                >
-                  {t(q)}
-                </button>
-              ))}
-            </div>
+            <>
+              {/* 초기 선택지(senario.md Case1/2/3) */}
+              <div className="mb-sm flex flex-wrap gap-xs">
+                {CASE_PROMPTS.map((c) => (
+                  <button
+                    key={c.label}
+                    onClick={() => send(t(c.prompt))}
+                    className="rounded-full border border-primary/30 bg-primary-fixed px-md py-xs font-label-md text-label-md text-primary transition-colors hover:bg-primary-fixed-dim"
+                  >
+                    {t(c.label)}
+                  </button>
+                ))}
+              </div>
+              <div className="mb-sm flex flex-wrap gap-xs">
+                {QUICK_PROMPT_KEYS.map((q) => (
+                  <button
+                    key={q}
+                    onClick={() => send(t(q))}
+                    className="rounded-[9px] bg-primary-fixed px-md py-xs font-body-sm text-[12px] font-medium leading-snug text-primary transition-colors hover:bg-primary-fixed-dim"
+                  >
+                    {t(q)}
+                  </button>
+                ))}
+              </div>
+            </>
           )}
           <form
             className="flex items-center gap-sm rounded-[12px] bg-surface-container py-[5px] pl-md pr-[5px]"

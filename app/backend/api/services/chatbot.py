@@ -133,8 +133,18 @@ def extract_member_codes(message: str) -> List[str]:
 _SYSTEM = (
     "너는 글로벌 오토파이낸스 진출 진단 서비스의 컨설턴트 챗봇이다. "
     "제공된 참고 컨텍스트(국가/권역 리서치 요약)에 근거해 간결하고 실무적으로 답하라. "
-    "근거 없는 수치를 지어내지 말고, 모르면 모른다고 답하라."
+    "근거 없는 수치를 지어내지 말고, 모르면 모른다고 답하라. "
+    "답변은 10줄 이내로 핵심만 담아 너무 길지 않게 한다(senario.md 공통 사항)."
 )
+
+# 관점(perspective) → 컨텍스트 요약에 포함할 item.category 집합.
+# 리서치 데이터 category: business(비즈니스)·it(시스템)·shared(공통). shared는 항상 포함.
+_PERSPECTIVE_CATEGORIES: dict[str, set] = {
+    "business": {"business", "shared"},
+    "system": {"it", "shared"},
+    "both": {"business", "it", "shared"},
+}
+_PERSPECTIVE_LABEL = {"business": "비즈니스", "system": "시스템", "both": "비즈니스·시스템"}
 
 # 대상(target) 추출 — 사용자 메시지에서 어떤 국가/권역에 대한 질문인지 식별.
 _RESOLVE_SYSTEM = (
@@ -252,8 +262,13 @@ def ask_for_target() -> ChatResponse:
     )
 
 
-def _summarize(data: dict) -> str:
-    """L8 컨텍스트 요약 — overall_insight + 핵심 score/gate items(토큰 절약)."""
+def _summarize(data: dict, perspective: Optional[str] = None) -> str:
+    """L8 컨텍스트 요약 — overall_insight + 핵심 score/gate items(토큰 절약).
+
+    perspective(business/system/both)가 주어지면 해당 관점 category의 item만 추린다
+    (senario.md 관점별 답변). 미지정이면 전체.
+    """
+    cats = _PERSPECTIVE_CATEGORIES.get(perspective or "")
     parts: List[str] = []
     oi = data.get("overall_insight")
     if oi:
@@ -261,6 +276,8 @@ def _summarize(data: dict) -> str:
     items = data.get("items") or []
     picked = 0
     for it in items:
+        if cats is not None and it.get("category") not in cats:
+            continue
         if it.get("role") in ("score", "gate"):
             seg = f"- {it.get('item')}: {it.get('value', '')} {it.get('unit', '')}".rstrip()
             ins = it.get("insight")
@@ -301,13 +318,17 @@ def _answer_existing(
     target_id: str,
     message: str,
     history: Optional[List[ChatTurn]],
+    perspective: Optional[str] = None,
 ) -> str:
-    """보유 데이터 기반 LLM 텍스트 답변(내부 데이터로만)."""
+    """보유 데이터 기반 LLM 텍스트 답변(내부 데이터로만). 관점이 있으면 해당 관점으로 답한다."""
     data = storage_resolver._load_latest_research(domain, target_id) or {}
-    ctx = _summarize(data)
+    ctx = _summarize(data, perspective)
+    system = _SYSTEM
+    if perspective:
+        system += f" 이번 답변은 '{_PERSPECTIVE_LABEL.get(perspective, perspective)}' 관점에 집중해 답하라."
     hist = [{"role": t.role, "content": t.content} for t in (history or [])]
     return bedrock_client.generate_text(
-        message, system=_SYSTEM, context=ctx, history=hist
+        message, system=system, context=ctx, history=hist
     )
 
 
@@ -357,12 +378,24 @@ def _country_research_blocked(target_id: str) -> ChatResponse:
     )
 
 
+def _ask_for_perspective(domain: str, target_id: str, has_report: bool) -> ChatResponse:
+    """QA 전에 관점(비즈니스/시스템/Both)을 되묻는 응답(senario.md). 답변은 하지 않는다."""
+    return ChatResponse(
+        intent="qa",
+        exists=True,
+        has_report=has_report,
+        needs_perspective=True,
+        research_suggestion="어떤 관점으로 설명해 드릴까요? (비즈니스 / 시스템 / 둘 다)",
+    )
+
+
 def handle(
     domain: str,
     target_id: str,
     message: str,
     history: Optional[List[ChatTurn]] = None,
     member_codes: Optional[List[str]] = None,
+    perspective: Optional[str] = None,
 ) -> ChatResponse:
     """챗봇 1턴 처리. §6.5 분기 + 의도(qa/research/report) 기반 트리거·선택지 노출.
 
@@ -449,7 +482,10 @@ def handle(
 
     # ── 일반 질의(qa) ──
     if exists and not missing:
-        answer = _answer_existing(domain, target_id, message, history)
+        # 관점 미선택이면 먼저 되묻는다(senario.md Case2/3 — 비즈니스/시스템/Both).
+        if not perspective:
+            return _ask_for_perspective(domain, target_id, has_report)
+        answer = _answer_existing(domain, target_id, message, history, perspective)
         return ChatResponse(
             intent="qa",
             exists=True,

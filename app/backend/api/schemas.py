@@ -158,12 +158,18 @@ class ChatTurn(BaseModel):
     content: str
 
 
+# 답변 관점(senario.md): business=비즈니스, system=시스템, both=둘 다.
+Perspective = Literal["business", "system", "both"]
+
+
 class ChatRequest(BaseModel):
     domain: Domain
     target_id: str
     message: str
     history: Optional[List[ChatTurn]] = None
     member_codes: Optional[List[str]] = None
+    # 답변 관점(senario.md). 미지정이면 챗봇이 먼저 관점을 되묻는다(needs_perspective).
+    perspective: Optional[Perspective] = None
 
 
 ChatIntent = Literal["qa", "research", "report"]
@@ -176,6 +182,9 @@ class ChatResponse(BaseModel):
     answer: Optional[str] = None
     needs_research: bool = False
     needs_report: bool = False
+    # 관점(비즈니스/시스템/Both) 선택이 필요함(senario.md). 프론트가 관점 칩을 노출하고
+    # 사용자가 고른 perspective를 같은 질문과 함께 재전송한다.
+    needs_perspective: bool = False
     # auto_trigger=True면 사용자의 명시적 의도(보유국 재리서치·보유국 보고서 생성)이므로
     # 프론트가 확인 없이 즉시 트리거. False면(데이터 없음 등) 사용자에게 먼저 묻는다.
     auto_trigger: bool = False

@@ -219,6 +219,8 @@ def list_countries() -> List[CountrySummary]:
         name = data.get("country") or code
         if name == code and geo.get("name"):
             name = geo["name"]
+        # 마커 좌표는 geo 단일 출처 + 폴백 보장(resolve_coords) — 신규국도 null이 안 되게.
+        lon, lat = geo_reference.resolve_coords(resolved_code)
         out.append(
             CountrySummary(
                 code=resolved_code,
@@ -228,10 +230,10 @@ def list_countries() -> List[CountrySummary]:
                 is_baseline=bool(data.get("is_baseline", False)),
                 has_detail=_has_detail("country", code),
                 has_report=_has_report("country", code),
-                # 진출 상태(v3 map-colors) + 마커 좌표(v2 geo) 둘 다 채운다.
+                # 진출 상태(v3 map-colors) + 마커 좌표(v2 geo + 폴백) 둘 다 채운다.
                 status=status_map.get(resolved_code),
-                lon=geo.get("lon"),
-                lat=geo.get("lat"),
+                lon=lon,
+                lat=lat,
                 entry_mode=entry_mode_map.get(resolved_code),
                 # 진출국 자산(P1 "진출 정보" 패널): 사용 솔루션·진출연도. 미진출국은 None.
                 solution=(assets_map.get(resolved_code) or {}).get("solution"),

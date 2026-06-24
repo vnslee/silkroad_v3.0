@@ -98,6 +98,32 @@ export const DICT: Dict = {
   'chat.summary.getSummary': { ko: '요약으로 받기', en: 'Get summary' },
   'chat.summary.request': { ko: '{id} 핵심 지표를 요약해줘', en: 'Summarize key metrics for {id}' },
 
+  // 관점 선택(senario.md — 비즈니스/시스템/Both)
+  'chat.perspective.ask': {
+    ko: '어떤 관점으로 설명해 드릴까요?',
+    en: 'Which perspective would you like?',
+  },
+  'chat.perspective.business': { ko: '비즈니스', en: 'Business' },
+  'chat.perspective.system': { ko: '시스템', en: 'System' },
+  'chat.perspective.both': { ko: '둘 다', en: 'Both' },
+
+  // 초기 선택지(senario.md Case1/2/3)
+  'chat.case.addCountry': { ko: '새로운 국가 추가하기', en: 'Add a new country' },
+  'chat.case.explore': { ko: '진출 검토 국가·권역 조사', en: 'Explore a target country/region' },
+  'chat.case.ask': { ko: '데이터 기반 질문하기', en: 'Ask a data-driven question' },
+  'chat.case.addCountry.prompt': {
+    ko: '새로운 국가를 추가하고 싶어요. 어떤 국가를 리서치할까요?',
+    en: 'I want to add a new country. Which country should I research?',
+  },
+  'chat.case.explore.prompt': {
+    ko: '진출을 검토 중인 국가나 권역을 조사하고 싶어요.',
+    en: 'I want to explore a country or region we are considering.',
+  },
+  'chat.case.ask.prompt': {
+    ko: '보유한 데이터를 기반으로 궁금한 점을 물어보고 싶어요.',
+    en: 'I want to ask a question based on the data on hand.',
+  },
+
   // 화면 액션 버튼(상세/보고서 우측 상단)
   'action.simulation': { ko: '보고서 생성', en: 'Generate report' },
   'action.report': { ko: '보고서', en: 'Report' },

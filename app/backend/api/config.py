@@ -89,6 +89,14 @@ _DEFAULT_MODEL = (
     else "global.anthropic.claude-opus-4-8"
 )
 BEDROCK_MODEL = os.environ.get("BEDROCK_MODEL", _DEFAULT_MODEL)
+# 챗봇 자유 답변(generate_text)용 모델 — 간단한 답변은 Sonnet으로 분리(빠르고 저렴).
+# 리서치·구조화 분류(generate_structured)는 BEDROCK_MODEL(Opus) 유지.
+_DEFAULT_CHAT_MODEL = (
+    "claude-sonnet-4-6"
+    if BEDROCK_BACKEND in ("api", "aws")
+    else "global.anthropic.claude-sonnet-4-6"
+)
+CHAT_MODEL = os.environ.get("CHAT_MODEL", _DEFAULT_CHAT_MODEL)
 RESEARCH_MAX_TOKENS = int(os.environ.get("RESEARCH_MAX_TOKENS", "16000"))
 
 

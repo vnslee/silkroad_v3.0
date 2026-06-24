@@ -14,15 +14,15 @@ export const LAND_COLORS: Record<LandColorKind, string> = {
 }
 
 // 이름 정규화: 소문자 + 영문자만(공백·점·괄호·악센트 제거). "Czech Republic"↔"Czechia" 같은
-// 표기차는 별도 별칭으로 흡수한다. (마커 좌표 폴백에서 atlas feature.name 매칭에 재사용 — export.)
+// 표기차는 별도 별칭으로 흡수한다.
 export function norm(s: string): string {
   // NFD 분해 후 영문자만 남기면 악센트(결합 문자)·공백·점·괄호가 모두 제거된다.
   return s.normalize('NFD').toLowerCase().replace(/[^a-z]/g, '')
 }
 
 // country_status 의 ISO alpha-2 → world-atlas feature.name(정규화 전 원문).
-// internal_latest.json country_status 키 전체 + 인접 후보국을 커버.
-// (마커 좌표 폴백 시 atlas 폴리곤 centroid를 코드에 잇는 용도로도 재사용 — export.)
+// internal_latest.json country_status 키 전체 + 인접 후보국을 커버. 육지 채색 전용
+// (마커 좌표는 백엔드 geo API가 단일 출처 — 프론트 좌표 폴백 테이블은 제거됨).
 export const A2_TO_ATLAS_NAME: Record<string, string> = {
   GB: 'United Kingdom',
   US: 'United States of America',
