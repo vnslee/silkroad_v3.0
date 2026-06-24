@@ -139,6 +139,7 @@ export function CountryDetail({
                     secondary={autoFin?.timeseries ?? null}
                     secondaryLabel={t('dtl.chart.autoFin')}
                     normalizeEach
+                    primaryAsBars
                   />
                 ) : autoFin?.timeseries ? (
                   <LineChart data={autoFin.timeseries} seriesLabel={t('dtl.chart.autoFinShort')} height={160} />

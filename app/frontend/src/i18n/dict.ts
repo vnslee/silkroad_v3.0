@@ -409,7 +409,7 @@ export const DICT: Dict = {
   'dtl.row.entryDate': { ko: '진출일', en: 'Entry year' },
   // 진출 상태 값(데이터/룰셋 literal) — 영문 모드에서 배지·태그 번역에 사용.
   'status.운영중': { ko: '운영중', en: 'Operating' },
-  'status.기진출': { ko: '기진출', en: 'Active market' },
+  'status.기진출': { ko: '기 진출', en: 'Active market' },
   'status.미진출': { ko: '미진출', en: 'Not entered' },
   'status.진출예정': { ko: '진출예정', en: 'Planned' },
   'status.준비중': { ko: '준비중', en: 'In preparation' },
@@ -508,7 +508,7 @@ export const DICT: Dict = {
   'rdtl.kpi.candidates': { ko: '분석 후보국', en: 'Candidate markets' },
   'rdtl.kpi.quickwin': { ko: 'Quick-win 최우선', en: 'Top Quick-win' },
   'rdtl.kpi.killswitchFailed': { ko: '킬스위치 탈락', en: 'Kill-switch failed' },
-  'rdtl.entered.title': { ko: '기진출 국가', en: 'Active markets' },
+  'rdtl.entered.title': { ko: '기 진출 국가', en: 'Active markets' },
   'rdtl.entered.entityType': { ko: '법인종류', en: 'Entity type' },
   'rdtl.entered.since': { ko: '설립연도', en: 'Since' },
   'rdtl.entered.products': { ko: '관리상품', en: 'Products' },
