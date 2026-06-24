@@ -8,7 +8,7 @@
   },
   "generated_at": "2026-06-24T20:56:46.313924",
   "schema_version": "1.1",
-  "overall_insight": "세계 3위 자동차 시장(2025년 신차 420만대). GDP 6.8% 고성장과 금융 침투율 80%로 매력도 최상위권. 그러나 RBI NBFC 인가·자본·거버넌스 부담, 결제 데이터 현지화, INR 변동성·자본통제 리스크가 진입 부담. 캡티브 강도 35%로 독립계 진입 여지 있고, 디지털 인프라(UPI·Account Aggregator)와 임베디드 금융이 단기 차별화 기회. 중고차 금융 25%·운용리스 미성숙은 개척 영역. NBFC 인가 우선·디지털 채널 중심 진입이 유효.",
+  "overall_insight": "세계 3위 자동차 시장(2025년 신차 420만대). GDP 6.8% 고성장과 금융 이용률 80%로 매력도 최상위권. 그러나 RBI NBFC 인가·자본·거버넌스 부담, 결제 데이터 현지화, INR 변동성·자본통제 리스크가 진입 부담. 캡티브 강도 35%로 독립계 진입 여지 있고, 디지털 인프라(UPI·Account Aggregator)와 임베디드 금융이 단기 차별화 기회. 중고차 금융 25%·운용리스 미성숙은 개척 영역. NBFC 인가 우선·디지털 채널 중심 진입이 유효.",
   "overall_insight_en": "World's 3rd-largest auto market (4.2M new cars in 2025). High GDP growth of 6.8% and 80% finance penetration place attractiveness at the top tier. However, RBI NBFC licensing, capital/governance burden, payment data localization, and INR volatility/capital-control risk add entry friction. Captive intensity at 35% leaves room for independents; digital infrastructure (UPI, Account Aggregator) and embedded finance offer near-term differentiation. Used-car finance (25%) and immature operating lease are greenfield. NBFC-license-first, digital-channel-led entry is effective.",
   "country_meta": {
     "country": "India",
@@ -1785,7 +1785,7 @@
         "item_en": null,
         "category": "business",
         "role": "context",
-        "value": "세계 3위 자동차 시장(2025 신차 420만대)·G20 최상위 성장(GDP 6.8%)·금융 침투율 80%로 매력도 최상. 그러나 NBFC 인가·자본(€11M)·결제 데이터 현지화·INR 변동성·SARFAESI 미적용 회수 어려움 등 진입 부담 큼. UPI·Aadhaar·Account Aggregator·NACH 디지털 인프라가 차별화 기회. 캡티브 35%로 독립계 진입 여지 있고, 중고차(25%)·운용리스(<1%)는 개척 영역. NBFC 인가 우선·디지털·EV 잔가 보수적 설계가 핵심.",
+        "value": "세계 3위 자동차 시장(2025 신차 420만대)·G20 최상위 성장(GDP 6.8%)·금융 이용률 80%로 매력도 최상. 그러나 NBFC 인가·자본(€11M)·결제 데이터 현지화·INR 변동성·SARFAESI 미적용 회수 어려움 등 진입 부담 큼. UPI·Aadhaar·Account Aggregator·NACH 디지털 인프라가 차별화 기회. 캡티브 35%로 독립계 진입 여지 있고, 중고차(25%)·운용리스(<1%)는 개척 영역. NBFC 인가 우선·디지털·EV 잔가 보수적 설계가 핵심.",
         "value_en": "World's 3rd-largest auto market (4.2M new cars 2025), top G20 growth (GDP 6.8%), and 80% finance penetration place attractiveness at the top. NBFC licensing, capital (€11M), payment data localization, INR volatility, and non-SARFAESI recovery difficulty add entry friction. UPI/Aadhaar/Account Aggregator/NACH digital infrastructure offers differentiation. Captives at 35% leave room for independents; used cars (25%) and operating lease (<1%) are greenfield. NBFC-license-first, digital-led entry with conservative EV GFV is key.",
         "unit": null,
         "direction": null,

@@ -59,8 +59,8 @@
       "value": 42, "unit": "%", "direction": "up", "axis": "attractiveness",
       "timeseries": null,
       "tier": 3,
-      "source": "Mordor Intelligence (중고차 정식 금융 침투율 약 42%)",
-      "insight": "중고차 금융 침투율 42%로 신차 대비 낮아 성장 여력 큼. 중고·인증중고 금융이 틈새 기회.",
+      "source": "Mordor Intelligence (중고차 정식 금융 이용률 약 42%)",
+      "insight": "중고차 금융 이용률 42%로 신차 대비 낮아 성장 여력 큼. 중고·인증중고 금융이 틈새 기회.",
       "insight_ai_generated": true
     },
     {

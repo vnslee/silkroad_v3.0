@@ -275,8 +275,8 @@
       "axis": "attractiveness",
       "timeseries": null,
       "tier": 3,
-      "source": "Mordor Intelligence (중고차 정식 금융 침투율 약 42%)",
-      "insight": "중고차 금융 침투율 42%로 신차 대비 낮아 성장 여력 큼. 중고·인증중고 금융이 틈새 기회.",
+      "source": "Mordor Intelligence (중고차 정식 금융 이용률 약 42%)",
+      "insight": "중고차 금융 이용률 42%로 신차 대비 낮아 성장 여력 큼. 중고·인증중고 금융이 틈새 기회.",
       "insight_ai_generated": true,
       "insight_en": "Used-car formal-finance penetration of 42% — lower than new cars, leaving room for growth. Used and certified-used finance is a niche opportunity.",
       "source_en": "Mordor Intelligence (used-car formal-finance penetration ~42%)."
