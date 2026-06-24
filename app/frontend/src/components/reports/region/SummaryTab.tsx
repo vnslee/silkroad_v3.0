@@ -32,7 +32,6 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
         </div>
         <div className="flex flex-col gap-md [&_strong]:text-white">
           <p className="flex items-start gap-sm font-body-lg text-body-lg text-white/90 leading-relaxed m-0">
-            <span className="material-symbols-outlined text-white/70 text-[22px] mt-[2px] flex-shrink-0">analytics</span>
             <span>
               <strong>{regionKo}</strong> 권역의 후보 <strong>{data.data_quality.total_countries}</strong>개국을 베이스라인{' '}
               <strong>{countryKo(baseline)}({baseline})</strong> 대비 스코어링한 결과, 최우선 퀵윈 후보는{' '}
@@ -40,14 +39,12 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
             </span>
           </p>
           <p className="flex items-start gap-sm font-body-lg text-body-lg text-white/90 leading-relaxed m-0">
-            <span className="material-symbols-outlined text-white/70 text-[22px] mt-[2px] flex-shrink-0">payments</span>
             <span>
               1위 근거 — <strong>{cc.why_top1.ko}</strong>. 킬스위치 탈락국은 <strong>{cc.killswitch_failed_count}</strong>개국입니다.
             </span>
           </p>
           {es.ai_cross_insight.insights.map((ins, i) => (
             <p key={i} className="flex items-start gap-sm font-body-lg text-body-lg text-white/90 leading-relaxed m-0">
-              <span className="material-symbols-outlined text-white/70 text-[22px] mt-[2px] flex-shrink-0">psychology</span>
               <span>{ins.ko}</span>
             </p>
           ))}

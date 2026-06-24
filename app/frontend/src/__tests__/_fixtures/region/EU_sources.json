@@ -1,0 +1,71 @@
+{
+  "region": "EU",
+  "members": [
+    "ES",
+    "PL",
+    "CZ",
+    "HU",
+    "DE",
+    "FR",
+    "IT",
+    "GB",
+    "AT",
+    "DK",
+    "NL",
+    "PT"
+  ],
+  "country_assets": {
+    "DE": {
+      "solution": "Self-built",
+      "type": "JV",
+      "products": [
+        "오토론",
+        "운용리스",
+        "할부금융"
+      ],
+      "since": 2016
+    },
+    "FR": {
+      "solution": "Cetelem Core",
+      "type": "JV",
+      "products": [
+        "오토론",
+        "리스"
+      ],
+      "since": 2018
+    },
+    "IT": {
+      "solution": "Cetelem Core",
+      "type": "JV",
+      "products": [
+        "오토론",
+        "할부금융"
+      ],
+      "since": 2020
+    },
+    "GB": {
+      "solution": "NetSol",
+      "type": "SA",
+      "subscription": true,
+      "products": [
+        "오토론",
+        "리스",
+        "할부금융"
+      ],
+      "since": 2026,
+      "build_cost": 5000,
+      "build_months": 20,
+      "reuse_factor": 0.7
+    }
+  },
+  "country_status": {
+    "ES": "미진출",
+    "PL": "미진출",
+    "CZ": "미진출",
+    "HU": "미진출",
+    "DE": "운영중",
+    "FR": "운영중",
+    "IT": "운영중",
+    "GB": "운영중"
+  }
+}

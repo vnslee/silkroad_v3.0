@@ -57,22 +57,19 @@ export function parseShare(raw: any): number {
 
 // ── 섹션 카드(흰 카드 + 아이콘 헤더) ────────────────────────────
 interface PanelProps {
-  icon: string
+  icon?: string
   title: ReactNode
   right?: ReactNode
   children: ReactNode
   className?: string
 }
-export function Panel({ icon, title, right, children, className = '' }: PanelProps) {
+export function Panel({ title, right, children, className = '' }: PanelProps) {
   return (
     <section
       className={`bg-surface-container-lowest border border-surface-border rounded-xl p-lg card-shadow ${className}`}
     >
       <div className="flex items-center justify-between gap-sm mb-md pb-sm border-b border-surface-border">
         <div className="flex items-center gap-sm">
-          <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
-            {icon}
-          </span>
           <h2 className="font-headline-md text-headline-md text-primary m-0">{title}</h2>
         </div>
         {right}

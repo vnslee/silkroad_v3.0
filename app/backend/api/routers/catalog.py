@@ -40,3 +40,10 @@ def get_country(code: str = Path(..., pattern=TARGET_ID_PATTERN)) -> ExistenceIn
 @router.get("/regions/{region}", response_model=ExistenceInfo)
 def get_region(region: str = Path(..., pattern=TARGET_ID_PATTERN)) -> ExistenceInfo:
     return storage_resolver.existence_info("region", region.upper())
+
+
+@router.get("/regions/{region}/detail-sources")
+def get_region_detail_sources(region: str = Path(..., pattern=TARGET_ID_PATTERN)):
+    # P2 상세화면이 3-소스 병합(리서치+퀵윈 보고서+internal)을 프론트에서 수행하기 위한
+    # 원시 internal 데이터(권역 소속국 자산·진출상태). 엔진/렌더러 미사용 — JSON 패스스루.
+    return storage_resolver.region_detail_sources(region.upper())

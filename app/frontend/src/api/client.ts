@@ -10,6 +10,7 @@ import type {
   MapColorData,
   JobCreatedResponse,
   JobStatus,
+  RegionDetailSources,
   RegionSummary,
   ReportListResponse,
   ResearchTriggerRequest,
@@ -66,6 +67,9 @@ export const api = {
   // 상세 데이터 스냅샷 버전 목록(P1/P2 버전 선택)
   getDetailVersions: (domain: Domain, id: string) =>
     request<string[]>(paths.detailVersions(domain, id)),
+  // 권역 상세(P2) 3-소스 병합용 원시 internal 데이터(권역 소속국 자산·진출상태).
+  getRegionDetailSources: (region: string) =>
+    request<RegionDetailSources>(paths.regionDetailSources(region)),
 
   // 보고서
   listReports: (domain: Domain, id: string) =>

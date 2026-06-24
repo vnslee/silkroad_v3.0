@@ -198,6 +198,9 @@ _MAP_COORDS = {
         "PL": (68, 32), "CZ": (60, 47), "HU": (72, 53), "AT": (57, 57),
         "FR": (30, 55), "IT": (52, 70), "ES": (22, 76), "PT": (10, 74),
     },
+    "NA": {
+        "CA": (40, 24), "US": (38, 46), "MX": (30, 68), "PR": (62, 70),
+    },
 }
 # 진출상태 → (노드 색, 글자색, 범례 라벨)  — Kinetic Enterprise 토큰만 사용
 _MAP_STATE = {
@@ -494,6 +497,55 @@ def load_detail(region, version=None):
     data["_report"] = report      # 뉴스가 executive_summary 참조
     data["_internal"] = internal  # 권역 지도가 country_to_region·status 참조
     return data, path
+
+
+def build_detail_data(region, version=None):
+    """권역 상세(P2) — React 프론트용 구조화 JSON(RegionDetailData) 반환.
+
+    load_detail의 3-소스 병합 결과(스냅샷+퀵윈 보고서+internal)에서, React 컴포넌트
+    RegionDetail이 쓰는 키(kpi·entered_countries·candidate_countries·map.members·
+    executive_summary)만 추려 dict로 조립한다. HTML 함수(kpi_cards/region_map 등)와
+    동일한 계산 로직을 재사용하되 HTML 대신 값으로 반환(관심사 분리)."""
+    data, _src = load_detail(region, version)
+    internal = data.get("_internal", {})
+    code = data.get("code", region.upper())
+
+    # KPI — kpi_cards()와 동일 계산(분석 후보국 / Quick-win 최우선 / 킬스위치 탈락)
+    candidates = data.get("candidate_countries", [])
+    n_quickwin = sum(1 for r in candidates if r.get("quick_win"))
+    es = _executive(data)
+    failed = (es.get("core_conclusion") or {}).get("killswitch_failed_count")
+    if not isinstance(failed, int):
+        rows = (data.get("_report", {}).get("tabs", {}).get("quickwin", {}) or {}).get("rows", [])
+        failed = sum(1 for r in rows if r.get("killswitch_excluded"))
+
+    # 지도 멤버 — region_map()과 동일하게 country_to_region에서 권역 소속국 추출,
+    # country_status로 상태 매핑(운영중/준비중 외엔 '미진출'). 코드는 alias 보정.
+    c2r = internal.get("country_to_region", {})
+    status = internal.get("country_status", {})
+    members = []
+    for c, r in c2r.items():
+        if r != code:
+            continue
+        s = status.get(alias(c))
+        members.append({"code": c, "status": s if s in ("운영중", "준비중") else "미진출"})
+
+    return {
+        "region": data.get("region", ""),
+        "region_ko": data.get("region_ko", ""),
+        "code": code,
+        "schema_version": data.get("schema_version"),
+        "fetched_at": data.get("fetched_at"),
+        "kpi": {
+            "candidates": len(candidates),
+            "quickwin": n_quickwin,
+            "killswitch_failed": failed if isinstance(failed, int) else 0,
+        },
+        "entered_countries": data.get("entered_countries", []),
+        "candidate_countries": candidates,
+        "map": {"members": members},
+        "executive_summary": es,
+    }
 
 
 def render_to_string(region="EU", version=None):

@@ -103,7 +103,6 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between mb-md">
             <span className="font-headline-md text-headline-md text-primary tracking-tight">유사도 점수</span>
-            <span className="material-symbols-outlined text-primary text-[28px]">donut_large</span>
           </div>
           <div className="flex-1 flex items-center justify-center">
             <ScoreDonut score={score} />
@@ -113,7 +112,6 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between mb-md">
             <span className="font-headline-md text-headline-md text-primary tracking-tight">예상 10년 TCO</span>
-            <span className="material-symbols-outlined text-primary text-[28px]">payments</span>
           </div>
           <div className="flex-1 flex items-center">
             {isBaselineDeployed ? (
@@ -127,7 +125,6 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between mb-md">
             <span className="font-headline-md text-headline-md text-primary tracking-tight">예상 구축 기간</span>
-            <span className="material-symbols-outlined text-primary text-[28px]">schedule</span>
           </div>
           {isBaselineDeployed ? (
             <div className="flex-1 flex items-center">
@@ -152,12 +149,12 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
       {/* 결정트리(8/12) + 구독료표(4/12), 종합 인사이트(12/12) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-stretch">
         <div className="lg:col-span-8 flex flex-col gap-xl">
-          <Panel icon="account_tree" title="시스템 결정 트리" className="flex-1">
+          <Panel title="시스템 결정 트리" className="flex-1">
             <DecisionTreeSvg score={score} baseCountryKo={baseKo} />
           </Panel>
         </div>
         <div className="lg:col-span-4 flex flex-col gap-xl">
-          <Panel icon="payments" title="구독료 구간표" className="flex-1">
+          <Panel title="구독료 구간표" className="flex-1">
             <SubscriptionTierTable
               tiers={tco.subscription_tiers}
               appliedPrice={sub.unit_price}
@@ -168,7 +165,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
           </Panel>
         </div>
         <div className="lg:col-span-12">
-          <Panel icon="lightbulb" title="국가 종합 인사이트">
+          <Panel title="국가 종합 인사이트">
             <ul className="flex flex-col gap-sm list-none p-0 m-0">
               <li className="flex items-start gap-sm">
                 <span className="material-symbols-outlined text-primary text-[16px] mt-[2px]">arrow_right</span>

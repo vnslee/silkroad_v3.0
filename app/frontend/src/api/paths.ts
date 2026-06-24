@@ -45,6 +45,8 @@ export const paths = {
   detail: (domain: Domain, id: string, version?: string) =>
     version ? `${base(domain, id)}/detail?version=${encodeURIComponent(version)}` : `${base(domain, id)}/detail`,
   detailVersions: (domain: Domain, id: string) => `${base(domain, id)}/detail/versions`,
+  // 권역 상세(P2) 3-소스 병합용 원시 internal 데이터(권역 소속국 자산·진출상태).
+  regionDetailSources: (region: string) => `${API}/regions/${normId(region)}/detail-sources`,
 
   reports: (domain: Domain, id: string) => `${base(domain, id)}/reports`,
   reportJson: (domain: Domain, id: string, reportId: string) =>

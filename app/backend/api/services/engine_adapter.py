@@ -103,3 +103,13 @@ def render_detail_html_str(domain: str, target_id: str, version: Optional[str] =
     import region_detail_rendering_engine as rdr  # type: ignore
 
     return str(rdr.render_to_string(target_id, version))
+
+
+def build_region_detail_data(target_id: str, version: Optional[str] = None) -> dict:
+    """권역 상세(P2) — React 프론트용 3-소스 병합 JSON dict 반환(표현 전용).
+
+    리서치 스냅샷+퀵윈 보고서+internal 룰셋을 병합한 결과(KPI·기진출·후보 퀵윈·지도
+    members·인사이트)를 담는다. 계산은 엔진이 수행하고 여기선 그대로 전달."""
+    import region_detail_rendering_engine as rdr  # type: ignore
+
+    return dict(rdr.build_detail_data(target_id, version))

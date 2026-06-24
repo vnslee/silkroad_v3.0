@@ -73,14 +73,22 @@ def get_country_detail(
 def get_region_detail(
     region: str = Path(..., pattern=TARGET_ID_PATTERN), version: Optional[str] = None
 ) -> Response:
-    # React 프론트엔드는 JSON을 요청 — 리서치 데이터 직접 반환
-    research_path = storage_resolver.research_latest_path("region", region.upper())
+    # React 프론트(P2)는 3-소스 병합 JSON을 요청 — 리서치+퀵윈 보고서+internal 룰셋을
+    # 병합한 표현용 데이터(KPI·기진출·후보 퀵윈·지도 members·인사이트)를 반환.
+    code = region.upper()
+    research_path = storage_resolver.research_latest_path("region", code)
     if research_path is None or not research_path.exists():
         raise HTTPException(
             status_code=404,
-            detail=f"region '{region.upper()}' 리서치 데이터 없음",
+            detail=f"region '{code}' 리서치 데이터 없음",
         )
-    return Response(content=research_path.read_text(encoding="utf-8"), media_type="application/json")
+    try:
+        data = engine_adapter.build_region_detail_data(code, version)
+    except (Exception, SystemExit) as exc:  # 병합/로드 실패(데이터 손상 등)
+        raise HTTPException(status_code=500, detail=f"권역 상세 데이터 조립 실패: {exc}")
+    import json
+
+    return Response(content=json.dumps(data, ensure_ascii=False), media_type="application/json")
 
 
 # ── 비동기 렌더링 잡 트리거 (3차 확장) ──────────────────────────

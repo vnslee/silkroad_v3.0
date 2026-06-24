@@ -343,13 +343,21 @@ function StepChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
   const bottom = 220
   const tiers = tco.subscription_tiers
   const current = tco.subscription_details.total_volume ?? tco.existing_total_volume + tco.expected_contracts
+  const appliedPrice = tco.subscription_details.unit_price
+  // 구독료 미적용 국가(applicable=false) 또는 데이터 부재 → 차트 생략, 안내만 표시.
+  if (appliedPrice == null || !tiers?.length) {
+    return (
+      <p className="font-body-sm text-body-sm text-text-secondary py-md">
+        {tco.subscription_details.note ?? '이 국가는 구독료 구간이 적용되지 않습니다.'}
+      </p>
+    )
+  }
   const maxPrice = Math.max(...tiers.map((t) => t.price_per_unit)) * 1.15
   const scaleY = (p: number) => bottom - (p / maxPrice) * (bottom - top)
   // X축: 로그 유사 — 구간 경계값 기준 비선형. mockup 처럼 경계점만 표기.
   const bounds = [0, ...tiers.filter((t) => t.max_volume != null).map((t) => t.max_volume as number)]
   const maxVol = Math.max(current * 1.05, bounds[bounds.length - 1] ? bounds[bounds.length - 1] * 6 : current * 2)
   const scaleX = (v: number) => left + (Math.log10(v + 1) / Math.log10(maxVol + 1)) * (right - left)
-  const appliedPrice = tco.subscription_details.unit_price
   const grid = [0, 0.25, 0.5, 0.75, 1].map((f) => ({ y: top + (bottom - top) * f, v: maxPrice * (1 - f) }))
   return (
     <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label="구독료 구간 스텝차트">

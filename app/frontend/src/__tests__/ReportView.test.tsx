@@ -1,10 +1,11 @@
-// FC-3: ReportView — reportId 지정 시 iframe title·액션 버튼 렌더.
+// FC-3: ReportView — reportId 지정 시 헤더 액션 버튼(PDF·메일) 렌더.
+// (구버전 iframe 전제 제거 — 본문은 React 컴포넌트로 직접 렌더링한다.)
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import ReportView from '../components/report/ReportView'
 
 beforeEach(() => {
-  // listReports는 reportId 지정 시 호출되지 않지만, 안전하게 목킹
+  // 카탈로그/보고서 목록/보고서 JSON 모두 빈 OK 응답으로 목킹.
   vi.stubGlobal(
     'fetch',
     vi.fn(async () => new Response(JSON.stringify({ domain: 'country', target_id: 'ES', reports: [] }), { status: 200 })),
@@ -12,11 +13,10 @@ beforeEach(() => {
 })
 
 describe('ReportView', () => {
-  it('reportId 지정 시 iframe(title)과 액션 버튼 렌더', () => {
+  it('reportId 지정 시 헤더 액션 버튼(PDF·메일 발송) 렌더', () => {
     render(<ReportView domain="country" code="ES" reportId="RPT_CTR_ES_001" mode="popup" />)
-    expect(screen.getByTitle(/본문/)).toBeInTheDocument()
+    // reportId가 selected를 초기화하므로 헤더 chrome(액션 버튼)이 즉시 렌더된다.
     expect(screen.getByRole('button', { name: /메일 발송/ })).toBeInTheDocument()
-    // PDF 다운로드 링크(anchor)
     expect(screen.getByText('PDF')).toBeInTheDocument()
   })
 })
