@@ -93,6 +93,7 @@ async function streamChat(req: ChatRequest, h: ChatStreamHandlers): Promise<void
     }
     const d = data as Record<string, unknown>
     if (event === 'token') h.onToken?.(String(d.text ?? ''))
+    else if (event === 'reset') h.onReset?.()
     else if (event === 'status') h.onStatus?.(String(d.tool ?? ''))
     else if (event === 'done') h.onDone(data as ChatResponse)
     else if (event === 'error') h.onError?.(String(d.detail ?? '오류'))

@@ -6,9 +6,13 @@ import type { CountryDetailData, CountryReportData, DetailItem, RankedEntity } f
 import type { RoseChartDatum } from '../charts'
 import { LineChart, RoseChart } from '../charts'
 import { locText } from '../reports/country/shared'
+<<<<<<< HEAD
 import { useT, valueLabel } from '../../i18n/dict'
 import { useLang } from '../../i18n/locale'
 import type { Lang } from '../../store'
+=======
+import { RegulatoryGates, RecoveryRiskPanel, ITMaturityPanel } from './CountryDiagnostics'
+>>>>>>> 42abc18 (야간 수술)
 
 interface Props {
   data: CountryDetailData
@@ -103,6 +107,19 @@ export function CountryDetail({
     lang === 'en' && data.overall_insight_en ? data.overall_insight_en : data.overall_insight,
   ).slice(0, 6)
 
+  // 규제 신호등 권위 판정 — 보고서(tab_1_2_decision)가 분류한 gate_result(PASS/FLAG/FAIL)를
+  // 항목명 부분키 → 상태로 매핑한다(있는 항목만; 없으면 신호등 컴포넌트가 휴리스틱 폴백).
+  const gateResults: Record<string, 'good' | 'mid' | 'low'> = {}
+  for (const it of decision?.items ?? []) {
+    if (it.role !== 'gate' || !it.gate_result) continue
+    const r = String(it.gate_result).toUpperCase()
+    const status = r === 'PASS' ? 'good' : r === 'FAIL' ? 'low' : 'mid'
+    // GATE_ITEMS와 동일한 부분키로 등록(항목명에서 추출).
+    for (const key of ['외국인 지분', '외환', '데이터 현지화', '국가신용등급', '라이선스 취득', '라이선스 체제', '금리 상한']) {
+      if (it.item.includes(key)) gateResults[key] = status
+    }
+  }
+
   return (
     <div className={`flex-1 bg-background flex items-start justify-center p-md ${className}`}>
       <div className="relative z-chrome max-w-[min(92vw,1760px)] w-full mx-auto border border-surface-border rounded-xl card-shadow flex flex-col bg-surface-container-lowest">
@@ -152,6 +169,7 @@ export function CountryDetail({
 
             {/* 우: AI 인사이트 + 베이스라인 */}
             <div className="flex flex-col gap-lg lg:border-l border-surface-border lg:pl-lg">
+<<<<<<< HEAD
               <h3 className="font-headline-md text-headline-md text-primary -mb-2">
                 {t('dtl.aiInsight')}
               </h3>
@@ -160,11 +178,43 @@ export function CountryDetail({
                   <li key={i} className="flex gap-sm py-[2px] first:pt-0">
                     <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-[8px] shrink-0" />
                     <span className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+=======
+              {/* 권역 상세 인사이트(RegionInsight)와 동일한 다크 히어로 카드 —
+                  잉크블랙 그라디언트 + 라임그린(#C8F051) 라벨 + AI 아이콘(ai_icon.png). */}
+              <div
+                className="rounded-[18px] px-[30px] py-[28px] custom-shadow-level-3 text-white"
+                style={{ background: 'linear-gradient(120deg,#14181C,#1f262d)' }}
+              >
+                <div
+                  className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mb-sm"
+                  style={{ color: '#C8F051', letterSpacing: '.1em' }}
+                >
+                  국가 진단 · AI 인사이트
+                </div>
+                <div className="flex items-center gap-sm mb-md">
+                  <img
+                    src={`${import.meta.env.BASE_URL}brand/ai_icon.png`}
+                    alt=""
+                    aria-hidden="true"
+                    className="w-6 h-6 shrink-0 object-contain"
+                  />
+                  <h3 className="text-[clamp(18.7px,calc(16.5px_+_0.611vw),25.3px)] font-bold leading-none text-white m-0">
+                    AI 인사이트
+                  </h3>
+                </div>
+                <div className="flex flex-col gap-sm [&_strong]:text-white">
+                  {bullets.map((b, i) => (
+                    <p
+                      key={i}
+                      className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0"
+                      style={{ color: 'rgba(255,255,255,.9)' }}
+                    >
+>>>>>>> 42abc18 (야간 수술)
                       {b}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                    </p>
+                  ))}
+                </div>
+              </div>
 
               <div>
                 <h3 className="font-headline-md text-headline-md text-primary mb-sm">
@@ -250,6 +300,14 @@ export function CountryDetail({
                 )}
               </div>
             </div>
+          </div>
+
+          {/* 진입 환경 진단 — 보고서(PR1)에 없는 원천 데이터 시각화.
+              ① 진입 규제 신호등(전폭) ③ 채권 회수·리스크 ④ IT 인프라 성숙도(2열). */}
+          <RegulatoryGates items={items} gateResults={gateResults} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+            <RecoveryRiskPanel items={items} />
+            <ITMaturityPanel items={items} />
           </div>
         </div>
       </div>

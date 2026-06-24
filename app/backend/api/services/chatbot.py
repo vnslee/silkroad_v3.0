@@ -116,6 +116,17 @@ def _assemble(trace: List[dict], final_text: str, req: ChatRequest) -> ChatRespo
     트리거 허용 여부는 research_policy로 재검증(LLM 판단 무시)."""
     names = {t["name"] for t in trace}
     lookup = _last_lookup(trace)
+    # 이번 턴에 구체적 대상을 식별하지 못했고(LLM이 list_available로 "어떤 국가/권역?"을
+    # 되묻는 중), 리서치/보고서 제안도 없는 경우다. 이때 직전 기본 대상(req.target_id, 예: 초기
+    # ES)을 대상으로 삼아 관점 게이트를 걸면, 사용자가 아직 대상도 답하지 않았는데 "어떤 관점?"으로
+    # 되물어 되묻기 답변 말풍선이 사라지는 버그가 생긴다(senario.md 탐색 진입). 이 경우 LLM의
+    # 되묻기 답변을 그대로 흘리고 perspective·actions 게이트를 적용하지 않는다.
+    asked_to_choose = (
+        lookup is None
+        and "list_available" in names
+        and "propose_research" not in names
+        and "propose_report" not in names
+    )
     if lookup:
         domain = lookup["domain"]
         target = lookup["target_id"]
@@ -177,6 +188,15 @@ def _assemble(trace: List[dict], final_text: str, req: ChatRequest) -> ChatRespo
         else:
             resp.research_suggestion = "외부 리서치를 진행할까요?"
             resp.actions = ["research"]
+        return resp
+
+    # ── 대상 되묻기(탐색 진입) ──
+    # 이번 턴에 대상을 식별하지 못했고 LLM이 list_available로 "어떤 국가/권역?"을 되묻는 중이면,
+    # 스테일한 기본 대상(req.target_id)에 관점 게이트를 걸지 말고 되묻기 답변을 그대로 흘린다.
+    # (안 그러면 사용자가 대상도 답하기 전에 "어떤 관점?"으로 되물어 답변 말풍선이 사라진다.)
+    if asked_to_choose:
+        resp.intent = "qa"
+        resp.answer = final_text or None
         return resp
 
     # ── 관점 되묻기(결정적 게이트, senario.md Case2/3) ──
@@ -253,6 +273,7 @@ def stream_agent(req: ChatRequest):
     yield하는 이벤트(라우터가 SSE 프레임으로 직렬화):
       {"type": "status", "tool": <name>}   — 도구 호출 중(분석 표시)
       {"type": "token", "text": <delta>}   — 답변 토큰(타이핑 효과)
+      {"type": "reset"}                     — 도구 preamble 토큰 폐기 신호(버블 비움)
       {"type": "done", "response": <ChatResponse dict>}  — 종료(플래그·칩)
 
     관점 되묻기(needs_perspective)면 답변 토큰을 흘리지 않는다 — request_perspective가
@@ -267,6 +288,8 @@ def stream_agent(req: ChatRequest):
     ):
         if ev["type"] == "token":
             yield {"type": "token", "text": ev["text"]}
+        elif ev["type"] == "reset":
+            yield {"type": "reset"}
         elif ev["type"] == "status":
             yield {"type": "status", "tool": ev["tool"]}
         elif ev["type"] == "final":

@@ -17,7 +17,11 @@
     ],
     "baseline_country": "GB"
   },
+<<<<<<< HEAD
   "generated_at": "2026-06-24T22:17:09.889028",
+=======
+  "generated_at": "2026-06-24T14:20:28.461109",
+>>>>>>> 42abc18 (야간 수술)
   "generated_by": "engine",
   "data_snapshot_id": "2026-06-22T16:00:00+09:00",
   "config_version": "1.6",
@@ -2997,8 +3001,13 @@
         }
       ],
       "note": {
+<<<<<<< HEAD
         "ko": "퀵윈 = 매력도×비즈니스 가중치 + IT유사도×IT 가중치. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.",
         "en": "Quickwin = Attractiveness×Business weight + IT×IT weight. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets."
+=======
+        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets."
+>>>>>>> 42abc18 (야간 수술)
       }
     },
     "top3_country_cards": [

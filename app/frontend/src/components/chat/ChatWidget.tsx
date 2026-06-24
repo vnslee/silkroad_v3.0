@@ -202,6 +202,17 @@ export function ChatWidget() {
         return next
       })
     }
+    // 도구 호출 턴의 preamble 토큰 폐기 — 흘린 버블을 제거하고 다시 타이핑 인디케이터로 돌아간다.
+    // (답변이 끊겼다 새 버블로 다시 쓰이는 현상 방지: 최종 답변 턴만 사용자에게 보인다.)
+    const resetBubble = () => {
+      if (streamingIdx >= 0) {
+        const idx = streamingIdx
+        setTurns((prev) => prev.filter((_, i) => i !== idx))
+      }
+      streamingIdx = -1
+      acc = ''
+      setTyping(true)
+    }
 
     const onDone = (resp: ChatResponse) => {
       // 백엔드가 식별한 대상을 다음 턴 대상으로 반영(ES 고정 버그 방지, §6.5).
@@ -274,6 +285,7 @@ export function ChatWidget() {
       { domain: target.domain, target_id: target.id, message: text, history, perspective },
       {
         onToken: appendToken,
+        onReset: resetBubble,
         onDone,
         onError: (detail) => {
           if (streamingIdx < 0) pushAssistant(`${t('chat.error')}${detail}`)
