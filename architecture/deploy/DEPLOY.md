@@ -40,7 +40,9 @@ aws ecr get-login-password --region $REGION \
   | docker login --username AWS --password-stdin $ECR
 
 # 3) 빌드(linux/arm64 — 빌드 호스트=Graviton, Fargate RuntimePlatform=ARM64) & 푸시
-docker build --platform linux/arm64 -t $ECR/silk-road-backend:$TAG  app/backend
+# ⚠️ backend는 빌드 컨텍스트=repo 루트(.), -f로 Dockerfile 지정. 리서치 프롬프트 명세
+#    (architecture/research)를 이미지에 포함해야 하므로 backend-only 컨텍스트는 금지.
+docker build --platform linux/arm64 -f app/backend/Dockerfile -t $ECR/silk-road-backend:$TAG .
 docker build --platform linux/arm64 -t $ECR/silk-road-frontend:$TAG app/frontend
 docker push $ECR/silk-road-backend:$TAG
 docker push $ECR/silk-road-frontend:$TAG

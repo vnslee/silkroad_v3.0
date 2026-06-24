@@ -10,6 +10,7 @@ AI 리서치로 국가(country) 데이터를 생성하기 위한 명세와, 그 
 | `country_research_schema.md` | 리서치 결과 데이터(country JSON)의 스키마 정의 |
 | `report_generate_req.md` | 보고서 생성 엔진 명세 — 리서치 JSON → 진단 리포트 JSON(데이터 원천 플래그·데이터 성격·산식). 차트/배지는 책임 밖 |
 | `report_render_req.md` | 보고서 렌더링 엔진 명세 — 리포트 JSON → HTML(데이터 성격→차트 매핑·배지·레이아웃·탭 구성) |
+| `GATEWAY_WEBSEARCH.md` | 리서치 웹검색 연동 — AgentCore Gateway WebSearch(선검색·SigV4·us-east-1)·신뢰도 3티어·IAM·env |
 
 > region 리서치 프롬프트·스키마(`region_research_*.md`)는 ROADMAP 2차에서 country 대칭으로 추가될 예정입니다.
 

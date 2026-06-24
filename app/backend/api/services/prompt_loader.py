@@ -58,6 +58,46 @@ _DEEP_RESEARCH_DIRECTIVE = (
 )
 
 
+# 선검색(Gateway) 모드 디렉티브 — 출처는 코드가 이미 검증해 주입했다. 모델은 검색하지 않고
+# 주어진 출처만 인용한다(티어 강제는 오케스트레이션이 소유). 라이브 fan-out 지시를 대체한다.
+_PREFETCHED_DIRECTIVE = (
+    "\n\n[딥리서치 수행 원칙 — 검증된 출처 선주입 모드]\n"
+    "1. 아래 [검증된 출처]에 제공된 출처만 인용한다. 시스템이 도메인 신뢰도(tier)를 이미 "
+    "검증해 선별했으므로, 목록에 없는 매체를 새로 지어내거나 추정 인용하지 말 것.\n"
+    "2. 교차 검증: 핵심 수치·게이트 판정은 제공된 출처 중 최소 2개로 대조하고, 출처가 "
+    "엇갈리면 tier가 낮은(신뢰도 높은) 출처를 채택하고 insight에 불일치를 명시한다.\n"
+    "3. tier 표기: 각 item의 tier·source는 인용한 출처의 신뢰도를 그대로 반영한다(시스템이 "
+    "사후 재검증·보정한다). tier는 출처 신뢰도이며 점수에 곱하지 않는다.\n"
+    "4. 근거 부족: 제공된 출처로 확인되지 않는 항목은 지어내지 말고 estimated:true 또는 "
+    "so_what=\"조사 필요\"로 표기한다(환각 금지).\n"
+    "5. 최신성: 가급적 최근 데이터를 쓰고 data_year를 명확히 한다."
+)
+
+
+def _vetted_sources_block(sources: list) -> str:
+    """선검색으로 수집·검증된 출처를 프롬프트 주입용 블록으로 렌더(tier=출처 신뢰도)."""
+    if not sources:
+        return (
+            "\n\n[검증된 출처]\n"
+            "(이번 조사에서 신뢰 도메인 검색 결과가 없음 — 확인 불가 항목은 estimated:true "
+            "또는 so_what=\"조사 필요\"로 표기)"
+        )
+    lines = ["\n\n[검증된 출처 — 아래 출처만 인용. tier가 출처 신뢰도(낮을수록 신뢰)]"]
+    for s in sources:
+        tier = s.get("tier")
+        title = (s.get("title") or "").strip()
+        url = (s.get("url") or "").strip()
+        date = (s.get("published_date") or "").strip()
+        snippet = (s.get("snippet") or "").strip().replace("\n", " ")
+        if len(snippet) > 300:
+            snippet = snippet[:300] + "…"
+        meta = f"[tier {tier}] {title} — {url}"
+        if date:
+            meta += f" ({date})"
+        lines.append(f"{meta}\n  · {snippet}" if snippet else meta)
+    return "\n".join(lines)
+
+
 def _schema_binding(schema_md: str) -> str:
     """출력이 스키마 명세를 그대로 따르도록 강제하는 바인딩 블록."""
     return (
@@ -157,22 +197,28 @@ def load_country_field_prompt(
     country_name: str,
     region: str,
     segment: Optional[str] = None,
+    sources: Optional[list] = None,
 ) -> str:
     """분야(market/regulatory/system/product)별 딥리서치 프롬프트.
 
     공통 명세(조사 항목·규칙)를 공유하되, 페르소나·담당 범위·출력 계약으로 자기 분야
-    items[]만 출력하도록 스코프한다."""
+    items[]만 출력하도록 스코프한다. sources가 주어지면(Gateway 선검색 모드) 라이브 검색
+    디렉티브를 선주입 디렉티브로 바꾸고 검증된 출처 블록을 덧붙인다."""
     if field not in _FIELD_PERSONAS:
         raise ValueError(f"unknown research field: {field}")
     common = _extract_prompt_body(_read_prompt_file("country_research_prompt.md"))
     schema_md = _load_schema_spec("country_research_schema.md")
     persona = _FIELD_PERSONAS[field]
     scope = _FIELD_SCOPE[field]
+    if sources is not None:
+        directive = _PREFETCHED_DIRECTIVE + _vetted_sources_block(sources)
+    else:
+        directive = _DEEP_RESEARCH_DIRECTIVE
     prompt = (
         f"{persona}\n\n{scope}\n\n"
         f"--- 아래는 전체 조사 명세다. 위 담당 범위에 해당하는 항목만 조사·출력하라 ---\n\n"
         f"{common}"
-        f"{_DEEP_RESEARCH_DIRECTIVE}"
+        f"{directive}"
         f"{_schema_binding(schema_md)}"
         f"{_FIELD_OUTPUT_CONTRACT}"
     )
@@ -224,19 +270,26 @@ def build_overall_insight_prompt(
 
 
 def load_region_prompt(
-    region_name: str, member_codes: List[str], segment: Optional[str] = None
+    region_name: str,
+    member_codes: List[str],
+    segment: Optional[str] = None,
+    sources: Optional[list] = None,
 ) -> str:
     """region_research_prompt.md(잠정) 본문 → 치환. member_codes는 안내로 부가.
 
     권역도 딥리서치 디렉티브 + 권역/국가 스키마 명세를 함께 주입해, 중첩 country 객체가
-    country 스키마 규칙을 그대로 따르도록 강제한다."""
+    country 스키마 규칙을 그대로 따르도록 강제한다. sources가 주어지면 선주입 모드."""
     body = _extract_prompt_body(_read_prompt_file("region_research_prompt.md"))
     region_schema = _load_schema_spec("region_research_schema.md")
     country_schema = _load_schema_spec("country_research_schema.md")
     members = ", ".join(member_codes) if member_codes else ""
+    if sources is not None:
+        directive = _PREFETCHED_DIRECTIVE + _vetted_sources_block(sources)
+    else:
+        directive = _DEEP_RESEARCH_DIRECTIVE
     prompt = (
         f"{body}"
-        f"{_DEEP_RESEARCH_DIRECTIVE}"
+        f"{directive}"
         f"{_schema_binding(region_schema)}"
         "\n\n[중첩 country 객체는 아래 country 스키마를 그대로 따른다]\n"
         "```\n" + country_schema + "\n```"

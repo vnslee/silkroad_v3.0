@@ -33,6 +33,18 @@ PDF_SCRIPT = PROJECT_ROOT / ".claude" / "skills" / "report-pdf" / "scripts" / "h
 # ── LLM 리서치 구성 (2차) ───────────────────────────────────────
 BEDROCK_REGION = os.environ.get("BEDROCK_REGION", os.environ.get("AWS_REGION", "ap-northeast-2"))
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
+
+# ── AgentCore Gateway 웹검색 (us-east-1 전용 커넥터) ──────────────
+# first-party "Web Search Tool" 커넥터는 현재 us-east-1에만 있다(서울 미지원).
+# Gateway는 us-east-1에 만들고 서울 백엔드에서 cross-region SigV4 호출한다.
+# Gateway URL/ID/ARN은 provision_gateway.py가 출력하는 값을 env로 주입한다.
+GATEWAY_REGION = os.environ.get("GATEWAY_SEARCH_REGION", "us-east-1")
+GATEWAY_SEARCH_URL = os.environ.get("GATEWAY_SEARCH_URL")
+GATEWAY_SEARCH_ID = os.environ.get("GATEWAY_SEARCH_ID")
+GATEWAY_SEARCH_ARN = os.environ.get("GATEWAY_SEARCH_ARN")
+GATEWAY_SEARCH_MAX_RESULTS = int(os.environ.get("GATEWAY_SEARCH_MAX_RESULTS", "10"))
+# 도메인→신뢰도 티어 매핑(운영자 편집 가능). 스코어링 룰셋(internal_latest.json)과 분리.
+CREDIBILITY_TIERS = DATA_DIR / "internal" / "source_tiers.json"
 # Claude Platform on AWS 워크스페이스 ID(aws 백엔드 필수).
 ANTHROPIC_AWS_WORKSPACE_ID = os.environ.get("ANTHROPIC_AWS_WORKSPACE_ID")
 
@@ -42,6 +54,13 @@ ANTHROPIC_AWS_WORKSPACE_ID = os.environ.get("ANTHROPIC_AWS_WORKSPACE_ID")
 #   "mantle" — Messages-API Bedrock(output_config 지원, 웹검색 ❌).
 #   "legacy" — bedrock-runtime InvokeModel(웹검색 ❌).
 # ⚠️ 웹검색 서버툴은 api/aws 에서만 동작 — Amazon Bedrock(mantle/legacy)은 미지원.
+#
+# 웹검색 제공자(WEB_SEARCH_PROVIDER):
+#   "gateway"     — AgentCore Gateway WebSearch 커넥터를 오케스트레이션이 직접 호출(선검색).
+#                   legacy 백엔드(IAM 키만)에서도 동작. 기본값.
+#   "server_tool" — 기존 Anthropic SDK 웹검색 서버툴(api/aws 백엔드 한정, web_search_supported()).
+#   "off"         — 웹검색 비활성.
+WEB_SEARCH_PROVIDER = os.environ.get("WEB_SEARCH_PROVIDER", "gateway")
 
 
 def _auto_backend() -> str:
@@ -74,8 +93,16 @@ RESEARCH_MAX_TOKENS = int(os.environ.get("RESEARCH_MAX_TOKENS", "16000"))
 
 
 def web_search_supported() -> bool:
-    """현재 백엔드가 웹검색 서버툴을 지원하는지(Bedrock 계열은 미지원)."""
+    """현재 백엔드가 웹검색 서버툴을 지원하는지(Bedrock 계열은 미지원).
+
+    server_tool 제공자 경로에서만 의미가 있다(gateway 경로는 백엔드 무관).
+    """
     return BEDROCK_BACKEND in ("api", "aws")
+
+
+def gateway_search_enabled() -> bool:
+    """AgentCore Gateway 선검색 경로가 활성인지(provider=gateway + URL 설정됨)."""
+    return WEB_SEARCH_PROVIDER == "gateway" and bool(GATEWAY_SEARCH_URL)
 # 리서치 프롬프트·스키마 명세 위치(self-locate). 명세=실행 단일출처(Q3=A).
 RESEARCH_SPEC_DIR = PROJECT_ROOT / "architecture" / "research"
 
