@@ -796,8 +796,8 @@
       "is_already_deployed": true,
       "decision": "already_deployed",
       "recommendation": {
-        "ko": "CN는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
-        "en": "CN is already an operational market — the system is live. The new-entry decision tree does not apply."
+        "ko": "중국는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
+        "en": "China is already an operational market — the system is live. The new-entry decision tree does not apply."
       },
       "similarity_score": 66.25,
       "base_country": "AU",
@@ -906,8 +906,8 @@
       "is_baseline": false,
       "is_already_deployed": true,
       "message": {
-        "ko": "CN는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
-        "en": "CN is already an operational market — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
+        "ko": "중국는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
+        "en": "China is already an operational market — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
       },
       "currency": "CNY",
       "items": [
@@ -1044,7 +1044,7 @@
           "tier": 2,
           "source": "CADA / China Automotive Finance Industry Report 2025",
           "source_en": "CADA / China Automotive Finance Industry Report 2025",
-          "insight": "신차 금융 침투율 58% — 글로벌 평균. NEV(전기차) 금융이 침투율 70%+로 견인. 중고차는 별도.",
+          "insight": "신차 금융 이용률 58% — 글로벌 평균. NEV(전기차) 금융이 침투율 70%+로 견인. 중고차는 별도.",
           "insight_en": "New-car finance penetration 58% — global average. NEV (EV) finance penetration exceeds 70%, driving overall rate. Used cars separate.",
           "insight_ai_generated": true,
           "status": "present"

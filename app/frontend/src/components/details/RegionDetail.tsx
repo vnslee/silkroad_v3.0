@@ -159,18 +159,8 @@ function EnteredList({ rows, lang }: { rows: RegionEnteredCountry[]; lang: Lang 
                 <span className="flex items-center gap-xs">
                   <Flag code={r.code} />
                   <span>
-                    {(() => {
-                      const primary = pickLang(lang, r.name_ko, r.name_en)
-                      const secondary = lang === 'en' ? r.name_ko : r.name_en
-                      return (
-                        <>
-                          {primary}
-                          {secondary && secondary !== primary && (
-                            <span className="text-on-surface-variant"> {secondary}</span>
-                          )}
-                        </>
-                      )
-                    })()}
+                    {pickLang(lang, r.name_ko, r.name_en)}{' '}
+                    <span className="font-mono text-xs text-on-surface-variant">{r.code}</span>
                   </span>
                 </span>
               </td>
@@ -193,6 +183,7 @@ function EnteredList({ rows, lang }: { rows: RegionEnteredCountry[]; lang: Lang 
 // 단위·축이 국가마다 달라도 각 셀은 자기 시계열만 그리므로 정규화 불필요(상대 모양·CAGR만 본다).
 function MarketTrendPanel({ rows }: { rows: RegionMemberTrend[] }) {
   const t = useT()
+  const lang = useLang()
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
       <div className="flex items-center gap-sm mb-md">
@@ -219,7 +210,7 @@ function MarketTrendPanel({ rows }: { rows: RegionMemberTrend[] }) {
                 className="border-b border-surface-border last:border-0 hover:bg-surface-variant transition-colors"
               >
                 <td className="p-sm text-on-surface whitespace-nowrap">
-                  {r.name_ko}{' '}
+                  {pickLang(lang, r.name_ko, r.name_en)}{' '}
                   <span className="font-mono text-xs text-on-surface-variant">{r.code}</span>
                 </td>
                 <td className="p-sm">
@@ -407,7 +398,7 @@ function RegionMap({
             preserveAspectRatio="xMidYMid meet"
             className="w-full h-full"
             role="img"
-            aria-label={`${code} 권역 진출 상태·시장규모 지도`}
+            aria-label={t('rdtl.mapAria').replace('{code}', code)}
           >
             {geo.shapes.map((s) => {
               const st = MAP_STATE[statusByCode[s.code]] ?? MAP_STATE['미진출']
@@ -555,7 +546,7 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
                   <span className="flex items-center gap-xs">
                     <Flag code={r.code} />
                     <span>
-                      {r.name_ko}{' '}
+                      {pickLang(lang, r.name_ko, r.name_en)}{' '}
                       <span className="font-mono text-xs text-on-surface-variant">{r.code}</span>
                     </span>
                   </span>
@@ -647,20 +638,21 @@ function RegionInsight({
           {t('rdtl.insight.title')}
         </h3>
       </div>
-      <div className="flex flex-col gap-sm [&_strong]:text-white">
+      <ul className="flex flex-col gap-sm [&_strong]:text-white list-none p-0 m-0">
         {cross.map((i, idx) => {
           const txt = (pickLang(lang, i.ko, i.en) || i.ko || i.en || '').trim()
           return (
-            <p
+            <li
               key={idx}
-              className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0 line-clamp-1"
+              className="flex items-start gap-sm font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0"
               style={{ color: 'rgba(255,255,255,.9)' }}
             >
-              {txt}
-            </p>
+              <span aria-hidden="true" className="shrink-0 select-none leading-[1.6]" style={{ color: '#C8F051' }}>•</span>
+              <span className="min-w-0 line-clamp-1">{txt}</span>
+            </li>
           )
         })}
-      </div>
+      </ul>
     </div>
   )
 }

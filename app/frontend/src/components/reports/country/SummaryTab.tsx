@@ -250,7 +250,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
               className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mb-sm"
               style={{ color: '#C8F051', letterSpacing: '.1em' }}
             >
-              국가 진단 보고서 · AI 인사이트
+              {t('sum.insightEyebrow')}
             </div>
             <div className="flex items-center gap-sm mb-md">
               <img
@@ -260,20 +260,21 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
                 className="w-6 h-6 shrink-0 object-contain"
               />
               <h2 className="text-[clamp(18.7px,calc(16.5px_+_0.611vw),25.3px)] font-bold leading-none text-white m-0">
-                국가 종합 인사이트
+                {t('sum.overallInsight')}
               </h2>
             </div>
-            <div className="flex flex-col gap-sm [&_strong]:text-white">
+            <ul className="flex flex-col gap-sm [&_strong]:text-white list-none p-0 m-0">
               {splitSentences(lang === 'en' && data.overall_insight_en ? data.overall_insight_en : data.overall_insight).map((sentence, i) => (
-                <p
+                <li
                   key={i}
-                  className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0"
+                  className="flex items-start gap-sm font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0"
                   style={{ color: 'rgba(255,255,255,.9)' }}
                 >
-                  {sentence}
-                </p>
+                  <span aria-hidden="true" className="shrink-0 select-none leading-[1.6]" style={{ color: '#C8F051' }}>•</span>
+                  <span className="min-w-0">{sentence}</span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </div>
@@ -293,13 +294,14 @@ function splitSentences(text: string | null | undefined): string[] {
 
 // 유사도 점수 도넛(KPI) — mockup viewBox 160x160, secondary 색
 function ScoreDonut({ score }: { score: number }) {
+  const t = useT()
   const r = 53
   const cx = 80
   const cy = 80
   const circ = 2 * Math.PI * r
   const frac = Math.max(0, Math.min(100, score)) / 100
   return (
-    <svg viewBox="0 0 160 160" className="w-full max-w-[220px] h-auto" preserveAspectRatio="xMidYMid meet" role="img" aria-label={`유사도 점수 ${fixed(score)}`}>
+    <svg viewBox="0 0 160 160" className="w-full max-w-[220px] h-auto" preserveAspectRatio="xMidYMid meet" role="img" aria-label={t('sum.aria.scoreDonut').replace('{score}', fixed(score))}>
       <circle cx={cx} cy={cy} r={r} fill="none" stroke="#e6e3db" strokeWidth="22" />
       <circle
         cx={cx}
@@ -334,7 +336,7 @@ function WaterfallMini({ steps, total, currency }: { steps: { label: string; val
   const barW = 42.24
   const gap = 64
   return (
-    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label="10년 TCO 워터폴">
+    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={t('sum.aria.waterfall')}>
       <line x1="24" y1={bottom} x2="344" y2={bottom} stroke="#e6e3db" strokeWidth="1" />
       {bars.map((b, i) => {
         const isTotal = 'isTotal' in b
@@ -368,12 +370,13 @@ function WaterfallMini({ steps, total, currency }: { steps: { label: string; val
 
 // 구축기간 비교 막대(KPI)
 function BuildBars({ targetMonths, baseMonths, targetKo, baseKo }: { targetMonths: number; baseMonths: number; targetKo: string; baseKo: string }) {
+  const t = useT()
   const W = 360
   const H = 168
   const full = 316
   const max = Math.max(targetMonths, baseMonths) || 1
   return (
-    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label="구축 기간 비교">
+    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={t('sum.aria.buildBars')}>
       <text x="0" y="19" fontSize="15" fill="#3a4048" fontWeight="700">{targetKo}</text>
       <rect x="0" y="30" width={full} height="30" rx="5" fill="#f2f0e9" />
       <rect x="0" y="30" width={(targetMonths / max) * full} height="30" rx="5" fill="#14181C" />

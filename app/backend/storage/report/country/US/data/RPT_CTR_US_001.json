@@ -522,8 +522,8 @@
       "is_already_deployed": true,
       "decision": "baseline_already_deployed",
       "recommendation": {
-        "ko": "US는 권역 기준국 — 시스템(Salesforce)이 이미 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
-        "en": "US is the regional baseline — system (Salesforce) is already operational. The new-entry decision tree does not apply."
+        "ko": "미국는 권역 기준국 — 시스템(Salesforce)이 이미 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
+        "en": "United States is the regional baseline — system (Salesforce) is already operational. The new-entry decision tree does not apply."
       },
       "similarity_score": 100.0,
       "base_country": "US",
@@ -632,8 +632,8 @@
       "is_baseline": true,
       "is_already_deployed": true,
       "message": {
-        "ko": "US는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
-        "en": "US is the regional baseline — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
+        "ko": "미국는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
+        "en": "United States is the regional baseline — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
       },
       "currency": "USD",
       "items": [

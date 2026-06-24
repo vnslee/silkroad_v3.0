@@ -1,7 +1,7 @@
 // 탭1 유사도 점수 — 레이더(축별) + 축별 점수카드 + 디멘전별 채점 + 원천 데이터 항목
 import type { CountryReportData, SimilarityItem } from '../types'
 import { Panel, EvidenceCard } from './shared'
-import { useT } from '../../../i18n/dict'
+import { useT, valueLabel } from '../../../i18n/dict'
 import { useLang } from '../../../i18n/locale'
 
 const AXIS_KEY: Record<string, string> = { system: 'sim.axis.system', product: 'sim.axis.product', regulatory: 'sim.axis.regulatory', risk: 'sim.axis.risk' }
@@ -67,7 +67,7 @@ export function SimilarityTab({ data }: { data: CountryReportData }) {
           </div>
           <div className="p-md bg-surface-container rounded-lg border-l-4 border-primary mb-sm">
             <div className="flex items-center gap-xs mb-xs">
-              <span className="font-semibold font-label-md text-label-md text-primary uppercase">Overall Score</span>
+              <span className="font-semibold font-label-md text-label-md text-primary uppercase">{t('sim.overallScore')}</span>
             </div>
             <div className="flex items-baseline gap-xs">
               <span className="font-headline-lg text-headline-lg text-primary">{sim.overall_score.toFixed(1)}</span>
@@ -131,9 +131,9 @@ function DimensionCard({ item, countryKo, baseKo }: { item: SimilarityItem; coun
     <div className="bg-surface border border-surface-container-highest rounded-lg p-md">
       <div className="flex items-start justify-between gap-md mb-sm">
         <div>
-          <div className="font-label-md text-label-md text-text-primary uppercase tracking-wider">{item.item}</div>
+          <div className="font-label-md text-label-md text-text-primary uppercase tracking-wider">{valueLabel('sim.item', item.item, lang)}</div>
           <div className="font-label-sm text-label-sm text-text-secondary mt-xs">
-            {t('sim.axisLabel')}: {item.axis} · {t('sim.weight')} {Math.round(item.weight * 100)}%
+            {t('sim.axisLabel')}: {t(AXIS_KEY[item.axis] ?? item.axis)} · {t('sim.weight')} {Math.round(item.weight * 100)}%
           </div>
         </div>
         <div className="flex flex-col items-end">
@@ -159,7 +159,7 @@ function DimensionCard({ item, countryKo, baseKo }: { item: SimilarityItem; coun
           {item.dimensions.map((d, i) => (
             <tr key={i} className="border-b border-surface-container-highest align-top">
               <td className="py-sm pr-sm">
-                <div className="font-body-sm text-body-sm text-text-primary font-semibold">{d.dimension}</div>
+                <div className="font-body-sm text-body-sm text-text-primary font-semibold">{valueLabel('sim.dim', d.dimension, lang)}</div>
                 {d.note && <div className="font-body-sm text-body-sm text-text-secondary mt-xs">{lang === 'en' && d.note_en ? d.note_en : d.note}</div>}
               </td>
               <td className="py-sm px-sm w-[110px]">
@@ -191,6 +191,7 @@ function ScoreBar({ score, color }: { score: number; color: string }) {
 
 // 4축 레이더 — mockup viewBox 200x200, 4방향(상=시스템,우=상품,하=규제,좌=리스크)
 function RadarChart({ axes }: { axes: Record<string, number> }) {
+  const t = useT()
   const cx = 100
   const cy = 100
   const maxR = 80
@@ -215,7 +216,7 @@ function RadarChart({ axes }: { axes: Record<string, number> }) {
     return `${x.toFixed(1)},${y.toFixed(1)}`
   })
   return (
-    <svg className="w-full h-full overflow-visible" viewBox="0 0 200 200" role="img" aria-label="유사도 4축 레이더">
+    <svg className="w-full h-full overflow-visible" viewBox="0 0 200 200" role="img" aria-label={t('sim.radarAria')}>
       {[0.25, 0.5, 0.75, 1].map((f, i) => (
         <polygon key={i} fill="none" points={polyAt(f)} stroke="#d3cfc4" strokeWidth="1" strokeDasharray="3 3" />
       ))}

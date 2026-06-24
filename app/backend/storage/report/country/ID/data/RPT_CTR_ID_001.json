@@ -8,7 +8,7 @@
   },
   "generated_at": "2026-06-24T20:56:46.209342",
   "schema_version": "1.1",
-  "overall_insight": "동남아 최대 자동차 시장(2025 신차 90만대)·5%대 안정 GDP 성장·금융 침투율 70%로 매력도 상위. OJK Multifinance 인가 + 외국 지분 한도 85%(2024 OJK 신규 가이드라인 기준) + IDR 변동성·자본통제 가능성이 진입 부담. Astra Group이 시장 30% 단독 점유 — 비-Astra 진입 전략 필요. 데이터 현지화 의무, BI 결제 데이터 국내 저장 의무 등 IT 아키텍처 제약 존재. 전기차(LCE·Hyundai Ioniq 5 현지생산) 가속과 디지털 신청 채널 확대가 단기 차별화 기회.",
+  "overall_insight": "동남아 최대 자동차 시장(2025 신차 90만대)·5%대 안정 GDP 성장·금융 이용률 70%로 매력도 상위. OJK Multifinance 인가 + 외국 지분 한도 85%(2024 OJK 신규 가이드라인 기준) + IDR 변동성·자본통제 가능성이 진입 부담. Astra Group이 시장 30% 단독 점유 — 비-Astra 진입 전략 필요. 데이터 현지화 의무, BI 결제 데이터 국내 저장 의무 등 IT 아키텍처 제약 존재. 전기차(LCE·Hyundai Ioniq 5 현지생산) 가속과 디지털 신청 채널 확대가 단기 차별화 기회.",
   "overall_insight_en": "Largest SE Asian auto market (0.9M new cars 2025), stable 5%+ GDP growth, and 70% finance penetration place attractiveness in the upper tier. OJK multifinance licensing, 85% foreign-ownership cap (2024 OJK guidelines), IDR volatility, and potential capital controls add entry friction. Astra Group alone holds ~30% of the market — non-Astra entry strategy required. Data localization and BI payment-data domestic-storage rules constrain IT architecture. EV acceleration (LCE policy, Hyundai Ioniq 5 local production) and digital application channels offer near-term differentiation.",
   "country_meta": {
     "country": "Indonesia",
@@ -796,8 +796,8 @@
       "is_already_deployed": true,
       "decision": "already_deployed",
       "recommendation": {
-        "ko": "ID는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
-        "en": "ID is already an operational market — the system is live. The new-entry decision tree does not apply."
+        "ko": "인도네시아는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
+        "en": "Indonesia is already an operational market — the system is live. The new-entry decision tree does not apply."
       },
       "similarity_score": 69.6875,
       "base_country": "AU",
@@ -906,8 +906,8 @@
       "is_baseline": false,
       "is_already_deployed": true,
       "message": {
-        "ko": "ID는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
-        "en": "ID is already an operational market — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
+        "ko": "인도네시아는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
+        "en": "Indonesia is already an operational market — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
       },
       "currency": "IDR",
       "items": [

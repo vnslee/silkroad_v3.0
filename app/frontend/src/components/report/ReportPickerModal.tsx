@@ -1,5 +1,6 @@
 // ReportPickerModal(C7 보조, Q5=B) — 보고서 다건 시 목록에서 사용자 선택.
 import type { ReportRef } from '../../api/types'
+import { useT } from '../../i18n/dict'
 
 interface Props {
   reports: ReportRef[]
@@ -8,11 +9,12 @@ interface Props {
 }
 
 export function ReportPickerModal({ reports, onPick, onClose }: Props) {
+  const t = useT()
   return (
     <div className="p-lg">
-      <h3 className="mb-md text-headline-md text-on-surface">보고서 선택</h3>
+      <h3 className="mb-md text-headline-md text-on-surface">{t('rpick.title')}</h3>
       {reports.length === 0 ? (
-        <p className="text-body-md text-on-surface-variant">생성된 보고서가 없습니다.</p>
+        <p className="text-body-md text-on-surface-variant">{t('rpick.noReports')}</p>
       ) : (
         <ul className="space-y-sm">
           {reports.map((r) => (
@@ -29,7 +31,7 @@ export function ReportPickerModal({ reports, onPick, onClose }: Props) {
         </ul>
       )}
       <button className="mt-md text-body-sm text-secondary hover:underline" onClick={onClose}>
-        닫기
+        {t('rpick.close')}
       </button>
     </div>
   )

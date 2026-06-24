@@ -276,9 +276,9 @@
       "axis": "attractiveness",
       "timeseries": null,
       "tier": 3,
-      "source": "DesRosiers / Canada Drives·Clutch 데이터 (중고차 정식 금융 침투율 40~50%)",
+      "source": "DesRosiers / Canada Drives·Clutch 데이터 (중고차 정식 금융 이용률 40~50%)",
       "source_en": "DesRosiers / Canada Drives·Clutch data (used-car formal-finance penetration 40-50%)",
-      "insight": "중고차 정식 금융 침투율 약 45% — 멕시코(18%) 대비 매우 높음. CPO·디지털 중고채널(Clutch·Canada Drives) 성장으로 임베디드 금융 기회.",
+      "insight": "중고차 정식 금융 이용률 약 45% — 멕시코(18%) 대비 매우 높음. CPO·디지털 중고채널(Clutch·Canada Drives) 성장으로 임베디드 금융 기회.",
       "insight_en": "Used-car formal-finance penetration ~45% — much higher than Mexico (18%). Embedded-finance opportunity via CPO and digital used channels (Clutch·Canada Drives).",
       "insight_ai_generated": true
     },

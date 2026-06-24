@@ -393,6 +393,7 @@ function MarketMetricCard({ item }: { item: ReportItem }) {
 
 // EV 보급률 + 잔존가치 듀얼 라인 (mockup viewBox 760x280)
 function DualLineChart({ ev, rv }: { ev: TimeseriesData | null; rv: TimeseriesData | null }) {
+  const t = useT()
   const W = 760
   const H = 280
   const left = 50
@@ -417,7 +418,7 @@ function DualLineChart({ ev, rv }: { ev: TimeseriesData | null; rv: TimeseriesDa
   const grid = [0, 0.25, 0.5, 0.75, 1].map((f) => ({ y: top + (bottom - top) * f, v: maxV - spanV * f }))
   const years = Array.from({ length: spanYr + 1 }, (_, i) => minY + i)
   return (
-    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label="EV 보급률·잔존가치 추이">
+    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={t('mkt.aria.evTrend')}>
       {grid.map((g, i) => (
         <g key={i}>
           <line x1={left} y1={g.y} x2={right} y2={g.y} stroke="#e6e3db" strokeWidth="1" />
@@ -457,15 +458,16 @@ function DualLineChart({ ev, rv }: { ev: TimeseriesData | null; rv: TimeseriesDa
 
 // 경쟁사 금리 범위(텍스트에서 범위 추출 → 가로 범위 막대)
 function RateRangeChart({ text }: { text: string }) {
+  const t = useT()
   const ranges: { lo: number; hi: number }[] = []
   const re = /(\d+(?:\.\d+)?)\s*[~\-–]\s*(\d+(?:\.\d+)?)\s*%/g
   let mm: RegExpExecArray | null
   while ((mm = re.exec(text)) !== null) ranges.push({ lo: parseFloat(mm[1]), hi: parseFloat(mm[2]) })
   const rows: { label: string; lo: number; hi: number; color: string }[] = []
-  if (ranges[0]) rows.push({ label: '신차 자동차대출', lo: ranges[0].lo, hi: ranges[0].hi, color: '#14181C' })
-  if (ranges[1]) rows.push({ label: '캡티브 프로모', lo: ranges[1].lo, hi: ranges[1].hi, color: '#4f8a6d' })
+  if (ranges[0]) rows.push({ label: t('mkt.rate.newCarLoan'), lo: ranges[0].lo, hi: ranges[0].hi, color: '#14181C' })
+  if (ranges[1]) rows.push({ label: t('mkt.rate.captivePromo'), lo: ranges[1].lo, hi: ranges[1].hi, color: '#4f8a6d' })
   const single = text.match(/평균[^0-9]*?(\d+(?:\.\d+)?)\s*%/)
-  if (single) rows.push({ label: '소비자신용 평균', lo: parseFloat(single[1]), hi: parseFloat(single[1]), color: '#c0533f' })
+  if (single) rows.push({ label: t('mkt.rate.consumerAvg'), lo: parseFloat(single[1]), hi: parseFloat(single[1]), color: '#c0533f' })
   if (rows.length === 0) return <p className="font-body-sm text-body-sm text-text-secondary">{text}</p>
 
   const W = 760
@@ -477,7 +479,7 @@ function RateRangeChart({ text }: { text: string }) {
   const rowH = 40
   const H = rows.length * rowH
   return (
-    <svg className="w-full" viewBox={`0 0 ${W} ${Math.max(H, 80)}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label="경쟁사 금리 범위">
+    <svg className="w-full" viewBox={`0 0 ${W} ${Math.max(H, 80)}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={t('mkt.rateRange')}>
       {rows.map((r, i) => {
         const y = i * rowH + 32
         const x1 = scaleX(r.lo)
