@@ -1432,8 +1432,8 @@
         }
       ],
       "note": {
-        "ko": "퀵윈 = 매력도×w_biz + IT유사도×w_it. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.",
-        "en": "Quickwin = Attractiveness×w_biz + IT×w_it. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets."
+        "ko": "퀵윈 = 매력도×비즈니스 가중치 + IT유사도×IT 가중치. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×Business weight + IT×IT weight. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets."
       }
     },
     "top3_country_cards": [

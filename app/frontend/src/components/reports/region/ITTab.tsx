@@ -3,30 +3,44 @@
 import type { RegionReportData, RegionITCountry, RegionQuickwinRow, RegionTop3Card } from '../types'
 import { countryKo, dash, Flag, itBandStyle, quickwinBandColor, SourcePill } from './shared'
 import { ScatterChart, type ScatterPoint } from './ScatterChart'
+import { useT } from '../../../i18n/dict'
+import { useLang, pickLang } from '../../../i18n/locale'
+import type { Lang } from '../../../store'
+
+// 국가명 표시 — en이면 country_name(영문) 우선, 없으면 코드. ko면 한글 매핑.
+function nameOf(lang: Lang, code: string, nameEn?: string): string {
+  if (lang === 'en') return nameEn ?? code
+  return countryKo(code, nameEn)
+}
 
 export function ITTab({ data }: { data: RegionReportData }) {
   const it = data.tabs.tab_2_2_it_similarity
   const qw = data.tabs.quickwin
   const cards = data.tabs.top3_country_cards
+  const t = useT()
+  const lang = useLang()
   // APAC — 기준국 미적용, IT 성숙도 절대점수. baseline 행/라벨/별표를 모두 숨긴다.
   const isAbsolute = it.mode === 'absolute'
-  const metricLabel = isAbsolute ? 'IT 성숙도' : 'IT 유사도'
-  const baselineName = it.baseline_country ? countryKo(it.baseline_country, it.baseline_country) : ''
+  const metricLabel = isAbsolute ? t('rit.metric.maturity') : t('rit.metric.similarity')
+  const baselineName = it.baseline_country ? nameOf(lang, it.baseline_country, it.baseline_country) : ''
   const axisOrder = Object.keys(it.weights)
 
   // 히트맵 행 정렬: 후보(밴드 내림차순) → 기준국 하단(절대점수 모드는 기준국 행 없음).
   const candidates = it.countries.filter((c) => !c.is_baseline).sort((a, b) => b.it_similarity_raw - a.it_similarity_raw)
   const baselineRow = isAbsolute ? undefined : it.countries.find((c) => c.is_baseline)
 
+  // 퀵윈 종합순위(기준국·탈락 제외)
+  const qwRanking = qw.ranking
+  // 산점도 강조용 — 퀵윈 순위 1위 국가 코드
+  const top1Country = qwRanking.find((r) => r.rank === 1)?.country
+
   const points: ScatterPoint[] = qw.rows.map((r) => ({
     country: r.country,
     attractiveness: r.attractiveness,
     it_similarity: r.it_similarity,
     is_baseline: r.is_baseline,
+    is_top1: r.country === top1Country,
   }))
-
-  // 퀵윈 종합순위(기준국·탈락 제외)
-  const qwRanking = qw.ranking
 
   return (
     <section className="flex flex-col gap-xl">
@@ -34,7 +48,7 @@ export function ITTab({ data }: { data: RegionReportData }) {
       <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-lg shadow-[0_4px_8px_rgba(20,23,28,0.04)]">
         <div className="flex items-center justify-between gap-sm mb-md border-b border-surface-border pb-sm flex-wrap">
           <div className="flex items-center gap-sm">
-            <h2 className="font-headline-md text-headline-md text-primary m-0">{metricLabel} 히트맵</h2>
+            <h2 className="font-headline-md text-headline-md text-primary m-0">{t('rit.heatmap').replace('{metric}', metricLabel)}</h2>
             {!isAbsolute && (
               <span className="text-label-sm text-text-secondary">vs 기준국 {it.countries.find((c) => c.is_baseline)?.country_name ?? it.baseline_country}</span>
             )}
@@ -55,27 +69,27 @@ export function ITTab({ data }: { data: RegionReportData }) {
         <div className="lg:col-span-7">
           <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-lg shadow-[0_4px_8px_rgba(20,23,28,0.04)] h-full">
             <div className="flex items-center gap-sm mb-md border-b border-surface-border pb-sm">
-              <h2 className="font-headline-md text-headline-md text-primary m-0">퀵윈 종합 순위</h2>
+              <h2 className="font-headline-md text-headline-md text-primary m-0">{t('rit.quickwinRank')}</h2>
               <SourcePill flag="CALC" />
             </div>
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b-2 border-surface-border">
-                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">순위</th>
-                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">국가</th>
-                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">퀵윈</th>
-                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">매력도</th>
-                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">IT</th>
+                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">{t('rit.col.rank')}</th>
+                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">{t('rit.col.country')}</th>
+                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">{t('rit.col.quickwin')}</th>
+                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">{t('rit.col.attr')}</th>
+                  <th className="py-sm px-sm font-label-md text-label-md text-text-secondary uppercase">{t('rit.col.it')}</th>
                 </tr>
               </thead>
               <tbody className="font-body-sm">
                 {qwRanking.map((r) => (
                   <tr key={r.country} className="border-b border-surface-border">
-                    <td className="py-sm px-sm font-medium text-primary">#{r.rank}</td>
+                    <td className="py-sm px-sm font-medium text-primary">{r.rank}</td>
                     <td className="py-sm px-sm">
                       <span className="inline-flex items-center gap-xs">
                         <Flag code={r.country} />
-                        {countryKo(r.country)} <span className="text-text-secondary">({r.country})</span>
+                        {nameOf(lang, r.country)} <span className="text-text-secondary">({r.country})</span>
                       </span>
                     </td>
                     <td className="py-sm px-sm font-semibold" style={{ color: quickwinBandColor(r.score_band) }}>
@@ -87,13 +101,13 @@ export function ITTab({ data }: { data: RegionReportData }) {
                 ))}
               </tbody>
             </table>
-            <p className="mt-sm text-label-sm text-text-secondary">{qw.note.ko}</p>
+            <p className="mt-sm text-label-sm text-text-secondary">{pickLang(lang, qw.note.ko, qw.note.en)}</p>
           </div>
         </div>
         <div className="lg:col-span-5">
           <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-lg shadow-[0_4px_8px_rgba(20,23,28,0.04)] h-full">
             <div className="flex items-center gap-sm mb-md border-b border-surface-border pb-sm">
-              <h2 className="font-headline-md text-headline-md text-primary m-0">매력도 × {metricLabel}</h2>
+              <h2 className="font-headline-md text-headline-md text-primary m-0">{t('rit.attrXmetric').replace('{metric}', metricLabel)}</h2>
               <SourcePill flag="CALC" suffix="· 2축" />
             </div>
             <ScatterChart points={points} />
@@ -104,7 +118,7 @@ export function ITTab({ data }: { data: RegionReportData }) {
       {/* 상위 3개국 프로파일 */}
       <div>
         <div className="flex items-center gap-sm mb-md flex-wrap">
-          <h2 className="font-headline-md text-headline-md text-primary m-0">상위 3개국 프로파일</h2>
+          <h2 className="font-headline-md text-headline-md text-primary m-0">{t('rit.top3profile')}</h2>
           <SourcePill flag="CALC" />
           <SourcePill flag="EXT" />
           <SourcePill flag="NEWS" />
@@ -112,29 +126,29 @@ export function ITTab({ data }: { data: RegionReportData }) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-md">
           {cards.map((card) => (
-            <Top3ProfileCard key={card.country} card={card} />
+            <Top3ProfileCard key={card.country} card={card} lang={lang} />
           ))}
         </div>
       </div>
 
       {/* 국가별 IT 성숙도/유사도 산식 */}
       <div>
-        <h3 className="font-label-md text-label-md uppercase tracking-wider text-text-secondary mb-sm">국가별 {metricLabel} 산식</h3>
+        <h3 className="font-label-md text-label-md uppercase tracking-wider text-text-secondary mb-sm">{t('rit.scoreFormula').replace('{metric}', metricLabel)}</h3>
         <div className="flex flex-col gap-sm">
           {orderedForFormula(it.countries).map((c) => (
-            <ITFormula key={c.country} country={c} axisOrder={axisOrder} baselineName={baselineName} isAbsolute={isAbsolute} />
+            <ITFormula key={c.country} country={c} axisOrder={axisOrder} baselineName={baselineName} isAbsolute={isAbsolute} lang={lang} />
           ))}
         </div>
       </div>
 
       {/* 국가별 퀵윈 산식 */}
       <div>
-        <h3 className="font-label-md text-label-md uppercase tracking-wider text-text-secondary mb-sm">국가별 퀵윈 점수 산식</h3>
+        <h3 className="font-label-md text-label-md uppercase tracking-wider text-text-secondary mb-sm">{t('rit.quickwinFormula')}</h3>
         <div className="flex flex-col gap-sm">
           {[...qw.rows]
             .sort((a, b) => a.country.localeCompare(b.country))
             .map((row) => (
-              <QuickwinFormula key={row.country} row={row} weights={qw.weights} />
+              <QuickwinFormula key={row.country} row={row} weights={qw.weights} lang={lang} />
             ))}
         </div>
       </div>
@@ -150,6 +164,7 @@ function orderedForFormula(countries: RegionITCountry[]): RegionITCountry[] {
 }
 
 function BandLegend() {
+  const t = useT()
   const bands = [
     { l: '≥90', bg: '#2f5c46', fg: '#FFFFFF' },
     { l: '80', bg: '#4f8a6d', fg: '#FFFFFF' },
@@ -161,7 +176,7 @@ function BandLegend() {
   ]
   return (
     <div className="flex items-center gap-xs flex-wrap">
-      <span className="text-label-sm text-text-secondary mr-xs">밴드</span>
+      <span className="text-label-sm text-text-secondary mr-xs">{t('rit.band')}</span>
       {bands.map((b) => (
         <div key={b.l} className="rounded px-2 py-[2px] text-label-sm font-semibold" style={{ background: b.bg, color: b.fg }}>
           {b.l}
@@ -180,24 +195,26 @@ function Heatmap({
   candidates: RegionITCountry[]
   baselineRow?: RegionITCountry
 }) {
+  const t = useT()
+  const lang = useLang()
   const gridCols = `minmax(180px, 1.4fr) repeat(${axisOrder.length}, minmax(80px, 1fr)) minmax(72px, 0.9fr)`
   return (
     <div className="overflow-x-auto">
       <div className="min-w-[640px]">
         {/* header */}
         <div className="grid items-end gap-[2px] mb-xs" style={{ gridTemplateColumns: gridCols }}>
-          <div className="px-sm py-xs text-label-sm text-text-secondary uppercase tracking-wider">국가</div>
+          <div className="px-sm py-xs text-label-sm text-text-secondary uppercase tracking-wider">{t('rit.col.country')}</div>
           {axisOrder.map((a) => (
             <div key={a} className="px-xs py-xs text-label-sm text-text-secondary text-center whitespace-normal leading-tight">
               {a}
             </div>
           ))}
-          <div className="px-xs py-xs text-label-sm text-text-secondary text-center uppercase tracking-wider">종합</div>
+          <div className="px-xs py-xs text-label-sm text-text-secondary text-center uppercase tracking-wider">{t('rit.col.overall')}</div>
         </div>
         {candidates.map((c) => (
-          <HeatRow key={c.country} country={c} axisOrder={axisOrder} gridCols={gridCols} />
+          <HeatRow key={c.country} country={c} axisOrder={axisOrder} gridCols={gridCols} lang={lang} />
         ))}
-        {baselineRow && <HeatRow country={baselineRow} axisOrder={axisOrder} gridCols={gridCols} isBaseline />}
+        {baselineRow && <HeatRow country={baselineRow} axisOrder={axisOrder} gridCols={gridCols} isBaseline lang={lang} />}
       </div>
     </div>
   )
@@ -208,12 +225,15 @@ function HeatRow({
   axisOrder,
   gridCols,
   isBaseline = false,
+  lang,
 }: {
   country: RegionITCountry
   axisOrder: string[]
   gridCols: string
   isBaseline?: boolean
+  lang: Lang
 }) {
+  const t = useT()
   const overall = itBandStyle(country.it_similarity_band)
   return (
     <div
@@ -224,11 +244,11 @@ function HeatRow({
     >
       <div className={`px-sm py-sm flex items-center gap-xs ${isBaseline ? 'opacity-70' : ''}`}>
         <Flag code={country.country} />
-        <span className="font-label-md text-label-md text-primary truncate">{countryKo(country.country, country.country_name)}</span>
+        <span className="font-label-md text-label-md text-primary truncate">{nameOf(lang, country.country, country.country_name)}</span>
         <span className="text-label-sm text-text-secondary truncate">{country.country_name}</span>
         {isBaseline && (
           <span className="text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold ml-xs px-[6px] py-[1px] rounded-full" style={{ background: '#e3edff', color: '#2f6be0' }}>
-            기준
+            {t('rit.baseline')}
           </span>
         )}
       </div>
@@ -259,33 +279,34 @@ function HeatRow({
 }
 
 // ── 상위 3개국 프로파일 카드 ──────────────────────────────────────────────
-function Top3ProfileCard({ card }: { card: RegionTop3Card }) {
+function Top3ProfileCard({ card, lang }: { card: RegionTop3Card; lang: Lang }) {
+  const t = useT()
   const band = card.quickwin_score_band
   const brief = card.market_brief
   const top5 = card.competition_brief.금융사_Top5 ?? []
   const entryForm = card.competition_brief.경쟁사_진출_형태
   // market_brief 키(한글) → 라벨 매핑
   const briefRows: { label: string; value: string }[] = []
-  if (brief['신차_판매대수'] != null) briefRows.push({ label: '신차 판매', value: String(brief['신차_판매대수']) })
-  if (brief['금융_이용률_신차'] != null) briefRows.push({ label: '금융 이용', value: `${brief['금융_이용률_신차']}%` })
-  if (brief['EV_보급률'] != null) briefRows.push({ label: 'EV 보급', value: `${brief['EV_보급률']}%` })
+  if (brief['신차_판매대수'] != null) briefRows.push({ label: t('rit.profile.sales'), value: String(brief['신차_판매대수']) })
+  if (brief['금융_이용률_신차'] != null) briefRows.push({ label: t('rit.profile.finUse'), value: `${brief['금융_이용률_신차']}%` })
+  if (brief['EV_보급률'] != null) briefRows.push({ label: t('rit.profile.ev'), value: `${brief['EV_보급률']}%` })
 
   return (
     <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-md shadow-[0_4px_8px_rgba(20,23,28,0.04)] flex flex-col min-w-0 overflow-hidden">
       <div className="flex items-center justify-between mb-sm">
         <div className="flex items-center gap-sm">
-          <span className="text-2xl font-bold text-primary">#{card.rank}</span>
+          <span className="text-2xl font-bold text-primary">{card.rank}</span>
           <div>
-            <div className="font-label-sm text-label-sm text-text-secondary uppercase">Rank #{card.rank}</div>
+            <div className="font-label-sm text-label-sm text-text-secondary uppercase">Rank {card.rank}</div>
             <div className="flex items-center gap-xs mt-[2px]">
               <Flag code={card.country} className="w-6 h-4" />
-              <h3 className="font-headline-md text-headline-md text-primary m-0">{countryKo(card.country, card.country_name)}</h3>
+              <h3 className="font-headline-md text-headline-md text-primary m-0">{nameOf(lang, card.country, card.country_name)}</h3>
               <span className="text-text-secondary">({card.country_name})</span>
             </div>
           </div>
         </div>
         <div className="text-right">
-          <span className="font-label-sm text-label-sm text-text-secondary uppercase">퀵윈</span>
+          <span className="font-label-sm text-label-sm text-text-secondary uppercase">{t('rit.col.quickwin')}</span>
           <div className="text-2xl font-bold" style={{ color: quickwinBandColor(band) }}>
             {band}
           </div>
@@ -294,22 +315,22 @@ function Top3ProfileCard({ card }: { card: RegionTop3Card }) {
 
       <div className="grid grid-cols-2 gap-xs mb-sm">
         <div className="bg-surface-light rounded-md p-xs text-center">
-          <span className="font-label-sm text-label-sm text-text-secondary">매력도</span>
+          <span className="font-label-sm text-label-sm text-text-secondary">{t('rit.profile.attr')}</span>
           <div className="font-semibold text-primary">{card.attractiveness}</div>
         </div>
         <div className="bg-surface-light rounded-md p-xs text-center">
-          <span className="font-label-sm text-label-sm text-text-secondary">IT 유사도</span>
+          <span className="font-label-sm text-label-sm text-text-secondary">{t('rit.profile.itSim')}</span>
           <div className="font-semibold text-primary">{card.it_similarity_band}</div>
         </div>
       </div>
 
       <div className="flex items-center justify-between text-body-sm mb-xs">
-        <span className="text-text-secondary">킬스위치</span>
+        <span className="text-text-secondary">{t('rit.profile.killswitch')}</span>
         <span
           className="px-2 py-[2px] rounded-md font-label-sm text-label-sm"
           style={card.killswitch_pass ? { background: '#e9f3ee', color: '#4f8a6d' } : { background: '#f7e4e0', color: '#c0533f' }}
         >
-          {card.killswitch_pass ? '통과' : '탈락'}
+          {card.killswitch_pass ? t('rks.pass') : t('rks.fail')}
         </span>
       </div>
 
@@ -328,12 +349,12 @@ function Top3ProfileCard({ card }: { card: RegionTop3Card }) {
         {(top5.length > 0 || entryForm) && (
           <div className="py-xs border-b border-surface-border min-w-0">
             <div className="flex items-center gap-xs mb-xs">
-              <span className="font-label-sm text-label-sm text-text-secondary">경쟁사 진출</span>
+              <span className="font-label-sm text-label-sm text-text-secondary">{t('rit.profile.competitorEntry')}</span>
               <SourcePill flag="EXT" />
             </div>
             {top5.length > 0 && (
               <div className="mb-xs">
-                <div className="font-label-sm text-label-sm text-primary mb-[2px]">금융사 Top 5</div>
+                <div className="font-label-sm text-label-sm text-primary mb-[2px]">{t('rit.profile.finTop5')}</div>
                 <div className="flex flex-wrap -m-[2px]">
                   {top5.map((f) => (
                     <span
@@ -355,11 +376,15 @@ function Top3ProfileCard({ card }: { card: RegionTop3Card }) {
       {card.top_news && (
         <div className="mt-sm bg-surface-light border border-surface-border rounded-md p-sm">
           <div className="flex items-center justify-between mb-xs">
-            <span className="font-label-sm text-label-sm text-text-secondary uppercase">핵심 이슈</span>
+            <span className="font-label-sm text-label-sm text-text-secondary uppercase">{t('rit.profile.keyIssue')}</span>
             <SourcePill flag="NEWS" />
           </div>
-          <div className="font-label-md text-label-md text-primary mb-xs">{card.top_news.headline}</div>
-          <div className="text-body-sm text-on-surface-variant">{card.top_news.so_what}</div>
+          <div className="font-label-md text-label-md text-primary mb-xs">
+            {pickLang(lang, card.top_news.headline, (card.top_news as { headline_en?: string }).headline_en)}
+          </div>
+          <div className="text-body-sm text-on-surface-variant">
+            {pickLang(lang, card.top_news.so_what, (card.top_news as { so_what_en?: string }).so_what_en)}
+          </div>
           {card.top_news.publisher && <div className="text-label-sm text-text-secondary mt-xs">{card.top_news.publisher}</div>}
         </div>
       )}
@@ -370,7 +395,7 @@ function Top3ProfileCard({ card }: { card: RegionTop3Card }) {
             <span className="material-symbols-outlined text-[clamp(13.6px,calc(12px_+_0.444vw),18.4px)]" style={{ color: '#2f6be0' }}>
               psychology
             </span>
-            <span className="font-label-sm text-label-sm uppercase tracking-wider">AI 코멘트</span>
+            <span className="font-label-sm text-label-sm uppercase tracking-wider">{t('rit.profile.aiComment')}</span>
             <SourcePill flag="AI" />
           </div>
           <div className="text-body-sm text-on-surface-variant">{card.ai_comment}</div>
@@ -381,7 +406,8 @@ function Top3ProfileCard({ card }: { card: RegionTop3Card }) {
 }
 
 // ── 국가별 IT 유사도 산식 ─────────────────────────────────────────────────
-function ITFormula({ country, axisOrder, baselineName, isAbsolute = false }: { country: RegionITCountry; axisOrder: string[]; baselineName: string; isAbsolute?: boolean }) {
+function ITFormula({ country, axisOrder, baselineName, isAbsolute = false, lang }: { country: RegionITCountry; axisOrder: string[]; baselineName: string; isAbsolute?: boolean; lang: Lang }) {
+  const t = useT()
   const band = country.it_similarity_band
   const bandColor = band >= 80 ? '#4f8a6d' : band >= 60 ? '#2f6be0' : '#c08a2e'
   return (
@@ -390,14 +416,14 @@ function ITFormula({ country, axisOrder, baselineName, isAbsolute = false }: { c
         <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-text-secondary transition-transform group-open:rotate-90">chevron_right</span>
         <Flag code={country.country} />
         <span className="font-label-md text-label-md text-primary">
-          {countryKo(country.country, country.country_name)} <span className="text-text-secondary font-normal">({country.country_name})</span>
-          {country.is_baseline && <span className="text-label-sm text-secondary ml-xs">기준</span>}
+          {nameOf(lang, country.country, country.country_name)} <span className="text-text-secondary font-normal">({country.country_name})</span>
+          {country.is_baseline && <span className="text-label-sm text-secondary ml-xs">{t('rit.baseline')}</span>}
         </span>
         <span className="text-2xl font-bold ml-xs" style={{ color: bandColor }}>
           {band}
         </span>
         <span className="text-label-sm text-text-secondary flex-1">/100 (raw {country.it_similarity_raw})</span>
-        <span className="font-label-sm text-label-sm text-secondary">산식 보기</span>
+        <span className="font-label-sm text-label-sm text-secondary">{t('rit.viewFormula')}</span>
       </summary>
       <div className="px-md pb-md pt-xs">
         <div className="bg-surface-light border border-surface-border rounded-md p-sm mb-sm font-body-sm text-on-surface-variant">
@@ -429,10 +455,10 @@ function ITFormula({ country, axisOrder, baselineName, isAbsolute = false }: { c
                     </span>
                     <SourcePill flag="EXT" />
                   </div>
-                  <div className="text-label-sm text-text-secondary mt-xs">조사항목: {a.source_item}</div>
+                  <div className="text-label-sm text-text-secondary mt-xs">{t('rit.surveyItem')}: {a.source_item}</div>
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-label-sm text-text-secondary">유효 가중치</div>
+                  <div className="text-label-sm text-text-secondary">{t('rit.effectiveWeight')}</div>
                   <div className="font-semibold text-primary">
                     {a.weight} × {a.tier_multiplier} = <strong>{a.effective_weight}</strong>
                   </div>
@@ -450,7 +476,7 @@ function ITFormula({ country, axisOrder, baselineName, isAbsolute = false }: { c
                   <div className="text-primary">{dash(a.target_value)}</div>
                 </div>
                 <div className="rounded p-xs" style={{ background: 'rgba(63,108,180,0.06)' }}>
-                  <span className="text-label-sm text-text-secondary mb-xs">밴드 점수</span>
+                  <span className="text-label-sm text-text-secondary mb-xs">{t('rit.bandScore')}</span>
                   <div className="font-bold" style={{ color: axisBandColor }}>
                     {a.score_band} <span className="text-label-sm text-text-secondary font-normal">(raw {a.score_raw})</span>
                   </div>
@@ -465,7 +491,8 @@ function ITFormula({ country, axisOrder, baselineName, isAbsolute = false }: { c
 }
 
 // ── 국가별 퀵윈 산식 ──────────────────────────────────────────────────────
-function QuickwinFormula({ row, weights }: { row: RegionQuickwinRow; weights: { w_biz: number; w_it: number } }) {
+function QuickwinFormula({ row, weights, lang }: { row: RegionQuickwinRow; weights: { w_biz: number; w_it: number }; lang: Lang }) {
+  const t = useT()
   const band = row.quickwin_band
   const bandColor = band >= 60 ? (band >= 80 ? '#4f8a6d' : '#2f6be0') : band >= 40 ? '#c08a2e' : '#c0533f'
   const sum = (row.attractiveness * weights.w_biz + row.it_similarity * weights.w_it).toFixed(2)
@@ -475,7 +502,7 @@ function QuickwinFormula({ row, weights }: { row: RegionQuickwinRow; weights: { 
         <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-text-secondary transition-transform group-open:rotate-90">chevron_right</span>
         <Flag code={row.country} />
         <span className="font-label-md text-label-md text-primary">
-          {countryKo(row.country, row.country_name)} <span className="text-text-secondary font-normal">({row.country_name})</span>
+          {nameOf(lang, row.country, row.country_name)} <span className="text-text-secondary font-normal">({row.country_name})</span>
         </span>
         <span className="text-2xl font-bold ml-xs" style={{ color: bandColor }}>
           {band}
@@ -483,21 +510,21 @@ function QuickwinFormula({ row, weights }: { row: RegionQuickwinRow; weights: { 
         <span className="text-label-sm text-text-secondary flex-1">퀵윈 구간</span>
         {row.is_baseline ? (
           <span className="px-2 py-[2px] rounded-md font-label-sm text-label-sm" style={{ background: '#e3edff', color: '#2f6be0' }}>
-            기준국 (제외)
+            {t('rit.qw.excluded')}
           </span>
         ) : row.killswitch_excluded ? (
           <span className="px-2 py-[2px] rounded-md font-label-sm text-label-sm" style={{ background: '#f7e4e0', color: '#c0533f' }}>
-            킬스위치 탈락
+            {t('rit.qw.killswitchFail')}
           </span>
         ) : (
           <span className="px-2 py-[2px] rounded-md font-label-sm text-label-sm" style={{ background: '#e9f3ee', color: '#4f8a6d' }}>
-            평가 대상
+            {t('rit.qw.evaluated')}
           </span>
         )}
       </summary>
       <div className="px-md pb-md pt-xs">
         <div className="bg-surface-light border border-surface-border rounded-md p-sm mb-sm font-body-sm text-on-surface-variant">
-          퀵윈 = 매력도 × w_biz + IT유사도 × w_it. 킬스위치 탈락국 제외, 10점 구간 표기.
+          퀵윈 = 매력도 × 비즈니스 가중치 + IT유사도 × IT 가중치. 킬스위치 탈락국 제외, 10점 구간 표기.
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-sm text-body-sm">
           <div className="bg-surface-light rounded p-sm">

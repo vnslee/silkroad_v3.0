@@ -1,5 +1,6 @@
 // 풀사이즈 모드 컨테이너(§5.1) — AISea 풀 모달(inset 0 + 상단 스트립 + "← 지도로").
 import { useEffect } from 'react'
+import { useT } from '../../i18n/dict'
 
 interface Props {
   onBack: () => void
@@ -7,10 +8,13 @@ interface Props {
   tag?: string
   tagClass?: string
   title?: string
+  /** 상단 스트립 우측에 붙는 추가 요소(예: 룰셋 화면의 한/영 토글). */
+  headerExtra?: React.ReactNode
   children: React.ReactNode
 }
 
-export function FullscreenContainer({ onBack, tag, tagClass = 'bg-primary', title, children }: Props) {
+export function FullscreenContainer({ onBack, tag, tagClass = 'bg-primary', title, headerExtra, children }: Props) {
+  const t = useT()
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onBack()
@@ -27,10 +31,10 @@ export function FullscreenContainer({ onBack, tag, tagClass = 'bg-primary', titl
           <button
             type="button"
             onClick={onBack}
-            aria-label="지도로 돌아가기"
+            aria-label={t('shell.backAria')}
             className="flex items-center gap-xs rounded-lg bg-surface-container px-md py-sm font-label-md text-label-md font-medium text-on-surface-variant transition-colors hover:bg-surface-container-high"
           >
-            ← 지도로
+            {t('shell.back')}
           </button>
           {tag && (
             <span
@@ -45,6 +49,12 @@ export function FullscreenContainer({ onBack, tag, tagClass = 'bg-primary', titl
             </span>
           )}
         </div>
+        {headerExtra && (
+          <>
+            <div className="flex-1" />
+            {headerExtra}
+          </>
+        )}
       </div>
       <div className="min-h-0 flex-1 overflow-auto bg-surface-light">{children}</div>
     </section>

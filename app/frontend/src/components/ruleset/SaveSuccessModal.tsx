@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { Icon } from '../common/Icon'
 import type { RulesetSaveResult } from '../../api/types'
+import { useT } from '../../i18n/dict'
 
 interface Props {
   result: RulesetSaveResult
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export function SaveSuccessModal({ result, onClose }: Props) {
+  const t = useT()
   const closeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -37,27 +39,27 @@ export function SaveSuccessModal({ result, onClose }: Props) {
             <Icon name="check_circle" className="text-[28px]" />
           </span>
           <h2 id="ruleset-save-title" className="text-headline-sm text-on-surface">
-            룰셋이 저장되었습니다
+            {t('rs.saved.title')}
           </h2>
         </div>
 
         <p className="mb-md text-body-md text-on-surface-variant">
-          이후 생성되는 보고서부터 새 가중치가 반영됩니다.
+          {t('rs.saved.desc')}
         </p>
 
         <dl className="mb-lg space-y-xs rounded-md bg-surface-container px-md py-sm text-body-sm">
           <div className="flex justify-between gap-md">
-            <dt className="text-on-surface-variant">버전</dt>
+            <dt className="text-on-surface-variant">{t('rs.saved.version')}</dt>
             <dd className="font-medium text-on-surface">v{result.version}</dd>
           </div>
           <div className="flex justify-between gap-md">
-            <dt className="shrink-0 text-on-surface-variant">스냅샷</dt>
+            <dt className="shrink-0 text-on-surface-variant">{t('rs.saved.snapshot')}</dt>
             <dd className="truncate font-mono text-on-surface" title={result.snapshot_file}>
               {result.snapshot_file}
             </dd>
           </div>
           <div className="flex justify-between gap-md">
-            <dt className="shrink-0 text-on-surface-variant">저장 시각</dt>
+            <dt className="shrink-0 text-on-surface-variant">{t('rs.saved.savedAt')}</dt>
             <dd className="text-on-surface">{result.updated_at}</dd>
           </div>
         </dl>
@@ -69,7 +71,7 @@ export function SaveSuccessModal({ result, onClose }: Props) {
             onClick={onClose}
             className="rounded bg-primary px-lg py-sm text-on-primary"
           >
-            확인
+            {t('rs.saved.confirm')}
           </button>
         </div>
       </div>

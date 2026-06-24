@@ -1,5 +1,5 @@
 {
-  "report_id": "RPT_RGN_EU_008",
+  "report_id": "RPT_RGN_EU_011",
   "report_type": "type2_region",
   "title": "European Union 권역 퀵윈 순위 보고서",
   "target": {
@@ -17,7 +17,7 @@
     ],
     "baseline_country": "GB"
   },
-  "generated_at": "2026-06-24T15:51:54.367456",
+  "generated_at": "2026-06-24T22:17:09.889028",
   "generated_by": "engine",
   "data_snapshot_id": "2026-06-22T16:00:00+09:00",
   "config_version": "1.6",
@@ -160,7 +160,7 @@
           "pass": true,
           "tier": "in_region_confidence",
           "tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "gates": {
@@ -200,7 +200,7 @@
           "pass": true,
           "tier": "in_region_confidence",
           "tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "gates": {
@@ -240,7 +240,7 @@
           "pass": true,
           "tier": "in_region_confidence",
           "tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "gates": {
@@ -280,7 +280,7 @@
           "pass": true,
           "tier": "in_region_confidence",
           "tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "gates": {
@@ -320,7 +320,7 @@
           "pass": true,
           "tier": "in_region_confidence",
           "tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "gates": {
@@ -360,7 +360,7 @@
           "pass": true,
           "tier": "in_region_confidence",
           "tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "gates": {
@@ -400,7 +400,7 @@
           "pass": true,
           "tier": "in_region_confidence",
           "tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "gates": {
@@ -440,7 +440,7 @@
           "pass": true,
           "tier": "in_region_confidence",
           "tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "gates": {
@@ -480,7 +480,7 @@
           "pass": true,
           "tier": "in_region_confidence",
           "tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "gates": {
@@ -563,7 +563,7 @@
         {
           "key": "in_region_confidence",
           "label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "severity": 4,
@@ -1488,6 +1488,7 @@
     "tab_2_2_it_similarity": {
       "nature": "score_multiaxis",
       "source_flag": "CALC",
+      "mode": "baseline",
       "baseline_country": "GB",
       "weights": {
         "솔루션 유형": 0.3,
@@ -2776,7 +2777,7 @@
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
           "killswitch_tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "quickwin_penalty": 0,
@@ -2797,7 +2798,7 @@
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
           "killswitch_tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "quickwin_penalty": 0,
@@ -2818,7 +2819,7 @@
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
           "killswitch_tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "quickwin_penalty": 0,
@@ -2839,7 +2840,7 @@
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
           "killswitch_tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "quickwin_penalty": 0,
@@ -2859,7 +2860,7 @@
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
           "killswitch_tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "quickwin_penalty": 0,
@@ -2879,7 +2880,7 @@
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
           "killswitch_tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "quickwin_penalty": 0,
@@ -2899,7 +2900,7 @@
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
           "killswitch_tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "quickwin_penalty": 0,
@@ -2920,7 +2921,7 @@
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
           "killswitch_tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "quickwin_penalty": 0,
@@ -2941,7 +2942,7 @@
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
           "killswitch_tier_label": {
-            "ko": "권역내 확산",
+            "ko": "권역내 확신",
             "en": "In-Region Confidence"
           },
           "quickwin_penalty": 0,
@@ -3011,7 +3012,7 @@
         "killswitch_pass": true,
         "killswitch_tier": "in_region_confidence",
         "killswitch_tier_label": {
-          "ko": "권역내 확산",
+          "ko": "권역내 확신",
           "en": "In-Region Confidence"
         },
         "market_brief": {
@@ -3084,7 +3085,7 @@
         "killswitch_pass": true,
         "killswitch_tier": "in_region_confidence",
         "killswitch_tier_label": {
-          "ko": "권역내 확산",
+          "ko": "권역내 확신",
           "en": "In-Region Confidence"
         },
         "market_brief": {
@@ -3152,7 +3153,7 @@
         "killswitch_pass": true,
         "killswitch_tier": "in_region_confidence",
         "killswitch_tier_label": {
-          "ko": "권역내 확산",
+          "ko": "권역내 확신",
           "en": "In-Region Confidence"
         },
         "market_brief": {

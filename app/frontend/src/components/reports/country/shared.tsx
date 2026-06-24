@@ -4,6 +4,9 @@ import type { ReactNode } from 'react'
 import type { ReportItem } from '../types'
 import type { TimeseriesData } from '../../charts/types'
 import { Money } from '../Money'
+import { useT } from '../../../i18n/dict'
+import { useLang, pickLang, locText as locTextLang } from '../../../i18n/locale'
+import type { Lang } from '../../../store'
 
 /** 통화 €1,234 포맷 (mockup: 천단위 콤마, 소수 없음) */
 export function eur(value: number | null | undefined, symbol = '€'): string {
@@ -35,16 +38,10 @@ export function intComma(value: number | null | undefined): string {
   return Math.round(value).toLocaleString('en-US')
 }
 
-/** 다국어 {ko,en} 또는 문자열을 한국어 텍스트로 안전 변환(React child로 객체 렌더 방지) */
-export function locText(value: unknown): string {
-  if (value === null || value === undefined) return ''
-  if (typeof value === 'string') return value
-  if (typeof value === 'object') {
-    const o = value as Record<string, unknown>
-    if (typeof o.ko === 'string') return o.ko
-    if (typeof o.en === 'string') return o.en
-  }
-  return String(value)
+/** 다국어 {ko,en} 또는 문자열을 lang 텍스트로 안전 변환(React child로 객체 렌더 방지).
+ *  lang 미지정 시 한국어(기존 호출부 호환). 신규 호출부는 useLang()으로 lang을 넘긴다. */
+export function locText(value: unknown, lang: Lang = 'ko'): string {
+  return locTextLang(value, lang)
 }
 
 /** 숫자 .toFixed 안전 래퍼 — null/undefined/NaN이면 dash 반환 */
@@ -109,13 +106,14 @@ export function Panel({ title, right, children, className = '' }: PanelProps) {
 
 // ── 캡티브 칩 ───────────────────────────────────────────────────
 export function CaptiveChip() {
+  const t = useT()
   return (
     <span
       className="inline-flex items-center gap-xs bg-secondary-container/30 text-secondary border border-secondary/40 px-2 py-[1px] rounded-full font-label-sm text-label-sm"
-      title="캡티브 금융사 보유 추정"
+      title={t('report.captive.title')}
     >
       <span className="material-symbols-outlined text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)]">verified</span>
-      <span>캡티브</span>
+      <span>{t('report.captive')}</span>
     </span>
   )
 }
@@ -140,18 +138,20 @@ export function TierBadge({ tier }: { tier?: number }) {
 // ── 인사이트 박스(좌측 강조선) ──────────────────────────────────
 export function InsightBox({
   children,
-  label = '인사이트',
+  label,
   icon = 'lightbulb',
 }: {
   children: ReactNode
   label?: string
   icon?: string
 }) {
+  const t = useT()
+  const lbl = label ?? t('report.insight')
   return (
     <div className="bg-surface-container/60 p-sm rounded-md border-l-4 border-primary">
       <div className="flex items-center gap-xs mb-xs">
         <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">{icon}</span>
-        <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">{label}</span>
+        <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">{lbl}</span>
       </div>
       <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{children}</p>
     </div>
@@ -160,13 +160,14 @@ export function InsightBox({
 
 // ── 근거·인사이트 아코디언(details) ─────────────────────────────
 export function EvidenceAccordion({ source, insight, ai }: { source?: string; insight?: string; ai?: boolean }) {
+  const t = useT()
   if (!source && !insight) return null
   return (
     <details className="border-t border-surface-container-highest pt-sm group">
       <summary className="flex items-center justify-between gap-xs cursor-pointer list-none">
         <div className="flex items-center gap-xs">
           <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">info</span>
-          <span className="font-label-sm text-label-sm text-text-secondary uppercase">근거 · 인사이트</span>
+          <span className="font-label-sm text-label-sm text-text-secondary uppercase">{t('report.evidenceInsight')}</span>
           {ai && (
             <span className="bg-purple-100 text-purple-700 border border-purple-200 px-2 py-0.5 rounded-full font-label-sm text-label-sm uppercase">
               AI
@@ -182,7 +183,7 @@ export function EvidenceAccordion({ source, insight, ai }: { source?: string; in
           <div>
             <div className="flex items-center gap-xs mb-xs">
               <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">source</span>
-              <span className="font-label-sm text-label-sm text-text-secondary uppercase">근거</span>
+              <span className="font-label-sm text-label-sm text-text-secondary uppercase">{t('report.evidence')}</span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{source}</p>
           </div>
@@ -195,7 +196,9 @@ export function EvidenceAccordion({ source, insight, ai }: { source?: string; in
 
 /** 원천 데이터 항목의 값 표시(문자열/숫자+단위). 순위형 list는 별도 처리. */
 function ItemValue({ item }: { item: ReportItem }) {
-  const { value, unit } = item
+  const lang = useLang()
+  const value = pickLang(lang, item.value, item.value_en)
+  const { unit } = item
   if (Array.isArray(value)) return null
   if (typeof value === 'number') {
     return (
@@ -240,6 +243,7 @@ function splitTopLevelCommas(text: string): string[] {
 
 // ── 원천 데이터 항목 카드(라벨 + 값 + 게이트배지 + 선택적 차트 + 아코디언) ──
 export function EvidenceCard({ item, chart }: { item: ReportItem; chart?: ReactNode }) {
+  const lang = useLang()
   const gatePass = item.gate_result === 'PASS' || item.gate_result === 'pass'
   return (
     <div className="p-md bg-surface rounded-lg border border-surface-container-highest flex flex-col gap-sm">
@@ -256,7 +260,11 @@ export function EvidenceCard({ item, chart }: { item: ReportItem; chart?: ReactN
         <ItemValue item={item} />
       </div>
       {chart}
-      <EvidenceAccordion source={item.source} insight={item.insight} ai={item.insight_ai_generated} />
+      <EvidenceAccordion
+        source={pickLang(lang, item.source, item.source_en)}
+        insight={pickLang(lang, item.insight, item.insight_en)}
+        ai={item.insight_ai_generated}
+      />
     </div>
   )
 }
@@ -422,6 +430,7 @@ export function DecisionTreeSvg({
   /** APAC(아시아) — 권역 확산·유사도 분기 없이 외부솔루션·자체구축 양쪽 동등 제시. */
   isApac?: boolean
 }) {
+  const t = useT()
   // APAC — 권역 확산·유사도 분기 없이 외부솔루션·자체구축을 양쪽 동등 제시.
   if (isApac) {
     return <DecisionTreeSvgApac />
@@ -491,33 +500,33 @@ export function DecisionTreeSvg({
       >
         <g className="dt-diamond">
           <polygon points="450,20 520,80 450,140 380,80" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
-          <text x="450" y="75" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">권역 내 구축</text>
-          <text x="450" y="92" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">시스템 존재?</text>
+          <text x="450" y="75" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">{t('dt.regionBuild1')}</text>
+          <text x="450" y="92" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">{t('dt.regionBuild2')}</text>
         </g>
         <path d="M450 140 L450 200" className="dt-flow-line" opacity="0.25" />
         <text x="465" y="175" textAnchor="start" fontSize="14" fontWeight="700" fill={regionSystemExists ? '#14181C' : '#9aa0a8'}>YES ({baseCountryKo})</text>
         <path d="M520 80 L820 80 L820 480 L520 480" className="dt-flow-line" opacity="0.25" />
-        <text x="700" y="70" textAnchor="middle" fontSize="14" fontWeight="700" fill={extViaNo ? '#14181C' : '#9aa0a8'}>NO → 외부솔루션</text>
+        <text x="700" y="70" textAnchor="middle" fontSize="14" fontWeight="700" fill={extViaNo ? '#14181C' : '#9aa0a8'}>{t('dt.noExternal')}</text>
         <g className="dt-diamond" style={{ animationDelay: '0.6s' }}>
           <polygon points="450,200 525,260 450,320 375,260" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
-          <text x="450" y="255" textAnchor="middle" fontSize="12" fill="#14181C" fontWeight="700">유사도</text>
+          <text x="450" y="255" textAnchor="middle" fontSize="12" fill="#14181C" fontWeight="700">{t('dt.similarity')}</text>
           <text x="450" y="280" textAnchor="middle" fontSize="18" fill="#14181C" fontWeight="800">{score.toFixed(1)}</text>
         </g>
         <path d="M450 320 L450 360 L150 360 L150 560" className="dt-flow-line" opacity="0.25" />
-        <text x="300" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isB ? '#14181C' : '#9aa0a8'}>{`≥ ${expansionMin} → 권역 내 확산`}</text>
+        <text x="300" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isB ? '#14181C' : '#9aa0a8'}>{`≥ ${expansionMin} → ${t('dt.expansion')}`}</text>
         <path d="M450 320 L450 360 L750 360 L750 560" className="dt-flow-line" opacity="0.25" />
-        <text x="600" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isHQ ? '#14181C' : '#9aa0a8'}>{`${hqBuildMin}~${expansionMin} → 본사 자체구축`}</text>
+        <text x="600" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isHQ ? '#14181C' : '#9aa0a8'}>{`${hqBuildMin}~${expansionMin} → ${t('dt.hqBuild')}`}</text>
         <path d="M450 320 L450 420" className="dt-flow-line" opacity="0.25" />
         <text x="465" y="370" textAnchor="start" fontSize="14" fontWeight="700" fill={isEXT ? '#14181C' : '#9aa0a8'}>{`< ${hqBuildMin}`}</text>
         <g className="dt-diamond" style={{ animationDelay: '1.0s' }}>
           <polygon points="450,420 520,480 450,540 380,480" fill="#fbf9f9" stroke="#9aa0a8" strokeWidth="2" />
-          <text x="450" y="475" textAnchor="middle" fontSize="12" fill="#9aa0a8" fontWeight="700">외부솔루션</text>
-          <text x="450" y="492" textAnchor="middle" fontSize="12" fill="#9aa0a8" fontWeight="700">기준점 통과?</text>
+          <text x="450" y="475" textAnchor="middle" fontSize="12" fill="#9aa0a8" fontWeight="700">{t('dt.external')}</text>
+          <text x="450" y="492" textAnchor="middle" fontSize="12" fill="#9aa0a8" fontWeight="700">{t('dt.passThreshold')}</text>
         </g>
         <path d="M450 540 L450 615" className="dt-flow-line" opacity="0.25" />
-        <text x="465" y="585" textAnchor="start" fontSize="14" fontWeight="700" fill={isEXT ? '#14181C' : '#9aa0a8'}>YES → 외부솔루션</text>
+        <text x="465" y="585" textAnchor="start" fontSize="14" fontWeight="700" fill={isEXT ? '#14181C' : '#9aa0a8'}>{t('dt.yesExternal')}</text>
         <path d="M520 480 L750 480 L750 560" className="dt-flow-line" opacity="0.25" />
-        <text x="640" y="472" textAnchor="middle" fontSize="14" fontWeight="700" fill="#9aa0a8">NO (Fallback)</text>
+        <text x="640" y="472" textAnchor="middle" fontSize="14" fontWeight="700" fill="#9aa0a8">{t('dt.noFallback')}</text>
         {/* active path: 엔진 decision(B/HQ/EXT)에 따라 점등 경로가 달라진다. */}
         <path d={activePath} className="dt-active-path" />
         <circle className="dt-active-bullet" cx={activeBullet.cx} cy={activeBullet.cy} r="7" fill="#14181C" />
@@ -527,19 +536,19 @@ export function DecisionTreeSvg({
           <div className={`dt-branch-card dt-branch-b ${isB ? cardActive : cardIdle}`} style={isB ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
               <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isB ? 'text-primary' : 'text-text-secondary'}`}>expand_circle_down</span>
-              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isB ? 'text-primary' : 'text-text-secondary'}`}>권역 내 확산</span>
+              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isB ? 'text-primary' : 'text-text-secondary'}`}>{t('dt.expansion')}</span>
             </div>
           </div>
           <div className={`dt-branch-card dt-branch-ext ${isEXT ? cardActive : cardIdle}`} style={isEXT ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
               <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>extension</span>
-              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>외부솔루션</span>
+              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>{t('dt.external')}</span>
             </div>
           </div>
           <div className={`dt-branch-card dt-branch-hq ${isHQ ? cardActive : cardIdle}`} style={isHQ ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
               <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>domain</span>
-              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>본사 자체구축</span>
+              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>{t('dt.hqBuild')}</span>
             </div>
           </div>
         </div>
@@ -552,6 +561,7 @@ export function DecisionTreeSvg({
 //   권역 내 확산 경로도, 유사도 임계값 분기도 없다. 두 경로를 동등하게 함께
 //   제시한다(추천 강조 없음). 의사결정은 사용자 몫.
 function DecisionTreeSvgApac() {
+  const t = useT()
   // 양쪽 모두 활성 — 중립 동등 제시.
   const cardActive = 'border-2 bg-primary/10 border-primary rounded-xl p-md'
   const cardActiveShadow = { boxShadow: '0 6px 18px rgba(0,0,0,0.08)' }
@@ -581,14 +591,14 @@ function DecisionTreeSvgApac() {
         {/* 시작 노드 — 진출 검토. 분기 없이 두 경로로 동시 연결. */}
         <g className="dt-node">
           <rect x="350" y="30" width="200" height="60" rx="12" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
-          <text x="450" y="58" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">APAC 진출 검토</text>
-          <text x="450" y="76" textAnchor="middle" fontSize="11" fill="#3a4048">두 경로 함께 검토</text>
+          <text x="450" y="58" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">{t('dt.apac.title')}</text>
+          <text x="450" y="76" textAnchor="middle" fontSize="11" fill="#3a4048">{t('dt.apac.subtitle')}</text>
         </g>
         {/* 좌(외부솔루션)·우(자체구축) 양쪽 모두 활성 경로로 점등. */}
         <path d="M450 90 L450 140 L230 140 L230 230" className="dt-active-path" />
         <path d="M450 90 L450 140 L670 140 L670 230" className="dt-active-path" style={{ animationDelay: '0.8s' }} />
-        <text x="230" y="125" textAnchor="middle" fontSize="13" fontWeight="700" fill="#14181C">외부솔루션 도입</text>
-        <text x="670" y="125" textAnchor="middle" fontSize="13" fontWeight="700" fill="#14181C">자체구축(내재화)</text>
+        <text x="230" y="125" textAnchor="middle" fontSize="13" fontWeight="700" fill="#14181C">{t('dt.apac.ext')}</text>
+        <text x="670" y="125" textAnchor="middle" fontSize="13" fontWeight="700" fill="#14181C">{t('dt.apac.int')}</text>
       </svg>
       <div className="w-full max-w-4xl">
         <div className="grid grid-cols-2 gap-lg">
@@ -596,7 +606,7 @@ function DecisionTreeSvgApac() {
             <div className={cardActive} style={cardActiveShadow}>
               <div className="flex items-center justify-center gap-xs">
                 <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-primary">extension</span>
-                <span className="font-semibold font-body-md text-body-md uppercase tracking-wider text-primary">외부솔루션</span>
+                <span className="font-semibold font-body-md text-body-md uppercase tracking-wider text-primary">{t('dt.external')}</span>
               </div>
             </div>
           </div>
@@ -604,13 +614,13 @@ function DecisionTreeSvgApac() {
             <div className={cardActive} style={cardActiveShadow}>
               <div className="flex items-center justify-center gap-xs">
                 <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-primary">domain</span>
-                <span className="font-semibold font-body-md text-body-md uppercase tracking-wider text-primary">자체구축(내재화)</span>
+                <span className="font-semibold font-body-md text-body-md uppercase tracking-wider text-primary">{t('dt.apac.int')}</span>
               </div>
             </div>
           </div>
         </div>
         <p className="text-center font-label-sm text-label-sm text-text-secondary mt-md">
-          APAC은 권역 확산·유사도 분기를 적용하지 않습니다 — 두 경로를 동등하게 비교 검토합니다.
+          {t('dt.apac.note')}
         </p>
       </div>
     </div>
@@ -628,18 +638,19 @@ interface SubTierTableProps {
   currency?: string
 }
 export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded, newCumulative, currency = 'EUR' }: SubTierTableProps) {
+  const t = useT()
   const rows = tiers ?? []
   // 기준국 등 구독료 데이터가 없으면 표 자체를 생략(크래시 방지).
   if (rows.length === 0) {
-    return <p className="font-body-sm text-body-sm text-text-secondary">구독료 구간 데이터가 없습니다.</p>
+    return <p className="font-body-sm text-body-sm text-text-secondary">{t('report.sub.noData')}</p>
   }
   return (
     <>
       <table className="w-full font-body-md text-body-md">
         <thead>
           <tr className="text-text-secondary">
-            <th className="px-2 py-1.5 text-left font-label-md text-label-md uppercase">누적건수</th>
-            <th className="px-2 py-1.5 text-right font-label-md text-label-md uppercase">단가</th>
+            <th className="px-2 py-1.5 text-left font-label-md text-label-md uppercase">{t('report.sub.cumCount')}</th>
+            <th className="px-2 py-1.5 text-right font-label-md text-label-md uppercase">{t('report.sub.unitPrice')}</th>
           </tr>
         </thead>
         <tbody>
@@ -660,19 +671,19 @@ export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded,
       </table>
       <div className="flex flex-col gap-xs mt-md pt-sm border-t border-surface-container-highest font-body-md text-body-md">
         <div className="flex justify-between">
-          <span className="text-text-secondary">기존 누적</span>
-          <span className="text-text-primary font-semibold">{intComma(existing)} 건</span>
+          <span className="text-text-secondary">{t('report.sub.existing')}</span>
+          <span className="text-text-primary font-semibold">{intComma(existing)} {t('report.sub.unit')}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-text-secondary">신규 추가</span>
-          <span className="text-text-primary font-semibold">{intComma(newAdded)} 건</span>
+          <span className="text-text-secondary">{t('report.sub.newAdded')}</span>
+          <span className="text-text-primary font-semibold">{intComma(newAdded)} {t('report.sub.unit')}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-text-secondary">신규 누적</span>
-          <span className="text-primary font-semibold">{intComma(newCumulative)} 건</span>
+          <span className="text-text-secondary">{t('report.sub.newCum')}</span>
+          <span className="text-primary font-semibold">{intComma(newCumulative)} {t('report.sub.unit')}</span>
         </div>
         <div className="flex justify-between items-center mt-xs px-sm py-2 rounded-lg bg-primary/10 border-l-4 border-primary">
-          <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">적용 단가</span>
+          <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">{t('report.sub.appliedPrice')}</span>
           <span className="text-primary font-bold font-body-lg text-body-lg">
             <Money value={appliedPrice} currency={currency} inline />
           </span>
@@ -713,17 +724,16 @@ export function DecisionSidePanel({
   subscription,
   isApac = false,
 }: DecisionSidePanelProps) {
+  const t = useT()
   if (decision === 'external_solution' || decision === 'apac_dual') {
     const list = externalCandidates ?? []
     if (list.length === 0) {
-      return <p className="font-body-sm text-body-sm text-text-secondary">해당국 외부솔루션 후보 데이터가 없습니다.</p>
+      return <p className="font-body-sm text-body-sm text-text-secondary">{t('report.ext.noData')}</p>
     }
     return (
       <div className="flex flex-col gap-sm">
         <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
-          {decision === 'apac_dual'
-            ? '자체구축(내재화)과 함께 검토할 현지 외부솔루션 후보입니다. 자체구축 예상 비용은 TCO 탭을 참조하세요.'
-            : '권역 확산·본사 구축 기준 미달 → 현지 외부솔루션 도입을 검토합니다. 후보 벤더는 다음과 같습니다.'}
+          {decision === 'apac_dual' ? t('report.ext.leadApac') : t('report.ext.lead')}
         </p>
         <ul className="flex flex-col gap-xs list-none p-0 m-0">
           {list.map((c, i) => (
@@ -739,7 +749,7 @@ export function DecisionSidePanel({
                   </span>
                 )}
               </span>
-              <span className="shrink-0 font-label-sm text-label-sm text-text-secondary">{c.cost_note ?? '별도 견적'}</span>
+              <span className="shrink-0 font-label-sm text-label-sm text-text-secondary">{c.cost_note ?? t('report.ext.quote')}</span>
             </li>
           ))}
         </ul>
@@ -747,23 +757,23 @@ export function DecisionSidePanel({
           <div className="mt-xs flex flex-col gap-xs rounded-lg bg-surface-light border border-outline-variant px-sm py-2">
             {externalSolutionSummary.solution_type && (
               <div className="flex flex-col">
-                <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">솔루션 유형</span>
+                <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">{t('report.ext.solutionType')}</span>
                 <span className="font-body-sm text-body-sm text-text-primary">{externalSolutionSummary.solution_type}</span>
               </div>
             )}
             {externalSolutionSummary.vendor_pattern && (
               <div className="flex flex-col">
-                <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">벤더 패턴</span>
+                <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">{t('report.ext.vendorPattern')}</span>
                 <span className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{externalSolutionSummary.vendor_pattern}</span>
               </div>
             )}
             {externalSolutionSummary.source && (
-              <span className="font-label-sm text-label-sm text-text-secondary">출처: {externalSolutionSummary.source}</span>
+              <span className="font-label-sm text-label-sm text-text-secondary">{t('report.source')}: {externalSolutionSummary.source}</span>
             )}
           </div>
         )}
         <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
-          * 도입 비용은 벤더별 견적에 따라 산정됩니다.
+          {t('report.ext.costNote')}
         </p>
       </div>
     )
@@ -772,22 +782,20 @@ export function DecisionSidePanel({
     return (
       <div className="flex flex-col gap-sm">
         <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
-          {isApac
-            ? '유사도 충분 → 본사 내재화 구축을 권고합니다. 예상 규모는 다음과 같습니다.'
-            : '권역 확산 기준 미달, 외부솔루션 대비 적합 → 본사 자체구축을 권고합니다. 예상 규모는 다음과 같습니다.'}
+          {isApac ? t('report.hq.leadApac') : t('report.hq.lead')}
         </p>
         <div className="flex flex-col gap-xs font-body-md text-body-md">
           <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-primary/10 border-l-4 border-primary">
-            <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축비용</span>
+            <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">{t('report.hq.cost')}</span>
             <span className="text-primary font-bold font-body-lg text-body-lg">{money(hqBaselineCost ?? 0, hqBaselineCurrency)}</span>
           </div>
           <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-surface-container border border-outline-variant">
-            <span className="text-text-secondary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축기간</span>
-            <span className="text-text-primary font-bold font-body-md text-body-md">{intComma(hqBaselineMonths)} 개월</span>
+            <span className="text-text-secondary font-semibold uppercase tracking-wider font-label-md text-label-md">{t('report.hq.months')}</span>
+            <span className="text-text-primary font-bold font-body-md text-body-md">{intComma(hqBaselineMonths)} {t('report.months')}</span>
           </div>
         </div>
         <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
-          {isApac ? '* 내재화 기준 baseline 값(참고용).' : '* 본사 자체구축 기준 baseline 값(참고용).'}
+          {isApac ? t('report.hq.noteApac') : t('report.hq.note')}
         </p>
       </div>
     )

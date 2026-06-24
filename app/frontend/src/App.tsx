@@ -8,6 +8,8 @@ import { GlobeIntro } from './components/map/GlobeIntro'
 import { MapView } from './components/map/MapView'
 import { ChatWidget } from './components/chat/ChatWidget'
 import { ProgressPanel } from './components/progress/ProgressPanel'
+import { LanguageSelectorDropdown } from './components/ui/language-selector-dropdown'
+import { useT } from './i18n/dict'
 
 // 라우트 화면 코드 스플리팅(NFR Q3=A)
 const DetailView = lazy(() => import('./components/detail/DetailView'))
@@ -23,6 +25,7 @@ function prefersReducedMotion(): boolean {
 
 export default function App() {
   const { route, navigate, goHome } = useRoute()
+  const t = useT()
   // 인트로(지구본) 스킵 조건: ① 딥링크 진입 ② CI/로고로 지도 복귀(skipIntro 플래그) — 둘 다 지도부터.
   // ⚠️ 이니셜라이저는 순수해야 한다(부수효과 금지). StrictMode(dev)는 useState 이니셜라이저를
   //    2번 호출하므로, 여기서 removeItem 하면 1차 호출이 플래그를 지워 2차 호출이 false를 반환 →
@@ -127,8 +130,10 @@ export default function App() {
     </Suspense>
   )
 
-  // AISea 모달 상단 스트립 — route 기준 태그/타이틀(P1=국가 정보·PR1=국가 진단 보고서 등)
-  const frame = modalFrame(route)
+  // AISea 모달 상단 스트립 — route 기준 태그/타이틀(P1=국가 정보·PR1=국가 진단 보고서 등). 한/영 번역.
+  const frame = modalFrame(route, t)
+  // 룰셋 화면은 TopBar 없이 단독으로 뜨므로, 컨테이너 상단 스트립에 한/영 토글을 얹는다.
+  const headerExtra = route.screen === 'ruleset' ? <LanguageSelectorDropdown /> : undefined
 
   // 팝업(상세/보고서) 진입 시 뒤 지도를 해당 국가/권역으로 확대. 닫히면(map/ruleset) null → 복귀.
   const focus =
@@ -150,12 +155,13 @@ export default function App() {
       />
 
       {overlay && route.mode === 'popup' && popupReady && (
-        <PopupContainer onClose={goHome} tag={frame.tag} tagClass={frame.tagClass} title={frame.title}>
+        <PopupContainer onClose={goHome} tag={frame.tag} tagClass={frame.tagClass} title={frame.title} headerExtra={headerExtra}>
+
           {overlay}
         </PopupContainer>
       )}
       {overlay && route.mode === 'fullscreen' && (
-        <FullscreenContainer onBack={goHome} tag={frame.tag} tagClass={frame.tagClass} title={frame.title}>
+        <FullscreenContainer onBack={goHome} tag={frame.tag} tagClass={frame.tagClass} title={frame.title} headerExtra={headerExtra}>
           {overlay}
         </FullscreenContainer>
       )}
@@ -167,23 +173,28 @@ export default function App() {
 }
 
 // route → 모달 스트립 태그/타이틀. 데이터(국가명 등)는 뷰 자체 헤더가 담당하므로 여기선 분류 라벨만.
-function modalFrame(route: ReturnType<typeof useRoute>['route']): {
+// 라벨은 t()로 한/영 번역(shell.* 키).
+function modalFrame(
+  route: ReturnType<typeof useRoute>['route'],
+  t: (key: string) => string,
+): {
   tag: string
   tagClass: string
   title: string
 } {
-  if (route.screen === 'ruleset') return { tag: '룰셋 설정', tagClass: 'bg-text-secondary', title: '진단 룰셋 설정' }
+  if (route.screen === 'ruleset')
+    return { tag: t('shell.tag.ruleset'), tagClass: 'bg-text-secondary', title: t('shell.title.ruleset') }
   const isCountry = route.domain === 'country'
   if (route.screen === 'report')
     return {
-      tag: isCountry ? '국가 진단 보고서' : '권역 진단 보고서',
+      tag: isCountry ? t('shell.tag.countryReport') : t('shell.tag.regionReport'),
       tagClass: 'bg-primary',
-      title: isCountry ? '국가 진단 보고서' : '권역 진단 보고서',
+      title: isCountry ? t('shell.title.countryReport') : t('shell.title.regionReport'),
     }
   // detail
   return {
-    tag: isCountry ? '국가 정보' : '권역 정보',
+    tag: isCountry ? t('shell.tag.countryDetail') : t('shell.tag.regionDetail'),
     tagClass: 'bg-primary',
-    title: isCountry ? '국가 상세' : '권역 상세',
+    title: isCountry ? t('shell.title.countryDetail') : t('shell.title.regionDetail'),
   }
 }

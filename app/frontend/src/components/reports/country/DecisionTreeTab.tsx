@@ -1,13 +1,18 @@
 // 탭2 시스템 결정 트리 — 결정트리(3/4) + 구독료 구간표(1/4)
 import type { CountryReportData } from '../types'
 import { DecisionTreeSvg, DecisionSidePanel, Panel } from './shared'
+import { useT } from '../../../i18n/dict'
+import { useLang, locText } from '../../../i18n/locale'
 
 export function DecisionTreeTab({ data }: { data: CountryReportData }) {
   const sim = data.tabs.tab_1_1_similarity
   const dec = data.tabs.tab_1_2_decision
   const tco = data.tabs.tab_1_3_tco
-  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아' }
-  const baseKo = baseKoMap[data.target.base_country] ?? data.target.base_country
+  const t = useT()
+  const lang = useLang()
+  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아', AU: '호주', CL: '칠레' }
+  const baseEnMap: Record<string, string> = { GB: 'UK', US: 'USA', DE: 'Germany', FR: 'France', IT: 'Italy', AU: 'Australia', CL: 'Chile' }
+  const baseKo = (lang === 'en' ? baseEnMap[data.target.base_country] : baseKoMap[data.target.base_country]) ?? data.target.base_country
   const sub = tco.subscription_details ?? ({} as NonNullable<typeof tco.subscription_details>)
 
   // APAC(아시아) — 권역 확산·유사도 분기 없이 외부솔루션·자체구축(내재화)을 양쪽 동등 제시(decision="apac_dual").
@@ -16,14 +21,14 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
 
   // 우측 패널 제목/아이콘 — 결정별로 바뀐다. APAC(양쪽 제시)은 외부솔루션 후보를 노출.
   const sidePanelTitle = isApacDual
-    ? '해당국 외부솔루션'
+    ? t('sum.side.apac')
     : dec.decision === 'external_solution'
-      ? '추천 외부솔루션'
+      ? t('sum.side.ext')
       : dec.decision === 'hq_build'
         ? isApac
-          ? '내재화 예상 비용'
-          : '본사 구축 예상 비용'
-        : '구독료 구간표'
+          ? t('dtt.side.internalize')
+          : t('sum.side.hq')
+        : t('sum.side.sub')
   const sidePanelIcon =
     isApacDual || dec.decision === 'external_solution' ? 'extension' : dec.decision === 'hq_build' ? 'domain' : 'payments'
 
@@ -33,12 +38,11 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
     dec.decision === 'baseline_already_deployed' ||
     dec.decision === 'already_deployed'
   if (isAlreadyDeployed) {
-    const rec = typeof dec.recommendation === 'object' ? dec.recommendation.ko : dec.recommendation
+    const rec = locText(dec.recommendation, lang)
     return (
-      <Panel icon="account_tree" title="시스템 결정 트리">
+      <Panel icon="account_tree" title={t('sum.decisionTree')}>
         <p className="font-body-md text-body-md text-on-surface-variant">
-          {rec ??
-            `${data.country_meta.country_ko}은(는) 이미 시스템이 운영 중인 국가로, 신규 진출 결정 트리는 적용되지 않습니다.`}
+          {rec || t('sum.noDecisionTree').replace('{country}', lang === 'en' ? data.country_meta.country : data.country_meta.country_ko)}
         </p>
       </Panel>
     )
@@ -47,7 +51,7 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
   return (
     <div className="flex flex-col lg:flex-row gap-gutter items-stretch">
       <div className="lg:w-3/4 flex min-w-0">
-        <Panel icon="account_tree" title="시스템 결정 트리" className="h-full w-full">
+        <Panel icon="account_tree" title={t('sum.decisionTree')} className="h-full w-full">
           <DecisionTreeSvg
             score={sim.overall_score}
             baseCountryKo={baseKo}

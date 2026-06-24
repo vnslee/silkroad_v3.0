@@ -1,8 +1,10 @@
 // 탭1 유사도 점수 — 레이더(축별) + 축별 점수카드 + 디멘전별 채점 + 원천 데이터 항목
 import type { CountryReportData, SimilarityItem } from '../types'
 import { Panel, EvidenceCard } from './shared'
+import { useT } from '../../../i18n/dict'
+import { useLang } from '../../../i18n/locale'
 
-const AXIS_KO: Record<string, string> = { system: '시스템', product: '상품', regulatory: '규제', risk: '리스크' }
+const AXIS_KEY: Record<string, string> = { system: 'sim.axis.system', product: 'sim.axis.product', regulatory: 'sim.axis.regulatory', risk: 'sim.axis.risk' }
 // 레이더 4축 고정 순서: 상단=시스템, 우=상품, 하=규제, 좌=리스크 (mockup)
 const RADAR_ORDER = ['system', 'product', 'regulatory', 'risk']
 
@@ -19,9 +21,12 @@ function gapColor(gap: number): string {
 
 export function SimilarityTab({ data }: { data: CountryReportData }) {
   const sim = data.tabs.tab_1_1_similarity
-  const countryKo = data.country_meta.country_ko
-  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아' }
-  const baseKo = baseKoMap[data.target.base_country] ?? data.target.base_country
+  const t = useT()
+  const lang = useLang()
+  const countryKo = lang === 'en' ? data.country_meta.country : data.country_meta.country_ko
+  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아', AU: '호주', CL: '칠레' }
+  const baseEnMap: Record<string, string> = { GB: 'UK', US: 'USA', DE: 'Germany', FR: 'France', IT: 'Italy', AU: 'Australia', CL: 'Chile' }
+  const baseKo = (lang === 'en' ? baseEnMap[data.target.base_country] : baseKoMap[data.target.base_country]) ?? data.target.base_country
   const mult = Math.round((data.tabs.tab_1_3_tco.similarity_multiplier ?? 0) * 100)
   const band = data.tabs.tab_1_3_tco.similarity_band
 
@@ -33,17 +38,17 @@ export function SimilarityTab({ data }: { data: CountryReportData }) {
           icon="radar"
           title={
             <>
-              유사도 점수 ({countryKo} vs {baseKo})
+              {t('sim.score')} ({countryKo} vs {baseKo})
             </>
           }
         >
           <div className="relative flex flex-col items-center">
             <div className="w-full aspect-square relative flex items-center justify-center mb-md max-w-md mx-auto">
               <RadarChart axes={sim.axes} />
-              <span className="absolute top-0 left-1/2 -translate-x-1/2 font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">시스템</span>
-              <span className="absolute right-0 top-1/2 -translate-y-1/2 font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">상품</span>
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">규제</span>
-              <span className="absolute left-0 top-1/2 -translate-y-1/2 font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">리스크</span>
+              <span className="absolute top-0 left-1/2 -translate-x-1/2 font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">{t('sim.axis.system')}</span>
+              <span className="absolute right-0 top-1/2 -translate-y-1/2 font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">{t('sim.axis.product')}</span>
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">{t('sim.axis.regulatory')}</span>
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">{t('sim.axis.risk')}</span>
             </div>
           </div>
         </Panel>
@@ -51,11 +56,11 @@ export function SimilarityTab({ data }: { data: CountryReportData }) {
 
       {/* 축별 점수 */}
       <div className="lg:col-span-4 flex flex-col gap-xl">
-        <Panel icon="assessment" title="축별 점수">
+        <Panel icon="assessment" title={t('sim.axisScores')}>
           <div className="grid grid-cols-2 gap-sm mb-md">
             {RADAR_ORDER.map((ax) => (
               <div key={ax} className="flex flex-col p-sm bg-surface rounded-lg border border-surface-container-highest">
-                <span className="font-label-sm text-label-sm text-text-secondary uppercase">{AXIS_KO[ax] ?? ax}</span>
+                <span className="font-label-sm text-label-sm text-text-secondary uppercase">{t(AXIS_KEY[ax] ?? ax)}</span>
                 <span className="font-headline-md text-headline-md text-primary">{(sim.axes[ax] ?? 0).toFixed(1)}</span>
               </div>
             ))}
@@ -72,13 +77,13 @@ export function SimilarityTab({ data }: { data: CountryReportData }) {
           <div className="p-md rounded-lg border-l-4 border-emerald-600" style={{ background: 'rgba(16,122,71,.06)' }}>
             <div className="flex items-center gap-xs mb-xs">
               <span className="material-symbols-outlined text-emerald-700 text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">percent</span>
-              <span className="font-semibold font-label-md text-label-md text-emerald-800 uppercase">TCO 적용 승수</span>
+              <span className="font-semibold font-label-md text-label-md text-emerald-800 uppercase">{t('sim.tcoMult')}</span>
             </div>
             <div className="flex items-baseline gap-xs">
               <span className="font-headline-lg text-headline-lg text-emerald-700">{mult}%</span>
             </div>
             <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
-              유사도 {band} → {mult}% 적용
+              {t('sim.bandApplied').replace('{band}', band).replace('{mult}', String(mult))}
             </p>
           </div>
         </Panel>
@@ -90,12 +95,12 @@ export function SimilarityTab({ data }: { data: CountryReportData }) {
           icon="calculate"
           title={
             <>
-              디멘전별 채점 ({countryKo} vs {baseKo})
+              {t('sim.dimScoring')} ({countryKo} vs {baseKo})
             </>
           }
         >
           <p className="font-body-sm text-body-sm text-text-secondary mb-md">
-            각 디멘전을 1~5점 척도로 양국 평가 후, 격차에 따라 유사도를 산출합니다.
+            {t('sim.dimScoringLead')}
           </p>
           <div className="flex flex-col gap-md">
             {sim.items.map((it, i) => (
@@ -107,7 +112,7 @@ export function SimilarityTab({ data }: { data: CountryReportData }) {
 
       {/* 원천 데이터 항목 */}
       <div className="lg:col-span-12">
-        <Panel icon="fact_check" title="유사도 산정 근거 항목 (원천 데이터)">
+        <Panel icon="fact_check" title={t('sim.evidenceItems')}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
             {sim.evidence_items.map((it, i) => (
               <EvidenceCard key={i} item={it} />
@@ -120,6 +125,8 @@ export function SimilarityTab({ data }: { data: CountryReportData }) {
 }
 
 function DimensionCard({ item, countryKo, baseKo }: { item: SimilarityItem; countryKo: string; baseKo: string }) {
+  const t = useT()
+  const lang = useLang()
   const headScore = Math.round(item.item_similarity)
   return (
     <div className="bg-surface border border-surface-container-highest rounded-lg p-md">
@@ -127,7 +134,7 @@ function DimensionCard({ item, countryKo, baseKo }: { item: SimilarityItem; coun
         <div>
           <div className="font-label-md text-label-md text-text-primary uppercase tracking-wider">{item.item}</div>
           <div className="font-label-sm text-label-sm text-text-secondary mt-xs">
-            축: {item.axis} · 가중치 {Math.round(item.weight * 100)}%
+            {t('sim.axisLabel')}: {item.axis} · {t('sim.weight')} {Math.round(item.weight * 100)}%
           </div>
         </div>
         <div className="flex flex-col items-end">
@@ -138,15 +145,15 @@ function DimensionCard({ item, countryKo, baseKo }: { item: SimilarityItem; coun
       <table className="w-full font-body-sm text-body-sm">
         <thead>
           <tr className="text-text-secondary border-b border-surface-container-highest">
-            <th className="py-xs pr-sm text-left font-label-sm text-label-sm uppercase">디멘전</th>
+            <th className="py-xs pr-sm text-left font-label-sm text-label-sm uppercase">{t('sim.dimension')}</th>
             <th className="py-xs px-sm text-left font-label-sm text-label-sm uppercase">
-              {countryKo} <span className="text-text-secondary normal-case">(대상국)</span>
+              {countryKo} <span className="text-text-secondary normal-case">({t('sim.targetCountry')})</span>
             </th>
             <th className="py-xs px-sm text-left font-label-sm text-label-sm uppercase">
-              {baseKo} <span className="text-text-secondary normal-case">(베이스라인)</span>
+              {baseKo} <span className="text-text-secondary normal-case">({t('sim.baseline')})</span>
             </th>
-            <th className="py-xs px-sm text-right font-label-sm text-label-sm uppercase">격차</th>
-            <th className="py-xs pl-sm text-right font-label-sm text-label-sm uppercase">유사도</th>
+            <th className="py-xs px-sm text-right font-label-sm text-label-sm uppercase">{t('sim.gap')}</th>
+            <th className="py-xs pl-sm text-right font-label-sm text-label-sm uppercase">{t('sim.similarity')}</th>
           </tr>
         </thead>
         <tbody>
@@ -154,7 +161,7 @@ function DimensionCard({ item, countryKo, baseKo }: { item: SimilarityItem; coun
             <tr key={i} className="border-b border-surface-container-highest align-top">
               <td className="py-sm pr-sm">
                 <div className="font-body-sm text-body-sm text-text-primary font-semibold">{d.dimension}</div>
-                {d.note && <div className="font-body-sm text-body-sm text-text-secondary mt-xs">{d.note}</div>}
+                {d.note && <div className="font-body-sm text-body-sm text-text-secondary mt-xs">{lang === 'en' && d.note_en ? d.note_en : d.note}</div>}
               </td>
               <td className="py-sm px-sm w-[110px]">
                 <ScoreBar score={d.target_score} color="bg-primary" />

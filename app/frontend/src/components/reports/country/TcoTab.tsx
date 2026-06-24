@@ -4,6 +4,8 @@ import type { CountryReportData, ReportItem } from '../types'
 import { Panel, EvidenceCard, Donut, MiniTimeseries, money, intComma } from './shared'
 import { Money, useFx } from '../Money'
 import { krwCompact } from '../../../utils/currency'
+import { useT } from '../../../i18n/dict'
+import { useLang, locText } from '../../../i18n/locale'
 
 const MULT_TABLE: { band: string; mult: number }[] = [
   { band: '90 ~ 100', mult: 50 },
@@ -17,8 +19,11 @@ const MULT_TABLE: { band: string; mult: number }[] = [
 export function TcoTab({ data }: { data: CountryReportData }) {
   const tco = data.tabs.tab_1_3_tco
   const dec = data.tabs.tab_1_2_decision
-  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아', AU: '호주' }
-  const baseKo = baseKoMap[data.target.base_country] ?? data.target.base_country
+  const t = useT()
+  const lang = useLang()
+  const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아', AU: '호주', CL: '칠레' }
+  const baseEnMap: Record<string, string> = { GB: 'UK', US: 'USA', DE: 'Germany', FR: 'France', IT: 'Italy', AU: 'Australia', CL: 'Chile' }
+  const baseKo = (lang === 'en' ? baseEnMap[data.target.base_country] : baseKoMap[data.target.base_country]) ?? data.target.base_country
 
   // 기준국·이미 진출(운영중)한 국가·TCO 미산정 보고서는 build_breakdown 등이 없어 산식 렌더 불가 → 안내 대체.
   const hasTco =
@@ -29,12 +34,11 @@ export function TcoTab({ data }: { data: CountryReportData }) {
     tco.build_breakdown != null &&
     tco.expected_contracts_breakdown != null
   if (!hasTco) {
-    const msg = typeof tco.message === 'object' ? tco.message.ko : tco.message
+    const msg = locText(tco.message, lang)
     return (
-      <Panel icon="payments" title="TCO · 구독료">
+      <Panel icon="payments" title={t('tco.title')}>
         <p className="font-body-md text-body-md text-on-surface-variant">
-          {msg ??
-            `${data.country_meta.country_ko}은(는) 이미 시스템이 배포된 국가이거나 TCO 산정 대상이 아니어서, 구축비용·구독료 산식이 제공되지 않습니다.`}
+          {msg || t('tco.noTco').replace('{country}', lang === 'en' ? data.country_meta.country : data.country_meta.country_ko)}
         </p>
       </Panel>
     )
@@ -55,19 +59,19 @@ export function TcoTab({ data }: { data: CountryReportData }) {
     <div className="flex flex-col gap-xl">
       {/* KPI 4 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-gutter">
-        <Kpi label="총 10년 TCO" icon="payments" value={<Money value={tco.total_tco_10y} currency={tco.currency} />} />
-        <Kpi label="예상 구축 기간" icon="schedule" value={`${tco.build_months.toFixed(1)}M`} />
-        <Kpi label="예상 계약건수" icon="fact_check" value={`${intComma(tco.expected_contracts)} 건`} />
+        <Kpi label={t('tco.kpi.total')} icon="payments" value={<Money value={tco.total_tco_10y} currency={tco.currency} />} />
+        <Kpi label={t('tco.kpi.buildMonths')} icon="schedule" value={`${tco.build_months.toFixed(1)}M`} />
+        <Kpi label={t('tco.kpi.contracts')} icon="fact_check" value={`${intComma(tco.expected_contracts)} ${t('tco.cases')}`} />
         {isApacFixed ? (
-          <Kpi label="구축비 기준" icon="account_balance" value="기준국 자산" sub="유사도 승수 미적용" />
+          <Kpi label={t('tco.kpi.buildBasis')} icon="account_balance" value={t('tco.baselineAsset')} sub={t('tco.noMultiplier')} />
         ) : (
-          <Kpi label="유사도 승수" icon="percent" value={`${mult}%`} sub={`구간 ${tco.similarity_band}`} />
+          <Kpi label={t('tco.kpi.multiplier')} icon="percent" value={`${mult}%`} sub={`${t('tco.band')} ${tco.similarity_band}`} />
         )}
       </div>
 
       {/* APAC은 산식 없이 기준국(호주) 자체구축 비용·기간만 — 외부 솔루션 비교 기준값. */}
       {isApacFixed ? (
-        <Panel icon="build" title="구축비용·기간 (기준국 자체구축 기준)">
+        <Panel icon="build" title={t('tco.panel.buildApac')}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-sm">
             <FormulaCell
               label="구축비용"
@@ -83,12 +87,12 @@ export function TcoTab({ data }: { data: CountryReportData }) {
             />
           </div>
           <p className="mt-md font-label-sm text-label-sm text-text-secondary">
-            APAC은 유사도 승수를 적용하지 않고, 기준국({baseKo})의 자체구축 비용·기간을 그대로 사용합니다. 외부 솔루션 도입 비용과 비교하기 위한 기준값입니다.
+            {t('tco.apacNote').replace('{base}', baseKo)}
           </p>
         </Panel>
       ) : (
       /* 구축비용·기간 산식 — 내재화(hq_build)와 확산(baseline_reuse)에 따라 입력 셀이 다르다. */
-      <Panel icon="build" title="구축비용·기간 산식">
+      <Panel icon="build" title={t('tco.panel.buildFormula')}>
         <div className="bg-surface-container p-md rounded-lg border-l-4 border-primary mb-md font-body-sm text-body-sm text-on-surface-variant">
           {bd.formula ?? '구축비용/기간 = 베이스라인(B) 값 × 유사도 승수'}
         </div>
@@ -115,7 +119,7 @@ export function TcoTab({ data }: { data: CountryReportData }) {
       )}
 
       {/* 예상 계약건수 산식 */}
-      <Panel icon="function" title="예상 계약건수 산식">
+      <Panel icon="function" title={t('tco.panel.contractsFormula')}>
         <div className="bg-surface-container p-md rounded-lg border-l-4 border-primary mb-md font-body-sm text-body-sm text-on-surface-variant">
           {tco.expected_contracts_breakdown.formula ?? '신차 판매대수 × 금융이용률(신차) × (할부+리스 비중) × 우리사 예상 점유율'}
         </div>
@@ -131,23 +135,23 @@ export function TcoTab({ data }: { data: CountryReportData }) {
       {/* 워터폴 + 누적추이 */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
         <div className="lg:col-span-6">
-          <Panel icon="stacked_bar_chart" title="10년 TCO 구성 분해 (워터폴)">
+          <Panel icon="stacked_bar_chart" title={t('tco.panel.waterfall')}>
             <TcoWaterfall tco={tco} />
           </Panel>
         </div>
         <div className="lg:col-span-6">
           <Panel
             icon="trending_up"
-            title="10년 누적 비용 추이"
+            title={t('tco.panel.cumulative')}
             right={
               <div className="flex items-center gap-md">
                 <span className="flex items-center gap-xs">
                   <span className="w-3 h-3 rounded-sm" style={{ background: '#14181C' }} />
-                  <span className="font-label-sm text-label-sm text-text-secondary">Y0 구축비</span>
+                  <span className="font-label-sm text-label-sm text-text-secondary">{t('tco.legend.y0')}</span>
                 </span>
                 <span className="flex items-center gap-xs">
                   <span className="w-3 h-3 rounded-full" style={{ background: '#14181C' }} />
-                  <span className="font-label-sm text-label-sm text-text-secondary">누적 총비용</span>
+                  <span className="font-label-sm text-label-sm text-text-secondary">{t('tco.legend.cumTotal')}</span>
                 </span>
               </div>
             }
@@ -156,10 +160,10 @@ export function TcoTab({ data }: { data: CountryReportData }) {
             <div className="mt-md bg-surface-container/60 p-md rounded-lg border-l-4 border-primary">
               <div className="flex items-center gap-xs mb-xs">
                 <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">function</span>
-                <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">산식</span>
+                <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">{t('tco.formula')}</span>
               </div>
               <code className="block font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-                누적(Y) = 구축비 + (연 구독료 + 연 유지보수 + 운영비 ÷ 10) × Y
+                {t('tco.cumFormula')}
               </code>
             </div>
           </Panel>
@@ -170,43 +174,41 @@ export function TcoTab({ data }: { data: CountryReportData }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
         <div className="lg:col-span-7">
           {isSubscription ? (
-            <Panel icon="stairs" title="구독료 구간 (전체 소급)">
+            <Panel icon="stairs" title={t('tco.panel.subTier')}>
               <StepChart tco={tco} />
               <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
-                X=누적 계약건수, Y=건당 단가 · 누적 증가 시 자동 하향 (전 물량 소급)
+                {t('tco.subTierNote')}
               </p>
             </Panel>
           ) : (
-            <Panel icon="build" title={isApacFixed ? `구축비용·기간 (기준국 ${baseKo} 자체구축)` : '구축비용 비교 (기준국 → 신규국)'}>
+            <Panel icon="build" title={isApacFixed ? t('tco.panel.buildCompareApac').replace('{base}', baseKo) : t('tco.panel.buildCompare')}>
               <BaselineBuildCompare tco={tco} ccy={ccy} baseKo={baseKo} />
               <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
-                {isApacFixed
-                  ? `APAC은 승수를 적용하지 않고 기준국(${baseKo}) 자체구축 비용·기간을 그대로 사용합니다. 외부 솔루션 도입 비용과 비교하기 위한 기준값입니다.`
-                  : '비구독 솔루션 — 구독료 대신 기준국(B) 구축비용 대비 신규국 구축비용을 비교합니다. 구독료는 운영비에 포함됩니다.'}
+                {isApacFixed ? t('tco.buildCompareNoteApac').replace('{base}', baseKo) : t('tco.buildCompareNote')}
               </p>
             </Panel>
           )}
         </div>
         <div className="lg:col-span-5">
-          <Panel icon="percent" title="유사도 → TCO 승수">
+          <Panel icon="percent" title={t('tco.panel.multiplier')}>
             <p className="font-body-sm text-body-sm text-text-secondary mb-sm">
-              탭1-1 종합 유사도 점수를 베이스라인 비용·기간에 적용할 승수로 환산합니다.
+              {t('tco.multiplierLead')}
             </p>
             {tco.build_method === 'hq_build' && (
               <div className="bg-surface-container p-sm rounded-lg border-l-4 border-primary mb-sm font-label-sm text-label-sm text-on-surface-variant">
-                내재화(본사 자체구축) 결정이라 재사용 승수는 구축비에 적용되지 않습니다. 아래 표는 참고용입니다.
+                {t('tco.multiplierHqNote')}
               </div>
             )}
             {isApacFixed && (
               <div className="bg-surface-container p-sm rounded-lg border-l-4 border-primary mb-sm font-label-sm text-label-sm text-on-surface-variant">
-                APAC은 기준국({baseKo}) 자체구축 값을 그대로 사용하므로 유사도 승수가 적용되지 않습니다. 아래 표는 참고용입니다.
+                {t('tco.multiplierApacNote').replace('{base}', baseKo)}
               </div>
             )}
             <table className="w-full">
               <thead>
                 <tr className="text-text-secondary">
-                  <th className="px-2 py-1 text-left font-label-sm text-label-sm uppercase">종합 유사도</th>
-                  <th className="px-2 py-1 text-right font-label-sm text-label-sm uppercase">승수</th>
+                  <th className="px-2 py-1 text-left font-label-sm text-label-sm uppercase">{t('tco.overallSim')}</th>
+                  <th className="px-2 py-1 text-right font-label-sm text-label-sm uppercase">{t('tco.mult')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -223,15 +225,15 @@ export function TcoTab({ data }: { data: CountryReportData }) {
             </table>
             <div className="flex flex-col gap-xs mt-md pt-sm border-t border-surface-container-highest font-body-sm text-body-sm">
               <div className="flex justify-between">
-                <span className="text-text-secondary">현재 유사도</span>
+                <span className="text-text-secondary">{t('tco.currentSim')}</span>
                 <span className="text-text-primary font-semibold">{tco.similarity_score.toFixed(1)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-text-secondary">적용 구간</span>
+                <span className="text-text-secondary">{t('tco.appliedBand')}</span>
                 <span className="text-primary font-semibold">{tco.similarity_band}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-text-secondary">적용 승수</span>
+                <span className="text-text-secondary">{t('tco.appliedMult')}</span>
                 <span className="text-primary font-semibold">{mult}%</span>
               </div>
             </div>
@@ -240,7 +242,7 @@ export function TcoTab({ data }: { data: CountryReportData }) {
       </div>
 
       {/* 계약 규모 산정 근거 항목 */}
-      <Panel icon="table_chart" title="계약 규모 산정 근거 항목">
+      <Panel icon="table_chart" title={t('tco.panel.basisItems')}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
           {tco.items.map((it, i) => (
             <ContractBasisCard key={i} item={it} />
@@ -516,6 +518,7 @@ function CumulativeChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'
 // 구독료 구간 스텝차트(누적건수→단가, 현재 위치 마커)
 function StepChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
   const fx = useFx()
+  const t = useT()
   const cur = tco.subscription_details.currency ?? tco.currency
   const W = 760
   const H = 260
@@ -530,7 +533,7 @@ function StepChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
   if (appliedPrice == null || !tiers?.length) {
     return (
       <p className="font-body-sm text-body-sm text-text-secondary py-md">
-        {tco.subscription_details.note ?? '이 국가는 구독료 구간이 적용되지 않습니다.'}
+        {tco.subscription_details.note ?? t('tco.noSubTier')}
       </p>
     )
   }
@@ -566,7 +569,7 @@ function StepChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
       <line x1={scaleX(current)} y1={top} x2={scaleX(current)} y2={bottom} stroke="#4f8a6d" strokeWidth="1.5" strokeDasharray="4 4" />
       <circle cx={scaleX(current)} cy={scaleY(appliedPrice)} r="6" fill="#4f8a6d" />
       <text x={scaleX(current) + 10} y={scaleY(appliedPrice) + 4} fontSize="12" fill="#4f8a6d" fontWeight="700">
-        현재 {intComma(current)}건 → {krwCompact(appliedPrice, cur, fx)}
+        {t('tco.current')} {intComma(current)}{t('tco.cases')} → {krwCompact(appliedPrice, cur, fx)}
       </text>
     </svg>
   )

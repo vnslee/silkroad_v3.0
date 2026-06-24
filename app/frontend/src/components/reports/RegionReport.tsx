@@ -3,6 +3,7 @@
 // 헤더 chrome(대상/버전 선택·PDF·메일)은 ReportView가 담당하므로 여기선 본문만 렌더.
 import { useState } from 'react'
 import type { RegionReportData } from './types'
+import { useT } from '../../i18n/dict'
 import { SummaryTab } from './region/SummaryTab'
 import { KillswitchTab } from './region/KillswitchTab'
 import { AttractivenessTab } from './region/AttractivenessTab'
@@ -18,12 +19,13 @@ interface Props {
 
 type TabId = 'summary' | 'killswitch' | 'attractiveness' | 'it' | 'market'
 
-const TABS: { id: TabId; label: string; sub: string }[] = [
-  { id: 'summary', label: '요약', sub: 'Summary' },
-  { id: 'killswitch', label: '킬스위치', sub: 'Kill-Switch' },
-  { id: 'attractiveness', label: '매력도', sub: 'Attractiveness' },
-  { id: 'it', label: 'IT/순위', sub: 'IT & Ranking' },
-  { id: 'market', label: '시장배경', sub: 'Market' },
+// 탭 라벨·서브라벨은 t()로 치환 — id별 dict 키 매핑.
+const TAB_DEFS: { id: TabId; labelKey: string; subKey: string }[] = [
+  { id: 'summary', labelKey: 'rgn.tab.summary', subKey: 'rgn.tab.summary.sub' },
+  { id: 'killswitch', labelKey: 'rgn.tab.killswitch', subKey: 'rgn.tab.killswitch.sub' },
+  { id: 'attractiveness', labelKey: 'rgn.tab.attractiveness', subKey: 'rgn.tab.attractiveness.sub' },
+  { id: 'it', labelKey: 'rgn.tab.it', subKey: 'rgn.tab.it.sub' },
+  { id: 'market', labelKey: 'rgn.tab.market', subKey: 'rgn.tab.market.sub' },
 ]
 
 // 탭 id → 콘텐츠 컴포넌트(인쇄 시 전체 펼침에 재사용).
@@ -44,13 +46,15 @@ function TabContent({ id, data }: { id: TabId; data: RegionReportData }) {
 
 export function RegionReport({ data, className = '', printMode = false }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>('summary')
+  const t = useT()
+  const tabs = TAB_DEFS.map((d) => ({ id: d.id, label: t(d.labelKey), sub: t(d.subKey) }))
 
   // 인쇄 모드 — 모든 탭을 섹션 제목과 함께 세로로 펼쳐 렌더(탭별 새 페이지는 print CSS가 처리).
   if (printMode) {
     return (
       <main className={`px-gutter sm:px-xl lg:px-[64px] py-xl ${className}`}>
         <div className="max-w-7xl mx-auto">
-          {TABS.map((t) => (
+          {tabs.map((t) => (
             <section key={t.id} className="report-print-section">
               <h2 className="report-print-heading font-headline-md text-headline-md text-primary mb-md">
                 {t.label} <span className="text-text-secondary text-[0.7em]">{t.sub}</span>
@@ -69,7 +73,7 @@ export function RegionReport({ data, className = '', printMode = false }: Props)
         {/* sticky 탭 네비 */}
         <div className="bg-surface-container-lowest border border-surface-border rounded-xl p-sm mb-xl sticky top-0 z-10 card-shadow">
           <div className="flex gap-sm overflow-x-auto" role="tablist" aria-label="권역 보고서 탭">
-            {TABS.map((t) => {
+            {tabs.map((t) => {
               const active = activeTab === t.id
               return (
                 <button

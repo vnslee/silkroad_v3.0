@@ -6,6 +6,9 @@ import type { CountryDetailData, CountryReportData, DetailItem, RankedEntity } f
 import type { RoseChartDatum } from '../charts'
 import { LineChart, RoseChart } from '../charts'
 import { locText } from '../reports/country/shared'
+import { useT, valueLabel } from '../../i18n/dict'
+import { useLang } from '../../i18n/locale'
+import type { Lang } from '../../store'
 
 interface Props {
   data: CountryDetailData
@@ -60,11 +63,13 @@ export function CountryDetail({
   entryMode,
   entrySince,
 }: Props) {
+  const t = useT()
+  const lang = useLang()
   const items = data.items || []
 
   // "진출 정보" 패널 값 — 시스템 결정·IT 유사도·베이스라인·기준 솔루션은 보고서(tab_1_2/1_1)에서.
   const decision = report?.tabs.tab_1_2_decision
-  const systemDecision = decision ? locText(decision.recommendation) || undefined : undefined
+  const systemDecision = decision ? locText(decision.recommendation, lang) || undefined : undefined
   // IT 유사도: similarity 탭 overall_score(=decision.similarity_score) 우선.
   const itSimilarity =
     report?.tabs.tab_1_1_similarity?.overall_score ?? decision?.similarity_score
@@ -94,7 +99,9 @@ export function CountryDetail({
     })
     .filter((d): d is RoseChartDatum => d !== null)
 
-  const bullets = toBullets(data.overall_insight).slice(0, 6)
+  const bullets = toBullets(
+    lang === 'en' && data.overall_insight_en ? data.overall_insight_en : data.overall_insight,
+  ).slice(0, 6)
 
   return (
     <div className={`flex-1 bg-background flex items-start justify-center p-md ${className}`}>
@@ -108,24 +115,24 @@ export function CountryDetail({
               <div className="border border-surface-border rounded-lg p-md bg-surface">
                 <div className="flex justify-between items-center mb-md">
                   <h4 className="font-label-md text-label-md text-on-surface-variant">
-                    핵심 시장 지표 추이
+                    {t('dtl.keyTrend')}
                   </h4>
                 </div>
                 {gdp?.timeseries ? (
                   <LineChart
                     data={gdp.timeseries}
-                    seriesLabel="GDP 성장률(%)"
+                    seriesLabel={t('dtl.chart.gdp')}
                     secondary={autoFin?.timeseries ?? null}
-                    secondaryLabel="오토금융 이용률(신차, %)"
+                    secondaryLabel={t('dtl.chart.autoFin')}
                     normalizeEach
                   />
                 ) : autoFin?.timeseries ? (
-                  <LineChart data={autoFin.timeseries} seriesLabel="오토금융 이용률(신차)" height={160} />
+                  <LineChart data={autoFin.timeseries} seriesLabel={t('dtl.chart.autoFinShort')} height={160} />
                 ) : sales?.timeseries ? (
-                  <LineChart data={sales.timeseries} seriesLabel="신차 판매대수" height={160} />
+                  <LineChart data={sales.timeseries} seriesLabel={t('dtl.chart.sales')} height={160} />
                 ) : (
                   <p className="font-body-sm text-body-sm text-on-surface-variant py-md">
-                    시계열 데이터가 없습니다.
+                    {t('dtl.noTimeseries')}
                   </p>
                 )}
               </div>
@@ -134,7 +141,7 @@ export function CountryDetail({
               {roseData.length >= 2 && (
                 <div>
                   <h3 className="font-headline-md text-headline-md text-primary mb-md">
-                    경쟁 금융사 Top {competitors.length}
+                    {t('dtl.competitorTop').replace('{n}', String(competitors.length))}
                   </h3>
                   <div className="border border-surface-border rounded-lg p-md bg-surface">
                     <RoseChart data={roseData} />
@@ -146,7 +153,7 @@ export function CountryDetail({
             {/* 우: AI 인사이트 + 베이스라인 */}
             <div className="flex flex-col gap-lg lg:border-l border-surface-border lg:pl-lg">
               <h3 className="font-headline-md text-headline-md text-primary -mb-2">
-                AI 인사이트
+                {t('dtl.aiInsight')}
               </h3>
               <ul className="flex flex-col gap-xs">
                 {bullets.map((b, i) => (
@@ -161,11 +168,11 @@ export function CountryDetail({
 
               <div>
                 <h3 className="font-headline-md text-headline-md text-primary mb-sm">
-                  진출 정보
+                  {t('dtl.entryInfo')}
                 </h3>
                 <div className="border border-surface-border rounded-lg bg-surface overflow-hidden divide-y divide-surface-border">
                   {/* 진출 상태 — 항상 표시(배지). */}
-                  <InfoRow label="진출 상태">
+                  <InfoRow label={t('dtl.row.status')}>
                     {entryStatus ? (
                       <span
                         className={`inline-flex items-center rounded px-2 py-0.5 font-label-md text-label-md ${entryStatusStyle}`}
@@ -180,29 +187,29 @@ export function CountryDetail({
                   {entered ? (
                     /* 기진출국: 실제 진출 자산(솔루션·법인유형·진출일). */
                     <>
-                      <InfoRow label="사용 솔루션">
+                      <InfoRow label={t('dtl.row.solution')}>
                         <span className="font-body-md text-body-md text-on-surface">
                           {entrySolution || <Pending />}
                         </span>
                       </InfoRow>
-                      <InfoRow label="법인 유형">
-                        {entryMode ? <EntityModeBadge mode={entryMode} /> : <Pending />}
+                      <InfoRow label={t('dtl.row.entityType')}>
+                        {entryMode ? <EntityModeBadge mode={entryMode} lang={lang} /> : <Pending />}
                       </InfoRow>
-                      <InfoRow label="진출일">
+                      <InfoRow label={t('dtl.row.entryDate')}>
                         <span className="font-body-md text-body-md text-on-surface whitespace-nowrap">
-                          {entrySince != null ? `${entrySince}년` : <Pending />}
+                          {entrySince != null ? `${entrySince}${t('dtl.year')}` : <Pending />}
                         </span>
                       </InfoRow>
                     </>
                   ) : (
                     /* 미진출국: 보고서(tab_1_2/1_1) 기반 시스템 결정·유사도·베이스라인·기준 솔루션. */
                     <>
-                      <InfoRow label="시스템 결정">
+                      <InfoRow label={t('dtl.row.systemDecision')}>
                         <span className="font-body-md text-body-md text-on-surface leading-relaxed">
                           {systemDecision ?? <Pending />}
                         </span>
                       </InfoRow>
-                      <InfoRow label="IT 유사도">
+                      <InfoRow label={t('dtl.row.itSim')}>
                         {itSimilarity != null ? (
                           <span className="font-label-md text-label-md text-secondary font-semibold whitespace-nowrap">
                             {itSimilarity.toFixed(1)}{' '}
@@ -212,7 +219,7 @@ export function CountryDetail({
                           <Pending />
                         )}
                       </InfoRow>
-                      <InfoRow label="권역 베이스라인">
+                      <InfoRow label={t('dtl.row.baseline')}>
                         {baseCountry ? (
                           <span className="inline-flex items-center gap-xs font-body-md text-body-md text-on-surface whitespace-nowrap">
                             <img
@@ -228,7 +235,7 @@ export function CountryDetail({
                           <Pending />
                         )}
                       </InfoRow>
-                      <InfoRow label="기준 솔루션">
+                      <InfoRow label={t('dtl.row.baseSystem')}>
                         <span className="font-body-md text-body-md text-on-surface">
                           {baseSystem ?? <Pending />}
                         </span>
@@ -238,7 +245,7 @@ export function CountryDetail({
                 </div>
                 {!entered && !report && (
                   <p className="mt-xs font-label-sm text-label-sm text-outline">
-                    시스템 결정·유사도는 보고서 생성 후 표시됩니다.
+                    {t('dtl.afterReport')}
                   </p>
                 )}
               </div>
@@ -267,14 +274,15 @@ const ENTITY_MODE_STYLE: Record<string, { bg: string; fg: string }> = {
   단독법인: { bg: '#e9f3ee', fg: '#4f8a6d' },
   JV: { bg: '#fbf0e6', fg: '#c08a2e' },
 }
-function EntityModeBadge({ mode }: { mode: string }) {
+function EntityModeBadge({ mode, lang }: { mode: string; lang: Lang }) {
   const style = ENTITY_MODE_STYLE[mode] ?? { bg: '#eef1f5', fg: '#475569' }
+  const label = valueLabel('entityMode', mode, lang)
   return (
     <span
       className="inline-block px-2 py-0.5 rounded font-label-sm text-label-sm whitespace-nowrap"
       style={{ background: style.bg, color: style.fg }}
     >
-      {mode}
+      {label}
     </span>
   )
 }

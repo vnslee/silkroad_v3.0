@@ -8,6 +8,7 @@ export interface ReportMeta {
   generated_at: string
   schema_version: string
   overall_insight: string
+  overall_insight_en?: string
 }
 
 export interface CountryMeta {
@@ -68,7 +69,9 @@ export interface ReportItem {
   timeseries?: TimeseriesData | null
   tier?: number
   source?: string
+  source_en?: string
   insight?: string
+  insight_en?: string
   insight_ai_generated?: boolean
   status?: string
 }
@@ -81,6 +84,7 @@ export interface SimilarityDimension {
   gap: number
   similarity: number
   note?: string
+  note_en?: string
 }
 export interface SimilarityItem {
   item: string
@@ -201,7 +205,9 @@ export interface TcoTabData {
 export interface NewsEntry {
   news_category: string
   headline: string
+  headline_en?: string
   so_what: string
+  so_what_en?: string
   publisher: string
   pub_date: string
   url: string
