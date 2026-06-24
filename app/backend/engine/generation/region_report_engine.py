@@ -442,9 +442,16 @@ class RegionReportEngine:
         failed_codes: List[str] = []
         tier_counts: Dict[str, int] = {}
 
+        # 진출국(country_status='운영중') — 이미 운영 중이라 신규 진출 게이트 평가 대상이
+        # 아니므로 킬스위치 매트릭스에서 제외(quickwin·히트맵과 동일 기준).
+        country_status = (self.internal_data.get("country_status") or {})
+        entered = {c for c, s in country_status.items() if s == "운영중"}
+
         for country in countries:
             idx = self._country_items_index(country)
             code = country.get("code")
+            if code in entered:
+                continue
             gates = {}
             country_pass = True
             for gate in self.KILLSWITCH_ITEMS:

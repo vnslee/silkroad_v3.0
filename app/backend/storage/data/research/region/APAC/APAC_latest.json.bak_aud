@@ -25,59 +25,59 @@
           "item": "오토금융/리스 시장규모",
           "category": "business",
           "role": "score",
-          "value": 56100,
-          "unit": "AUD_M",
+          "value": 34000,
+          "unit": "EUR_M",
           "direction": "up",
           "axis": "attractiveness",
           "tier": 1,
-          "source": "Mordor Intelligence Australia Auto Finance / AFIA (Australian Finance Industry Association)",
-          "source_en": "Mordor Intelligence Australia Auto Finance / AFIA (Australian Finance Industry Association)",
-          "insight": "신차·중고 합산 약 AUD 56bn(€34bn, 1.65 AUD/EUR 기준). 중국 대비 작으나 APAC 내 성숙·고가 시장.",
-          "insight_en": "~AUD 56B (~€34B at 1.65 AUD/EUR) new+used. Smaller than China but a mature, high-value APAC market.",
+          "source": "PBoC Auto Finance Statistics 2025 / Mordor Intelligence China Auto Finance",
+          "source_en": "PBoC Auto Finance Statistics 2025 / Mordor Intelligence China Auto Finance",
+          "insight": "신차·중고 합산 약 AUD 56bn(€34bn, 1.65 AUD/EUR). 중국 대비 작으나 APAC 내 성숙·고가 시장.",
+          "insight_en": "~AUD 56B (€34B) new+used. Smaller than China but mature, high-value within APAC.",
           "insight_ai_generated": true,
           "timeseries": {
             "history": [
               {
                 "year": 2021,
-                "value": 40071
+                "value": 200000
               },
               {
                 "year": 2022,
-                "value": 44079
+                "value": 220000
               },
               {
                 "year": 2023,
-                "value": 48086
+                "value": 240000
               },
               {
                 "year": 2024,
-                "value": 52093
+                "value": 260000
               },
               {
                 "year": 2025,
-                "value": 56100
+                "value": 280000
               }
             ],
             "forecast": [
               {
                 "year": 2026,
-                "value": 60107
+                "value": 300000
               },
               {
                 "year": 2027,
-                "value": 64114
+                "value": 320000
               },
               {
                 "year": 2028,
-                "value": 68121
+                "value": 340000
               },
               {
                 "year": 2029,
-                "value": 72129
+                "value": 360000
               },
               {
                 "year": 2030,
-                "value": 76136
+                "value": 380000
               }
             ],
             "estimated": true
