@@ -102,7 +102,8 @@ export interface SimilarityTabData {
 export interface DecisionTabData {
   decision: string
   similarity_score: number
-  recommendation: string
+  /** 권역 확산 권고 문구. 엔진 산출은 {ko,en} 객체. */
+  recommendation: string | { ko: string; en?: string }
   base_country: string
   base_system: string
   region_system_exists: boolean

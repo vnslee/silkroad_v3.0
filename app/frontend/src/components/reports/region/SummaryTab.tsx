@@ -12,42 +12,85 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
   const top1 = cc.top3[0]
   const newsItems = es.external_news_scan.items
 
-  // 산점도 포인트: 퀵윈 rows(후보 + 기준국) 전체.
-  const points: ScatterPoint[] = qw.rows.map((r) => ({
-    country: r.country,
-    attractiveness: r.attractiveness,
-    it_similarity: r.it_similarity,
-    is_baseline: r.is_baseline,
-  }))
+  // 산점도 포인트: 퀵윈 rows(후보 + 기준국). 진출국(이미 운영중)은 후보가 아니므로 제외.
+  // 단 기준국(baseline)은 진출국이라도 비교용 별표로 유지한다.
+  const points: ScatterPoint[] = qw.rows
+    .filter((r) => r.is_baseline || !r.already_entered)
+    .map((r) => ({
+      country: r.country,
+      attractiveness: r.attractiveness,
+      it_similarity: r.it_similarity,
+      is_baseline: r.is_baseline,
+    }))
+
+  // 진출국(이미 운영중·기준국 제외) — 요약에 제외 사실을 명시한다.
+  const enteredRows = qw.rows.filter((r) => r.already_entered && !r.is_baseline)
+  // 실제 후보국(baseline·진출국 제외) — total_countries는 평가국 전체라 후보 수와 다르다.
+  const candidateRows = qw.rows.filter((r) => !r.excluded)
+  // 퀵윈 최적 사분면(① 매력도≥50 & IT유사도≥50) 후보국 — 산점도 기준선과 동일.
+  const quickwinOptimal = candidateRows.filter((r) => r.attractiveness >= 50 && r.it_similarity >= 50)
+
+  // 권역 인사이트 — 기준국(baseline) 언급 항목은 요약에서 제외.
+  const insights = es.ai_cross_insight.insights.filter(
+    (ins) => !/기준국|baseline/i.test(ins.ko) && !ins.ko.includes(`(${baseline})`),
+  )
+  // 인사이트에 곁들일 권역 공통 뉴스 1건(헤드라인 + 시사점 한 줄).
+  const regionNews = newsItems.find((n) => n.scope === 'region')
 
   return (
     <section className="flex flex-col gap-xl">
-      {/* 요약 패널 (네이비 배경) */}
-      <section className="bg-primary border border-primary rounded-xl p-lg shadow-[0_4px_8px_rgba(20,23,28,0.04)]">
-        <div className="flex items-center gap-sm mb-md pb-sm border-b border-white/20">
-          <span className="material-symbols-outlined text-on-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+      {/* 요약 패널 — 국가 요약 탭과 동일한 다크 히어로 카드(잉크블랙 그라디언트 + 라임그린 강조) */}
+      <section
+        className="rounded-[18px] px-[30px] py-[28px] card-shadow text-white"
+        style={{ background: 'linear-gradient(120deg,#14181C,#1f262d)' }}
+      >
+        <div className="font-label-sm text-[12px] mb-sm" style={{ color: '#C8F051', letterSpacing: '.1em' }}>
+          권역 진단 보고서 · 퀵윈 스코어링
+        </div>
+        <div className="flex items-center gap-sm mb-md">
+          <span className="material-symbols-outlined" style={{ color: '#C8F051', fontVariationSettings: "'FILL' 1" }}>
             auto_awesome
           </span>
-          <h2 className="font-headline-md text-[24px] leading-[32px] font-semibold text-on-primary">요약</h2>
+          <h2 className="text-[28px] font-bold leading-none text-white">요약</h2>
         </div>
         <div className="flex flex-col gap-md [&_strong]:text-white">
-          <p className="flex items-start gap-sm font-body-lg text-body-lg text-white/90 leading-relaxed m-0">
-            <span>
-              <strong>{regionKo}</strong> 권역의 후보 <strong>{data.data_quality.total_countries}</strong>개국을 베이스라인{' '}
-              <strong>{countryKo(baseline)}({baseline})</strong> 대비 스코어링한 결과, 최우선 퀵윈 후보는{' '}
-              <strong>{countryKo(top1.country)}({top1.country})</strong>(으)로 도출되었습니다.
-            </span>
+          <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+            <strong>{regionKo}</strong> 권역 평가 <strong>{data.data_quality.total_countries}</strong>개국 중 베이스라인{' '}
+            <strong>{countryKo(baseline)}({baseline})</strong>
+            {enteredRows.length > 0 && (
+              <>
+                {' '}및 진출국{' '}
+                <strong>
+                  {enteredRows.map((r) => `${countryKo(r.country)}(${r.country})`).join('·')}
+                </strong>
+                {' '}{enteredRows.length}개국
+              </>
+            )}
+            을(를) 제외한 후보 <strong>{candidateRows.length}</strong>개국을 스코어링한 결과, 최우선 퀵윈 후보는{' '}
+            <strong>{countryKo(top1.country)}({top1.country})</strong>(으)로 도출되었습니다.
           </p>
-          <p className="flex items-start gap-sm font-body-lg text-body-lg text-white/90 leading-relaxed m-0">
-            <span>
-              1위 근거 — <strong>{cc.why_top1.ko}</strong>. 킬스위치 탈락국은 <strong>{cc.killswitch_failed_count}</strong>개국입니다.
-            </span>
+          <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+            1위 근거 — <strong>{cc.why_top1.ko}</strong>.
+            {quickwinOptimal.length > 0 && (
+              <>
+                {' '}후보 {candidateRows.length}개국 중 <strong>{quickwinOptimal.length}</strong>개국(
+                {quickwinOptimal.map((r) => r.country).join('·')})이 매력도·IT유사도 모두 높은 <strong>퀵윈 최적 영역</strong>에 위치합니다.
+              </>
+            )}
+            {cc.killswitch_failed_count > 0 && (
+              <> 킬스위치 탈락국은 <strong>{cc.killswitch_failed_count}</strong>개국입니다.</>
+            )}
           </p>
-          {es.ai_cross_insight.insights.map((ins, i) => (
-            <p key={i} className="flex items-start gap-sm font-body-lg text-body-lg text-white/90 leading-relaxed m-0">
-              <span>{ins.ko}</span>
+          {insights.map((ins, i) => (
+            <p key={i} className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+              {ins.ko}
             </p>
           ))}
+          {regionNews && (
+            <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+              <span style={{ color: '#C8F051' }}>최근 이슈 —</span> <strong>{regionNews.headline}</strong>. {regionNews.so_what}
+            </p>
+          )}
         </div>
       </section>
 

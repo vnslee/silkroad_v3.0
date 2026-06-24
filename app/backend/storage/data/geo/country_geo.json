@@ -50,6 +50,22 @@
       "lat": 35.86,
       "iso_numeric": null
     },
+    "CZ": {
+      "name": "Czechia",
+      "name_ko": "체코",
+      "region": "EU",
+      "lon": 15.47,
+      "lat": 49.82,
+      "iso_numeric": "203"
+    },
+    "DE": {
+      "name": "Germany",
+      "name_ko": "독일",
+      "region": "EU",
+      "lon": 10.45,
+      "lat": 51.17,
+      "iso_numeric": "276"
+    },
     "DK": {
       "name": "Denmark",
       "name_ko": "덴마크",
@@ -81,6 +97,14 @@
       "lon": -3.44,
       "lat": 55.38,
       "iso_numeric": "826"
+    },
+    "HU": {
+      "name": "Hungary",
+      "name_ko": "헝가리",
+      "region": "EU",
+      "lon": 19.5,
+      "lat": 47.16,
+      "iso_numeric": "348"
     },
     "ID": {
       "name": "Indonesia",

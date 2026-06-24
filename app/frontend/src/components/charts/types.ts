@@ -29,3 +29,12 @@ export interface RadarAxis {
   name: string
   max: number
 }
+
+/** 로즈(나이팅게일) 차트 항목 — 동일 각도 쐐기, 반지름이 value를 인코딩 */
+export interface RoseChartDatum {
+  label: string
+  value: number
+  /** 원본 표기(예: "약 20%") — 툴팁/범례 표시용 */
+  display?: string
+  color?: string
+}

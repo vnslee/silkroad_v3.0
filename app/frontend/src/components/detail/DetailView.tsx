@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { api } from '../../api/client'
 import { paths } from '../../api/paths'
 import type { CountrySummary, Domain, RegionSummary } from '../../api/types'
-import { useJobPolling } from '../../hooks/useJobPolling'
 import { store } from '../../store'
 import { Icon } from '../common/Icon'
 import { HeaderSelect, type SelectOption } from '../common/HeaderSelect'
@@ -15,7 +14,12 @@ import { useT } from '../../i18n/dict'
 import type { EntryMode } from '../../app/route'
 import { CountryDetail } from '../details/CountryDetail'
 import { RegionDetail } from '../details/RegionDetail'
-import type { CountryDetailData, RegionDetailData, RegionReportData } from '../reports/types'
+import type {
+  CountryDetailData,
+  CountryReportData,
+  RegionDetailData,
+  RegionReportData,
+} from '../reports/types'
 import { buildRegionDetail, type RegionResearchSnapshot } from '../../utils/regionDetail'
 
 interface Props {
@@ -33,19 +37,24 @@ interface CatalogItem {
   hasReport: boolean
   // 진출 상태(internal country_status): '운영중'|'미진출'|'진출예정'|'준비중' 등. 없으면 undefined.
   status?: string
-  // 진출형태(internal country_assets 보유 여부) — 값이 있으면 기진출국.
+  // 진출형태(internal country_assets[code].type): '단독법인'|'JV'. 값이 있으면 기진출국.
   entryMode?: string
+  // 진출국 사용 솔루션. 기진출국만.
+  solution?: string
+  // 진출연도. 기진출국만.
+  since?: number
 }
 
 export default function DetailView({ domain, code, mode }: Props) {
   const [ready, setReady] = useState(false)
-  const [jobId, setJobId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [catalog, setCatalog] = useState<CatalogItem[]>([])
   const [versions, setVersions] = useState<string[]>([])
   const [version, setVersion] = useState<string | undefined>(undefined) // undefined = latest
   const [simulating, setSimulating] = useState(false)
   const [detailData, setDetailData] = useState<CountryDetailData | RegionDetailData | null>(null)
+  // 국가(P1) "진출 정보" 패널용 최신 보고서 — 없으면 null(진출 상태만 표시).
+  const [countryReport, setCountryReport] = useState<CountryReportData | null>(null)
   const [loading, setLoading] = useState(false)
   const t = useT()
 
@@ -66,6 +75,8 @@ export default function DetailView({ domain, code, mode }: Props) {
             hasReport: x.has_report,
             status: 'status' in x ? (x.status ?? undefined) : undefined,
             entryMode: 'entry_mode' in x ? (x.entry_mode ?? undefined) : undefined,
+            solution: 'solution' in x ? (x.solution ?? undefined) : undefined,
+            since: 'since' in x ? (x.since ?? undefined) : undefined,
           })),
         )
       })
@@ -81,7 +92,6 @@ export default function DetailView({ domain, code, mode }: Props) {
     setReady(false)
     setError(null)
     setVersion(undefined)
-    setJobId(null)
 
     api
       .getDetailVersions(domain, code)
@@ -96,28 +106,15 @@ export default function DetailView({ domain, code, mode }: Props) {
           setError('리서치 데이터가 없습니다. 챗봇에서 리서치를 진행하세요.')
           return
         }
-        if (info.has_detail) {
-          setReady(true)
-        } else {
-          api
-            .triggerDetail(domain, code)
-            .then((job) => !cancelled && setJobId(job.job_id))
-            .catch((e) => !cancelled && setError(String(e)))
-        }
+        // 상세화면은 React가 직접 렌더한다 — 리서치 데이터만 있으면 바로 준비 완료.
+        // (과거엔 서버에 HTML 캐시를 만들 때까지 비동기 잡을 폴링했으나, 이제 불필요.)
+        setReady(true)
       })
       .catch((e) => !cancelled && setError(String(e)))
     return () => {
       cancelled = true
     }
   }, [domain, code])
-
-  useJobPolling(jobId, {
-    onDone: () => {
-      store.removeJob(jobId ?? '')
-      setReady(true)
-    },
-    onError: (msg) => setError(msg),
-  })
 
   // 상세 JSON 데이터 로드
   useEffect(() => {
@@ -129,6 +126,7 @@ export default function DetailView({ domain, code, mode }: Props) {
     let cancelled = false
     setLoading(true)
     setError(null)
+    setCountryReport(null)
 
     // 리서치 스냅샷 JSON (detail 경로) — country는 그대로, region은 병합 입력으로 사용.
     const detailPath = paths.detail(domain, code, version)
@@ -138,10 +136,22 @@ export default function DetailView({ domain, code, mode }: Props) {
     })
 
     if (domain === 'country') {
-      fetchSnapshot
-        .then((data) => {
+      // "진출 정보" 패널(시스템 결정·IT 유사도·베이스라인·기준 솔루션)은 보고서 JSON에 있다.
+      // 보고서는 미생성일 수 있으므로 실패/부재 시 null로 진행(진출 상태만 표시).
+      const fetchReport = api
+        .listReports(domain, code)
+        .then((res) => {
+          const latest = res.reports[res.reports.length - 1]
+          if (!latest) return null
+          return api.getReportJson<CountryReportData>(domain, code, latest.report_id)
+        })
+        .catch(() => null)
+
+      Promise.all([fetchSnapshot, fetchReport])
+        .then(([data, report]) => {
           if (cancelled) return
           setDetailData(data)
+          setCountryReport(report ?? null)
           setLoading(false)
         })
         .catch((e) => {
@@ -327,7 +337,25 @@ export default function DetailView({ domain, code, mode }: Props) {
         )}
         {!error && ready && !loading && detailData && (
           <>
-            {domain === 'country' && <CountryDetail data={detailData as CountryDetailData} />}
+            {domain === 'country' && (
+              <CountryDetail
+                data={detailData as CountryDetailData}
+                report={countryReport}
+                entryStatus={status}
+                entryStatusStyle={statusStyle}
+                entered={Boolean(meta?.entryMode)}
+                entrySolution={meta?.solution}
+                entryMode={meta?.entryMode}
+                entrySince={meta?.since}
+                baselineNameKo={
+                  countryReport
+                    ? (catalog.find(
+                        (c) => c.code === countryReport.tabs.tab_1_2_decision.base_country,
+                      )?.nameKo ?? undefined)
+                    : undefined
+                }
+              />
+            )}
             {domain === 'region' && <RegionDetail data={detailData as RegionDetailData} />}
           </>
         )}

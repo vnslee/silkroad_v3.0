@@ -35,6 +35,10 @@ class CountrySummary(BaseModel):
     lat: Optional[float] = None
     # 진출형태(internal_latest.json country_assets[code].type): 단독법인·JV. 기진출국만, 미진출국은 None.
     entry_mode: Optional[str] = None
+    # 진출국 사용 솔루션(country_assets[code].solution). 기진출국만, 미진출국은 None.
+    solution: Optional[str] = None
+    # 진출연도(country_assets[code].since). 기진출국만. 값이 없거나 None일 수 있음.
+    since: Optional[int] = None
 
 
 class RegionSummary(BaseModel):

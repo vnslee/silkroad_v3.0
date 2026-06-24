@@ -22,9 +22,8 @@ def run_report_job(job_id: str, domain: str, target_id: str) -> None:
         job_manager.set_progress(job_id, "generating", "리포트 데이터 생성 중")
         json_path = engine_adapter.generate_report_json(domain, target_id)
 
-        job_manager.set_progress(job_id, "rendering", "보고서 HTML 렌더링 중")
-        html_path = engine_adapter.render_report_html(domain, json_path)
-
+        # 보고서 화면은 React(ReportView)가 리포트 JSON으로 직접 렌더한다 — 서버측 HTML
+        # 렌더 단계는 없다(렌더 엔진 의존 제거). 산출물은 JSON 하나.
         report_id = Path(json_path).stem
         result = JobResult(
             domain=domain,

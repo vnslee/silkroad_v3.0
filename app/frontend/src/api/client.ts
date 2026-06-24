@@ -61,9 +61,6 @@ export const api = {
   getExistence: (domain: Domain, id: string) =>
     request<ExistenceInfo>(paths.existence(domain, id)),
 
-  // 상세화면 비동기 렌더 잡(3차 확장). 동기 표시는 paths.detail() 을 iframe src 로.
-  triggerDetail: (domain: Domain, id: string) =>
-    request<JobCreatedResponse>(paths.detail(domain, id), { method: 'POST' }),
   // 상세 데이터 스냅샷 버전 목록(P1/P2 버전 선택)
   getDetailVersions: (domain: Domain, id: string) =>
     request<string[]>(paths.detailVersions(domain, id)),

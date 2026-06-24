@@ -128,6 +128,18 @@ def _country_entry_mode_map() -> dict:
     }
 
 
+def _country_assets_map() -> dict:
+    """internal_latest.json country_assets 원본(ISO2 → {solution, type, since, ...}).
+
+    진출국(자산 보유국)만 키에 존재한다. 미진출국은 없다. 실패 시 빈 dict.
+    """
+    try:
+        with open(config.INTERNAL_LATEST, encoding="utf-8") as f:
+            return json.load(f).get("country_assets", {}) or {}
+    except (OSError, ValueError):
+        return {}
+
+
 def _hyundai_country_names() -> List[str]:
     """현대차 해외사업망 국가 영문명 목록(권역 무관, 평탄화). 실패 시 빈 리스트."""
     try:
@@ -173,9 +185,17 @@ def region_detail_sources(region: str) -> dict:
     assets = internal.get("country_assets", {}) or {}
     status = internal.get("country_status", {}) or {}
     members = [code for code, reg in c2r.items() if reg == region]
+    # 멤버 국가명(영/한) — 리서치 스냅샷 countries[]에 없는 기진출국(예: DE)도
+    # 이름이 비지 않도록 geo 참조에서 채운다. 프론트는 이 맵을 1차 이름 소스로 쓴다.
+    member_names = {}
+    for c in members:
+        geo = geo_reference.get_country(c) or {}
+        if geo.get("name") or geo.get("name_ko"):
+            member_names[c] = {"name": geo.get("name"), "name_ko": geo.get("name_ko")}
     return {
         "region": region,
         "members": members,  # 권역 소속국(ISO alpha-2) 코드 목록 — 지도/기진출 판정용
+        "member_names": member_names,  # 코드 → {name, name_ko} (geo 참조; 이름 폴백용)
         "country_assets": {c: assets[c] for c in members if c in assets},
         "country_status": {c: status[c] for c in members if c in status},
     }
@@ -188,6 +208,7 @@ def list_countries() -> List[CountrySummary]:
         return out
     status_map = _country_status_map()
     entry_mode_map = _country_entry_mode_map()
+    assets_map = _country_assets_map()
     for d in sorted(p for p in base.iterdir() if p.is_dir()):
         code = d.name
         data = _load_latest_research("country", code) or {}
@@ -212,6 +233,9 @@ def list_countries() -> List[CountrySummary]:
                 lon=geo.get("lon"),
                 lat=geo.get("lat"),
                 entry_mode=entry_mode_map.get(resolved_code),
+                # 진출국 자산(P1 "진출 정보" 패널): 사용 솔루션·진출연도. 미진출국은 None.
+                solution=(assets_map.get(resolved_code) or {}).get("solution"),
+                since=(assets_map.get(resolved_code) or {}).get("since"),
             )
         )
     return out

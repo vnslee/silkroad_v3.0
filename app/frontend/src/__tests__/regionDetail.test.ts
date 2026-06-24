@@ -24,6 +24,11 @@ describe('buildRegionDetail (EU 3-소스 병합)', () => {
     const de = data.entered_countries.find((c) => c.code === 'DE')
     expect(de?.type).toBe('JV')
     expect(de?.products.length).toBeGreaterThan(0)
+    // 회귀: DE는 리서치 스냅샷 countries[]에 없지만 member_names(geo)로 이름이 채워져야 한다.
+    // 이름 폴백이 코드를 두 번 찍던 "DE DE" 버그 방지 — 한글명은 코드가 아니고, 영문명은 한글명과 다름.
+    expect(de?.name_ko).toBe('독일')
+    expect(de?.name_ko).not.toBe('DE')
+    expect(de?.name_en).toBe('Germany')
   })
 
   it('후보국 = 퀵윈 보고서 랭킹 행(비제외), 점수·판정 포함', () => {

@@ -32,6 +32,10 @@ export interface CountrySummary {
   lat?: number | null
   // 진출형태(internal country_assets[code].type): '단독법인'|'JV'. 기진출국만, 미진출국은 null.
   entry_mode?: string | null
+  // 진출국 사용 솔루션(country_assets[code].solution). 기진출국만, 미진출국은 null.
+  solution?: string | null
+  // 진출연도(country_assets[code].since). 기진출국만. 값이 없을 수 있음.
+  since?: number | null
 }
 
 export interface RegionSummary {
@@ -54,6 +58,8 @@ export interface RegionAssetEntry {
 export interface RegionDetailSources {
   region: string
   members: string[] // 권역 소속국(ISO alpha-2)
+  // 코드 → {name, name_ko} (geo 참조). 리서치 스냅샷 countries[]에 없는 기진출국 이름 폴백용.
+  member_names?: Record<string, { name?: string | null; name_ko?: string | null }>
   country_assets: Record<string, RegionAssetEntry>
   country_status: Record<string, string> // ISO alpha-2 → '운영중'|'준비중'|'미진출'
 }

@@ -200,14 +200,19 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   }
 
   const onSendMail = () => {
+    // 보고서는 React 화면(SPA hash 라우트)으로 본다 — 서버측 정적 HTML이 없으므로
+    // 메일 본문 링크는 프론트 보고서 화면 URL을 가리킨다.
+    const reportViewUrl =
+      typeof window !== 'undefined'
+        ? `${window.location.origin}${window.location.pathname}#/${domain}/${code}/report?report=${selected ?? ''}`
+        : `#/${domain}/${code}/report?report=${selected ?? ''}`
     const url = buildMailtoUrl({
       domain,
       targetName: name,
       reportId: selected ?? '',
       createdAt: current?.generated_at ?? undefined,
       summary: current?.title ?? '진단 결과 요약',
-      htmlUrl: paths.reportHtml(domain, code, selected ?? ''),
-      pdfUrl: paths.reportPdf(domain, code, selected ?? ''),
+      htmlUrl: reportViewUrl,
     })
     window.location.href = url
   }
