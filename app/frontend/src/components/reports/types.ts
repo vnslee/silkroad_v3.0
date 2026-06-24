@@ -129,6 +129,10 @@ export interface TcoTabData {
   system_cost_10y: number
   total_tco_10y: number
   currency: string
+  /** 산식 작업 통화(항상 "EUR"). 표시 금액은 currency로 환산됨. 구버전 데이터엔 없음. */
+  currency_base?: string
+  /** 환산 전 EUR 원본 총 TCO. 구버전 데이터엔 없음. */
+  total_tco_10y_eur?: number
   similarity_score: number
   similarity_multiplier: number
   similarity_band: string
@@ -137,6 +141,8 @@ export interface TcoTabData {
     formula?: string
     inputs: Record<string, any>
     outputs: Record<string, any>
+    /** 표시 통화. 구버전 데이터엔 없음. */
+    currency?: string
   }
   expected_contracts: number
   expected_contracts_breakdown: {
@@ -244,17 +250,32 @@ export interface RegionTabs {
 
 // --- 2.0 킬스위치 ---
 export interface RegionKillswitchGateCell {
-  status: string // "PASS" | "FAIL" 등
+  status: string // "PASS" | "FLAG" | "FAIL" 등
   value: string
   source?: string
   tier?: number
   gate_scope?: string
 }
+/** 진출 형태(killswitch tier) 라벨 — ko/en */
+export interface KillswitchTierLabel {
+  ko: string
+  en: string
+}
 export interface RegionKillswitchCountry {
   country: string
   country_name: string
   pass: boolean
+  /** 진출 형태 키 — "jv_required" | "jv_recommended" | "external_solution" | "in_region_confidence". 구버전 데이터엔 없음. */
+  tier?: string
+  tier_label?: KillswitchTierLabel
   gates: Record<string, RegionKillswitchGateCell>
+}
+/** tier_summary 항목 — tier별 분포 요약(severity 오름차순) */
+export interface RegionKillswitchTierSummary {
+  key: string
+  label: KillswitchTierLabel
+  severity: number
+  count: number
 }
 export interface RegionKillswitchTab {
   nature: string
@@ -265,6 +286,10 @@ export interface RegionKillswitchTab {
   failed: string[]
   passed_count: number
   failed_count: number
+  /** tier별 카운트(키→개수). 구버전 데이터엔 없음. */
+  tier_counts?: Record<string, number>
+  /** tier별 분포 요약. 구버전 데이터엔 없음. */
+  tier_summary?: RegionKillswitchTierSummary[]
 }
 
 // --- 2.1 매력도 ---
@@ -375,6 +400,13 @@ export interface RegionQuickwinRow {
   quickwin_band: number
   is_baseline: boolean
   killswitch_excluded: boolean
+  /** 진출 형태 키 — 랭킹 제외/감점 판정용. 구버전 데이터엔 없음. */
+  killswitch_tier?: string
+  killswitch_tier_label?: KillswitchTierLabel
+  /** 랭킹 점수 차감(JV 권고=10, 그 외 0). 구버전 데이터엔 없음. */
+  quickwin_penalty?: number
+  /** 이미 진출(운영중·기진출 자산 보유)한 국가 → 후보 제외. */
+  already_entered?: boolean
   excluded: boolean
   exclusion_reason: string | null
   rank: number
@@ -411,6 +443,9 @@ export interface RegionTop3Card {
   attractiveness: number
   it_similarity_band: number
   killswitch_pass: boolean
+  /** 진출 형태 키. 구버전 데이터엔 없음. */
+  killswitch_tier?: string
+  killswitch_tier_label?: KillswitchTierLabel
   market_brief: Record<string, number>
   competition_brief: {
     금융사_Top5?: RegionTop3Competitor[]
