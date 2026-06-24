@@ -19,6 +19,10 @@ interface Props {
   onSelectRegion: (region: string) => void
   /** 인트로 지구본 → 지도 줌인 모핑 진입 여부(App에서 전달). reduced-motion이면 false. */
   enterAnim?: boolean
+  /** 진입 모핑 시작 배율. 인트로(지구본)=3.4로 깊게, CI 로고 복귀=1.5로 얕게 줌아웃. */
+  enterScale?: number
+  /** 상세 팝업 포커스 대상. 지정 시 뒤 지도가 해당 국가/권역으로 확대, null이면 기본 배율로 복귀. */
+  focus?: { domain: 'country' | 'region'; id: string } | null
 }
 
 interface Marker {
@@ -51,6 +55,10 @@ const REGIONS6: Region6[] = [
   { key: 'af', label: '아프리카', fill: '#E2DED5', dark: '#3a4048', code: 'AF' },
 ]
 const REGION_BY_KEY: Record<string, Region6> = Object.fromEntries(REGIONS6.map((r) => [r.key, r]))
+// 백엔드 권역코드(NA/EU/APAC…) → 분류 키(na/eu/ap…). 팝업 포커스 시 해당 권역 육지 묶음 찾기용.
+const REGION_KEY_BY_CODE: Record<string, string> = Object.fromEntries(
+  REGIONS6.map((r) => [r.code, r.key]),
+)
 
 // 경위도 centroid로 육지를 6개 권역에 분류(mockup continentOf 동일).
 function classifyRegion(lon: number, lat: number): string {
@@ -62,13 +70,29 @@ function classifyRegion(lon: number, lat: number): string {
   return 'ap'
 }
 
-export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: Props) {
+export function MapView({
+  onSelectCountry,
+  onSelectRegion,
+  enterAnim = false,
+  enterScale = 3.4,
+  focus = null,
+}: Props) {
   const svgRef = useRef<SVGSVGElement>(null)
   const zoomRef = useRef<{
     svg: d3.Selection<SVGSVGElement, unknown, null, undefined>
     zoom: d3.ZoomBehavior<SVGSVGElement, unknown>
   } | null>(null)
+  // 줌 변환을 적용할 현재 <g>. 데이터 늦은 도착으로 effect가 재빌드되면 g가 새로 생기는데,
+  // zoom 핸들러는 이 ref로 '살아있는 g'를 가리켜 진행 중 트랜지션이 죽은 g를 갱신하지 않게 한다.
+  const gRef = useRef<d3.Selection<SVGGElement, unknown, null, undefined> | null>(null)
   const enteredOnce = useRef(false) // 진입 줌 애니메이션 1회 가드(검색·팝업 재렌더 시 재실행 방지)
+  // 빌드 effect가 만든 '포커스 줌' 함수를 보관 — 팝업 진입/종료 effect가 이 함수를 호출한다.
+  // (projection·zoom·rest 등 빌드 effect 내부 값에 접근해야 하므로 ref 경유.)
+  const focusFnRef = useRef<((f: Props['focus']) => void) | null>(null)
+  // 진입 모핑이 안착(또는 정적 진입 완료)한 뒤에만 포커스 복귀(null)를 허용 — 진행 중 끊김 방지.
+  const restReadyRef = useRef(false)
+  const focusRef = useRef<Props['focus']>(null)
+  focusRef.current = focus
   const [countries, setCountries] = useState<CountrySummary[]>([])
   const [regions, setRegions] = useState<RegionSummary[]>([])
   const [mapColors, setMapColors] = useState<MapColorData | null>(null)
@@ -170,6 +194,7 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
       )
 
     const g = svg.append('g')
+    gRef.current = g
     const path = d3.geoPath(projection)
 
     // hover 툴팁 위치 계산 — SVG 컨테이너 기준 화면 좌표. bg=툴팁 배경색.
@@ -281,6 +306,22 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
     // mockup(컨테이너 실치수 렌더)의 체감 크기에 맞춘다. stroke도 동일 비율 축소.
     const MS = 0.5
 
+    // ── A. ripple — 마커 뒤에 퍼지는 '두껍고 투명한' 링(은은). 마커별 시작 시점을 랜덤하게
+    //   흩뿌려 일제히 터지지 않게 한다(코드 해시 기반 → 리렌더에도 안정). pointer-events:none으로 비간섭.
+    const rippleDelay = (code: string): string => {
+      let h = 0
+      for (let i = 0; i < code.length; i++) h = (h * 31 + code.charCodeAt(i)) >>> 0
+      return `-${(((h % 1000) / 1000) * 2.4).toFixed(2)}s` // 0~한 주기(2.4s) 사이로 분산
+    }
+    node
+      .insert('circle', ':first-child')
+      .attr('class', 'map-ripple')
+      .attr('r', 5 * MS)
+      .attr('fill', 'none')
+      .attr('stroke', (d) => (d.status === 'established' ? 'rgba(20,24,28,0.9)' : '#7CB518'))
+      .attr('stroke-width', 5 * MS) // 두꺼운 링 — CSS opacity가 낮아 은은하게 퍼짐
+      .style('animation-delay', (d) => rippleDelay(d.code))
+
     // ── 기진출국(established): 잉크블랙 3중 고정 링(펄스 없음, 안정) ──
     const established = node.filter((d) => d.status === 'established')
     // 외곽 후광(반투명)
@@ -295,15 +336,9 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
     // 중심 흰 점
     established.append('circle').attr('r', 1.8 * MS).attr('fill', '#fff')
 
-    // ── 진출후보국(candidate): 라임그린 펄스 링 + 라임그린 핀(잉크 테두리로 대비 보강) ──
+    // ── 진출후보국(candidate): 라임그린 핀(잉크 테두리로 대비 보강) ──
+    //   펄스 링은 위 staggered ripple(map-ripple)이 담당하므로 동시 펄스 링은 제거(이중 링 방지).
     const candidate = node.filter((d) => d.status === 'candidate')
-    candidate
-      .append('circle')
-      .attr('r', 6 * MS)
-      .attr('fill', '#C8F051')
-      .style('transform-box', 'fill-box')
-      .style('transform-origin', 'center')
-      .style('animation', 'aisea-pulse 2.4s ease-out infinite')
     candidate
       .append('circle')
       .attr('r', 4 * MS)
@@ -319,24 +354,103 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
         [0, 0],
         [width, height],
       ])
-      .on('zoom', (e) => g.attr('transform', e.transform.toString()))
+      // 항상 '살아있는 g'(gRef)에 변환 적용 — 재빌드로 g가 교체돼도 진행 중 트랜지션이 끊기지 않음.
+      .on('zoom', (e) => gRef.current?.attr('transform', e.transform.toString()))
     svg.call(zoom)
     zoomRef.current = { svg, zoom }
 
-    // ── 진입 모핑: 큰 배율 → 1배 수렴 (최초 1회만 — 검색·팝업 재렌더 시 재실행 금지) ──
+    // 기본(정지) 배율 — 전체 핏(1배)보다 살짝 확대해 지도를 조금 더 크게 보여준다.
+    const RESTING_SCALE = 1.2
+    const cx = width / 2
+    const cy = height / 2
+    const rest = d3.zoomIdentity.translate(cx, cy).scale(RESTING_SCALE).translate(-cx, -cy)
+
+    // viewBox 좌표 bounds([[x0,y0],[x1,y1]]) → 화면에 담기는 줌 transform. pad=여백비율, maxK=상한.
+    const transformForBounds = (b: [[number, number], [number, number]], maxK: number): d3.ZoomTransform => {
+      const [[x0, y0], [x1, y1]] = b
+      const bw = Math.max(1, x1 - x0)
+      const bh = Math.max(1, y1 - y0)
+      const k = Math.min(maxK, 0.7 * Math.min(width / bw, height / bh)) // 0.7=주변 맥락 남기는 여백
+      const tcx = (x0 + x1) / 2
+      const tcy = (y0 + y1) / 2
+      return d3.zoomIdentity.translate(cx, cy).scale(k).translate(-tcx, -tcy)
+    }
+
+    // ── 팝업 포커스 줌 — 국가=마커 좌표 중심 확대, 권역=해당 권역 육지 bounds로 fit, null=rest 복귀.
+    //   상세 팝업이 오른쪽을 덮으므로 대상을 화면 왼쪽으로 살짝 치우치게(왼쪽 1/3 지점) 둔다.
+    focusFnRef.current = (f) => {
+      const z = zoomRef.current
+      if (!z) return
+      let target = rest
+      if (f?.domain === 'country') {
+        const m = markers.find((mk) => mk.code === f.id.toUpperCase())
+        const p = m ? projection([m.lon, m.lat]) : null
+        if (p) {
+          const k = 2.6
+          // 대상을 화면 가로 35% 지점에 두어 우측 팝업과 겹치지 않게.
+          target = d3.zoomIdentity.translate(width * 0.35, cy).scale(k).translate(-p[0], -p[1])
+        }
+      } else if (f?.domain === 'region') {
+        const key = REGION_KEY_BY_CODE[f.id.toUpperCase()] ?? f.id.toLowerCase()
+        const feats = countriesGeo.features.filter((ft) => featRegion.get(ft) === key)
+        if (feats.length) {
+          // 권역 소속 육지들의 화면 bounds 합집합 → 그 영역이 들어오게 fit.
+          let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity
+          for (const ft of feats) {
+            const bb = path.bounds(ft as never)
+            x0 = Math.min(x0, bb[0][0]); y0 = Math.min(y0, bb[0][1])
+            x1 = Math.max(x1, bb[1][0]); y1 = Math.max(y1, bb[1][1])
+          }
+          if (Number.isFinite(x0)) target = transformForBounds([[x0, y0], [x1, y1]], 4)
+        }
+      }
+      z.svg.transition().duration(900).ease(d3.easeCubicInOut).call(z.zoom.transform, target)
+    }
+
+    // ── 진입 모핑(최초 1회만 — 검색·팝업 재렌더 시 재실행 금지) ──
+    // enterScale배(확대 상태, 인트로=3.4·CI복귀=1.3) → 1배로 줌아웃해 전체 지도를 펼쳐 보여준
+    // 뒤 → 1.2배로 살짝 다시 줌인해 안착. 자연스러운 2단계 모션.
+    // ⚠️ 새 g에는 마지막 transform을 즉시 반영해야(없으면 변환 0,0,1로 깜빡임).
     if (enterAnim && !enteredOnce.current) {
       enteredOnce.current = true
-      const cx = width / 2
-      const cy = height / 2
-      const start = d3.zoomIdentity.translate(cx, cy).scale(3.4).translate(-cx, -cy)
+      // 1단계(줌아웃) 속도: 얕은 줌아웃(CI복귀, enterScale 작음)은 빠르게, 깊은 줌아웃(인트로)은 느리게.
+      const zoomOutMs = enterScale <= 2 ? 550 : 1100
+      const start = d3.zoomIdentity.translate(cx, cy).scale(enterScale).translate(-cx, -cy)
       svg.call(zoom.transform, start)
       svg
-        .transition()
-        .duration(1100)
+        .transition() // 1단계: enterScale배 → 1배(전체 핏)로 줌아웃
+        .duration(zoomOutMs)
         .ease(d3.easeCubicOut)
         .call(zoom.transform, d3.zoomIdentity)
+        .transition() // 2단계: 1배 → 1.2배로 천천히 줌인, 끝에서 살짝 오버슈트해 '쫀득하게' 안착
+        .duration(1200)
+        .ease(d3.easeBackOut.overshoot(1.5))
+        .call(zoom.transform, rest)
+        .on('end', () => {
+          restReadyRef.current = true
+          // 진입 중 팝업이 이미 열려 있었다면(딥링크 등) 안착 직후 포커스 적용.
+          if (focusRef.current) focusFnRef.current?.(focusRef.current)
+        })
+    } else if (enteredOnce.current) {
+      // 진입 애니메이션 도중/이후 데이터 늦은 도착으로 재빌드 → 새 g에 '현재 transform'을 그대로
+      // 재적용(rest로 스냅하지 않음). 진행 중 트랜지션이면 다음 zoom 이벤트가 이어서 갱신한다.
+      const cur = d3.zoomTransform(svg.node() as SVGSVGElement)
+      g.attr('transform', cur.toString())
+    } else {
+      // 딥링크·reduced-motion·최초 정적 진입 → 정지 배율을 즉시 적용(애니메이션 없음).
+      svg.call(zoom.transform, rest)
+      restReadyRef.current = true
     }
-  }, [markers, colorOf, onSelectCountry, onSelectRegion, enterAnim])
+  }, [markers, colorOf, onSelectCountry, onSelectRegion, enterAnim, enterScale])
+
+  // 팝업 포커스 — focus 변경 시 빌드 effect가 만든 줌 함수 호출.
+  // 진입 모핑이 진행 중일 때(restReadyRef=false)는 포커스/복귀를 미룬다(진입 줌 끊김 방지) —
+  // 안착 후 transition.on('end')에서 focusRef로 한 번 따라잡는다. focus가 있으면 진입을 가로채도
+  // 무방하니 즉시 적용(팝업 우선).
+  useEffect(() => {
+    if (focus == null && !restReadyRef.current) return
+    focusFnRef.current?.(focus)
+  }, [focus, markers])
 
   const zoomBy = (k: number) => {
     const z = zoomRef.current

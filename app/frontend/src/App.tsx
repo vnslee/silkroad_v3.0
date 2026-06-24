@@ -35,17 +35,32 @@ export default function App() {
 
   // skipIntro 플래그 소비(1회성) — 마운트 후 제거. 이니셜라이저 밖이라 StrictMode 이중 호출 영향 없음.
   useEffect(() => {
-    if (typeof window !== 'undefined') sessionStorage.removeItem('skipIntro')
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('skipIntro')
+      sessionStorage.removeItem('mapAnim')
+    }
   }, [])
-  // 인트로를 실제로 본 경우에만 지도 줌인 모핑(딥링크·reduced-motion 진입은 정적)
-  const [mapEnter, setMapEnter] = useState(false)
+  // 지도 줌아웃→줌인 진입 모핑 여부. 인트로를 실제로 본 경우(아래 onDone) 또는 CI 로고로
+  // 인트로를 스킵하되 모션은 원하는 경우(mapAnim 플래그) true. 딥링크·reduced-motion은 정적.
+  const [mapEnter, setMapEnter] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return sessionStorage.getItem('mapAnim') === '1' && !prefersReducedMotion()
+  })
+  // 진입 줌아웃 시작 배율: CI 로고 복귀(mapAnim)=1.3으로 얕게, 인트로(지구본)=3.4로 깊게.
+  const [mapEnterScale, setMapEnterScale] = useState(() => {
+    if (typeof window === 'undefined') return 3.4
+    return sessionStorage.getItem('mapAnim') === '1' ? 1.3 : 3.4
+  })
 
   if (!introDone) {
     return (
       <GlobeIntro
         reducedMotion={prefersReducedMotion()}
         onDone={() => {
-          if (!prefersReducedMotion()) setMapEnter(true)
+          if (!prefersReducedMotion()) {
+            setMapEnter(true)
+            setMapEnterScale(3.4) // 인트로 경로는 깊게 줌아웃
+          }
           setIntroDone(true)
         }}
       />
@@ -74,10 +89,21 @@ export default function App() {
   // AISea 모달 상단 스트립 — route 기준 태그/타이틀(P1=국가 정보·PR1=국가 진단 보고서 등)
   const frame = modalFrame(route)
 
+  // 팝업(상세/보고서) 진입 시 뒤 지도를 해당 국가/권역으로 확대. 닫히면(map/ruleset) null → 복귀.
+  const focus =
+    route.mode === 'popup' &&
+    (route.screen === 'detail' || route.screen === 'report') &&
+    route.domain &&
+    route.id
+      ? { domain: route.domain, id: route.id }
+      : null
+
   return (
     <div className="relative h-screen w-screen overflow-hidden">
       <MapView
         enterAnim={mapEnter}
+        enterScale={mapEnterScale}
+        focus={focus}
         onSelectCountry={(code) => navigate({ screen: 'detail', domain: 'country', id: code, mode: 'popup' })}
         onSelectRegion={(region) => navigate({ screen: 'detail', domain: 'region', id: region, mode: 'popup' })}
       />

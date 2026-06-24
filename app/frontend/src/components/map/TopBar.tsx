@@ -3,7 +3,7 @@
 // 레이아웃 탭·챗 버튼은 제외(사용자 결정). 드롭다운 항목은 실제 카탈로그로 채우고 상태배지 표기(가짜 점수 금지).
 import { useState } from 'react'
 import type { CountrySummary, Domain, RegionSummary } from '../../api/types'
-import { store } from '../../store'
+import { store, useStore } from '../../store'
 import { useT } from '../../i18n/dict'
 import { HyundaiCapitalCI } from '../common/HyundaiCapitalCI'
 import { LanguageSelectorDropdown } from '../ui/language-selector-dropdown'
@@ -38,6 +38,11 @@ export function TopBar({ countries, regions }: Props) {
   const [menu, setMenu] = useState<MenuKey>(null)
   const [search, setSearch] = useState('')
   const t = useT()
+  const lang = useStore((s) => s.lang)
+
+  // 현재 언어 기준 국가/권역 표시명 — 한국어면 한글명만, 영어면 영문명만.
+  const displayName = (x: { name: string; name_ko?: string | null }) =>
+    lang === 'ko' ? x.name_ko || x.name : x.name
 
   const close = () => setMenu(null)
   const toggle = (k: Exclude<MenuKey, null>) => setMenu((m) => (m === k ? null : k))
@@ -90,7 +95,9 @@ export function TopBar({ countries, regions }: Props) {
           close()
           // 지도 초기상태로 완전 리셋: 해시 비우고 새로고침.
           // 단, 지구본 인트로는 건너뛰고 펼쳐진 지도부터 — sessionStorage 1회성 플래그(App이 소비).
+          // mapAnim: 인트로는 스킵하되 지도 줌아웃→줌인 진입 모션은 재생(App이 mapEnter로 소비).
           sessionStorage.setItem('skipIntro', '1')
+          sessionStorage.setItem('mapAnim', '1')
           window.location.hash = ''
           window.location.reload()
         }}
@@ -118,7 +125,7 @@ export function TopBar({ countries, regions }: Props) {
                 }}
               >
                 <span className={`truncate ${c.is_baseline ? 'font-semibold text-on-surface' : ''}`}>
-                  {c.name_ko ? `${c.name_ko} (${c.name})` : c.name}
+                  {displayName(c)}
                 </span>
               </DropdownRow>
             ))}
@@ -139,7 +146,7 @@ export function TopBar({ countries, regions }: Props) {
                   nav(`#/region/${r.code}/detail?mode=fullscreen`)
                 }}
               >
-                <span className="truncate">{r.name_ko ? `${r.name_ko} (${r.name})` : r.name}</span>
+                <span className="truncate">{displayName(r)}</span>
               </DropdownRow>
             ))}
           </Dropdown>
