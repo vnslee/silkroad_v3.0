@@ -2,15 +2,16 @@
 import type { RegionReportData, RegionAttrCountry } from '../types'
 import { countryKo, Flag, scoreBarColor, normBarColor, SourcePill } from './shared'
 
-// 항목(축)별 스택 막대 색 — mockup 범례 순서 그대로.
+// 항목(축)별 스택 막대 색 — 7개 항목이 서로 또렷이 구분되도록 색상환을 넓게 배치
+// (기존엔 4개가 동일 #2f6be0이라 구분 불가). 보고서 톤(블루 베이스 + 앰버 포인트) 유지.
 const AXIS_COLORS: Record<string, string> = {
-  'GDP 성장률': '#2f6be0',
-  '자동차 판매대수': '#2f6be0',
-  시장규모: '#4F8BFF',
-  '오토금융 성장률(CAGR)': '#92b4ff',
-  '금융 이용률': '#2f6be0',
-  금융이용유형: '#c08a2e',
-  경쟁강도: '#2f6be0',
+  'GDP 성장률': '#1f3a8a', // 진한 네이비
+  '자동차 판매대수': '#3f8fd0', // 미드 블루
+  시장규모: '#34b3a0', // 틸
+  '오토금융 성장률(CAGR)': '#8fce5a', // 라임그린
+  '금융 이용률': '#f0b429', // 골드
+  금융이용유형: '#c0533f', // 테라코타
+  경쟁강도: '#8159c9', // 퍼플
 }
 
 export function AttractivenessTab({ data }: { data: RegionReportData }) {
@@ -64,6 +65,12 @@ export function AttractivenessTab({ data }: { data: RegionReportData }) {
         <div className="flex flex-col gap-sm">
           {at.countries.map((c) => {
             const total = c.attractiveness_score
+            // 막대는 '항목 구성비'를 보여주므로 기여분 합 기준으로 100%를 채운다. total(최종 점수)로
+            // 나누면 합이 total과 달라(반올림·표시 외 항목) 막대가 덜 차서 빈 공간이 생기던 문제 해소.
+            const sumContrib = axisOrder.reduce(
+              (s, axis) => s + (c.contributions[axis]?.contribution ?? 0),
+              0,
+            )
             return (
               <div key={c.country} className="grid grid-cols-12 items-center gap-sm">
                 <div className="col-span-3 flex items-center gap-xs">
@@ -74,7 +81,7 @@ export function AttractivenessTab({ data }: { data: RegionReportData }) {
                   <div className="w-full h-4 bg-surface-container rounded overflow-hidden flex">
                     {axisOrder.map((axis) => {
                       const contrib = c.contributions[axis]?.contribution ?? 0
-                      const pct = total > 0 ? (contrib / total) * 100 : 0
+                      const pct = sumContrib > 0 ? (contrib / sumContrib) * 100 : 0
                       return (
                         <div
                           key={axis}

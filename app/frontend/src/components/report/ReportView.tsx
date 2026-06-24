@@ -255,7 +255,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
+    <div className="content-scale flex h-full min-h-0 flex-col">
       {/* 헤더 chrome */}
       <div className="flex shrink-0 items-start justify-between gap-gutter border-b border-surface-border p-lg pr-16">
         <div className="flex items-start gap-md">
@@ -359,11 +359,13 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
         reportData &&
         createPortal(
           <FxProvider fx={fx}>
+            <div className="content-scale">
             {domain === 'country' ? (
               <CountryReport data={reportData as CountryReportData} printMode />
             ) : (
               <RegionReport data={reportData as RegionReportData} printMode />
             )}
+            </div>
           </FxProvider>,
           getPrintRoot(),
         )}

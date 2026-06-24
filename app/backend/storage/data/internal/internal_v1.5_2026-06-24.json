@@ -1017,7 +1017,7 @@
       },
       {
         "key": "in_region_confidence",
-        "label_ko": "권역내 확신",
+        "label_ko": "권역내 확산",
         "label_en": "In-Region Confidence",
         "severity": 4,
         "trigger": {

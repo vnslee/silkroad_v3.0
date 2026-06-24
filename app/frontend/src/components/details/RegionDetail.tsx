@@ -397,8 +397,10 @@ function RegionMap({
                   key={`p-${s.code}`}
                   d={s.d}
                   fill={st.fill}
-                  stroke="#ffffff"
+                  // 흰 테두리는 미진출국(거의 흰 fill) 위에서 경계가 사라져 보임 → 중립 회색 경계.
+                  stroke="#9aa0a6"
                   strokeWidth="0.7"
+                  strokeOpacity="0.7"
                   strokeLinejoin="round"
                 />
               )
@@ -462,7 +464,8 @@ function RegionMap({
                   fontWeight="700"
                   fill={st.fg}
                   paintOrder="stroke"
-                  stroke="rgba(255,255,255,0.85)"
+                  // 외곽선은 글자색 대비로 — 흰 글자(운영중)엔 어두운 외곽선, 어두운 글자(미진출)엔 옅은 흰 외곽선.
+                  stroke={st.fg === '#ffffff' ? 'rgba(20,23,28,0.45)' : 'rgba(255,255,255,0.9)'}
                   strokeWidth={fs * 0.16}
                 >
                   {s.code}

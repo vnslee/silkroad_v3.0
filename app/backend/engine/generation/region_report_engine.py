@@ -91,7 +91,7 @@ class RegionReportEngine:
             {"key": "external_solution", "label_ko": "외부솔루션 사용", "label_en": "External Solution",
              "severity": 3, "trigger": {"only_fail": ["데이터 현지화 의무"]},
              "eligible": True, "quickwin_penalty": 0, "killswitch_excluded": False},
-            {"key": "in_region_confidence", "label_ko": "권역내 확신", "label_en": "In-Region Confidence",
+            {"key": "in_region_confidence", "label_ko": "권역내 확산", "label_en": "In-Region Confidence",
              "severity": 4, "trigger": {"all_pass": True},
              "eligible": True, "quickwin_penalty": 0, "killswitch_excluded": False},
         ],
@@ -1182,7 +1182,7 @@ class RegionReportEngine:
                     f"excluded from the ranking (used as the reference for system expansion)."
                 ),
             })
-        # 킬스위치 tier별 인사이트 — 권역내 확신(전 PASS)을 제외한 단계만, 단계별 권고 액션과 함께.
+        # 킬스위치 tier별 인사이트 — 권역내 확산(전 PASS)을 제외한 단계만, 단계별 권고 액션과 함께.
         # tier별 해석·권고 문구(액션). severity 순서(나쁨→좋음)로 노출.
         tier_insight_text = {
             "jv_required": {

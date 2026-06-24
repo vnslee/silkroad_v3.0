@@ -247,7 +247,7 @@ export default function DetailView({ domain, code, mode }: Props) {
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
+    <div className="content-scale flex h-full min-h-0 flex-col">
       {/* 헤더 chrome */}
       <div className="flex shrink-0 items-start justify-between gap-md border-b border-surface-border p-lg pr-16">
         <div className="flex items-center gap-md">

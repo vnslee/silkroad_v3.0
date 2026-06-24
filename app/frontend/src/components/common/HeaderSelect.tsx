@@ -48,7 +48,7 @@ export function HeaderSelect({ options, value, onChange, trigger, ariaLabel, ali
       {open && (
         <ul
           role="listbox"
-          className={`absolute top-full z-chrome mt-xs max-h-72 w-56 overflow-auto rounded-lg border border-surface-border bg-surface-container-lowest py-xs shadow-[0_4px_12px_rgba(0,32,78,0.12)] ${
+          className={`absolute top-full z-toast mt-xs max-h-72 w-56 overflow-auto rounded-lg border border-surface-border bg-surface-container-lowest py-xs shadow-[0_4px_12px_rgba(0,32,78,0.12)] ${
             align === 'right' ? 'right-0' : 'left-0'
           }`}
         >

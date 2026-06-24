@@ -160,7 +160,7 @@
 | `similarity_brackets` | `[{min, max, discount}]` | 유사도 → discount 매핑 (`calculate_similarity_discount`) |
 | `similarity_multiplier_table` | `[{min, max, multiplier, band}]` | **유형1 탭1-3 산식1** — 유사도 → B 구축비용·기간에 곱하는 승수 (50%~100%) |
 | `decision_thresholds` | `{expansion_min_score, hq_build_min_score}` | **유형1 탭1-2** — 시스템 결정 트리 임계값 (≥70 확산, ≥50 본사구축, 그 외 외부솔루션) |
-| `killswitch_tier_rules` | `{gates, fail_statuses, tiers:[{key, label_ko, label_en, severity, trigger, fallback, eligible, quickwin_penalty, killswitch_excluded}]}` | **유형2 탭2-0** — 킬스위치 게이트 조합 → 진출 형태 4단계(권역내 확신·외부솔루션·JV권고·JV필수) 분류. `trigger`=`all_pass`/`only_fail`/`any_fail`/`fallback`, severity 낮을수록 위험(worst-first 평가). `eligible=false`(JV필수)면 퀵윈 랭킹 제외, `quickwin_penalty`는 banding 전 감점. (`compute_killswitch`/`_classify_killswitch_tier`/`compute_quickwin`) |
+| `killswitch_tier_rules` | `{gates, fail_statuses, tiers:[{key, label_ko, label_en, severity, trigger, fallback, eligible, quickwin_penalty, killswitch_excluded}]}` | **유형2 탭2-0** — 킬스위치 게이트 조합 → 진출 형태 4단계(권역내 확산·외부솔루션·JV권고·JV필수) 분류. `trigger`=`all_pass`/`only_fail`/`any_fail`/`fallback`, severity 낮을수록 위험(worst-first 평가). `eligible=false`(JV필수)면 퀵윈 랭킹 제외, `quickwin_penalty`는 banding 전 감점. (`compute_killswitch`/`_classify_killswitch_tier`/`compute_quickwin`) |
 
 ### 5. TCO·비용 파라미터 (유형1 전용)
 

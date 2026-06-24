@@ -1,5 +1,5 @@
 // AppShell(C1) — 라우팅·진입 모드 컨테이너 선택·전역 레이아웃·딥링크 인트로 스킵(L1·L2).
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useRoute } from './app/useRoute'
 import { isDeepLink } from './app/route'
 import { PopupContainer } from './app/containers/PopupContainer'
@@ -51,6 +51,47 @@ export default function App() {
     if (typeof window === 'undefined') return 3.4
     return sessionStorage.getItem('mapAnim') === '1' ? 1.3 : 3.4
   })
+
+  // MapView에 넘기는 콜백은 안정 참조여야 한다 — 매 렌더 새 함수면 MapView 빌드 effect가 재실행돼
+  // (deps에 포함) 진행 중인 확대 트랜지션이 끊긴다. navigate는 useRoute에서 이미 안정.
+  const selectCountry = useCallback(
+    (code: string) => navigate({ screen: 'detail', domain: 'country', id: code, mode: 'popup' }),
+    [navigate],
+  )
+  const selectRegion = useCallback(
+    (region: string) => navigate({ screen: 'detail', domain: 'region', id: region, mode: 'popup' }),
+    [navigate],
+  )
+
+  // 팝업은 지도 확대(focus 줌)가 끝난 뒤에 띄운다 — '지역으로 확대되는 모습'을 먼저 보여주려고.
+  // 단, 지연은 '지도에서 새로 진입(지도 확대가 실제로 일어남)'할 때만. 이미 팝업이 떠 있는 상태의
+  // 전환(상세↔보고서, 같은 지역 detail→report)은 지도 확대가 없으므로 즉시 띄운다.
+  // fullscreen·ruleset(지도 안 보임)·reduced-motion도 즉시. 닫힘은 항상 즉시.
+  // ⚠️ 훅은 introDone early-return 앞에서 호출해야 함(훅 순서 고정).
+  const isPopupDetail =
+    route.mode === 'popup' && (route.screen === 'detail' || route.screen === 'report')
+  const [popupReady, setPopupReady] = useState(false)
+  const popupOpenRef = useRef(false) // 직전 프레임에 팝업이 떠 있었는지 — 전환 vs 신규진입 구분
+  useEffect(() => {
+    if (!isPopupDetail) {
+      setPopupReady(true)
+      popupOpenRef.current = false // 닫힘 → 다음 진입은 신규(지연 대상)
+      return
+    }
+    // 이미 팝업이 열려 있던 중의 전환(상세↔보고서 등) 또는 reduced-motion → 지연 없이 즉시.
+    if (popupOpenRef.current || prefersReducedMotion()) {
+      setPopupReady(true)
+      popupOpenRef.current = true
+      return
+    }
+    // 지도에서 새로 진입 → 확대를 먼저 보여주고 그 뒤 팝업.
+    setPopupReady(false)
+    const tid = window.setTimeout(() => {
+      setPopupReady(true)
+      popupOpenRef.current = true
+    }, 1300) // focus 줌(1400ms) 거의 끝날 때
+    return () => window.clearTimeout(tid)
+  }, [isPopupDetail, route.screen, route.domain, route.id])
 
   if (!introDone) {
     return (
@@ -104,11 +145,11 @@ export default function App() {
         enterAnim={mapEnter}
         enterScale={mapEnterScale}
         focus={focus}
-        onSelectCountry={(code) => navigate({ screen: 'detail', domain: 'country', id: code, mode: 'popup' })}
-        onSelectRegion={(region) => navigate({ screen: 'detail', domain: 'region', id: region, mode: 'popup' })}
+        onSelectCountry={selectCountry}
+        onSelectRegion={selectRegion}
       />
 
-      {overlay && route.mode === 'popup' && (
+      {overlay && route.mode === 'popup' && popupReady && (
         <PopupContainer onClose={goHome} tag={frame.tag} tagClass={frame.tagClass} title={frame.title}>
           {overlay}
         </PopupContainer>

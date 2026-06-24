@@ -13,6 +13,7 @@ import { useT, translate } from '../../i18n/dict'
 import { TopBar } from './TopBar'
 import { Legend } from './Legend'
 import { LAND_COLORS, makeColorResolver, type ColorResolver } from './countryColor'
+import { toast } from '../ui/toast'
 
 interface Props {
   onSelectCountry: (code: string) => void
@@ -278,6 +279,11 @@ export function MapView({
       })
       .on('click', (_e: MouseEvent, d) => {
         const reg = featRegion.get(d) ?? 'ap'
+        // 아프리카(af)·중동(me)은 진단 미대상 — hover는 되지만 상세 팝업은 막고 toast 안내.
+        if (reg === 'af' || reg === 'me') {
+          toast.warning('미대상 권역입니다.')
+          return
+        }
         const info = REGION_BY_KEY[reg]
         setNotif(false)
         onSelectRegion(info?.code ?? reg.toUpperCase())
@@ -371,15 +377,21 @@ export function MapView({
     const cy = height / 2
     const rest = d3.zoomIdentity.translate(cx, cy).scale(RESTING_SCALE).translate(-cx, -cy)
 
-    // viewBox 좌표 bounds([[x0,y0],[x1,y1]]) → 화면에 담기는 줌 transform. pad=여백비율, maxK=상한.
-    const transformForBounds = (b: [[number, number], [number, number]], maxK: number): d3.ZoomTransform => {
+    // viewBox 좌표 bounds → 줌 transform. minK로 '확대감'을 보장(큰 권역도 최소한 확대),
+    // maxK로 과확대 방지. 중심은 화면 가로 35%(우측 팝업 회피) — 국가 포커스와 일관.
+    const transformForBounds = (
+      b: [[number, number], [number, number]],
+      minK: number,
+      maxK: number,
+    ): d3.ZoomTransform => {
       const [[x0, y0], [x1, y1]] = b
       const bw = Math.max(1, x1 - x0)
       const bh = Math.max(1, y1 - y0)
-      const k = Math.min(maxK, 0.7 * Math.min(width / bw, height / bh)) // 0.7=주변 맥락 남기는 여백
+      const fitK = 0.7 * Math.min(width / bw, height / bh) // 0.7=주변 맥락 남기는 여백
+      const k = Math.max(minK, Math.min(maxK, fitK)) // 작은 권역=fit, 큰 권역=최소 minK 확대
       const tcx = (x0 + x1) / 2
       const tcy = (y0 + y1) / 2
-      return d3.zoomIdentity.translate(cx, cy).scale(k).translate(-tcx, -tcy)
+      return d3.zoomIdentity.translate(width * 0.35, cy).scale(k).translate(-tcx, -tcy)
     }
 
     // ── 팝업 포커스 줌 — 국가=마커 좌표 중심 확대, 권역=해당 권역 육지 bounds로 fit, null=rest 복귀.
@@ -405,7 +417,8 @@ export function MapView({
             x0 = Math.min(x0, bb[0][0]); y0 = Math.min(y0, bb[0][1])
             x1 = Math.max(x1, bb[1][0]); y1 = Math.max(y1, bb[1][1])
           }
-          if (Number.isFinite(x0)) return transformForBounds([[x0, y0], [x1, y1]], 4)
+          // minK=1.8: 미주·APAC처럼 큰 권역도 최소 1.8배 확대돼 '이동'이 아닌 '확대'로 보이게.
+          if (Number.isFinite(x0)) return transformForBounds([[x0, y0], [x1, y1]], 1.8, 4)
         }
       }
       return rest
@@ -421,7 +434,9 @@ export function MapView({
       entryDoneRef.current = true
       const target = computeTarget(f)
       desiredRef.current = target // 재빌드 시 이 목표를 즉시 반영(위치 유실 방지)
-      z.svg.transition().duration(900).ease(d3.easeCubicInOut).call(z.zoom.transform, target)
+      // 포커스(확대)는 줌만 단독으로 보이므로 길고 부드럽게(팝업이 그 뒤에 뜸). 복귀(f=null)는 빠르게.
+      const dur = f ? 1400 : 700
+      z.svg.transition().duration(dur).ease(d3.easeCubicInOut).call(z.zoom.transform, target)
     }
 
     // ── 진입 모핑(최초 1회만 — 검색·팝업 재렌더 시 재실행 금지) ──
