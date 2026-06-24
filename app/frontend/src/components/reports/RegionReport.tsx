@@ -85,7 +85,7 @@ export function RegionReport({ data, className = '', printMode = false }: Props)
                   }`}
                 >
                   <span>{t.label}</span>
-                  <span className="opacity-60 text-[10px]">{t.sub}</span>
+                  <span className="opacity-60 text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)]">{t.sub}</span>
                 </button>
               )
             })}

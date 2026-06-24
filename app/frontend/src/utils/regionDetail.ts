@@ -122,6 +122,7 @@ export function buildRegionDetail(
     code,
     schema_version: snapshot.schema_version ?? null,
     fetched_at: snapshot.fetched_at ?? null,
+    baseline_country: report?.target?.baseline_country ?? '',
     kpi: {
       candidates: candidates.length,
       quickwin: candidates.filter((r) => r.quick_win).length,

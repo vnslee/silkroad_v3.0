@@ -76,7 +76,7 @@ export function CountryReport({ data, className = '', printMode = false }: Props
                   role="tab"
                   aria-selected={active}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-xs px-[14px] py-sm rounded-[9px] text-[13px] font-semibold whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${
+                  className={`flex items-center gap-xs px-[14px] py-sm rounded-[9px] text-[clamp(11.05px,calc(9.75px_+_0.361vw),14.95px)] font-semibold whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${
                     active ? 'bg-primary text-on-primary' : 'text-text-secondary hover:bg-surface-container'
                   }`}
                 >

@@ -220,7 +220,7 @@ function HeatRow({
         <span className="font-label-md text-label-md text-primary truncate">{countryKo(country.country, country.country_name)}</span>
         <span className="text-label-sm text-text-secondary truncate">{country.country_name}</span>
         {isBaseline && (
-          <span className="text-[10px] font-semibold ml-xs px-[6px] py-[1px] rounded-full" style={{ background: '#e3edff', color: '#2f6be0' }}>
+          <span className="text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold ml-xs px-[6px] py-[1px] rounded-full" style={{ background: '#e3edff', color: '#2f6be0' }}>
             기준
           </span>
         )}
@@ -331,7 +331,7 @@ function Top3ProfileCard({ card }: { card: RegionTop3Card }) {
                   {top5.map((f) => (
                     <span
                       key={f.rank}
-                      className="inline-block px-2 py-[1px] bg-surface-container text-on-surface-variant rounded-full text-[11px] m-[2px]"
+                      className="inline-block px-2 py-[1px] bg-surface-container text-on-surface-variant rounded-full text-[clamp(9.35px,calc(8.25px_+_0.306vw),12.65px)] m-[2px]"
                       title={f.market_share}
                     >
                       {f.name}
@@ -360,7 +360,7 @@ function Top3ProfileCard({ card }: { card: RegionTop3Card }) {
       {card.ai_comment && (
         <div className="mt-sm bg-[#e3edff]/40 border border-[#e3edff] rounded-md p-sm">
           <div className="flex items-center gap-xs mb-xs">
-            <span className="material-symbols-outlined text-[16px]" style={{ color: '#2f6be0' }}>
+            <span className="material-symbols-outlined text-[clamp(13.6px,calc(12px_+_0.444vw),18.4px)]" style={{ color: '#2f6be0' }}>
               psychology
             </span>
             <span className="font-label-sm text-label-sm uppercase tracking-wider">AI 코멘트</span>
@@ -380,7 +380,7 @@ function ITFormula({ country, axisOrder, baselineName }: { country: RegionITCoun
   return (
     <details className="bg-surface-container-lowest border border-surface-border rounded-lg shadow-[0_2px_4px_rgba(20,23,28,0.04)] group">
       <summary className="cursor-pointer list-none px-md py-sm flex items-center gap-sm hover:bg-surface-light rounded-lg">
-        <span className="material-symbols-outlined text-[20px] text-text-secondary transition-transform group-open:rotate-90">chevron_right</span>
+        <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-text-secondary transition-transform group-open:rotate-90">chevron_right</span>
         <Flag code={country.country} />
         <span className="font-label-md text-label-md text-primary">
           {countryKo(country.country, country.country_name)} <span className="text-text-secondary font-normal">({country.country_name})</span>
@@ -408,7 +408,7 @@ function ITFormula({ country, axisOrder, baselineName }: { country: RegionITCoun
                 <div className="flex-1">
                   <div className="flex items-center gap-xs flex-wrap">
                     <span className="font-label-md text-label-md text-primary">{axis}</span>
-                    <span className="px-[6px] py-[1px] rounded text-[10px] font-semibold" style={{ background: '#eef0f2', color: '#3a4048' }}>
+                    <span className="px-[6px] py-[1px] rounded text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold" style={{ background: '#eef0f2', color: '#3a4048' }}>
                       Tier {a.tier} ×{a.tier_multiplier}
                     </span>
                     <SourcePill flag="EXT" />
@@ -454,7 +454,7 @@ function QuickwinFormula({ row, weights }: { row: RegionQuickwinRow; weights: { 
   return (
     <details className="bg-surface-container-lowest border border-surface-border rounded-lg shadow-[0_2px_4px_rgba(20,23,28,0.04)] group">
       <summary className="cursor-pointer list-none px-md py-sm flex items-center gap-sm hover:bg-surface-light rounded-lg">
-        <span className="material-symbols-outlined text-[20px] text-text-secondary transition-transform group-open:rotate-90">chevron_right</span>
+        <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-text-secondary transition-transform group-open:rotate-90">chevron_right</span>
         <Flag code={row.country} />
         <span className="font-label-md text-label-md text-primary">
           {countryKo(row.country, row.country_name)} <span className="text-text-secondary font-normal">({row.country_name})</span>

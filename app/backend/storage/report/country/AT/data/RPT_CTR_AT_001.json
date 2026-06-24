@@ -6,7 +6,7 @@
     "country": "AT",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-23T22:17:24.240834",
+  "generated_at": "2026-06-24T16:31:52.399624",
   "schema_version": "1.1",
   "overall_insight": "EU 12위 자동차 시장이자 독일·체코·헝가리 CEE 권역의 자연스러운 거점. 2025년 신차 등록 약 24만대(Statistik Austria)로 규모는 작으나 운용리스(operatives Leasing) 비중 EU 톱급(법인 신차 60%+), 캡티브 강도 EU 최강(VW FS·Porsche Bank 단독으로 자동차금융 50%+)인 구조가 핵심이다. 비용·난이도 드라이버는 명확하다 — 소비자 자동차금융은 FMA(금융시장청)+OeNB(중앙은행) 이중 감독 하 BWG(은행법) §1 Z2 등록 또는 Zahlungsdienstleister 인가(자본금 €5M)와 강력한 사용자금리 상한(VKrG §6: OeNB 분기 평균 + 2배·12pp 절대, 2025 약 19% APR)이 진입 부담의 핵심이다. 반면 B2B 운용리스(VÖL 회원)는 BWG 인가 면제로 진입 매우 유연. 비즈니스 매력도는 시장규모는 EU 중하위이나 단위경제 우수(평균 신차가 €36k·BEV 25%+)·국가신용 AA+. 캡티브 압도(Porsche Bank가 그룹 합산 약 50%, 독일 VW FS 모회사)와 다국적 리스사(Ayvens·Arval·Sixt Leasing) 양강 구조로 약 80% 점유 — 독립계 단독 진입은 거의 비매력. 한국 OEM이 진입한다면 캡티브(KCFS) 형태로 신규 진입 가능성. IT 유사도는 매우 높음 — EU GDPR·SEPA·EPS Überweisung(현지 결제)·KSV1870/CRIF(신용정보)·Handy-Signatur/ID Austria(전자인증) 등 인프라 EU 최상위. 매력도↔IT 불일치 지점은 작은 시장규모 — 단독 진입은 ROI 회수 어려움. 다크호스는 CEE 권역 본부 활용(Wien Hub) — Erste Group이 CEE 전역 운영하는 모델 적용 가능. 운용리스·플릿 우선 진입(VÖL) → CEE 권역(HU/CZ/SK/SI/HR) 본부 활용 전략이 유효.",
   "overall_insight_en": "Austria is the EU's 12th-largest auto market and a natural hub for the German/Czech/Hungarian CEE region. 2025 new-car registrations of ~240k (Statistik Austria) make it small in scale, but its structure is the core: operating-lease (operatives Leasing) share is EU-top (60%+ of corporate new cars) and captive intensity is the EU's strongest (VW FS·Porsche Bank alone hold 50%+ of auto finance). Cost/difficulty drivers are clear — consumer auto finance requires BWG (Banking Act) §1 Z2 registration or Zahlungsdienstleister authorization (€5M capital) under dual supervision by FMA (Financial Market Authority) + OeNB (central bank), and a strong usury cap (VKrG §6: OeNB quarterly average ×2 + 12pp absolute, ~19% APR in 2025) is the heart of entry burden. By contrast, B2B operating lease (VÖL member) is exempt from BWG authorization, so entry is very flexible. Business attractiveness: market size is EU lower-mid but unit economics are strong (average new-car price €36k, BEV 25%+) with AA+ sovereign credit. Captive dominance (Porsche Bank ~50% group-wide, German VW FS parent) and a duopoly of multinational lessors (Ayvens·Arval·Sixt Leasing) cover ~80% — standalone independent entry is nearly unattractive. If a Korean OEM entered, a captive (KCFS) form is the feasible new-entry path. IT similarity is very high — EU GDPR·SEPA·EPS Überweisung (local payments)·KSV1870/CRIF (credit data)·Handy-Signatur/ID Austria (e-authentication) make infrastructure EU-top. The attractiveness↔IT mismatch is the small market size — standalone entry struggles to recover ROI. The dark horse is using it as a CEE regional HQ (Wien Hub) — the Erste Group model of running all of CEE applies. Operating-lease/fleet-first entry (VÖL) → leveraging it as a CEE-region (HU/CZ/SK/SI/HR) HQ is a valid strategy.",
@@ -801,6 +801,10 @@
       "base_country": "GB",
       "base_system": "NetSol",
       "region_system_exists": true,
+      "thresholds": {
+        "expansion_min_score": 75.0,
+        "hq_build_min_score": 35.0
+      },
       "hq_baseline_cost": 8000,
       "hq_baseline_months": 24,
       "hq_baseline_currency": "EUR",
@@ -914,6 +918,16 @@
       "similarity_score": 83.4375,
       "similarity_multiplier": 0.6,
       "similarity_band": "80~90",
+      "build_method": "baseline_reuse",
+      "hq_build_reference": {
+        "build_cost": 8000,
+        "build_months": 24,
+        "build_cost_eur": 8000,
+        "currency": "EUR",
+        "delta_vs_applied": 5000.0,
+        "is_applied": false,
+        "note": "본사 자체구축 시 기본 비용/기간 (참고용)"
+      },
       "discount_applied": 0.4,
       "build_breakdown": {
         "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",

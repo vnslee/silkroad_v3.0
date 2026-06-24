@@ -472,12 +472,15 @@ class CountryReportEngine:
             "scale": "1~5 per dimension → gap 0=100, gap 4=0",
         }
 
-    def determine_system_decision(self, similarity_score: float, base_country: str) -> Dict[str, Any]:
+    def determine_system_decision(self, similarity_score: float, base_country: str,
+                                  region: Optional[str] = None) -> Dict[str, Any]:
         """Determine system decision based on similarity score.
 
         Args:
             similarity_score: Overall similarity score (0-100)
             base_country: Base country code
+            region: Target country's region code (e.g. 'EU', 'APAC'). APAC는
+                권역 확산 분기 없이 2지선(내재화/외부솔루션)으로 분기한다.
 
         Returns:
             Decision result with path and details
@@ -495,6 +498,49 @@ class CountryReportEngine:
         thresholds = (self.internal_data or {}).get("decision_thresholds") or {}
         expansion_min = float(thresholds.get("expansion_min_score", 70))
         hq_build_min = float(thresholds.get("hq_build_min_score", 50))
+
+        # 본사 자체구축 기준비용은 EUR로 저장돼 있다. TCO 탭과 동일하게 권역
+        # 표시통화(EU=EUR, NA/SA=USD, APAC=KRW)로 환산해 내려보낸다(화면 정합).
+        # region 미지정 시 EUR 폴백(환산 없음) → 기존 동작 유지.
+        disp_ccy = (self.internal_data.get("region_currency") or {}).get(region, "EUR") if region else "EUR"
+        hq_baseline_cost_disp = self._from_eur(hq_baseline.get("cost", 0), disp_ccy)
+
+        # APAC(아시아) — 권역 내 확산 경로가 없다. 유사도 단일 임계값으로
+        # 내재화(hq_build) / 외부솔루션 2지선만 가른다. region_system_exists 무시.
+        if region == "APAC":
+            apac_min = float(thresholds.get("apac_internalization_min_score", 50))
+            if similarity_score >= apac_min:
+                decision = "hq_build"  # 내재화(표시 라벨), 다운스트림은 hq_build 로직 재사용
+                recommendation = {
+                    "ko": "내재화 추천 (유사도 충분 → 본사 내재화 구축)",
+                    "en": "Internalization recommended (sufficient similarity → in-house build).",
+                }
+            else:
+                decision = "external_solution"
+                recommendation = {
+                    "ko": "현지 외부솔루션 2~3종 추천 (내재화 기준 미달)",
+                    "en": "Recommend 2-3 local external solutions (below internalization threshold).",
+                }
+            result = {
+                "decision": decision,
+                "is_apac": True,
+                "similarity_score": similarity_score,
+                "recommendation": recommendation,
+                "base_country": base_country,
+                "base_system": base_solution,
+                "region_system_exists": region_system_exists,
+                "thresholds": {
+                    "expansion_min_score": expansion_min,
+                    "hq_build_min_score": hq_build_min,
+                    "apac_internalization_min_score": apac_min,
+                },
+                "hq_baseline_cost": hq_baseline_cost_disp,
+                "hq_baseline_months": hq_baseline.get("months", 0),
+                "hq_baseline_currency": disp_ccy,
+            }
+            if decision == "external_solution":
+                result["external_candidates"] = self._extract_external_candidates()
+            return result
 
         # Stage 1 — does the region already have a deployed system?
         if not region_system_exists:
@@ -522,17 +568,48 @@ class CountryReportEngine:
                 "en": "Recommend 2-3 local external solutions.",
             }
 
-        return {
+        result = {
             "decision": decision,
             "similarity_score": similarity_score,
             "recommendation": recommendation,
             "base_country": base_country,
             "base_system": base_solution,
             "region_system_exists": region_system_exists,
-            "hq_baseline_cost": hq_baseline.get("cost", 0),
+            # 결정 트리 임계값을 산출물에 실어 화면이 룰셋 변경을 그대로 반영하도록 한다(하드코딩 금지).
+            "thresholds": {
+                "expansion_min_score": expansion_min,
+                "hq_build_min_score": hq_build_min,
+            },
+            "hq_baseline_cost": hq_baseline_cost_disp,
             "hq_baseline_months": hq_baseline.get("months", 0),
-            "hq_baseline_currency": hq_baseline.get("currency", "EUR")
+            "hq_baseline_currency": disp_ccy
         }
+        # 외부솔루션 결정 시 — 리서치 '솔루션 벤더' 항목을 추천 후보 리스트로 담는다.
+        # (비용 산식은 데이터에 없어 '별도 견적'으로 표기. 화면은 후보명만 노출.)
+        if decision == "external_solution":
+            result["external_candidates"] = self._extract_external_candidates()
+        return result
+
+    def _extract_external_candidates(self) -> List[Dict[str, Any]]:
+        """리서치 '솔루션 벤더' 항목 값에서 외부솔루션 추천 후보를 파싱한다.
+
+        value 예: "글로벌 벤더(NETSOL/Sopra Banking/Sofico) + 현지 SI 혼재"
+        → 괄호 안 슬래시/쉼표 구분 토큰을 후보명으로 추출. 괄호가 없으면
+        구분자(/·,·、) 기준으로 분리. 최대 3종까지.
+        """
+        vendor = self._extract_item_detail("솔루션 벤더") or {}
+        raw = vendor.get("value")
+        if not isinstance(raw, str) or not raw.strip():
+            return []
+        import re as _re
+        # 괄호 안 토큰 우선 추출, 없으면 전체 문자열 사용
+        groups = _re.findall(r"[（(]([^（）()]+)[）)]", raw)
+        segment = groups[0] if groups else raw
+        names = [t.strip() for t in _re.split(r"[/,、·]+", segment) if t.strip()]
+        candidates: List[Dict[str, Any]] = []
+        for name in names[:3]:
+            candidates.append({"name": name, "cost_note": "별도 견적"})
+        return candidates
 
     def calculate_similarity_multiplier(self, similarity_score: float) -> Dict[str, Any]:
         """명세서 산식 1 — 종합 유사도 → TCO 적용 승수%.
@@ -719,12 +796,17 @@ class CountryReportEngine:
             "note": "All volume repriced at new tier rate"
         }
 
-    def calculate_tco_10y(self, target_country: str, base_country: str) -> Dict[str, Any]:
+    def calculate_tco_10y(self, target_country: str, base_country: str,
+                          decision: Optional[str] = None) -> Dict[str, Any]:
         """Calculate 10-year TCO for target country.
 
         Args:
             target_country: Target country code
             base_country: Base country code for reuse
+            decision: 탭1-2 시스템 결정 경로('hq_build'·'baseline_system_expansion'·
+                'external_solution'). 'hq_build'(내재화)면 베이스국 재사용이 아니라
+                본사 자체구축이므로 구축비/기간을 hq_build_baseline 기준으로 산정한다.
+                None(미지정)이면 기존 확산(재사용) 공식으로 폴백.
 
         Returns:
             TCO breakdown
@@ -744,28 +826,53 @@ class CountryReportEngine:
         base_cost = base_info.get("build_cost", 5000)
         base_months = base_info.get("build_months", 18)
 
-        # 명세서 산식 4:
-        #   구축비   = B 구축비용 × 유사도승수
-        #   구축기간 = B 구축기간 × 유사도승수
-        build_cost = base_cost * multiplier
-        build_months = base_months * multiplier
+        is_hq_build = decision == "hq_build"
 
-        build_breakdown = {
-            "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",
-            "inputs": {
-                "베이스라인 국가": base_country,
-                "베이스라인 솔루션": base_info.get("solution"),
-                "B 구축비용": base_cost,
-                "B 구축기간(개월)": base_months,
-                "종합 유사도": round(similarity["overall_score"], 1),
-                "승수 구간": mult_info["band"],
-                "적용 승수": multiplier,
-            },
-            "outputs": {
-                "신규국 구축비용": build_cost,
-                "신규국 구축기간(개월)": build_months,
-            },
-        }
+        if is_hq_build:
+            # 내재화(본사 자체구축) — 베이스국 시스템을 재사용하지 않으므로 유사도 승수를
+            # 적용하지 않고, 본사 자체구축 표준 비용/기간(hq_build_baseline)을 그대로 쓴다.
+            hq_baseline = self.internal_data.get("hq_build_baseline", {}) or {}
+            hq_cost = hq_baseline.get("cost", 8000)
+            hq_months = hq_baseline.get("months", 24)
+            build_cost = hq_cost
+            build_months = hq_months
+            build_breakdown = {
+                "formula": "구축비용/기간 = 본사 자체구축 표준(hq_build_baseline) — 내재화 결정이므로 재사용 승수 미적용",
+                "inputs": {
+                    "구축 방식": "내재화(본사 자체구축)",
+                    "본사 자체구축 비용": hq_cost,
+                    "본사 자체구축 기간(개월)": hq_months,
+                    "종합 유사도": round(similarity["overall_score"], 1),
+                    "적용 승수": 1.0,
+                },
+                "outputs": {
+                    "신규국 구축비용": build_cost,
+                    "신규국 구축기간(개월)": build_months,
+                },
+            }
+        else:
+            # 명세서 산식 4 (확산/재사용):
+            #   구축비   = B 구축비용 × 유사도승수
+            #   구축기간 = B 구축기간 × 유사도승수
+            build_cost = base_cost * multiplier
+            build_months = base_months * multiplier
+
+            build_breakdown = {
+                "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",
+                "inputs": {
+                    "베이스라인 국가": base_country,
+                    "베이스라인 솔루션": base_info.get("solution"),
+                    "B 구축비용": base_cost,
+                    "B 구축기간(개월)": base_months,
+                    "종합 유사도": round(similarity["overall_score"], 1),
+                    "승수 구간": mult_info["band"],
+                    "적용 승수": multiplier,
+                },
+                "outputs": {
+                    "신규국 구축비용": build_cost,
+                    "신규국 구축기간(개월)": build_months,
+                },
+            }
 
         # Calculate subscription
         # 구독제 솔루션(NetSol)만 구독료를 별도 산정한다. 그 외 솔루션의 비용은
@@ -803,9 +910,29 @@ class CountryReportEngine:
         c = lambda x: self._from_eur(x, disp_ccy)
 
         # build_breakdown의 금액도 표시통화로 환산(렌더러가 tco.currency로 표기).
-        build_breakdown["inputs"]["B 구축비용"] = c(base_cost)
+        if is_hq_build:
+            build_breakdown["inputs"]["본사 자체구축 비용"] = c(build_breakdown["inputs"]["본사 자체구축 비용"])
+        else:
+            build_breakdown["inputs"]["B 구축비용"] = c(base_cost)
         build_breakdown["outputs"]["신규국 구축비용"] = c(build_cost)
         build_breakdown["currency"] = disp_ccy
+
+        # 내재화(본사 자체구축) 기준선 — 결정 경로와 무관하게 항상 비교용으로 노출한다.
+        # 확산 국가에서는 "실제 적용 구축비(재사용) vs 내재화로 했다면" 비교의 기준이 되고,
+        # 내재화 국가에서는 실제 적용값과 동일하다.
+        hq_ref = self.internal_data.get("hq_build_baseline", {}) or {}
+        hq_ref_cost_eur = hq_ref.get("cost", 8000)
+        hq_ref_months = hq_ref.get("months", 24)
+        hq_build_reference = {
+            "build_cost": c(hq_ref_cost_eur),
+            "build_months": hq_ref_months,
+            "build_cost_eur": hq_ref_cost_eur,
+            "currency": disp_ccy,
+            # 적용 구축비 대비 내재화 기준선의 차액(표시통화). 양수면 내재화가 더 비쌈.
+            "delta_vs_applied": c(hq_ref_cost_eur) - c(build_cost),
+            "is_applied": is_hq_build,  # 이 국가의 실제 적용 방식이 내재화인지
+            "note": hq_ref.get("note", "본사 자체구축 시 기본 비용/기간 (참고용)"),
+        }
 
         return {
             "build_cost": c(build_cost),
@@ -820,8 +947,11 @@ class CountryReportEngine:
             "currency_base": "EUR",
             "total_tco_10y_eur": total_tco,
             "similarity_score": similarity["overall_score"],
-            "similarity_multiplier": multiplier,
+            # 내재화는 재사용 승수를 적용하지 않으므로 실효 승수 1.0을 노출(확산은 산식 승수 그대로).
+            "similarity_multiplier": 1.0 if is_hq_build else multiplier,
             "similarity_band": mult_info["band"],
+            "build_method": "hq_build" if is_hq_build else "baseline_reuse",
+            "hq_build_reference": hq_build_reference,
             "discount_applied": discount,
             "build_breakdown": build_breakdown,
             "expected_contracts": expected_volume,
@@ -904,11 +1034,21 @@ class CountryReportEngine:
         quality = self._assess_data_quality()
         readiness = self._assess_type1_readiness(analysis)
 
+        # 진출 상태 — 신규 진출 산식(결정 트리·TCO) 적용 여부 판정에 사용.
+        entry_status = (
+            (self.internal_data or {}).get("country_status", {}).get(target_country)
+            or (self.internal_data or {}).get("country_status", {}).get(self.normalize_country_code(target_country))
+            or "미진출"
+        )
+
         # 기준국 자가 분석 감지 — TCO/결정 산식이 무의미해지므로 명시적 안내로 대체.
         is_baseline_self = (
             self.normalize_country_code(target_country)
             == self.normalize_country_code(base_country)
         )
+        # 이미 진출(운영중)한 국가는 신규 구축 결정/TCO 산식을 적용하지 않는다.
+        # baseline 자가분석이거나 운영중인 국가면 두 탭을 안내 메시지로 대체.
+        is_already_deployed = is_baseline_self or (entry_status == "운영중")
         base_solution = (
             (self.internal_data or {}).get("country_assets", {}).get(base_country, {}).get("solution")
             or "N/A"
@@ -921,49 +1061,89 @@ class CountryReportEngine:
         similarity["evidence_items"] = self._collect_tab_items("1-1")
 
         # Tab 1-2: System Decision Tree
-        if is_baseline_self:
+        if is_already_deployed:
+            if is_baseline_self:
+                rec_ko = (
+                    f"{target_country}는 권역 기준국 — 시스템({base_solution})이 이미 운영 중입니다. "
+                    f"신규 진출 결정 트리는 적용되지 않습니다."
+                )
+                rec_en = (
+                    f"{target_country} is the regional baseline — system ({base_solution}) "
+                    f"is already operational. The new-entry decision tree does not apply."
+                )
+            else:
+                rec_ko = (
+                    f"{target_country}는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. "
+                    f"신규 진출 결정 트리는 적용되지 않습니다."
+                )
+                rec_en = (
+                    f"{target_country} is already an operational market — the system is live. "
+                    f"The new-entry decision tree does not apply."
+                )
             decision = {
-                "is_baseline": True,
-                "decision": "baseline_already_deployed",
+                "is_baseline": is_baseline_self,
+                "is_already_deployed": True,
+                "decision": "baseline_already_deployed" if is_baseline_self else "already_deployed",
                 "recommendation": {
-                    "ko": (
-                        f"{target_country}는 권역 기준국 — 시스템({base_solution})이 이미 운영 중입니다. "
-                        f"신규 진출 결정 트리는 적용되지 않습니다."
-                    ),
-                    "en": (
-                        f"{target_country} is the regional baseline — system ({base_solution}) "
-                        f"is already operational. The new-entry decision tree does not apply."
-                    ),
+                    "ko": rec_ko,
+                    "en": rec_en,
                 },
                 "similarity_score": similarity.get("overall_score"),
                 "base_country": base_country,
                 "base_system": base_solution,
                 "region_system_exists": True,
+                "thresholds": {
+                    "expansion_min_score": float((self.internal_data.get("decision_thresholds") or {}).get("expansion_min_score", 70)),
+                    "hq_build_min_score": float((self.internal_data.get("decision_thresholds") or {}).get("hq_build_min_score", 50)),
+                },
                 "items": self._collect_tab_items("1-2"),
             }
         else:
-            decision = self.determine_system_decision(similarity["overall_score"], base_country)
+            # 대상국 권역 — country_to_region 룩업(원본 코드·정규화 코드 양쪽 시도).
+            # APAC이면 determine_system_decision이 2지선(내재화/외부솔루션)으로 분기한다.
+            country_to_region = (self.internal_data or {}).get("country_to_region") or {}
+            target_region = (
+                country_to_region.get(target_country)
+                or country_to_region.get(self.normalize_country_code(target_country))
+            )
+            decision = self.determine_system_decision(
+                similarity["overall_score"], base_country, region=target_region
+            )
             decision["items"] = self._collect_tab_items("1-2")
 
         # Tab 1-3: Contract Volume & 10Y TCO
-        if is_baseline_self:
+        if is_already_deployed:
+            if is_baseline_self:
+                msg_ko = (
+                    f"{target_country}는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. "
+                    f"운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요."
+                )
+                msg_en = (
+                    f"{target_country} is the regional baseline — new build cost/duration do not apply. "
+                    f"For operational figures (existing volume, opex), see the separate management report."
+                )
+            else:
+                msg_ko = (
+                    f"{target_country}는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. "
+                    f"운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요."
+                )
+                msg_en = (
+                    f"{target_country} is already an operational market — new build cost/duration do not apply. "
+                    f"For operational figures (existing volume, opex), see the separate management report."
+                )
             tco = {
-                "is_baseline": True,
+                "is_baseline": is_baseline_self,
+                "is_already_deployed": True,
                 "message": {
-                    "ko": (
-                        f"{target_country}는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. "
-                        f"운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요."
-                    ),
-                    "en": (
-                        f"{target_country} is the regional baseline — new build cost/duration do not apply. "
-                        f"For operational figures (existing volume, opex), see the separate management report."
-                    ),
+                    "ko": msg_ko,
+                    "en": msg_en,
                 },
                 "currency": (self.country_data.get("currency") or "EUR"),
                 "items": self._collect_tab_items("1-3"),
             }
         else:
-            tco = self.calculate_tco_10y(target_country, base_country)
+            # 결정 경로를 전달 — 내재화(hq_build)면 구축비를 본사 자체구축 베이스로 산정.
+            tco = self.calculate_tco_10y(target_country, base_country, decision=decision.get("decision"))
             tco["items"] = self._collect_tab_items("1-3")
 
         # Tab 1-4: Market & Competition — fully sourced from country_data.items
@@ -1000,11 +1180,7 @@ class CountryReportEngine:
                 "data_year": self.country_data.get("data_year"),
                 "fetched_at": self.country_data.get("fetched_at"),
                 "fetched_by": self.country_data.get("fetched_by"),
-                "entry_status": (
-                    (self.internal_data or {}).get("country_status", {}).get(target_country)
-                    or (self.internal_data or {}).get("country_status", {}).get(self.normalize_country_code(target_country))
-                    or "미진출"
-                ),
+                "entry_status": entry_status,
             },
 
             "data_quality": {

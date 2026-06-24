@@ -1,7 +1,7 @@
 // 탭3 TCO·구독료 — KPI 4 + 구축산식 + 계약건수산식 + 워터폴 + 누적추이 + 구독료구간 + 승수표 + 근거항목
 import type { ReactNode } from 'react'
 import type { CountryReportData, ReportItem } from '../types'
-import { Panel, EvidenceCard, Donut, MiniTimeseries, intComma } from './shared'
+import { Panel, EvidenceCard, Donut, MiniTimeseries, money, intComma } from './shared'
 import { Money, useFx } from '../Money'
 import { krwCompact } from '../../../utils/currency'
 
@@ -20,17 +20,21 @@ export function TcoTab({ data }: { data: CountryReportData }) {
   const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아' }
   const baseKo = baseKoMap[data.target.base_country] ?? data.target.base_country
 
-  // 기준국(이미 시스템 배포)·TCO 미산정 보고서는 build_breakdown 등이 없어 산식 렌더 불가 → 안내 대체.
+  // 기준국·이미 진출(운영중)한 국가·TCO 미산정 보고서는 build_breakdown 등이 없어 산식 렌더 불가 → 안내 대체.
   const hasTco =
+    !tco.is_already_deployed &&
     dec.decision !== 'baseline_already_deployed' &&
+    dec.decision !== 'already_deployed' &&
     tco.build_months != null &&
     tco.build_breakdown != null &&
     tco.expected_contracts_breakdown != null
   if (!hasTco) {
+    const msg = typeof tco.message === 'object' ? tco.message.ko : tco.message
     return (
       <Panel icon="payments" title="TCO · 구독료">
         <p className="font-body-md text-body-md text-on-surface-variant">
-          {data.country_meta.country_ko}은(는) 이미 시스템이 배포된 기준국이거나 TCO 산정 대상이 아니어서, 구축비용·구독료 산식이 제공되지 않습니다.
+          {msg ??
+            `${data.country_meta.country_ko}은(는) 이미 시스템이 배포된 국가이거나 TCO 산정 대상이 아니어서, 구축비용·구독료 산식이 제공되지 않습니다.`}
         </p>
       </Panel>
     )
@@ -40,6 +44,8 @@ export function TcoTab({ data }: { data: CountryReportData }) {
   const bd = tco.build_breakdown
   const bi = bd.inputs
   const ec = tco.expected_contracts_breakdown.inputs
+  // 표시통화 — 엔진이 이미 환산한 금액. 기호/단위만 입힌다(EU=EUR, NA/SA=USD, APAC=KRW).
+  const ccy = tco.currency ?? 'EUR'
 
   return (
     <div className="flex flex-col gap-xl">
@@ -51,19 +57,30 @@ export function TcoTab({ data }: { data: CountryReportData }) {
         <Kpi label="유사도 승수" icon="percent" value={`${mult}%`} sub={`구간 ${tco.similarity_band}`} />
       </div>
 
-      {/* 구축비용·기간 산식 */}
+      {/* 구축비용·기간 산식 — 내재화(hq_build)와 확산(baseline_reuse)에 따라 입력 셀이 다르다. */}
       <Panel icon="build" title="구축비용·기간 산식">
         <div className="bg-surface-container p-md rounded-lg border-l-4 border-primary mb-md font-body-sm text-body-sm text-on-surface-variant">
           {bd.formula ?? '구축비용/기간 = 베이스라인(B) 값 × 유사도 승수'}
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-sm">
-          <FormulaCell label="베이스라인" big={baseKo} small={tco.build_breakdown.inputs['베이스라인 솔루션'] ?? data.tabs.tab_1_2_decision.base_system} />
-          <FormulaCell label="B 구축비용" big={<Money value={bi['B 구축비용']} currency={bd.currency ?? tco.currency} />} small="internal.json" />
-          <FormulaCell label="B 구축기간" big={`${bi['B 구축기간(개월)'] ?? bi['B 구축기간']}M`} small="internal.json" />
-          <FormulaCell label="종합 유사도" big={tco.similarity_score.toFixed(1)} small="유사도 점수 결과" />
-          <FormulaCell label="적용 승수" big={`${mult}%`} small={`구간 ${tco.similarity_band}`} />
-          <FormulaCell label="신규국 산출" big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
-        </div>
+        {tco.build_method === 'hq_build' ? (
+          // 내재화: 베이스국 재사용 없이 본사 자체구축 표준값 적용(유사도 승수 미적용).
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-sm">
+            <FormulaCell label="구축 방식" big="내재화" small="본사 자체구축" />
+            <FormulaCell label="본사 자체구축 비용" big={<Money value={bi['본사 자체구축 비용']} currency={tco.currency} />} small="internal.json" />
+            <FormulaCell label="본사 자체구축 기간" big={`${bi['본사 자체구축 기간(개월)']}M`} small="internal.json" />
+            <FormulaCell label="신규국 산출" big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-sm">
+            <FormulaCell label="베이스라인" big={baseKo} small={tco.build_breakdown.inputs['베이스라인 솔루션'] ?? data.tabs.tab_1_2_decision.base_system} />
+            <FormulaCell label="B 구축비용" big={<Money value={bi['B 구축비용']} currency={bd.currency ?? tco.currency} />} small="internal.json" />
+            <FormulaCell label="B 구축기간" big={`${bi['B 구축기간(개월)'] ?? bi['B 구축기간']}M`} small="internal.json" />
+            <FormulaCell label="종합 유사도" big={tco.similarity_score.toFixed(1)} small="유사도 점수 결과" />
+            <FormulaCell label="적용 승수" big={`${mult}%`} small={`구간 ${tco.similarity_band}`} />
+            <FormulaCell label="신규국 산출" big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
+          </div>
+        )}
+        {tco.hq_build_reference && <HqBuildCompare tco={tco} ccy={ccy} />}
       </Panel>
 
       {/* 예상 계약건수 산식 */}
@@ -107,7 +124,7 @@ export function TcoTab({ data }: { data: CountryReportData }) {
             <CumulativeChart tco={tco} />
             <div className="mt-md bg-surface-container/60 p-md rounded-lg border-l-4 border-primary">
               <div className="flex items-center gap-xs mb-xs">
-                <span className="material-symbols-outlined text-primary text-[14px]">function</span>
+                <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">function</span>
                 <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">산식</span>
               </div>
               <code className="block font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
@@ -133,6 +150,11 @@ export function TcoTab({ data }: { data: CountryReportData }) {
             <p className="font-body-sm text-body-sm text-text-secondary mb-sm">
               탭1-1 종합 유사도 점수를 베이스라인 비용·기간에 적용할 승수로 환산합니다.
             </p>
+            {tco.build_method === 'hq_build' && (
+              <div className="bg-surface-container p-sm rounded-lg border-l-4 border-primary mb-sm font-label-sm text-label-sm text-on-surface-variant">
+                내재화(본사 자체구축) 결정이라 재사용 승수는 구축비에 적용되지 않습니다. 아래 표는 참고용입니다.
+              </div>
+            )}
             <table className="w-full">
               <thead>
                 <tr className="text-text-secondary">
@@ -187,7 +209,7 @@ function Kpi({ label, icon, value, sub }: { label: string; icon: string; value: 
     <div className="bg-surface-container-lowest border border-surface-border rounded-xl p-lg card-shadow flex flex-col">
       <div className="flex items-center justify-between mb-sm">
         <span className="font-label-md text-label-md text-primary uppercase tracking-wider">{label}</span>
-        <span className="material-symbols-outlined text-primary text-[24px]">{icon}</span>
+        <span className="material-symbols-outlined text-primary text-[clamp(20.4px,calc(18px_+_0.667vw),27.6px)]">{icon}</span>
       </div>
       <span className="font-display-lg text-display-lg text-primary leading-none">{value}</span>
       {sub && <span className="font-label-sm text-label-sm text-text-secondary mt-xs">{sub}</span>}
@@ -201,6 +223,52 @@ function FormulaCell({ label, big, small, highlight }: { label: string; big: Rea
       <div className={`font-label-sm text-label-sm uppercase tracking-wider ${highlight ? 'text-primary' : 'text-text-secondary'}`}>{label}</div>
       <div className="font-headline-md text-headline-md text-primary">{big}</div>
       {small && <div className="font-label-sm text-label-sm text-text-secondary">{small}</div>}
+    </div>
+  )
+}
+
+// 내재화(본사 자체구축) 기준선 비교 — 결정 경로와 무관하게 항상 노출.
+// 확산 국가: 적용 구축비(재사용) vs 내재화로 했다면 얼마인지 차액과 함께 비교.
+// 내재화 국가: 적용된 방식이 내재화임을 표시(차액 0).
+function HqBuildCompare({ tco, ccy }: { tco: CountryReportData['tabs']['tab_1_3_tco']; ccy: string }) {
+  const ref = tco.hq_build_reference
+  if (!ref) return null
+  const applied = ref.is_applied
+  const delta = ref.delta_vs_applied
+  // 차액 부호: 양수면 내재화가 더 비쌈(확산이 절감), 음수면 내재화가 더 쌈.
+  const deltaLabel =
+    Math.abs(delta) < 1
+      ? '동일'
+      : delta > 0
+        ? `+${money(delta, ccy)} (내재화가 더 비쌈)`
+        : `${money(delta, ccy)} (내재화가 더 저렴)`
+  return (
+    <div className="mt-md bg-surface-container/60 p-md rounded-lg border-l-4 border-primary">
+      <div className="flex items-center gap-xs mb-sm">
+        <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">compare_arrows</span>
+        <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">
+          내재화(본사 자체구축) 기준선 비교
+        </span>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-sm">
+        <FormulaCell
+          label="적용 구축비"
+          big={money(tco.build_cost, ccy)}
+          small={`${tco.build_months.toFixed(1)}M · ${tco.build_method === 'hq_build' ? '내재화' : '확산(재사용)'}`}
+          highlight
+        />
+        <FormulaCell
+          label="내재화로 했다면"
+          big={money(ref.build_cost, ccy)}
+          small={`${ref.build_months}M · ${applied ? '현재 적용 방식' : 'hq_build_baseline'}`}
+        />
+        <FormulaCell label="차액" big={deltaLabel} small="내재화 − 적용 구축비" />
+      </div>
+      {!applied && (
+        <p className="mt-sm font-label-sm text-label-sm text-text-secondary">
+          이 국가는 확산(재사용)으로 산정됐습니다. 위 내재화 금액은 본사 자체구축 표준 기준선(참고용)입니다.
+        </p>
+      )}
     </div>
   )
 }

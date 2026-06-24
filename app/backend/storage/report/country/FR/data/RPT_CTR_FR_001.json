@@ -6,7 +6,7 @@
     "country": "FR",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-23T22:17:25.267108",
+  "generated_at": "2026-06-24T16:31:52.441816",
   "schema_version": "1.1",
   "overall_insight": "프랑스는 EU 3위 신차 시장이자 캡티브 금융(특히 Stellantis·Renault 계열)의 본거지로, 개인 신차 할부·B2B 리스 모두 성숙한 고침투 시장이다. 비즈니스 매력도(시장규모·금융이용률·EV 보급)는 높으나, 진입 난이도 드라이버는 EU CCD2/소비자보호 규제, 추심·회수 절차의 사법 의존성, 그리고 PSD2·GDPR 기반 데이터·AI 신용평가 규제다. IT 유사도는 EU 표준(SEPA·PSD2·오픈뱅킹)에 높게 정렬되어 베이스라인 대비 양호하나, 비즈니스 매력도 대비 회수 실행 리스크(평균 회수기간 장기)가 엇갈리는 지점이다. 다크호스는 B2B 오퍼레이팅 리스·플릿 시장으로 Ayvens(구 ALD·LeasePlan) 본사가 있어 경쟁이 치열하지만 EV 전환 수요가 폭발적이다. 리스크 플래그는 EV 잔가 변동성과 ICE 단계적 퇴출에 따른 잔가 손익으로, 잔가 헤지·리마케팅 역량 없이는 B2B 리스 마진이 압박받는다. 외국사 라이선스는 ACPR 인가 및 EU 패스포팅으로 취득 가능해 국가 게이트는 대체로 PASS다.",
   "overall_insight_en": "France is the EU's #3 new-car market and the home of major captive finance arms (notably Stellantis and Renault groups), a mature, high-penetration market for both retail new-car installment loans and B2B leasing. Business attractiveness (market size, finance penetration, EV adoption) is high, but entry-difficulty drivers are EU CCD2/consumer-protection regulation, the judicial dependency of collection/repossession procedures, and PSD2/GDPR-based data and AI credit-scoring rules. IT similarity is highly aligned with EU standards (SEPA, PSD2, open banking), favorable vs. baseline, but the divergence point vs. business attractiveness is recovery-execution risk (long average recovery period). The dark horse is the B2B operating-lease/fleet market — Ayvens (ex-ALD/LeasePlan) is headquartered here, so competition is fierce but EV-transition demand is explosive. The risk flags are EV residual-value volatility and residual P&L from the ICE phase-out — without residual hedging and remarketing capabilities, B2B lease margins come under pressure. Foreign licensing is obtainable via ACPR authorization and EU passporting, so the country gate broadly PASSes.",
@@ -792,18 +792,21 @@
       ]
     },
     "tab_1_2_decision": {
-      "decision": "baseline_system_expansion",
-      "similarity_score": 90.3125,
+      "is_baseline": false,
+      "is_already_deployed": true,
+      "decision": "already_deployed",
       "recommendation": {
-        "ko": "권역 내 확산: GB 시스템(NetSol) 현지화",
-        "en": "Regional expansion: localize GB system (NetSol)."
+        "ko": "FR는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
+        "en": "FR is already an operational market — the system is live. The new-entry decision tree does not apply."
       },
+      "similarity_score": 90.3125,
       "base_country": "GB",
       "base_system": "NetSol",
       "region_system_exists": true,
-      "hq_baseline_cost": 8000,
-      "hq_baseline_months": 24,
-      "hq_baseline_currency": "EUR",
+      "thresholds": {
+        "expansion_min_score": 75.0,
+        "hq_build_min_score": 35.0
+      },
       "items": [
         {
           "item": "금리 상한 규제",
@@ -900,135 +903,13 @@
       ]
     },
     "tab_1_3_tco": {
-      "build_cost": 2500.0,
-      "build_months": 10.0,
-      "annual_subscription": 1976.0,
-      "annual_maintenance": 500,
-      "annual_recurring": 2476.0,
-      "operations_10y": 50000,
-      "system_cost_10y": 27260.0,
-      "total_tco_10y": 77260.0,
+      "is_baseline": false,
+      "is_already_deployed": true,
+      "message": {
+        "ko": "FR는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
+        "en": "FR is already an operational market — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
+      },
       "currency": "EUR",
-      "currency_base": "EUR",
-      "total_tco_10y_eur": 77260.0,
-      "similarity_score": 90.3125,
-      "similarity_multiplier": 0.5,
-      "similarity_band": "90~100",
-      "discount_applied": 0.4,
-      "build_breakdown": {
-        "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",
-        "inputs": {
-          "베이스라인 국가": "GB",
-          "베이스라인 솔루션": "NetSol",
-          "B 구축비용": 5000,
-          "B 구축기간(개월)": 20,
-          "종합 유사도": 90.3,
-          "승수 구간": "90~100",
-          "적용 승수": 0.5
-        },
-        "outputs": {
-          "신규국 구축비용": 2500.0,
-          "신규국 구축기간(개월)": 10.0
-        },
-        "currency": "EUR"
-      },
-      "expected_contracts": 0,
-      "expected_contracts_breakdown": {
-        "value": 0,
-        "formula": "신차 판매대수 × 금융이용률(신차) × (할부+리스 비중) × 우리사 예상 점유율",
-        "inputs": {
-          "신차 판매대수": 1,
-          "신차 판매대수(원본값)": 1.72,
-          "신차 판매대수(단위)": "million_units",
-          "금융 이용률(신차)_%": 72.0,
-          "구매 패턴(할부·리스 비중)_%": 55.0,
-          "우리사 예상 점유율": 0.02
-        }
-      },
-      "subscription_details": {
-        "existing_volume": 80,
-        "new_volume": 0,
-        "total_volume": 80,
-        "unit_price": 24.7,
-        "currency": "EUR",
-        "annual_fee": 1976.0,
-        "note": "All volume repriced at new tier rate"
-      },
-      "subscription_tiers": [
-        {
-          "min_volume": 0,
-          "max_volume": 500,
-          "price_per_unit": 24.7,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 501,
-          "max_volume": 1000,
-          "price_per_unit": 9.88,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 1001,
-          "max_volume": 1500,
-          "price_per_unit": 8.645,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 1501,
-          "max_volume": 2000,
-          "price_per_unit": 7.41,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 2001,
-          "max_volume": 3000,
-          "price_per_unit": 6.175,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 3001,
-          "max_volume": 5000,
-          "price_per_unit": 5.681,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 5001,
-          "max_volume": 10000,
-          "price_per_unit": 4.94,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 10001,
-          "max_volume": 12000,
-          "price_per_unit": 4.693,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 12001,
-          "max_volume": 14000,
-          "price_per_unit": 4.446,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 14001,
-          "max_volume": 20000,
-          "price_per_unit": 4.323,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 20001,
-          "max_volume": 80000,
-          "price_per_unit": 4.076,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 80001,
-          "max_volume": 999999,
-          "price_per_unit": 0.865,
-          "currency": "EUR"
-        }
-      ],
-      "existing_total_volume": 80,
       "items": [
         {
           "item": "신차 판매대수",

@@ -113,7 +113,7 @@ function CountryFormula({ country, axisOrder }: { country: RegionAttrCountry; ax
   return (
     <details className="bg-surface-container-lowest border border-surface-border rounded-lg shadow-[0_2px_4px_rgba(20,23,28,0.04)] group">
       <summary className="cursor-pointer list-none px-md py-sm flex items-center gap-sm hover:bg-surface-light rounded-lg">
-        <span className="material-symbols-outlined text-[20px] text-text-secondary transition-transform group-open:rotate-90">
+        <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-text-secondary transition-transform group-open:rotate-90">
           chevron_right
         </span>
         <Flag code={country.country} />
@@ -141,15 +141,15 @@ function CountryFormula({ country, axisOrder }: { country: RegionAttrCountry; ax
                   <div className="flex items-center gap-xs flex-wrap">
                     <span className="font-label-md text-label-md text-primary">{axis}</span>
                     {ctr.reverse ? (
-                      <span className="px-[6px] py-[1px] rounded text-[10px] font-semibold" style={{ background: '#f7e4e0', color: '#c0533f' }}>
+                      <span className="px-[6px] py-[1px] rounded text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold" style={{ background: '#f7e4e0', color: '#c0533f' }}>
                         高=惡 역점수
                       </span>
                     ) : (
-                      <span className="px-[6px] py-[1px] rounded text-[10px] font-semibold" style={{ background: '#e9f3ee', color: '#4f8a6d' }}>
+                      <span className="px-[6px] py-[1px] rounded text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold" style={{ background: '#e9f3ee', color: '#4f8a6d' }}>
                         高=好 정점수
                       </span>
                     )}
-                    <span className="px-[6px] py-[1px] rounded text-[10px] font-semibold" style={{ background: '#eef0f2', color: '#3a4048' }}>
+                    <span className="px-[6px] py-[1px] rounded text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold" style={{ background: '#eef0f2', color: '#3a4048' }}>
                       Tier {ctr.tier} ×{ctr.tier_multiplier}
                     </span>
                     <SourcePill flag="EXT" />

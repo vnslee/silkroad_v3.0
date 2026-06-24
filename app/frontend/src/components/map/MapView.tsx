@@ -114,6 +114,9 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
 
   const markers = useMemo<Marker[]>(
     () =>
+      // 카탈로그(getCountries)는 리서치 보유국 ∪ internal.json 진출국을 모두 포함한다
+      // (백엔드 list_countries에서 union). 따라서 독일(DE JV)·체코·일본 등 리서치 폴더가
+      // 없는 internal-only 국가도 여기에 포함돼 마커가 찍힌다 — 별도 보강 로직 불필요.
       countries
         .map((c) => {
           // 좌표는 백엔드 geo(API)가 단일 출처 — 폴백·누락 보장도 백엔드 resolve_coords가 담당.

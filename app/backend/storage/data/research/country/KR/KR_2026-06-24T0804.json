@@ -1,0 +1,1270 @@
+{
+  "code": "KR",
+  "country": "South Korea",
+  "country_ko": "대한민국",
+  "region": "APAC",
+  "currency": null,
+  "is_baseline": false,
+  "schema_version": "1.0",
+  "fetched_by": "ai",
+  "overall_insight": "한국 개인 신차 시장은 게이트 측면에서 진입이 매우 우호적이다: 외국인 지분 100% 허용·JV 불필요, 여전업 등록제(인가 아님)로 외국계 캡티브 진입 선례가 풍부하며, 국가신용등급 AA·2023년 투자자 등록제 폐지로 자본회수·배당 송금 리스크가 낮다. 비용/난이도 드라이버는 최저자본금 200억원(글로벌 캡티브엔 경부담, 독립계엔 진입장벽)과 PIPA·신용정보법상 국외이전 동의·금융 클라우드 국내처리 강제 경향으로, 글로벌 SaaS 직접 이전이 막혀 현지 데이터센터·동의 설계가 필수 비용으로 작용한다. 비즈니스 매력도와 IT 유사도가 엇갈리는 핵심 지점은, 결제·정산(5)과 CB 인프라(4), 비대면·전자계약 채널 성숙도가 베이스라인을 상회하는 강점인 반면, 자체구축 코어+대규모 SI 의존과 멀티테넌시 SaaS 미성숙, 딜러 통합 F&I 플랫폼(3) 격차가 북미 베이스라인 재사용률을 중간 수준으로 끌어내려, 코어 모듈 일부만 이전하고 채널·정산은 현지 강점에 얹는 하이브리드 전개가 합리적이다. 다만 시장 매력도 자체는 양면적이다: 380억 달러 규모에 신차 침투율 62%로 상승 여지는 있으나 신차 판매 162만대 정체·CAGR 5%의 성숙기이며, 현대캐피탈 캡티브 강도 35%·Top5 70% 과점 구조가 신규 진입 과실을 제한한다. 따라서 다크호스는 EV·중고차·수입차 틈새와 한국이 세계 최고인 장기렌탈 인프라를 활용한 '장기렌탈+할부 패키지'이며, 리스크 플래그는 EV 3년 잔가 변동성(잔가 리스크 55%)에 따른 잔가 보증·바이백 보수 설계, 금소법 꺾기 규제(2)와 충돌하는 보험·신용생명 번들의 컴플라이언스, 자력구제 불허로 회수기간 120일·차량회수 용이성 3에 그치는 부실채권 처리 리스크다.",
+  "items": [
+    {
+      "item": "구매 패턴(할부·리스 비중)",
+      "category": "business",
+      "role": "score",
+      "value": "개인 신차: 할부(오토론)+선할부 약 55~60%, 장기렌탈(운용리스 성격) 약 25~30%, 일반리스 약 10~15% / 법인은 운용리스·렌탈 비중 우세",
+      "unit": "match",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "similarity_axis": "product",
+      "similarity_weight": 0.15,
+      "score_dimensions": {
+        "리스 취급 일치도": {
+          "target_score": 4,
+          "base_score": 4,
+          "note": "KR은 여신전문금융업법상 시설대여(리스)·할부금융 모두 캡티브/카드사가 취급, EU 베이스라인과 상품 라인업 거의 일치"
+        },
+        "렌탈 취급 일치도": {
+          "target_score": 5,
+          "base_score": 4,
+          "note": "KR은 장기렌터카(자동차대여업)가 개인 신차 시장에서 매우 활성화 — EU(운용리스 중심) 대비 렌탈 채널 발달도 오히려 높음"
+        },
+        "플릿 취급 일치도": {
+          "target_score": 3,
+          "base_score": 4,
+          "note": "KR 개인 신차 세그먼트에서 플릿 비중은 낮음, B국(EU) 대비 플릿 상품 성숙도·취급 일치도 다소 낮음"
+        },
+        "상품별 비중 유사도": {
+          "target_score": 3,
+          "base_score": 4,
+          "note": "KR은 할부 비중이 EU 베이스라인 대비 높고 운용리스 비중이 낮아 상품 믹스 구조가 다소 상이"
+        }
+      },
+      "tier": 3,
+      "source": "여신금융협회·렌터카사업조합 시장구조 추정, 시장조사 종합",
+      "insight": "KR 개인 신차는 할부(오토론)와 장기렌탈이 양대 축이며 순수 리스 비중은 상대적으로 낮아 EU 베이스라인의 운용리스 중심 믹스와 차이가 있다. 렌탈 취급 인프라는 오히려 강점이므로 장기렌탈+할부 패키지를 전면에 내세운 상품설계가 베이스라인 재사용성과 시장 적합성을 동시에 확보하는 길이다.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "상품별 비중(할부·리스·렌탈·플릿) 보조 서술",
+      "category": "business",
+      "role": "context",
+      "value": "개인 신차 기준 한국 자동차금융 상품 구성: ① 할부금융(오토론)이 전통적 주력으로 개인 구매의 절반 이상 차지, ② 장기렌터카(운용리스 성격)는 세제·유지관리 편의로 개인까지 빠르게 확산 중, ③ 순수 금융·운용리스는 법인·고가차 중심, ④ 플릿은 대기업 법인 위주로 개인 신차 세그먼트 기여도 낮음. 캡티브(현대캐피탈 등)는 할부 중심, 카드·캐피탈사는 할부+장기렌탈 병행, 렌터카 전업사(롯데렌탈·SK렌터카 등)는 장기렌탈 주도.",
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "여신금융협회 통계 및 렌터카업계 시장구조 종합 추정",
+      "insight": "할부와 장기렌탈이 개인 신차의 핵심 양대 채널이라는 점이 EU형 운용리스 중심 모델과 가장 큰 차이다. 진입 초기에는 캡티브가 장악한 할부보다 장기렌탈·구독형 상품으로 차별화하고, 플릿은 개인 세그먼트 기여도가 낮으므로 후순위로 두는 것이 합리적이다.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "솔루션 벤더",
+      "category": "it",
+      "role": "score",
+      "value": "NetSol·자체구축 혼재 / 캡티브계 글로벌 코어뱅킹+자체 LOS",
+      "unit": "match",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 3,
+      "source": "업계 시장조사(국내 캐피탈사 IT 환경 추정)",
+      "insight": "한국은 대형 캐피탈사(현대캐피탈·KB·신한 등)가 자체 구축 코어와 글로벌 패키지를 혼용. 북미 베이스라인(Dealertrack/RouteOne 생태계)과 벤더 계열이 달라 재사용률은 중간 수준 — 코어 모듈 일부만 이전 가능.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "솔루션 유형",
+      "category": "it",
+      "role": "score",
+      "value": "패키지+대규모 SI 혼합, 자체 코어 비중 높음, SaaS 전환 초기",
+      "unit": "match",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 3,
+      "source": "국내 캐피탈/카드사 IT 아키텍처 시장조사",
+      "insight": "한국은 대형사 자체구축 코어+SI 의존도가 높아 멀티테넌시 SaaS 성숙도는 낮음. 북미 베이스라인(클라우드 SaaS·Dealertrack 다테넌트)과 배포형태·테넌시 격차가 유사도를 갉아먹는 핵심 축.",
+      "insight_ai_generated": true,
+      "similarity_axis": "system",
+      "similarity_weight": 0.2,
+      "score_dimensions": {
+        "배포형태(패키지/SI/SaaS)": {
+          "target_score": 3,
+          "base_score": 4,
+          "note": "KR 자체구축+SI 우세, 북미 SaaS 비중 더 높음"
+        },
+        "커스터마이징 자유도": {
+          "target_score": 5,
+          "base_score": 4,
+          "note": "KR 자체코어로 커스터마이징 자유도 매우 높음"
+        },
+        "벤더 종속도": {
+          "target_score": 4,
+          "base_score": 3,
+          "note": "KR 자체구축으로 외부 벤더 종속 낮음, 북미는 Dealertrack/RouteOne 종속"
+        },
+        "멀티테넌시 여부": {
+          "target_score": 2,
+          "base_score": 4,
+          "note": "KR 멀티테넌시 미성숙, 북미 SaaS 다테넌트 표준화"
+        }
+      }
+    },
+    {
+      "item": "디지털 채널 성숙도",
+      "category": "it",
+      "role": "score",
+      "value": "온라인·비대면 신청 보편화, 페이퍼리스·전자계약 성숙, API 개방은 중간",
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 3,
+      "source": "금융위 마이데이터·전자금융 환경 및 업계 조사",
+      "insight": "한국은 비대면 계약·전자서명·페이퍼리스가 세계 최고 수준이며 모바일 채널 침투가 높다. 다만 딜러-금융사 간 개방형 API 표준화는 북미 Dealertrack/RouteOne 대비 파편화 — 채널 성숙도 자체는 베이스라인을 상회.",
+      "insight_ai_generated": true,
+      "similarity_axis": "system",
+      "similarity_weight": 0.2,
+      "score_dimensions": {
+        "온라인 신청 연동": {
+          "target_score": 5,
+          "base_score": 4,
+          "note": "KR 모바일·온라인 신청 침투 최고 수준"
+        },
+        "비대면 계약 가능": {
+          "target_score": 5,
+          "base_score": 4,
+          "note": "KR 전자서명·비대면 계약 법제·관행 성숙"
+        },
+        "API 개방도": {
+          "target_score": 3,
+          "base_score": 4,
+          "note": "KR 딜러-금융사 API 표준화 파편적, 북미 통합 플랫폼 우위"
+        },
+        "페이퍼리스 수준": {
+          "target_score": 5,
+          "base_score": 4,
+          "note": "KR 페이퍼리스·전자문서 보편화"
+        }
+      }
+    },
+    {
+      "item": "신용정보(CB) 인프라",
+      "category": "it",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 2,
+      "source": "NICE평가정보·KCB(코리아크레딧뷰로) 시스템 및 신용정보법",
+      "insight": "한국은 NICE·KCB 양대 CB와 마이데이터 인프라로 신용조회·실시간 평가가 고도화됨. 북미 3대 뷰로(Experian/Equifax/TransUnion) 대비 커버리지·실시간성 동등하나 사업자 수가 적어 다소 집중적.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "결제·정산 인프라",
+      "category": "it",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 2,
+      "source": "금융결제원·CMS 자동이체·오픈뱅킹 인프라",
+      "insight": "한국은 오픈뱅킹·실시간 계좌이체·CMS 자동납부가 세계 최고 수준으로 할부 회수·정산 자동화 용이. 결제 인프라 측면에서 진입 부담이 거의 없는 강점 축.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "디지털 딜러 성숙도",
+      "category": "it",
+      "role": "score",
+      "value": 3,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 3,
+      "source": "국내 완성차·수입차 딜러망 디지털화 시장조사",
+      "insight": "한국은 완성차 직영·캡티브 채널 중심으로 OEM 디지털 견적·온라인 판매가 발전 중이나, 독립 딜러 대상 통합 F&I 플랫폼(Dealertrack류)은 미성숙. 북미 베이스라인 대비 딜러 통합 플랫폼 격차 존재.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "국외이전 제한",
+      "category": "it",
+      "role": "score",
+      "value": "개인정보보호법(PIPA)상 국외이전 시 정보주체 동의·고지 의무, 금융 클라우드 가이드라인 적용",
+      "unit": "match",
+      "direction": "down",
+      "axis": "similarity",
+      "timeseries": null,
+      "tier": 1,
+      "source": "개인정보보호법·신용정보법·금융분야 클라우드 컴퓨팅 가이드라인",
+      "insight": "한국은 PIPA·신용정보법상 국외이전에 별도 동의·고지가 필요하고 금융 데이터는 클라우드 가이드라인 적용. 강제 현지화는 아니나 사실상 국내 처리·동의 절차로 인해 글로벌 SaaS 직접 이전에는 제약 — 현지 데이터센터·동의 설계 필요.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "외국인 지분 한도",
+      "category": "shared",
+      "role": "gate",
+      "value": "100% 허용 (금융업 외국인 직접투자 원칙적 자유, 외국인투자촉진법상 자동차금융·여신전문금융 비제한 업종)",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null,
+      "tier": 1,
+      "source": "외국인투자촉진법 시행령 별표(제한업종 목록), 금융위원회",
+      "insight": "여신전문금융업(할부금융·리스)은 외국인 지분 제한 없음. 단독 100% 자회사 설립 가능, JV 불필요.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "외환·배당 송금 자유도",
+      "category": "shared",
+      "role": "gate",
+      "value": "외국환거래법상 경상·자본거래 원칙 자유, 배당·청산금 송금 가능(신고/보고 절차 존재). 2023년 외국인 투자자 등록제 폐지로 접근성 개선",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null,
+      "tier": 1,
+      "source": "Financial Services Commission (fsc.go.kr/eng/pr010101/79324, 2023) — 외국인 투자자 등록제 폐지; 외국환거래법",
+      "insight": "투자수익·배당 본국 송금 자유. 2023 FRIC 자본시장 규제개선으로 외국인 접근성 추가 개선 — 자본회수 리스크 낮음.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "데이터 현지화 의무",
+      "category": "shared",
+      "role": "score",
+      "value": "신용정보·개인정보 국외이전은 정보주체 동의 또는 법적 근거 필요. 금융 클라우드는 국내 데이터센터 권고/실무 강제 경향. GDPR 적정성 결정 보유(EU↔KR)",
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "regulatory",
+      "value_score": 3,
+      "tier": 1,
+      "source": "신용정보법, 개인정보보호법, 금융분야 클라우드 가이드라인; FIU(kofiu.go.kr) AML/CDD",
+      "insight": "엄격한 현지 저장 강제는 아니나 금융데이터 국외이전은 동의·감독당국 보고 부담. EU 적정성 인정으로 EU 베이스라인 대비 이전 용이성은 양호.",
+      "insight_ai_generated": true,
+      "similarity_axis": "regulatory",
+      "similarity_weight": 0.1,
+      "score_dimensions": {
+        "현지 저장 강제": {
+          "target_score": 3,
+          "base_score": 3,
+          "note": "양국 모두 금융데이터 현지보관 실무 압력 존재"
+        },
+        "국외 이전 허용도": {
+          "target_score": 3,
+          "base_score": 4,
+          "note": "EU(GDPR)는 역내 이전 자유, KR은 동의·보고 절차 부담 다소 큼"
+        },
+        "동의·보관 규제": {
+          "target_score": 3,
+          "base_score": 3,
+          "note": "신용정보법 동의체계와 GDPR 동의요건 유사 수준"
+        },
+        "GDPR 동등성": {
+          "target_score": 4,
+          "base_score": 5,
+          "note": "KR은 EU 적정성 결정 보유하나 베이스라인(EU 역내)이 동등성 기준 자체"
+        }
+      }
+    },
+    {
+      "item": "국가신용등급",
+      "category": "shared",
+      "role": "gate",
+      "value": "AA (S&P) / Aa2 (Moody's) / AA- (Fitch), 안정적",
+      "gate_result": "PASS",
+      "gate_scope": "country",
+      "segment": null,
+      "tier": 1,
+      "source": "S&P·Moody's·Fitch 국가신용등급 (2024~2025)",
+      "insight": "선진국 투자등급 상위권. 송금·자본회수 리스크 매우 낮아 킬스위치 통과.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "라이선스 취득 가능 여부(외국사)",
+      "category": "shared",
+      "role": "gate",
+      "value": "여신전문금융업법상 할부금융업·시설대여(리스)업 등록 필요/외국사 취득 가능. 개인 신차 할부금융=등록제, B2B 리스=시설대여업 등록",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "segment": "installment_finance",
+      "tier": 1,
+      "source": "여신전문금융업법, 금융위원회 등록 규정",
+      "insight": "외국계 캡티브(예: BMW·Toyota·Mercedes 파이낸셜)가 이미 여전업 등록으로 영업 중 — 진입 선례 풍부. 등록제로 인가 대비 진입장벽 낮음.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "라이선스 체제(세그먼트별)",
+      "category": "shared",
+      "role": "gate",
+      "value": "개인 신차 할부금융=여신전문금융업(할부금융업) 등록, 리스=시설대여업 등록. 등록제(인가 아님)·최저자본금 200억원(전업) 또는 업종별 차등. 금융위 등록+금감원 감독",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "segment": "installment_finance",
+      "tier": 1,
+      "source": "여신전문금융업법 및 시행령(자본금 요건), 금융위원회·금융감독원",
+      "insight": "등록제로 인가 대비 처리기간 짧고 외국사 취득 가능. 다만 최저자본금·내부통제·AML(FIU CDD) 요건이 진입 부담 드라이버. 개인 신차(할부)와 B2B 리스 모두 여전업 단일 프레임 내 등록.",
+      "insight_ai_generated": true,
+      "similarity_axis": "regulatory",
+      "similarity_weight": 0.25,
+      "score_dimensions": {
+        "취득방식(등록 vs 인가)": {
+          "target_score": 4,
+          "base_score": 4,
+          "note": "KR 여전업 등록제, EU 다수국도 소비자신용 등록/인가 혼재"
+        },
+        "외국인 취득 가능": {
+          "target_score": 5,
+          "base_score": 5,
+          "note": "양국 모두 외국사 면허취득 자유"
+        },
+        "처리기간(개월)": {
+          "target_score": 4,
+          "base_score": 4,
+          "note": "등록제로 3~6개월 수준, 베이스라인과 유사"
+        },
+        "최저자본금 수준": {
+          "target_score": 3,
+          "base_score": 4,
+          "note": "KR 전업 200억원으로 EU 일부국보다 부담 큼"
+        },
+        "감독 강도": {
+          "target_score": 3,
+          "base_score": 4,
+          "note": "금감원 건전성·AML 감독 엄격, 베이스라인보다 강도 다소 높음"
+        }
+      }
+    },
+    {
+      "item": "금리 상한 규제",
+      "category": "shared",
+      "role": "gate",
+      "value": "대부업법·이자제한법상 법정 최고금리 연 20%. 할부금융·여전사 금리도 적용. 개인 신차 할부와 리스(이자 아닌 리스료) 적용 방식 상이",
+      "gate_result": "PASS",
+      "gate_scope": "segment",
+      "segment": "installment_finance",
+      "tier": 1,
+      "source": "이자제한법, 대부업 등의 등록 및 금융이용자 보호에 관한 법률(최고금리 20%), 금융위원회",
+      "insight": "최고금리 20% 캡 — 신차 할부 APR은 통상 한참 하회해 영업 제약 적음. 단 서브프라임 고위험 차주 마진 압박 요인. B2B 리스는 리스료 구조로 금리상한 직접 적용 회피 가능.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "최저자본금",
+      "category": "shared",
+      "role": "score",
+      "value": 200,
+      "unit": "KRW_billion",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null,
+      "tier": 1,
+      "source": "여신전문금융업법 시행령(전업 여신전문금융회사 최저자본금)",
+      "insight": "전업 여전사 200억원, 단종(할부금융 또는 리스 단일) 영위 시 업종별 차등(통상 100~200억원). 자본 요건은 글로벌 캡티브에 부담 낮으나 독립계엔 진입 드라이버.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "차량회수 절차 용이성",
+      "category": "shared",
+      "role": "score",
+      "value": 3,
+      "unit": "ease_1to5",
+      "direction": "up",
+      "axis": "risk",
+      "timeseries": null,
+      "tier": 2,
+      "source": "민사집행법, 자동차등록령(소유권유보부 매매), 현지 법무 자문",
+      "insight": "리스·소유권유보부 할부는 소유권 기반 회수 가능하나 자력구제 원칙 불허 → 점유이전 거부 시 인도명령·강제집행 필요. 자발적 반환 유도가 일반적. 상품별 회수 모듈 분기 필요.",
+      "insight_ai_generated": true,
+      "similarity_axis": "risk",
+      "similarity_weight": 0.1,
+      "score_dimensions": {
+        "사법절차 필요": {
+          "target_score": 3,
+          "base_score": 3,
+          "note": "KR 자력구제 불허, 점유분쟁 시 집행권원 필요 — EU와 유사"
+        },
+        "회수 소요기간(일)": {
+          "target_score": 3,
+          "base_score": 3,
+          "note": "임의반환 시 수일, 강제집행 시 수개월 — 베이스라인 유사"
+        },
+        "자력구제 허용": {
+          "target_score": 2,
+          "base_score": 2,
+          "note": "양국 모두 채권자 자력 회수 원칙 금지"
+        },
+        "회수율": {
+          "target_score": 4,
+          "base_score": 4,
+          "note": "잔가·중고시장 발달로 회수율 양호"
+        }
+      }
+    },
+    {
+      "item": "법적 회수 소요기간",
+      "category": "shared",
+      "role": "score",
+      "value": 120,
+      "unit": "days",
+      "direction": "down",
+      "axis": "risk",
+      "timeseries": null,
+      "tier": 2,
+      "source": "민사집행법 절차(인도명령·강제집행), 현지 법무 자문 추정",
+      "insight": "임의반환 거부 시 인도청구 소송·강제집행까지 3~6개월. 소유권유보·리스는 본안 없이 인도명령 활용 가능해 단축. 초기 추심정책에 자발적 반환 인센티브 설계 권장.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "추심 규제",
+      "category": "shared",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "risk",
+      "timeseries": null,
+      "tier": 1,
+      "source": "채권의 공정한 추심에 관한 법률(채권추심법), 금융감독원 가이드라인",
+      "insight": "채권추심법상 폭행·협박·야간(21시~08시) 연락·반복연락 금지 등 엄격. 위반 시 형사·과태료. 외주 추심사 등록 요건. 추심 컴플라이언스 체계 구축 필수.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "충당금 규정",
+      "category": "shared",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "risk",
+      "timeseries": null,
+      "tier": 1,
+      "source": "여신전문금융업 감독규정(자산건전성 분류 및 대손충당금), 금융감독원; K-IFRS 9 기대신용손실(ECL)",
+      "insight": "건전성 분류(정상/요주의/고정/회수의문/추정손실)별 최소 대손충당금 적립률 규정 + IFRS9 ECL 병행. 신차 할부(저위험) 충당부담 낮으나 감독기준 엄격 — 충당 모델 현지 정합 필요.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "연체 분류 기준",
+      "category": "shared",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "risk",
+      "timeseries": null,
+      "tier": 1,
+      "source": "여신전문금융업 감독규정 자산건전성 분류 기준, 금융감독원",
+      "insight": "연체 1개월 미만=정상/요주의, 3개월(90일) 이상 연체=고정이하 부실여신 분류가 기본 원칙. 90일 기준은 글로벌 표준과 정합 — 시스템 분류 로직 재사용 용이.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "의무보험 규제",
+      "category": "shared",
+      "role": "score",
+      "value": 5,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "regulatory",
+      "timeseries": null,
+      "tier": 1,
+      "source": "자동차손해배상 보장법(의무 책임보험), 자동차관리법",
+      "insight": "자배법상 대인배상 책임보험(자동차보험) 가입 의무. 할부·리스 차량은 통상 자차담보 포함 종합보험 부보 조건 부과. 보험 연계 상품 설계 표준화 용이.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "신용생명보험 규제",
+      "category": "shared",
+      "role": "score",
+      "value": 2,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "regulatory",
+      "timeseries": null,
+      "tier": 2,
+      "source": "보험업법, 금융소비자보호법; 시장 관행",
+      "insight": "신용생명보험(차주 사망·상해 시 잔존채무 변제) 시장은 한국에서 미발달·제한적. 의무 아님. 끼워팔기 규제와 충돌 소지로 부수상품화 신중 접근 필요.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "보험 끼워팔기 규제",
+      "category": "shared",
+      "role": "score",
+      "value": 2,
+      "unit": "maturity_1to5",
+      "direction": "down",
+      "axis": "regulatory",
+      "timeseries": null,
+      "tier": 1,
+      "source": "금융소비자보호법(불공정영업행위·구속성 판매 금지), 보험업법, 금융감독원",
+      "insight": "금소법상 대출 등에 보험 가입 강요(구속성 영업·꺾기) 엄격 금지. 위반 시 제재. 보험 부수판매는 자발성·설명의무·비교공시 준수 필요 — 번들 상품 설계 시 컴플라이언스 핵심 리스크.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "AI 신용평가 규제",
+      "category": "shared",
+      "role": "score",
+      "value": 4,
+      "unit": "maturity_1to5",
+      "direction": "up",
+      "axis": "regulatory",
+      "timeseries": null,
+      "tier": 1,
+      "source": "신용정보법(자동화평가 대응권·설명요구권), 개인정보보호법(자동화된 결정 거부권), 금융위 AI 가이드라인",
+      "insight": "신용정보법상 자동화평가 결과 설명·이의제기권 보장, 개인정보보호법 자동화 결정 거부·설명권 도입. AI 모델 설명가능성(XAI)·차별금지·검증체계 요구 — 글로벌 스코어링 모델 현지 컴플라이언스 튜닝 필요.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "규제기관 식별",
+      "category": "shared",
+      "role": "context",
+      "value": "금융위원회(FSC, 정책·인허가/등록), 금융감독원(FSS, 건전성·영업행위 감독), 한국은행(통화·외환), FIU(금융정보분석원, AML/CFT·CDD), 개인정보보호위원회(PIPC, 데이터)",
+      "context_type": "descriptive",
+      "tier": 1,
+      "source": "Financial Services Commission(fsc.go.kr), FIU(kofiu.go.kr), 금융감독원",
+      "insight": "여전업 등록은 FSC, 상시감독은 FSS, AML CDD는 FIU 소관. 멀티 규제기관 대응체계 필요하나 영문 공시·창구 정비되어 외국사 진입 예측가능성 높음.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "오토금융/리스 시장규모",
+      "category": "business",
+      "role": "score",
+      "value": 38000,
+      "unit": "USD_M",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 30500
+          },
+          {
+            "year": 2022,
+            "value": 32800
+          },
+          {
+            "year": 2023,
+            "value": 34500
+          },
+          {
+            "year": 2024,
+            "value": 36200
+          },
+          {
+            "year": 2025,
+            "value": 38000
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 39900
+          },
+          {
+            "year": 2027,
+            "value": 41900
+          },
+          {
+            "year": 2028,
+            "value": 44000
+          },
+          {
+            "year": 2029,
+            "value": 46200
+          },
+          {
+            "year": 2030,
+            "value": 48500
+          }
+        ],
+        "cagr_hist": 5.7,
+        "cagr_forecast": 5.0,
+        "estimated": true
+      },
+      "tier": 3,
+      "source": "업계 추정(여신금융협회 통계 기반 추정)",
+      "insight": "선진 시장 규모로 절대 규모는 크나 성장률은 성숙기 한 자릿수. 캡티브·카드·캐피탈 과점 구조로 신규 진입 과실 분배 제한적.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "오토금융 성장률(CAGR)",
+      "category": "business",
+      "role": "score",
+      "value": 5.0,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 6.2
+          },
+          {
+            "year": 2022,
+            "value": 7.5
+          },
+          {
+            "year": 2023,
+            "value": 5.2
+          },
+          {
+            "year": 2024,
+            "value": 4.9
+          },
+          {
+            "year": 2025,
+            "value": 5.0
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 5.0
+          },
+          {
+            "year": 2027,
+            "value": 5.0
+          },
+          {
+            "year": 2028,
+            "value": 5.0
+          },
+          {
+            "year": 2029,
+            "value": 5.0
+          },
+          {
+            "year": 2030,
+            "value": 5.0
+          }
+        ],
+        "cagr_hist": 5.7,
+        "cagr_forecast": 5.0,
+        "estimated": true
+      },
+      "tier": 3,
+      "source": "업계 추정",
+      "insight": "성숙 시장 한 자릿수 성장. 신차 판매 정체·고금리 환경에서 성장 동력은 EV·리스 전환과 중고차 금융 확대.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "금융 이용률(신차)",
+      "category": "business",
+      "role": "score",
+      "value": 62,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 58
+          },
+          {
+            "year": 2022,
+            "value": 59
+          },
+          {
+            "year": 2023,
+            "value": 60
+          },
+          {
+            "year": 2024,
+            "value": 61
+          },
+          {
+            "year": 2025,
+            "value": 62
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 63
+          },
+          {
+            "year": 2027,
+            "value": 64
+          },
+          {
+            "year": 2028,
+            "value": 65
+          },
+          {
+            "year": 2029,
+            "value": 66
+          },
+          {
+            "year": 2030,
+            "value": 67
+          }
+        ],
+        "cagr_hist": 1.7,
+        "cagr_forecast": 1.6,
+        "estimated": true
+      },
+      "tier": 3,
+      "source": "업계 추정(여신금융협회·캐피탈사 자료 기반)",
+      "insight": "신차 금융 침투율 60%대 중반. 현금 구매 비중이 여전히 높은 한국 특성상 침투율 추가 상승 여지 존재.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "금융 이용률(중고차)",
+      "category": "business",
+      "role": "score",
+      "value": 40,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": null,
+      "tier": 3,
+      "source": "업계 추정",
+      "insight": "중고차 금융 침투율은 신차 대비 낮으나 온라인 중고차 플랫폼 성장으로 확대 여력. 미국 추세(은행 중고차 점유 확대)와 유사 흐름 가능.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "평균 금리/APR",
+      "category": "business",
+      "role": "score",
+      "value": 7.5,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 4.5
+          },
+          {
+            "year": 2022,
+            "value": 5.8
+          },
+          {
+            "year": 2023,
+            "value": 7.8
+          },
+          {
+            "year": 2024,
+            "value": 7.9
+          },
+          {
+            "year": 2025,
+            "value": 7.5
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 7.0
+          },
+          {
+            "year": 2027,
+            "value": 6.5
+          },
+          {
+            "year": 2028,
+            "value": 6.3
+          },
+          {
+            "year": 2029,
+            "value": 6.2
+          },
+          {
+            "year": 2030,
+            "value": 6.0
+          }
+        ],
+        "cagr_hist": 13.6,
+        "cagr_forecast": -4.3,
+        "estimated": true
+      },
+      "tier": 3,
+      "source": "한국은행 기준금리·캐피탈사 공시금리 기반 추정",
+      "insight": "2022~2023 고금리 정점 이후 완만한 하향. 캡티브 프로모션 금리(0~3%대)와 독립계 표준금리 격차가 가격 경쟁의 핵심.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "신차 판매대수",
+      "category": "business",
+      "role": "score",
+      "value": 1620,
+      "unit": "units_K",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 1735
+          },
+          {
+            "year": 2022,
+            "value": 1684
+          },
+          {
+            "year": 2023,
+            "value": 1747
+          },
+          {
+            "year": 2024,
+            "value": 1638
+          },
+          {
+            "year": 2025,
+            "value": 1620
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 1640
+          },
+          {
+            "year": 2027,
+            "value": 1660
+          },
+          {
+            "year": 2028,
+            "value": 1680
+          },
+          {
+            "year": 2029,
+            "value": 1695
+          },
+          {
+            "year": 2030,
+            "value": 1710
+          }
+        ],
+        "cagr_hist": -1.7,
+        "cagr_forecast": 1.1,
+        "estimated": true
+      },
+      "tier": 3,
+      "source": "KAMA(한국자동차모빌리티산업협회) 등록 통계 기반 추정",
+      "insight": "내수 신차 시장 정체·소폭 감소. 모수 정체로 계약건수 성장은 침투율·점유율 확대에 의존.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "캡티브 강도(점유율)",
+      "category": "business",
+      "role": "score",
+      "value": 35,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "timeseries": null,
+      "tier": 3,
+      "source": "업계 추정",
+      "insight": "현대캐피탈(현대·기아 캡티브)이 압도적. 사실상 국내 1위 OEM의 전속 금융사가 시장을 지배해 독립계·외국계 진입 장벽이 높음.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "금융사 점유율(Top 5)",
+      "category": "business",
+      "role": "score",
+      "value": 70,
+      "unit": "%",
+      "direction": "down",
+      "axis": "attractiveness",
+      "timeseries": null,
+      "tier": 3,
+      "source": "업계 추정(여신금융협회 자료 기반)",
+      "insight": "상위 5개사 합산 70% 내외의 과점 구조. 현대캐피탈 단독 점유율이 높아 신규 진입자는 틈새(수입차·중고차·EV)로 차별화 필요.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "법인세율",
+      "category": "business",
+      "role": "score",
+      "value": 24,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null,
+      "tier": 1,
+      "source": "대한민국 법인세법(과표 3천억원 초과 최고세율 24%, 지방소득세 별도)",
+      "insight": "누진 구조(9~24%)에 지방소득세 10% 가산. 대형 금융법인은 실효세율 26%대로 부담. 진출 초기 손실 이월공제 활용 고려.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "이자소득 원천징수",
+      "category": "business",
+      "role": "score",
+      "value": 14,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null,
+      "tier": 1,
+      "source": "대한민국 소득세법·법인세법(비거주자 이자소득 원천징수, 조세조약 우선)",
+      "insight": "국내 비거주자 이자 원천징수 기본 14%(지방세 포함 15.4%), 조세조약 적용 시 경감 가능. 본사 차입구조 설계 시 조약 활용 핵심.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "배당 원천징수",
+      "category": "business",
+      "role": "score",
+      "value": 20,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": null,
+      "tier": 1,
+      "source": "대한민국 법인세법(비거주자 배당 원천징수 20%, 조세조약 우선)",
+      "insight": "비거주자 배당 원천징수 기본 20%(지방세 포함 22%), 조세조약으로 5~15%까지 경감. 모회사 소재국 조약 검토로 본국 송금 효율화.",
+      "insight_ai_generated": false
+    },
+    {
+      "item": "EV 보급률",
+      "category": "business",
+      "role": "score",
+      "value": 11.0,
+      "unit": "%",
+      "direction": "up",
+      "axis": "attractiveness",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 5.5
+          },
+          {
+            "year": 2022,
+            "value": 9.6
+          },
+          {
+            "year": 2023,
+            "value": 9.3
+          },
+          {
+            "year": 2024,
+            "value": 10.0
+          },
+          {
+            "year": 2025,
+            "value": 11.0
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 13.0
+          },
+          {
+            "year": 2027,
+            "value": 16.0
+          },
+          {
+            "year": 2028,
+            "value": 20.0
+          },
+          {
+            "year": 2029,
+            "value": 25.0
+          },
+          {
+            "year": 2030,
+            "value": 30.0
+          }
+        ],
+        "cagr_hist": 18.9,
+        "cagr_forecast": 18.2,
+        "estimated": true
+      },
+      "tier": 3,
+      "source": "KAMA·국토교통부 등록 통계 기반 추정(BEV+PHEV 신차 비중)",
+      "insight": "2022 급증 후 캐즘으로 정체했으나 보조금·충전 인프라로 재가속 전망. 리스 잔가 모델에 EV 별도 곡선 반영 필수.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "EV·ICE 잔존가치 리스크",
+      "category": "business",
+      "role": "score",
+      "value": 55,
+      "unit": "%",
+      "direction": "down",
+      "axis": "difficulty",
+      "timeseries": {
+        "history": [
+          {
+            "year": 2021,
+            "value": 62
+          },
+          {
+            "year": 2022,
+            "value": 60
+          },
+          {
+            "year": 2023,
+            "value": 57
+          },
+          {
+            "year": 2024,
+            "value": 56
+          },
+          {
+            "year": 2025,
+            "value": 55
+          }
+        ],
+        "forecast": [
+          {
+            "year": 2026,
+            "value": 53
+          },
+          {
+            "year": 2027,
+            "value": 51
+          },
+          {
+            "year": 2028,
+            "value": 50
+          },
+          {
+            "year": 2029,
+            "value": 49
+          },
+          {
+            "year": 2030,
+            "value": 48
+          }
+        ],
+        "cagr_hist": -2.9,
+        "cagr_forecast": -2.7,
+        "estimated": true
+      },
+      "tier": 3,
+      "source": "Cox Automotive/Manheim 잔가 추정·국내 중고차 시세 기반(3년 EV 기준)",
+      "insight": "테슬라 가격 인하·중국산 EV 유입으로 EV 3년 잔가 하락 압박. 잔가 보증·바이백 조건 보수 설계 권장. ICE 대비 EV 잔가 변동성 큼.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "해당국 정성 요약",
+      "category": "business",
+      "role": "context",
+      "value": "한국은 GDP 대비 자동차 보급이 높은 성숙 시장으로, 신차 판매는 정체·소폭 감소 국면이다. 오토금융은 현대캐피탈(현대·기아 캡티브)이 시장을 지배하는 과점 구조이며, 은행계 카드·캐피탈, 수입차 캡티브(BMW·벤츠·도요타 파이낸셜)가 경쟁한다. 할부 중심에서 리스·렌탈로 상품 다변화가 진행 중이며, 법인 리스와 장기렌터카가 빠르게 성장하고 있다. EV 보급률은 두 자릿수로 권역 평균을 상회하나 잔가 변동성이 리스 손익의 핵심 변수다. 규제는 금융위·금감원의 인가·감독 체계가 촘촘하고, 신용정보·데이터 규제가 강해 외국계 단독 진입 시 라이선스·컴플라이언스 부담이 크다.",
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "업계 종합 분석",
+      "insight": "성숙·과점 시장. 신규 진입은 수입차·EV·온라인 중고차 등 틈새 차별화와 디지털 경험이 관건.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "브랜드 Top10",
+      "category": "business",
+      "role": "context",
+      "value": [
+        "Hyundai",
+        "Kia",
+        "Genesis",
+        "BMW",
+        "Mercedes-Benz",
+        "Tesla",
+        "Audi",
+        "Volkswagen",
+        "Volvo",
+        "Toyota"
+      ],
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "KAMA 등록 통계 기반 추정(2025)",
+      "insight": "현대·기아·제네시스 국산 3사가 내수 70%대 점유. 수입차는 독일 프리미엄·테슬라 중심으로 금융 틈새 기회.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "OEM 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "rank": 1,
+          "name": "Hyundai",
+          "market_share": "38%"
+        },
+        {
+          "rank": 2,
+          "name": "Kia",
+          "market_share": "30%"
+        },
+        {
+          "rank": 3,
+          "name": "Genesis",
+          "market_share": "8%"
+        },
+        {
+          "rank": 4,
+          "name": "BMW",
+          "market_share": "4%"
+        },
+        {
+          "rank": 5,
+          "name": "Mercedes-Benz",
+          "market_share": "3.5%"
+        }
+      ],
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "KAMA 등록 통계 기반 추정(2025)",
+      "insight": "현대차그룹(현대+기아+제네시스)이 내수 75% 이상 지배. OEM 집중도가 캡티브 금융 지배력으로 직결.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "금융사 순위(Top 5)",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "rank": 1,
+          "name": "현대캐피탈",
+          "market_share": "30%+"
+        },
+        {
+          "rank": 2,
+          "name": "KB캐피탈",
+          "market_share": "10%"
+        },
+        {
+          "rank": 3,
+          "name": "신한캐피탈/신한카드",
+          "market_share": "9%"
+        },
+        {
+          "rank": 4,
+          "name": "우리금융캐피탈",
+          "market_share": "7%"
+        },
+        {
+          "rank": 5,
+          "name": "하나캐피탈",
+          "market_share": "6%"
+        }
+      ],
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "여신금융협회 자료 기반 추정(2025)",
+      "insight": "현대캐피탈 단독 1위 압도적. 나머지는 은행계 금융지주 캐피탈이 분점. 외국계 독립 진입 여지는 좁음.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "경쟁사 리스트",
+      "category": "business",
+      "role": "context",
+      "value": [
+        {
+          "rank": 1,
+          "name": "BMW Financial Services Korea"
+        },
+        {
+          "rank": 2,
+          "name": "Mercedes-Benz Financial Services Korea"
+        },
+        {
+          "rank": 3,
+          "name": "Toyota Financial Services Korea"
+        },
+        {
+          "rank": 4,
+          "name": "RCI Financial Services Korea (Renault)"
+        },
+        {
+          "rank": 5,
+          "name": "Volkswagen Financial Services Korea"
+        }
+      ],
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "업계 조사",
+      "insight": "기진출 외국계는 대부분 수입차 OEM 캡티브 형태. 독립계 외국 금융사 진출 사례는 드물어, 캡티브 외 모델은 차별화 필요.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "경쟁사 진출 형태",
+      "category": "business",
+      "role": "context",
+      "value": "외국계는 주로 수입차 OEM 캡티브(BMW·벤츠·도요타·VW·르노) 형태로 현지 여신전문금융업(할부·리스) 인가를 받아 진출. 독립계 소비자금융 단독 진출은 제한적이며, 일부는 은행계와 제휴·합작 또는 중고차 플랫폼 제휴로 시장 접근.",
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "업계 조사",
+      "insight": "캡티브 인가 모델이 표준. 독립 진입 시 현지 제휴(딜러·플랫폼·은행)가 현실적 경로.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "경쟁사 금리 범위",
+      "category": "business",
+      "role": "context",
+      "value": "캡티브 프로모션 금리 0~3%대(특정 모델·기간 한정), 표준 할부 5~8%대, 독립계·은행계 6~9%대, 중고차·저신용 9~12%대.",
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "캐피탈사 공시금리 기반 추정",
+      "insight": "OEM 캡티브의 보조금 기반 초저금리가 신차 가격 경쟁의 핵심. 독립계는 금리만으로 경쟁 어려워 부가서비스·심사속도로 차별화 필요.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "평균 신차가격",
+      "category": "business",
+      "role": "context",
+      "value": "약 4,300만원(약 31,000 USD), 프리미엄·SUV·EV 비중 상승으로 평균단가 지속 상승 추세",
+      "context_type": "descriptive",
+      "tier": 3,
+      "source": "KAMA·업계 추정(2025)",
+      "insight": "평균 거래단가 상승으로 건당 여신 규모 증가 — 침투율 정체에도 잔액 성장 여지. EV·프리미엄 비중이 단가 견인.",
+      "insight_ai_generated": true
+    },
+    {
+      "item": "외부 이슈 스캔",
+      "category": "business",
+      "role": "context",
+      "context_type": "news",
+      "value": [
+        {
+          "news_category": "auto_finance",
+          "headline": "Banks Lead Used, Captives Lose New-Car Ground — 은행 차량금융 점유율 26.6%로 확대(Experian Q1 2025)",
+          "so_what": "캡티브의 신차 금융 점유 후퇴·은행 중고차 약진 추세는 한국에도 시사 — 중고차·은행계 제휴 채널이 신규 진입 기회.",
+          "publisher": "WardsAuto",
+          "pub_date": "2025-07-08",
+          "url": "https://www.wardsauto.com/finance-insurance/financing-shifts-banks-lead-used-captives-lose-new-car-ground"
+        },
+        {
+          "news_category": "geopolitical",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "finance",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "auto_market",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        },
+        {
+          "news_category": "credit_abs",
+          "headline": "조사 필요",
+          "so_what": "조사 필요",
+          "publisher": "",
+          "pub_date": "",
+          "url": ""
+        }
+      ],
+      "tier": 3,
+      "source": "화이트리스트(WardsAuto)",
+      "insight": "확보된 화이트리스트 출처는 미국 시장 캡티브·은행 점유 변동 1건으로, 한국 직접 이슈는 추가 조사 필요. 캡티브 후퇴·은행 약진 흐름은 진입 채널 설계에 참고.",
+      "insight_ai_generated": true
+    }
+  ]
+}

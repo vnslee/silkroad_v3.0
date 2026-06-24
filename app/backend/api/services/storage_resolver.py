@@ -214,19 +214,30 @@ def region_detail_sources(region: str) -> dict:
 
 def list_countries() -> List[CountrySummary]:
     base = config.RESEARCH_DIR / "country"
-    out: List[CountrySummary] = []
-    if not base.is_dir():
-        return out
     status_map = _country_status_map()
     entry_mode_map = _country_entry_mode_map()
     assets_map = _country_assets_map()
-    for d in sorted(p for p in base.iterdir() if p.is_dir()):
-        code = d.name
-        data = _load_latest_research("country", code) or {}
+
+    # 카탈로그 = 리서치 보유국 ∪ internal.json 진출 상태(country_status) 국가.
+    #   리서치 폴더가 없어도 internal 룰셋에 진출 상태가 있는 국가(예: 독일 DE JV,
+    #   체코·헝가리·일본·한국 등)는 지도 마커·팝업 헤더에 정확한 진출 상태로 노출돼야 한다.
+    #   리서치 보유국이 우선(이름·is_baseline 등 풍부) → 그 뒤 internal-only 국가를 보강.
+    research_codes = (
+        [d.name for d in sorted(p for p in base.iterdir() if p.is_dir())]
+        if base.is_dir()
+        else []
+    )
+    research_set = set(research_codes)
+    internal_only = [c for c in sorted(status_map) if c not in research_set]
+
+    out: List[CountrySummary] = []
+    for code in [*research_codes, *internal_only]:
+        # research 보유국만 리서치 JSON을 읽는다(internal-only는 메타 없음 → geo로 보강).
+        data = _load_latest_research("country", code) or {} if code in research_set else {}
         geo = geo_reference.get_country(code) or {}
         resolved_code = data.get("code", code)
-        # research JSON 메타가 비어 있으면(에이전트 생성국 등) geo 참조로 보강한다.
-        # 국가명은 코드와 같으면(=메타 미채움) geo 이름으로 대체.
+        # research JSON 메타가 비어 있으면(에이전트 생성국·internal-only 등) geo 참조로 보강한다.
+        # 국가명은 코드와 같으면(=메타 미채움) geo 이름으로 대체(geo도 없으면 코드 유지).
         name = data.get("country") or code
         if name == code and geo.get("name"):
             name = geo["name"]

@@ -1012,6 +1012,106 @@ class RegionReportEngine:
                         f"the clear top entry candidate for the region."
                     ),
                 })
+
+        # B-2. 후보국 분포 인사이트 — quickwin rows(매력도·IT밴드·퀵윈밴드)에서 직접 도출.
+        cand_rows = [r for r in quickwin.get("rows", []) if not r.get("excluded")]
+        if len(cand_rows) >= 2:
+            # (1) 퀵윈 최적 사분면(매력도≥50 & IT유사도≥50) 분포 — 산점도 기준선과 동일.
+            optimal = [r for r in cand_rows if r.get("attractiveness", 0) >= 50 and r.get("it_similarity", 0) >= 50]
+            if optimal:
+                names_ko = ", ".join(self._country_ko(r["country"]) for r in optimal)
+                names_en = ", ".join(r["country"] for r in optimal)
+                ai_insights.append({
+                    "ko": (
+                        f"후보 {len(cand_rows)}개국 중 {len(optimal)}개국({names_ko})이 매력도·IT유사도 모두 50 이상인 "
+                        f"퀵윈 최적 영역에 위치 — 시장성과 단기 확산성을 동시에 갖춘 우선 검토 대상."
+                    ),
+                    "en": (
+                        f"{len(optimal)} of {len(cand_rows)} candidates ({names_en}) sit in the quick-win sweet spot "
+                        f"(attractiveness & IT similarity both ≥50) — priority targets combining market size and fast deployment."
+                    ),
+                })
+            else:
+                ai_insights.append({
+                    "ko": (
+                        f"후보 {len(cand_rows)}개국 중 매력도·IT유사도가 모두 50 이상인 국가는 없음 — "
+                        f"권역 내 단기 확산과 시장성을 동시에 만족하는 국가가 부재해 단계적 진출이 불가피."
+                    ),
+                    "en": (
+                        f"None of the {len(cand_rows)} candidates clear both attractiveness and IT similarity ≥50 — "
+                        f"no single market combines fast deployment with scale, so phased entry is unavoidable."
+                    ),
+                })
+
+            # (2) 매력도 1위의 격차 — 압도적/박빙 해석. attractiveness 랭킹의 score 사용.
+            attr_ranked = [r for r in attractiveness["ranking"] if r["country"] in candidate_codes]
+            if len(attr_ranked) >= 2:
+                a1, a2 = attr_ranked[0], attr_ranked[1]
+                gap = round(a1.get("score", 0) - a2.get("score", 0), 1)
+                if gap >= 10:
+                    ai_insights.append({
+                        "ko": (
+                            f"매력도 1위 {self._country_ko(a1['country'])}({a1.get('score')})와 2위 "
+                            f"{self._country_ko(a2['country'])}({a2.get('score')})의 격차가 {gap}점 — 시장 매력도 측면에서 1위가 뚜렷이 앞섬."
+                        ),
+                        "en": (
+                            f"Top-attractiveness {a1['country']} ({a1.get('score')}) leads #2 {a2['country']} ({a2.get('score')}) "
+                            f"by {gap} points — a clear front-runner on market attractiveness."
+                        ),
+                    })
+                else:
+                    ai_insights.append({
+                        "ko": (
+                            f"매력도 상위권 {self._country_ko(a1['country'])}·{self._country_ko(a2['country'])}의 격차가 "
+                            f"{gap}점에 불과 — 시장 매력도가 박빙이라 IT유사도·규제 게이트가 순위를 가르는 변수."
+                        ),
+                        "en": (
+                            f"Attractiveness leaders {a1['country']} and {a2['country']} differ by only {gap} points — "
+                            f"a tight race where IT similarity and regulatory gates decide the order."
+                        ),
+                    })
+
+            # (3) IT유사도 밴드 변별력 — 후보 다수가 같은 최상위 밴드면 IT가 변별 변수가 못 됨.
+            it_bands = [r.get("it_similarity_band") for r in cand_rows if r.get("it_similarity_band") is not None]
+            if it_bands:
+                top_band = max(it_bands)
+                top_band_n = sum(1 for b in it_bands if b == top_band)
+                if top_band_n >= 3 and top_band_n >= len(cand_rows) * 0.5:
+                    ai_insights.append({
+                        "ko": (
+                            f"후보 {len(cand_rows)}개국 중 {top_band_n}개국이 IT유사도 {top_band} 동일 밴드 — "
+                            f"IT 확산 난이도는 권역 전반이 유사해, 매력도가 우선순위를 가르는 핵심 변수."
+                        ),
+                        "en": (
+                            f"{top_band_n} of {len(cand_rows)} candidates share the same top IT-similarity band ({top_band}) — "
+                            f"deployment effort is broadly similar, so attractiveness becomes the key differentiator."
+                        ),
+                    })
+
+        # B-3. top1 경쟁 구조 — 시장배경 탭에서 1순위국의 진입 형태 한 줄.
+        if top3:
+            top1_code = top3[0].get("country")
+            mb_country = next(
+                (c for c in self.region_data.get("countries", []) if c.get("code") == top1_code),
+                None,
+            )
+            if mb_country:
+                entry_form = (self._country_items_index(mb_country).get("경쟁사 진출 형태") or {}).get("value")
+                if isinstance(entry_form, str) and entry_form.strip():
+                    summary = entry_form.strip()
+                    if len(summary) > 90:
+                        summary = summary[:90].rstrip() + "…"
+                    ai_insights.append({
+                        "ko": (
+                            f"1순위 {self._country_ko(top1_code)} 경쟁 구조 — {summary} "
+                            f"진입 전략 설계 시 기존 플레이어 구도를 우선 검토."
+                        ),
+                        "en": (
+                            f"Top candidate {top1_code} — incumbent landscape: {summary} "
+                            f"Factor this competitive structure into entry strategy."
+                        ),
+                    })
+
         if baseline:
             ai_insights.append({
                 "ko": f"기준국 {self._country_ko(baseline)}{self._josa_eun(self._country_ko(baseline))} 이미 시스템 보유국 → 순위에서 제외(B국 시스템 확산의 비교 기준).",
@@ -1058,6 +1158,20 @@ class RegionReportEngine:
                 "ko": tier_insight_text[tk]["ko"].format(names=names_ko),
                 "en": tier_insight_text[tk]["en"].format(names=names_en),
             })
+        # 킬스위치 전 통과(JV 필수/권고국 부재) — 규제 리스크가 낮다는 긍정 인사이트.
+        if not by_tier.get("jv_required") and not by_tier.get("jv_recommended"):
+            passed_n = killswitch.get("passed_count")
+            if passed_n:
+                ai_insights.append({
+                    "ko": (
+                        f"킬스위치 평가 {passed_n}개국 전부 단독 진출 가능 — 권역 전반의 규제·신용 게이트 리스크가 낮아 "
+                        f"JV 없이 직접 진출 전략을 우선 검토할 수 있음."
+                    ),
+                    "en": (
+                        f"All {passed_n} screened markets clear the kill-switch gates — low region-wide regulatory/credit risk "
+                        f"means direct entry (without a JV) can be the primary strategy."
+                    ),
+                })
 
         # C. 외부 이슈 스캔 (NEWS) — 권역 공통 이슈를 가장 위에, 그 다음 상위 3개국 헤드라인
         news: List[Dict[str, Any]] = []

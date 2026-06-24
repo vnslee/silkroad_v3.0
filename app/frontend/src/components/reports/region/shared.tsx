@@ -4,14 +4,18 @@
 /** 평가 후보 9개국 + 기준국 한글명 매핑 (JSON엔 영문명만 있음). */
 export const COUNTRY_KO: Record<string, string> = {
   AT: '오스트리아',
+  BR: '브라질',
+  DE: '독일',
   DK: '덴마크',
   ES: '스페인',
   FR: '프랑스',
   GB: '영국',
   IT: '이탈리아',
+  MX: '멕시코',
   NL: '네덜란드',
   PL: '폴란드',
   PT: '포르투갈',
+  US: '미국',
 }
 
 export function countryKo(code: string, fallback?: string): string {
@@ -89,7 +93,7 @@ export function SourcePill({ flag, suffix }: { flag: string; suffix?: string }) 
   const m = FLAG_META[flag] ?? { bg: '#eef0f2', fg: '#3a4048', label: flag }
   return (
     <span
-      className="inline-flex items-center gap-1 px-2 py-[2px] rounded-full text-[10px] font-semibold tracking-wide"
+      className="inline-flex items-center gap-1 px-2 py-[2px] rounded-full text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold tracking-wide"
       style={{ background: m.bg, color: m.fg }}
     >
       {m.label}

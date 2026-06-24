@@ -102,15 +102,18 @@ export default {
         mono: ['Hanken Grotesk', 'Pretendard', 'system-ui', 'sans-serif'],
       },
       fontSize: {
-        'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
-        'headline-lg': ['32px', { lineHeight: '40px', letterSpacing: '-0.01em', fontWeight: '700' }],
-        'headline-lg-mobile': ['24px', { lineHeight: '32px', fontWeight: '700' }],
-        'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
-        'body-lg': ['18px', { lineHeight: '28px', fontWeight: '400' }],
-        'body-md': ['16px', { lineHeight: '24px', fontWeight: '400' }],
-        'body-sm': ['14px', { lineHeight: '20px', fontWeight: '400' }],
-        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.05em', fontWeight: '600' }],
-        'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500' }],
+        // 유체 타이포(fluid type) — 화면 너비 360~1440px 구간에서 폰트가 부드럽게 스케일.
+        // clamp(최소 0.85배, 뷰포트 선형 보간, 최대 1.15배). lineHeight도 1.x 비율로 풀어 동반 스케일.
+        // 보고서(PR1/PR2)·상세화면(P1/P2)이 이 토큰을 쓰므로 해상도에 자동 반응한다.
+        'display-lg': ['clamp(40.8px, calc(36px + 1.333vw), 55.2px)', { lineHeight: '1.17', letterSpacing: '-0.02em', fontWeight: '700' }],
+        'headline-lg': ['clamp(27.2px, calc(24px + 0.889vw), 36.8px)', { lineHeight: '1.25', letterSpacing: '-0.01em', fontWeight: '700' }],
+        'headline-lg-mobile': ['clamp(20.4px, calc(18px + 0.667vw), 27.6px)', { lineHeight: '1.33', fontWeight: '700' }],
+        'headline-md': ['clamp(20.4px, calc(18px + 0.667vw), 27.6px)', { lineHeight: '1.33', fontWeight: '600' }],
+        'body-lg': ['clamp(15.3px, calc(13.5px + 0.5vw), 20.7px)', { lineHeight: '1.56', fontWeight: '400' }],
+        'body-md': ['clamp(13.6px, calc(12px + 0.444vw), 18.4px)', { lineHeight: '1.5', fontWeight: '400' }],
+        'body-sm': ['clamp(11.9px, calc(10.5px + 0.389vw), 16.1px)', { lineHeight: '1.43', fontWeight: '400' }],
+        'label-md': ['clamp(10.2px, calc(9px + 0.333vw), 13.8px)', { lineHeight: '1.33', letterSpacing: '0.05em', fontWeight: '600' }],
+        'label-sm': ['clamp(9.35px, calc(8.25px + 0.306vw), 12.65px)', { lineHeight: '1.27', fontWeight: '500' }],
       },
       spacing: {
         // 4px 베이스 증분(DESIGN.md)

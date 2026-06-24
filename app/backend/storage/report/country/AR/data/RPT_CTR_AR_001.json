@@ -6,7 +6,7 @@
     "country": "AR",
     "base_country": "BR"
   },
-  "generated_at": "2026-06-23T22:17:24.120829",
+  "generated_at": "2026-06-24T16:31:52.392623",
   "schema_version": "1.2",
   "overall_insight": "라틴아메리카 3위권 자동차 시장이나 초고인플레·외환통제·CCC 신용등급으로 변동성이 권역 최고 수준이다. 2025년 신차 약 45만대(ACARA)로 회복 중이며, 금융 침투율 약 45%의 절반 이상을 Plan de Ahorro(círculos de ahorro, 저축형 공동구매조합)가 차지하는 것이 아르헨티나의 결정적 특수성 — 무이자+행정비 구조로 인플레 헷지 구매 수단이 되어 신차 판매의 대들보다. 비용·난이도 드라이버는 매우 강하다: 명목 APR 75%·외환통제(cepo)·법인세 35%·이자 원천 35%(한·아르헨티나 조세조약 미체결)에 더해, 소비자 여신 BCRA EFNB 인가와 Plan de Ahorro IGJ administradora 인가의 이중 규제가 핵심이다. 다만 2024~2025 Milei 정부의 재정흑자·디스인플레·cepo 단계적 완화가 회복 사이클을 열어 진입 타이밍 매력을 키운다. 매력도↔IT 불일치 지점은 솔루션 정합성 — EU 데이터 적정성 인정·Veraz/BCRA Central de Deudores CB는 견고하나, Plan de Ahorro 운영·인플레 인덱싱 특화 시스템 필요로 NetSol 베이스라인 재사용은 40%대로 BR(50%대)보다 낮다. 반면 차량회수는 prenda con registro 자력집행(secuestro prendario)으로 BR보다 빨라 리스크 축의 다크호스다. 리스크 플래그는 외환통제·환율·정치(디폴트 이력)로, 자본회수·환헷지 시나리오 실사가 필수다. 한국 OEM 캡티브 직진입(점유 낮음)보다 은행계·핀테크 파트너십 + Plan de Ahorro administradora 결합으로 진입, B2B Leasing 우선 후 prenda 단계 확장이 유효하다.",
   "overall_insight_en": "Latin America's #3 auto market, but hyperinflation, FX controls and a CCC sovereign rating make volatility the highest in the region. New-car sales recovering to ~450k units in 2025 (ACARA); of the ~45% finance penetration, more than half is taken by Plan de Ahorro (círculos de ahorro, savings-pool group-purchase schemes) — Argentina's decisive specificity, an interest-free + admin-fee structure that serves as an inflation-hedge purchase vehicle and the backbone of new-car sales. Cost/difficulty drivers are very strong: nominal APR 75% · FX controls (cepo) · 35% corporate tax · 35% interest WHT (no Korea-Argentina tax treaty), plus the dual regulation of BCRA EFNB consumer-credit licensing and IGJ administradora licensing for Plan de Ahorro. That said, the 2024-2025 Milei government's fiscal surplus, disinflation and gradual cepo easing open a recovery cycle, raising the appeal of entry timing. The attractiveness↔IT mismatch is solution fit — EU data-adequacy recognition and Veraz/BCRA Central de Deudores CB are solid, but the need for Plan de Ahorro operations and inflation-indexing specialization keeps NetSol baseline reuse in the 40s%, lower than BR (50s%). Conversely, repossession via prenda con registro self-enforcement (secuestro prendario) is faster than BR — a dark horse on the risk axis. Risk flags are FX controls · exchange rate · politics (default history); capital-recovery and FX-hedge scenario due diligence is essential. Rather than direct entry by a Korean OEM captive (low share), enter via bank/fintech partnerships + a Plan de Ahorro administradora combination, prioritizing B2B leasing first then expanding to the prenda stage.",
@@ -801,6 +801,10 @@
       "base_country": "BR",
       "base_system": "현지 SI",
       "region_system_exists": true,
+      "thresholds": {
+        "expansion_min_score": 75.0,
+        "hq_build_min_score": 35.0
+      },
       "hq_baseline_cost": 8000,
       "hq_baseline_months": 24,
       "hq_baseline_currency": "EUR",
@@ -914,6 +918,16 @@
       "similarity_score": 83.75,
       "similarity_multiplier": 0.6,
       "similarity_band": "80~90",
+      "build_method": "baseline_reuse",
+      "hq_build_reference": {
+        "build_cost": 8787.878787878788,
+        "build_months": 24,
+        "build_cost_eur": 8000,
+        "currency": "USD",
+        "delta_vs_applied": 6388.128787878788,
+        "is_applied": false,
+        "note": "본사 자체구축 시 기본 비용/기간 (참고용)"
+      },
       "discount_applied": 0.4,
       "build_breakdown": {
         "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",

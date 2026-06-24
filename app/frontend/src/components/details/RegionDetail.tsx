@@ -2,6 +2,7 @@
 // 디자인 참조: region_detail_rendering_engine.py 산출 HTML(DTL_<REGION>_NNN.html) 구조.
 // 구성(스펙 §4 P2): KPI 3카드 → 기진출 국가 → (권역 지도 + 진출예정국 Quick-Win 순위) → 권역 인사이트.
 // 데이터는 프론트에서 3-소스 병합(buildRegionDetail) — 표현만 담당(렌더링 엔진 미사용).
+import { useEffect, useRef, useState } from 'react'
 import type {
   RegionDetailData,
   RegionCandidateCountry,
@@ -56,7 +57,7 @@ export function RegionDetail({ data, className = '' }: Props) {
     <div
       className={`flex items-start justify-center min-h-full w-full p-margin-mobile md:p-margin-desktop bg-background ${className}`}
     >
-      <div className="w-full max-w-5xl rounded-xl custom-shadow-level-3 flex flex-col border-surface-border bg-surface-container">
+      <div className="w-full max-w-5xl rounded-xl custom-shadow-level-3 flex flex-col border-surface-border bg-surface-container-lowest">
         <div className="p-lg flex flex-col gap-xl">
           {/* 제목(권역명)은 DetailView 헤더 chrome에 이미 노출 — 바디 중복 제거 */}
           {/* KPI 3카드 */}
@@ -76,7 +77,7 @@ export function RegionDetail({ data, className = '' }: Props) {
           </div>
 
           {/* 권역 인사이트 */}
-          <RegionInsight es={es} />
+          <RegionInsight es={es} baseline={data.baseline_country} />
         </div>
       </div>
     </div>
@@ -86,10 +87,10 @@ export function RegionDetail({ data, className = '' }: Props) {
 function KpiCard({ value, label, color }: { value: number; label: string; color: string }) {
   return (
     <div className="bg-surface-container-lowest border border-surface-border rounded-[14px] p-md text-center">
-      <div className="font-mono text-[30px] font-bold leading-none" style={{ color }}>
+      <div className="font-mono text-[clamp(25.5px,calc(22.5px_+_0.833vw),34.5px)] font-bold leading-none" style={{ color }}>
         {value}
       </div>
-      <div className="font-body-sm text-[12px] text-[#6B7280] mt-1">{label}</div>
+      <div className="font-body-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] text-[#6B7280] mt-1">{label}</div>
     </div>
   )
 }
@@ -114,7 +115,7 @@ function ProductsCell({ products }: { products: string[] }) {
 function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
-      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md">
+      <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
         기진출 국가
       </h3>
       <table className="w-full text-left border-collapse font-body-sm text-body-sm">
@@ -156,16 +157,33 @@ function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
 function RegionMap({ code, members }: { code: string; members: RegionDetailData['map']['members'] }) {
   // 실제 국경(world-atlas 50m)을 권역 멤버 bbox 에 fit 해 클로즈업. 진출상태별 채움.
   // atlas 매칭 0건(미등록 권역)이면 안내 폴백.
-  const W = 360
-  const H = 300
-  const geo = buildRegionMapGeometry(members, W, H)
+  // 지도 영역의 실제 크기를 ResizeObserver 로 측정해 그 비율로 projection 을 fit —
+  // 패널이 넓든 좁든 letterbox 여백 없이 지도가 영역을 꽉 채운다.
+  const areaRef = useRef<HTMLDivElement>(null)
+  const [size, setSize] = useState({ w: 360, h: 380 })
+
+  useEffect(() => {
+    const el = areaRef.current
+    if (!el) return
+    const ro = new ResizeObserver((entries) => {
+      const r = entries[0]?.contentRect
+      if (!r) return
+      const w = Math.round(r.width)
+      const h = Math.round(r.height)
+      if (w > 0 && h > 0) setSize((p) => (p.w === w && p.h === h ? p : { w, h }))
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  const geo = buildRegionMapGeometry(members, size.w, size.h)
   const statusByCode = Object.fromEntries(members.map((m) => [m.code, m.status]))
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
-      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md">
+      <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
         권역 지도
       </h3>
-      <div className="flex-1 flex items-center justify-center min-h-[380px]">
+      <div ref={areaRef} className="flex-1 flex items-stretch justify-center min-h-[460px]">
         {geo ? (
           <svg
             viewBox={geo.viewBox}
@@ -176,7 +194,8 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
           >
             {geo.shapes.map((s) => {
               const st = MAP_STATE[statusByCode[s.code]] ?? MAP_STATE['미진출']
-              const fs = Math.max(7, Math.min(13, geo.width * 0.035))
+              // 라벨 폰트는 viewBox(=패널 실측) 좌표계 기준 — 짧은 변에 비례시켜 패널 크기와 무관하게 일정한 화면 크기로 보이게 한다.
+              const fs = Math.max(9, Math.min(18, Math.min(geo.width, geo.height) * 0.042))
               return (
                 <g key={s.code}>
                   <path
@@ -227,7 +246,7 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
 function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
-      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md">
+      <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
         진출 예정국 Quick-Win 순위
       </h3>
       <table className="w-full text-left border-collapse font-body-sm text-body-sm">
@@ -235,7 +254,7 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
           <tr className="bg-surface-light border-b border-surface-border">
             <Th>#</Th>
             <Th>국가</Th>
-            <Th>종합점수</Th>
+            <Th align="center">종합점수</Th>
             <Th>판정</Th>
           </tr>
         </thead>
@@ -256,7 +275,7 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
                   <span className="font-mono text-xs text-on-surface-variant">{r.code}</span>
                 </td>
                 <td className="p-sm">
-                  <div className="flex items-center gap-xs min-w-[88px]">
+                  <div className="flex items-center gap-xs min-w-[88px] mx-auto">
                     <div className="flex-1 w-full h-base bg-surface-border rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full"
@@ -287,9 +306,22 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
   )
 }
 
-function RegionInsight({ es }: { es: RegionDetailData['executive_summary'] }) {
+function RegionInsight({
+  es,
+  baseline,
+}: {
+  es: RegionDetailData['executive_summary']
+  baseline?: string
+}) {
   // 기준국(top1·why_top1) 얘기는 제외 — AI 교차 인사이트만 본문으로.
-  const cross = (es?.ai_cross_insight?.insights ?? []).filter((i) => i.ko || i.en)
+  // 보고서 SummaryTab과 동일하게 기준국 언급 항목('기준국'·'baseline'·'(코드)')도 제외.
+  const cross = (es?.ai_cross_insight?.insights ?? []).filter((i) => {
+    const ko = i.ko || i.en || ''
+    if (!ko) return false
+    if (/기준국|baseline/i.test(ko)) return false
+    if (baseline && ko.includes(`(${baseline})`)) return false
+    return true
+  })
   // 마지막 라인: 해당 권역 뉴스 1건(권역 스코프 우선, 없으면 첫 항목).
   const newsItems = es?.external_news_scan?.items ?? []
   const news = newsItems.find((n) => n.scope === 'region') ?? newsItems[0]
@@ -297,7 +329,7 @@ function RegionInsight({ es }: { es: RegionDetailData['executive_summary'] }) {
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
       <div className="flex items-center gap-sm mb-md">
-        <h3 className="font-headline-md text-[22px] leading-[30px] text-primary font-bold flex-1">
+        <h3 className="font-headline-md text-[clamp(18.7px,calc(16.5px_+_0.611vw),25.3px)] leading-[30px] text-primary font-bold flex-1">
           권역 인사이트
         </h3>
         <span className="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full whitespace-nowrap">
@@ -355,8 +387,17 @@ function RegionNewsLine({
   )
 }
 
-function Th({ children }: { children: React.ReactNode }) {
+function Th({
+  children,
+  align = 'left',
+}: {
+  children: React.ReactNode
+  align?: 'left' | 'center' | 'right'
+}) {
+  const cls = align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : 'text-left'
   return (
-    <th className="p-sm font-label-md text-label-md text-outline font-semibold">{children}</th>
+    <th className={`p-sm font-label-md text-label-md text-outline font-semibold ${cls}`}>
+      {children}
+    </th>
   )
 }
