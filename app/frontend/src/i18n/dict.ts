@@ -147,7 +147,7 @@ export const DICT: Dict = {
   'legend.established': { ko: '기 진출', en: 'Active markets' },
   'legend.candidate': { ko: '진출 후보', en: 'Candidate markets' },
   'legend.operating': { ko: '운영중', en: 'Operating' },
-  'legend.notEntered': { ko: '진출 예정국', en: 'Planned markets' },
+  'legend.notEntered': { ko: '진출 예정', en: 'Planned markets' },
   'legend.hyundai': { ko: '현대차 사업망', en: 'Hyundai network' },
   'legend.none': { ko: '대상 외', en: 'Out of scope' },
   'map.aria': { ko: '세계 지도', en: 'World map' },

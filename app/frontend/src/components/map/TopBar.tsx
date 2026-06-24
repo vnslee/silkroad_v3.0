@@ -7,7 +7,17 @@ import { store } from '../../store'
 import { useT } from '../../i18n/dict'
 import { HyundaiCapitalCI } from '../common/HyundaiCapitalCI'
 import { LanguageSelectorDropdown } from '../ui/language-selector-dropdown'
-import { ExpandableSearch } from '../ui/expandable-search'
+import { ExpandableSearch, type SearchSuggestion } from '../ui/expandable-search'
+
+// 국가코드(ISO alpha-2) → 국기 이모지(regional indicator). 'ES' → 🇪🇸. 형식 안 맞으면 빈 문자열.
+function flagEmoji(code: string): string {
+  if (!/^[A-Za-z]{2}$/.test(code)) return ''
+  return String.fromCodePoint(
+    ...[...code.toUpperCase()].map((c) => 0x1f1e6 + (c.charCodeAt(0) - 65)),
+  )
+}
+
+const MAX_SUGGESTIONS = 8
 
 interface Props {
   countries: CountrySummary[]
@@ -32,21 +42,41 @@ export function TopBar({ countries, regions }: Props) {
   const close = () => setMenu(null)
   const toggle = (k: Exclude<MenuKey, null>) => setMenu((m) => (m === k ? null : k))
 
-  // 검색 — name/name_ko/code 부분일치, 첫 매칭국으로 팝업 진입(AISea mockup onSearchKey 패턴).
-  const runSearch = () => {
+  // 입력 부분일치(name/name_ko/code) 국가들 — 자동완성 후보. 코드 시작 일치를 우선 정렬.
+  const matches = (() => {
     const q = search.trim().toLowerCase()
-    if (!q) return
-    const hit = countries.find(
-      (c) =>
-        c.code.toLowerCase().includes(q) ||
-        c.name.toLowerCase().includes(q) ||
-        (c.name_ko ?? '').toLowerCase().includes(q),
-    )
-    if (hit) {
-      close()
-      setSearch('')
-      nav(`#/country/${hit.code}/detail?mode=popup`)
-    }
+    if (!q) return []
+    return countries
+      .filter(
+        (c) =>
+          c.code.toLowerCase().includes(q) ||
+          c.name.toLowerCase().includes(q) ||
+          (c.name_ko ?? '').toLowerCase().includes(q),
+      )
+      .sort((a, b) => {
+        // 한글명/영문명 prefix 일치를 가장 위로.
+        const score = (c: (typeof countries)[number]) =>
+          (c.name_ko ?? '').toLowerCase().startsWith(q) || c.name.toLowerCase().startsWith(q) ? 0 : 1
+        return score(a) - score(b)
+      })
+  })()
+
+  const suggestions: SearchSuggestion[] = matches.slice(0, MAX_SUGGESTIONS).map((c) => ({
+    id: c.code,
+    label: c.name_ko ? `${c.name_ko}` : c.name,
+    sub: c.name_ko ? c.name : c.code,
+    prefix: flagEmoji(c.code),
+  }))
+
+  const goCountry = (code: string) => {
+    close()
+    setSearch('')
+    nav(`#/country/${code}/detail?mode=popup`)
+  }
+
+  // 검색 — 후보 첫 매칭국으로 팝업 진입(Enter 폴백; 후보 선택은 onSelectSuggestion).
+  const runSearch = () => {
+    if (matches.length > 0) goCountry(matches[0].code)
   }
 
   return (
@@ -79,7 +109,7 @@ export function TopBar({ countries, regions }: Props) {
           onClose={close}
         >
           <Dropdown title={t('menu.countryTitle')}>
-            {countries.slice(0, 8).map((c) => (
+            {countries.map((c) => (
               <DropdownRow
                 key={c.code}
                 onClick={() => {
@@ -160,6 +190,8 @@ export function TopBar({ countries, regions }: Props) {
         value={search}
         onChange={setSearch}
         onSubmit={runSearch}
+        suggestions={suggestions}
+        onSelectSuggestion={(s) => goCountry(s.id)}
         placeholder={t('search.placeholder')}
         ariaLabel={t('search.aria')}
         className="flex-none"
@@ -217,7 +249,7 @@ function Dropdown({ title, children }: { title: string; children: React.ReactNod
   return (
     <div
       role="menu"
-      className="absolute left-0 top-[calc(100%+6px)] z-[2] w-max min-w-[120px] max-w-[240px] animate-aisea-pop rounded-[13px] border border-surface-border bg-surface-container-lowest p-[7px] shadow-[0_16px_44px_rgba(20,23,28,0.14)]"
+      className="absolute left-0 top-[calc(100%+6px)] z-[2] max-h-[196px] w-max min-w-[120px] max-w-[240px] overflow-y-auto animate-aisea-pop rounded-[13px] border border-surface-border bg-surface-container-lowest p-[7px] shadow-[0_16px_44px_rgba(20,23,28,0.14)]"
     >
       {title && (
         <div className="px-md pb-xs pt-sm font-label-sm text-label-sm tracking-wide text-outline">{title}</div>
