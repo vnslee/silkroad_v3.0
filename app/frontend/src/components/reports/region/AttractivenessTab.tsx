@@ -1,6 +1,6 @@
 // 매력도 탭 — 비즈니스 매력도 순위 / 항목 기여분(스택 막대) / 국가별 산식.
 import type { RegionReportData, RegionAttrCountry } from '../types'
-import { countryKo, Flag, scoreBarColor, normBarColor, SourcePill } from './shared'
+import { axisLabel, countryKo, Flag, scoreBarColor, normBarColor, SourcePill } from './shared'
 import { useT } from '../../../i18n/dict'
 import { useLang } from '../../../i18n/locale'
 import type { Lang } from '../../../store'
@@ -26,9 +26,9 @@ function nameOf(lang: Lang, code: string, nameEn?: string): string {
 export function AttractivenessTab({ data }: { data: RegionReportData }) {
   const at = data.tabs.tab_2_1_attractiveness
   const axisOrder = Object.keys(at.weights)
-  const weightsNote = axisOrder.map((k) => `${k} ${at.weights[k]}`).join(', ')
   const t = useT()
   const lang = useLang()
+  const weightsNote = axisOrder.map((k) => `${axisLabel(lang, k)} ${at.weights[k]}`).join(', ')
 
   return (
     <section className="flex flex-col gap-xl">
@@ -68,7 +68,7 @@ export function AttractivenessTab({ data }: { data: RegionReportData }) {
             {axisOrder.map((axis) => (
               <div key={axis} className="flex items-center gap-xs">
                 <div className="w-3 h-3 rounded-sm" style={{ background: AXIS_COLORS[axis] ?? '#2f6be0' }} />
-                <span className="text-label-sm text-text-secondary">{axis}</span>
+                <span className="text-label-sm text-text-secondary">{axisLabel(lang, axis)}</span>
               </div>
             ))}
           </div>
@@ -98,13 +98,13 @@ export function AttractivenessTab({ data }: { data: RegionReportData }) {
                           key={axis}
                           className="h-full"
                           style={{ width: `${pct}%`, background: AXIS_COLORS[axis] ?? '#2f6be0' }}
-                          title={`${axis}: ${contrib.toFixed(1)}`}
+                          title={`${axisLabel(lang, axis)}: ${contrib.toFixed(1)}`}
                         />
                       )
                     })}
                   </div>
                 </div>
-                <div className="col-span-2 text-right text-text-secondary text-label-sm">총 {total}</div>
+                <div className="col-span-2 text-right text-text-secondary text-label-sm">{t('rattr.total')} {total}</div>
               </div>
             )
           })}
@@ -142,13 +142,12 @@ function CountryFormula({ country, axisOrder, lang }: { country: RegionAttrCount
         <span className="text-2xl font-bold ml-xs" style={{ color: scoreBarColor(country.attractiveness_score) }}>
           {country.attractiveness_score}
         </span>
-        <span className="text-label-sm text-text-secondary flex-1">/100 — 항목별 정규화×가중치 합산</span>
+        <span className="text-label-sm text-text-secondary flex-1">{t('rattr.summaryNote')}</span>
         <span className="font-label-sm text-label-sm text-secondary">{t('rattr.viewFormula')}</span>
       </summary>
       <div className="px-md pb-md pt-xs">
         <div className="bg-surface-light border border-surface-border rounded-md p-sm mb-sm font-body-sm text-on-surface-variant">
-          매력도 = Σ(정규화 × 유효가중치) ÷ Σ(유효가중치). 유효가중치 = 항목 가중치 × Tier 멀티플라이어 (Tier1=1.0 고정, Tier2~4는
-          config 조정 가능). 정규화는 권역 내 min~max 기준. 역점수 항목은 100 − 정규화값 적용(경쟁강도).
+          {t('rattr.formula')}
         </div>
         {axisOrder.map((axis) => {
           const ctr = country.contributions[axis]
@@ -158,7 +157,7 @@ function CountryFormula({ country, axisOrder, lang }: { country: RegionAttrCount
               <div className="flex items-start justify-between gap-sm mb-xs">
                 <div className="flex-1">
                   <div className="flex items-center gap-xs flex-wrap">
-                    <span className="font-label-md text-label-md text-primary">{axis}</span>
+                    <span className="font-label-md text-label-md text-primary">{axisLabel(lang, axis)}</span>
                     {ctr.reverse ? (
                       <span className="px-[6px] py-[1px] rounded text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold" style={{ background: '#f7e4e0', color: '#c0533f' }}>
                         {t('rattr.reverseScore')}
@@ -199,7 +198,7 @@ function CountryFormula({ country, axisOrder, lang }: { country: RegionAttrCount
                   </div>
                 </div>
                 <div>
-                  <div className="text-label-sm text-text-secondary">기여 = 정규화 × 유효가중치</div>
+                  <div className="text-label-sm text-text-secondary">{t('rattr.contribFormula')}</div>
                   <div className="text-primary font-medium">
                     {ctr.normalized} × {ctr.effective_weight} = <strong>{ctr.contribution}</strong>
                   </div>

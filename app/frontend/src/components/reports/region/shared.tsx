@@ -1,5 +1,6 @@
 // 권역 보고서(PR2) 공통 헬퍼 — 국가 표기·플래그·밴드 색·소스 플래그 배지.
 // mockup 04_region_report.html 의 raw hex / 클래스를 그대로 옮겼다.
+import { useT } from '../../../i18n/dict'
 
 /** 평가 후보 9개국 + 기준국 한글명 매핑 (JSON엔 영문명만 있음). */
 export const COUNTRY_KO: Record<string, string> = {
@@ -32,6 +33,31 @@ export const COUNTRY_KO: Record<string, string> = {
 
 export function countryKo(code: string, fallback?: string): string {
   return COUNTRY_KO[code] ?? fallback ?? code
+}
+
+/**
+ * 매력도·IT 축 이름 한→영 매핑 (백엔드 weights/contributions/axes 키는 한글뿐 .en 없음).
+ * 키는 region 리포트 JSON에서 추출(GDP 성장률·경쟁강도 등). 미등록 키는 원문 폴백.
+ */
+const AXIS_EN: Record<string, string> = {
+  'GDP 성장률': 'GDP growth',
+  '자동차 판매대수': 'Car sales volume',
+  시장규모: 'Market size',
+  '오토금융 성장률(CAGR)': 'Auto finance growth (CAGR)',
+  '금융 이용률': 'Finance penetration',
+  금융이용유형: 'Finance usage type',
+  경쟁강도: 'Competition intensity',
+  '디지털 채널 성숙도': 'Digital channel maturity',
+  데이터현지화: 'Data localization',
+  '라이선스 종류': 'License type',
+  '솔루션 유형': 'Solution type',
+  '차량회수 절차': 'Vehicle repossession process',
+}
+
+/** 축 이름 표시 — en이면 매핑(없으면 원문), 그 외 한글 원문 그대로. */
+export function axisLabel(lang: 'ko' | 'en', axis: string): string {
+  if (lang === 'en') return AXIS_EN[axis] ?? axis
+  return axis
 }
 
 /**
@@ -101,17 +127,22 @@ export function normBarColor(norm: number): string {
 
 export type SourceFlag = 'CALC' | 'EXT' | 'NEWS' | 'AI' | 'INT'
 
-const FLAG_META: Record<string, { bg: string; fg: string; label: string }> = {
-  CALC: { bg: '#e9f3ee', fg: '#4f8a6d', label: '계산값' },
-  EXT: { bg: '#eef0f2', fg: '#3a4048', label: '외부조사' },
-  NEWS: { bg: '#fbf3e2', fg: '#c08a2e', label: '외부이슈' },
-  AI: { bg: '#e3edff', fg: '#2f6be0', label: 'AI 인사이트' },
-  INT: { bg: '#e3edff', fg: '#2f6be0', label: '내부자료' },
+// 라벨은 i18n 키로 보관(SourcePill 에서 useT 로 해석) — 색만 여기서 고정.
+const FLAG_META: Record<string, { bg: string; fg: string; labelKey: string }> = {
+  CALC: { bg: '#e9f3ee', fg: '#4f8a6d', labelKey: 'rsrc.calc' },
+  EXT: { bg: '#eef0f2', fg: '#3a4048', labelKey: 'rsrc.ext' },
+  NEWS: { bg: '#fbf3e2', fg: '#c08a2e', labelKey: 'rsrc.news' },
+  AI: { bg: '#e3edff', fg: '#2f6be0', labelKey: 'rsrc.ai' },
+  INT: { bg: '#e3edff', fg: '#2f6be0', labelKey: 'rsrc.int' },
 }
 
 /** 소스 플래그 pill (mockup engine_msg 배지). suffix 로 "· 2축" 등 부가 텍스트. */
 export function SourcePill({ flag, suffix }: { flag: string; suffix?: string }) {
-  const m = FLAG_META[flag] ?? { bg: '#eef0f2', fg: '#3a4048', label: flag }
+  const t = useT()
+  const meta = FLAG_META[flag]
+  const m = meta
+    ? { bg: meta.bg, fg: meta.fg, label: t(meta.labelKey) }
+    : { bg: '#eef0f2', fg: '#3a4048', label: flag }
   return (
     <span
       className="inline-flex items-center gap-1 px-2 py-[2px] rounded-full text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold tracking-wide"

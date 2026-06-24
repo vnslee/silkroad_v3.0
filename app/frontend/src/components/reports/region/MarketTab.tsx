@@ -2,7 +2,7 @@
 import type { RegionReportData, RegionMarketCountry } from '../types'
 import { countryKo, Flag, SourcePill } from './shared'
 import { useT } from '../../../i18n/dict'
-import { useLang } from '../../../i18n/locale'
+import { useLang, pickLang } from '../../../i18n/locale'
 import type { Lang } from '../../../store'
 import { useFx } from '../Money'
 import { parseFirstAmount, toKRW, formatKRW } from '../../../utils/currency'
@@ -11,11 +11,12 @@ import { parseFirstAmount, toKRW, formatKRW } from '../../../utils/currency'
 // 파싱·환산 실패 시 원문만 표시(그레이스풀).
 function NewCarPrice({ text }: { text: string }) {
   const fx = useFx()
+  const t = useT()
   const hit = parseFirstAmount(text)
   const krw = hit ? toKRW(hit.value, hit.currency, fx) : null
   return (
     <div className="text-body-sm text-on-surface-variant">
-      {krw != null && <span className="font-semibold text-text-primary">약 {formatKRW(krw)}</span>}
+      {krw != null && <span className="font-semibold text-text-primary">{t('rmkt.approx')} {formatKRW(krw)}</span>}
       <span className={krw != null ? 'block text-label-sm text-text-secondary' : undefined}>{text}</span>
     </div>
   )
@@ -95,12 +96,12 @@ function MarketCard({ country, lang }: { country: RegionMarketCountry; lang: Lan
         )}
         {country.avg_new_car_price && (
           <Field label={t('rmkt.avgPrice')} pillSuffix="· single_value">
-            <NewCarPrice text={country.avg_new_car_price} />
+            <NewCarPrice text={pickLang(lang, country.avg_new_car_price, country.avg_new_car_price_en)} />
           </Field>
         )}
         {country.qualitative_summary && (
           <Field label={t('rmkt.countrySummary')} pillSuffix="· qualitative">
-            <div className="text-body-sm text-on-surface-variant">{country.qualitative_summary}</div>
+            <div className="text-body-sm text-on-surface-variant">{pickLang(lang, country.qualitative_summary, country.qualitative_summary_en)}</div>
           </Field>
         )}
       </div>

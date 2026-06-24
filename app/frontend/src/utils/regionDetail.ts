@@ -181,6 +181,8 @@ export function buildRegionDetail(
         quick_win_rank: r.rank,
         code: r.country ?? '',
         name_ko: koByCode[r.country ?? ''] || r.country_name || '',
+        // 영문명 없으면 빈 값 — 컴포넌트의 pickLang이 ko로 폴백.
+        name_en: enByCode[r.country ?? ''] ?? '',
         similarity: num(r.it_similarity),
         attractiveness: num(r.attractiveness),
         composite_score: num(r.quickwin_raw),
@@ -208,6 +210,8 @@ export function buildRegionDetail(
       return {
         code: gb,
         name_ko: koByCode[gb] ?? gb,
+        // 영문명 없으면 빈 값 — 컴포넌트의 pickLang이 ko로 폴백.
+        name_en: enByCode[gb] ?? '',
         market,
         ev,
         // 국가간 비교용 정규화 시장규모(KRW bn). fx 없으면 null → 지도 버블 생략.

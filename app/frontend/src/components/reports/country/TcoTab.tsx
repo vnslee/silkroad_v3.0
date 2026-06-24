@@ -74,15 +74,15 @@ export function TcoTab({ data }: { data: CountryReportData }) {
         <Panel icon="build" title={t('tco.panel.buildApac')}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-sm">
             <FormulaCell
-              label="구축비용"
+              label={t('tco.cell.buildCost')}
               big={<Money value={bi['기준국 구축비용'] ?? tco.build_cost} currency={bd.currency ?? tco.currency} />}
-              small={`기준국 ${bi['기준국 솔루션'] ? `${baseKo} · ${bi['기준국 솔루션']}` : baseKo} 자체구축`}
+              small={t('tco.cell.baselineSelfBuild').replace('{base}', bi['기준국 솔루션'] ? `${baseKo} · ${bi['기준국 솔루션']}` : baseKo)}
               highlight
             />
             <FormulaCell
-              label="구축기간"
+              label={t('tco.cell.buildPeriod')}
               big={`${bi['기준국 구축기간(개월)'] ?? tco.build_months}M`}
-              small={`기준국 ${baseKo} 자체구축`}
+              small={t('tco.cell.baselineSelfBuild').replace('{base}', baseKo)}
               highlight
             />
           </div>
@@ -94,24 +94,24 @@ export function TcoTab({ data }: { data: CountryReportData }) {
       /* 구축비용·기간 산식 — 내재화(hq_build)와 확산(baseline_reuse)에 따라 입력 셀이 다르다. */
       <Panel icon="build" title={t('tco.panel.buildFormula')}>
         <div className="bg-surface-container p-md rounded-lg border-l-4 border-primary mb-md font-body-sm text-body-sm text-on-surface-variant">
-          {bd.formula ?? '구축비용/기간 = 베이스라인(B) 값 × 유사도 승수'}
+          {bd.formula ?? t('tco.buildFormulaFallback')}
         </div>
         {tco.build_method === 'hq_build' ? (
           // 내재화: 베이스국 재사용 없이 본사 자체구축 표준값 적용(유사도 승수 미적용).
           <div className="grid grid-cols-2 md:grid-cols-4 gap-sm">
-            <FormulaCell label="구축 방식" big="내재화" small="본사 자체구축" />
-            <FormulaCell label="본사 자체구축 비용" big={<Money value={bi['본사 자체구축 비용']} currency={tco.currency} />} small="내부정보" />
-            <FormulaCell label="본사 자체구축 기간" big={`${bi['본사 자체구축 기간(개월)']}M`} small="내부정보" />
-            <FormulaCell label="신규국 산출" big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
+            <FormulaCell label={t('tco.cell.buildMethod')} big={t('tco.cell.internalize')} small={t('tco.cell.hqSelfBuild')} />
+            <FormulaCell label={t('tco.cell.hqBuildCost')} big={<Money value={bi['본사 자체구축 비용']} currency={tco.currency} />} small={t('tco.cell.internalInfo')} />
+            <FormulaCell label={t('tco.cell.hqBuildPeriod')} big={`${bi['본사 자체구축 기간(개월)']}M`} small={t('tco.cell.internalInfo')} />
+            <FormulaCell label={t('tco.cell.newMarketCalc')} big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-6 gap-sm">
-            <FormulaCell label="베이스라인" big={baseKo} small={tco.build_breakdown.inputs['베이스라인 솔루션'] ?? data.tabs.tab_1_2_decision.base_system} />
-            <FormulaCell label="B 구축비용" big={<Money value={bi['B 구축비용']} currency={bd.currency ?? tco.currency} />} small="내부정보" />
-            <FormulaCell label="B 구축기간" big={`${bi['B 구축기간(개월)'] ?? bi['B 구축기간']}M`} small="내부정보" />
-            <FormulaCell label="종합 유사도" big={tco.similarity_score.toFixed(1)} small="유사도 점수 결과" />
-            <FormulaCell label="적용 승수" big={`${mult}%`} small={`구간 ${tco.similarity_band}`} />
-            <FormulaCell label="신규국 산출" big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
+            <FormulaCell label={t('tco.cell.baseline')} big={baseKo} small={tco.build_breakdown.inputs['베이스라인 솔루션'] ?? data.tabs.tab_1_2_decision.base_system} />
+            <FormulaCell label={t('tco.cell.bBuildCost')} big={<Money value={bi['B 구축비용']} currency={bd.currency ?? tco.currency} />} small={t('tco.cell.internalInfo')} />
+            <FormulaCell label={t('tco.cell.bBuildPeriod')} big={`${bi['B 구축기간(개월)'] ?? bi['B 구축기간']}M`} small={t('tco.cell.internalInfo')} />
+            <FormulaCell label={t('tco.cell.overallSim')} big={tco.similarity_score.toFixed(1)} small={t('tco.cell.simScoreResult')} />
+            <FormulaCell label={t('tco.cell.appliedMult')} big={`${mult}%`} small={t('tco.cell.band').replace('{band}', tco.similarity_band)} />
+            <FormulaCell label={t('tco.cell.newMarketCalc')} big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
           </div>
         )}
         {tco.hq_build_reference && <HqBuildCompare tco={tco} ccy={ccy} />}
@@ -121,14 +121,14 @@ export function TcoTab({ data }: { data: CountryReportData }) {
       {/* 예상 계약건수 산식 */}
       <Panel icon="function" title={t('tco.panel.contractsFormula')}>
         <div className="bg-surface-container p-md rounded-lg border-l-4 border-primary mb-md font-body-sm text-body-sm text-on-surface-variant">
-          {tco.expected_contracts_breakdown.formula ?? '신차 판매대수 × 금융이용률(신차) × (할부+리스 비중) × 우리사 예상 점유율'}
+          {tco.expected_contracts_breakdown.formula ?? t('tco.contractsFormulaFallback')}
         </div>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-sm">
-          <FormulaCell label="신차 판매대수" big={intComma(ec['신차 판매대수'])} small="대 / 년" />
-          <FormulaCell label="금융 이용률" big={`${ec['금융 이용률(신차)_%'] ?? 0}%`} small="신차 기준" />
-          <FormulaCell label="할부·리스 비중" big={`${ec['구매 패턴(할부·리스 비중)_%'] ?? 0}%`} small="구매 패턴" />
-          <FormulaCell label="우리사 점유율" big={`${((ec['우리사 예상 점유율'] ?? 0) * 100).toFixed(1)}%`} small="내부정보" />
-          <FormulaCell label="예상 계약건수" big={`${intComma(tco.expected_contracts)} 건`} small="= 산식 결과" highlight />
+          <FormulaCell label={t('tco.cell.newCarSales')} big={intComma(ec['신차 판매대수'])} small={t('tco.cell.unitsPerYear')} />
+          <FormulaCell label={t('tco.cell.finPenetration')} big={`${ec['금융 이용률(신차)_%'] ?? 0}%`} small={t('tco.cell.newCarBasis')} />
+          <FormulaCell label={t('tco.cell.installmentLeaseShare')} big={`${ec['구매 패턴(할부·리스 비중)_%'] ?? 0}%`} small={t('tco.cell.purchasePattern')} />
+          <FormulaCell label={t('tco.cell.ourShare')} big={`${((ec['우리사 예상 점유율'] ?? 0) * 100).toFixed(1)}%`} small={t('tco.cell.internalInfo')} />
+          <FormulaCell label={t('tco.cell.expectedContracts')} big={`${intComma(tco.expected_contracts)} ${t('tco.unit.cases')}`} small={t('tco.cell.formulaResult')} highlight />
         </div>
       </Panel>
 
@@ -279,6 +279,7 @@ function FormulaCell({ label, big, small, highlight }: { label: string; big: Rea
 // 확산 국가: 적용 구축비(재사용) vs 내재화로 했다면 얼마인지 차액과 함께 비교.
 // 내재화 국가: 적용된 방식이 내재화임을 표시(차액 0).
 function HqBuildCompare({ tco, ccy }: { tco: CountryReportData['tabs']['tab_1_3_tco']; ccy: string }) {
+  const t = useT()
   const ref = tco.hq_build_reference
   if (!ref) return null
   const applied = ref.is_applied
@@ -286,34 +287,34 @@ function HqBuildCompare({ tco, ccy }: { tco: CountryReportData['tabs']['tab_1_3_
   // 차액 부호: 양수면 내재화가 더 비쌈(확산이 절감), 음수면 내재화가 더 쌈.
   const deltaLabel =
     Math.abs(delta) < 1
-      ? '동일'
+      ? t('tco.delta.same')
       : delta > 0
-        ? `+${money(delta, ccy)} (내재화가 더 비쌈)`
-        : `${money(delta, ccy)} (내재화가 더 저렴)`
+        ? t('tco.hq.deltaPricier').replace('{amt}', `+${money(delta, ccy)}`)
+        : t('tco.hq.deltaCheaper').replace('{amt}', money(delta, ccy))
   return (
     <div className="mt-md bg-surface-container/60 p-md rounded-lg border-l-4 border-primary">
       <div className="flex items-center gap-xs mb-sm">
         <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">
-          내재화(본사 자체구축) 기준선 비교
+          {t('tco.hq.compareTitle')}
         </span>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-sm">
         <FormulaCell
-          label="적용 구축비"
+          label={t('tco.hq.appliedBuild')}
           big={money(tco.build_cost, ccy)}
-          small={`${tco.build_months.toFixed(1)}M · ${tco.build_method === 'hq_build' ? '내재화' : '확산(재사용)'}`}
+          small={`${tco.build_months.toFixed(1)}M · ${tco.build_method === 'hq_build' ? t('tco.cell.internalize') : t('tco.hq.spread')}`}
           highlight
         />
         <FormulaCell
-          label="내재화로 했다면"
+          label={t('tco.hq.ifInternalized')}
           big={money(ref.build_cost, ccy)}
-          small={`${ref.build_months}M · ${applied ? '현재 적용 방식' : 'hq_build_baseline'}`}
+          small={`${ref.build_months}M · ${applied ? t('tco.hq.currentMethod') : 'hq_build_baseline'}`}
         />
-        <FormulaCell label="차액" big={deltaLabel} small="내재화 − 적용 구축비" />
+        <FormulaCell label={t('tco.hq.delta')} big={deltaLabel} small={t('tco.hq.deltaSmall')} />
       </div>
       {!applied && (
         <p className="mt-sm font-label-sm text-label-sm text-text-secondary">
-          이 국가는 확산(재사용)으로 산정됐습니다. 위 내재화 금액은 본사 자체구축 표준 기준선(참고용)입니다.
+          {t('tco.hq.reuseNote')}
         </p>
       )}
     </div>
@@ -331,6 +332,7 @@ function BaselineBuildCompare({
   ccy: string
   baseKo: string
 }) {
+  const t = useT()
   const bi = tco.build_breakdown.inputs
   const isHq = tco.build_method === 'hq_build'
   const isApac = tco.build_method === 'apac_fixed'
@@ -339,15 +341,15 @@ function BaselineBuildCompare({
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-sm">
         <FormulaCell
-          label="구축비용"
+          label={t('tco.cell.buildCost')}
           big={money(bi['기준국 구축비용'] ?? tco.build_cost, ccy)}
-          small={`기준국 ${baseKo} 자체구축`}
+          small={t('tco.cell.baselineSelfBuild').replace('{base}', baseKo)}
           highlight
         />
         <FormulaCell
-          label="구축기간"
+          label={t('tco.cell.buildPeriod')}
           big={`${bi['기준국 구축기간(개월)'] ?? tco.build_months}M`}
-          small={`기준국 ${baseKo} 자체구축`}
+          small={t('tco.cell.baselineSelfBuild').replace('{base}', baseKo)}
           highlight
         />
       </div>
@@ -355,42 +357,44 @@ function BaselineBuildCompare({
   }
   // 확산: B 구축비용 / 내재화: 본사 자체구축 비용 (둘 다 신규국 산출 전 기준값)
   const baseCost = isHq ? bi['본사 자체구축 비용'] : bi['B 구축비용']
-  const baseLabel = isHq ? '본사 자체구축 비용' : `${baseKo}(기준국) 구축비용`
-  const baseSmall = isHq ? '내재화 표준' : (bi['베이스라인 솔루션'] ?? '내부정보')
+  const baseLabel = isHq ? t('tco.base.hqBuildCost') : t('tco.base.baselineBuildCost').replace('{base}', baseKo)
+  const baseSmall = isHq ? t('tco.base.internalizeStd') : (bi['베이스라인 솔루션'] ?? t('tco.cell.internalInfo'))
   const delta = tco.build_cost - (baseCost ?? 0)
   const deltaLabel =
     Math.abs(delta) < 1
-      ? '동일'
+      ? t('tco.delta.same')
       : delta < 0
-        ? `${money(delta, ccy)} (절감)`
-        : `+${money(delta, ccy)} (증가)`
+        ? t('tco.base.deltaSaved').replace('{amt}', money(delta, ccy))
+        : t('tco.base.deltaIncreased').replace('{amt}', money(delta, ccy))
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-sm">
       <FormulaCell label={baseLabel} big={money(baseCost ?? 0, ccy)} small={baseSmall} />
       <FormulaCell
-        label="신규국 구축비용"
+        label={t('tco.base.newMarketBuildCost')}
         big={money(tco.build_cost, ccy)}
-        small={`${tco.build_months.toFixed(1)}M · ${isHq ? '내재화' : `유사도 승수 ${Math.round((tco.similarity_multiplier ?? 0) * 100)}%`}`}
+        small={`${tco.build_months.toFixed(1)}M · ${isHq ? t('tco.cell.internalize') : t('tco.base.simMult').replace('{pct}', String(Math.round((tco.similarity_multiplier ?? 0) * 100)))}`}
         highlight
       />
-      <FormulaCell label="차액" big={deltaLabel} small="신규국 − 기준국" />
+      <FormulaCell label={t('tco.hq.delta')} big={deltaLabel} small={t('tco.base.deltaSmall')} />
     </div>
   )
 }
 
 // 원천 데이터(계약 규모): 도넛(%) 또는 미니 시계열 + 아코디언
 function ContractBasisCard({ item }: { item: ReportItem }) {
+  const t = useT()
   let chart: React.ReactNode = undefined
+  // 키(item.item)는 백엔드 데이터 매칭용 — 그대로 두고, 라벨만 dict 키로 번역.
   const donutMap: Record<string, [string, string]> = {
-    '금융 이용률(신차)': ['금융 이용', '현금'],
-    '구매 패턴(할부·리스 비중)': ['할부·리스', '현금·기타'],
-    '캡티브 강도(점유율)': ['캡티브 금융사', '그 외'],
+    '금융 이용률(신차)': ['tco.donut.finUse', 'tco.donut.cash'],
+    '구매 패턴(할부·리스 비중)': ['tco.donut.installmentLease', 'tco.donut.cashEtc'],
+    '캡티브 강도(점유율)': ['tco.donut.captive', 'tco.donut.others'],
   }
   if (typeof item.value === 'number' && donutMap[item.item]) {
     const [seg, rest] = donutMap[item.item]
     chart = (
       <>
-        <Donut pct={item.value} segLabel={seg} restLabel={rest} />
+        <Donut pct={item.value} segLabel={t(seg)} restLabel={t(rest)} />
         {item.timeseries && <MiniTimeseries ts={item.timeseries} />}
       </>
     )
@@ -403,6 +407,7 @@ function ContractBasisCard({ item }: { item: ReportItem }) {
 // 워터폴: 구축비 / 유지비(10Y=구독+유보) / 시스템소계 / 운영비(10Y) / 총TCO
 function TcoWaterfall({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
   const fx = useFx()
+  const t = useT()
   const cur = tco.currency
   const W = 760
   const H = 320
@@ -416,15 +421,15 @@ function TcoWaterfall({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }
   const gap = 140
   type Bar = { label: string; value: number; mode: 'add' | 'subtotal' | 'total'; color: string }
   const bars: Bar[] = [
-    { label: '구축비', value: tco.build_cost, mode: 'add', color: '#4f8a6d' },
-    { label: '유지비(10Y)', value: recurring10, mode: 'add', color: '#4f8a6d' },
-    { label: '시스템 소계', value: tco.system_cost_10y, mode: 'subtotal', color: '#14181C' },
-    { label: '운영비(10Y)', value: tco.operations_10y, mode: 'add', color: '#4f8a6d' },
-    { label: '총 TCO', value: total, mode: 'total', color: '#14181C' },
+    { label: t('tco.wf.build'), value: tco.build_cost, mode: 'add', color: '#4f8a6d' },
+    { label: t('tco.wf.maint10y'), value: recurring10, mode: 'add', color: '#4f8a6d' },
+    { label: t('tco.wf.systemSubtotal'), value: tco.system_cost_10y, mode: 'subtotal', color: '#14181C' },
+    { label: t('tco.wf.ops10y'), value: tco.operations_10y, mode: 'add', color: '#4f8a6d' },
+    { label: t('tco.wf.totalTco'), value: total, mode: 'total', color: '#14181C' },
   ]
   let cum = 0
   return (
-    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label="10년 TCO 워터폴">
+    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={t('tco.aria.waterfall')}>
       <line x1="40" y1={bottom} x2="740" y2={bottom} stroke="#e6e3db" strokeWidth="1" />
       {bars.map((b, i) => {
         const x = 40 + i * gap
@@ -461,6 +466,7 @@ function TcoWaterfall({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }
 // 10년 누적 비용 추이(Y0~Y10)
 function CumulativeChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
   const fx = useFx()
+  const t = useT()
   const cur = tco.currency
   const W = 760
   const H = 320
@@ -483,7 +489,7 @@ function CumulativeChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'
   const areaPath = `M ${left} ${bottom} ${coords.map((c) => `L ${c.x.toFixed(1)} ${c.y.toFixed(1)}`).join(' ')} L ${right} ${bottom} Z`
   const grid = [0, 0.25, 0.5, 0.75, 1].map((f) => ({ y: top + (bottom - top) * f, v: max * (1 - f) }))
   return (
-    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label="10년 누적 비용 추이">
+    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={t('tco.aria.cumulative')}>
       {grid.map((g, i) => (
         <g key={i}>
           <line x1={left} y1={g.y} x2={right} y2={g.y} stroke="#e6e3db" />
@@ -499,10 +505,10 @@ function CumulativeChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'
       ))}
       <rect x={left - 7} y={coords[0].y} width="14" height={Math.max(bottom - coords[0].y, 4)} rx="3" fill="#14181C" />
       <text x={left} y={coords[0].y - 8} fontSize="11" fill="#14181C" fontWeight="700" textAnchor="middle">
-        구축 {krwCompact(tco.build_cost, cur, fx)}
+        {t('tco.chart.buildLabel').replace('{amt}', krwCompact(tco.build_cost, cur, fx))}
       </text>
       <text x={right - 6} y={20} fontSize="12" fill="#14181C" fontWeight="700" textAnchor="end">
-        Y10 누적 {krwCompact(total, cur, fx)}
+        {t('tco.chart.y10Cum').replace('{amt}', krwCompact(total, cur, fx))}
       </text>
       {coords.map((_, i) => (
         <text key={i} x={left + i * xStep} y="298" fontSize="10" fill="#9aa0a6" textAnchor="middle">
@@ -543,7 +549,7 @@ function StepChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
   const scaleX = (v: number) => left + (Math.log10(v + 1) / Math.log10(maxVol + 1)) * (right - left)
   const grid = [0, 0.25, 0.5, 0.75, 1].map((f) => ({ y: top + (bottom - top) * f, v: maxPrice * (1 - f) }))
   return (
-    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label="구독료 구간 스텝차트">
+    <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={t('tco.aria.stepChart')}>
       {grid.map((g, i) => (
         <g key={i}>
           <line x1={left} y1={g.y} x2={right} y2={g.y} stroke="#e6e3db" />

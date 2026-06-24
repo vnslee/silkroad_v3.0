@@ -580,7 +580,11 @@ class CountryReportEngine:
         }
         # 외부솔루션 결정 시 — 리서치 '솔루션 벤더' 항목을 추천 후보 리스트로 담고,
         # 솔루션 유형·벤더 패턴 요약을 곁들인다. (비용 산식은 데이터에 없어 '별도 견적'으로 표기.)
-        if decision == "external_solution":
+        #
+        # 미주(NA)는 APAC처럼 결정 트리 결과와 무관하게 외부솔루션 후보를 항상 함께
+        # 노출한다 — 화면에서 결정 트리 옆에 외부솔루션이 조회되도록(결정 경로 분기는
+        # 그대로 유지하되, 정보만 추가로 싣는다).
+        if decision == "external_solution" or region == "NA":
             result["external_candidates"] = self._extract_external_candidates()
             result["external_solution_summary"] = self._extract_external_solution_summary()
         return result
@@ -1119,6 +1123,10 @@ class CountryReportEngine:
             (self.internal_data or {}).get("country_assets", {}).get(base_country, {}).get("solution")
             or "N/A"
         )
+        # 안내 메시지에 쓸 국가명(코드 노출 방지). 한국어=country_ko, 영어=country(영문명).
+        # 둘 다 없으면 코드로 폴백.
+        name_ko = self.country_data.get("country_ko") or self.country_data.get("country") or target_country
+        name_en = self.country_data.get("country") or target_country
 
         # Tab 1-1: Similarity Scoring
         # calculate_similarity_score()가 디멘전 채점 결과를 'items'에 채움.
@@ -1130,20 +1138,20 @@ class CountryReportEngine:
         if is_already_deployed:
             if is_baseline_self:
                 rec_ko = (
-                    f"{target_country}는 권역 기준국 — 시스템({base_solution})이 이미 운영 중입니다. "
+                    f"{name_ko}는 권역 기준국 — 시스템({base_solution})이 이미 운영 중입니다. "
                     f"신규 진출 결정 트리는 적용되지 않습니다."
                 )
                 rec_en = (
-                    f"{target_country} is the regional baseline — system ({base_solution}) "
+                    f"{name_en} is the regional baseline — system ({base_solution}) "
                     f"is already operational. The new-entry decision tree does not apply."
                 )
             else:
                 rec_ko = (
-                    f"{target_country}는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. "
+                    f"{name_ko}는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. "
                     f"신규 진출 결정 트리는 적용되지 않습니다."
                 )
                 rec_en = (
-                    f"{target_country} is already an operational market — the system is live. "
+                    f"{name_en} is already an operational market — the system is live. "
                     f"The new-entry decision tree does not apply."
                 )
             decision = {
@@ -1181,20 +1189,20 @@ class CountryReportEngine:
         if is_already_deployed:
             if is_baseline_self:
                 msg_ko = (
-                    f"{target_country}는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. "
+                    f"{name_ko}는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. "
                     f"운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요."
                 )
                 msg_en = (
-                    f"{target_country} is the regional baseline — new build cost/duration do not apply. "
+                    f"{name_en} is the regional baseline — new build cost/duration do not apply. "
                     f"For operational figures (existing volume, opex), see the separate management report."
                 )
             else:
                 msg_ko = (
-                    f"{target_country}는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. "
+                    f"{name_ko}는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. "
                     f"운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요."
                 )
                 msg_en = (
-                    f"{target_country} is already an operational market — new build cost/duration do not apply. "
+                    f"{name_en} is already an operational market — new build cost/duration do not apply. "
                     f"For operational figures (existing volume, opex), see the separate management report."
                 )
             tco = {

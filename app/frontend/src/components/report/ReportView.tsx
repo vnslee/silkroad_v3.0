@@ -12,7 +12,7 @@ import { Icon } from '../common/Icon'
 import { HeaderSelect, type SelectOption } from '../common/HeaderSelect'
 import { HeaderEmblem } from '../common/HeaderEmblem'
 import { MicroExpander } from '../ui/micro-expander'
-import { useT } from '../../i18n/dict'
+import { useT, statusLabel, valueLabel } from '../../i18n/dict'
 import { LangProvider } from '../../i18n/locale'
 import { useStore } from '../../store'
 import type { EntryMode } from '../../app/route'
@@ -230,7 +230,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
       targetName: name,
       reportId: selected ?? '',
       createdAt: current?.generated_at ?? undefined,
-      summary: current?.title ?? '진단 결과 요약',
+      summary: current?.title ?? t('rv.summaryFallback'),
       htmlUrl: reportViewUrl,
     })
     window.location.href = url
@@ -241,7 +241,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   if (!selected && reports.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-md p-lg text-center">
-        <p className="font-body-md text-on-surface-variant">생성된 보고서가 없습니다.</p>
+        <p className="font-body-md text-on-surface-variant">{t('rv.noReports')}</p>
         <button
           className="rounded-lg bg-primary px-md py-sm font-label-md text-label-md text-on-primary"
           onClick={() => {
@@ -249,14 +249,14 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
             window.location.hash = `#/${domain}/${code}/detail?mode=${mode}`
           }}
         >
-          보고서 생성하기
+          {t('rv.createReport')}
         </button>
       </div>
     )
   }
 
   if (!selected) {
-    return <p className="p-lg font-body-md text-on-surface-variant">보고서를 불러오는 중…</p>
+    return <p className="p-lg font-body-md text-on-surface-variant">{t('rv.loading')}</p>
   }
 
   return (
@@ -270,7 +270,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
           <div>
             {/* 제목(위) — 대상 선택 드롭다운 */}
             <HeaderSelect
-              ariaLabel={isCountry ? '국가 선택' : '권역 선택'}
+              ariaLabel={isCountry ? t('rv.selectCountry') : t('rv.selectRegion')}
               options={targetOptions}
               value={code}
               onChange={goTarget}
@@ -282,7 +282,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
             <div className="mt-xs flex flex-wrap items-center gap-sm">
               <span className="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary">Report</span>
               <HeaderSelect
-                ariaLabel="보고서 버전 선택"
+                ariaLabel={t('rv.selectReportVersion')}
                 options={versionOptions}
                 value={selected}
                 onChange={setSelected}
@@ -302,7 +302,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
               {meta?.baseline && (
                 <>
                   <span className="h-1 w-1 rounded-full bg-surface-border" />
-                  <span className="font-label-sm text-label-sm text-text-secondary">기준국: {meta.baseline}</span>
+                  <span className="font-label-sm text-label-sm text-text-secondary">{t('rv.baseline')}: {meta.baseline}</span>
                 </>
               )}
               <span className="h-1 w-1 rounded-full bg-surface-border" />
@@ -310,12 +310,12 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
                 className={`inline-flex items-center gap-xs rounded-full border px-2 py-[2px] font-label-sm text-label-sm uppercase tracking-wide ${statusStyle}`}
               >
                 <Icon name={statusIcon} className="text-[12px]" />
-                {status}
+                {statusLabel(status, lang)}
               </span>
               {entryMode && (
                 <span className="inline-flex items-center gap-xs rounded-full border border-secondary-fixed-dim bg-secondary-fixed px-2 py-[2px] font-label-sm text-label-sm uppercase tracking-wide text-on-secondary-fixed-variant">
                   <Icon name="apartment" className="text-[12px]" />
-                  {entryMode}
+                  {valueLabel('entityMode', entryMode, lang)}
                 </span>
               )}
             </div>
@@ -343,7 +343,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
       <div className="flex-1 overflow-auto bg-surface">
         {loading && (
           <div className="flex h-full items-center justify-center">
-            <p className="text-gray-500">보고서를 불러오는 중...</p>
+            <p className="text-gray-500">{t('rv.loading')}</p>
           </div>
         )}
         {error && !loading && (

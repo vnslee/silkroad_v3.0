@@ -764,6 +764,11 @@ class RegionReportEngine:
         base_country = next((c for c in countries if c.get("code") == base_code), None)
         base_idx = self._country_items_index(base_country) if base_country else {}
 
+        # 진출국(country_status='운영중') — 이미 운영 중이라 히트맵 후보 행에서 제외.
+        # quickwin 랭킹과 동일 기준. baseline 행은 entered 여부와 무관하게 유지된다.
+        country_status = (self.internal_data.get("country_status") or {})
+        entered = {c for c, s in country_status.items() if s == "운영중"}
+
         per_country: List[Dict[str, Any]] = []
         for country in countries:
             code = country.get("code")
@@ -808,6 +813,9 @@ class RegionReportEngine:
                 "it_similarity_raw": round(it_score_raw, 1) if it_score_raw is not None else None,
                 "it_similarity_band": self._bucket_10(it_score_raw),
                 "is_baseline": code == base_code,
+                # 진출국(운영중)은 히트맵 후보 행에서 제외 — 행 자체는 남겨(quickwin이 raw 참조)
+                # 프론트가 이 플래그로 후보에서 거른다. baseline은 entered여도 제외 대상 아님.
+                "already_entered": code in entered and code != base_code,
                 "axes": axes,
             })
 
@@ -815,7 +823,8 @@ class RegionReportEngine:
         # 비교 잣대일 뿐 후보가 아니다. per_country 행은 남겨(quickwin 등이 raw 참조) rank만 None.
         ranked = sorted(
             [c for c in per_country
-             if c["it_similarity_band"] is not None and not c["is_baseline"]],
+             if c["it_similarity_band"] is not None and not c["is_baseline"]
+             and not c["already_entered"]],
             key=lambda c: (c["it_similarity_band"] or 0, c["it_similarity_raw"] or 0),
             reverse=True,
         )
@@ -867,9 +876,13 @@ class RegionReportEngine:
                 "purchase_pattern_unit": (idx.get("구매 패턴(할부·리스 비중)") or {}).get("unit"),
                 "competitors": (idx.get("경쟁사 리스트") or {}).get("value"),
                 "competitor_entry_form": (idx.get("경쟁사 진출 형태") or {}).get("value"),
+                "competitor_entry_form_en": (idx.get("경쟁사 진출 형태") or {}).get("value_en"),
                 "competitor_rates": (idx.get("경쟁사 금리 범위") or {}).get("value"),
+                "competitor_rates_en": (idx.get("경쟁사 금리 범위") or {}).get("value_en"),
                 "avg_new_car_price": (idx.get("평균 신차가격") or {}).get("value"),
+                "avg_new_car_price_en": (idx.get("평균 신차가격") or {}).get("value_en"),
                 "qualitative_summary": (idx.get("해당국 정성 요약") or {}).get("value"),
+                "qualitative_summary_en": (idx.get("해당국 정성 요약") or {}).get("value_en"),
             })
         return {
             "nature": "ranking",
@@ -899,12 +912,11 @@ class RegionReportEngine:
         tier_meta = {t.get("key"): t for t in rules.get("tiers", [])}
         ks_country_map = {c["country"]: c for c in killswitch["countries"]}
 
-        # 진출국(이미 운영중이거나 기진출 자산 보유) — 신규 진출 추천 후보가 아니므로 랭킹에서 제외.
+        # 진출국(country_status='운영중'으로 등록) — 이미 운영 중이라 신규 진출 추천 후보가
+        # 아니므로 랭킹에서 제외. 준비중·진출예정·미진출은 아직 운영중이 아니므로 후보로 남긴다.
+        # (country_assets는 TCO 산식용 자산 정보일 뿐 운영 상태를 나타내지 않아 기준으로 쓰지 않음.)
         country_status = (self.internal_data.get("country_status") or {})
-        country_assets = (self.internal_data.get("country_assets") or {})
-        entered = {
-            c for c, s in country_status.items() if s == "운영중"
-        } | set(country_assets.keys())
+        entered = {c for c, s in country_status.items() if s == "운영중"}
 
         rows: List[Dict[str, Any]] = []
         for country in self.region_data.get("countries", []):
@@ -1007,10 +1019,13 @@ class RegionReportEngine:
                 "competition_brief": {
                     "금융사_Top5": (idx.get("금융사 순위(Top 5)") or {}).get("value"),
                     "경쟁사_진출_형태": (idx.get("경쟁사 진출 형태") or {}).get("value"),
+                    "경쟁사_진출_형태_en": (idx.get("경쟁사 진출 형태") or {}).get("value_en"),
                 },
                 "top_news": top_news,  # NEWS flag
                 "ai_comment": (idx.get("해당국 정성 요약") or {}).get("insight")
                               or (idx.get("해당국 정성 요약") or {}).get("value"),
+                "ai_comment_en": (idx.get("해당국 정성 요약") or {}).get("insight_en")
+                              or (idx.get("해당국 정성 요약") or {}).get("value_en"),
                 "source_flags": {
                     "rank": "CALC", "score": "CALC", "market": "EXT",
                     "competition": "EXT", "news": "NEWS", "ai_comment": "AI",

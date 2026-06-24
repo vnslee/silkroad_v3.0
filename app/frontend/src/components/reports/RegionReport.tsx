@@ -80,7 +80,7 @@ export function RegionReport({ data, className = '', printMode = false }: Props)
       <div className="max-w-[min(92vw,1920px)] mx-auto">
         {/* sticky 탭 네비 */}
         <div ref={navRef} className="bg-surface-container-lowest border border-surface-border rounded-xl p-sm mb-xl sticky top-0 z-10 card-shadow">
-          <div className="flex gap-sm overflow-x-auto" role="tablist" aria-label="권역 보고서 탭">
+          <div className="flex gap-sm overflow-x-auto" role="tablist" aria-label={t('rgn.tablistAria')}>
             {tabs.map((t) => {
               const active = activeTab === t.id
               return (

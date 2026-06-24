@@ -105,7 +105,7 @@ export default function DetailView({ domain, code, mode }: Props) {
       .then((info) => {
         if (cancelled) return
         if (!info.exists) {
-          setError('리서치 데이터가 없습니다. 챗봇에서 리서치를 진행하세요.')
+          setError(t('dv.noResearch'))
           return
         }
         // 상세화면은 React가 직접 렌더한다 — 리서치 데이터만 있으면 바로 준비 완료.
@@ -242,10 +242,10 @@ export default function DetailView({ domain, code, mode }: Props) {
           kind: 'report',
           domain,
           id: code,
-          label: `${meta?.name ?? code} 보고서 생성`,
+          label: t('dv.reportJob').replace('{name}', meta?.name ?? code),
         })
       })
-      .catch((e) => setError(`보고서 생성 트리거 실패: ${String(e)}`))
+      .catch((e) => setError(t('dv.reportTriggerFailed').replace('{error}', String(e))))
       .finally(() => setSimulating(false))
   }
 
@@ -260,7 +260,7 @@ export default function DetailView({ domain, code, mode }: Props) {
             <div className="flex items-baseline gap-sm">
               {/* 국가/권역 선택 드롭다운 */}
               <HeaderSelect
-                ariaLabel={isCountry ? '국가 선택' : '권역 선택'}
+                ariaLabel={isCountry ? t('dv.selectCountry') : t('dv.selectRegion')}
                 options={targetOptions}
                 value={code}
                 onChange={goTarget}
@@ -288,7 +288,7 @@ export default function DetailView({ domain, code, mode }: Props) {
               {/* 데이터 버전 선택 */}
               <span className="font-label-sm text-label-sm text-outline">·</span>
               <HeaderSelect
-                ariaLabel="데이터 버전 선택"
+                ariaLabel={t('dv.selectDataVersion')}
                 options={versionOptions}
                 value={version ?? ''}
                 onChange={(v) => setVersion(v || undefined)}
@@ -332,12 +332,12 @@ export default function DetailView({ domain, code, mode }: Props) {
         )}
         {!error && !ready && (
           <div className="flex h-full items-center justify-center p-lg font-body-md text-on-surface-variant">
-            상세화면을 준비 중입니다…
+            {t('dv.preparing')}
           </div>
         )}
         {!error && ready && loading && (
           <div className="flex h-full items-center justify-center">
-            <p className="text-gray-500">데이터를 불러오는 중...</p>
+            <p className="text-gray-500">{t('dv.loading')}</p>
           </div>
         )}
         {!error && ready && !loading && detailData && (

@@ -393,6 +393,8 @@ export interface RegionITCountry {
   it_similarity_raw: number
   it_similarity_band: number
   is_baseline: boolean
+  /** 진출국(country_status='운영중') — 히트맵 후보 행에서 제외. 구버전 데이터엔 없음. */
+  already_entered?: boolean
   axes: Record<string, RegionITAxis>
 }
 export interface RegionITRankingEntry {
@@ -430,9 +432,13 @@ export interface RegionMarketCountry {
   purchase_pattern_unit?: string
   competitors: string[]
   competitor_entry_form?: string
+  competitor_entry_form_en?: string
   competitor_rates?: string
+  competitor_rates_en?: string
   avg_new_car_price?: string
+  avg_new_car_price_en?: string
   qualitative_summary?: string
+  qualitative_summary_en?: string
 }
 export interface RegionMarketTab {
   nature: string
@@ -501,6 +507,7 @@ export interface RegionTop3Card {
   competition_brief: {
     금융사_Top5?: RegionTop3Competitor[]
     경쟁사_진출_형태?: string
+    경쟁사_진출_형태_en?: string
   }
   top_news?: {
     news_category?: string
@@ -511,6 +518,7 @@ export interface RegionTop3Card {
     url?: string
   }
   ai_comment?: string
+  ai_comment_en?: string
 }
 
 // --- 요약 ---
@@ -581,6 +589,8 @@ export interface RegionCandidateCountry {
   quick_win_rank: number
   code: string
   name_ko: string
+  /** 영문명. 없으면 빈 문자열(pickLang이 ko로 폴백). */
+  name_en: string
   similarity: number
   attractiveness: number
   composite_score: number
@@ -610,6 +620,8 @@ export interface RegionTrendMetric {
 export interface RegionMemberTrend {
   code: string
   name_ko: string
+  /** 영문명. 없으면 빈 문자열(pickLang이 ko로 폴백). */
+  name_en: string
   market: RegionTrendMetric | null
   ev: RegionTrendMetric | null
   /** 통화 정규화 시장규모(KRW 십억). 지도 버블·국가간 비교용. fx 없으면 null. */

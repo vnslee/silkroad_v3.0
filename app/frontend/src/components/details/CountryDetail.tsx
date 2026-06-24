@@ -177,7 +177,7 @@ export function CountryDetail({
                   className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mb-sm"
                   style={{ color: '#C8F051', letterSpacing: '.1em' }}
                 >
-                  국가 진단 · AI 인사이트
+                  {t('dtl.insight.eyebrow')}
                 </div>
                 <div className="flex items-center gap-sm mb-md">
                   <img
@@ -187,20 +187,21 @@ export function CountryDetail({
                     className="w-6 h-6 shrink-0 object-contain"
                   />
                   <h3 className="text-[clamp(18.7px,calc(16.5px_+_0.611vw),25.3px)] font-bold leading-none text-white m-0">
-                    AI 인사이트
+                    {t('dtl.aiInsight')}
                   </h3>
                 </div>
-                <div className="flex flex-col gap-sm [&_strong]:text-white">
+                <ul className="flex flex-col gap-sm [&_strong]:text-white list-none p-0 m-0">
                   {bullets.map((b, i) => (
-                    <p
+                    <li
                       key={i}
-                      className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0"
+                      className="flex items-start gap-sm font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0"
                       style={{ color: 'rgba(255,255,255,.9)' }}
                     >
-                      {b}
-                    </p>
+                      <span aria-hidden="true" className="shrink-0 select-none leading-[1.6]" style={{ color: '#C8F051' }}>•</span>
+                      <span className="min-w-0">{b}</span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
 
               <div>

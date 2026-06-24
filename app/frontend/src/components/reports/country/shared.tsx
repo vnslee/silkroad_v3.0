@@ -330,6 +330,7 @@ export function Donut({
 // AISea: viewBox 360x90, 과거 실선 + 전망 점선, 라이트면 데이터는 잉크블랙.
 const MINI = '#14181C'
 export function MiniTimeseries({ ts }: { ts: TimeseriesData }) {
+  const t = useT()
   const W = 360
   const H = 90
   const padL = 36
@@ -386,13 +387,13 @@ export function MiniTimeseries({ ts }: { ts: TimeseriesData }) {
           {ts.cagr_hist != null && (
             <span className="inline-flex items-center gap-xs">
               <span className="w-2 h-2 rounded-full" style={{ background: MINI }} />
-              CAGR(과거): <span className="font-semibold text-text-primary">{ts.cagr_hist}%</span>
+              {t('report.cagr.hist')}: <span className="font-semibold text-text-primary">{ts.cagr_hist}%</span>
             </span>
           )}
           {ts.cagr_forecast != null && (
             <span className="inline-flex items-center gap-xs">
               <span className="w-2 h-2 rounded-full" style={{ background: MINI, opacity: 0.7 }} />
-              CAGR(전망): <span className="font-semibold text-text-primary">{ts.cagr_forecast}%</span>
+              {t('report.cagr.forecast')}: <span className="font-semibold text-text-primary">{ts.cagr_forecast}%</span>
             </span>
           )}
         </div>
@@ -490,7 +491,7 @@ export function DecisionTreeSvg({
         preserveAspectRatio="xMidYMid meet"
         style={{ marginBottom: '-8px' }}
         role="img"
-        aria-label="시스템 결정 트리"
+        aria-label={t('report.aria.decisionTree')}
       >
         <g className="dt-diamond">
           <polygon points="450,20 520,80 450,140 380,80" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
@@ -577,7 +578,7 @@ function DecisionTreeSvgApac() {
         preserveAspectRatio="xMidYMid meet"
         style={{ marginBottom: '-8px' }}
         role="img"
-        aria-label="APAC 시스템 결정 트리 (외부솔루션·자체구축 양쪽 검토)"
+        aria-label={t('report.aria.decisionTreeApac')}
       >
         {/* 시작 노드 — 진출 검토. 분기 없이 두 경로로 동시 연결. */}
         <g className="dt-node">
@@ -724,16 +725,16 @@ export function DecisionSidePanel({
   buildCurrency = 'EUR',
 }: DecisionSidePanelProps) {
   const t = useT()
-  if (decision === 'external_solution' || decision === 'apac_dual') {
+  // 외부솔루션 후보 리스트(+시장 요약) — external_solution·apac_dual 단독 표시뿐 아니라
+  // 미주(NA)처럼 권역 확산 결정에서도 '함께 검토'용으로 재사용한다(중복 작성 금지).
+  const renderExternalList = (lead: string) => {
     const list = externalCandidates ?? []
     if (list.length === 0) {
       return <p className="font-body-sm text-body-sm text-text-secondary">{t('report.ext.noData')}</p>
     }
     return (
       <div className="flex flex-col gap-sm">
-        <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
-          {decision === 'apac_dual' ? t('report.ext.leadApac') : t('report.ext.lead')}
-        </p>
+        <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">{lead}</p>
         <ul className="flex flex-col gap-xs list-none p-0 m-0">
           {list.map((c, i) => (
             <li
@@ -777,6 +778,22 @@ export function DecisionSidePanel({
       </div>
     )
   }
+
+  if (decision === 'external_solution' || decision === 'apac_dual') {
+    return renderExternalList(decision === 'apac_dual' ? t('report.ext.leadApac') : t('report.ext.lead'))
+  }
+  // 미주(NA) 등 — 권역 확산 결정이라도 외부솔루션 후보가 있으면 본 패널(금액)과 함께 노출.
+  // external_candidates 존재 자체가 NA 신호(엔진이 NA에서만 항상 채워 내려보냄).
+  const hasAltExternal = (externalCandidates?.length ?? 0) > 0
+  const altExternalBlock = hasAltExternal ? (
+    <div className="mt-md pt-md border-t border-outline-variant">
+      <p className="font-label-md text-label-md text-text-primary font-semibold uppercase tracking-wider mb-xs">
+        {t('report.ext.headingAlt')}
+      </p>
+      {renderExternalList(t('report.ext.leadAlt'))}
+    </div>
+  ) : null
+
   if (decision === 'hq_build') {
     return (
       <div className="flex flex-col gap-sm">
@@ -804,25 +821,31 @@ export function DecisionSidePanel({
     return (
       <div className="flex flex-col gap-sm">
         <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
-          비구독 솔루션 — 구독료 구간 대신 신규국 예상 구축비용·기간을 제시합니다. 구독료는 운영비에 포함됩니다.
+          {t('report.nonsub.lead')}
         </p>
         <div className="flex flex-col gap-xs font-body-md text-body-md">
           <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-primary/10 border-l-4 border-primary">
-            <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축비용</span>
+            <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">{t('report.hq.cost')}</span>
             <span className="text-primary font-bold font-body-lg text-body-lg">
               <Money value={buildCost ?? 0} currency={buildCurrency} inline />
             </span>
           </div>
           <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-surface-container border border-outline-variant">
-            <span className="text-text-secondary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축기간</span>
-            <span className="text-text-primary font-bold font-body-md text-body-md">{fixed(buildMonths)} 개월</span>
+            <span className="text-text-secondary font-semibold uppercase tracking-wider font-label-md text-label-md">{t('report.hq.months')}</span>
+            <span className="text-text-primary font-bold font-body-md text-body-md">{fixed(buildMonths)} {t('report.months')}</span>
           </div>
         </div>
         <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
-          * 자세한 산식은 TCO · 구독료 탭을 참조하세요.
+          {t('report.nonsub.note')}
         </p>
+        {altExternalBlock}
       </div>
     )
   }
-  return <SubscriptionTierTable {...subscription} />
+  return (
+    <div className="flex flex-col">
+      <SubscriptionTierTable {...subscription} />
+      {altExternalBlock}
+    </div>
+  )
 }

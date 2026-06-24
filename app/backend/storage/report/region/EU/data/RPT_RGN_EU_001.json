@@ -17,10 +17,10 @@
     ],
     "baseline_country": "GB"
   },
-  "generated_at": "2026-06-23T22:18:23.335443",
+  "generated_at": "2026-06-25T08:12:29.765050",
   "generated_by": "engine",
   "data_snapshot_id": "2026-06-22T16:00:00+09:00",
-  "config_version": "1.1",
+  "config_version": "1.6",
   "engine_version": "v1.0",
   "schema_version": "1.1",
   "fx": {
@@ -158,6 +158,11 @@
           "country": "AT",
           "country_name": "Austria",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -193,6 +198,11 @@
           "country": "DK",
           "country_name": "Denmark",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -228,6 +238,11 @@
           "country": "ES",
           "country_name": "Spain",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -263,6 +278,11 @@
           "country": "FR",
           "country_name": "France",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -298,6 +318,11 @@
           "country": "GB",
           "country_name": "United Kingdom",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -333,6 +358,11 @@
           "country": "IT",
           "country_name": "Italy",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -368,6 +398,11 @@
           "country": "NL",
           "country_name": "Netherlands",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -403,6 +438,11 @@
           "country": "PL",
           "country_name": "Poland",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -438,6 +478,11 @@
           "country": "PT",
           "country_name": "Portugal",
           "pass": true,
+          "tier": "in_region_confidence",
+          "tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
           "gates": {
             "외국인 지분 한도": {
               "status": "PASS",
@@ -483,7 +528,48 @@
       ],
       "failed": [],
       "passed_count": 9,
-      "failed_count": 0
+      "failed_count": 0,
+      "tier_counts": {
+        "in_region_confidence": 9
+      },
+      "tier_summary": [
+        {
+          "key": "jv_required",
+          "label": {
+            "ko": "JV 필수",
+            "en": "JV Required"
+          },
+          "severity": 1,
+          "count": 0
+        },
+        {
+          "key": "jv_recommended",
+          "label": {
+            "ko": "JV 권고",
+            "en": "JV Recommended"
+          },
+          "severity": 2,
+          "count": 0
+        },
+        {
+          "key": "external_solution",
+          "label": {
+            "ko": "외부솔루션 사용",
+            "en": "External Solution"
+          },
+          "severity": 3,
+          "count": 0
+        },
+        {
+          "key": "in_region_confidence",
+          "label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "severity": 4,
+          "count": 9
+        }
+      ]
     },
     "tab_2_1_attractiveness": {
       "nature": "ranking",
@@ -1402,6 +1488,7 @@
     "tab_2_2_it_similarity": {
       "nature": "score_multiaxis",
       "source_flag": "CALC",
+      "mode": "baseline",
       "baseline_country": "GB",
       "weights": {
         "솔루션 유형": 0.3,
@@ -1424,6 +1511,7 @@
           "it_similarity_raw": 69.8,
           "it_similarity_band": 70,
           "is_baseline": false,
+          "already_entered": false,
           "axes": {
             "솔루션 유형": {
               "source_item": "솔루션 유형",
@@ -1489,6 +1577,7 @@
           "it_similarity_raw": 69.5,
           "it_similarity_band": 70,
           "is_baseline": false,
+          "already_entered": false,
           "axes": {
             "솔루션 유형": {
               "source_item": "솔루션 유형",
@@ -1554,6 +1643,7 @@
           "it_similarity_raw": 65.8,
           "it_similarity_band": 70,
           "is_baseline": false,
+          "already_entered": false,
           "axes": {
             "솔루션 유형": {
               "source_item": "솔루션 유형",
@@ -1619,6 +1709,7 @@
           "it_similarity_raw": 60.1,
           "it_similarity_band": 60,
           "is_baseline": false,
+          "already_entered": true,
           "axes": {
             "솔루션 유형": {
               "source_item": "솔루션 유형",
@@ -1675,8 +1766,7 @@
               "score_raw": 60.0,
               "score_band": 60
             }
-          },
-          "rank": 8
+          }
         },
         {
           "country": "GB",
@@ -1684,6 +1774,7 @@
           "it_similarity_raw": 98.3,
           "it_similarity_band": 100,
           "is_baseline": true,
+          "already_entered": false,
           "axes": {
             "솔루션 유형": {
               "source_item": "솔루션 유형",
@@ -1748,6 +1839,7 @@
           "it_similarity_raw": 60.9,
           "it_similarity_band": 60,
           "is_baseline": false,
+          "already_entered": true,
           "axes": {
             "솔루션 유형": {
               "source_item": "솔루션 유형",
@@ -1804,8 +1896,7 @@
               "score_raw": 60.0,
               "score_band": 60
             }
-          },
-          "rank": 7
+          }
         },
         {
           "country": "NL",
@@ -1813,6 +1904,7 @@
           "it_similarity_raw": 69.5,
           "it_similarity_band": 70,
           "is_baseline": false,
+          "already_entered": false,
           "axes": {
             "솔루션 유형": {
               "source_item": "솔루션 유형",
@@ -1878,6 +1970,7 @@
           "it_similarity_raw": 69.4,
           "it_similarity_band": 70,
           "is_baseline": false,
+          "already_entered": false,
           "axes": {
             "솔루션 유형": {
               "source_item": "솔루션 유형",
@@ -1943,6 +2036,7 @@
           "it_similarity_raw": 63.1,
           "it_similarity_band": 60,
           "is_baseline": false,
+          "already_entered": false,
           "axes": {
             "솔루션 유형": {
               "source_item": "솔루션 유형",
@@ -2033,16 +2127,6 @@
           "rank": 6,
           "country": "PT",
           "score_band": 60
-        },
-        {
-          "rank": 7,
-          "country": "IT",
-          "score_band": 60
-        },
-        {
-          "rank": 8,
-          "country": "FR",
-          "score_band": 60
         }
       ],
       "method": "축별 raw = 수치(100−|Δ|×20) / 범주(텍스트 Jaccard 30+J×65) / gate(동일=90·한쪽 PASS=50) → effective weight = item_weight × tier_multiplier → 가중평균 raw → 10점 구간 반올림.",
@@ -2112,9 +2196,13 @@
             "UniCredit Bank Austria/Bank Austria Leasing"
           ],
           "competitor_entry_form": "OEM 캡티브(Porsche Bank·VW FS·BMW·MB·Toyota·Stellantis) + 오스트리아 은행계(Raiffeisen·BAWAG·Erste·Bank Austria) + 다국적 리스사(Ayvens·Arval·Alphabet·Sixt). 운용리스는 GmbH 즉시 가능, 소비자금융은 FMA 인가 필요",
+          "competitor_entry_form_en": "OEM captives (Porsche Bank·VW FS·BMW·MB·Toyota·Stellantis) + Austrian banks (Raiffeisen·BAWAG·Erste·Bank Austria) + multinational lessors (Ayvens·Arval·Alphabet·Sixt). Operating lease via GmbH is immediately possible; consumer finance requires FMA authorization",
           "competitor_rates": "신차 자동차대출 APR 약 5~9% (프로모 0~3% Porsche Bank 압도), 운용리스 월 임대료 €350~700, 소비자신용 평균 OeNB 통계 약 7%",
+          "competitor_rates_en": "New-car auto-loan APR ~5-9% (Porsche Bank dominates with 0-3% promos), operating-lease monthly rent €350-700, consumer credit avg ~7% per OeNB statistics",
           "avg_new_car_price": "약 €36,000 (turismos 평균 거래가, NoVA 등록세+EV·SUV 비중으로 EU 평균 상회)",
-          "qualitative_summary": "EU 12위 자동차 시장(2025 신차 24만대 보합). Porsche Bank(VW그룹) 단독 35%+로 EU 최강 캡티브 구조 — OEM 캡티브 합산 55%·다국적 리스 20%·은행계 15%·독립계 10%. 운용리스 60%+로 EU 톱급. 소비자금융은 BWG §1 Z2 등록(€5M)·VKrG §6 사용자금리, B2B 운용리스는 VÖL 자율규제. EU GDPR·SEPA·EPS·KSV1870·ID Austria로 IT 재사용성 최상위. AA+ 신용·이자 0%·EU/CEE 본부 활용 가능."
+          "avg_new_car_price_en": "~€36,000 (turismos average transaction price; above EU average due to NoVA registration tax + EV/SUV share)",
+          "qualitative_summary": "EU 12위 자동차 시장(2025 신차 24만대 보합). Porsche Bank(VW그룹) 단독 35%+로 EU 최강 캡티브 구조 — OEM 캡티브 합산 55%·다국적 리스 20%·은행계 15%·독립계 10%. 운용리스 60%+로 EU 톱급. 소비자금융은 BWG §1 Z2 등록(€5M)·VKrG §6 사용자금리, B2B 운용리스는 VÖL 자율규제. EU GDPR·SEPA·EPS·KSV1870·ID Austria로 IT 재사용성 최상위. AA+ 신용·이자 0%·EU/CEE 본부 활용 가능.",
+          "qualitative_summary_en": "EU's 12th-largest auto market (2025 new cars flat at 240k). Porsche Bank (VW Group) alone 35%+ makes the EU's strongest captive structure — OEM captives combined 55%, multinational lessors 20%, banks 15%, independents 10%. Operating lease 60%+ is EU-top. Consumer finance requires BWG §1 Z2 registration (€5M)·VKrG §6 usury rate; B2B operating lease under VÖL self-regulation. EU GDPR·SEPA·EPS·KSV1870·ID Austria make IT reusability top. AA+ credit·interest 0%·EU/CEE HQ use possible."
         },
         {
           "country": "DK",
@@ -2176,9 +2264,13 @@
             "DLR Kredit (현지 중견)"
           ],
           "competitor_entry_form": "다국적 리스사 자회사(Ayvens·Arval·Athlon·Alphabet) + OEM 캡티브(VW FS·Toyota·Stellantis·BMW·MB) + 북유럽 은행계(Nordea Finans·Jyske Finans·Danske). 운용리스는 ApS/A/S 즉시 가능, 소비자금융은 FSA 인가 필요",
+          "competitor_entry_form_en": "Multinational lessor subsidiaries (Ayvens, Arval, Athlon, Alphabet) + OEM captives (VW FS, Toyota, Stellantis, BMW, MB) + Nordic banks (Nordea Finans, Jyske Finans, Danske). Operating lease available immediately via ApS/A/S; consumer finance requires FSA licensing.",
           "competitor_rates": "신차 자동차대출 APR 약 5~8% (프로모 0~3% 캡티브 한정), 운용리스 월 임대료 DKK 3,000~6,000 (€400~800, 등록세 회피 splitleasing), 소비자신용 평균 Nationalbanken 통계 약 6.5%",
+          "competitor_rates_en": "New auto-loan APR ~5-8% (promo 0-3% captive only), operating-lease monthly rent DKK 3,000-6,000 (€400-800, registration-tax-avoidance splitleasing), consumer credit avg ~6.5% per Nationalbanken.",
           "avg_new_car_price": "약 €40,000 (turismos 평균 거래가, 등록세+EV·SUV 비중으로 EU 평균 상회)",
-          "qualitative_summary": "EU 16위 자동차 시장(2025 신차 17만대) — 등록세(90~150%)로 시장 크게 위축. BEV 점유 60%(EU 1위)·운용리스 80%+로 단위경제 우수. 다국적 리스(Ayvens·Arval·LeasePlan 35%)+OEM 캡티브(VW·Toyota·Stellantis 30%)+은행계(20%) 구조. 소비자금융은 2020 forbrugslån 강화로 사실상 비매력, B2B 운용리스는 FSA 인가 면제로 매우 유연. EU GDPR·SEPA·MitID·MobilePay·RKI로 IT 재사용성 최상위. AAA 신용·이자 원천세 EU 지침 0% — Nordic 허브 활용 가능."
+          "avg_new_car_price_en": "Approx. €40,000 (avg. turismos transaction price; above EU average due to registration tax + EV/SUV mix).",
+          "qualitative_summary": "EU 16위 자동차 시장(2025 신차 17만대) — 등록세(90~150%)로 시장 크게 위축. BEV 점유 60%(EU 1위)·운용리스 80%+로 단위경제 우수. 다국적 리스(Ayvens·Arval·LeasePlan 35%)+OEM 캡티브(VW·Toyota·Stellantis 30%)+은행계(20%) 구조. 소비자금융은 2020 forbrugslån 강화로 사실상 비매력, B2B 운용리스는 FSA 인가 면제로 매우 유연. EU GDPR·SEPA·MitID·MobilePay·RKI로 IT 재사용성 최상위. AAA 신용·이자 원천세 EU 지침 0% — Nordic 허브 활용 가능.",
+          "qualitative_summary_en": "EU's 16th-largest auto market (170K new cars in 2025) — registration tax (90-150%) heavily shrinks the market. BEV share 60% (EU #1) and operating-lease 80%+ give strong unit economics. Structure of multinational lessors (Ayvens, Arval, LeasePlan 35%) + OEM captives (VW, Toyota, Stellantis 30%) + banks (20%). Consumer finance is effectively unattractive after the 2020 forbrugslan tightening; B2B operating lease is very flexible thanks to FSA-license exemption. EU GDPR, SEPA, MitID, MobilePay, and RKI give top-tier IT reusability. AAA credit and 0% interest WHT via EU directives — a Nordic hub is viable."
         },
         {
           "country": "ES",
@@ -2236,9 +2328,13 @@
             "CaixaBank Consumer"
           ],
           "competitor_entry_form": "은행계 자회사(Santander Consumer·Cetelem·CA Auto Bank) + OEM 캡티브(VW FS·Toyota·BMW·MB) + 일부 EFC 인가 전문 여신사. 렌팅은 ALD/Arval/Alphabet 등 다국적 플릿 리스사 주도",
+          "competitor_entry_form_en": "Bank subsidiaries (Santander Consumer, Cetelem, CA Auto Bank) + OEM captives (VW FS, Toyota, BMW, MB) + EFC-licensed specialized lenders. Renting handled by ALD/Arval/Alphabet/LeasePlan.",
           "competitor_rates": "신차 자동차대출 TAE 약 6~10% (프로모 0~3% 캡티브 한정), 소비자신용 평균 TEDR 약 7%",
+          "competitor_rates_en": "New auto-loan APR ~6-10% (promo 0-3% captive only); consumer credit avg TEDR ~7%.",
           "avg_new_car_price": "약 €30,000~32,000 (turismos 평균 거래가, 전동화로 상승 추세)",
-          "qualitative_summary": "EU 5위권 자동차 시장(2025 신차 114.9만대, +12.9%). 은행계 소비자금융(Santander Consumer·CA Auto Bank·Cetelem 약 60%)+OEM 캡티브 혼재, 렌팅(운용리스) 고성장(점유 25.6%, EV 51%). 소비자금융은 EFC 인가(€5M)·2026 금리상한법 적용, B2B 리스·렌팅은 유연. EU GDPR·SEPA·성숙 CB로 IT 재사용성 높음."
+          "avg_new_car_price_en": "Approx. €30,000-32,000 (avg. turismos transaction price; trending up with electrification).",
+          "qualitative_summary": "EU 5위권 자동차 시장(2025 신차 114.9만대, +12.9%). 은행계 소비자금융(Santander Consumer·CA Auto Bank·Cetelem 약 60%)+OEM 캡티브 혼재, 렌팅(운용리스) 고성장(점유 25.6%, EV 51%). 소비자금융은 EFC 인가(€5M)·2026 금리상한법 적용, B2B 리스·렌팅은 유연. EU GDPR·SEPA·성숙 CB로 IT 재사용성 높음.",
+          "qualitative_summary_en": "EU top-5 auto market (2025 new-car 1.149M units, +12.9%). Bank-led consumer finance (Santander Consumer, CA Auto Bank, Cetelem ~60%) coexists with OEM captives; renting (operating lease) grows fast (25.6% share; EVs 51%). Consumer credit faces EFC licensing (€5M capital) and the 2026 rate-cap law; B2B leasing/renting is more flexible. EU GDPR / SEPA / Bizum / mature CB make IT similarity high. Repossession is the key mismatch — easy for leases (ownership), 6-12 months for consumer-loan collateral. Renting/fleet first, then staged consumer finance via EFC licensing is the recommended strategy."
         },
         {
           "country": "FR",
@@ -2341,9 +2437,13 @@
             }
           ],
           "competitor_entry_form": "OEM 캡티브=현지 신용기관 자회사. 글로벌 리스(Ayvens/Arval)=본사 직접운영. 외국 은행계=EU 패스포팅·자회사. 화이트라벨·딜러파이낸싱 제휴 다수.",
+          "competitor_entry_form_en": "OEM captives = local credit-institution subsidiaries. Global lessors (Ayvens/Arval) = direct HQ operation. Foreign banks = EU passporting/subsidiary. Many white-label and dealer-financing partnerships.",
           "competitor_rates": "개인 신차 할부/LOA: 프로모션 0~3.9%, 표준 5~8% APR. B2B 리스는 자산·신용도별 협상.",
+          "competitor_rates_en": "Retail new-car installment/LOA: promo 0-3.9%, standard 5-8% APR. B2B leasing negotiated by asset and credit profile.",
           "avg_new_car_price": "약 35,000 EUR (신차 평균 거래가)",
-          "qualitative_summary": "프랑스는 EU 3위 신차시장이자 LOA/LLD 리스 문화가 깊게 자리잡은 시장. Stellantis·Renault 캡티브와 은행계 소비자금융이 지배하며, EV 전환·구독 모빌리티가 신규 성장축. 소비자보호·AI·보험 규제가 강하다."
+          "avg_new_car_price_en": "Approx. 35,000 EUR (average new-car transaction price)",
+          "qualitative_summary": "프랑스는 EU 3위 신차시장이자 LOA/LLD 리스 문화가 깊게 자리잡은 시장. Stellantis·Renault 캡티브와 은행계 소비자금융이 지배하며, EV 전환·구독 모빌리티가 신규 성장축. 소비자보호·AI·보험 규제가 강하다.",
+          "qualitative_summary_en": "France is the EU's #3 new-car market with deeply rooted LOA/LLD leasing culture. Dominated by Stellantis/Renault captives and bank-affiliated consumer finance, with EV transition and subscription mobility as new growth axes. Consumer-protection, AI, and insurance regulation are strict."
         },
         {
           "country": "GB",
@@ -2402,9 +2502,13 @@
             "Mercedes-Benz Financial"
           ],
           "competitor_entry_form": "은행계 자회사(Black Horse/Lloyds·Santander) + OEM 캡티브(VWFS·BMW·Ford·Stellantis FS) + 독립계 전문여신사(MotoNovo·Close Brothers). 리스는 LeasePlan/Ayvens·Arval 등 다국적",
+          "competitor_entry_form_en": "Bank-owned subsidiaries (Black Horse/Lloyds, Santander) + OEM captives (VWFS, BMW, Ford, Stellantis FS) + independent specialist lenders (MotoNovo, Close Brothers). Leasing via multinationals such as LeasePlan/Ayvens, Arval.",
           "competitor_rates": "신차 PCP APR 약 5~10%(캡티브 프로모 0~6%), 중고/니어프라임 10~20%대",
+          "competitor_rates_en": "New-car PCP APR ~5-10% (captive promos 0-6%); used/near-prime in the 10-20% range.",
           "avg_new_car_price": "약 £35,000~40,000 (신차 평균 거래가, EV 비중 상승으로 상향)",
-          "qualitative_summary": "유럽 최대급 자동차금융 시장이자 자사 NetSol 구축 베이스라인. 2025 신차 약 196만대(SMMT), 신차 사적구매 80%+ 금융(PCP 지배적). FLA 기준 소비자 자동차금융 연 약 £39bn. FCA 규제·DCA 미스셀링 사태가 컴플라이언스 핵심 변수. Open Banking·3대 CB로 IT 인프라 세계 최고."
+          "avg_new_car_price_en": "~£35,000-40,000 (average new-car transaction price, trending up as EV share rises).",
+          "qualitative_summary": "유럽 최대급 자동차금융 시장이자 자사 NetSol 구축 베이스라인. 2025 신차 약 196만대(SMMT), 신차 사적구매 80%+ 금융(PCP 지배적). FLA 기준 소비자 자동차금융 연 약 £39bn. FCA 규제·DCA 미스셀링 사태가 컴플라이언스 핵심 변수. Open Banking·3대 CB로 IT 인프라 세계 최고.",
+          "qualitative_summary_en": "Europe's largest-tier auto-finance market and our own NetSol deployment baseline. 2025 new cars ~1.96M (SMMT), 80%+ of private new-car purchases financed (PCP dominant). FLA-basis consumer auto-finance ~£39bn/yr. FCA regulation and the DCA mis-selling crisis are the core compliance variables. Open Banking and the 3 major CBs make IT infrastructure world-leading."
         },
         {
           "country": "IT",
@@ -2468,9 +2572,13 @@
             "Leasys (Stellantis NLT)"
           ],
           "competitor_entry_form": "OEM 캡티브(Stellantis FS·VW FS·Toyota·BMW·MB) + 소비자신용 전문은행(Findomestic·Agos·Compass) + 은행계 리스(UniCredit·Intesa·BNL) + NLT 다국적(Arval·ALD/Ayvens·LeasePlan·Alphabet·Leasys). TUB Art. 106 등록 형태가 일반적",
+          "competitor_entry_form_en": "OEM captives (Stellantis FS, VW FS, Toyota, BMW, MB) + consumer-credit specialist banks (Findomestic, Agos, Compass) + bank leasing (UniCredit, Intesa, BNL) + multinational NLT (Arval, ALD/Ayvens, LeasePlan, Alphabet, Leasys). TUB Art. 106 registration is the common form",
           "competitor_rates": "신차 자동차대출 TAEG 약 7~11% (프로모 0~3% 캡티브 한정, Stellantis FS Black Friday 0%), 소비자신용 평균 TAEG BdI 통계 약 9%",
+          "competitor_rates_en": "New auto-loan TAEG ~7-11% (promo 0-3% captive only, Stellantis FS Black Friday 0%); consumer credit avg TAEG ~9% per BdI statistics",
           "avg_new_car_price": "약 €28,500 (turismos 평균 거래가, 전동화·SUV 비중 상승으로 우상향)",
-          "qualitative_summary": "EU 4위 자동차 시장(2025 신차 156만대, -0.8%). 캡티브 주도(Stellantis FS 18%·VW FS·Toyota·BMW 등 약 45%)+은행계(UniCredit·Intesa·BNL 25%)+독립계(30%) 구조. NLT(장기렌트) 고성장(점유 28%, EV 30%+). 소비자금융은 TUB Art. 106 등록(€2M)·Tasso Soglia 적용, B2B 리스·NLT는 유연. EU GDPR·SEPA·CRIF·PagoPA·SPID로 IT 재사용성 높음. 단 사법회수 4~7년이 회수 리스크 핵심."
+          "avg_new_car_price_en": "Approx. €28,500 (avg turismos transaction price; trending up with electrification/SUV mix)",
+          "qualitative_summary": "EU 4위 자동차 시장(2025 신차 156만대, -0.8%). 캡티브 주도(Stellantis FS 18%·VW FS·Toyota·BMW 등 약 45%)+은행계(UniCredit·Intesa·BNL 25%)+독립계(30%) 구조. NLT(장기렌트) 고성장(점유 28%, EV 30%+). 소비자금융은 TUB Art. 106 등록(€2M)·Tasso Soglia 적용, B2B 리스·NLT는 유연. EU GDPR·SEPA·CRIF·PagoPA·SPID로 IT 재사용성 높음. 단 사법회수 4~7년이 회수 리스크 핵심.",
+          "qualitative_summary_en": "EU #4 auto market (2025 new-car 1.56M units, -0.8%). Captive-led (Stellantis FS 18%, VW FS, Toyota, BMW etc. ~45%) + banks (UniCredit, Intesa, BNL 25%) + independents (30%). NLT (long-term rental) growing fast (28% share, EV 30%+). Consumer finance faces TUB Art. 106 registration (€2M) and Tasso Soglia; B2B leasing/NLT is flexible. EU GDPR / SEPA / CRIF / PagoPA / SPID make IT reuse high. But 4-7-year judicial recovery is the key recovery risk."
         },
         {
           "country": "NL",
@@ -2532,9 +2640,13 @@
             "DirectLease"
           ],
           "competitor_entry_form": "다국적 리스사 자회사(Ayvens·Athlon·Arval·Alphabet·LeasePlan) + OEM 캡티브(VW FS·Toyota·Stellantis·Hyundai Capital) + Wft 인가 EFC + EV 전문(MisterGreen)·디지털(Bynco) 신생. 운용리스는 B.V. 즉시 가능, 소비자금융은 Wft 인가 필요",
+          "competitor_entry_form_en": "Multinational-lessor subsidiaries (Ayvens, Athlon, Arval, Alphabet, LeasePlan) + OEM captives (VW FS, Toyota, Stellantis, Hyundai Capital) + Wft-licensed EFCs + EV specialists (MisterGreen) and digital (Bynco) newcomers. Operational lease can use a B.V. immediately; consumer finance requires a Wft license.",
           "competitor_rates": "신차 자동차대출 APR 약 6~10% (프로모 0~3% 캡티브 한정), 운용리스 월 임대료 €350~700 (잔가·기간·BEV 의존), 소비자신용 평균 DNB 통계 약 7.5%",
+          "competitor_rates_en": "New auto-loan APR ~6-10% (promo 0-3% captive only), operational-lease monthly rent €350-700 (depends on residual/term/BEV), consumer credit DNB avg. ~7.5%",
           "avg_new_car_price": "약 €42,000 (turismos 평균 거래가, EV·SUV 비중 높아 EU 평균 상회)",
-          "qualitative_summary": "EU 9위 자동차 시장(2025 신차 38만대, ±0%) — 규모 중위지만 운용리스 침투·EV 보급은 EU 1위. 다국적 리스사 주도(Ayvens/ALD·LeasePlan·Arval·Athlon 약 45%)+OEM 캡티브(VW·Stellantis·Toyota 30%)+은행계·독립계(25%) 구조. 소비자금융은 Wft 인가(€730k)·Wck 35a 사용자금리, B2B 운용리스는 인가 면제. EU GDPR·SEPA·iDEAL·BKR·DigiD로 IT 재사용성 최상위. AAA 국가신용, 이자 원천세 0% — EU Holding 허브로 활용 가능."
+          "avg_new_car_price_en": "Approx. €42,000 (avg. turismos transaction price; above EU average due to high EV/SUV mix)",
+          "qualitative_summary": "EU 9위 자동차 시장(2025 신차 38만대, ±0%) — 규모 중위지만 운용리스 침투·EV 보급은 EU 1위. 다국적 리스사 주도(Ayvens/ALD·LeasePlan·Arval·Athlon 약 45%)+OEM 캡티브(VW·Stellantis·Toyota 30%)+은행계·독립계(25%) 구조. 소비자금융은 Wft 인가(€730k)·Wck 35a 사용자금리, B2B 운용리스는 인가 면제. EU GDPR·SEPA·iDEAL·BKR·DigiD로 IT 재사용성 최상위. AAA 국가신용, 이자 원천세 0% — EU Holding 허브로 활용 가능.",
+          "qualitative_summary_en": "EU #9 auto market (2025 new-car 380k units, ±0%) — mid-size in scale but #1 in the EU for operational-lease penetration and EV adoption. Multinational-lessor led (Ayvens/ALD, LeasePlan, Arval, Athlon ~45%) + OEM captives (VW, Stellantis, Toyota 30%) + banks/independents (25%). Consumer finance faces Wft licensing (€730k) and Wck 35a borrowing-rate cap; B2B operational lease is exempt. EU GDPR, SEPA, iDEAL, BKR, DigiD make IT reuse best-in-class. AAA sovereign credit, 0% interest WHT — usable as an EU holding hub."
         },
         {
           "country": "PL",
@@ -2597,9 +2709,13 @@
             "LeasePlan"
           ],
           "competitor_entry_form": "은행계 리스 자회사(PKO·mLeasing·Santander·EFL) + OEM 캡티브(VW FS·Toyota Bank·Stellantis FS·BMW·MB) + 다국적 플릿 리스사(Arval·ALD/Ayvens·Alphabet·LeasePlan·Carefleet). KNF 인가 EFC 또는 상법상 Sp. z o.o. 형태가 일반적",
+          "competitor_entry_form_en": "Bank-affiliated lease subsidiaries (PKO, mLeasing, Santander, EFL) + OEM captives (VW FS, Toyota Bank, Stellantis FS, BMW, MB) + multinational fleet lessors (Arval, ALD/Ayvens, Alphabet, LeasePlan, Carefleet). KNF-licensed EFC or commercial-law Sp. z o.o. form is typical.",
           "competitor_rates": "신차 자동차대출 APR 약 9~14% (프로모 0~3% 캡티브 한정), 운용리스 월 임대료 1.0~1.8% (잔가·기간 의존), 소비자신용 평균 APR NBP 통계 약 11%",
+          "competitor_rates_en": "New-car auto-loan APR ~9-14% (promo 0-3% captive only), operating-lease monthly rate 1.0-1.8% (residual/term dependent), consumer-credit avg APR ~11% per NBP statistics.",
           "avg_new_car_price": "약 PLN 145,000 (€33,000~34,000, turismos 평균 거래가, 전동화·SUV 비중 상승으로 우상향)",
-          "qualitative_summary": "EU 6위·CEE 1위 자동차 시장(2025 신차 56만대, +5.7%). 리스 주도 구조(신차 70%+) — ZPL 회원사가 시장 90%+. 캡티브(VW FS·Toyota·Stellantis FS 35%)+은행계 리스(PKO·mLeasing·Santander 55%) 양강. 소비자신용은 KNF 인가(PLN 1M)+2023 금리상한법 적용, B2B 리스는 무면허(상법상 즉시 가능). EU GDPR·SEPA·BIK·BLIK·PolishAPI로 IT 재사용성 높음."
+          "avg_new_car_price_en": "Approx. PLN 145,000 (€33,000-34,000, avg. turismos transaction price, trending up as electrification/SUV mix rises).",
+          "qualitative_summary": "EU 6위·CEE 1위 자동차 시장(2025 신차 56만대, +5.7%). 리스 주도 구조(신차 70%+) — ZPL 회원사가 시장 90%+. 캡티브(VW FS·Toyota·Stellantis FS 35%)+은행계 리스(PKO·mLeasing·Santander 55%) 양강. 소비자신용은 KNF 인가(PLN 1M)+2023 금리상한법 적용, B2B 리스는 무면허(상법상 즉시 가능). EU GDPR·SEPA·BIK·BLIK·PolishAPI로 IT 재사용성 높음.",
+          "qualitative_summary_en": "EU's 6th-largest and CEE's largest auto market (2025 new-car sales 560K, +5.7%). Lease-led structure (70%+ of new cars) — ZPL members hold 90%+ of the market. A duopoly of captives (VW FS, Toyota, Stellantis FS ~35%) and bank-affiliated lessors (PKO, mLeasing, Santander ~55%). Consumer credit requires KNF licensing (PLN 1M) and is subject to the 2023 rate-cap law; B2B leasing is unlicensed (immediately permissible under commercial law). High IT reusability via EU GDPR, SEPA, BIK, BLIK, and PolishAPI."
         },
         {
           "country": "PT",
@@ -2663,9 +2779,13 @@
             "Externato (현지 렌팅)"
           ],
           "competitor_entry_form": "은행계 자회사(Santander Consumer·BPI·BCP·CGD) + OEM 캡티브(VW·Stellantis·Toyota·BMW·MB) + 다국적 렌팅(Ayvens·Arval·LeasePlan·Alphabet) + 소비자신용 전문(Cetelem·Cofidis). SFC 인가 또는 IFIC 형태가 일반적",
+          "competitor_entry_form_en": "Bank subsidiaries (Santander Consumer, BPI, BCP, CGD) + OEM captives (VW, Stellantis, Toyota, BMW, MB) + multinational renting (Ayvens, Arval, LeasePlan, Alphabet) + consumer-credit specialists (Cetelem, Cofidis). SFC license or IFIC form is typical.",
           "competitor_rates": "신차 자동차대출 TAEG 약 7~11% (프로모 0~3% 캡티브 한정), 렌팅(AOR) 월 임대료 €350~600 (잔가·기간 의존), 소비자신용 평균 TAEG BdP 통계 약 8.5%",
+          "competitor_rates_en": "New-car auto-loan TAEG ~7-11% (promo 0-3% captive-only), renting (AOR) monthly rent EUR350-600 (residual/term dependent), consumer-credit average TAEG ~8.5% per BdP statistics.",
           "avg_new_car_price": "약 €27,500 (turismos 평균 거래가, ES 대비 약간 낮음, EV·SUV로 우상향)",
-          "qualitative_summary": "EU 14위 자동차 시장(2025 신차 22만대, +4.3%). 이베리아 보조 시장으로 단독 진입보다 ES 통합 진입의 보조 시장 가치 큼. 캡티브(Stellantis·VW·Renault 약 35%)+은행계(Santander·BCP·CGD·BPI 약 35%)+다국적 렌팅(Ayvens·Arval 약 20%) 구조. 렌팅(AOR) 30%+ 점유, EV 28% EU 톱5. 소비자금융은 SFC 인가(€7.5M)·DL 133/2009 금리상한, B2B 렌팅은 IFIC 단순등록+ANCAVE. EU GDPR·SEPA·MULTIBANCO·CRC로 IT 재사용성 높음. AAA→A- 신용 회복세."
+          "avg_new_car_price_en": "~EUR27,500 (turismos average transaction price, slightly below ES, trending up on EV/SUV).",
+          "qualitative_summary": "EU 14위 자동차 시장(2025 신차 22만대, +4.3%). 이베리아 보조 시장으로 단독 진입보다 ES 통합 진입의 보조 시장 가치 큼. 캡티브(Stellantis·VW·Renault 약 35%)+은행계(Santander·BCP·CGD·BPI 약 35%)+다국적 렌팅(Ayvens·Arval 약 20%) 구조. 렌팅(AOR) 30%+ 점유, EV 28% EU 톱5. 소비자금융은 SFC 인가(€7.5M)·DL 133/2009 금리상한, B2B 렌팅은 IFIC 단순등록+ANCAVE. EU GDPR·SEPA·MULTIBANCO·CRC로 IT 재사용성 높음. AAA→A- 신용 회복세.",
+          "qualitative_summary_en": "EU 14th-largest auto market (2025 new cars 220k, +4.3%). As a secondary Iberian market, value is higher for integrated ES entry than standalone. Structure: captives (Stellantis, VW, Renault ~35%) + banks (Santander, BCP, CGD, BPI ~35%) + multinational renting (Ayvens, Arval ~20%). Renting (AOR) 30%+ share; EV 28%, EU top-5. Consumer finance needs SFC license (EUR7.5M) and the DL 133/2009 rate cap; B2B renting uses simple IFIC registration + ANCAVE. EU GDPR, SEPA, MULTIBANCO, CRC give high IT reusability. Credit recovery from junk to A-."
         }
       ]
     },
@@ -2673,8 +2793,8 @@
       "nature": "ranking",
       "source_flag": "CALC",
       "weights": {
-        "w_biz": 0.6,
-        "w_it": 0.4
+        "w_biz": 0.9,
+        "w_it": 0.1
       },
       "baseline_country": "GB",
       "rows": [
@@ -2684,10 +2804,16 @@
           "attractiveness": 26.5,
           "it_similarity": 69.8,
           "it_similarity_band": 70,
-          "quickwin_raw": 43.8,
-          "quickwin_band": 40,
+          "quickwin_raw": 30.8,
+          "quickwin_band": 30,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
@@ -2699,14 +2825,20 @@
           "attractiveness": 54.8,
           "it_similarity": 69.5,
           "it_similarity_band": 70,
-          "quickwin_raw": 60.7,
+          "quickwin_raw": 56.3,
           "quickwin_band": 60,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
-          "rank": 2
+          "rank": 3
         },
         {
           "country": "ES",
@@ -2714,14 +2846,20 @@
           "attractiveness": 55.8,
           "it_similarity": 65.8,
           "it_similarity_band": 70,
-          "quickwin_raw": 59.8,
+          "quickwin_raw": 56.8,
           "quickwin_band": 60,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
-          "rank": 3
+          "rank": 2
         },
         {
           "country": "FR",
@@ -2729,10 +2867,16 @@
           "attractiveness": 8.9,
           "it_similarity": 60.1,
           "it_similarity_band": 60,
-          "quickwin_raw": 29.4,
-          "quickwin_band": 30,
+          "quickwin_raw": 14.0,
+          "quickwin_band": 10,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": true,
           "excluded": true,
           "exclusion_reason": "진출국 (이미 운영중, 후보 아님)"
@@ -2743,10 +2887,16 @@
           "attractiveness": 64.6,
           "it_similarity": 98.3,
           "it_similarity_band": 100,
-          "quickwin_raw": 78.1,
-          "quickwin_band": 80,
+          "quickwin_raw": 68.0,
+          "quickwin_band": 70,
           "is_baseline": true,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": true,
           "excluded": true,
           "exclusion_reason": "baseline (기준국, 후보 아님)"
@@ -2757,10 +2907,16 @@
           "attractiveness": 36.4,
           "it_similarity": 60.9,
           "it_similarity_band": 60,
-          "quickwin_raw": 46.2,
-          "quickwin_band": 50,
+          "quickwin_raw": 38.8,
+          "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": true,
           "excluded": true,
           "exclusion_reason": "진출국 (이미 운영중, 후보 아님)"
@@ -2771,14 +2927,20 @@
           "attractiveness": 39.6,
           "it_similarity": 69.5,
           "it_similarity_band": 70,
-          "quickwin_raw": 51.6,
-          "quickwin_band": 50,
+          "quickwin_raw": 42.6,
+          "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
-          "rank": 4
+          "rank": 5
         },
         {
           "country": "PL",
@@ -2786,10 +2948,16 @@
           "attractiveness": 76.6,
           "it_similarity": 69.4,
           "it_similarity_band": 70,
-          "quickwin_raw": 73.7,
-          "quickwin_band": 70,
+          "quickwin_raw": 75.9,
+          "quickwin_band": 80,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
@@ -2801,63 +2969,69 @@
           "attractiveness": 40.9,
           "it_similarity": 63.1,
           "it_similarity_band": 60,
-          "quickwin_raw": 49.8,
-          "quickwin_band": 50,
+          "quickwin_raw": 43.1,
+          "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
-          "rank": 5
+          "rank": 4
         }
       ],
       "ranking": [
         {
           "rank": 1,
           "country": "PL",
-          "score_band": 70,
+          "score_band": 80,
           "attractiveness": 76.6,
           "it_similarity_band": 70
         },
         {
           "rank": 2,
-          "country": "DK",
-          "score_band": 60,
-          "attractiveness": 54.8,
-          "it_similarity_band": 70
-        },
-        {
-          "rank": 3,
           "country": "ES",
           "score_band": 60,
           "attractiveness": 55.8,
           "it_similarity_band": 70
         },
         {
-          "rank": 4,
-          "country": "NL",
-          "score_band": 50,
-          "attractiveness": 39.6,
+          "rank": 3,
+          "country": "DK",
+          "score_band": 60,
+          "attractiveness": 54.8,
           "it_similarity_band": 70
         },
         {
-          "rank": 5,
+          "rank": 4,
           "country": "PT",
-          "score_band": 50,
+          "score_band": 40,
           "attractiveness": 40.9,
           "it_similarity_band": 60
         },
         {
+          "rank": 5,
+          "country": "NL",
+          "score_band": 40,
+          "attractiveness": 39.6,
+          "it_similarity_band": 70
+        },
+        {
           "rank": 6,
           "country": "AT",
-          "score_band": 40,
+          "score_band": 30,
           "attractiveness": 26.5,
           "it_similarity_band": 70
         }
       ],
       "note": {
-        "ko": "퀵윈 = 매력도×비즈니스 가중치 + IT유사도×IT 가중치. 기준국(B국)·진출국(운영중)·킬스위치 탈락국 제외. 10점 구간 표기.",
-        "en": "Quickwin = Attractiveness×Business weight + IT×IT weight. Baseline, already-entered, and killswitch failures excluded. Reported in 10-point buckets."
+        "ko": "퀵윈 = 매력도×비즈니스 가중치 + IT유사도×IT 가중치. 기준국(B국)·진출국(운영중)·JV필수국(킬스위치) 제외. JV권고국은 감점 후 포함. 10점 구간 표기.",
+        "en": "Quickwin = Attractiveness×Business weight + IT×IT weight. Baseline, already-entered, and JV-required (killswitch) countries excluded. JV-recommended countries included with a penalty. Reported in 10-point buckets."
       }
     },
     "top3_country_cards": [
@@ -2865,10 +3039,15 @@
         "rank": 1,
         "country": "PL",
         "country_name": "Poland",
-        "quickwin_score_band": 70,
+        "quickwin_score_band": 80,
         "attractiveness": 76.6,
         "it_similarity_band": 70,
         "killswitch_pass": true,
+        "killswitch_tier": "in_region_confidence",
+        "killswitch_tier_label": {
+          "ko": "권역내 확산",
+          "en": "In-Region Confidence"
+        },
         "market_brief": {
           "신차_판매대수": 560000,
           "금융_이용률_신차": 78,
@@ -2907,7 +3086,8 @@
               "market_share_en": "~8%"
             }
           ],
-          "경쟁사_진출_형태": "은행계 리스 자회사(PKO·mLeasing·Santander·EFL) + OEM 캡티브(VW FS·Toyota Bank·Stellantis FS·BMW·MB) + 다국적 플릿 리스사(Arval·ALD/Ayvens·Alphabet·LeasePlan·Carefleet). KNF 인가 EFC 또는 상법상 Sp. z o.o. 형태가 일반적"
+          "경쟁사_진출_형태": "은행계 리스 자회사(PKO·mLeasing·Santander·EFL) + OEM 캡티브(VW FS·Toyota Bank·Stellantis FS·BMW·MB) + 다국적 플릿 리스사(Arval·ALD/Ayvens·Alphabet·LeasePlan·Carefleet). KNF 인가 EFC 또는 상법상 Sp. z o.o. 형태가 일반적",
+          "경쟁사_진출_형태_en": "Bank-affiliated lease subsidiaries (PKO, mLeasing, Santander, EFL) + OEM captives (VW FS, Toyota Bank, Stellantis FS, BMW, MB) + multinational fleet lessors (Arval, ALD/Ayvens, Alphabet, LeasePlan, Carefleet). KNF-licensed EFC or commercial-law Sp. z o.o. form is typical."
         },
         "top_news": {
           "news_category": "auto_market",
@@ -2920,6 +3100,7 @@
           "so_what_en": "Market recovery/expansion keeps finance-penetration base solid — entry timing favorable. Corporate registrations 70%+ strengthen the rationale for a B2B-lease-first strategy."
         },
         "ai_comment": "B2B 리스·운용리스(CFM)로 빠른 진입 → EV·중고 틈새 → KNF 인가 기반 소비자금융 확장의 단계적 전략 유효. CEE 허브로 활용 가능.",
+        "ai_comment_en": "A staged strategy is effective: rapid entry via B2B leasing / operating lease (CFM) → EV and used niches → expansion into consumer finance under KNF licensing. Usable as a CEE hub.",
         "source_flags": {
           "rank": "CALC",
           "score": "CALC",
@@ -2931,75 +3112,17 @@
       },
       {
         "rank": 2,
-        "country": "DK",
-        "country_name": "Denmark",
-        "quickwin_score_band": 60,
-        "attractiveness": 54.8,
-        "it_similarity_band": 70,
-        "killswitch_pass": true,
-        "market_brief": {
-          "신차_판매대수": 170000,
-          "금융_이용률_신차": 80,
-          "EV_보급률": 60
-        },
-        "competition_brief": {
-          "금융사_Top5": [
-            {
-              "rank": 1,
-              "name": "Ayvens (구 ALD+LeasePlan)",
-              "market_share": "약 18%"
-            },
-            {
-              "rank": 2,
-              "name": "Arval (BNP Paribas)",
-              "market_share": "약 11%"
-            },
-            {
-              "rank": 3,
-              "name": "Volkswagen Financial Services Denmark",
-              "market_share": "약 10%"
-            },
-            {
-              "rank": 4,
-              "name": "Nordea Finans",
-              "market_share": "약 8%"
-            },
-            {
-              "rank": 5,
-              "name": "Jyske Bank Finans / Jyske Finans",
-              "market_share": "약 7%"
-            }
-          ],
-          "경쟁사_진출_형태": "다국적 리스사 자회사(Ayvens·Arval·Athlon·Alphabet) + OEM 캡티브(VW FS·Toyota·Stellantis·BMW·MB) + 북유럽 은행계(Nordea Finans·Jyske Finans·Danske). 운용리스는 ApS/A/S 즉시 가능, 소비자금융은 FSA 인가 필요"
-        },
-        "top_news": {
-          "news_category": "auto_market",
-          "headline": "덴마크 2025년 BEV 점유 50% 돌파, EU에서 NO 다음 글로벌 2위",
-          "headline_en": "Denmark surpasses 50% BEV share in 2025 — #2 globally after NO",
-          "so_what": "BEV 압도적 시장 — EV 운용리스 전문 진입에 최적 환경. 잔가 모델 정교화가 손익 좌우, 한국 OEM(Kia·Hyundai) EV 라인업 우위 활용.",
-          "so_what_en": "BEV-dominant market — optimal for an EV operating-lease specialist entry. Residual-value model precision drives P&L; leverage the Korean OEM (Kia, Hyundai) EV-lineup edge.",
-          "publisher": "Automotive News Europe",
-          "pub_date": "2026-01-28",
-          "url": "https://europe.autonews.com/..."
-        },
-        "ai_comment": "운용리스·EV 전문 진입 → brugtleasing 중고리스 확장 → SE·NO·FI Nordic 통합 운영. 소비자금융은 사실상 진입 비매력 — B2B 한정 전략.",
-        "source_flags": {
-          "rank": "CALC",
-          "score": "CALC",
-          "market": "EXT",
-          "competition": "EXT",
-          "news": "NEWS",
-          "ai_comment": "AI"
-        }
-      },
-      {
-        "rank": 3,
         "country": "ES",
         "country_name": "Spain",
         "quickwin_score_band": 60,
         "attractiveness": 55.8,
         "it_similarity_band": 70,
         "killswitch_pass": true,
+        "killswitch_tier": "in_region_confidence",
+        "killswitch_tier_label": {
+          "ko": "권역내 확산",
+          "en": "In-Region Confidence"
+        },
         "market_brief": {
           "신차_판매대수": 1148650,
           "금융_이용률_신차": 60,
@@ -3033,7 +3156,8 @@
               "market_share": "약 6%"
             }
           ],
-          "경쟁사_진출_형태": "은행계 자회사(Santander Consumer·Cetelem·CA Auto Bank) + OEM 캡티브(VW FS·Toyota·BMW·MB) + 일부 EFC 인가 전문 여신사. 렌팅은 ALD/Arval/Alphabet 등 다국적 플릿 리스사 주도"
+          "경쟁사_진출_형태": "은행계 자회사(Santander Consumer·Cetelem·CA Auto Bank) + OEM 캡티브(VW FS·Toyota·BMW·MB) + 일부 EFC 인가 전문 여신사. 렌팅은 ALD/Arval/Alphabet 등 다국적 플릿 리스사 주도",
+          "경쟁사_진출_형태_en": "Bank subsidiaries (Santander Consumer, Cetelem, CA Auto Bank) + OEM captives (VW FS, Toyota, BMW, MB) + EFC-licensed specialized lenders. Renting handled by ALD/Arval/Alphabet/LeasePlan."
         },
         "top_news": {
           "news_category": "auto_market",
@@ -3046,6 +3170,77 @@
           "so_what_en": "Market recovery underpins finance penetration — entry timing favorable. Note renting/fleet share rise decoupling from consumer retail."
         },
         "ai_comment": "렌팅·플릿으로 빠른 진입 → EV·중고 틈새 → EFC 인가 기반 소비자금융 확장의 단계적 전략 유효.",
+        "ai_comment_en": "Spain's appeal centers on EU-5 scale and fast-growing renting; key risks are EFC licensing burden and 2026 rate caps. Recommend entering renting/fleet first; expand into consumer credit after EFC licensing.",
+        "source_flags": {
+          "rank": "CALC",
+          "score": "CALC",
+          "market": "EXT",
+          "competition": "EXT",
+          "news": "NEWS",
+          "ai_comment": "AI"
+        }
+      },
+      {
+        "rank": 3,
+        "country": "DK",
+        "country_name": "Denmark",
+        "quickwin_score_band": 60,
+        "attractiveness": 54.8,
+        "it_similarity_band": 70,
+        "killswitch_pass": true,
+        "killswitch_tier": "in_region_confidence",
+        "killswitch_tier_label": {
+          "ko": "권역내 확산",
+          "en": "In-Region Confidence"
+        },
+        "market_brief": {
+          "신차_판매대수": 170000,
+          "금융_이용률_신차": 80,
+          "EV_보급률": 60
+        },
+        "competition_brief": {
+          "금융사_Top5": [
+            {
+              "rank": 1,
+              "name": "Ayvens (구 ALD+LeasePlan)",
+              "market_share": "약 18%"
+            },
+            {
+              "rank": 2,
+              "name": "Arval (BNP Paribas)",
+              "market_share": "약 11%"
+            },
+            {
+              "rank": 3,
+              "name": "Volkswagen Financial Services Denmark",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 4,
+              "name": "Nordea Finans",
+              "market_share": "약 8%"
+            },
+            {
+              "rank": 5,
+              "name": "Jyske Bank Finans / Jyske Finans",
+              "market_share": "약 7%"
+            }
+          ],
+          "경쟁사_진출_형태": "다국적 리스사 자회사(Ayvens·Arval·Athlon·Alphabet) + OEM 캡티브(VW FS·Toyota·Stellantis·BMW·MB) + 북유럽 은행계(Nordea Finans·Jyske Finans·Danske). 운용리스는 ApS/A/S 즉시 가능, 소비자금융은 FSA 인가 필요",
+          "경쟁사_진출_형태_en": "Multinational lessor subsidiaries (Ayvens, Arval, Athlon, Alphabet) + OEM captives (VW FS, Toyota, Stellantis, BMW, MB) + Nordic banks (Nordea Finans, Jyske Finans, Danske). Operating lease available immediately via ApS/A/S; consumer finance requires FSA licensing."
+        },
+        "top_news": {
+          "news_category": "auto_market",
+          "headline": "덴마크 2025년 BEV 점유 50% 돌파, EU에서 NO 다음 글로벌 2위",
+          "headline_en": "Denmark surpasses 50% BEV share in 2025 — #2 globally after NO",
+          "so_what": "BEV 압도적 시장 — EV 운용리스 전문 진입에 최적 환경. 잔가 모델 정교화가 손익 좌우, 한국 OEM(Kia·Hyundai) EV 라인업 우위 활용.",
+          "so_what_en": "BEV-dominant market — optimal for an EV operating-lease specialist entry. Residual-value model precision drives P&L; leverage the Korean OEM (Kia, Hyundai) EV-lineup edge.",
+          "publisher": "Automotive News Europe",
+          "pub_date": "2026-01-28",
+          "url": "https://europe.autonews.com/..."
+        },
+        "ai_comment": "운용리스·EV 전문 진입 → brugtleasing 중고리스 확장 → SE·NO·FI Nordic 통합 운영. 소비자금융은 사실상 진입 비매력 — B2B 한정 전략.",
+        "ai_comment_en": "Operating-lease/EV specialist entry → brugtleasing used-lease expansion → SE/NO/FI Nordic integrated operations. Consumer finance is effectively unattractive — a B2B-only strategy.",
         "source_flags": {
           "rank": "CALC",
           "score": "CALC",
@@ -3063,29 +3258,32 @@
           {
             "rank": 1,
             "country": "PL",
-            "score_band": 70,
+            "score_band": 80,
             "attractiveness": 76.6,
             "it_similarity_band": 70
           },
           {
             "rank": 2,
-            "country": "DK",
-            "score_band": 60,
-            "attractiveness": 54.8,
-            "it_similarity_band": 70
-          },
-          {
-            "rank": 3,
             "country": "ES",
             "score_band": 60,
             "attractiveness": 55.8,
             "it_similarity_band": 70
+          },
+          {
+            "rank": 3,
+            "country": "DK",
+            "score_band": 60,
+            "attractiveness": 54.8,
+            "it_similarity_band": 70
           }
         ],
         "killswitch_failed_count": 0,
+        "killswitch_tier_counts": {
+          "in_region_confidence": 9
+        },
         "why_top1": {
-          "ko": "폴란드 — 매력도 76.6, IT유사도 70 구간, 퀵윈 70 구간",
-          "en": "Poland(PL) — Attractiveness 76.6, IT band 70, Quickwin band 70"
+          "ko": "폴란드 — 매력도 76.6, IT유사도 70 구간, 퀵윈 80 구간",
+          "en": "Poland(PL) — Attractiveness 76.6, IT band 70, Quickwin band 80"
         }
       },
       "ai_cross_insight": {
@@ -3096,8 +3294,28 @@
             "en": "Top attractiveness (PL) and top IT similarity (AT) are different countries — trade-off between fast deployment (IT) and market potential (attractiveness)."
           },
           {
+            "ko": "후보 6개국 중 3개국(덴마크, 스페인, 폴란드)이 매력도·IT유사도 모두 50 이상인 퀵윈 최적 영역에 위치 — 시장성과 단기 확산성을 동시에 갖춘 우선 검토 대상.",
+            "en": "3 of 6 candidates (DK, ES, PL) sit in the quick-win sweet spot (attractiveness & IT similarity both ≥50) — priority targets combining market size and fast deployment."
+          },
+          {
+            "ko": "매력도 1위 폴란드(76.6)와 2위 스페인(55.8)의 격차가 20.8점 — 시장 매력도 측면에서 1위가 뚜렷이 앞섬.",
+            "en": "Top-attractiveness PL (76.6) leads #2 ES (55.8) by 20.8 points — a clear front-runner on market attractiveness."
+          },
+          {
+            "ko": "후보 6개국 중 5개국이 IT유사도 70 동일 밴드 — IT 확산 난이도는 권역 전반이 유사해, 매력도가 우선순위를 가르는 핵심 변수.",
+            "en": "5 of 6 candidates share the same top IT-similarity band (70) — deployment effort is broadly similar, so attractiveness becomes the key differentiator."
+          },
+          {
+            "ko": "1순위 폴란드 경쟁 구조 — 은행계 리스 자회사(PKO·mLeasing·Santander·EFL) + OEM 캡티브(VW FS·Toyota Bank·Stellantis FS·BMW·MB) +… 진입 전략 설계 시 기존 플레이어 구도를 우선 검토.",
+            "en": "Top candidate PL — incumbent landscape: 은행계 리스 자회사(PKO·mLeasing·Santander·EFL) + OEM 캡티브(VW FS·Toyota Bank·Stellantis FS·BMW·MB) +… Factor this competitive structure into entry strategy."
+          },
+          {
             "ko": "기준국 영국은 이미 시스템 보유국 → 순위에서 제외(B국 시스템 확산의 비교 기준).",
             "en": "Baseline GB already operates a deployed system — excluded from the ranking (used as the reference for system expansion)."
+          },
+          {
+            "ko": "킬스위치 평가 9개국 전부 단독 진출 가능 — 권역 전반의 규제·신용 게이트 리스크가 낮아 JV 없이 직접 진출 전략을 우선 검토할 수 있음.",
+            "en": "All 9 screened markets clear the kill-switch gates — low region-wide regulatory/credit risk means direct entry (without a JV) can be the primary strategy."
           }
         ]
       },
