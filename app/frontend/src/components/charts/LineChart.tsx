@@ -17,6 +17,8 @@ interface Props {
   /** 두 시계열의 단위·스케일이 다를 때, 각 선을 자기 값 범위로 독립 정규화(이중 y축처럼)해 둘 다 기울기가 살게 한다.
    *  기본(false)은 공통 y축 — 단위가 같고 절대값 비교가 의미 있을 때 사용. */
   normalizeEach?: boolean
+  /** 주 시계열을 선 대신 막대로 그린다(콤보 차트). history=채운 막대, forecast=빗금 막대. */
+  primaryAsBars?: boolean
   className?: string
 }
 
@@ -37,9 +39,10 @@ export function LineChart({
   seriesLabel,
   secondaryLabel,
   normalizeEach = false,
+  primaryAsBars = false,
   className = '',
 }: Props) {
-  const { primary, secondaryPaths, xLabels } = useMemo(() => {
+  const { primary, secondaryPaths, barW, baselineY, xLabels } = useMemo(() => {
     // X축은 두 시계열을 합친 연도 범위로 잡아 같은 격자에 정렬한다.
     const merged = [
       ...data.history,
@@ -51,6 +54,8 @@ export function LineChart({
       return {
         primary: null,
         secondaryPaths: null,
+        barW: 16,
+        baselineY: VIEW_H - PAD,
         xLabels: [] as { label: string; leftPct: number }[],
       }
     }
@@ -97,6 +102,9 @@ export function LineChart({
     return {
       primary: buildSeries(data),
       secondaryPaths: secondary ? buildSeries(secondary) : null,
+      // 막대 폭 — 연도 간격(픽셀)의 60%. 막대는 차트 바닥(baseline)에서 각 값까지.
+      barW: spanYr > 0 ? ((VIEW_W - PAD * 2) / spanYr) * 0.6 : 16,
+      baselineY: VIEW_H - PAD,
       // 라벨은 점(마커)과 같은 toX 좌표를 공유해야 정렬이 맞는다.
       // 좌표를 VIEW_W 기준 백분율로 환산해 절대 배치한다(아래 렌더 참고).
       xLabels: years.map((y) => ({ label: y.toString(), leftPct: (toX(y) / VIEW_W) * 100 })),
@@ -123,25 +131,70 @@ export function LineChart({
           role="img"
           aria-label={title || '시계열 추이 차트'}
         >
-          {historyPath && (
-            <path d={historyPath} fill="none" stroke="#14181C" strokeWidth="2" />
+          {primaryAsBars ? (
+            <>
+              {/* forecast 막대 빗금 패턴 */}
+              <defs>
+                <pattern
+                  id="lc-bar-hatch"
+                  patternUnits="userSpaceOnUse"
+                  width="3"
+                  height="3"
+                  patternTransform="rotate(45)"
+                >
+                  <rect width="3" height="3" fill="#fff" />
+                  <line x1="0" y1="0" x2="0" y2="3" stroke="#2f6be0" strokeWidth="0.8" />
+                </pattern>
+              </defs>
+              {/* history = 채운 막대(잉크블랙) */}
+              {historyPts.map((p, i) => (
+                <rect
+                  key={`hb${i}`}
+                  x={p.x - barW / 2}
+                  y={p.y}
+                  width={barW}
+                  height={Math.max(0, baselineY - p.y)}
+                  fill="#14181C"
+                />
+              ))}
+              {/* forecast = 빗금 막대(블루 외곽) */}
+              {forecastPts.map((p, i) => (
+                <rect
+                  key={`fb${i}`}
+                  x={p.x - barW / 2}
+                  y={p.y}
+                  width={barW}
+                  height={Math.max(0, baselineY - p.y)}
+                  fill="url(#lc-bar-hatch)"
+                  stroke="#2f6be0"
+                  strokeWidth="0.5"
+                  opacity="0.85"
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              {historyPath && (
+                <path d={historyPath} fill="none" stroke="#14181C" strokeWidth="2" />
+              )}
+              {forecastPath && (
+                <path
+                  d={forecastPath}
+                  fill="none"
+                  stroke="#14181C"
+                  strokeWidth="2"
+                  strokeDasharray="4 3"
+                  opacity="0.6"
+                />
+              )}
+              {historyPts.map((p, i) => (
+                <circle key={`h${i}`} cx={p.x} cy={p.y} r="2" fill="#14181C" />
+              ))}
+              {forecastPts.map((p, i) => (
+                <circle key={`f${i}`} cx={p.x} cy={p.y} r="2" fill="#2f6be0" />
+              ))}
+            </>
           )}
-          {forecastPath && (
-            <path
-              d={forecastPath}
-              fill="none"
-              stroke="#14181C"
-              strokeWidth="2"
-              strokeDasharray="4 3"
-              opacity="0.6"
-            />
-          )}
-          {historyPts.map((p, i) => (
-            <circle key={`h${i}`} cx={p.x} cy={p.y} r="2" fill="#14181C" />
-          ))}
-          {forecastPts.map((p, i) => (
-            <circle key={`f${i}`} cx={p.x} cy={p.y} r="2" fill="#2f6be0" />
-          ))}
           {secondaryPaths && (
             <>
               {secondaryPaths.historyPath && (
