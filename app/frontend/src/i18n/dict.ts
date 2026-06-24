@@ -32,6 +32,10 @@ export const DICT: Dict = {
   'chat.inputAria': { ko: '질문 입력', en: 'Type your question' },
   'chat.inputPlaceholder': { ko: '진출 시장에 대해 물어보세요…', en: 'Ask about a target market…' },
   'chat.send': { ko: '전송', en: 'Send' },
+  'chat.disclaimer': {
+    ko: 'AI 응답에는 부정확한 내용이 있을 수 있어요. 중요한 정보는 확인해 주세요.',
+    en: 'AI responses may be inaccurate. Please verify important information.',
+  },
   'chat.greeting': {
     ko: '안녕하세요 👋 AISea 진단 어시스턴트예요.\n진출을 검토 중인 국가나 권역을 말씀해 주시면 리스크 진단을 도와드릴게요.',
     en: "Hi 👋 I'm AISea, your diagnostic assistant.\nTell me a country or region you're considering and I'll help assess the risks.",
