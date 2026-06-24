@@ -20,17 +20,21 @@ export function TcoTab({ data }: { data: CountryReportData }) {
   const baseKoMap: Record<string, string> = { GB: '영국', US: '미국', DE: '독일', FR: '프랑스', IT: '이탈리아' }
   const baseKo = baseKoMap[data.target.base_country] ?? data.target.base_country
 
-  // 기준국(이미 시스템 배포)·TCO 미산정 보고서는 build_breakdown 등이 없어 산식 렌더 불가 → 안내 대체.
+  // 기준국·이미 진출(운영중)한 국가·TCO 미산정 보고서는 build_breakdown 등이 없어 산식 렌더 불가 → 안내 대체.
   const hasTco =
+    !tco.is_already_deployed &&
     dec.decision !== 'baseline_already_deployed' &&
+    dec.decision !== 'already_deployed' &&
     tco.build_months != null &&
     tco.build_breakdown != null &&
     tco.expected_contracts_breakdown != null
   if (!hasTco) {
+    const msg = typeof tco.message === 'object' ? tco.message.ko : tco.message
     return (
       <Panel icon="payments" title="TCO · 구독료">
         <p className="font-body-md text-body-md text-on-surface-variant">
-          {data.country_meta.country_ko}은(는) 이미 시스템이 배포된 기준국이거나 TCO 산정 대상이 아니어서, 구축비용·구독료 산식이 제공되지 않습니다.
+          {msg ??
+            `${data.country_meta.country_ko}은(는) 이미 시스템이 배포된 국가이거나 TCO 산정 대상이 아니어서, 구축비용·구독료 산식이 제공되지 않습니다.`}
         </p>
       </Panel>
     )

@@ -347,7 +347,61 @@ export function MiniTimeseries({ ts }: { ts: TimeseriesData }) {
 }
 
 // ── 시스템 결정 트리(탭0 요약 / 탭2) — mockup SVG 그대로(raw hex 유지) ──
-export function DecisionTreeSvg({ score, baseCountryKo }: { score: number; baseCountryKo: string }) {
+export function DecisionTreeSvg({
+  score,
+  baseCountryKo,
+  decision,
+  regionSystemExists = true,
+  expansionMin = 65,
+  hqBuildMin = 55,
+}: {
+  score: number
+  baseCountryKo: string
+  /** 엔진 산출 결정값. 미지정 시 score·임계값으로 폴백 추론. */
+  decision?: string
+  /** 권역 내 구축 시스템 존재 여부(첫 분기). */
+  regionSystemExists?: boolean
+  /** 권역 확산 임계값(룰셋 expansion_min_score). 미지정 시 65 폴백. */
+  expansionMin?: number
+  /** 본사 자체구축 임계값(룰셋 hq_build_min_score). 미지정 시 55 폴백. */
+  hqBuildMin?: number
+}) {
+  // 엔진 decision을 시각화 분기로 매핑. decision이 없으면 score·임계값으로 폴백.
+  // - baseline_system_expansion → 권역 내 확산 (B)
+  // - hq_build                  → 본사 자체구축 (HQ)
+  // - external_solution         → 외부솔루션 (EXT)
+  const branch: 'B' | 'HQ' | 'EXT' = (() => {
+    if (decision === 'baseline_system_expansion') return 'B'
+    if (decision === 'hq_build') return 'HQ'
+    if (decision === 'external_solution') return 'EXT'
+    // 폴백: 권역 시스템 없으면 외부솔루션, 아니면 임계값 비교
+    if (!regionSystemExists) return 'EXT'
+    if (score >= expansionMin) return 'B'
+    if (score >= hqBuildMin) return 'HQ'
+    return 'EXT'
+  })()
+  // 외부솔루션이 "권역 시스템 없음(NO)" 경로로 도달했는지 여부 — active path가 달라진다.
+  const extViaNo = branch === 'EXT' && !regionSystemExists
+  const isB = branch === 'B'
+  const isHQ = branch === 'HQ'
+  const isEXT = branch === 'EXT'
+  // 활성 경로 d 속성 — 분기별로 굵게 점등되는 라인.
+  const activePath = isB
+    ? 'M450 140 L450 200 M450 320 L450 360 L150 360 L150 560' // region exists → ≥65 → B(좌)
+    : isHQ
+      ? 'M450 140 L450 200 M450 320 L450 360 L750 360 L750 560' // region exists → 55~65 → HQ(우)
+      : extViaNo
+        ? 'M520 80 L820 80 L820 480 L520 480 L450 480 L450 540 L450 615' // NO → 외부솔루션
+        : 'M450 140 L450 200 M450 320 L450 420 L450 540 L450 615' // <55 → 외부솔루션(중앙 하단)
+  const activeBullet = isB
+    ? { cx: 150, cy: 560 }
+    : isHQ
+      ? { cx: 750, cy: 560 }
+      : { cx: 450, cy: 612 }
+  // 비활성 분기 카드 공통 클래스(흐림). 활성 분기는 강조.
+  const cardActive = 'border-2 bg-primary/10 border-primary rounded-xl p-md'
+  const cardActiveShadow = { boxShadow: '0 6px 18px rgba(0,0,0,0.08)' }
+  const cardIdle = 'border-2 bg-surface-container border-outline-variant opacity-40 rounded-xl p-md'
   return (
     <div className="flex flex-col items-center pt-md gap-sm">
       <style>{`
@@ -381,51 +435,51 @@ export function DecisionTreeSvg({ score, baseCountryKo }: { score: number; baseC
           <text x="450" y="92" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">시스템 존재?</text>
         </g>
         <path d="M450 140 L450 200" className="dt-flow-line" opacity="0.25" />
-        <text x="465" y="175" textAnchor="start" fontSize="14" fontWeight="700" fill="#14181C">YES ({baseCountryKo})</text>
+        <text x="465" y="175" textAnchor="start" fontSize="14" fontWeight="700" fill={regionSystemExists ? '#14181C' : '#9aa0a8'}>YES ({baseCountryKo})</text>
         <path d="M520 80 L820 80 L820 480 L520 480" className="dt-flow-line" opacity="0.25" />
-        <text x="700" y="70" textAnchor="middle" fontSize="14" fontWeight="700" fill="#9aa0a8">NO → 외부솔루션</text>
+        <text x="700" y="70" textAnchor="middle" fontSize="14" fontWeight="700" fill={extViaNo ? '#14181C' : '#9aa0a8'}>NO → 외부솔루션</text>
         <g className="dt-diamond" style={{ animationDelay: '0.6s' }}>
           <polygon points="450,200 525,260 450,320 375,260" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
           <text x="450" y="255" textAnchor="middle" fontSize="12" fill="#14181C" fontWeight="700">유사도</text>
           <text x="450" y="280" textAnchor="middle" fontSize="18" fill="#14181C" fontWeight="800">{score.toFixed(1)}</text>
         </g>
         <path d="M450 320 L450 360 L150 360 L150 560" className="dt-flow-line" opacity="0.25" />
-        <text x="300" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill="#14181C">≥ 70 → 권역 내 확산</text>
+        <text x="300" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isB ? '#14181C' : '#9aa0a8'}>{`≥ ${expansionMin} → 권역 내 확산`}</text>
         <path d="M450 320 L450 360 L750 360 L750 560" className="dt-flow-line" opacity="0.25" />
-        <text x="600" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill="#9aa0a8">50~70 → 본사 자체구축</text>
+        <text x="600" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isHQ ? '#14181C' : '#9aa0a8'}>{`${hqBuildMin}~${expansionMin} → 본사 자체구축`}</text>
         <path d="M450 320 L450 420" className="dt-flow-line" opacity="0.25" />
-        <text x="465" y="370" textAnchor="start" fontSize="14" fontWeight="700" fill="#9aa0a8">{'< 50'}</text>
+        <text x="465" y="370" textAnchor="start" fontSize="14" fontWeight="700" fill={isEXT ? '#14181C' : '#9aa0a8'}>{`< ${hqBuildMin}`}</text>
         <g className="dt-diamond" style={{ animationDelay: '1.0s' }}>
           <polygon points="450,420 520,480 450,540 380,480" fill="#fbf9f9" stroke="#9aa0a8" strokeWidth="2" />
           <text x="450" y="475" textAnchor="middle" fontSize="12" fill="#9aa0a8" fontWeight="700">외부솔루션</text>
           <text x="450" y="492" textAnchor="middle" fontSize="12" fill="#9aa0a8" fontWeight="700">기준점 통과?</text>
         </g>
         <path d="M450 540 L450 615" className="dt-flow-line" opacity="0.25" />
-        <text x="465" y="585" textAnchor="start" fontSize="14" fontWeight="700" fill="#9aa0a8">YES → 외부솔루션</text>
+        <text x="465" y="585" textAnchor="start" fontSize="14" fontWeight="700" fill={isEXT ? '#14181C' : '#9aa0a8'}>YES → 외부솔루션</text>
         <path d="M520 480 L750 480 L750 560" className="dt-flow-line" opacity="0.25" />
         <text x="640" y="472" textAnchor="middle" fontSize="14" fontWeight="700" fill="#9aa0a8">NO (Fallback)</text>
-        {/* active path: region exists, ≥70 → B */}
-        <path d="M450 140 L450 200 M450 320 L450 360 L150 360 L150 560" className="dt-active-path" />
-        <circle className="dt-active-bullet" cx="150" cy="560" r="7" fill="#14181C" />
+        {/* active path: 엔진 decision(B/HQ/EXT)에 따라 점등 경로가 달라진다. */}
+        <path d={activePath} className="dt-active-path" />
+        <circle className="dt-active-bullet" cx={activeBullet.cx} cy={activeBullet.cy} r="7" fill="#14181C" />
       </svg>
       <div className="w-full max-w-4xl">
         <div className="grid grid-cols-3 gap-lg">
-          <div className="dt-branch-card dt-branch-b border-2 bg-primary/10 border-primary rounded-xl p-md" style={{ boxShadow: '0 6px 18px rgba(0,0,0,0.08)' }}>
+          <div className={`dt-branch-card dt-branch-b ${isB ? cardActive : cardIdle}`} style={isB ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
-              <span className="material-symbols-outlined text-primary text-[20px]">expand_circle_down</span>
-              <span className="font-semibold font-body-md text-body-md text-primary uppercase tracking-wider">권역 내 확산</span>
+              <span className={`material-symbols-outlined text-[20px] ${isB ? 'text-primary' : 'text-text-secondary'}`}>expand_circle_down</span>
+              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isB ? 'text-primary' : 'text-text-secondary'}`}>권역 내 확산</span>
             </div>
           </div>
-          <div className="dt-branch-card dt-branch-ext border-2 bg-surface-container border-outline-variant opacity-40 rounded-xl p-md">
+          <div className={`dt-branch-card dt-branch-ext ${isEXT ? cardActive : cardIdle}`} style={isEXT ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
-              <span className="material-symbols-outlined text-text-secondary text-[20px]">extension</span>
-              <span className="font-semibold font-body-md text-body-md text-text-secondary uppercase tracking-wider">외부솔루션</span>
+              <span className={`material-symbols-outlined text-[20px] ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>extension</span>
+              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>외부솔루션</span>
             </div>
           </div>
-          <div className="dt-branch-card dt-branch-hq border-2 bg-surface-container border-outline-variant opacity-40 rounded-xl p-md">
+          <div className={`dt-branch-card dt-branch-hq ${isHQ ? cardActive : cardIdle}`} style={isHQ ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
-              <span className="material-symbols-outlined text-text-secondary text-[20px]">domain</span>
-              <span className="font-semibold font-body-md text-body-md text-text-secondary uppercase tracking-wider">본사 자체구축</span>
+              <span className={`material-symbols-outlined text-[20px] ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>domain</span>
+              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>본사 자체구축</span>
             </div>
           </div>
         </div>
@@ -497,4 +551,84 @@ export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded,
       </div>
     </>
   )
+}
+
+// 표시통화 코드 → 심볼(eur() 헬퍼는 심볼을 받는다). 매핑 없으면 코드+공백 폴백.
+const CURRENCY_SYMBOL: Record<string, string> = { EUR: '€', USD: '$', KRW: '₩', GBP: '£' }
+
+// ── 결정별 우측 패널(구독료/본사구축비용/외부솔루션 후보) ──────────────
+// decision에 따라 표시를 분기한다:
+//   external_solution → 추천 벤더 후보 리스트
+//   hq_build          → 본사 자체구축 예상 비용/기간
+//   그 외(권역 확산)   → 기존 구독료 구간표
+interface DecisionSidePanelProps {
+  decision?: string
+  externalCandidates?: { name: string; cost_note?: string }[]
+  hqBaselineCost?: number
+  hqBaselineMonths?: number
+  hqBaselineCurrency?: string
+  subscription: SubTierTableProps
+}
+export function DecisionSidePanel({
+  decision,
+  externalCandidates,
+  hqBaselineCost,
+  hqBaselineMonths,
+  hqBaselineCurrency = 'EUR',
+  subscription,
+}: DecisionSidePanelProps) {
+  if (decision === 'external_solution') {
+    const list = externalCandidates ?? []
+    if (list.length === 0) {
+      return <p className="font-body-sm text-body-sm text-text-secondary">추천 외부솔루션 후보 데이터가 없습니다.</p>
+    }
+    return (
+      <div className="flex flex-col gap-sm">
+        <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+          권역 확산·본사 구축 기준 미달 → 현지 외부솔루션 도입을 검토합니다. 후보 벤더는 다음과 같습니다.
+        </p>
+        <ul className="flex flex-col gap-xs list-none p-0 m-0">
+          {list.map((c, i) => (
+            <li
+              key={i}
+              className="flex items-center justify-between px-sm py-2 rounded-lg bg-surface-container border border-outline-variant"
+            >
+              <span className="flex items-center gap-xs">
+                <span className="material-symbols-outlined text-primary text-[18px]">extension</span>
+                <span className="font-body-md text-body-md text-text-primary font-semibold">{c.name}</span>
+              </span>
+              <span className="font-label-sm text-label-sm text-text-secondary">{c.cost_note ?? '별도 견적'}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
+          * 도입 비용은 벤더별 견적에 따라 산정됩니다.
+        </p>
+      </div>
+    )
+  }
+  if (decision === 'hq_build') {
+    return (
+      <div className="flex flex-col gap-sm">
+        <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+          권역 확산 기준 미달, 외부솔루션 대비 적합 → 본사 자체구축을 권고합니다. 예상 규모는 다음과 같습니다.
+        </p>
+        <div className="flex flex-col gap-xs font-body-md text-body-md">
+          <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-primary/10 border-l-4 border-primary">
+            <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축비용</span>
+            <span className="text-primary font-bold font-body-lg text-body-lg">{eur(hqBaselineCost ?? 0, CURRENCY_SYMBOL[hqBaselineCurrency] ?? hqBaselineCurrency + ' ')}</span>
+          </div>
+          <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-surface-container border border-outline-variant">
+            <span className="text-text-secondary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축기간</span>
+            <span className="text-text-primary font-bold font-body-md text-body-md">{intComma(hqBaselineMonths)} 개월</span>
+          </div>
+        </div>
+        <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
+          * 본사 자체구축 기준 baseline 값(참고용).
+        </p>
+      </div>
+    )
+  }
+  // 기본: 권역 확산 — 구독료 구간표
+  return <SubscriptionTierTable {...subscription} />
 }

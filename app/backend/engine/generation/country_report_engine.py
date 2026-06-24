@@ -522,17 +522,48 @@ class CountryReportEngine:
                 "en": "Recommend 2-3 local external solutions.",
             }
 
-        return {
+        result = {
             "decision": decision,
             "similarity_score": similarity_score,
             "recommendation": recommendation,
             "base_country": base_country,
             "base_system": base_solution,
             "region_system_exists": region_system_exists,
+            # 결정 트리 임계값을 산출물에 실어 화면이 룰셋 변경을 그대로 반영하도록 한다(하드코딩 금지).
+            "thresholds": {
+                "expansion_min_score": expansion_min,
+                "hq_build_min_score": hq_build_min,
+            },
             "hq_baseline_cost": hq_baseline.get("cost", 0),
             "hq_baseline_months": hq_baseline.get("months", 0),
             "hq_baseline_currency": hq_baseline.get("currency", "EUR")
         }
+        # 외부솔루션 결정 시 — 리서치 '솔루션 벤더' 항목을 추천 후보 리스트로 담는다.
+        # (비용 산식은 데이터에 없어 '별도 견적'으로 표기. 화면은 후보명만 노출.)
+        if decision == "external_solution":
+            result["external_candidates"] = self._extract_external_candidates()
+        return result
+
+    def _extract_external_candidates(self) -> List[Dict[str, Any]]:
+        """리서치 '솔루션 벤더' 항목 값에서 외부솔루션 추천 후보를 파싱한다.
+
+        value 예: "글로벌 벤더(NETSOL/Sopra Banking/Sofico) + 현지 SI 혼재"
+        → 괄호 안 슬래시/쉼표 구분 토큰을 후보명으로 추출. 괄호가 없으면
+        구분자(/·,·、) 기준으로 분리. 최대 3종까지.
+        """
+        vendor = self._extract_item_detail("솔루션 벤더") or {}
+        raw = vendor.get("value")
+        if not isinstance(raw, str) or not raw.strip():
+            return []
+        import re as _re
+        # 괄호 안 토큰 우선 추출, 없으면 전체 문자열 사용
+        groups = _re.findall(r"[（(]([^（）()]+)[）)]", raw)
+        segment = groups[0] if groups else raw
+        names = [t.strip() for t in _re.split(r"[/,、·]+", segment) if t.strip()]
+        candidates: List[Dict[str, Any]] = []
+        for name in names[:3]:
+            candidates.append({"name": name, "cost_note": "별도 견적"})
+        return candidates
 
     def calculate_similarity_multiplier(self, similarity_score: float) -> Dict[str, Any]:
         """명세서 산식 1 — 종합 유사도 → TCO 적용 승수%.
@@ -904,11 +935,21 @@ class CountryReportEngine:
         quality = self._assess_data_quality()
         readiness = self._assess_type1_readiness(analysis)
 
+        # 진출 상태 — 신규 진출 산식(결정 트리·TCO) 적용 여부 판정에 사용.
+        entry_status = (
+            (self.internal_data or {}).get("country_status", {}).get(target_country)
+            or (self.internal_data or {}).get("country_status", {}).get(self.normalize_country_code(target_country))
+            or "미진출"
+        )
+
         # 기준국 자가 분석 감지 — TCO/결정 산식이 무의미해지므로 명시적 안내로 대체.
         is_baseline_self = (
             self.normalize_country_code(target_country)
             == self.normalize_country_code(base_country)
         )
+        # 이미 진출(운영중)한 국가는 신규 구축 결정/TCO 산식을 적용하지 않는다.
+        # baseline 자가분석이거나 운영중인 국가면 두 탭을 안내 메시지로 대체.
+        is_already_deployed = is_baseline_self or (entry_status == "운영중")
         base_solution = (
             (self.internal_data or {}).get("country_assets", {}).get(base_country, {}).get("solution")
             or "N/A"
@@ -921,24 +962,41 @@ class CountryReportEngine:
         similarity["evidence_items"] = self._collect_tab_items("1-1")
 
         # Tab 1-2: System Decision Tree
-        if is_baseline_self:
+        if is_already_deployed:
+            if is_baseline_self:
+                rec_ko = (
+                    f"{target_country}는 권역 기준국 — 시스템({base_solution})이 이미 운영 중입니다. "
+                    f"신규 진출 결정 트리는 적용되지 않습니다."
+                )
+                rec_en = (
+                    f"{target_country} is the regional baseline — system ({base_solution}) "
+                    f"is already operational. The new-entry decision tree does not apply."
+                )
+            else:
+                rec_ko = (
+                    f"{target_country}는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. "
+                    f"신규 진출 결정 트리는 적용되지 않습니다."
+                )
+                rec_en = (
+                    f"{target_country} is already an operational market — the system is live. "
+                    f"The new-entry decision tree does not apply."
+                )
             decision = {
-                "is_baseline": True,
-                "decision": "baseline_already_deployed",
+                "is_baseline": is_baseline_self,
+                "is_already_deployed": True,
+                "decision": "baseline_already_deployed" if is_baseline_self else "already_deployed",
                 "recommendation": {
-                    "ko": (
-                        f"{target_country}는 권역 기준국 — 시스템({base_solution})이 이미 운영 중입니다. "
-                        f"신규 진출 결정 트리는 적용되지 않습니다."
-                    ),
-                    "en": (
-                        f"{target_country} is the regional baseline — system ({base_solution}) "
-                        f"is already operational. The new-entry decision tree does not apply."
-                    ),
+                    "ko": rec_ko,
+                    "en": rec_en,
                 },
                 "similarity_score": similarity.get("overall_score"),
                 "base_country": base_country,
                 "base_system": base_solution,
                 "region_system_exists": True,
+                "thresholds": {
+                    "expansion_min_score": float((self.internal_data.get("decision_thresholds") or {}).get("expansion_min_score", 70)),
+                    "hq_build_min_score": float((self.internal_data.get("decision_thresholds") or {}).get("hq_build_min_score", 50)),
+                },
                 "items": self._collect_tab_items("1-2"),
             }
         else:
@@ -946,18 +1004,31 @@ class CountryReportEngine:
             decision["items"] = self._collect_tab_items("1-2")
 
         # Tab 1-3: Contract Volume & 10Y TCO
-        if is_baseline_self:
+        if is_already_deployed:
+            if is_baseline_self:
+                msg_ko = (
+                    f"{target_country}는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. "
+                    f"운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요."
+                )
+                msg_en = (
+                    f"{target_country} is the regional baseline — new build cost/duration do not apply. "
+                    f"For operational figures (existing volume, opex), see the separate management report."
+                )
+            else:
+                msg_ko = (
+                    f"{target_country}는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. "
+                    f"운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요."
+                )
+                msg_en = (
+                    f"{target_country} is already an operational market — new build cost/duration do not apply. "
+                    f"For operational figures (existing volume, opex), see the separate management report."
+                )
             tco = {
-                "is_baseline": True,
+                "is_baseline": is_baseline_self,
+                "is_already_deployed": True,
                 "message": {
-                    "ko": (
-                        f"{target_country}는 권역 기준국 — 신규 구축 비용·기간이 적용되지 않습니다. "
-                        f"운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요."
-                    ),
-                    "en": (
-                        f"{target_country} is the regional baseline — new build cost/duration do not apply. "
-                        f"For operational figures (existing volume, opex), see the separate management report."
-                    ),
+                    "ko": msg_ko,
+                    "en": msg_en,
                 },
                 "currency": (self.country_data.get("currency") or "EUR"),
                 "items": self._collect_tab_items("1-3"),
@@ -1000,11 +1071,7 @@ class CountryReportEngine:
                 "data_year": self.country_data.get("data_year"),
                 "fetched_at": self.country_data.get("fetched_at"),
                 "fetched_by": self.country_data.get("fetched_by"),
-                "entry_status": (
-                    (self.internal_data or {}).get("country_status", {}).get(target_country)
-                    or (self.internal_data or {}).get("country_status", {}).get(self.normalize_country_code(target_country))
-                    or "미진출"
-                ),
+                "entry_status": entry_status,
             },
 
             "data_quality": {

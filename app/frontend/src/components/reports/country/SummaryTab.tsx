@@ -1,6 +1,6 @@
 // 탭0 요약 — 네이비 그라디언트 헤더 + KPI(도넛/워터폴/막대) + 결정트리 + 구독료표 + 종합 인사이트
 import type { CountryReportData } from '../types'
-import { DecisionTreeSvg, SubscriptionTierTable, Panel, intComma, locText, fixed } from './shared'
+import { DecisionTreeSvg, DecisionSidePanel, Panel, intComma, locText, fixed } from './shared'
 import { Money, useFx } from '../Money'
 import { krwCompact } from '../../../utils/currency'
 
@@ -17,8 +17,32 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
   const baseKo = baseKoMap[baseCode] ?? baseCode
   const flag = countryCode.toLowerCase()
 
-  // 기준국(이미 시스템 배포)은 TCO/구축 산식이 없어 build_months 등이 null → KPI 분기.
-  const isBaselineDeployed = dec.decision === 'baseline_already_deployed' || tco.build_months == null
+  // 기준국·이미 진출(운영중)한 국가는 TCO/구축 산식이 없어 build_months 등이 null → KPI 분기.
+  const isBaselineDeployed =
+    dec.is_already_deployed ||
+    tco.is_already_deployed ||
+    dec.decision === 'baseline_already_deployed' ||
+    dec.decision === 'already_deployed' ||
+    tco.build_months == null
+  // 기준국 자가분석인지(=베이스라인 본인) — 안내 문구 분기에 사용.
+  const isBaselineSelf = dec.is_baseline || dec.decision === 'baseline_already_deployed'
+
+  // 시스템 결정 라벨 — 엔진 decision 기준(하드코딩 금지). 요약 헤더/뱃지에서 공용.
+  const decisionLabel =
+    dec.decision === 'baseline_system_expansion'
+      ? `권역 내 확산 (${baseKo} 시스템)`
+      : dec.decision === 'hq_build'
+        ? '본사 자체구축'
+        : dec.decision === 'external_solution'
+          ? '외부솔루션'
+          : `권역 내 확산 (${baseKo} 시스템)` // 폴백(구버전 데이터)
+  // 우측 패널 제목 — 결정별로 바뀐다(구독료/본사구축/외부솔루션).
+  const sidePanelTitle =
+    dec.decision === 'external_solution'
+      ? '추천 외부솔루션'
+      : dec.decision === 'hq_build'
+        ? '본사 구축 예상 비용'
+        : '구독료 구간표'
 
   const sub = tco.subscription_details ?? ({} as typeof tco.subscription_details)
   const buildMonths = tco.build_months ?? 0
@@ -63,11 +87,13 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
                 <strong className="text-white">{countryKo}({countryCode})</strong>의 종합 유사도는 베이스라인{' '}
                 <strong className="text-white">{baseKo}({baseCode})</strong> 대비{' '}
                 <strong className="text-white">{fixed(score)}점/100</strong>으로, 이에 따라 시스템 결정은{' '}
-                <strong className="text-white">권역 내 확산 ({baseKo} 시스템)</strong>(으)로 권고됩니다.
+                <strong className="text-white">{decisionLabel}</strong>(으)로 권고됩니다.
               </p>
               {isBaselineDeployed ? (
                 <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
-                  {baseKo}({baseCode})은(는) 이미 시스템이 배포된 베이스라인 국가로, 신규 구축·TCO 산정 대상이 아닙니다.
+                  {isBaselineSelf
+                    ? `${countryKo}(${countryCode})은(는) 이미 시스템이 배포된 권역 기준국으로, 신규 구축·TCO 산정 대상이 아닙니다.`
+                    : `${countryKo}(${countryCode})은(는) 이미 진출(운영중)한 국가로, 신규 구축·TCO 산정 대상이 아닙니다.`}
                 </p>
               ) : (
                 <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
@@ -94,7 +120,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
               className="mt-sm rounded-[9px] px-[14px] py-[6px] font-body-sm text-[12px] font-semibold inline-block"
               style={{ background: 'rgba(200,240,81,.16)', border: '1px solid rgba(200,240,81,.4)', color: '#C8F051' }}
             >
-              권역 내 확산 ({baseKo} 시스템)
+              {decisionLabel}
             </div>
           </div>
         </div>
@@ -152,18 +178,39 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-stretch">
         <div className="lg:col-span-8 flex flex-col gap-xl">
           <Panel title="시스템 결정 트리" className="flex-1">
-            <DecisionTreeSvg score={score} baseCountryKo={baseKo} />
+            {isBaselineDeployed ? (
+              <p className="font-body-md text-body-md text-on-surface-variant">
+                {recommendationText ||
+                  `${countryKo}은(는) 이미 시스템이 운영 중인 국가로, 신규 진출 결정 트리는 적용되지 않습니다.`}
+              </p>
+            ) : (
+              <DecisionTreeSvg
+                score={score}
+                baseCountryKo={baseKo}
+                decision={dec.decision}
+                regionSystemExists={dec.region_system_exists}
+                expansionMin={dec.thresholds?.expansion_min_score}
+                hqBuildMin={dec.thresholds?.hq_build_min_score}
+              />
+            )}
           </Panel>
         </div>
         <div className="lg:col-span-4 flex flex-col gap-xl">
-          <Panel title="구독료 구간표" className="flex-1">
-            <SubscriptionTierTable
-              tiers={tco.subscription_tiers}
-              appliedPrice={sub.unit_price}
-              existing={sub.existing_volume ?? tco.existing_total_volume}
-              newAdded={sub.new_volume ?? tco.expected_contracts}
-              newCumulative={sub.total_volume ?? (tco.existing_total_volume + tco.expected_contracts)}
-              currency={sub.currency ?? tco.currency}
+          <Panel title={sidePanelTitle} className="flex-1">
+            <DecisionSidePanel
+              decision={dec.decision}
+              externalCandidates={dec.external_candidates}
+              hqBaselineCost={dec.hq_baseline_cost}
+              hqBaselineMonths={dec.hq_baseline_months}
+              hqBaselineCurrency={dec.hq_baseline_currency}
+              subscription={{
+                tiers: tco.subscription_tiers,
+                appliedPrice: sub.unit_price,
+                existing: sub.existing_volume ?? tco.existing_total_volume,
+                newAdded: sub.new_volume ?? tco.expected_contracts,
+                newCumulative: sub.total_volume ?? (tco.existing_total_volume + tco.expected_contracts),
+                currency: sub.currency ?? tco.currency,
+              }}
             />
           </Panel>
         </div>

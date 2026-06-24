@@ -4,14 +4,18 @@
 /** 평가 후보 9개국 + 기준국 한글명 매핑 (JSON엔 영문명만 있음). */
 export const COUNTRY_KO: Record<string, string> = {
   AT: '오스트리아',
+  BR: '브라질',
+  DE: '독일',
   DK: '덴마크',
   ES: '스페인',
   FR: '프랑스',
   GB: '영국',
   IT: '이탈리아',
+  MX: '멕시코',
   NL: '네덜란드',
   PL: '폴란드',
   PT: '포르투갈',
+  US: '미국',
 }
 
 export function countryKo(code: string, fallback?: string): string {

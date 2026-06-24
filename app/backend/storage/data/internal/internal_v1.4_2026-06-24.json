@@ -1,6 +1,6 @@
 {
-  "version": "1.5",
-  "updated_at": "2026-06-24T14:48:10+09:00",
+  "version": "1.4",
+  "updated_at": "2026-06-24T14:37:49+09:00",
   "country_assets": {
     "GB": {
       "solution": "NetSol",
@@ -804,7 +804,7 @@
     }
   ],
   "decision_thresholds": {
-    "expansion_min_score": 93.0,
+    "expansion_min_score": 24.0,
     "hq_build_min_score": 55.0,
     "_note": "유형1 탭1-2 시스템 결정 트리 임계값. 유사도 ≥ expansion_min_score → B시스템 확산 / ≥ hq_build_min_score → 본사 자체구축 / 그 외 → 외부솔루션. 명세 §탭1-2 정책."
   },

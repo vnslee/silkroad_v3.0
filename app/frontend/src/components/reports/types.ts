@@ -101,15 +101,23 @@ export interface SimilarityTabData {
 /** tab_1_2 시스템 결정 트리 */
 export interface DecisionTabData {
   decision: string
+  /** 권역 기준국 자가분석 여부. */
+  is_baseline?: boolean
+  /** 이미 진출(운영중)·기준국 등 신규 결정트리/TCO 산식 미적용 국가. */
+  is_already_deployed?: boolean
   similarity_score: number
   /** 권역 확산 권고 문구. 엔진 산출은 {ko,en} 객체. */
   recommendation: string | { ko: string; en?: string }
   base_country: string
   base_system: string
   region_system_exists: boolean
+  /** 결정 트리 임계값(룰셋 decision_thresholds). 화면 라벨·분기 폴백에 사용. */
+  thresholds?: { expansion_min_score: number; hq_build_min_score: number }
   hq_baseline_cost?: number
   hq_baseline_months?: number
   hq_baseline_currency?: string
+  /** 외부솔루션 결정 시 추천 벤더 후보(리서치 '솔루션 벤더' 파싱). */
+  external_candidates?: { name: string; cost_note?: string }[]
   items: ReportItem[]
 }
 
@@ -121,6 +129,12 @@ export interface SubscriptionTier {
   currency: string
 }
 export interface TcoTabData {
+  /** 권역 기준국 자가분석 여부. */
+  is_baseline?: boolean
+  /** 이미 진출(운영중)·기준국 등 신규 TCO 산식 미적용 국가. */
+  is_already_deployed?: boolean
+  /** 산식 미적용 시 안내 문구. 엔진 산출은 {ko,en} 객체. */
+  message?: string | { ko: string; en?: string }
   build_cost: number
   build_months: number
   annual_subscription: number
@@ -547,6 +561,8 @@ export interface RegionDetailData {
   code: string
   schema_version?: string | null
   fetched_at?: string | null
+  /** 권역 기준국 코드 — 인사이트에서 기준국 언급 제외용. report 없으면 빈 값. */
+  baseline_country?: string
   kpi: {
     candidates: number
     quickwin: number
