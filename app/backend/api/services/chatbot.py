@@ -22,8 +22,9 @@ _log = config.get_logger("chatbot")
 
 # 관점(perspective) → 답변 시 강조할 카테고리 라벨(senario.md).
 _PERSPECTIVE_LABEL = {"business": "비즈니스", "system": "시스템", "both": "비즈니스·시스템"}
-# 관점 되묻기 문구(senario.md Case2/3). _ask_for_perspective와 동일.
-_PERSPECTIVE_QUESTION = "어떤 관점으로 설명해 드릴까요? (비즈니스 / 시스템 / 둘 다)"
+# 관점 되묻기 문구(senario.md Case2/3). 선택지(비즈니스/시스템/둘 다)는 바로 아래 칩으로
+# 노출되므로 문구에 다시 적지 않는다(중복 제거).
+_PERSPECTIVE_QUESTION = "어떤 관점으로 설명해 드릴까요?"
 
 # 답변 생성 전 멈추는 신호 tool — 관점 되묻기는 답변을 만들지 않고 즉시 분기한다.
 _STOP_TOOLS = {"request_perspective"}

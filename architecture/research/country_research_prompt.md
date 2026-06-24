@@ -31,6 +31,7 @@
 각 항목은 [category / role]을 지정값으로 출력하라. (필수/노출 여부는 시스템이 관리하므로 신경 쓰지 말 것)
 
 ■ 시장·매력도
+  GDP 성장률                    [business / score]  ※시계열
   오토금융/리스 시장규모        [business / score]  ※시계열
   오토금융 성장률(CAGR)         [business / score]  ※시계열
   금융 이용률(신차)             [business / score]  ※시계열

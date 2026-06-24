@@ -22,6 +22,15 @@ export function countryKo(code: string, fallback?: string): string {
   return COUNTRY_KO[code] ?? fallback ?? code
 }
 
+/**
+ * 임의 스칼라값을 표시 문자열로 안전 변환 — null/undefined면 '—'(리서치 데이터 필드
+ * 누락 시 화면에 "undefined"가 그대로 노출되던 회귀 방지). 빈 String(...) 대체용.
+ */
+export function dash(value: unknown, fallback = '—'): string {
+  if (value === null || value === undefined) return fallback
+  return String(value)
+}
+
 /** flagcdn 국기 URL. width 변형 지원(w80/w160). */
 export function flagUrl(code: string, w: 80 | 160 = 80): string {
   return `https://flagcdn.com/w${w}/${code.toLowerCase()}.png`

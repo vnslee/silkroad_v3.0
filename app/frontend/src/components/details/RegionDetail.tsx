@@ -5,10 +5,14 @@
 import { useEffect, useRef, useState } from 'react'
 import type {
   RegionDetailData,
+  RegionAssetReuse,
   RegionCandidateCountry,
   RegionEnteredCountry,
+  RegionMemberTrend,
+  RegionTrendMetric,
 } from '../reports/types'
 import { buildRegionMapGeometry } from './regionMapGeo'
+import { Flag } from '../reports/region/shared'
 
 interface Props {
   data: RegionDetailData
@@ -51,15 +55,20 @@ export function RegionDetail({ data, className = '' }: Props) {
     (a, b) => (a.quick_win_rank ?? 999) - (b.quick_win_rank ?? 999),
   )
   const members = data.map?.members ?? []
+  const trends = data.trends ?? []
+  const assetReuse = data.asset_reuse ?? []
   const es = data.executive_summary
 
   return (
     <div
       className={`flex items-start justify-center min-h-full w-full p-margin-mobile md:p-margin-desktop bg-background ${className}`}
     >
-      <div className="w-full max-w-5xl rounded-xl custom-shadow-level-3 flex flex-col border-surface-border bg-surface-container-lowest">
+      <div className="w-full max-w-[min(92vw,1760px)] rounded-xl custom-shadow-level-3 flex flex-col border-surface-border bg-surface-container-lowest">
         <div className="p-lg flex flex-col gap-xl">
           {/* 제목(권역명)은 DetailView 헤더 chrome에 이미 노출 — 바디 중복 제거 */}
+          {/* 권역 인사이트 — 최상단. 뉴스 제외, AI 교차 인사이트만 최대 5줄 */}
+          <RegionInsight es={es} baseline={data.baseline_country} />
+
           {/* KPI 3카드 */}
           <div className="grid grid-cols-3 gap-sm">
             <KpiCard value={kpi.candidates} label="분석 후보국" color="#3F6CB4" />
@@ -70,14 +79,18 @@ export function RegionDetail({ data, className = '' }: Props) {
           {/* 기진출 국가 */}
           {entered.length > 0 && <EnteredList rows={entered} />}
 
-          {/* 권역 지도 + 진출예정국 Quick-Win 순위 */}
+          {/* 권역 지도(시장규모 버블·진출상태) + 시장 추세 매트릭스(A) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-md items-stretch">
-            <RegionMap code={data.code} members={members} />
-            {candidates.length > 0 && <QuickwinTable rows={candidates} />}
+            <RegionMap code={data.code} members={members} links={assetReuse} />
+            {trends.length > 0 ? (
+              <MarketTrendPanel rows={trends} />
+            ) : (
+              candidates.length > 0 && <QuickwinTable rows={candidates} />
+            )}
           </div>
 
-          {/* 권역 인사이트 */}
-          <RegionInsight es={es} baseline={data.baseline_country} />
+          {/* 진출예정국 Quick-Win 순위 — 추세 패널이 지도 옆을 차지하면 전폭으로 내린다 */}
+          {trends.length > 0 && candidates.length > 0 && <QuickwinTable rows={candidates} />}
         </div>
       </div>
     </div>
@@ -134,10 +147,15 @@ function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
               className="border-b border-surface-border last:border-0 hover:bg-surface-variant transition-colors"
             >
               <td className="p-sm text-on-surface">
-                {r.name_ko}
-                {r.name_en && r.name_en !== r.name_ko && (
-                  <span className="text-on-surface-variant"> {r.name_en}</span>
-                )}
+                <span className="flex items-center gap-xs">
+                  <Flag code={r.code} />
+                  <span>
+                    {r.name_ko}
+                    {r.name_en && r.name_en !== r.name_ko && (
+                      <span className="text-on-surface-variant"> {r.name_en}</span>
+                    )}
+                  </span>
+                </span>
               </td>
               <td className="p-sm">
                 <EntityCell type={r.type} />
@@ -154,13 +172,163 @@ function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
   )
 }
 
-function RegionMap({ code, members }: { code: string; members: RegionDetailData['map']['members'] }) {
+// ── 시계열 추세 패널(A) — 멤버국 × (시장규모·EV) 스파크라인. 보고서엔 없는 "추세" 관점.
+// 단위·축이 국가마다 달라도 각 셀은 자기 시계열만 그리므로 정규화 불필요(상대 모양·CAGR만 본다).
+function MarketTrendPanel({ rows }: { rows: RegionMemberTrend[] }) {
+  return (
+    <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
+      <div className="flex items-center gap-sm mb-md">
+        <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold flex-1">
+          시장 추세 (5년)
+        </h3>
+        <span className="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full whitespace-nowrap">
+          시장규모·EV
+        </span>
+      </div>
+      <div className="flex-1 overflow-x-auto">
+        <table className="w-full text-left border-collapse font-body-sm text-body-sm">
+          <thead>
+            <tr className="bg-surface-light border-b border-surface-border">
+              <Th>국가</Th>
+              <Th>오토금융 시장규모</Th>
+              <Th>EV 보급률</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr
+                key={r.code}
+                className="border-b border-surface-border last:border-0 hover:bg-surface-variant transition-colors"
+              >
+                <td className="p-sm text-on-surface whitespace-nowrap">
+                  {r.name_ko}{' '}
+                  <span className="font-mono text-xs text-on-surface-variant">{r.code}</span>
+                </td>
+                <td className="p-sm">
+                  <TrendCell metric={r.market} />
+                </td>
+                <td className="p-sm">
+                  <TrendCell metric={r.ev} pct />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="font-label-sm text-label-sm text-outline mt-md pt-md border-t border-surface-border m-0">
+        실선 = 실적(history), 점선 = 전망(forecast). CAGR은 실적 구간 연복리 성장률.
+      </p>
+    </div>
+  )
+}
+
+// 추세 셀 — 스파크라인 + 최신값 + CAGR 배지. metric 없으면 "—".
+function TrendCell({ metric, pct = false }: { metric: RegionTrendMetric | null; pct?: boolean }) {
+  if (!metric) return <span className="text-on-surface-variant">—</span>
+  const c = metric.cagr
+  // 방향 고려: direction 'down'이면 하락이 긍정. 표시는 순수 증감 부호 기준 색.
+  const up = c != null && c >= 0
+  const cagrColor = c == null ? '#6B7280' : up ? '#4f8a6d' : '#c0533f'
+  const latest = pct
+    ? `${Math.round(metric.latest * 10) / 10}%`
+    : fmtCompact(metric.latest, metric.unit)
+  return (
+    <div className="flex items-center gap-sm">
+      <Sparkline history={metric.history} forecast={metric.forecast} />
+      <div className="flex flex-col leading-tight">
+        <span className="font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
+          {latest}
+        </span>
+        {c != null && (
+          <span className="font-label-sm text-label-sm whitespace-nowrap" style={{ color: cagrColor }}>
+            {up ? '▲' : '▼'} {Math.abs(c)}%
+          </span>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// 순수 SVG 스파크라인 — history(실선)+forecast(점선)를 같은 y스케일로. 라이브러리 미사용(지도와 동일 패턴).
+function Sparkline({
+  history,
+  forecast,
+}: {
+  history: { year: number; value: number }[]
+  forecast: { year: number; value: number }[]
+}) {
+  const W = 76
+  const H = 26
+  const pad = 2
+  const all = [...history, ...forecast]
+  if (all.length < 2) return <span className="text-on-surface-variant">—</span>
+  const xs = all.map((p) => p.year)
+  const ys = all.map((p) => p.value)
+  const xMin = Math.min(...xs)
+  const xMax = Math.max(...xs)
+  const yMin = Math.min(...ys)
+  const yMax = Math.max(...ys)
+  const xSpan = xMax - xMin || 1
+  const ySpan = yMax - yMin || 1
+  const px = (x: number) => pad + ((x - xMin) / xSpan) * (W - pad * 2)
+  const py = (y: number) => H - pad - ((y - yMin) / ySpan) * (H - pad * 2)
+  const toPath = (pts: { year: number; value: number }[]) =>
+    pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${px(p.year).toFixed(1)},${py(p.value).toFixed(1)}`).join(' ')
+  const histPath = toPath(history)
+  // forecast 실선과 끊김 없이: history 마지막 점에서 이어 그린다.
+  const fcPath = forecast.length
+    ? toPath([history[history.length - 1], ...forecast])
+    : ''
+  const last = history[history.length - 1]
+  const col = '#3f6cb4'
+  return (
+    <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="shrink-0" aria-hidden="true">
+      {fcPath && (
+        <path d={fcPath} fill="none" stroke={col} strokeWidth="1.2" strokeDasharray="2.5 2" opacity="0.55" />
+      )}
+      <path d={histPath} fill="none" stroke={col} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
+      <circle cx={px(last.year)} cy={py(last.value)} r="1.8" fill={col} />
+    </svg>
+  )
+}
+
+// 큰 수 축약 표시(시장규모 등). 단위 접두 통화코드만 떼어 함께 표기.
+function fmtCompact(v: number, unit: string): string {
+  const ccy = (unit.match(/^([A-Z]{3})/)?.[1] ?? '').trim()
+  const billion = /billion/i.test(unit)
+  // _M(백만) 단위 값이면 1000 이상은 'b'(십억)로 축약, 아니면 그대로.
+  let n = v
+  let suffix = ''
+  if (billion) {
+    suffix = 'b'
+  } else if (Math.abs(v) >= 1000) {
+    n = v / 1000
+    suffix = 'b'
+  } else {
+    suffix = 'm'
+  }
+  const num = n >= 100 ? Math.round(n) : Math.round(n * 10) / 10
+  return `${ccy ? ccy + ' ' : ''}${num}${suffix}`
+}
+
+function RegionMap({
+  code,
+  members,
+  links = [],
+}: {
+  code: string
+  members: RegionDetailData['map']['members']
+  links?: RegionAssetReuse[]
+}) {
   // 실제 국경(world-atlas 50m)을 권역 멤버 bbox 에 fit 해 클로즈업. 진출상태별 채움.
   // atlas 매칭 0건(미등록 권역)이면 안내 폴백.
   // 지도 영역의 실제 크기를 ResizeObserver 로 측정해 그 비율로 projection 을 fit —
   // 패널이 넓든 좁든 letterbox 여백 없이 지도가 영역을 꽉 채운다.
   const areaRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ w: 360, h: 380 })
+  // 연결선(기진출→후보) 토글 — 자산 재사용 매핑이 있을 때만 노출.
+  const hasLinks = links.length > 0
+  const [showLinks, setShowLinks] = useState(false)
 
   useEffect(() => {
     const el = areaRef.current
@@ -178,11 +346,41 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
 
   const geo = buildRegionMapGeometry(members, size.w, size.h)
   const statusByCode = Object.fromEntries(members.map((m) => [m.code, m.status]))
+  // 시장규모(KRW bn) 버블 — 보유 멤버만. 반지름 ∝ √값(면적 비례), 짧은 변 기준 스케일.
+  const krwByCode = Object.fromEntries(
+    members.map((m) => [m.code, m.market_krw_bn ?? null]),
+  ) as Record<string, number | null>
+  const krwVals = members
+    .map((m) => m.market_krw_bn)
+    .filter((v): v is number => typeof v === 'number' && v > 0)
+  const krwMax = krwVals.length ? Math.max(...krwVals) : 0
+  // 라벨 중심 좌표(연결선·버블 기준) — geo.shapes에서 코드별로.
+  const centerByCode: Record<string, [number, number]> = {}
+  if (geo) for (const s of geo.shapes) centerByCode[s.code] = s.label
+  const shortSide = geo ? Math.min(geo.width, geo.height) : 0
+
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
-      <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
-        권역 지도
-      </h3>
+      <div className="flex items-center gap-sm mb-md">
+        <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold flex-1">
+          권역 지도
+        </h3>
+        {hasLinks && (
+          <button
+            type="button"
+            onClick={() => setShowLinks((v) => !v)}
+            aria-pressed={showLinks}
+            className="font-label-sm text-label-sm px-2 py-0.5 rounded-full border border-surface-border whitespace-nowrap transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+            style={
+              showLinks
+                ? { background: '#3f6cb4', color: '#ffffff', borderColor: '#3f6cb4' }
+                : { color: '#3b3f46' }
+            }
+          >
+            자산 연결 {showLinks ? '끄기' : '보기'}
+          </button>
+        )}
+      </div>
       <div ref={areaRef} className="flex-1 flex items-stretch justify-center min-h-[460px]">
         {geo ? (
           <svg
@@ -190,35 +388,85 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
             preserveAspectRatio="xMidYMid meet"
             className="w-full h-full"
             role="img"
-            aria-label={`${code} 권역 진출 상태 지도`}
+            aria-label={`${code} 권역 진출 상태·시장규모 지도`}
           >
             {geo.shapes.map((s) => {
               const st = MAP_STATE[statusByCode[s.code]] ?? MAP_STATE['미진출']
-              // 라벨 폰트는 viewBox(=패널 실측) 좌표계 기준 — 짧은 변에 비례시켜 패널 크기와 무관하게 일정한 화면 크기로 보이게 한다.
-              const fs = Math.max(9, Math.min(18, Math.min(geo.width, geo.height) * 0.042))
               return (
-                <g key={s.code}>
-                  <path
-                    d={s.d}
-                    fill={st.fill}
-                    stroke="#ffffff"
-                    strokeWidth="0.7"
-                    strokeLinejoin="round"
+                <path
+                  key={`p-${s.code}`}
+                  d={s.d}
+                  fill={st.fill}
+                  stroke="#ffffff"
+                  strokeWidth="0.7"
+                  strokeLinejoin="round"
+                />
+              )
+            })}
+            {/* 시장규모 버블 — 색칠 위, 라벨 아래. 보유국만. */}
+            {krwMax > 0 &&
+              geo.shapes.map((s) => {
+                const v = krwByCode[s.code]
+                if (typeof v !== 'number' || v <= 0) return null
+                // 반지름: 면적 비례(√), 짧은 변의 3%~12% 범위.
+                const r = (0.03 + 0.09 * Math.sqrt(v / krwMax)) * shortSide
+                return (
+                  <circle
+                    key={`b-${s.code}`}
+                    cx={s.label[0]}
+                    cy={s.label[1]}
+                    r={r}
+                    fill="#14171c"
+                    fillOpacity="0.14"
+                    stroke="#14171c"
+                    strokeOpacity="0.25"
+                    strokeWidth="0.4"
                   />
-                  <text
-                    x={s.label[0]}
-                    y={s.label[1] + fs * 0.34}
-                    textAnchor="middle"
-                    fontSize={fs}
-                    fontWeight="700"
-                    fill={st.fg}
-                    paintOrder="stroke"
-                    stroke="rgba(255,255,255,0.85)"
-                    strokeWidth={fs * 0.16}
-                  >
-                    {s.code}
-                  </text>
-                </g>
+                )
+              })}
+            {/* 기진출 → 후보 연결선(토글) — 자산 재사용 매핑 기반. */}
+            {showLinks &&
+              links.flatMap((l) => {
+                const from = centerByCode[l.from_code]
+                if (!from) return []
+                return l.matches.map((m) => {
+                  const to = centerByCode[m.code]
+                  if (!to) return null
+                  // 살짝 휜 2차 베지어로 겹침 완화.
+                  const mx = (from[0] + to[0]) / 2
+                  const my = (from[1] + to[1]) / 2 - shortSide * 0.06
+                  return (
+                    <path
+                      key={`l-${l.from_code}-${m.code}`}
+                      d={`M${from[0]},${from[1]} Q${mx},${my} ${to[0]},${to[1]}`}
+                      fill="none"
+                      stroke="#c08a2e"
+                      strokeWidth={shortSide * 0.006}
+                      strokeOpacity="0.8"
+                      strokeLinecap="round"
+                    />
+                  )
+                })
+              })}
+            {geo.shapes.map((s) => {
+              const st = MAP_STATE[statusByCode[s.code]] ?? MAP_STATE['미진출']
+              // 라벨 폰트는 viewBox(=패널 실측) 좌표계 기준 — 짧은 변에 비례시켜 패널 크기와 무관하게 일정한 화면 크기로 보이게 한다.
+              const fs = Math.max(9, Math.min(18, shortSide * 0.042))
+              return (
+                <text
+                  key={`t-${s.code}`}
+                  x={s.label[0]}
+                  y={s.label[1] + fs * 0.34}
+                  textAnchor="middle"
+                  fontSize={fs}
+                  fontWeight="700"
+                  fill={st.fg}
+                  paintOrder="stroke"
+                  stroke="rgba(255,255,255,0.85)"
+                  strokeWidth={fs * 0.16}
+                >
+                  {s.code}
+                </text>
               )
             })}
           </svg>
@@ -228,7 +476,7 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
           </p>
         )}
       </div>
-      <div className="flex flex-wrap gap-md mt-md pt-md border-t border-surface-border">
+      <div className="flex flex-wrap items-center gap-md mt-md pt-md border-t border-surface-border">
         {Object.values(MAP_STATE).map((s) => (
           <span
             key={s.label}
@@ -238,6 +486,15 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
             {s.label}
           </span>
         ))}
+        {krwMax > 0 && (
+          <span className="flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant">
+            <span
+              className="inline-block w-3 h-3 rounded-full"
+              style={{ background: 'rgba(20,23,28,0.14)', border: '1px solid rgba(20,23,28,0.25)' }}
+            />
+            버블 = 시장규모
+          </span>
+        )}
       </div>
     </div>
   )
@@ -271,23 +528,28 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
                   {r.quick_win_rank ?? '—'}
                 </td>
                 <td className="p-sm text-on-surface whitespace-nowrap">
-                  {r.name_ko}{' '}
-                  <span className="font-mono text-xs text-on-surface-variant">{r.code}</span>
+                  <span className="flex items-center gap-xs">
+                    <Flag code={r.code} />
+                    <span>
+                      {r.name_ko}{' '}
+                      <span className="font-mono text-xs text-on-surface-variant">{r.code}</span>
+                    </span>
+                  </span>
                 </td>
-                <td className="p-sm">
-                  <div className="flex items-center gap-xs min-w-[88px] mx-auto">
-                    <div className="flex-1 w-full h-base bg-surface-border rounded-full overflow-hidden">
+                <td className="p-sm text-center">
+                  <div className="inline-flex flex-col items-center gap-1 w-[96px]">
+                    <span
+                      className="font-label-md text-label-md font-semibold leading-none"
+                      style={{ color: col }}
+                    >
+                      {Math.round(v * 10) / 10}
+                    </span>
+                    <div className="w-full h-base bg-surface-border rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full"
                         style={{ width: `${Math.max(0, Math.min(100, v))}%`, background: col }}
                       />
                     </div>
-                    <span
-                      className="font-label-md text-label-md font-semibold w-7 text-right shrink-0"
-                      style={{ color: col }}
-                    >
-                      {Math.round(v * 10) / 10}
-                    </span>
                   </div>
                 </td>
                 <td className="p-sm">
@@ -315,74 +577,61 @@ function RegionInsight({
 }) {
   // 기준국(top1·why_top1) 얘기는 제외 — AI 교차 인사이트만 본문으로.
   // 보고서 SummaryTab과 동일하게 기준국 언급 항목('기준국'·'baseline'·'(코드)')도 제외.
-  const cross = (es?.ai_cross_insight?.insights ?? []).filter((i) => {
+  const crossAll = (es?.ai_cross_insight?.insights ?? []).filter((i) => {
     const ko = i.ko || i.en || ''
     if (!ko) return false
     if (/기준국|baseline/i.test(ko)) return false
     if (baseline && ko.includes(`(${baseline})`)) return false
     return true
   })
-  // 마지막 라인: 해당 권역 뉴스 1건(권역 스코프 우선, 없으면 첫 항목).
-  const newsItems = es?.external_news_scan?.items ?? []
-  const news = newsItems.find((n) => n.scope === 'region') ?? newsItems[0]
-  if (cross.length === 0 && !news) return null
+  // 인사이트는 5줄 이내로 — 교차 인사이트 상위 5건만. 각 줄은 1행으로 클램프(line-clamp-1).
+  // 잘린 항목은 "+N건(보고서)"으로 표기. 뉴스는 노출하지 않는다(인사이트 정보만).
+  const cross = crossAll.slice(0, 5)
+  const hiddenCount = crossAll.length - cross.length
+  if (cross.length === 0) return null
+  // 권역 보고서 요약 탭(region/SummaryTab)과 동일한 다크 히어로 카드 —
+  // 잉크블랙 그라디언트 + 라임그린(#C8F051) 강조 + AI 스파클 아이콘(ai_icon.png, 배경 투명).
   return (
-    <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
-      <div className="flex items-center gap-sm mb-md">
-        <h3 className="font-headline-md text-[clamp(18.7px,calc(16.5px_+_0.611vw),25.3px)] leading-[30px] text-primary font-bold flex-1">
-          권역 인사이트
-        </h3>
-        <span className="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full whitespace-nowrap">
-          AI 분석
-        </span>
-      </div>
-      {cross.length > 0 && (
-        <div className="flex flex-col gap-md">
-          {cross.map((i, idx) => (
-            <p key={idx} className="font-body-md text-body-md text-on-surface leading-relaxed m-0">
-              {(i.ko || i.en)!.trim()}
-            </p>
-          ))}
+    <div
+      className="rounded-[18px] px-[30px] py-[28px] custom-shadow-level-3 text-white"
+      style={{ background: 'linear-gradient(120deg,#14181C,#1f262d)' }}
+    >
+      <div className="flex items-center gap-sm mb-sm">
+        <div
+          className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] flex-1"
+          style={{ color: '#C8F051', letterSpacing: '.1em' }}
+        >
+          권역 진단 · AI 교차 인사이트
         </div>
-      )}
-      {news && <RegionNewsLine news={news} hasAbove={cross.length > 0} />}
-    </div>
-  )
-}
-
-// 권역 인사이트 마지막 라인 — 해당 권역 뉴스 1건(헤드라인 + 출처·날짜). url 있으면 링크.
-function RegionNewsLine({
-  news,
-  hasAbove,
-}: {
-  news: NonNullable<RegionDetailData['executive_summary']>['external_news_scan']['items'][number]
-  hasAbove: boolean
-}) {
-  const meta = [news.publisher, news.date].filter(Boolean).join(' · ')
-  const headline = (news.headline || '').trim()
-  if (!headline) return null
-  return (
-    <div className={hasAbove ? 'mt-md pt-md border-t border-surface-border' : ''}>
-      <div className="flex items-center gap-xs mb-1">
-        <span className="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full whitespace-nowrap">
-          권역 뉴스
-        </span>
-        {meta && (
-          <span className="font-label-sm text-label-sm text-outline truncate">{meta}</span>
+        {hiddenCount > 0 && (
+          <span className="font-label-sm text-label-sm whitespace-nowrap" style={{ color: 'rgba(255,255,255,.55)' }}>
+            +{hiddenCount}건 (보고서)
+          </span>
         )}
       </div>
-      {news.url ? (
-        <a
-          href={news.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-body-md text-body-md text-on-surface leading-relaxed hover:text-secondary hover:underline"
-        >
-          {headline}
-        </a>
-      ) : (
-        <p className="font-body-md text-body-md text-on-surface leading-relaxed m-0">{headline}</p>
-      )}
+      <div className="flex items-center gap-sm mb-md">
+        <img
+          src={`${import.meta.env.BASE_URL}brand/ai_icon.png`}
+          alt=""
+          aria-hidden="true"
+          className="w-6 h-6 shrink-0 object-contain"
+        />
+        <h3 className="text-[clamp(18.7px,calc(16.5px_+_0.611vw),25.3px)] font-bold leading-none text-white m-0">
+          권역 인사이트
+        </h3>
+      </div>
+      <div className="flex flex-col gap-sm [&_strong]:text-white">
+        {cross.map((i, idx) => (
+          <p
+            key={idx}
+            className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0 line-clamp-1"
+            style={{ color: 'rgba(255,255,255,.9)' }}
+            title={(i.ko || i.en)!.trim()}
+          >
+            {(i.ko || i.en)!.trim()}
+          </p>
+        ))}
+      </div>
     </div>
   )
 }

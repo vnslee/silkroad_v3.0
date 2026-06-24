@@ -57,6 +57,27 @@ export interface RegionMapGeometry {
   height: number
 }
 
+// 한 국가 feature 에서 '본토'(가장 큰 단일 폴리곤)만 추출한다.
+// US(알래스카·하와이)·ES(카나리아 제도)·FR(해외영토)처럼 한 국가 안에 본토와
+// 멀리 떨어진 영토가 MultiPolygon 으로 함께 들어 있으면, fit/bbox 가 그 영토까지
+// 감싸 본토가 작게 보인다. 본토만 fit 기준으로 쓰면 지도가 본토 중심으로 확대된다
+// (그리기용 path 는 전체 폴리곤을 그대로 쓰므로 섬·영토도 보이긴 한다).
+function mainlandFeature(feat: GeoJSON.Feature): GeoJSON.Feature {
+  const g = feat.geometry
+  if (!g || g.type !== 'MultiPolygon') return feat
+  let best: GeoJSON.Position[][] | null = null
+  let bestArea = -1
+  for (const poly of g.coordinates) {
+    const area = d3.geoArea({ type: 'Polygon', coordinates: poly } as GeoJSON.Polygon)
+    if (area > bestArea) {
+      bestArea = area
+      best = poly
+    }
+  }
+  if (!best) return feat
+  return { ...feat, geometry: { type: 'Polygon', coordinates: best } }
+}
+
 /** 멤버국 국경을 size 영역에 fit 한 path/라벨 좌표를 만든다. 매칭 0이면 null. */
 export function buildRegionMapGeometry(
   members: RegionMapMember[],
@@ -73,16 +94,19 @@ export function buildRegionMapGeometry(
   }
   if (matched.length === 0) return null
 
-  // fit·bbox 계산은 "본토급" 멤버만 사용한다. PR(푸에르토리코)·하와이 같은
-  // 본토에서 멀리 떨어진 작은 영토가 끼면 bbox 가 거대해져 본토가 작게 보인다.
-  // d3.geoArea(스테라디안)로 최대 면적의 8% 미만인 멤버는 fit 대상에서 제외하되,
-  // path/라벨은 그대로 그린다(보이긴 함). 큰 멤버가 1개뿐이면 전체로 폴백.
+  // fit·bbox 계산은 "본토급" 멤버의 "본토 폴리곤"만 사용한다.
+  // ① 멤버 단위: PR(푸에르토리코)처럼 본토에서 멀리 떨어진 작은 멤버국이 끼면
+  //    bbox 가 거대해져 본토가 작게 보인다 → 최대 면적의 8% 미만 멤버는 fit 제외.
+  // ② 국가 내부: US(알래스카·하와이)·ES(카나리아)처럼 한 국가 안의 원거리 영토도
+  //    같은 문제를 일으킨다 → mainlandFeature 로 본토 폴리곤만 fit 기준으로 쓴다.
+  // 어느 경우든 path/라벨은 전체 폴리곤으로 그대로 그린다(영토도 보이긴 함).
+  // 큰 멤버가 1개뿐이면 전체로 폴백.
   const areas = matched.map((x) => d3.geoArea(x.feat))
   const maxArea = Math.max(...areas, 0)
   const major = matched.filter((_, i) => areas[i] >= maxArea * 0.08)
   const fitFc: GeoJSON.FeatureCollection = {
     type: 'FeatureCollection',
-    features: (major.length > 0 ? major : matched).map((x) => x.feat),
+    features: (major.length > 0 ? major : matched).map((x) => mainlandFeature(x.feat)),
   }
 
   const projection = d3
@@ -94,7 +118,8 @@ export function buildRegionMapGeometry(
   for (const { member, feat } of matched) {
     const d = path(feat)
     if (!d) continue
-    const c = path.centroid(feat)
+    // 라벨은 본토 폴리곤 중심에 둔다 — 원거리 영토(알래스카 등)에 끌려 바다로 나가지 않게.
+    const c = path.centroid(mainlandFeature(feat))
     shapes.push({ code: member.code, d, label: [c[0], c[1]] })
   }
 
