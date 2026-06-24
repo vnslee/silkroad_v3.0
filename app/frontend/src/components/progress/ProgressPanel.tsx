@@ -48,6 +48,7 @@ export function ProgressPanel() {
             <ProgressModal
               jobId={openJob.jobId}
               kind={openJob.kind}
+              domain={openJob.domain}
               title={openJob.label}
               onMinimize={() => setOpenJobId(null)}
               onViewReport={(reportId) => openReport(openJob, reportId)}

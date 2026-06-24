@@ -102,6 +102,9 @@ export const DICT: Dict = {
   'chat.summary.getSummary': { ko: '요약으로 받기', en: 'Get summary' },
   'chat.summary.request': { ko: '{id} 핵심 지표를 요약해줘', en: 'Summarize key metrics for {id}' },
 
+  // 후속 추천 질문(보유국 QA 답변과 함께 노출 — senario.md 틀 안)
+  'chat.suggestions.aria': { ko: '추천 후속 질문', en: 'Suggested follow-up questions' },
+
   // 관점 선택(senario.md — 비즈니스/시스템/Both)
   'chat.perspective.ask': {
     ko: '어떤 관점으로 설명해 드릴까요?',
@@ -116,8 +119,8 @@ export const DICT: Dict = {
   'chat.case.explore': { ko: '진출 검토 국가·권역 조사', en: 'Explore a target country/region' },
   'chat.case.ask': { ko: '데이터 기반 질문하기', en: 'Ask a data-driven question' },
   'chat.case.addCountry.prompt': {
-    ko: '새로운 국가를 추가하고 싶어요. 어떤 국가를 리서치할까요?',
-    en: 'I want to add a new country. Which country should I research?',
+    ko: '새로운 국가를 추가하고 싶어요.',
+    en: 'I want to add a new country.',
   },
   'chat.case.explore.prompt': {
     ko: '진출을 검토 중인 국가나 권역을 조사하고 싶어요.',

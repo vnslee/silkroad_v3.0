@@ -107,16 +107,46 @@ def test_research_intent_existing_auto_triggers():
     assert resp.actions == ["re_research"]
 
 
-def test_qa_existing_returns_actions(monkeypatch):
-    # 보유국 일반 질의 → 내부 데이터로 답변 + 선택지 칩(상세요약/재리서치/보고서).
-    monkeypatch.setattr(bedrock_client, "generate_text", lambda *a, **k: "답변입니다.")
+def test_qa_existing_asks_perspective_first(monkeypatch):
+    # 보유국 일반 질의 + 관점 미선택 → 답변 전에 관점(비즈니스/시스템/Both) 되묻기(senario.md).
+    monkeypatch.setattr(bedrock_client, "generate_text_with_suggestions", _fail_if_called)
     resp = chatbot.handle("country", "ES", "ES 금리 어때?")
+    assert resp.intent == "qa"
+    assert resp.needs_perspective is True
+    assert resp.answer is None
+
+
+def test_qa_existing_returns_actions(monkeypatch):
+    # 보유국 일반 질의 + 관점 선택 → 내부 데이터 답변 + 선택지 칩 + 후속 추천칩.
+    monkeypatch.setattr(
+        bedrock_client,
+        "generate_text_with_suggestions",
+        lambda *a, **k: ("답변입니다.", ["ES 규제 환경은?", "ES 보고서 만들어줘"]),
+    )
+    resp = chatbot.handle("country", "ES", "ES 금리 어때?", perspective="business")
     assert resp.intent == "qa"
     assert resp.answer == "답변입니다."
     assert "summary" in resp.actions
     assert "re_research" in resp.actions
     # ES는 보고서 보유 → re_report 노출.
     assert "re_report" in resp.actions
+    # 답변과 함께 후속 추천칩(senario.md 틀 안)이 실린다.
+    assert resp.suggested_prompts == ["ES 규제 환경은?", "ES 보고서 만들어줘"]
+
+
+def test_handle_uses_passed_intent_over_regex(monkeypatch):
+    # LLM이 준 intent를 정규식보다 우선 사용. 정규식상 qa로 보일 메시지도 report로 처리.
+    resp = chatbot.handle("country", "ES", "ES 어떻게 좀 정리해줄래?", intent="report")
+    assert resp.intent == "report"
+    assert resp.auto_trigger is True
+    assert resp.needs_report is True
+
+
+def test_handle_intent_none_falls_back_to_regex():
+    # intent=None(LLM 미사용/실패) → 정규식 _detect_intent 보강. '보고서 생성' → report.
+    resp = chatbot.handle("country", "ES", "ES 보고서 생성해줘", intent=None)
+    assert resp.intent == "report"
+    assert resp.auto_trigger is True
 
 
 def test_qa_missing_no_answer_offers_research(monkeypatch):

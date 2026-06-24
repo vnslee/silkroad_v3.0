@@ -198,6 +198,32 @@ class ChatResponse(BaseModel):
     exists: bool = False
     has_report: bool = False
     actions: List[ChatAction] = Field(default_factory=list)
+    # 보유국 QA 답변과 함께 LLM이 제안한 후속 질문(senario.md 케이스·관점·보고서 틀 안에서만).
+    # 프론트가 탐색용 칩으로 노출하고 클릭 시 그대로 재질문한다. 비어 있으면 노출 안 함.
+    suggested_prompts: List[str] = Field(default_factory=list)
+
+
+# ── 챗봇 흐름 명세 (GET /api/chat/flow) ─────────────────────────
+# 흐름·선택지 SoT(architecture/chatbot/chatbot_flow.json)를 프론트에 노출. 텍스트는
+# 담지 않고 i18n 키만 — 프론트가 dict.ts로 한/영 변환한다. 흐름을 바꿀 때 JSON만 고치면
+# 프론트/백엔드 양쪽에 반영된다(소스 하드코딩 제거).
+class FlowCase(BaseModel):
+    id: str
+    labelKey: str
+    promptKey: str
+
+
+class FlowPerspective(BaseModel):
+    value: Perspective
+    labelKey: str
+
+
+class ChatFlowResponse(BaseModel):
+    version: Optional[str] = None
+    cases: List[FlowCase] = Field(default_factory=list)
+    perspectives: List[FlowPerspective] = Field(default_factory=list)
+    quickPrompts: List[str] = Field(default_factory=list)
+    actionLabels: Dict[str, str] = Field(default_factory=dict)
 
 
 # ── 룰셋 설정 (FR-6) ────────────────────────────────────────────

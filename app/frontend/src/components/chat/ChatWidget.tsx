@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { api } from '../../api/client'
-import type { ChatAction, ChatTurn, Domain, JobKind, Perspective } from '../../api/types'
+import type { ChatAction, ChatFlow, ChatTurn, Domain, JobKind, Perspective } from '../../api/types'
 import { useStore, store } from '../../store'
 import { useJobPolling } from '../../hooks/useJobPolling'
 import { useT } from '../../i18n/dict'
@@ -18,30 +18,28 @@ interface Pending {
   missingCodes: string[]
 }
 
-// 칩 동작 키 → i18n 라벨 키.
-const ACTION_LABEL_KEY: Record<ChatAction, string> = {
-  summary: 'chat.action.summary',
-  research: 'chat.action.research',
-  re_research: 'chat.action.re_research',
-  report: 'chat.action.report',
-  re_report: 'chat.action.re_report',
+// 흐름·선택지 SoT는 백엔드 chatbot_flow.json(GET /api/chat/flow). 아래는 fetch 실패 시
+// 폴백 기본값 — 네트워크 오류로 흐름을 못 받아도 챗봇이 정상 동작하도록 한다(회귀 없음).
+const FALLBACK_FLOW: ChatFlow = {
+  cases: [
+    { id: 'addCountry', labelKey: 'chat.case.addCountry', promptKey: 'chat.case.addCountry.prompt' },
+    { id: 'explore', labelKey: 'chat.case.explore', promptKey: 'chat.case.explore.prompt' },
+    { id: 'ask', labelKey: 'chat.case.ask', promptKey: 'chat.case.ask.prompt' },
+  ],
+  perspectives: [
+    { value: 'business', labelKey: 'chat.perspective.business' },
+    { value: 'system', labelKey: 'chat.perspective.system' },
+    { value: 'both', labelKey: 'chat.perspective.both' },
+  ],
+  quickPrompts: ['chat.quick.spain', 'chat.quick.euQuickwin'],
+  actionLabels: {
+    summary: 'chat.action.summary',
+    research: 'chat.action.research',
+    re_research: 'chat.action.re_research',
+    report: 'chat.action.report',
+    re_report: 'chat.action.re_report',
+  },
 }
-
-const QUICK_PROMPT_KEYS = ['chat.quick.spain', 'chat.quick.euQuickwin']
-
-// 초기 선택지(senario.md Case1/2/3) — 라벨 키 → 보낼 프롬프트 키.
-const CASE_PROMPTS: { label: string; prompt: string }[] = [
-  { label: 'chat.case.addCountry', prompt: 'chat.case.addCountry.prompt' },
-  { label: 'chat.case.explore', prompt: 'chat.case.explore.prompt' },
-  { label: 'chat.case.ask', prompt: 'chat.case.ask.prompt' },
-]
-
-// 관점 선택 칩(senario.md — 비즈니스/시스템/Both).
-const PERSPECTIVES: { value: Perspective; key: string }[] = [
-  { value: 'business', key: 'chat.perspective.business' },
-  { value: 'system', key: 'chat.perspective.system' },
-  { value: 'both', key: 'chat.perspective.both' },
-]
 
 // 봇 아바타(원형, 잉크블랙 컨테이너 + smart_toy). 메시지·인라인 칩이 공유한다.
 function BotAvatar() {
@@ -94,6 +92,11 @@ export function ChatWidget() {
   ])
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
+  // 흐름·선택지 명세(초기 케이스/관점/퀵프롬프트 칩). 백엔드 GET /api/chat/flow에서 받되,
+  // 실패 시 폴백 기본값으로 동작. 마운트 시 1회 fetch.
+  const [flow, setFlow] = useState<ChatFlow>(FALLBACK_FLOW)
+  // 보유국 QA 답변과 함께 받은 후속 추천 질문(탐색용 칩). 다음 질문 전송 시 초기화.
+  const [suggestions, setSuggestions] = useState<string[]>([])
   // 초기 대상은 스페인이지만, 백엔드가 질문에서 식별한 대상(resolved_*)으로 매 턴 갱신한다.
   // (이전엔 고정이라 어떤 질문이든 ES 데이터로만 답하는 버그가 있었음 — §6.5)
   const [target, setTarget] = useState<{ domain: Domain; id: string }>({ domain: 'country', id: 'ES' })
@@ -116,6 +119,16 @@ export function ChatWidget() {
     }, 30)
   }
   useEffect(scrollToEnd, [turns, typing])
+
+  // 흐름 명세 1회 fetch — 실패 시 폴백 기본값 유지(회귀 없음).
+  useEffect(() => {
+    api
+      .getChatFlow()
+      .then((f) => setFlow(f))
+      .catch(() => {
+        /* 폴백 FALLBACK_FLOW 유지 */
+      })
+  }, [])
 
   // 진행 중 잡 폴링 — 완료/실패 시 챗봇 안내. 잡 카드는 제거하지 않고(우상단 진행 패널이
   // 완료 상태·상세 바를 계속 보여주도록) 사용자가 패널에서 직접 닫는다.
@@ -166,6 +179,7 @@ export function ChatWidget() {
     setActions([])
     setSummaryAsk(null)
     setPerspectiveAsk(null)
+    setSuggestions([])
     try {
       const resp = await api.chat({
         domain: target.domain,
@@ -211,6 +225,8 @@ export function ChatWidget() {
 
       // 보유국 QA → 선택지 칩 노출(상세요약/리서치 재수행/보고서).
       setActions(resp.actions ?? [])
+      // 답변과 함께 받은 후속 추천 질문(senario.md 틀 안) → 탐색용 칩.
+      setSuggestions(resp.suggested_prompts ?? [])
     } catch (e) {
       pushAssistant(`${t('chat.error')}${String(e)}`)
     }
@@ -388,9 +404,9 @@ export function ChatWidget() {
           {/* 초기 선택지(senario.md Case1/2/3) — 첫 화면, 인사말 아래 대화 흐름에 노출 */}
           {turns.length <= 1 && !typing && !activeJob && (
             <ChipRow ariaLabel={t('chat.case.ask')}>
-              {CASE_PROMPTS.map((c) => (
-                <button key={c.label} onClick={() => send(t(c.prompt))} className={ACCENT_CHIP}>
-                  {t(c.label)}
+              {flow.cases.map((c) => (
+                <button key={c.id} onClick={() => send(t(c.promptKey))} className={ACCENT_CHIP}>
+                  {t(c.labelKey)}
                 </button>
               ))}
             </ChipRow>
@@ -417,9 +433,9 @@ export function ChatWidget() {
           {/* 관점 선택(senario.md): 비즈니스 / 시스템 / 둘 다 */}
           {perspectiveAsk && !activeJob && !pending && (
             <ChipRow ariaLabel={t('chat.perspective.ask')}>
-              {PERSPECTIVES.map((p) => (
+              {flow.perspectives.map((p) => (
                 <button key={p.value} className={SOLID_CHIP} onClick={() => onPerspective(p.value)}>
-                  {t(p.key)}
+                  {t(p.labelKey)}
                 </button>
               ))}
             </ChipRow>
@@ -442,7 +458,18 @@ export function ChatWidget() {
             <ChipRow ariaLabel={t('chat.action.summary')}>
               {actions.map((a) => (
                 <button key={a} onClick={() => onAction(a)} className={ACCENT_CHIP}>
-                  {t(ACTION_LABEL_KEY[a])}
+                  {t(flow.actionLabels[a])}
+                </button>
+              ))}
+            </ChipRow>
+          )}
+
+          {/* 후속 추천 질문(senario.md 틀 안) — 탐색용 보조 칩. 클릭 시 그대로 재질문. */}
+          {suggestions.length > 0 && !pending && !summaryAsk && !perspectiveAsk && !activeJob && (
+            <ChipRow ariaLabel={t('chat.suggestions.aria')}>
+              {suggestions.map((s, i) => (
+                <button key={i} onClick={() => send(s)} className={GHOST_CHIP}>
+                  {s}
                 </button>
               ))}
             </ChipRow>
@@ -453,7 +480,7 @@ export function ChatWidget() {
         <div className="flex-none border-t border-surface-border bg-surface-container-lowest px-lg py-md shadow-[0_-4px_12px_rgba(20,24,28,0.04)]">
           {turns.length <= 1 && (
             <div className="mb-md flex flex-wrap gap-xs">
-              {QUICK_PROMPT_KEYS.map((q) => (
+              {flow.quickPrompts.map((q) => (
                 <button
                   key={q}
                   onClick={() => send(t(q))}

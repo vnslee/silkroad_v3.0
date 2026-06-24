@@ -187,6 +187,17 @@ export interface ChatResponse {
   exists: boolean
   has_report: boolean
   actions: ChatAction[]
+  // 보유국 QA 답변과 함께 LLM이 제안한 후속 질문(senario.md 틀 안). 탐색용 칩으로 노출.
+  suggested_prompts?: string[]
+}
+
+// 챗봇 흐름·선택지 명세(GET /api/chat/flow). 텍스트는 i18n 키만 — dict.ts로 한/영 변환.
+export interface ChatFlow {
+  version?: string
+  cases: { id: string; labelKey: string; promptKey: string }[]
+  perspectives: { value: Perspective; labelKey: string }[]
+  quickPrompts: string[]
+  actionLabels: Record<ChatAction, string>
 }
 
 export interface ResearchTriggerRequest {

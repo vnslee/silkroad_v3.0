@@ -210,6 +210,81 @@ def generate_text(
     return text
 
 
+def generate_text_with_suggestions(
+    message: str,
+    system: Optional[str] = None,
+    context: Optional[str] = None,
+    history: Optional[List[dict]] = None,
+    max_suggestions: int = 3,
+) -> tuple:
+    """챗봇 답변 + 후속 추천 질문을 한 번의 호출로 생성 → (answer, [suggested_prompts]).
+
+    generate_text와 같은 CHAT_MODEL(Sonnet)·메시지 구성을 쓰되, 출력만 {answer,
+    suggested_prompts} 구조로 받는다(추가 LLM 호출 없음). 구조화 출력 지원 백엔드
+    (api/aws/mantle)는 output_config.format으로 강제하고, legacy는 프롬프트 JSON 계약 +
+    코드펜스 제거 파싱으로 폴백한다. 어떤 단계든 실패하면 (원문 텍스트, []) 폴백 —
+    후속칩이 없을 뿐 답변은 항상 살아남는다(회귀 없음)."""
+    client = get_client()
+    messages: List[dict] = []
+    for turn in history or []:
+        messages.append({"role": turn["role"], "content": turn["content"]})
+    user_content = message if not context else f"[참고 컨텍스트]\n{context}\n\n[질문]\n{message}"
+    messages.append({"role": "user", "content": user_content})
+
+    schema = {
+        "type": "object",
+        "properties": {
+            "answer": {"type": "string"},
+            "suggested_prompts": {
+                "type": "array",
+                "items": {"type": "string"},
+                "maxItems": max_suggestions,
+            },
+        },
+        "required": ["answer"],
+    }
+    kwargs: dict = {
+        "model": config.CHAT_MODEL,
+        "max_tokens": config.RESEARCH_MAX_TOKENS,
+        "messages": messages,
+    }
+    sys_prompt = system or ""
+    if _supports_output_config():
+        kwargs["output_config"] = {
+            "format": {"type": "json_schema", "schema": schema}
+        }
+    else:
+        # legacy: 프롬프트로 JSON 계약을 강제(순수 JSON만 출력).
+        sys_prompt = (
+            sys_prompt
+            + "\n반드시 아래 형식의 순수 JSON만 출력하라(설명·코드펜스 금지): "
+            '{"answer": "<답변>", "suggested_prompts": ["<후속질문1>", "..."]}'
+        )
+    if sys_prompt:
+        kwargs["system"] = sys_prompt
+    try:
+        with client.messages.stream(**kwargs) as stream:
+            msg = stream.get_final_message()
+    except Exception as exc:  # noqa: BLE001
+        raise BedrockError(f"Bedrock 텍스트 호출 실패: {exc}") from exc
+
+    text = _first_text(msg) or _last_json_text(msg)
+    if text is None:
+        raise BedrockError("텍스트 응답에 text 블록 없음")
+    try:
+        data = _parse_json(text)
+        answer = data.get("answer") or ""
+        prompts = data.get("suggested_prompts") or []
+        prompts = [str(p) for p in prompts if str(p).strip()][:max_suggestions]
+        if answer:
+            return answer, prompts
+    except BedrockError:
+        pass
+    # 파싱 실패 폴백: 원문을 답변으로, 후속칩 없음.
+    _log.warning("후속칩 JSON 파싱 실패 — 원문 답변 폴백(후속칩 생략)")
+    return text, []
+
+
 def _first_text(message) -> Optional[str]:
     """응답 content 블록에서 첫 text 블록 추출(챗봇 자유 텍스트용)."""
     for block in getattr(message, "content", []) or []:

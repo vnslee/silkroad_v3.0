@@ -10,7 +10,7 @@ from typing import List, Optional
 
 from .. import config
 from ..schemas import ChatResponse, ChatTurn
-from . import bedrock_client, research_policy, storage_resolver
+from . import bedrock_client, chatbot_flow, research_policy, storage_resolver
 
 _log = config.get_logger("chatbot")
 
@@ -146,14 +146,21 @@ _PERSPECTIVE_CATEGORIES: dict[str, set] = {
 }
 _PERSPECTIVE_LABEL = {"business": "비즈니스", "system": "시스템", "both": "비즈니스·시스템"}
 
-# 대상(target) 추출 — 사용자 메시지에서 어떤 국가/권역에 대한 질문인지 식별.
+# 대상(target) 추출 — 사용자 메시지에서 어떤 국가/권역 + 어떤 의도(qa/research/report)인지 식별.
+# 대상 식별과 의도 분류를 한 번의 LLM 호출로 함께 처리한다(추가 호출·레이턴시 없음).
 _RESOLVE_SYSTEM = (
-    "너는 사용자의 질문에서 '어떤 국가 또는 권역에 대한 질문인지'를 식별하는 분류기다. "
+    "너는 사용자의 질문에서 ①'어떤 국가 또는 권역에 대한 질문인지'와 "
+    "②'무엇을 하려는 의도인지'를 동시에 식별하는 분류기다. "
     "국가는 ISO 3166-1 alpha-2 대문자 코드(예: 스페인→ES, 독일→DE, 이탈리아→IT)로, "
     "권역은 권역 코드(예: 유럽→EU, 북미→NA, 아시아태평양→APAC, 남미→SA, 중동→ME, 아프리카→AF)로 반환하라. "
     "질문에 명시적 국가/권역이 없으면 found=false 로 답하라. "
     "국가와 권역이 모두 언급되면 더 구체적인 국가를 우선한다. "
-    "단, '권역 리서치'·'권역 분석'처럼 권역 단위 작업을 명시하면 권역을 우선한다."
+    "단, '권역 리서치'·'권역 분석'처럼 권역 단위 작업을 명시하면 권역을 우선한다.\n"
+    "의도(intent)는 다음 중 하나로 분류하라: "
+    "report=진단 보고서/리포트를 생성·제작·발행하려는 의도(예: '보고서 만들어줘', '리포트 뽑아줄래?'), "
+    "research=신규/재조사(리서치)를 수행하려는 의도(예: '리서치 다시 해줘', '새로 조사해줘'), "
+    "qa=그 외 일반 질의응답(시장·지표·진출성 등을 묻는 모든 질문). "
+    "표현이 정형적이지 않아도 핵심 동작으로 판단하라."
 )
 
 # '권역' 단위 작업 명시 신호 — 이때는 함께 언급된 개별 국가보다 권역을 우선한다.
@@ -165,6 +172,7 @@ _RESOLVE_SCHEMA = {
         "found": {"type": "boolean"},
         "domain": {"type": "string", "enum": ["country", "region"]},
         "target_id": {"type": "string"},
+        "intent": {"type": "string", "enum": ["qa", "research", "report"]},
     },
     "required": ["found"],
 }
@@ -174,21 +182,25 @@ def resolve_target(
     message: str,
     history: Optional[List[ChatTurn]] = None,
 ) -> Optional[tuple]:
-    """사용자 메시지에서 (domain, target_id)를 식별. 식별 실패 시 None.
+    """사용자 메시지에서 (domain, target_id, intent)를 식별. 대상 식별 실패 시 None.
 
     LLM 분류를 시도하되, 실패(Bedrock 오류·found=false·형식 불일치)하면 질문 텍스트의
-    결정적 국가/권역명 매칭으로 폴백한다. 둘 다 실패할 때만 None(라우터가 프론트 target
-    으로 폴백) — 이로써 LLM이 흔들려도 'ES 고정' 버그가 재발하지 않는다.
+    결정적 국가/권역명 매칭으로 폴백한다. 대상이 둘 다 실패할 때만 None(라우터가 프론트
+    target으로 폴백) — 이로써 LLM이 흔들려도 'ES 고정' 버그가 재발하지 않는다.
+
+    의도(intent)는 같은 LLM 호출로 함께 받되, 없거나 폴백 경로면 None을 돌려준다 —
+    호출부(handle)가 None이면 정규식 _detect_intent로 보강한다.
 
     '권역 리서치/분석'처럼 권역 단위 작업을 명시하면 함께 언급된 개별 국가보다 권역을
-    우선한다(결정적 — LLM의 '국가 우선' 경향에 좌우되지 않게 선처리)."""
+    우선한다(결정적 — LLM의 '국가 우선' 경향에 좌우되지 않게 선처리). 이 결정적 경로는
+    대상만 정하고 의도는 정규식 보강에 맡긴다(intent=None)."""
     # 권역 단위 작업 명시 + 권역명 매칭 → 권역 우선(결정적).
     if _REGION_INTENT_RE.search(message.lower()):
         low = message.lower()
         for alias in sorted(_REGION_ALIASES, key=len, reverse=True):
             if alias in low:
                 _log.info("권역 의도 감지 — 권역 우선: %s", _REGION_ALIASES[alias])
-                return "region", _REGION_ALIASES[alias]
+                return "region", _REGION_ALIASES[alias], None
     countries = storage_resolver.list_countries()
     regions = storage_resolver.list_regions()
     country_lines = ", ".join(f"{c.code}({c.name_ko or c.name})" for c in countries)
@@ -201,7 +213,7 @@ def resolve_target(
         f"[보유 권역] {region_lines}\n"
         f"[최근 대화]\n{recent}\n\n"
         f"[현재 질문]\n{message}\n\n"
-        "위 질문이 가리키는 국가/권역을 식별해 JSON으로만 답하라. "
+        "위 질문이 가리키는 국가/권역과 의도를 식별해 JSON으로만 답하라. "
         "보유 목록에 없어도 표준 코드로 추론해 반환하라."
     )
     try:
@@ -211,16 +223,20 @@ def resolve_target(
         if out.get("found"):
             domain = out.get("domain")
             target_id = (out.get("target_id") or "").upper()
+            intent = out.get("intent")
+            if intent not in ("qa", "research", "report"):
+                intent = None
             if domain in ("country", "region") and target_id:
-                return domain, target_id
+                return domain, target_id, intent
     except bedrock_client.BedrockError as exc:
-        _log.warning("LLM 대상 추출 실패 — 결정적 매칭으로 폴백: %s", exc)
+        _log.warning("LLM 대상/의도 추출 실패 — 결정적 매칭으로 폴백: %s", exc)
 
-    # 결정적 폴백: 질문 텍스트에서 국가/권역명 직접 매칭(ES 고정 버그 방지).
+    # 결정적 폴백: 질문 텍스트에서 국가/권역명 직접 매칭(ES 고정 버그 방지). 의도는 정규식 보강.
     matched = _match_alias(message)
     if matched:
         _log.info("결정적 매칭으로 대상 식별: %s", matched)
-    return matched
+        return matched[0], matched[1], None
+    return None
 
 
 # 후속 질문(직전 대상을 이어감) 신호어 — 명시 대상 없이도 직전 대상 유지.
@@ -313,21 +329,41 @@ def _detect_intent(message: str) -> str:
     return "qa"
 
 
+def _suggestion_directive() -> str:
+    """후속 추천칩 생성 지침 — senario.md의 케이스·관점·보고서 틀 안에서만 제안하도록 제약.
+
+    senario.md를 런타임에 읽어 시스템 프롬프트에 주입한다(틀 SoT). 파일이 없으면 틀 없이도
+    동작(빈 문자열). 챗봇이 만들어내는 후속질문이 시나리오 범위를 벗어나지 않게 한다."""
+    scenario = chatbot_flow.load_scenario()
+    base = (
+        " 답변 뒤에는 사용자가 이어서 물어볼 만한 후속 질문 2~3개를 suggested_prompts로 제안하라. "
+        "후속 질문은 아래 챗봇 시나리오의 케이스·관점(비즈니스/시스템/Both)·보고서 흐름 안에서, "
+        "지금 다루는 대상 국가/권역에 대해 자연스럽게 더 깊이 들어가는 짧은 질문이어야 한다. "
+        "사용자가 그대로 보내도 말이 되는 1인칭 질문 형태로, 시나리오 밖 주제는 제안하지 마라."
+    )
+    if scenario:
+        base += f"\n\n[챗봇 시나리오]\n{scenario}"
+    return base
+
+
 def _answer_existing(
     domain: str,
     target_id: str,
     message: str,
     history: Optional[List[ChatTurn]],
     perspective: Optional[str] = None,
-) -> str:
-    """보유 데이터 기반 LLM 텍스트 답변(내부 데이터로만). 관점이 있으면 해당 관점으로 답한다."""
+) -> tuple:
+    """보유 데이터 기반 LLM 답변 + 후속 추천칩 → (answer, [suggested_prompts]).
+
+    관점이 있으면 해당 관점으로 답한다. 후속칩은 senario.md 틀 안에서만 제안된다."""
     data = storage_resolver._load_latest_research(domain, target_id) or {}
     ctx = _summarize(data, perspective)
     system = _SYSTEM
     if perspective:
         system += f" 이번 답변은 '{_PERSPECTIVE_LABEL.get(perspective, perspective)}' 관점에 집중해 답하라."
+    system += _suggestion_directive()
     hist = [{"role": t.role, "content": t.content} for t in (history or [])]
-    return bedrock_client.generate_text(
+    return bedrock_client.generate_text_with_suggestions(
         message, system=system, context=ctx, history=hist
     )
 
@@ -396,6 +432,7 @@ def handle(
     history: Optional[List[ChatTurn]] = None,
     member_codes: Optional[List[str]] = None,
     perspective: Optional[str] = None,
+    intent: Optional[str] = None,
 ) -> ChatResponse:
     """챗봇 1턴 처리. §6.5 분기 + 의도(qa/research/report) 기반 트리거·선택지 노출.
 
@@ -405,10 +442,13 @@ def handle(
     - 미보유국은 리서치 의도를 먼저 묻고(needs_research), 사용자가 거절하면 보유국
       정보에 한해서만 답변(프론트가 안내) — 없는 국가를 임의로 답하지 않는다.
     - 보고서 생성은 '국가 + 보고서 생성' 명시일 때만 트리거.
-    """
+
+    intent(qa/research/report)는 resolve_target의 LLM 분류 결과를 받는다. None이면
+    정규식 _detect_intent로 보강한다(LLM 미사용·실패 시 회귀 없음)."""
     exists = storage_resolver.research_exists(domain, target_id)
     has_report = storage_resolver.latest_report_id(domain, target_id) is not None
-    intent = _detect_intent(message)
+    if intent not in ("qa", "research", "report"):
+        intent = _detect_intent(message)
 
     if domain == "region" and member_codes:
         missing = [
@@ -485,13 +525,16 @@ def handle(
         # 관점 미선택이면 먼저 되묻는다(senario.md Case2/3 — 비즈니스/시스템/Both).
         if not perspective:
             return _ask_for_perspective(domain, target_id, has_report)
-        answer = _answer_existing(domain, target_id, message, history, perspective)
+        answer, suggested = _answer_existing(
+            domain, target_id, message, history, perspective
+        )
         return ChatResponse(
             intent="qa",
             exists=True,
             has_report=has_report,
             answer=answer,
             actions=_qa_actions(domain, True, has_report),
+            suggested_prompts=suggested,
         )
 
     # 미보유 일반 질의 → 임의 답변 금지.

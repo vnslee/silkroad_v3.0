@@ -2,6 +2,7 @@
 // HTML/PDF·detail GET 은 fetch 하지 않고 paths.*() URL 을 iframe src / anchor 로 직접 사용.
 import { paths } from './paths'
 import type {
+  ChatFlow,
   ChatRequest,
   ChatResponse,
   CountrySummary,
@@ -90,6 +91,8 @@ export const api = {
   // 챗봇(동기)
   chat: (req: ChatRequest) =>
     request<ChatResponse>(paths.chat(), { method: 'POST', body: JSON.stringify(req) }),
+  // 챗봇 흐름·선택지 명세(초기 케이스/관점/퀵프롬프트 칩). 흐름 SoT는 백엔드 chatbot_flow.json.
+  getChatFlow: () => request<ChatFlow>(paths.chatFlow()),
 
   // 룰셋 설정(FR-6) — 편집 가능한 가중치/계수 조회·저장
   getRuleset: () => request<RulesetPayload>(paths.ruleset()),

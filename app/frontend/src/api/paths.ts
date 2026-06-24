@@ -59,6 +59,7 @@ export const paths = {
   job: (jobId: string) => `${API}/jobs/${jobId}`,
   research: (domain: Domain, id: string) => `${base(domain, id)}/research`,
   chat: () => `${API}/chat`,
+  chatFlow: () => `${API}/chat/flow`,
   ruleset: () => `${API}/ruleset`,
   rulesetVersions: () => `${API}/ruleset/versions`,
   rulesetVersion: (version: string) => `${API}/ruleset/versions/${encodeURIComponent(version)}`,

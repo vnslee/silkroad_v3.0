@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "_comment": "챗봇 흐름·선택지 SoT(senario.md 구조의 기계 판독 형태). 텍스트는 담지 않고 i18n 키만 둔다(텍스트는 app/frontend/src/i18n/dict.ts). 흐름을 바꿀 때 이 파일만 고치면 프론트/백엔드 양쪽에 반영된다. 백엔드는 services/chatbot_flow.py가 self-locate로 읽어 GET /api/chat/flow로 노출하고, 프론트 ChatWidget이 fetch한다.",
+  "cases": [
+    { "id": "addCountry", "labelKey": "chat.case.addCountry", "promptKey": "chat.case.addCountry.prompt" },
+    { "id": "explore", "labelKey": "chat.case.explore", "promptKey": "chat.case.explore.prompt" },
+    { "id": "ask", "labelKey": "chat.case.ask", "promptKey": "chat.case.ask.prompt" }
+  ],
+  "perspectives": [
+    { "value": "business", "labelKey": "chat.perspective.business" },
+    { "value": "system", "labelKey": "chat.perspective.system" },
+    { "value": "both", "labelKey": "chat.perspective.both" }
+  ],
+  "quickPrompts": ["chat.quick.spain", "chat.quick.euQuickwin"],
+  "actionLabels": {
+    "summary": "chat.action.summary",
+    "research": "chat.action.research",
+    "re_research": "chat.action.re_research",
+    "report": "chat.action.report",
+    "re_report": "chat.action.re_report"
+  }
+}

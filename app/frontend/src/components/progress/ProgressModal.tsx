@@ -1,6 +1,6 @@
 // ProgressModal(C9/PS2, FR-7.1) — AISea PS2: 전체 진행(굵은 바) + 단계별 바 + 보고서 열기.
 // 잡 폴링/단계 매핑 로직은 useJobPolling·mapStepToBars로 불변. 표현만 AISea.
-import type { JobKind } from '../../api/types'
+import type { Domain, JobKind } from '../../api/types'
 import { useJobPolling } from '../../hooks/useJobPolling'
 import { mapStepToBars, overallPercent } from '../../utils/progress'
 
@@ -8,13 +8,17 @@ interface Props {
   jobId: string
   kind: JobKind
   title?: string
+  // 잡 도메인(country/region) — 리서치 잡 단계 바를 분야 병렬/권역 흐름 중 무엇으로 그릴지 결정.
+  domain?: Domain
   onMinimize?: () => void
   onViewReport?: (reportId: string) => void
 }
 
-export function ProgressModal({ jobId, kind, title, onMinimize, onViewReport }: Props) {
-  const { step, percent, status, result } = useJobPolling(jobId)
-  const bars = step ? mapStepToBars(kind, step, percent) : []
+export function ProgressModal({ jobId, kind, title, domain, onMinimize, onViewReport }: Props) {
+  const { step, percent, status, result, agents } = useJobPolling(jobId)
+  // 분야 agent별 실제 진행률(agents[])과 domain을 넘겨 4개 분야 바를 병렬로 채운다.
+  // (이전엔 인자 누락으로 percent 순차 보간 폴백 → 병렬인데 순차처럼 보였음)
+  const bars = step ? mapStepToBars(kind, step, percent, agents, domain) : []
   const total = overallPercent(percent)
   const reportId =
     result && 'report_id' in result ? (result as { report_id: string }).report_id : null

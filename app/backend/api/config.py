@@ -113,6 +113,9 @@ def gateway_search_enabled() -> bool:
     return WEB_SEARCH_PROVIDER == "gateway" and bool(GATEWAY_SEARCH_URL)
 # 리서치 프롬프트·스키마 명세 위치(self-locate). 명세=실행 단일출처(Q3=A).
 RESEARCH_SPEC_DIR = PROJECT_ROOT / "architecture" / "research"
+# 챗봇 시나리오 명세 위치(self-locate). 흐름·선택지 SoT(chatbot_flow.json)와
+# 케이스·관점 서술 SoT(senario.md)를 런타임에 읽는다(RESEARCH_SPEC_DIR과 동일 패턴).
+CHATBOT_SPEC_DIR = PROJECT_ROOT / "architecture" / "chatbot"
 
 # 도메인 상수
 DOMAINS = ("country", "region")
