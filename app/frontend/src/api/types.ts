@@ -234,3 +234,11 @@ export interface RulesetVersionInfo {
   file: string
   is_latest: boolean
 }
+
+// 환율 스냅샷(internal_latest.json fx). 기준통화 KRW, rates[통화]=통화 1단위당 KRW. schemas.py FxData와 1:1.
+export interface FxData {
+  base: string
+  as_of?: string | null
+  rates: Record<string, number>
+  note?: string | null
+}

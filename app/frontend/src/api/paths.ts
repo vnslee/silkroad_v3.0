@@ -39,6 +39,7 @@ export const paths = {
   countries: () => `${API}/countries`,
   regions: () => `${API}/regions`,
   mapColors: () => `${API}/map-colors`,
+  fx: () => `${API}/fx`,
 
   existence: (domain: Domain, id: string) => base(domain, id),
 

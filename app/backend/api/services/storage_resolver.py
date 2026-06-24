@@ -173,6 +173,17 @@ def _load_internal() -> dict:
         return {}
 
 
+def fx_data() -> dict:
+    """환율 스냅샷(internal_latest.json의 fx 블록). 없으면 KRW 기준 빈 rates."""
+    fx = _load_internal().get("fx") or {}
+    return {
+        "base": fx.get("base", "KRW"),
+        "as_of": fx.get("as_of"),
+        "rates": fx.get("rates", {}) or {},
+        "note": fx.get("note"),
+    }
+
+
 def region_detail_sources(region: str) -> dict:
     """권역 상세(P2)용 원시 internal 데이터를 그대로 제공(엔진 의존 없음).
 

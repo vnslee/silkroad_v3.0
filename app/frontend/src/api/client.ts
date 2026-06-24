@@ -8,6 +8,7 @@ import type {
   CountrySummary,
   Domain,
   ExistenceInfo,
+  FxData,
   MapColorData,
   JobCreatedResponse,
   JobStatus,
@@ -59,6 +60,7 @@ export const api = {
   getCountries: () => request<CountrySummary[]>(paths.countries()),
   getRegions: () => request<RegionSummary[]>(paths.regions()),
   getMapColors: () => request<MapColorData>(paths.mapColors()),
+  getFx: () => request<FxData>(paths.fx()),
   getExistence: (domain: Domain, id: string) =>
     request<ExistenceInfo>(paths.existence(domain, id)),
 

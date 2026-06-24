@@ -1,6 +1,22 @@
 // 시장 배경(참고) 탭 — 국가별 시장 카드 2열 그리드.
 import type { RegionReportData, RegionMarketCountry } from '../types'
 import { countryKo, Flag, SourcePill } from './shared'
+import { useFx } from '../Money'
+import { parseFirstAmount, toKRW, formatKRW } from '../../../utils/currency'
+
+// 신차가격(자유서술 문자열)에서 첫 금액을 한화로 환산해 원문 위에 크게 병기.
+// 파싱·환산 실패 시 원문만 표시(그레이스풀).
+function NewCarPrice({ text }: { text: string }) {
+  const fx = useFx()
+  const hit = parseFirstAmount(text)
+  const krw = hit ? toKRW(hit.value, hit.currency, fx) : null
+  return (
+    <div className="text-body-sm text-on-surface-variant">
+      {krw != null && <span className="font-semibold text-text-primary">약 {formatKRW(krw)}</span>}
+      <span className={krw != null ? 'block text-label-sm text-text-secondary' : undefined}>{text}</span>
+    </div>
+  )
+}
 
 export function MarketTab({ data }: { data: RegionReportData }) {
   const mb = data.tabs.tab_2_3_market_background
@@ -71,7 +87,7 @@ function MarketCard({ country }: { country: RegionMarketCountry }) {
         )}
         {country.avg_new_car_price && (
           <Field label="평균 신차가격" pillSuffix="· single_value">
-            <div className="text-body-sm text-on-surface-variant">{country.avg_new_car_price}</div>
+            <NewCarPrice text={country.avg_new_car_price} />
           </Field>
         )}
         {country.qualitative_summary && (

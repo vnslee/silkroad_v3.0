@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import type { ReportItem } from '../types'
 import type { TimeseriesData } from '../../charts/types'
+import { Money } from '../Money'
 
 /** 통화 €1,234 포맷 (mockup: 천단위 콤마, 소수 없음) */
 export function eur(value: number | null | undefined, symbol = '€'): string {
@@ -440,8 +441,10 @@ interface SubTierTableProps {
   existing?: number
   newAdded?: number
   newCumulative?: number
+  /** 단가 통화(데이터 currency). 한화 환산 병기에 사용. */
+  currency?: string
 }
-export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded, newCumulative }: SubTierTableProps) {
+export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded, newCumulative, currency = 'EUR' }: SubTierTableProps) {
   const rows = tiers ?? []
   // 기준국 등 구독료 데이터가 없으면 표 자체를 생략(크래시 방지).
   if (rows.length === 0) {
@@ -464,7 +467,9 @@ export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded,
             return (
               <tr key={i} className={isApplied ? 'bg-primary/10 text-primary font-semibold' : 'text-text-primary'}>
                 <td className="px-2 py-1.5 border-b border-surface-container-highest">{range}</td>
-                <td className="px-2 py-1.5 border-b border-surface-container-highest text-right">€{(t.price_per_unit ?? 0).toFixed(2)}</td>
+                <td className="px-2 py-1.5 border-b border-surface-container-highest text-right">
+                  <Money value={t.price_per_unit} currency={currency} inline />
+                </td>
               </tr>
             )
           })}
@@ -485,7 +490,9 @@ export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded,
         </div>
         <div className="flex justify-between items-center mt-xs px-sm py-2 rounded-lg bg-primary/10 border-l-4 border-primary">
           <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">적용 단가</span>
-          <span className="text-primary font-bold font-body-lg text-body-lg">€{(appliedPrice ?? 0).toFixed(2)}</span>
+          <span className="text-primary font-bold font-body-lg text-body-lg">
+            <Money value={appliedPrice} currency={currency} inline />
+          </span>
         </div>
       </div>
     </>
