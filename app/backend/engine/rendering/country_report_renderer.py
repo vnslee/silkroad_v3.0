@@ -1428,8 +1428,10 @@ class CountryReportRenderer:
         </section>
         '''
 
-        # 국가 종합 인사이트 패널 — overall_insight를 문장 단위 불릿으로
-        # 양 언어 문장 수가 다를 수 있어 통째로 한 불릿에 bilingual span 사용
+        # 국가 종합 인사이트 패널 — overall_insight를 항상 문장 단위 불릿으로 분할.
+        # 한국어 문장을 기준으로 쪼개고, 영어는 문장 수가 정확히 일치할 때만 1:1 매칭.
+        # 불일치 시(예: 12 vs 13문장) 영어를 통문장으로 합쳐 한 덩어리가 되던 버그 방지 —
+        # 이 경우 한국어 불릿은 그대로 쪼개고 영어는 생략한다(_bi_span이 en 없으면 한글만 렌더).
         def _to_bullets(text: str, text_en: str = "") -> str:
             if not text:
                 return ""
@@ -1438,11 +1440,11 @@ class CountryReportRenderer:
             sentences_en = [s.strip() for s in re.split(r"(?<=[.!?。])\s+", text_en.strip()) if s.strip()] if text_en else []
             if not sentences_ko:
                 sentences_ko = [text.strip()]
-            # 양 언어 문장 수 같으면 1:1 매칭, 다르면 통째 한 줄
+            # 양 언어 문장 수 같으면 1:1 매칭, 다르면 한국어만 문장별 불릿(영어 생략)
             if sentences_en and len(sentences_en) == len(sentences_ko):
                 pairs = list(zip(sentences_ko, sentences_en))
             else:
-                pairs = [(text.strip(), text_en.strip() if text_en else "")]
+                pairs = [(s, "") for s in sentences_ko]
             return "".join(
                 f'<li class="flex items-start gap-sm">'
                 f'<span class="material-symbols-outlined text-primary text-[16px] mt-[2px]">arrow_right</span>'

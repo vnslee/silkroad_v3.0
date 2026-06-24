@@ -6,9 +6,10 @@
     "country": "PT",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-21T19:11:12.976097",
+  "generated_at": "2026-06-23T22:17:26.489751",
   "schema_version": "1.1",
   "overall_insight": "EU 14위 자동차 시장이자 이베리아 반도 진출의 보조 시장. 2025년 신차 등록 약 22만대(ACAP)로 규모는 작으나 법인·렌팅(AOR-Aluguer Operacional de Veículos) 비중이 EU 톱급(신규 등록의 약 50%)인 구조가 핵심이다. 비용·난이도 드라이버는 명확하다 — 소비자 자동차금융은 Banco de Portugal(BdP) 인가 SFC(Sociedade Financeira para Crédito)/IFIC 등록(자본금 €7.5M·DL 100/2015·BdP 감독)과 강력한 사용자금리 상한(DL 133/2009 + BdP 분기 고시 평균 TAEG + 1/3 가산)이라는 이중 규제가 진입 부담의 핵심이다. 반면 B2B 렌팅(AOR)·금융리스(ALD-Aluguer com opção de compra)는 ANCAVE 자율규제 + IFIC 인가로 진입 부담 경감되어 유연하다. 비즈니스 매력도는 시장규모가 작아 단독 진입 매력은 제한적이나 ES(스페인) 동반 진출 시 이베리아 통합 운영의 보조 시장으로 가치가 크다. 캡티브(Stellantis·VW·Renault)와 은행계(Santander·BCP·Caixa) 양강 구조로 약 70% 점유 — 독립계 진입은 EV·렌팅·중고 틈새 공략 필요. IT 유사도는 양호 — EU GDPR·SEPA·MULTIBANCO(현지 결제·ATM)·Banco de Portugal CRC(신용정보)·CMD(시민이동인증) 인프라로 NetSol 베이스라인 재사용률 높음. 매력도↔IT 불일치 지점은 차량회수 — 렌팅·리스는 소유권 기반으로 용이하나 소비자대출 담보회수는 사법 적체로 평균 3~5년. 다크호스는 EV 보급률 가속(2025 BEV+PHEV 약 28%)과 인구 고령화로 인한 시장 정체 — 단기 매력보다 이베리아 ES+PT 통합/단계적 진입 전략이 유효하다. 렌팅·플릿 우선 진입(ANCAVE) 후 IFIC 등록 기반 소비자금융 확장.",
+  "overall_insight_en": "Portugal is the EU's 14th-largest auto market and a secondary market for Iberian entry. With ~220k new registrations in 2025 (ACAP) the scale is small, but the core feature is a corporate/renting (AOR-Aluguer Operacional de Veiculos) share among the EU's highest (~50% of new registrations). The cost/difficulty drivers are clear — consumer auto-finance faces dual regulation: Banco de Portugal (BdP)-authorized SFC (Sociedade Financeira para Credito)/IFIC registration (capital EUR7.5M, DL 100/2015, BdP supervision) and a strong usury rate cap (DL 133/2009 + BdP quarterly published average TAEG + 1/3 add-on). By contrast B2B renting (AOR) and finance lease (ALD-Aluguer com opcao de compra) are flexible thanks to ANCAVE self-regulation + IFIC authorization, easing entry burden. Business attractiveness for standalone entry is limited by the small market, but as a secondary market for integrated Iberian operations alongside ES (Spain) the value is large. Captives (Stellantis, VW, Renault) and banks (Santander, BCP, Caixa) form a duopoly holding ~70% — independents must target EV, renting, and used-car niches. IT similarity is good — EU GDPR, SEPA, MULTIBANCO (local payments/ATM), Banco de Portugal CRC (credit information), and CMD (citizen mobile ID) infrastructure give a high NetSol baseline reuse rate. The attractiveness-IT mismatch is vehicle repossession — renting/lease are easy via ownership, but consumer-loan collateral recovery averages 3-5 years due to judicial backlog. Dark horses are accelerating EV adoption (2025 BEV+PHEV ~28%) and demographic aging causing market stagnation — rather than short-term attractiveness, an integrated/phased Iberian ES+PT entry strategy is effective. Enter renting/fleet first (ANCAVE), then expand into consumer finance on an IFIC-registration basis.",
   "country_meta": {
     "country": "Portugal",
     "country_ko": "포르투갈",
@@ -20,12 +21,12 @@
     "entry_status": "미진출"
   },
   "data_quality": {
-    "completeness_pct": 100.0,
-    "total_items": 48,
+    "completeness_pct": 97.95918367346938,
+    "total_items": 49,
     "target_items": 48,
-    "timeseries_coverage": 64.58333333333334,
+    "timeseries_coverage": 65.3061224489796,
     "source_tiers": {
-      "tier1": 18,
+      "tier1": 19,
       "tier2": 12,
       "tier3": 18,
       "tier4": 0
@@ -43,6 +44,12 @@
           "role": "score",
           "has_timeseries": true,
           "source_tier": 3
+        },
+        {
+          "item": "GDP 성장률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
         },
         {
           "item": "금융 이용률(신차)",
@@ -378,7 +385,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "렌팅(AOR) 30%+ + 금융리스 15%"
+              "note": "렌팅(AOR) 30%+ + 금융리스 15%",
+              "note_en": "Renting (AOR) 30%+ + finance lease 15%"
             },
             {
               "dimension": "렌탈 취급 일치도",
@@ -386,7 +394,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "AOR 강세 — EU 상위"
+              "note": "AOR 강세 — EU 상위",
+              "note_en": "AOR strength — among the EU's highest"
             },
             {
               "dimension": "플릿 취급 일치도",
@@ -394,7 +403,8 @@
               "base_score": 5,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "법인 등록 50%+"
+              "note": "법인 등록 50%+",
+              "note_en": "Corporate registrations 50%+"
             },
             {
               "dimension": "상품별 비중 유사도",
@@ -402,7 +412,8 @@
               "base_score": 4,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "ES와 유사 구조, GB 대비 렌팅 우세"
+              "note": "ES와 유사 구조, GB 대비 렌팅 우세",
+              "note_en": "Similar structure to ES; renting stronger than GB"
             }
           ],
           "item_similarity": 87.5
@@ -418,7 +429,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "강제 현지화 없음"
+              "note": "강제 현지화 없음",
+              "note_en": "No forced localization"
             },
             {
               "dimension": "국외 이전 허용도",
@@ -426,7 +438,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "EU 역내 자유"
+              "note": "EU 역내 자유",
+              "note_en": "Free intra-EU"
             },
             {
               "dimension": "동의·보관 규제",
@@ -434,7 +447,8 @@
               "base_score": 4,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "CNPD 표준 감독"
+              "note": "CNPD 표준 감독",
+              "note_en": "CNPD standard supervision"
             },
             {
               "dimension": "GDPR 동등성",
@@ -442,7 +456,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "GDPR 동등(EU)"
+              "note": "GDPR 동등(EU)",
+              "note_en": "GDPR-equivalent (EU)"
             }
           ],
           "item_similarity": 93.75
@@ -458,7 +473,8 @@
               "base_score": 4,
               "gap": 2.0,
               "similarity": 50.0,
-              "note": "SFC 인가 — 부담 큼"
+              "note": "SFC 인가 — 부담 큼",
+              "note_en": "SFC license — high burden"
             },
             {
               "dimension": "외국인 취득 가능",
@@ -466,7 +482,8 @@
               "base_score": 5,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "EU 자본자유"
+              "note": "EU 자본자유",
+              "note_en": "EU free movement of capital"
             },
             {
               "dimension": "처리기간(개월)",
@@ -474,7 +491,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "BdP 인가 6~12개월"
+              "note": "BdP 인가 6~12개월",
+              "note_en": "BdP licensing 6-12 months"
             },
             {
               "dimension": "최저자본금 수준",
@@ -482,7 +500,8 @@
               "base_score": 4,
               "gap": 2.0,
               "similarity": 50.0,
-              "note": "자본 €7.5M (EU 중상위 부담)"
+              "note": "자본 €7.5M (EU 중상위 부담)",
+              "note_en": "Capital EUR7.5M (upper-mid EU burden)"
             },
             {
               "dimension": "감독 강도",
@@ -490,7 +509,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "BdP+ASF+CMVM 분산"
+              "note": "BdP+ASF+CMVM 분산",
+              "note_en": "BdP + ASF + CMVM (split)"
             }
           ],
           "item_similarity": 65.0
@@ -506,7 +526,8 @@
               "base_score": 4,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "EU 패키지 + 현지 SI(Glintt·Novabase)"
+              "note": "EU 패키지 + 현지 SI(Glintt·Novabase)",
+              "note_en": "EU packages + local SI (Glintt, Novabase)"
             },
             {
               "dimension": "커스터마이징 자유도",
@@ -514,7 +535,8 @@
               "base_score": 5,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "ES 자회사 활용 시 시너지 가능"
+              "note": "ES 자회사 활용 시 시너지 가능",
+              "note_en": "Synergy possible by leveraging ES subsidiary"
             },
             {
               "dimension": "벤더 종속도",
@@ -522,7 +544,8 @@
               "base_score": 3,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "글로벌 벤더 의존 GB와 유사"
+              "note": "글로벌 벤더 의존 GB와 유사",
+              "note_en": "Global-vendor dependency similar to GB"
             },
             {
               "dimension": "멀티테넌시 여부",
@@ -530,7 +553,8 @@
               "base_score": 4,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "표준 멀티테넌시"
+              "note": "표준 멀티테넌시",
+              "note_en": "Standard multi-tenancy"
             }
           ],
           "item_similarity": 93.75
@@ -546,7 +570,8 @@
               "base_score": 5,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "MULTIBANCO 결제 70%+ — EU 톱 인프라"
+              "note": "MULTIBANCO 결제 70%+ — EU 톱 인프라",
+              "note_en": "MULTIBANCO payments 70%+ — EU-top infrastructure"
             },
             {
               "dimension": "비대면 계약 가능",
@@ -554,7 +579,8 @@
               "base_score": 5,
               "gap": 0.0,
               "similarity": 100.0,
-              "note": "MB WAY 즉시이체 + CMD 전자인증 보편"
+              "note": "MB WAY 즉시이체 + CMD 전자인증 보편",
+              "note_en": "MB WAY instant transfer + CMD e-ID widespread"
             },
             {
               "dimension": "API 개방도",
@@ -562,7 +588,8 @@
               "base_score": 5,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "PSD2 적용, Open Banking 발달 중"
+              "note": "PSD2 적용, Open Banking 발달 중",
+              "note_en": "PSD2 applies, Open Banking developing"
             },
             {
               "dimension": "페이퍼리스 수준",
@@ -570,7 +597,8 @@
               "base_score": 5,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "표준 페이퍼리스"
+              "note": "표준 페이퍼리스",
+              "note_en": "Standard paperless"
             }
           ],
           "item_similarity": 81.25
@@ -586,7 +614,8 @@
               "base_score": 4,
               "gap": 2.0,
               "similarity": 50.0,
-              "note": "사법 적체로 회수 지연"
+              "note": "사법 적체로 회수 지연",
+              "note_en": "Recovery delayed by judicial backlog"
             },
             {
               "dimension": "회수 소요기간(일)",
@@ -594,7 +623,8 @@
               "base_score": 4,
               "gap": 2.0,
               "similarity": 50.0,
-              "note": "평균 3~5년(약 1095일)"
+              "note": "평균 3~5년(약 1095일)",
+              "note_en": "Average 3-5 years (~1095 days)"
             },
             {
               "dimension": "자력구제 허용",
@@ -602,7 +632,8 @@
               "base_score": 4,
               "gap": 3.0,
               "similarity": 25.0,
-              "note": "자력구제 금지"
+              "note": "자력구제 금지",
+              "note_en": "Self-help repossession prohibited"
             },
             {
               "dimension": "회수율",
@@ -610,7 +641,8 @@
               "base_score": 4,
               "gap": 1.0,
               "similarity": 75.0,
-              "note": "회수율 EU 평균 하회"
+              "note": "회수율 EU 평균 하회",
+              "note_en": "Recovery rate below EU average"
             }
           ],
           "item_similarity": 50.0
@@ -621,9 +653,11 @@
       "evidence_items": [
         {
           "item": "솔루션 유형",
+          "item_en": null,
           "category": "it",
           "role": "score",
           "value": "글로벌 패키지 + 은행계 자체 코어(CGD·BCP·BPI) + 캡티브 패키지 혼재",
+          "value_en": "Global packages + bank proprietary core (CGD, BCP, BPI) + captive packages, mixed.",
           "unit": "type",
           "direction": "up",
           "axis": "similarity",
@@ -634,15 +668,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "업계",
+          "source_en": "Industry.",
           "insight": "대형 은행계(Caixa Geral de Depósitos·BCP·BPI)는 자체 코어, 캡티브·전문 리스사는 글로벌 패키지 사용. EU 표준 아키텍처와 정합.",
+          "insight_en": "Large banks (Caixa Geral de Depositos, BCP, BPI) use proprietary core; captives and specialized lessors use global packages. Aligned with EU standard architecture.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "디지털 채널 성숙도",
+          "item_en": null,
           "category": "it",
           "role": "score",
           "value": 4,
+          "value_en": null,
           "unit": "maturity_1to5",
           "direction": "up",
           "axis": "similarity",
@@ -653,15 +691,19 @@
           "timeseries": null,
           "tier": 2,
           "source": "MULTIBANCO(ATM·결제 70%+·EU 톱)·MB WAY(즉시이체)·Chave Móvel Digital(전자인증)·전자서명 보편화",
+          "source_en": "MULTIBANCO (ATM/payments 70%+, EU top), MB WAY (instant transfer), Chave Movel Digital (e-ID), widespread e-signature.",
           "insight": "MULTIBANCO(ATM+결제 통합, EU 톱 인프라)·MB WAY 즉시이체·CMD(시민이동인증) 보편화로 디지털 계약 성숙도 EU 상위. 완전 디지털 온보딩 가능.",
+          "insight_en": "MULTIBANCO (integrated ATM/payments, EU-top infrastructure), MB WAY instant transfer, and CMD (citizen mobile ID) are widespread — digital-contracting maturity is among the EU's highest. Full digital onboarding is possible.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "디지털 딜러 성숙도",
+          "item_en": null,
           "category": "it",
           "role": "score",
           "value": 3,
+          "value_en": null,
           "unit": "maturity_1to5",
           "direction": "up",
           "axis": "similarity",
@@ -672,15 +714,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "업계 (Standvirtual·OLX Autos·Carmudi·OEM 직판)",
+          "source_en": "Industry (Standvirtual, OLX Autos, Carmudi, OEM direct sales).",
           "insight": "Standvirtual·OLX Autos·Carmudi 등 온라인 마켓 발달이나 OEM 디지털 직판은 ES·DE 대비 발달 미흡. 디지털 리테일 성숙 중간 — 임베디드 금융 연동 기회는 ES 시장 대비 제한적.",
+          "insight_en": "Online marketplaces like Standvirtual, OLX Autos, and Carmudi are developed, but OEM digital direct-sales lag ES and DE. Digital retail is mid-maturity — embedded-finance integration opportunity is more limited than in the ES market.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "라이선스 체제(세그먼트별)",
+          "item_en": null,
           "category": "shared",
           "role": "gate",
           "value": "소비자 여신=SFC(Sociedade Financeira para Crédito) 인가(S.A.+자본금 €7.5M+BdP 감독), B2B 렌팅(AOR)=IFIC 단순등록+ANCAVE 자율규제",
+          "value_en": "Consumer credit = SFC (Sociedade Financeira para Credito) license (S.A. + capital EUR7.5M + BdP supervision); B2B renting (AOR) = simple IFIC registration + ANCAVE self-regulation.",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -691,15 +737,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "DL 100/2015 Art. 7, RGICSF(은행법), BdP 인가 가이드",
+          "source_en": "DL 100/2015 Art. 7, RGICSF (banking law), BdP licensing guide.",
           "insight": "세그먼트별 규제 강도 큼. 소비자 여신 SFC 인가 자본 €7.5M으로 EU 중상위 부담(ES €5M·NL €730k 대비 큼). 렌팅(AOR)은 IFIC 단순등록·ANCAVE로 진입 부담 경량 — 단계적 진입 전략 권장.",
+          "insight_en": "Regulatory intensity varies widely by segment. Consumer-credit SFC licensing requires EUR7.5M capital — upper-mid EU burden (larger than ES EUR5M, NL EUR730k). Renting (AOR) is light via simple IFIC registration + ANCAVE — recommend a phased entry strategy.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "데이터 현지화 의무",
+          "item_en": null,
           "category": "shared",
           "role": "gate",
           "value": "EU GDPR 직접 적용, EU 역내 이전 자유, 강제 현지화 없음",
+          "value_en": "EU GDPR directly applies; free intra-EU transfer; no forced localization.",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -710,15 +760,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "EU GDPR, Lei 58/2019(GDPR 이행법), CNPD(Comissão Nacional de Proteção de Dados)",
+          "source_en": "EU GDPR, Lei 58/2019 (GDPR implementing act), CNPD (Comissao Nacional de Protecao de Dados).",
           "insight": "EU GDPR 직접 적용, 역내 자유 이전. 강제 현지화 의무 없어 본사(EU) 연동 아키텍처 제약 낮음. CNPD 표준 수준 감독 — 동의·DPIA 준수면 충분.",
+          "insight_en": "EU GDPR directly applicable, free intra-EU transfer. No forced localization — low constraint for HQ (EU) connected architecture. CNPD provides standard-level supervision — consent and DPIA compliance suffice.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "차량회수 절차 용이성",
+          "item_en": null,
           "category": "shared",
           "role": "score",
           "value": 3,
+          "value_en": null,
           "unit": "ease_1to5",
           "direction": "up",
           "axis": "similarity",
@@ -729,7 +783,9 @@
           "timeseries": null,
           "tier": 3,
           "source": "포르투갈 민사소송법(CPC), 업계 (리스/렌팅 소유권 기반 회수)",
+          "source_en": "Portuguese Civil Procedure Code (CPC), industry (lease/renting ownership-based recovery).",
           "insight": "렌팅·금융리스는 금융사 소유권 보유로 회수 용이(평균 60~90일). 소비자 대출 담보회수는 사법 적체로 평균 3~5년 — 상품별 회수 모듈 분기 필요. ES 수준 유사.",
+          "insight_en": "Renting and finance lease are easy as the financier holds ownership (60-90 days average). Consumer-loan collateral recovery averages 3-5 years due to judicial backlog — segment-specific recovery modules needed. Similar to ES.",
           "insight_ai_generated": true,
           "status": "present"
         }
@@ -738,7 +794,10 @@
     "tab_1_2_decision": {
       "decision": "baseline_system_expansion",
       "similarity_score": 78.75,
-      "recommendation": "권역 내 확산: GB 시스템(NetSol) 현지화",
+      "recommendation": {
+        "ko": "권역 내 확산: GB 시스템(NetSol) 현지화",
+        "en": "Regional expansion: localize GB system (NetSol)."
+      },
       "base_country": "GB",
       "base_system": "NetSol",
       "region_system_exists": true,
@@ -748,9 +807,11 @@
       "items": [
         {
           "item": "금리 상한 규제",
+          "item_en": null,
           "category": "shared",
           "role": "gate",
           "value": "DL 133/2009 사용자금리: BdP 분기 고시 평균 TAEG × 4/3 (자동차대출 2025Q4 약 11.5% → 상한 약 15.3%). 사용자금지 형사처벌(usura) 별도",
+          "value_en": "DL 133/2009 usury rate: BdP quarterly published average TAEG x 4/3 (auto loans 2025Q4 ~11.5% -> cap ~15.3%). Criminal usury (usura) prohibition is separate.",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -761,15 +822,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "DL 133/2009 (소비자신용법), Banco de Portugal 분기 TAEG 고시",
+          "source_en": "DL 133/2009 (consumer credit law), Banco de Portugal quarterly TAEG publication.",
           "insight": "DL 133/2009 사용자금리 상한 — BdP 분기마다 자동차대출 평균 TAEG × 4/3 고시(2025Q4 약 15.3%). 자동차대출 평균 APR 8.5%로 여유 충분하나 분기 변동 모니터링 필수. B2B 렌팅은 적용 제외.",
+          "insight_en": "DL 133/2009 usury cap — BdP publishes auto-loan average TAEG x 4/3 each quarter (2025Q4 ~15.3%). Auto-loan average APR of 8.5% leaves ample room, but quarterly-variation monitoring is essential. B2B renting is exempt.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "외환·배당 송금 자유도",
+          "item_en": null,
           "category": "shared",
           "role": "gate",
           "value": "외환 통제 없음 (배당/이자 비거주자 원천징수 25%, EU 지침·조세조약 면제 가능)",
+          "value_en": "No FX controls (25% non-resident WHT on dividends/interest; EU directive/treaty exemptions available).",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -780,15 +845,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "PwC Portugal Withholding Taxes, EU 모자회사·이자로열티 지침",
+          "source_en": "PwC Portugal Withholding Taxes, EU Parent-Subsidiary & Interest-Royalty Directives.",
           "insight": "송금 자유. 배당·이자 원천징수 25%는 EU 지침/조세조약으로 0~15%까지 감면 — 본국 회수 장애 없음. 단 EU Holding 활용 시 최적.",
+          "insight_en": "Free remittance. 25% WHT on dividends/interest can be reduced to 0-15% via EU directives/tax treaties — no obstacle to repatriation. Optimal with an EU holding structure.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "의무보험 규제",
+          "item_en": null,
           "category": "shared",
           "role": "score",
           "value": "자동차 의무책임보험(seguro obrigatório) 강제, DL 291/2007 / Lei 5/2024(EU 지침 2009/103 이행)",
+          "value_en": "Compulsory third-party auto liability insurance (seguro obrigatorio), DL 291/2007 / Lei 5/2024 (implementing EU Directive 2009/103).",
           "unit": "regime",
           "direction": "down",
           "axis": "similarity",
@@ -799,15 +868,19 @@
           "timeseries": null,
           "tier": 1,
           "source": "DL 291/2007 (자동차책임보험법), ASF(보험감독청), EU 자동차보험 지침",
+          "source_en": "DL 291/2007 (motor liability insurance law), ASF (insurance supervisor), EU Motor Insurance Directive.",
           "insight": "차량 책임보험(SO) 의무는 EU 표준과 동일(ASF 감독·Fundo de Garantia 보장기금). 베이스라인 보험연동 로직 재사용 가능 — 특화개발 부담 낮음.",
+          "insight_en": "Compulsory third-party liability (SO) matches the EU standard (ASF supervision, Fundo de Garantia guarantee fund). Baseline insurance-integration logic is reusable — low specialized-development burden.",
           "insight_ai_generated": false,
           "status": "present"
         },
         {
           "item": "신용생명보험 규제",
+          "item_en": null,
           "category": "shared",
           "role": "score",
           "value": "끼워팔기 강제 금지, 별도 동의·대안 제시 의무 (DL 133/2009 소비자신용법 + ASF Norma Regulamentar)",
+          "value_en": "Tying prohibited; separate consent and alternative-offer obligations (DL 133/2009 consumer credit law + ASF Norma Regulamentar).",
           "unit": "regime",
           "direction": "down",
           "axis": "similarity",
@@ -818,7 +891,9 @@
           "timeseries": null,
           "tier": 2,
           "source": "DL 133/2009 (소비자신용법), ASF Norma Regulamentar (보험배분 규정)",
+          "source_en": "DL 133/2009 (consumer credit law), ASF Norma Regulamentar (insurance distribution rules).",
           "insight": "신용생명보험 강제판매 제한 — 동의·대안 제공 의무로 상품 설계 시 옵션화 필요. EU 일반 수준 + ASF 추가 가이드.",
+          "insight_en": "Forced sale of credit life insurance is restricted — consent and alternative-offer obligations require optionalizing it in product design. EU general level + additional ASF guidance.",
           "insight_ai_generated": true,
           "status": "present"
         }
@@ -826,14 +901,16 @@
     },
     "tab_1_3_tco": {
       "build_cost": 3500.0,
-      "build_months": 12.6,
-      "annual_subscription": 1146.6,
+      "build_months": 14.0,
+      "annual_subscription": 14160.51,
       "annual_maintenance": 500,
-      "annual_recurring": 1646.6,
+      "annual_recurring": 14660.51,
       "operations_10y": 50000,
-      "system_cost_10y": 19966.0,
-      "total_tco_10y": 69966.0,
+      "system_cost_10y": 150105.1,
+      "total_tco_10y": 200105.1,
       "currency": "EUR",
+      "currency_base": "EUR",
+      "total_tco_10y_eur": 200105.1,
       "similarity_score": 78.75,
       "similarity_multiplier": 0.7,
       "similarity_band": "70~80",
@@ -844,15 +921,16 @@
           "베이스라인 국가": "GB",
           "베이스라인 솔루션": "NetSol",
           "B 구축비용": 5000,
-          "B 구축기간(개월)": 18,
+          "B 구축기간(개월)": 20,
           "종합 유사도": 78.8,
           "승수 구간": "70~80",
           "적용 승수": 0.7
         },
         "outputs": {
           "신규국 구축비용": 3500.0,
-          "신규국 구축기간(개월)": 12.6
-        }
+          "신규국 구축기간(개월)": 14.0
+        },
+        "currency": "EUR"
       },
       "expected_contracts": 1831,
       "expected_contracts_breakdown": {
@@ -871,40 +949,82 @@
         "existing_volume": 80,
         "new_volume": 1831,
         "total_volume": 1911,
-        "unit_price": 0.6,
+        "unit_price": 7.41,
         "currency": "EUR",
-        "annual_fee": 1146.6,
+        "annual_fee": 14160.51,
         "note": "All volume repriced at new tier rate"
       },
       "subscription_tiers": [
         {
           "min_volume": 0,
-          "max_volume": 100,
-          "price_per_unit": 1.0,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 101,
-          "max_volume": 200,
-          "price_per_unit": 0.9,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 201,
           "max_volume": 500,
-          "price_per_unit": 0.8,
+          "price_per_unit": 24.7,
           "currency": "EUR"
         },
         {
           "min_volume": 501,
           "max_volume": 1000,
-          "price_per_unit": 0.7,
+          "price_per_unit": 9.88,
           "currency": "EUR"
         },
         {
           "min_volume": 1001,
+          "max_volume": 1500,
+          "price_per_unit": 8.645,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 1501,
+          "max_volume": 2000,
+          "price_per_unit": 7.41,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 2001,
+          "max_volume": 3000,
+          "price_per_unit": 6.175,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 3001,
+          "max_volume": 5000,
+          "price_per_unit": 5.681,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 5001,
+          "max_volume": 10000,
+          "price_per_unit": 4.94,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 10001,
+          "max_volume": 12000,
+          "price_per_unit": 4.693,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 12001,
+          "max_volume": 14000,
+          "price_per_unit": 4.446,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 14001,
+          "max_volume": 20000,
+          "price_per_unit": 4.323,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 20001,
+          "max_volume": 80000,
+          "price_per_unit": 4.076,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 80001,
           "max_volume": 999999,
-          "price_per_unit": 0.6,
+          "price_per_unit": 0.865,
           "currency": "EUR"
         }
       ],
@@ -912,9 +1032,11 @@
       "items": [
         {
           "item": "신차 판매대수",
+          "item_en": null,
           "category": "business",
           "role": "score",
           "value": 218000,
+          "value_en": null,
           "unit": "units",
           "direction": "up",
           "axis": "attractiveness",
@@ -973,15 +1095,19 @@
           },
           "tier": 2,
           "source": "ACAP(Associação Automóvel de Portugal) 2025 (신차 등록 약 21.8만대, +4.3%)",
+          "source_en": "ACAP (Associacao Automovel de Portugal) 2025 (new registrations ~218k, +4.3%).",
           "insight": "2025년 +4.3%로 21.8만대 — 2019년(22.4만) 회복 임박. 법인 등록 50%+로 렌팅이 견인. EU 14위 규모로 작아 단독 진입 매력 제한, ES 통합 진입의 보조 시장.",
+          "insight_en": "+4.3% in 2025 to 218k — recovery to 2019 levels (224k) imminent. Corporate registrations 50%+ with renting leading. EU 14th-largest scale is small, limiting standalone attractiveness — a secondary market for integrated ES entry.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "금융 이용률(신차)",
+          "item_en": null,
           "category": "business",
           "role": "score",
           "value": 70,
+          "value_en": null,
           "unit": "%",
           "direction": "up",
           "axis": "attractiveness",
@@ -1040,15 +1166,19 @@
           },
           "tier": 3,
           "source": "ALF/ASFAC 2025 (소비자금융 침투 약 50% + 렌팅 약 50%), Cetelem Observatório 2025",
+          "source_en": "ALF/ASFAC 2025 (consumer-finance penetration ~50% + renting ~50%), Cetelem Observatorio 2025.",
           "insight": "신차 등록의 70%가 금융 경유 — 법인 등록의 90%+가 렌팅(AOR)·금융리스(ALD). 개인 부문은 할부 약 45%+개인리스 5%. 법인·플릿 중심 진입 자명.",
+          "insight_en": "70% of new registrations go through finance — 90%+ of corporate registrations are renting (AOR)/finance lease (ALD). Private segment ~45% installment + 5% personal lease. Corporate/fleet-centric entry is self-evident.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "구매 패턴(할부·리스 비중)",
+          "item_en": null,
           "category": "business",
           "role": "score",
           "value": 60,
+          "value_en": null,
           "unit": "%",
           "direction": "up",
           "axis": "attractiveness",
@@ -1059,15 +1189,19 @@
           "timeseries": null,
           "tier": 2,
           "source": "ANCAVE 2025 (렌팅 신규 등록 점유 약 30%·차량 18만대); ALF 금융리스 신규 약 15%",
+          "source_en": "ANCAVE 2025 (renting ~30% of new registrations, 180k vehicles); ALF finance lease ~15% of new.",
           "insight": "신차의 60%가 리스 경유 — 렌팅(AOR) 30%+ 금융리스(ALD) 15% + 할부 15%. 렌팅 비중 EU 상위 — 진입 시 렌팅/플릿 우선 자명.",
+          "insight_en": "60% of new cars go through leasing — renting (AOR) 30% + finance lease (ALD) 15% + installment 15%. Renting share is among the EU's highest — renting/fleet-first entry is self-evident.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "캡티브 강도(점유율)",
+          "item_en": null,
           "category": "business",
           "role": "score",
           "value": 35,
+          "value_en": null,
           "unit": "%",
           "direction": "down",
           "axis": "difficulty",
@@ -1078,15 +1212,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "ALF/ANCAVE 2025 / 업계 추정 (Stellantis FS·VW FS·Renault·Toyota 약 35%); 은행계(Santander·BCP·Caixa) 약 35%",
+          "source_en": "ALF/ANCAVE 2025 / industry estimate (Stellantis FS, VW FS, Renault, Toyota ~35%); banks (Santander, BCP, Caixa) ~35%.",
           "insight": "캡티브(Stellantis·VW·Renault·Toyota) 약 35%, 은행계(Santander Consumer·Banco BPI·Caixa Geral·BCP) 약 35%, 다국적 렌팅(Ayvens·Arval·LeasePlan) 약 20%, 독립계 10%. 양강 구조라 독립계 진입은 EV·SME·중고 틈새 권장.",
+          "insight_en": "Captives (Stellantis, VW, Renault, Toyota) ~35%, banks (Santander Consumer, Banco BPI, Caixa Geral, BCP) ~35%, multinational renting (Ayvens, Arval, LeasePlan) ~20%, independents 10%. Given the duopoly, independents should target EV/SME/used niches.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "평균 신차가격",
+          "item_en": null,
           "category": "business",
           "role": "context",
           "value": "약 €27,500 (turismos 평균 거래가, ES 대비 약간 낮음, EV·SUV로 우상향)",
+          "value_en": "~EUR27,500 (turismos average transaction price, slightly below ES, trending up on EV/SUV).",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -1097,7 +1235,9 @@
           "timeseries": null,
           "tier": 3,
           "source": "ACAP 2025 평균 거래가 추정, AutoNews Portugal",
+          "source_en": "ACAP 2025 average transaction price estimate, AutoNews Portugal.",
           "insight": "평균 신차 거래가 €27.5k(ES €30k·EU 평균보다 낮음), EV·SUV 비중 상승으로 우상향. 건수×평균가 기반 금융 자산규모 산정 모수.",
+          "insight_en": "Average new-car transaction price EUR27.5k (below ES EUR30k and EU average), trending up on rising EV/SUV share. Base parameter for sizing finance assets via units x average price.",
           "insight_ai_generated": true,
           "status": "present"
         }
@@ -1106,7 +1246,148 @@
     "tab_1_4_market": {
       "items": [
         {
+          "item": "GDP 성장률",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 1.9,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 5.7
+              },
+              {
+                "year": 2022,
+                "value": 7.0
+              },
+              {
+                "year": 2023,
+                "value": 2.5
+              },
+              {
+                "year": 2024,
+                "value": 1.9
+              },
+              {
+                "year": 2025,
+                "value": 1.9
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 2.0
+              },
+              {
+                "year": 2027,
+                "value": 2.0
+              },
+              {
+                "year": 2028,
+                "value": 1.8
+              },
+              {
+                "year": 2029,
+                "value": 1.7
+              },
+              {
+                "year": 2030,
+                "value": 1.7
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 1,
+          "source": "Banco de Portugal·IMF WEO 2025",
+          "source_en": "Banco de Portugal, IMF WEO 2025",
+          "insight": "관광·EU 회복기금으로 안정적 1%대 후반 성장. 2025년 1.9%. 인구·생산성이 중장기 제약.",
+          "insight_en": "Steady high-1% growth driven by tourism and EU recovery funds; 1.9% in 2025. Demographics and productivity constrain medium-term growth.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 8.9,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 6.5
+              },
+              {
+                "year": 2022,
+                "value": 9.4
+              },
+              {
+                "year": 2023,
+                "value": 11.4
+              },
+              {
+                "year": 2024,
+                "value": 7.7
+              },
+              {
+                "year": 2025,
+                "value": 7.1
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 5.6
+              },
+              {
+                "year": 2027,
+                "value": 5.3
+              },
+              {
+                "year": 2028,
+                "value": 5.0
+              },
+              {
+                "year": 2029,
+                "value": 4.8
+              },
+              {
+                "year": 2030,
+                "value": 4.5
+              }
+            ],
+            "cagr_hist": 8.9,
+            "cagr_forecast": 5.0,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "ALF/ANCAVE 2025 (렌팅 두 자릿수 성장, 소매 자동차금융 한 자릿수 중반)",
+          "source_en": "ALF/ANCAVE 2025 (renting double-digit growth; retail auto-finance mid-single-digit).",
+          "insight": "렌팅 두 자릿수 성장이 견인, 소매 포함 종합 CAGR 한 자릿수 중반. ECB 완화·EV 보조금(Fundo Ambiental)이 지지 — 단 인구 정체로 장기 성장 압박.",
+          "insight_en": "Renting double-digit growth leads; combined CAGR including retail is mid-single-digit. ECB easing and EV subsidies (Fundo Ambiental) support — but demographic stagnation pressures long-term growth.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
           "item": "금융사 순위(Top 5)",
+          "item_en": null,
           "category": "business",
           "role": "context",
           "value": [
@@ -1136,6 +1417,7 @@
               "market_share": "약 7%"
             }
           ],
+          "value_en": null,
           "unit": null,
           "direction": null,
           "axis": null,
@@ -1146,15 +1428,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "ASFAC·ALF 2025 / Santander Consumer Portugal 공시",
+          "source_en": "ASFAC/ALF 2025 / Santander Consumer Portugal disclosures.",
           "insight": "Santander Consumer Portugal(ES SCF 자회사) 1위 22%, 톱5 합산 약 65%. ES 1위 SCF의 자회사 점유가 강해 한국계 진입 시 ES+PT 통합 진입이 효율적.",
+          "insight_en": "Santander Consumer Portugal (ES SCF subsidiary) #1 at 22%, top-5 combined ~65%. Strong share of the ES #1 SCF subsidiary makes integrated ES+PT entry efficient for Korean entrants.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "금융사 점유율(Top 5)",
+          "item_en": null,
           "category": "business",
           "role": "score",
           "value": 22,
+          "value_en": null,
           "unit": "%",
           "direction": "down",
           "axis": "difficulty",
@@ -1165,15 +1451,19 @@
           "timeseries": null,
           "tier": 3,
           "source": "ASFAC/ALF 2025 (Santander Consumer Portugal 약 22%, 상위 5사 약 65%)",
+          "source_en": "ASFAC/ALF 2025 (Santander Consumer Portugal ~22%, top-5 ~65%).",
           "insight": "Santander Consumer Portugal 단독 1위 약 22%(ES 1위 SCF의 자회사). 톱5 합산 약 65% 은행계·캡티브 집중 — 신규 진입은 EV·렌팅·중고 틈새 권장.",
+          "insight_en": "Santander Consumer Portugal sole #1 at ~22% (subsidiary of ES #1 SCF). Top-5 combined ~65% concentrated in banks/captives — new entrants should target EV/renting/used niches.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "경쟁사 금리 범위",
+          "item_en": null,
           "category": "business",
           "role": "context",
           "value": "신차 자동차대출 TAEG 약 7~11% (프로모 0~3% 캡티브 한정), 렌팅(AOR) 월 임대료 €350~600 (잔가·기간 의존), 소비자신용 평균 TAEG BdP 통계 약 8.5%",
+          "value_en": "New-car auto-loan TAEG ~7-11% (promo 0-3% captive-only), renting (AOR) monthly rent EUR350-600 (residual/term dependent), consumer-credit average TAEG ~8.5% per BdP statistics.",
           "unit": null,
           "direction": null,
           "axis": null,
@@ -1184,12 +1474,15 @@
           "timeseries": null,
           "tier": 2,
           "source": "Banco de Portugal 소비자신용 통계 2025, OEM 캡티브 프로모 공시, ANCAVE 렌팅 가격",
+          "source_en": "Banco de Portugal consumer credit statistics 2025, OEM captive promo disclosures, ANCAVE renting pricing.",
           "insight": "표준 차량대출 TAEG 7~11%, 캡티브 0~3% 프로모로 점유. DL 133/2009 사용자금리(약 15.3%) 내 여유 있으나 캡티브·은행계 프로모와의 가격경쟁 압박 — 차별화 필요.",
+          "insight_en": "Standard auto-loan TAEG 7-11%, captives hold share with 0-3% promos. Room exists within the DL 133/2009 usury rate (~15.3%), but price competition with captive/bank promos pressures — differentiation needed.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "OEM 순위(Top 5)",
+          "item_en": null,
           "category": "business",
           "role": "context",
           "value": [
@@ -1219,6 +1512,7 @@
               "market_share": "6.5%"
             }
           ],
+          "value_en": null,
           "unit": null,
           "direction": null,
           "axis": null,
@@ -1229,15 +1523,19 @@
           "timeseries": null,
           "tier": 2,
           "source": "ACAP 2025 신차 등록 (Peugeot 22,890 / Renault 17,876 / BMW 16,350 / MB 15,260 / VW 14,170 추정)",
+          "source_en": "ACAP 2025 new registrations (Peugeot 22,890 / Renault 17,876 / BMW 16,350 / MB 15,260 / VW 14,170 est.).",
           "insight": "Peugeot 1위 10.5%, Stellantis 그룹(Peugeot·Citroën) 합산 약 18%. BMW·MB 프리미엄 비중 큼(법인·플릿 영향). 한국 OEM(Hyundai·Kia)은 톱10권으로 ES 대비 약함.",
+          "insight_en": "Peugeot #1 at 10.5%, Stellantis group (Peugeot, Citroen) combined ~18%. BMW and MB premium share large (corporate/fleet effect). Korean OEMs (Hyundai, Kia) in top-10, weaker than in ES.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "EV 보급률",
+          "item_en": null,
           "category": "business",
           "role": "score",
           "value": 28,
+          "value_en": null,
           "unit": "%",
           "direction": "up",
           "axis": "attractiveness",
@@ -1296,15 +1594,19 @@
           },
           "tier": 2,
           "source": "ACAP/UVE(전기차이용자협회) 2025 (BEV+PHEV 점유 약 28%), Fundo Ambiental 보조금",
+          "source_en": "ACAP/UVE (EV users association) 2025 (BEV+PHEV share ~28%), Fundo Ambiental subsidy.",
           "insight": "2025년 EV(BEV+PHEV) 점유 28%로 EU 톱5권(NL·SE·NO 다음). Fundo Ambiental BEV 보조금(€4,000)·법인세 BEV 감가상각 우대 견인. 렌팅 신규 EV 비중 40%+ — 잔가 모델에 EV 별도 곡선 필수.",
+          "insight_en": "2025 EV (BEV+PHEV) share 28%, EU top-5 (after NL, SE, NO). Fundo Ambiental BEV subsidy (EUR4,000) and BEV depreciation tax incentives drive it. EVs are 40%+ of new renting — a separate EV curve is essential in residual-value models.",
           "insight_ai_generated": true,
           "status": "present"
         },
         {
           "item": "EV·ICE 잔존가치 리스크",
+          "item_en": null,
           "category": "business",
           "role": "score",
           "value": 55,
+          "value_en": null,
           "unit": "%",
           "direction": "down",
           "axis": "difficulty",
@@ -1363,13 +1665,16 @@
           },
           "tier": 3,
           "source": "Cox Automotive/Manheim 잔가 추정(3년 EV 기준), 유럽 중고 EV 가격 약세",
+          "source_en": "Cox Automotive/Manheim residual estimates (3-year EV basis), weak European used-EV prices.",
           "insight": "EV 3년 잔가 55%로 ES 동등 수준 — ICE 대비 리스 손익 압박. 렌팅 EV 비중 40%+로 노출 큼. 잔가 보증·바이백 조건 보수적 설계 권장.",
+          "insight_en": "3-year EV residual of 55% matches ES — pressuring lease P&L vs ICE. EVs are 40%+ of renting, so exposure is large. Recommend conservative residual-guarantee/buyback terms.",
           "insight_ai_generated": true,
           "status": "present"
         }
       ],
       "competitors": {
         "item": "경쟁사 리스트",
+        "item_en": null,
         "category": "business",
         "role": "context",
         "value": [
@@ -1389,6 +1694,7 @@
           "Alphabet Portugal (BMW)",
           "Externato (현지 렌팅)"
         ],
+        "value_en": null,
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1399,14 +1705,18 @@
         "timeseries": null,
         "tier": 3,
         "source": "ASFAC, ALF, ANCAVE 회원사 명단",
+        "source_en": "ASFAC, ALF, ANCAVE member lists.",
         "insight": "ES 시장 진출사 대다수가 PT도 진출(ES+PT 일체 운영). OEM 캡티브+은행계+다국적 렌팅 혼재. 한국계 미진출 — Hyundai Capital Portugal 부재로 ES 진입 시 PT 동반 진입 기회.",
+        "insight_en": "Most ES-market entrants also operate in PT (unified ES+PT operations). Mix of OEM captives + banks + multinational renting. No Korean entrant — absence of Hyundai Capital Portugal makes PT a co-entry opportunity when entering ES.",
         "insight_ai_generated": true
       },
       "competitor_entry_form": {
         "item": "경쟁사 진출 형태",
+        "item_en": null,
         "category": "business",
         "role": "context",
         "value": "은행계 자회사(Santander Consumer·BPI·BCP·CGD) + OEM 캡티브(VW·Stellantis·Toyota·BMW·MB) + 다국적 렌팅(Ayvens·Arval·LeasePlan·Alphabet) + 소비자신용 전문(Cetelem·Cofidis). SFC 인가 또는 IFIC 형태가 일반적",
+        "value_en": "Bank subsidiaries (Santander Consumer, BPI, BCP, CGD) + OEM captives (VW, Stellantis, Toyota, BMW, MB) + multinational renting (Ayvens, Arval, LeasePlan, Alphabet) + consumer-credit specialists (Cetelem, Cofidis). SFC license or IFIC form is typical.",
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1417,11 +1727,14 @@
         "timeseries": null,
         "tier": 3,
         "source": "ASFAC, ALF, ANCAVE, BdP 등록부",
+        "source_en": "ASFAC, ALF, ANCAVE, BdP register.",
         "insight": "소비자금융은 SFC, 렌팅은 IFIC+ANCAVE. ES 본사 자회사 형태가 일반적이라 한국계 진입 시 ES 모회사+PT 자회사 구조 권장 — 자본·인가 효율.",
+        "insight_en": "Consumer finance uses SFC; renting uses IFIC + ANCAVE. The ES-HQ subsidiary form is typical, so for Korean entrants an ES-parent + PT-subsidiary structure is recommended — efficient on capital and licensing.",
         "insight_ai_generated": true
       },
       "brand_top10": {
         "item": "브랜드 Top10",
+        "item_en": null,
         "category": "business",
         "role": "context",
         "value": [
@@ -1436,6 +1749,7 @@
           "Dacia",
           "Tesla"
         ],
+        "value_en": null,
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1446,11 +1760,14 @@
         "timeseries": null,
         "tier": 2,
         "source": "ACAP 2025 신차 등록 통계 (Peugeot 1위·프랑스 OEM 강세)",
+        "source_en": "ACAP 2025 new-registration statistics (Peugeot #1, French OEMs strong).",
         "insight": "Peugeot 1위, 프랑스 OEM(Peugeot·Renault·Citroën) 합산 톱3급. BMW·MB 프리미엄 강세, Tesla 톱10 진입. 한국 Hyundai 톱10 진입, MG·BYD 중국 브랜드 급부상.",
+        "insight_en": "Peugeot #1, French OEMs (Peugeot, Renault, Citroen) combined among top-3. BMW and MB premium strength, Tesla in top-10. Korea's Hyundai in top-10; Chinese brands MG and BYD surging.",
         "insight_ai_generated": true
       },
       "news": {
         "item": "외부 이슈 스캔",
+        "item_en": null,
         "category": "business",
         "role": "context",
         "value": [
@@ -1460,7 +1777,9 @@
             "so_what": "시장 회복으로 금융 침투 기반 견조 — 진입 타이밍 우호적. 단 EU 14위로 규모는 작아 ES 통합 진입의 보조 시장.",
             "publisher": "Automotive News Europe",
             "pub_date": "2026-01-30",
-            "url": "https://europe.autonews.com/..."
+            "url": "https://europe.autonews.com/...",
+            "headline_en": "Portugal 2025 new registrations 218k +4.3%, near pre-COVID recovery",
+            "so_what_en": "Market recovery keeps the finance-penetration base solid — timing is favorable for entry. But at EU 14th the scale is small, a secondary market for integrated ES entry."
           },
           {
             "news_category": "auto_finance",
@@ -1468,7 +1787,9 @@
             "so_what": "B2B 렌팅 진입 매력 — IFIC 단순등록·ANCAVE 자율규제로 진입 부담 경량. 소비자금융보다 우선 진입 전략 강화.",
             "publisher": "S&P Global Mobility",
             "pub_date": "2026-02-20",
-            "url": "https://www.spglobal.com/mobility/..."
+            "url": "https://www.spglobal.com/mobility/...",
+            "headline_en": "Portugal renting (AOR) fleet passes 180k vehicles, 60%+ of corporate registrations",
+            "so_what_en": "B2B renting is attractive to enter — light burden via simple IFIC registration and ANCAVE self-regulation. Strengthens the case for renting-first over consumer finance."
           },
           {
             "news_category": "auto_market",
@@ -1476,7 +1797,9 @@
             "so_what": "EV 진입 시 잔가·충전 인프라 리스크 노출 큼. 보조금 의존도 높아 정책 변화 모니터링·잔가 보증 조건 보수적 설계 필요.",
             "publisher": "Just Auto",
             "pub_date": "2026-03-22",
-            "url": "https://www.just-auto.com/..."
+            "url": "https://www.just-auto.com/...",
+            "headline_en": "Portugal EV share passes 28%, Fundo Ambiental subsidy extended into 2026",
+            "so_what_en": "EV entry carries high residual/charging-infrastructure risk. High subsidy dependence requires policy-change monitoring and conservative residual-guarantee terms."
           },
           {
             "news_category": "credit_abs",
@@ -1484,7 +1807,9 @@
             "so_what": "연체 안정 신호 — 충당금·심사기준 EU 표준 적용 가능. 진입 초기 신용정책 과도한 보수화 불필요.",
             "publisher": "Moody's",
             "pub_date": "2026-04-15",
-            "url": "https://www.moodys.com/..."
+            "url": "https://www.moodys.com/...",
+            "headline_en": "Portugal auto-loan ABS delinquencies stable around 1.0%, continued recovery since BES crisis",
+            "so_what_en": "Stable delinquency signal — EU-standard provisioning/underwriting can apply. No need for excessive credit-policy conservatism at early entry."
           },
           {
             "news_category": "geopolitical",
@@ -1492,7 +1817,9 @@
             "so_what": "조사 필요",
             "publisher": "",
             "pub_date": "",
-            "url": ""
+            "url": "",
+            "headline_en": "Research needed",
+            "so_what_en": "Research needed"
           },
           {
             "news_category": "finance",
@@ -1500,9 +1827,12 @@
             "so_what": "조달비용 하향 안정 — 자동차금융 마진·신차 수요에 우호적. 금리 환경 리스크 낮음, EU Holding 활용 매력 강화.",
             "publisher": "Financial Times",
             "pub_date": "2025-12-10",
-            "url": "https://www.ft.com/..."
+            "url": "https://www.ft.com/...",
+            "headline_en": "Portugal Moody's 2024 upgrade to A3, BTP spreads narrow on ECB easing",
+            "so_what_en": "Funding-cost decline and stability — favorable for auto-finance margins and new-car demand. Low rate-environment risk strengthens the case for an EU holding structure."
           }
         ],
+        "value_en": null,
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1513,14 +1843,18 @@
         "timeseries": null,
         "tier": 3,
         "source": "화이트리스트(Automotive News Europe·S&P Global Mobility·Just Auto·Moody's·Financial Times)",
+        "source_en": "Whitelist (Automotive News Europe, S&P Global Mobility, Just Auto, Moody's, Financial Times).",
         "insight": "시장 회복·금리 안정·신용 회복은 진입에 우호적이나, EU 14위 규모와 EV 잔가 압박이 양대 제약. 단독 진입보다 ES 통합 진입의 보조 시장으로 활용. geopolitical은 화이트리스트 직접 관련 이슈 미확보.",
+        "insight_en": "Market recovery, rate stability, and credit recovery favor entry, but EU 14th-largest scale and EV residual pressure are the two main constraints. Use as a secondary market for integrated ES entry rather than standalone. No directly relevant whitelist issue secured for geopolitical.",
         "insight_ai_generated": true
       },
       "regulators": {
         "item": "규제기관 식별",
+        "item_en": null,
         "category": "shared",
         "role": "context",
         "value": "Banco de Portugal(BdP, IFIC/SFC 인가·건전성·결제) / CMVM(증권) / ASF(보험·렌팅 부수) / CNPD(개인정보) / AT(국세청) / Ministério das Finanças(재정부)",
+        "value_en": "Banco de Portugal (BdP, IFIC/SFC licensing, prudential, payments) / CMVM (securities) / ASF (insurance, renting ancillary) / CNPD (data protection) / AT (tax authority) / Ministerio das Financas (finance ministry).",
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1531,14 +1865,18 @@
         "timeseries": null,
         "tier": 1,
         "source": "Banco de Portugal, CMVM, ASF, CNPD 공식",
+        "source_en": "Banco de Portugal, CMVM, ASF, CNPD official.",
         "insight": "여신·결제는 BdP, 보험·렌팅 부수는 ASF, 데이터는 CNPD, 세무는 AT로 감독 분산. ES와 거의 동일한 거버넌스 구조(BdE↔BdP)로 ES 진출 노하우 재사용 가능.",
+        "insight_en": "Credit/payments under BdP, insurance/renting ancillary under ASF, data under CNPD, tax under AT — split supervision. Nearly identical governance to ES (BdE<->BdP), so ES entry know-how is reusable.",
         "insight_ai_generated": false
       },
       "country_summary": {
         "item": "해당국 정성 요약",
+        "item_en": null,
         "category": "business",
         "role": "context",
         "value": "EU 14위 자동차 시장(2025 신차 22만대, +4.3%). 이베리아 보조 시장으로 단독 진입보다 ES 통합 진입의 보조 시장 가치 큼. 캡티브(Stellantis·VW·Renault 약 35%)+은행계(Santander·BCP·CGD·BPI 약 35%)+다국적 렌팅(Ayvens·Arval 약 20%) 구조. 렌팅(AOR) 30%+ 점유, EV 28% EU 톱5. 소비자금융은 SFC 인가(€7.5M)·DL 133/2009 금리상한, B2B 렌팅은 IFIC 단순등록+ANCAVE. EU GDPR·SEPA·MULTIBANCO·CRC로 IT 재사용성 높음. AAA→A- 신용 회복세.",
+        "value_en": "EU 14th-largest auto market (2025 new cars 220k, +4.3%). As a secondary Iberian market, value is higher for integrated ES entry than standalone. Structure: captives (Stellantis, VW, Renault ~35%) + banks (Santander, BCP, CGD, BPI ~35%) + multinational renting (Ayvens, Arval ~20%). Renting (AOR) 30%+ share; EV 28%, EU top-5. Consumer finance needs SFC license (EUR7.5M) and the DL 133/2009 rate cap; B2B renting uses simple IFIC registration + ANCAVE. EU GDPR, SEPA, MULTIBANCO, CRC give high IT reusability. Credit recovery from junk to A-.",
         "unit": null,
         "direction": null,
         "axis": null,
@@ -1549,7 +1887,9 @@
         "timeseries": null,
         "tier": 3,
         "source": "ACAP, ALF, ANCAVE, ASFAC, Banco de Portugal",
+        "source_en": "ACAP, ALF, ANCAVE, ASFAC, Banco de Portugal.",
         "insight": "ES와 통합 진입(이베리아 단일 운영) → 렌팅·플릿 우선 → EV·중고 틈새 → SFC 인가 단계 확장. 단독 진입은 시장 규모로 ROI 제한, ES와의 시너지가 ROI 결정.",
+        "insight_en": "Integrated ES entry (single Iberian operation) -> renting/fleet first -> EV/used niches -> staged SFC-license expansion. Standalone entry has limited ROI given market size; synergy with ES decides ROI.",
         "insight_ai_generated": true
       }
     }

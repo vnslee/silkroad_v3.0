@@ -5,15 +5,17 @@ import { useState } from 'react'
 import type { Domain } from '../../api/types'
 import { Icon } from './Icon'
 
-// 권역 코드 → 대표 이모지(대륙) + 그라데이션색. 미정의 권역은 지구본으로 폴백.
+// 권역 코드 → 대표 이모지(대륙) + AISea 지역색 그라데이션. 미정의 권역은 지구본으로 폴백.
+// 지역색(AISea): NA #4F8BFF / SA #34D399 / ME #FBBF24 / EU #C8F051 / APAC #FB7185.
 const REGION_EMBLEM: Record<string, { emoji: string; from: string; to: string }> = {
-  EU: { emoji: '🇪🇺', from: '#1a3a8f', to: '#2563c9' }, // 유럽
-  APAC: { emoji: '🌏', from: '#0e7490', to: '#0891b2' }, // 아시아·태평양
-  NA: { emoji: '🌎', from: '#9a3412', to: '#c2410c' }, // 북미
-  SA: { emoji: '🌎', from: '#15803d', to: '#16a34a' }, // 남미
+  EU: { emoji: '🇪🇺', from: '#C8F051', to: '#9fcf2e' }, // 유럽 — 라임그린
+  APAC: { emoji: '🌏', from: '#FB7185', to: '#e04b62' }, // 아시아·태평양 — 로즈
+  NA: { emoji: '🌎', from: '#4F8BFF', to: '#2f6be0' }, // 북미 — 블루
+  SA: { emoji: '🌎', from: '#34D399', to: '#1fae7a' }, // 남미 — 에메랄드
+  ME: { emoji: '🌍', from: '#FBBF24', to: '#e0a300' }, // 중동 — 골드
 }
 
-const REGION_FALLBACK = { emoji: '🌐', from: '#334155', to: '#475569' }
+const REGION_FALLBACK = { emoji: '🌐', from: '#3a4048', to: '#14181C' }
 
 type Props = {
   domain: Domain

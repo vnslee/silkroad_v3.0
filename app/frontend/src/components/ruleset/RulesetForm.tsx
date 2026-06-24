@@ -29,8 +29,8 @@ const LABELS: Record<string, string> = {
 
 const lbl = (k: string) => LABELS[k] ?? k
 
-// 스택 바·바 채움색 — 보고서 차트와 동일 계열(Kinetic Enterprise 블루 패밀리).
-const PALETTE = ['#3f6cb4', '#6e97d6', '#2c4c86', '#aebdd6', '#8fa0bd', '#1c3a66', '#cbd9ee']
+// 스택 바·바 채움색 — AISea 팔레트(잉크블랙 + 지역색 패밀리).
+const PALETTE = ['#14181C', '#2f6be0', '#34D399', '#FBBF24', '#FB7185', '#3a4048', '#92b4ff']
 
 // 합이 1.0이어야 하는 가중치 그룹
 const SUM_ONE_GROUPS = new Set([
@@ -424,7 +424,7 @@ function WeightGroup({
             label={lbl(k)}
             sub={axes?.[k]}
             value={values[k]}
-            color={sumOne ? PALETTE[i % PALETTE.length] : '#3f6cb4'}
+            color={sumOne ? PALETTE[i % PALETTE.length] : '#14181C'}
             min={min}
             max={max}
             step={step}

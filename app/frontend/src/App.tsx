@@ -107,7 +107,7 @@ function modalFrame(route: ReturnType<typeof useRoute>['route']): {
   if (route.screen === 'report')
     return {
       tag: isCountry ? '국가 진단 보고서' : '권역 진단 보고서',
-      tagClass: 'bg-aisea-dark',
+      tagClass: 'bg-primary',
       title: isCountry ? '국가 진단 보고서' : '권역 진단 보고서',
     }
   // detail

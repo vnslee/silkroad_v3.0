@@ -37,16 +37,17 @@ export const COUNTRY_NUMERIC: Record<string, string> = {
   PT: '620', // Portugal
 }
 
-// 권역 코드 → 폴리곤 채움/테두리 색. DESIGN.md Kinetic Enterprise 팔레트 계열.
+// 권역 코드 → 폴리곤 채움/테두리 색. AISea 지역색 팔레트.
 // 진출 권역만 지도 상에서 별도 색으로 강조한다(web_design_spec 5-4 권역 분기).
-// 6개 권역(북미·남미·유럽·중동·아태·아프리카) — AISea mockup REGIONS6 색 계열.
+// 지역색(AISea): NA #4F8BFF / SA #34D399 / ME #FBBF24 / EU #C8F051 / APAC #FB7185.
+// fill=연한 파스텔, stroke=어두운 톤(MapView REGIONS6와 동일 계열).
 export const REGION_FILL: Record<string, { fill: string; stroke: string }> = {
-  EU: { fill: '#c9d2ee', stroke: '#3a4c9a' }, // 유럽
-  NORTH_AMERICA: { fill: '#bfd0ec', stroke: '#2c4c86' }, // 북아메리카
-  SOUTH_AMERICA: { fill: '#c8e0d2', stroke: '#2e6b4e' }, // 남아메리카
-  ASIA: { fill: '#cbc7ec', stroke: '#5a4c9a' }, // 아시아·태평양
-  MIDDLE_EAST: { fill: '#ead9b8', stroke: '#8a6a1e' }, // 중동
-  AFRICA: { fill: '#ebcfc2', stroke: '#8a4a24' }, // 아프리카
+  EU: { fill: '#e4f6b8', stroke: '#5c6f12' }, // 유럽 — 라임그린
+  NORTH_AMERICA: { fill: '#cbddff', stroke: '#1f4ea8' }, // 북아메리카 — 블루
+  SOUTH_AMERICA: { fill: '#c2f0de', stroke: '#157a55' }, // 남아메리카 — 에메랄드
+  ASIA: { fill: '#fed2d8', stroke: '#bc3a4d' }, // 아시아·태평양 — 로즈
+  MIDDLE_EAST: { fill: '#fdeabf', stroke: '#946a08' }, // 중동 — 골드
+  AFRICA: { fill: '#e2ded5', stroke: '#3a4048' }, // 아프리카 — 베이지 그레이
 }
 
 // 권역 코드 → world-atlas(countries-110m) 국가명 집합. 권역 단위 하이라이트/클릭 영역 계산용.

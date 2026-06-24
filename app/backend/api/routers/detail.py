@@ -21,13 +21,11 @@ router = APIRouter(prefix="/api", tags=["detail"])
 
 
 def _detail_html(domain: str, target_id: str, version: Optional[str] = None) -> str:
-    # version 미지정 → 최신 캐시본 반환.
-    if version is None:
-        cached = storage_resolver.latest_detail_html(domain, target_id)
-        if cached is not None:
-            return cached.read_text(encoding="utf-8")
-    else:
-        # version = 렌더 ID(DTL_<ID>_NNN). 해당 캐시 HTML을 그대로 반환(재렌더 아님).
+    # version 미지정 → 항상 실시간 재렌더(최신 리서치·룰셋 반영). 캐시본을 반환하지 않는다.
+    #   상세화면 상태(진출 상태 등)의 출처는 internal_latest(country_status)·리서치 데이터이므로,
+    #   데이터 변경이 새로고침만으로 즉시 보이도록 매 요청 렌더한다(렌더 비용 경미).
+    if version is not None:
+        # version = 렌더 ID(DTL_<ID>_NNN). 해당 캐시 HTML(스냅샷)을 그대로 반환(재렌더 아님).
         snap = storage_resolver.detail_html_by_id(domain, target_id, version)
         if snap is not None:
             return snap.read_text(encoding="utf-8")
@@ -41,12 +39,10 @@ def _detail_html(domain: str, target_id: str, version: Optional[str] = None) -> 
             detail=f"{domain} '{target_id}' 리서치 데이터 없음 — 리서치 필요",
         )
     try:
-        out_path = engine_adapter.render_detail_html(domain, target_id, version)
+        # 파일을 쓰지 않고 HTML 문자열만 받는다(매 요청 실시간 렌더, 디스크 캐시 미생성).
+        return engine_adapter.render_detail_html_str(domain, target_id, version)
     except (Exception, SystemExit) as exc:  # detail 렌더러는 데이터 손상 시 SystemExit 발생
         raise HTTPException(status_code=500, detail=f"상세화면 렌더 실패: {exc}")
-    from pathlib import Path as _P
-
-    return _P(out_path).read_text(encoding="utf-8")
 
 
 @router.get("/countries/{code}/detail/versions", response_model=List[str])
@@ -63,16 +59,28 @@ def list_region_detail_versions(region: str = Path(..., pattern=TARGET_ID_PATTER
 def get_country_detail(
     code: str = Path(..., pattern=TARGET_ID_PATTERN), version: Optional[str] = None
 ) -> Response:
-    html = _detail_html("country", code.upper(), version)
-    return Response(content=html, media_type="text/html")
+    # React 프론트엔드는 JSON을 요청 — 리서치 데이터 직접 반환
+    research_path = storage_resolver.research_latest_path("country", code.upper())
+    if research_path is None or not research_path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"country '{code.upper()}' 리서치 데이터 없음",
+        )
+    return Response(content=research_path.read_text(encoding="utf-8"), media_type="application/json")
 
 
 @router.get("/regions/{region}/detail")
 def get_region_detail(
     region: str = Path(..., pattern=TARGET_ID_PATTERN), version: Optional[str] = None
 ) -> Response:
-    html = _detail_html("region", region.upper(), version)
-    return Response(content=html, media_type="text/html")
+    # React 프론트엔드는 JSON을 요청 — 리서치 데이터 직접 반환
+    research_path = storage_resolver.research_latest_path("region", region.upper())
+    if research_path is None or not research_path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"region '{region.upper()}' 리서치 데이터 없음",
+        )
+    return Response(content=research_path.read_text(encoding="utf-8"), media_type="application/json")
 
 
 # ── 비동기 렌더링 잡 트리거 (3차 확장) ──────────────────────────

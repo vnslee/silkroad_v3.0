@@ -43,10 +43,12 @@
 
 | 키 | 타입 | 설명 |
 |---|---|---|
-| `country_assets` | `{ISO2: {solution, build_cost, build_months, reuse_factor}}` | **기진출국**의 시스템·구축비·기간. 유형1 TCO 산식에서 `B 구축비용·기간`으로 사용. |
-| `region_baselines` | `{region: ISO2}` | 권역별 기준국(B국) — `EU=GB, NA=US, APAC=AU`. 권역 보고서에서 IT 유사도 비교 기준. |
+| `country_assets` | `{ISO2: {solution, type, build_cost, build_months, reuse_factor}}` | **기진출국**의 시스템·법인유형·구축비·기간. 유형1 TCO 산식에서 `B 구축비용·기간`으로 사용. `type`은 법인 유형(`"SA"`=단독법인 / `"JV"`=합작법인). `build_cost`는 **EUR 작업통화 기준**(천 EUR 단위; TCO는 EUR로 계산 후 권역 통화로 환산 표시). |
+| `region_baselines` | `{region: ISO2}` | 권역별 기준국(B국) — `EU=GB, NA=US, APAC=AU, SA=BR`. 권역 보고서에서 IT 유사도 비교 기준. |
+| `region_currency` | `{region: 통화코드}` | **권역별 보고서 표시통화** — `EU=EUR, NA=USD, SA=USD, APAC=KRW`. TCO는 EUR로 계산하고 출력 금액만 이 통화로 환산(`fx.rates` 경유). 매핑 없으면 EUR 폴백. |
 | `country_to_region` | `{ISO2: region}` | 국가 → 권역 매핑. 신규 국가 추가 시 여기에 등록. |
-| `country_status` | `{ISO2: "운영중"\|"준비중"\|"미진출"}` | 진출 단계 표시 (UI 용). |
+| `country_status` | `{ISO2: "운영중"\|"준비중"\|"진출예정"\|"미진출"}` | 진출 단계 표시 (UI 용). 허용 값은 `_country_status_values` 배열에 명시. |
+| `_country_status_values` | `["운영중","준비중","진출예정","미진출"]` | `country_status` 가 가질 수 있는 값 목록(문서·검증용 상수). |
 
 ### 2. 베이스라인 채점 (탭1-1 유사도 비교 기준)
 
@@ -158,6 +160,7 @@
 | `similarity_brackets` | `[{min, max, discount}]` | 유사도 → discount 매핑 (`calculate_similarity_discount`) |
 | `similarity_multiplier_table` | `[{min, max, multiplier, band}]` | **유형1 탭1-3 산식1** — 유사도 → B 구축비용·기간에 곱하는 승수 (50%~100%) |
 | `decision_thresholds` | `{expansion_min_score, hq_build_min_score}` | **유형1 탭1-2** — 시스템 결정 트리 임계값 (≥70 확산, ≥50 본사구축, 그 외 외부솔루션) |
+| `killswitch_tier_rules` | `{gates, fail_statuses, tiers:[{key, label_ko, label_en, severity, trigger, fallback, eligible, quickwin_penalty, killswitch_excluded}]}` | **유형2 탭2-0** — 킬스위치 게이트 조합 → 진출 형태 4단계(권역내 확신·외부솔루션·JV권고·JV필수) 분류. `trigger`=`all_pass`/`only_fail`/`any_fail`/`fallback`, severity 낮을수록 위험(worst-first 평가). `eligible=false`(JV필수)면 퀵윈 랭킹 제외, `quickwin_penalty`는 banding 전 감점. (`compute_killswitch`/`_classify_killswitch_tier`/`compute_quickwin`) |
 
 ### 5. TCO·비용 파라미터 (유형1 전용)
 
@@ -196,7 +199,8 @@
 |---|---|---|
 | 탭2-1 매력도 = Σ(정규화 × 유효가중치) | `region_report_engine.compute_attractiveness` | `values.biz_attractiveness`, `tier_weights` |
 | 탭2-2 IT 유사도 = Σ(raw × 유효가중치) | `region_report_engine.compute_it_similarity` | `values.it_readiness`, `tier_weights` |
-| 퀵윈 = 매력도 × w_biz + IT × w_it | `region_report_engine.compute_quickwin` | `values.report_blend` |
+| 퀵윈 = 매력도 × w_biz + IT × w_it | `region_report_engine.compute_quickwin` | `values.report_blend`, `killswitch_tier_rules` |
+| 탭2-0 킬스위치 4단계 분류 | `region_report_engine.compute_killswitch` / `_classify_killswitch_tier` | `killswitch_tier_rules` |
 | 기준국 식별 | `region_report_engine._baseline_country_code` | `region_baselines` |
 | 탭1-1 유사도 (디멘전 채점) | `country_report_engine.calculate_similarity_score` | `baseline_scoring`, `values.similarity_axis_weights` (있을 시) |
 | 탭1-2 시스템 결정 | `country_report_engine.determine_system_decision` | `decision_thresholds`, `country_assets`, `hq_build_baseline` |
@@ -204,6 +208,7 @@
 | 탭1-3 산식2 예상 건수 | `country_report_engine.calculate_expected_contracts` | `expected_market_share` |
 | 탭1-3 산식3 구독료 | `country_report_engine.calculate_subscription_fee` | `subscription_tiers`, `existing_total_volume` |
 | 탭1-3 산식4 10년 TCO | `country_report_engine.calculate_tco_10y` | `country_assets`, `maintenance_cost_annual`, `operational_cost_10y`, `hq_build_baseline` |
+| TCO 표시통화 환산 (EUR→권역통화) | `country_report_engine._region_currency` / `_from_eur` | `region_currency`, `country_to_region`, `fx.rates` |
 | 통화 환산 | both engines | `fx.rates`, `fx.as_of` |
 
 ---
@@ -273,6 +278,7 @@
 | `similarity_multiplier_table` | 빈 표 → multiplier 1.0 (재사용 없음) |
 | `expected_market_share` | 0.02 (=2%) |
 | `region_baselines.{region}` | "GB" |
+| `killswitch_tier_rules` 통째 | 엔진 내장 기본 4단계 규칙(`DEFAULT_KILLSWITCH_TIER_RULES`) 사용 — JV필수만 랭킹 제외, JV권고 10점 감점 |
 
 폴백이 작동한다 ≠ 의도된 결과. 변경 후 보고서를 확인해 폴백이 발동했는지 점검할 것.
 

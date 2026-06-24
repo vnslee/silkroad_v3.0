@@ -13,7 +13,13 @@ import { useT, translate } from '../../i18n/dict'
 import { TopBar } from './TopBar'
 import { Legend } from './Legend'
 import { COUNTRY_COORDS } from './coords'
-import { LAND_COLORS, makeColorResolver, type ColorResolver } from './countryColor'
+import {
+  A2_TO_ATLAS_NAME,
+  LAND_COLORS,
+  makeColorResolver,
+  norm,
+  type ColorResolver,
+} from './countryColor'
 
 interface Props {
   onSelectCountry: (code: string) => void
@@ -41,15 +47,40 @@ interface Region6 {
   dark: string
   code: string
 }
+// 지역색(AISea): NA #4F8BFF / SA #34D399 / ME #FBBF24 / EU #C8F051 / APAC #FB7185.
+// fill=hover 채움(연한 파스텔), dark=툴팁 배경(어두운 톤, 흰 텍스트 대비).
 const REGIONS6: Region6[] = [
-  { key: 'na', label: '북아메리카', fill: '#BFD0EC', dark: '#2C4C86', code: 'NA' },
-  { key: 'sa', label: '남아메리카', fill: '#C8E0D2', dark: '#2E6B4E', code: 'SA' },
-  { key: 'eu', label: '유럽', fill: '#C9D2EE', dark: '#3A4C9A', code: 'EU' },
-  { key: 'me', label: '중동', fill: '#EAD9B8', dark: '#8A6A1E', code: 'ME' },
-  { key: 'ap', label: '아시아·태평양', fill: '#CBC7EC', dark: '#5A4C9A', code: 'APAC' },
-  { key: 'af', label: '아프리카', fill: '#EBCFC2', dark: '#8A4A24', code: 'AF' },
+  { key: 'na', label: '북아메리카', fill: '#CBDDFF', dark: '#1f4ea8', code: 'NA' },
+  { key: 'sa', label: '남아메리카', fill: '#C2F0DE', dark: '#157a55', code: 'SA' },
+  { key: 'eu', label: '유럽', fill: '#E4F6B8', dark: '#5c6f12', code: 'EU' },
+  { key: 'me', label: '중동', fill: '#FDEABF', dark: '#946a08', code: 'ME' },
+  { key: 'ap', label: '아시아·태평양', fill: '#FED2D8', dark: '#bc3a4d', code: 'APAC' },
+  { key: 'af', label: '아프리카', fill: '#E2DED5', dark: '#3a4048', code: 'AF' },
 ]
 const REGION_BY_KEY: Record<string, Region6> = Object.fromEntries(REGIONS6.map((r) => [r.key, r]))
+
+// 마커 좌표 폴백: 국가코드 → world-atlas 폴리곤 centroid[lon,lat].
+// 좌표 단일 출처는 백엔드 geo(API)지만, 미등록 국가(예: US가 country_geo.json에 없음)는
+// 정적 하드코딩 대신 atlas 폴리곤 중심을 1회 계산해 대표 좌표로 쓴다. A2_TO_ATLAS_NAME으로
+// 코드↔atlas feature.name을 잇는다(정규화 비교). atlas는 정적이라 모듈 로드 시 1회만 계산.
+const ATLAS_CENTROIDS: Record<string, [number, number]> = (() => {
+  const topo = worldData as unknown as Topology
+  const fc = feature(topo, topo.objects.countries as never) as unknown as {
+    features: GeoJSON.Feature[]
+  }
+  const nameToCentroid = new Map<string, [number, number]>()
+  for (const f of fc.features) {
+    const nm = (f.properties as { name?: string } | undefined)?.name
+    if (!nm) continue
+    nameToCentroid.set(norm(nm), d3.geoCentroid(f) as [number, number])
+  }
+  const out: Record<string, [number, number]> = {}
+  for (const [code, atlasName] of Object.entries(A2_TO_ATLAS_NAME)) {
+    const c = nameToCentroid.get(norm(atlasName))
+    if (c) out[code] = c
+  }
+  return out
+})()
 
 // 경위도 centroid로 육지를 6개 권역에 분류(mockup continentOf 동일).
 function classifyRegion(lon: number, lat: number): string {
@@ -115,12 +146,16 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
     () =>
       countries
         .map((c) => {
-          // 좌표는 API(geo 참조)가 단일 출처. 구버전 응답·미등록 국가 폴백으로만 정적 테이블 사용.
-          const lon = c.lon ?? COUNTRY_COORDS[c.code]?.[0]
-          const lat = c.lat ?? COUNTRY_COORDS[c.code]?.[1]
+          // 좌표는 API(geo 참조)가 단일 출처. 구버전 응답·미등록 국가 폴백으로 정적 테이블 →
+          // 그래도 없으면 atlas 폴리곤 centroid(예: US가 geo 미등록일 때)로 마커 표시.
+          const lon = c.lon ?? COUNTRY_COORDS[c.code]?.[0] ?? ATLAS_CENTROIDS[c.code]?.[0]
+          const lat = c.lat ?? COUNTRY_COORDS[c.code]?.[1] ?? ATLAS_CENTROIDS[c.code]?.[1]
           if (lon == null || lat == null) return null
-          // 기진출국(established) = 기준국(is_baseline) / 그 외 = 진출후보국(candidate). AISea mockup 2종 구분.
-          const status: Marker['status'] = c.is_baseline ? 'established' : 'candidate'
+          // 기진출국(established) = 운영중(country_status) 또는 권역 기준국(is_baseline).
+          //   그 외(미진출·진출예정 등) = 진출후보국(candidate). AISea mockup 2종 구분.
+          //   ※ 기준국이 아니어도 운영중이면 기진출 마커로 표시(예: CA — NA 운영중, 기준국은 US).
+          const isEstablished = c.status === '운영중' || c.is_baseline
+          const status: Marker['status'] = isEstablished ? 'established' : 'candidate'
           const m: Marker = {
             code: c.code,
             name: c.name,
@@ -202,7 +237,7 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
       .attr('class', 'land')
       .attr('d', path as never)
       .attr('fill', featBaseFill)
-      .attr('stroke', '#F4F6F8')
+      .attr('stroke', '#EDEBE4')
       .attr('stroke-width', 0.6)
       .style('cursor', 'pointer')
 
@@ -258,10 +293,10 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
       .attr('role', 'button')
       .attr('aria-label', (d) => `${d.name} 선택`)
       .on('mouseenter', (e: MouseEvent, d) =>
-        showTip(e, markerLabel(d), d.status === 'established' ? '#1B3451' : '#3F6CB4'),
+        showTip(e, markerLabel(d), d.status === 'established' ? '#14181C' : '#5c6f12'),
       )
       .on('mousemove', (e: MouseEvent, d) =>
-        showTip(e, markerLabel(d), d.status === 'established' ? '#1B3451' : '#3F6CB4'),
+        showTip(e, markerLabel(d), d.status === 'established' ? '#14181C' : '#5c6f12'),
       )
       .on('mouseleave', () => setTip(null))
       .on('click', (_e, d) => {
@@ -273,34 +308,34 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
     // mockup(컨테이너 실치수 렌더)의 체감 크기에 맞춘다. stroke도 동일 비율 축소.
     const MS = 0.5
 
-    // ── 기진출국(established): 네이비 3중 고정 링(펄스 없음, 안정) ──
+    // ── 기진출국(established): 잉크블랙 3중 고정 링(펄스 없음, 안정) ──
     const established = node.filter((d) => d.status === 'established')
     // 외곽 후광(반투명)
-    established.append('circle').attr('r', 8 * MS).attr('fill', 'rgba(27,52,81,0.15)')
-    // 메인 원(네이비 + 흰 테두리)
+    established.append('circle').attr('r', 8 * MS).attr('fill', 'rgba(20,24,28,0.15)')
+    // 메인 원(잉크블랙 + 흰 테두리)
     established
       .append('circle')
       .attr('r', 5 * MS)
-      .attr('fill', '#1B3451')
+      .attr('fill', '#14181C')
       .attr('stroke', '#fff')
       .attr('stroke-width', 1.8 * MS)
     // 중심 흰 점
     established.append('circle').attr('r', 1.8 * MS).attr('fill', '#fff')
 
-    // ── 진출후보국(candidate): 블루 펄스 링 + 블루 중심 핀 ──
+    // ── 진출후보국(candidate): 라임그린 펄스 링 + 라임그린 핀(잉크 테두리로 대비 보강) ──
     const candidate = node.filter((d) => d.status === 'candidate')
     candidate
       .append('circle')
       .attr('r', 6 * MS)
-      .attr('fill', '#3F6CB4')
+      .attr('fill', '#C8F051')
       .style('transform-box', 'fill-box')
       .style('transform-origin', 'center')
       .style('animation', 'aisea-pulse 2.4s ease-out infinite')
     candidate
       .append('circle')
       .attr('r', 4 * MS)
-      .attr('fill', '#3F6CB4')
-      .attr('stroke', '#fff')
+      .attr('fill', '#C8F051')
+      .attr('stroke', '#14181C')
       .attr('stroke-width', 1.5 * MS)
 
     // 줌/패닝(1~6배) — translateExtent로 지도 영역 밖(공백)으로 끌려나가지 않게 제한.
@@ -338,7 +373,7 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
   return (
     <div
       className="relative h-full w-full"
-      style={{ background: 'radial-gradient(120% 120% at 50% 0%, #f7f8fa 0%, #ebeef1 100%)' }}
+      style={{ background: 'radial-gradient(120% 120% at 50% 0%, #f4f2ea 0%, #e3e0d6 100%)' }}
     >
       <TopBar
         countries={countries}

@@ -1,6 +1,6 @@
-// DetailView(C6, FR-4, L8) — 상세 HTML iframe embed + chrome(원본 렌더 헤더 형식 재현).
+// DetailView(C6, FR-4, L8) — 상세 React 컴포넌트 렌더링 (iframe 제거).
 // 헤더: 국기 + [국가/권역 선택 드롭다운] + 상태배지 + [데이터 버전 드롭다운] + 시뮬레이션·보고서.
-// 본문(스탯·차트·표)만 iframe(렌더 엔진 HTML) — chrome은 전부 프론트(PIPELINE §5).
+// 본문은 React 컴포넌트로 직접 렌더링 (CountryDetail / RegionDetail).
 import { useEffect, useState } from 'react'
 import { api } from '../../api/client'
 import { paths } from '../../api/paths'
@@ -10,10 +10,12 @@ import { store } from '../../store'
 import { Icon } from '../common/Icon'
 import { HeaderSelect, type SelectOption } from '../common/HeaderSelect'
 import { HeaderEmblem } from '../common/HeaderEmblem'
-import { fitEmbeddedHtml } from '../common/fitEmbeddedHtml'
 import { MicroExpander } from '../ui/micro-expander'
 import { useT } from '../../i18n/dict'
 import type { EntryMode } from '../../app/route'
+import { CountryDetail } from '../details/CountryDetail'
+import { RegionDetail } from '../details/RegionDetail'
+import type { CountryDetailData, RegionDetailData } from '../reports/types'
 
 interface Props {
   domain: Domain
@@ -28,6 +30,10 @@ interface CatalogItem {
   region?: string
   isBaseline: boolean
   hasReport: boolean
+  // 진출 상태(internal country_status): '운영중'|'미진출'|'진출예정'|'준비중' 등. 없으면 undefined.
+  status?: string
+  // 진출형태(internal country_assets 보유 여부) — 값이 있으면 기진출국.
+  entryMode?: string
 }
 
 export default function DetailView({ domain, code, mode }: Props) {
@@ -38,6 +44,8 @@ export default function DetailView({ domain, code, mode }: Props) {
   const [versions, setVersions] = useState<string[]>([])
   const [version, setVersion] = useState<string | undefined>(undefined) // undefined = latest
   const [simulating, setSimulating] = useState(false)
+  const [detailData, setDetailData] = useState<CountryDetailData | RegionDetailData | null>(null)
+  const [loading, setLoading] = useState(false)
   const t = useT()
 
   // 카탈로그(대상 선택용)
@@ -55,6 +63,8 @@ export default function DetailView({ domain, code, mode }: Props) {
             region: 'region' in x ? (x.region ?? undefined) : undefined,
             isBaseline: 'is_baseline' in x ? x.is_baseline : false,
             hasReport: x.has_report,
+            status: 'status' in x ? (x.status ?? undefined) : undefined,
+            entryMode: 'entry_mode' in x ? (x.entry_mode ?? undefined) : undefined,
           })),
         )
       })
@@ -108,14 +118,55 @@ export default function DetailView({ domain, code, mode }: Props) {
     onError: (msg) => setError(msg),
   })
 
+  // 상세 JSON 데이터 로드
+  useEffect(() => {
+    if (!ready) {
+      setDetailData(null)
+      return
+    }
+
+    let cancelled = false
+    setLoading(true)
+    setError(null)
+
+    // JSON 데이터를 직접 fetch (detail 경로에서 리서치 JSON 사용)
+    const detailPath = paths.detail(domain, code, version)
+    fetch(detailPath)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to load detail: ${res.statusText}`)
+        return res.json()
+      })
+      .then((data) => {
+        if (cancelled) return
+        setDetailData(data)
+        setLoading(false)
+      })
+      .catch((e) => {
+        if (cancelled) return
+        setError(String(e))
+        setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [domain, code, version, ready])
+
   const isCountry = domain === 'country'
   const meta = catalog.find((c) => c.code === code)
-  const status = meta?.isBaseline ? '기준국' : meta?.hasReport ? '진출' : '진출예정'
+  // 진출 상태 — 백엔드 country_detail 엔진과 동일 기준: country_status(meta.status) 우선,
+  // 없으면 country_assets 보유(meta.entryMode) → '기진출', 둘 다 없으면 '미진출'. (hasReport 무관)
+  const status = meta?.isBaseline
+    ? '기준국'
+    : meta?.status ?? (meta?.entryMode ? '기진출' : '미진출')
+  // 색: 운영중/기진출=초록, 미진출=레드, 그 외(진출예정·준비중 등)=중립. (detail 엔진 _status_badge와 일치)
   const statusStyle = meta?.isBaseline
     ? 'bg-secondary-fixed text-on-secondary-fixed-variant'
-    : meta?.hasReport
+    : status === '운영중' || status === '기진출'
       ? 'bg-success-container text-success border border-success/30'
-      : 'bg-surface-container text-on-surface-variant'
+      : status === '미진출'
+        ? 'bg-error-container text-error border border-error/30'
+        : 'bg-surface-container text-on-surface-variant'
 
   // 대상 선택 옵션
   const targetOptions: SelectOption[] = catalog.map((c) => ({
@@ -177,9 +228,12 @@ export default function DetailView({ domain, code, mode }: Props) {
               />
             </div>
             <div className="mt-xs flex items-center gap-sm">
-              <span className={`inline-flex items-center rounded px-2 py-0.5 font-label-sm text-label-sm ${statusStyle}`}>
-                {status}
-              </span>
+              {/* 진출 상태 배지는 국가에만 해당 — 권역은 진출 상태 개념이 없어 미표시. */}
+              {isCountry && (
+                <span className={`inline-flex items-center rounded px-2 py-0.5 font-label-sm text-label-sm ${statusStyle}`}>
+                  {status}
+                </span>
+              )}
               <span className="font-label-sm text-label-sm text-outline">
                 {isCountry ? `Region: ${meta?.region ?? '-'}` : '권역'}
               </span>
@@ -219,8 +273,8 @@ export default function DetailView({ domain, code, mode }: Props) {
         </div>
       </div>
 
-      {/* 본문 — iframe(렌더 엔진 HTML). version 지정 시 쿼리 포함. */}
-      <div className="min-h-0 flex-1 bg-surface">
+      {/* 본문 — React 컴포넌트로 렌더링 */}
+      <div className="min-h-0 flex-1 overflow-auto bg-surface">
         {error && (
           <div className="flex h-full items-center justify-center p-lg text-center font-body-md text-on-surface-variant">
             {error}
@@ -231,15 +285,16 @@ export default function DetailView({ domain, code, mode }: Props) {
             상세화면을 준비 중입니다…
           </div>
         )}
-        {!error && ready && (
-          <iframe
-            key={`${code}-${version ?? 'latest'}`}
-            title={`${meta?.name ?? code} 상세화면`}
-            src={paths.detail(domain, code, version)}
-            className="h-full w-full border-0"
-            loading="lazy"
-            onLoad={fitEmbeddedHtml}
-          />
+        {!error && ready && loading && (
+          <div className="flex h-full items-center justify-center">
+            <p className="text-gray-500">데이터를 불러오는 중...</p>
+          </div>
+        )}
+        {!error && ready && !loading && detailData && (
+          <>
+            {domain === 'country' && <CountryDetail data={detailData as CountryDetailData} />}
+            {domain === 'region' && <RegionDetail data={detailData as RegionDetailData} />}
+          </>
         )}
       </div>
     </div>

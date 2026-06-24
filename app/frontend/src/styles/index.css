@@ -11,16 +11,25 @@
     @apply bg-background text-on-surface font-sans antialiased;
   }
 
-  /* AISea 커스텀 스크롤바(mockup 동일) */
+  /* AISea: 제목·강조는 Space Grotesk(font-display) */
+  h1, h2, h3 {
+    @apply font-display;
+  }
+
+  /* AISea 커스텀 스크롤바(베이지/잉크 톤) */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #d2d7de;
-    border-radius: 8px;
-    border: 3px solid transparent;
-    background-clip: padding-box;
+    background: #d3cfc4;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9aa0a6;
   }
 
   /* Material Symbols (mockup 아이콘) */
@@ -42,9 +51,9 @@
     user-select: none;
   }
 
-  /* 접근성: 키보드 포커스 가시화(AR-3) */
+  /* 접근성: 키보드 포커스 가시화(AR-3) — 라임그린은 대비 약해 잉크블랙(primary) 사용 */
   :focus-visible {
-    @apply outline outline-2 outline-offset-2 outline-secondary;
+    @apply outline outline-2 outline-offset-2 outline-primary;
   }
 
   /* 전체 Pretendard 통일(사용자 요청) — 숫자·로고도 Pretendard */
@@ -111,6 +120,17 @@
 }
 .animate-aisea-spin {
   animation: aisea-spin 0.9s linear infinite;
+}
+
+/* AISea 엘리베이션(DESIGN.md §Elevation) — 잉크블랙 틴트 그림자 */
+.card-shadow {
+  box-shadow: 0 4px 8px rgba(12, 16, 22, 0.12);
+}
+.custom-shadow-level-2 {
+  box-shadow: 0 4px 8px -2px rgba(12, 16, 22, 0.14);
+}
+.custom-shadow-level-3 {
+  box-shadow: 0 12px 24px -4px rgba(12, 16, 22, 0.18);
 }
 
 /* prefers-reduced-motion 존중(AR-1) — 모션 최소화 */

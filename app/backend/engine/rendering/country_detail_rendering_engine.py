@@ -287,13 +287,47 @@ def market_chart(data):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 경쟁 금융사 Top 3 + 합산 점유율 푸터 (mockup)
+# 경쟁 금융사 Top 5 + 합산 점유율 푸터 (로즈/나이팅게일 차트)
 # ─────────────────────────────────────────────────────────────────────────────
+# 슬라이스 색 — Kinetic Enterprise 팔레트(블루·그린·앰버·레드 + 중립)
+_PIE_COLORS = ["#3F6CB4", "#4F8A6D", "#C08A2E", "#C0533F", "#7A8493"]
+
+
 def _share_pct(s):
     """'약 20%' / '20%' → 20.0 (float), 실패 시 None."""
     import re
     m = re.search(r"(\d+(?:\.\d+)?)", str(s))
     return float(m.group(1)) if m else None
+
+
+def _pie_chart(slices, size=176):
+    """로즈(나이팅게일) 차트 — 각도는 균등(360/N), 반지름은 값에 비례.
+    slices: [(label, value, color)]. 점유율이 클수록 바깥으로 더 길게 뻗는다."""
+    import math
+    cx = cy = size / 2
+    r_max = size / 2
+    n = len(slices)
+    if not n:
+        return ""
+    vmax = max((v for _, v, _ in slices), default=0) or 1
+    r_min = r_max * 0.30  # 가장 작은 값도 최소한 보이도록 안쪽 베이스
+    sweep = 360.0 / n
+    paths, ang = [], -90.0  # 12시 방향에서 시작
+    for _label, value, color in slices:
+        rr = r_min + (r_max - r_min) * (value / vmax)
+        a0 = math.radians(ang)
+        a1 = math.radians(ang + sweep)
+        x0, y0 = cx + rr * math.cos(a0), cy + rr * math.sin(a0)
+        x1, y1 = cx + rr * math.cos(a1), cy + rr * math.sin(a1)
+        large = 1 if sweep > 180 else 0
+        paths.append(
+            f'<path d="M{cx},{cy} L{x0:.2f},{y0:.2f} '
+            f'A{rr:.2f},{rr:.2f} 0 {large} 1 {x1:.2f},{y1:.2f} Z" '
+            f'fill="{color}" stroke="#FFFFFF" stroke-width="1.5"/>')
+        ang += sweep
+    return (f'<svg viewBox="0 0 {size} {size}" width="{size}" height="{size}" '
+            f'class="shrink-0" role="img" aria-label="경쟁 금융사 시장 점유율">'
+            f'{"".join(paths)}</svg>')
 
 
 def competitors_table(data):
@@ -304,31 +338,40 @@ def competitors_table(data):
             break
     if not rows:
         return ""
-    top = rows[:3]
-    body = "".join(
-        '<tr class="border-b border-surface-border last:border-0">'
-        f'<td class="py-[11px] px-md font-mono font-bold text-[14px] text-[#101622] w-8">{rre.esc(r.get("rank", "—"))}</td>'
-        f'<td class="py-[11px] px-md font-body-md text-[14px] text-on-surface break-words">{rre.esc(r.get("name", ""))}</td>'
-        f'<td class="py-[11px] px-md text-right"><span class="font-mono text-[14px] font-bold text-secondary">{rre.esc(r.get("market_share", "—"))}</span></td>'
-        '</tr>' for r in top)
+    top = rows[:5]
+    # 파이 슬라이스 + 범례(점유율 파싱 가능한 행만 파이에 반영)
+    slices = []
+    for i, r in enumerate(top):
+        pct = _share_pct(r.get("market_share"))
+        if pct is not None:
+            slices.append((r.get("name", ""), pct, _PIE_COLORS[i % len(_PIE_COLORS)]))
+    pie = _pie_chart(slices) if slices else ""
+    legend = "".join(
+        '<div class="flex items-center gap-sm py-[7px]">'
+        f'<span class="inline-block w-[11px] h-[11px] rounded-sm shrink-0" '
+        f'style="background:{_PIE_COLORS[i % len(_PIE_COLORS)]}"></span>'
+        f'<span class="font-mono font-bold text-[13px] text-[#101622] w-5 shrink-0">{rre.esc(r.get("rank", i + 1))}</span>'
+        f'<span class="font-body-md text-[13.5px] text-on-surface break-words flex-1 min-w-0">{rre.esc(r.get("name", ""))}</span>'
+        f'<span class="font-mono text-[13.5px] font-bold text-secondary whitespace-nowrap">{rre.esc(r.get("market_share", "—"))}</span>'
+        '</div>' for i, r in enumerate(top))
+    chart_block = (
+        '<div class="flex flex-wrap items-center gap-lg">'
+        f'<div class="flex items-center justify-center">{pie}</div>'
+        f'<div class="flex-1 min-w-[180px]">{legend}</div>'
+        '</div>')
     # 합산 점유율(파싱 가능한 값만)
-    shares = [v for v in (_share_pct(r.get("market_share")) for r in top) if v is not None]
+    shares = [v for _n, v, _c in slices]
     footer = ""
     if shares:
         total = round(sum(shares))
         footer = (
             '<div class="mt-md px-[14px] py-[11px] bg-surface-light rounded-[10px] '
             'font-body-sm text-[12px] text-[#6B7280] leading-relaxed">'
-            f'3사 합산 자동차 금융 시장 점유율 약 <strong class="text-on-surface">{total}%</strong> '
+            f'{len(shares)}사 합산 자동차 금융 시장 점유율 약 <strong class="text-on-surface">{total}%</strong> '
             '— 독립계 캡티브 진입 여지 존재</div>')
     return _card(
-        _card_title("경쟁 금융사 Top 3")
-        + '<table class="w-full border-collapse"><thead>'
-        '<tr class="border-b-2 border-surface-border">'
-        '<th class="py-sm px-md text-left font-label-sm text-[11px] text-outline font-semibold tracking-wider">#</th>'
-        '<th class="py-sm px-md text-left font-label-sm text-[11px] text-outline font-semibold tracking-wider">금융사</th>'
-        '<th class="py-sm px-md text-right font-label-sm text-[11px] text-outline font-semibold tracking-wider">점유율</th>'
-        f'</tr></thead><tbody>{body}</tbody></table>{footer}')
+        _card_title("경쟁 금융사 Top 5")
+        + chart_block + footer)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -389,6 +432,29 @@ def _latest_report(code):
         return None
 
 
+# 법인종류 코드 → (라벨, 배경, 글자색). 미지정은 None.
+_ENTITY_TYPE = {
+    "SA": ("단독법인", "#E9F3EE", "#4F8A6D"),
+    "JV": ("JV", "#FBF0E6", "#C08A2E"),
+}
+
+
+def _entity_cell(t):
+    """법인종류(SA/JV) → 배지 HTML. 비면 빈 문자열."""
+    label, bg, fg = _ENTITY_TYPE.get((t or "").upper(), (None, None, None))
+    if not label:
+        return ""
+    return rre.badge(label, bg, fg)
+
+
+def _products_cell(products):
+    """관리상품 리스트 → 작은 칩 배지 묶음. 비면 '—'."""
+    if not products:
+        return '<span class="font-body-sm text-[13px] text-outline">—</span>'
+    return '<div class="flex flex-wrap gap-1 justify-end">' + "".join(
+        rre.badge(p, "#EAF0F8", "#2C4C86") for p in products) + '</div>'
+
+
 def entry_info(data):
     code = data.get("code", "")
     region = data.get("region", "")
@@ -408,38 +474,53 @@ def entry_info(data):
     # 진출 상태
     row("진출 상태", _status_badge(status_text))
 
-    # 시스템 결정 + IT 유사도 (보고서 있으면)
-    if report:
-        tabs = report.get("tabs", {})
-        decision = tabs.get("tab_1_2_decision", {})
-        rec = decision.get("recommendation")
-        rec_text = rec.get("ko") if isinstance(rec, dict) else rec
-        if rec_text:
-            row("시스템 결정",
-                f'<span class="font-body-sm text-[13px] font-semibold text-secondary">{rre.esc(rec_text)}</span>')
-        sim = tabs.get("tab_1_1_similarity", {}).get("overall_score")
-        if isinstance(sim, (int, float)):
-            row("IT 유사도",
-                f'<span class="font-mono text-[16px] font-bold text-secondary">{sim:.1f}'
-                '<span class="font-body-sm text-[12px] text-outline font-normal"> / 100</span></span>')
-
-    # 권역 베이스라인 국가
-    base_code = (internal.get("region_baselines", {}) or {}).get(region)
-    if base_code:
-        base_ko = _country_ko(base_code)
-        flag = ""
-        if len(base_code) == 2 and base_code.isalpha():
-            flag = f'<span class="mr-1">{_flag_emoji(base_code)}</span>'
-        row("권역 베이스라인",
-            f'<span class="font-body-sm text-[13px] font-semibold">{flag}{rre.esc(base_ko)} ({rre.esc(base_code)})</span>')
-
-    # 지원 방식 권고(있으면) — overall_insight 마지막 문장의 전략 힌트는 생략, 베이스라인 솔루션 표시
-    if base_code:
-        sol = (internal.get("country_assets", {}) or {}).get(base_code, {}).get("solution")
+    if status_text == "운영중":
+        # 운영중 — 추천(베이스라인/기준 솔루션) 대신 실제 자체 운영 정보를 표시.
+        asset = (internal.get("country_assets", {}) or {}).get(code, {})
+        sol = asset.get("solution")
         if sol:
-            rows[-1] = rows[-1]  # noop
-            row("기준 솔루션",
-                f'<span class="font-body-sm text-[13px] font-semibold">{rre.esc(sol)}</span>', border=False)
+            row("운영 솔루션",
+                f'<span class="font-body-sm text-[13px] font-semibold">{rre.esc(sol)}</span>')
+        ent = _entity_cell(asset.get("type"))
+        if ent:
+            row("법인종류", ent)
+        products = asset.get("products") or []
+        if products:
+            row("관리상품", _products_cell(products))
+        since = asset.get("since")
+        if since:
+            row("진출연도",
+                f'<span class="font-body-sm text-[13px] font-semibold">{rre.esc(since)}</span>')
+    else:
+        # 미진출/준비중 등 — 진출 추천 정보(시스템 결정·IT 유사도·베이스라인·기준 솔루션).
+        if report:
+            tabs = report.get("tabs", {})
+            decision = tabs.get("tab_1_2_decision", {})
+            rec = decision.get("recommendation")
+            rec_text = rec.get("ko") if isinstance(rec, dict) else rec
+            if rec_text:
+                row("시스템 결정",
+                    f'<span class="font-body-sm text-[13px] font-semibold text-secondary">{rre.esc(rec_text)}</span>')
+            sim = tabs.get("tab_1_1_similarity", {}).get("overall_score")
+            if isinstance(sim, (int, float)):
+                row("IT 유사도",
+                    f'<span class="font-mono text-[16px] font-bold text-secondary">{sim:.1f}'
+                    '<span class="font-body-sm text-[12px] text-outline font-normal"> / 100</span></span>')
+
+        # 권역 베이스라인 국가
+        base_code = (internal.get("region_baselines", {}) or {}).get(region)
+        if base_code:
+            base_ko = _country_ko(base_code)
+            flag = ""
+            if len(base_code) == 2 and base_code.isalpha():
+                flag = f'<span class="mr-1">{_flag_emoji(base_code)}</span>'
+            row("권역 베이스라인",
+                f'<span class="font-body-sm text-[13px] font-semibold">{flag}{rre.esc(base_ko)} ({rre.esc(base_code)})</span>')
+            # 베이스라인 솔루션을 기준 솔루션으로 표시
+            sol = (internal.get("country_assets", {}) or {}).get(base_code, {}).get("solution")
+            if sol:
+                row("기준 솔루션",
+                    f'<span class="font-body-sm text-[13px] font-semibold">{rre.esc(sol)}</span>', border=False)
     if rows:
         # 마지막 행 보더 제거
         rows[-1] = rows[-1].replace(" border-b border-surface-border", "")
@@ -463,23 +544,6 @@ def _flag_emoji(code):
     if len(code) != 2 or not code.isalpha():
         return ""
     return "".join(chr(0x1F1E6 + ord(c) - ord("A")) for c in code)
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 보고서 생성 CTA — 다크 카드 (mockup)
-# ─────────────────────────────────────────────────────────────────────────────
-def report_cta(data):
-    ko = data.get("country_ko") or data.get("country") or data.get("code", "")
-    return (
-        '<div class="bg-primary rounded-2xl p-lg text-white">'
-        '<div class="font-headline-md text-[15px] font-bold">진단 보고서 생성</div>'
-        f'<div class="font-body-sm text-[12.5px] mt-[7px] leading-[1.5]" style="color:#AEB6C4">'
-        f'현재 룰셋 기준으로 {rre.esc(ko)} 정밀 진단 보고서를 생성합니다.</div>'
-        '<div class="mt-[15px] rounded-[11px] p-[11px] text-center font-body-sm text-[13.5px] font-semibold cursor-pointer" '
-        'style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)">기존 보고서 보기</div>'
-        '<div class="mt-[9px] rounded-[11px] p-[13px] text-center font-body-md text-[14px] font-bold cursor-pointer" '
-        'style="background:#3F6CB4;box-shadow:0 6px 18px rgba(63,108,180,.4)">새 보고서 생성 →</div>'
-        '</div>')
 
 
 def flag_cell(data):
@@ -511,8 +575,7 @@ def render_html(data):
             .replace("{{MARKET_CHART}}", market_chart(data))
             .replace("{{COMPETITORS}}", competitors_table(data))
             .replace("{{AI_INSIGHTS}}", ai_insights(data))
-            .replace("{{ENTRY_INFO}}", entry_info(data))
-            .replace("{{REPORT_CTA}}", report_cta(data)))
+            .replace("{{ENTRY_INFO}}", entry_info(data)))
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -531,6 +594,15 @@ def load_detail(code, version=None):
         path = cand[-1]
     with open(path, encoding="utf-8") as f:
         return json.load(f), path
+
+
+def render_to_string(code="ES", version=None):
+    """파일을 쓰지 않고 상세화면 HTML 문자열만 반환(API 실시간 렌더용).
+
+    매 요청마다 최신 리서치 데이터·internal_latest(country_status 등)를 읽어 렌더하므로
+    데이터 변경이 즉시 반영된다. 디스크 캐시(DTL_<CODE>_nnn.html)는 만들지 않는다."""
+    data, _src = load_detail(code, version)
+    return render_html(data)
 
 
 def render(code="ES", version=None):
