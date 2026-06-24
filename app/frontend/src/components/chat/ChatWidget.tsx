@@ -1,13 +1,16 @@
-// ChatWidget(C5, FR-3, L6) — AISea C1 충실 재현.
-// 다크 헤더 / 버블(유저=블루·봇=흰 카드) / 퀵프롬프트 칩 / 둥근 입력 바 / 다크 pill FAB.
+// ChatWidget(C5, FR-3, L6) — AISea C1 mockup 충실 재현.
+// 봇/유저 아바타 + 버블 꼬리 / 라이트 헤더(부제 라벨) / 인라인 선택지 칩(대화 흐름 내) /
+// Material Symbols 아이콘 입력 바 / pill FAB. 색·타이포는 DESIGN.md(잉크블랙+라임) 토큰.
 // chatOpen은 store 구독(상단바 챗 버튼·FAB가 공유). 텍스트는 i18n(useT)로 한/영 전환.
 // 로직(§6.5): 의도(qa/research/report) 기반 트리거·선택지 칩·상세요약 분기·권역 리서치 가드.
 import { useEffect, useRef, useState } from 'react'
+import type { ReactNode } from 'react'
 import { api } from '../../api/client'
 import type { ChatAction, ChatTurn, Domain, JobKind, Perspective } from '../../api/types'
 import { useStore, store } from '../../store'
 import { useJobPolling } from '../../hooks/useJobPolling'
 import { useT } from '../../i18n/dict'
+import { Icon } from '../common/Icon'
 
 interface Pending {
   domain: Domain
@@ -39,6 +42,48 @@ const PERSPECTIVES: { value: Perspective; key: string }[] = [
   { value: 'system', key: 'chat.perspective.system' },
   { value: 'both', key: 'chat.perspective.both' },
 ]
+
+// 봇 아바타(원형, 잉크블랙 컨테이너 + smart_toy). 메시지·인라인 칩이 공유한다.
+function BotAvatar() {
+  return (
+    <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-container">
+      <Icon name="smart_toy" filled className="text-[18px] text-on-primary-container" />
+    </div>
+  )
+}
+
+// 인라인 선택지 행 — 봇 아바타와 정렬해 '봇이 제시한 선택지'로 읽히게 대화 흐름 안에 둔다.
+// variant: 'primary'=강조 채움 칩(예/아니오·관점·요약), 'soft'=라임 톤 액션 칩.
+function ChipRow({
+  children,
+  ariaLabel,
+}: {
+  children: ReactNode
+  ariaLabel: string
+}) {
+  return (
+    <div className="flex gap-md">
+      <BotAvatar />
+      <div
+        role="group"
+        aria-label={ariaLabel}
+        className="flex max-w-[85%] flex-wrap gap-xs pt-0.5"
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// 강조(채움) 칩 — 잉크블랙 배경. 예/아니오·관점·상세요약 분기처럼 '지금 답해야 할' 선택.
+const SOLID_CHIP =
+  'rounded-full bg-primary px-md py-sm font-label-md text-label-md text-on-primary shadow-[0_2px_6px_rgba(20,24,28,0.16)] transition-transform hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-container-lowest motion-reduce:transition-none motion-reduce:hover:translate-y-0'
+// 보조(아웃라인) 칩 — '아니오'·'요약으로 받기' 같은 약한 대안.
+const GHOST_CHIP =
+  'rounded-full border border-surface-border bg-surface-container px-md py-sm font-label-md text-label-md text-on-surface-variant transition-colors hover:bg-surface-container-high focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-container-lowest'
+// 라임 톤 액션 칩 — 상세요약/리서치/보고서 등 보유국 QA 후속 액션.
+const ACCENT_CHIP =
+  'inline-flex items-center gap-1 rounded-full border border-on-primary-fixed-variant/20 bg-primary-fixed px-md py-xs font-label-md text-label-md text-on-primary-fixed transition-colors hover:bg-primary-fixed-dim focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-container-lowest'
 
 export function ChatWidget() {
   const t = useT()
@@ -244,17 +289,17 @@ export function ChatWidget() {
     }
   }
 
-  // ── FAB (다크 pill) ──
+  // ── FAB (잉크블랙 pill + 라임 아바타) ──
   if (!open) {
     return (
       <button
         type="button"
         aria-label={t('chat.openAria')}
         onClick={() => store.setChatOpen(true)}
-        className="absolute bottom-[26px] right-[78px] z-chat flex h-[52px] animate-aisea-slide items-center gap-md rounded-full bg-primary-container pl-[18px] pr-[20px] text-on-primary shadow-[0_10px_30px_rgba(20,23,28,0.28)] transition-colors hover:bg-primary"
+        className="absolute bottom-[26px] right-[78px] z-chat flex h-[52px] animate-aisea-slide items-center gap-sm rounded-full bg-primary pl-[8px] pr-[20px] text-on-primary shadow-[0_10px_30px_rgba(20,23,28,0.28)] transition-transform hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
       >
-        <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-primary">
-          <span className="block h-[11px] w-[13px] rounded-[4px] border-2 border-white" />
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-inverse-primary text-primary">
+          <Icon name="smart_toy" filled className="text-[20px]" />
         </span>
         <span className="font-body-md text-[14px] font-semibold">{t('chat.fab')}</span>
       </button>
@@ -278,24 +323,28 @@ export function ChatWidget() {
       >
         {/* 진행 상황은 우상단 메인 프로그레스 패널(ProgressPanel)에서 상세 표시한다. */}
 
-        {/* 헤더 (다크) */}
-        <div className="flex flex-none items-center gap-md bg-primary-container px-md py-md text-on-primary">
-          <div className="flex h-[30px] w-[30px] items-center justify-center rounded-[9px] bg-primary">
-            <span className="block h-[11px] w-[13px] rounded-[4px] border-2 border-white" />
-          </div>
-          <div className="flex-1">
-            <div className="font-body-md text-[14px] font-bold">{t('chat.title')}</div>
-            <div className="flex items-center gap-xs font-label-sm text-label-sm text-on-primary-container">
-              <span className="inline-block h-[6px] w-[6px] rounded-full bg-success" />
-              {t('chat.online')}
+        {/* 헤더 — 라이트 표면 + 아바타 + 부제 라벨(C1 mockup) */}
+        <div className="flex flex-none items-center justify-between border-b border-surface-border px-lg py-md">
+          <div className="flex items-center gap-md">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-container">
+              <Icon name="smart_toy" filled className="text-[22px] text-on-primary-container" />
+            </div>
+            <div>
+              <h2 className="font-display text-[17px] font-bold leading-tight text-primary">
+                {t('chat.title')}
+              </h2>
+              <p className="mt-0.5 flex items-center gap-xs font-label-sm text-label-sm uppercase tracking-widest text-text-secondary">
+                <span className="inline-block h-[6px] w-[6px] rounded-full bg-success" />
+                {t('chat.online')}
+              </p>
             </div>
           </div>
           <button
             onClick={() => store.setChatOpen(false)}
             aria-label={t('chat.close')}
-            className="flex h-[30px] w-[30px] items-center justify-center rounded-lg text-on-primary-container transition-colors hover:bg-white/10"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-surface-variant hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-container-lowest"
           >
-            <span className="text-[16px] leading-none">✕</span>
+            <Icon name="close" className="text-[20px]" />
           </button>
         </div>
 
@@ -303,41 +352,58 @@ export function ChatWidget() {
         <div
           ref={scrollRef}
           aria-live="polite"
-          className="flex flex-1 flex-col gap-md overflow-y-auto bg-surface-light p-lg"
+          className="flex flex-1 flex-col gap-lg overflow-y-auto bg-surface-light p-lg"
         >
-          {turns.map((turn, i) => (
-            <div key={i} className={`flex ${turn.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div
-                className={`max-w-[80%] whitespace-pre-wrap rounded-[14px] px-md py-sm font-body-sm text-[13.5px] leading-relaxed ${
-                  turn.role === 'user'
-                    ? 'bg-primary text-on-primary'
-                    : 'border border-surface-border bg-surface-container-lowest text-on-surface'
-                }`}
-              >
-                {turn.content}
+          {turns.map((turn, i) =>
+            turn.role === 'user' ? (
+              <div key={i} className="flex max-w-[85%] flex-row-reverse gap-md self-end">
+                <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-secondary-container">
+                  <Icon name="person" filled className="text-[18px] text-on-secondary-container" />
+                </div>
+                <div className="whitespace-pre-wrap rounded-2xl rounded-tr-sm bg-primary px-md py-sm font-body-sm text-[13.5px] leading-relaxed text-on-primary shadow-[0_4px_8px_rgba(20,24,28,0.12)]">
+                  {turn.content}
+                </div>
               </div>
-            </div>
-          ))}
+            ) : (
+              <div key={i} className="flex max-w-[85%] gap-md">
+                <BotAvatar />
+                <div className="whitespace-pre-wrap rounded-2xl rounded-tl-sm border border-surface-border bg-surface-container-lowest px-md py-sm font-body-sm text-[13.5px] leading-relaxed text-on-surface shadow-[0_4px_8px_rgba(20,24,28,0.05)]">
+                  {turn.content}
+                </div>
+              </div>
+            ),
+          )}
           {typing && (
-            <div className="flex justify-start">
-              <div className="flex gap-[4px] rounded-[14px] border border-surface-border bg-surface-container-lowest px-md py-md">
-                <span className="h-[6px] w-[6px] rounded-full bg-outline" style={{ animation: 'aisea-pulse 1s infinite' }} />
-                <span className="h-[6px] w-[6px] rounded-full bg-outline" style={{ animation: 'aisea-pulse 1s infinite .2s' }} />
-                <span className="h-[6px] w-[6px] rounded-full bg-outline" style={{ animation: 'aisea-pulse 1s infinite .4s' }} />
+            <div className="flex gap-md">
+              <BotAvatar />
+              <div className="flex items-center gap-[5px] rounded-2xl rounded-tl-sm border border-surface-border bg-surface-container-lowest px-lg py-md shadow-[0_4px_8px_rgba(20,24,28,0.05)]">
+                <span className="h-2 w-2 rounded-full bg-outline" style={{ animation: 'aisea-pulse 1s infinite' }} />
+                <span className="h-2 w-2 rounded-full bg-outline" style={{ animation: 'aisea-pulse 1s infinite .2s' }} />
+                <span className="h-2 w-2 rounded-full bg-outline" style={{ animation: 'aisea-pulse 1s infinite .4s' }} />
               </div>
             </div>
           )}
+          {/* 선택지는 모두 대화 흐름 안(봇 아바타와 정렬)에 인라인으로 노출한다. */}
+
+          {/* 초기 선택지(senario.md Case1/2/3) — 첫 화면, 인사말 아래 대화 흐름에 노출 */}
+          {turns.length <= 1 && !typing && !activeJob && (
+            <ChipRow ariaLabel={t('chat.case.ask')}>
+              {CASE_PROMPTS.map((c) => (
+                <button key={c.label} onClick={() => send(t(c.prompt))} className={ACCENT_CHIP}>
+                  {t(c.label)}
+                </button>
+              ))}
+            </ChipRow>
+          )}
+
           {/* 예/아니오 확인(미보유국 리서치 등). 거절 시 보유국 한정 안내. */}
           {pending && !activeJob && !summaryAsk && (
-            <div className="flex gap-sm">
-              <button
-                className="rounded-full bg-primary px-md py-sm font-label-md text-label-md text-on-primary"
-                onClick={() => startResearch(pending)}
-              >
+            <ChipRow ariaLabel={t('chat.research.fallbackPrompt')}>
+              <button className={SOLID_CHIP} onClick={() => startResearch(pending)}>
                 {t('chat.research.yes')}
               </button>
               <button
-                className="rounded-full bg-surface-container px-md py-sm font-label-md text-label-md text-on-surface-variant"
+                className={GHOST_CHIP}
                 onClick={() => {
                   setPending(null)
                   pushAssistant(t('chat.research.declined'))
@@ -345,96 +411,68 @@ export function ChatWidget() {
               >
                 {t('chat.research.no')}
               </button>
-            </div>
+            </ChipRow>
           )}
 
           {/* 관점 선택(senario.md): 비즈니스 / 시스템 / 둘 다 */}
           {perspectiveAsk && !activeJob && !pending && (
-            <div className="flex flex-wrap gap-sm">
+            <ChipRow ariaLabel={t('chat.perspective.ask')}>
               {PERSPECTIVES.map((p) => (
-                <button
-                  key={p.value}
-                  className="rounded-full bg-primary px-md py-sm font-label-md text-label-md text-on-primary"
-                  onClick={() => onPerspective(p.value)}
-                >
+                <button key={p.value} className={SOLID_CHIP} onClick={() => onPerspective(p.value)}>
                   {t(p.key)}
                 </button>
               ))}
-            </div>
+            </ChipRow>
           )}
 
           {/* 상세 요약 분기: 상세 화면 / 요약 */}
           {summaryAsk && !activeJob && (
-            <div className="flex gap-sm">
-              <button
-                className="rounded-full bg-primary px-md py-sm font-label-md text-label-md text-on-primary"
-                onClick={() => onSummaryChoice(true)}
-              >
+            <ChipRow ariaLabel={t('chat.summary.ask').replace('{id}', summaryAsk.id)}>
+              <button className={SOLID_CHIP} onClick={() => onSummaryChoice(true)}>
                 {t('chat.summary.openDetail')}
               </button>
-              <button
-                className="rounded-full bg-surface-container px-md py-sm font-label-md text-label-md text-on-surface-variant"
-                onClick={() => onSummaryChoice(false)}
-              >
+              <button className={GHOST_CHIP} onClick={() => onSummaryChoice(false)}>
                 {t('chat.summary.getSummary')}
               </button>
-            </div>
+            </ChipRow>
           )}
 
           {/* 선택지 칩(보유국 QA): 상세요약 / 리서치(재)수행 / 보고서(재)생성 */}
           {actions.length > 0 && !pending && !summaryAsk && !perspectiveAsk && !activeJob && (
-            <div className="flex flex-wrap gap-xs">
+            <ChipRow ariaLabel={t('chat.action.summary')}>
               {actions.map((a) => (
-                <button
-                  key={a}
-                  onClick={() => onAction(a)}
-                  className="rounded-full border border-primary/30 bg-primary-fixed px-md py-xs font-label-md text-label-md text-primary transition-colors hover:bg-primary-fixed-dim"
-                >
+                <button key={a} onClick={() => onAction(a)} className={ACCENT_CHIP}>
                   {t(ACTION_LABEL_KEY[a])}
+                </button>
+              ))}
+            </ChipRow>
+          )}
+        </div>
+
+        {/* 하단: 퀵프롬프트 + 입력 (C1 mockup: 입력 바 우측에 send 아이콘, 푸터 disclaimer) */}
+        <div className="flex-none border-t border-surface-border bg-surface-container-lowest px-lg py-md shadow-[0_-4px_12px_rgba(20,24,28,0.04)]">
+          {turns.length <= 1 && (
+            <div className="mb-md flex flex-wrap gap-xs">
+              {QUICK_PROMPT_KEYS.map((q) => (
+                <button
+                  key={q}
+                  onClick={() => send(t(q))}
+                  className="rounded-full border border-surface-border bg-surface-container px-md py-xs font-label-sm text-label-sm text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-container-lowest"
+                >
+                  {t(q)}
                 </button>
               ))}
             </div>
           )}
-        </div>
-
-        {/* 하단: 퀵프롬프트 + 입력 */}
-        <div className="flex-none border-t border-surface-border bg-surface-container-lowest px-md py-sm">
-          {turns.length <= 1 && (
-            <>
-              {/* 초기 선택지(senario.md Case1/2/3) */}
-              <div className="mb-sm flex flex-wrap gap-xs">
-                {CASE_PROMPTS.map((c) => (
-                  <button
-                    key={c.label}
-                    onClick={() => send(t(c.prompt))}
-                    className="rounded-full border border-primary/30 bg-primary-fixed px-md py-xs font-label-md text-label-md text-primary transition-colors hover:bg-primary-fixed-dim"
-                  >
-                    {t(c.label)}
-                  </button>
-                ))}
-              </div>
-              <div className="mb-sm flex flex-wrap gap-xs">
-                {QUICK_PROMPT_KEYS.map((q) => (
-                  <button
-                    key={q}
-                    onClick={() => send(t(q))}
-                    className="rounded-[9px] bg-primary-fixed px-md py-xs font-body-sm text-[12px] font-medium leading-snug text-primary transition-colors hover:bg-primary-fixed-dim"
-                  >
-                    {t(q)}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
           <form
-            className="flex items-center gap-sm rounded-[12px] bg-surface-container py-[5px] pl-md pr-[5px]"
+            className="relative"
             onSubmit={(e) => {
               e.preventDefault()
               send(input)
             }}
           >
             <input
-              className="flex-1 bg-transparent font-body-sm text-[13.5px] text-on-surface outline-none placeholder:text-outline"
+              className="h-[48px] w-full rounded-full border border-surface-border bg-surface-light pl-lg pr-[52px] font-body-sm text-[13.5px] text-on-surface outline-none transition-colors placeholder:text-text-disabled focus:border-primary focus:ring-1 focus:ring-primary"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={t('chat.inputPlaceholder')}
@@ -443,11 +481,15 @@ export function ChatWidget() {
             <button
               type="submit"
               aria-label={t('chat.send')}
-              className="flex h-9 w-9 flex-none items-center justify-center rounded-[10px] bg-primary text-[15px] text-on-primary transition-colors hover:bg-inverse-primary"
+              disabled={!input.trim()}
+              className="absolute right-[6px] top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-on-primary shadow-[0_2px_4px_rgba(20,24,28,0.16)] transition-colors hover:bg-primary-container disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-container-lowest"
             >
-              ↑
+              <Icon name="send" className="text-[18px]" />
             </button>
           </form>
+          <p className="mt-sm text-center font-label-sm text-label-sm text-text-disabled">
+            {t('chat.disclaimer')}
+          </p>
         </div>
       </div>
     </div>
