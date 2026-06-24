@@ -6,7 +6,7 @@
     "country": "ES",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-23T22:17:25.134385",
+  "generated_at": "2026-06-24T20:56:45.880242",
   "schema_version": "1.1",
   "overall_insight": "EU 5위권 자동차 시장. 2025년 신차(turismos) 등록 1,148,650대(+12.9%, ANFAC)로 강한 회복세를 보였고, 렌팅(운용리스)이 신규 등록의 25.6%(281,593대, AER)를 차지하며 법인·플릿 수요가 성장을 견인한다. 비용·난이도 드라이버는 명확하다 — 소비자 자동차금융은 EFC(여신전문금융기관) 인가(최저자본 €5M·전액 현금납입, RD 309/2020·Banco de España 감독)와 2026년 발효 예정 신소비자신용법(한시 22% TAE 상한 + 영구적으로 BdE 분기 평균금리+금액별 마진)이라는 이중 규제가 진입 부담의 핵심이다. 반면 B2B 리스·렌팅은 인가 부담이 경감되어 진입이 유연하다. 비즈니스 매력도(EU 5위 시장규모, 렌팅 고성장)는 상위권이나, 캡티브가 아닌 은행계 주도(Santander Consumer·CA Auto Bank·Cetelem 3사가 승용차 금융 약 60%) 구조는 독립계 진입 여지를 남긴다. IT 유사도는 높다 — EU GDPR·SEPA·Bizum·성숙한 CB 인프라(CIRBE/ASNEF/Experian)로 NetSol 베이스라인 재사용률이 양호하다. 매력도↔IT 불일치 지점은 차량회수 — 리스·렌팅은 소유권 기반으로 용이하나 소비자대출 담보회수는 사법 적체로 6~12개월이 걸려 상품 믹스가 회수 리스크를 좌우한다. 다크호스는 렌팅 시장의 EV 비중(신규의 51.3%)으로, 잔가 리스크 관리가 리스 손익의 핵심 변수다. 렌팅·플릿 우선 진입 후 EFC 인가 기반 소비자금융으로 단계적 확장하는 전략이 유효하다.",
   "overall_insight_en": "Spain ranks among the EU's top-5 auto markets. New-car (turismos) registrations reached 1,148,650 units in 2025 (+12.9%, ANFAC), with renting (operating lease) accounting for 25.6% of registrations (281,593 units, AER) as corporate and fleet demand drove growth. Cost/difficulty drivers are clear — consumer auto finance faces a dual regulatory burden: EFC (specialized credit institution) licensing (minimum capital €5M, fully cash-paid, RD 309/2020, supervised by Banco de España) and the upcoming 2026 Consumer Credit Act (temporary 22% APR cap plus a permanent mechanism based on BdE quarterly average rates with amount-tiered margins). B2B leasing/renting faces lighter licensing. Business attractiveness (EU #5 market size, fast-growing renting) is strong, while the bank-led (not captive) structure — Santander Consumer, CA Auto Bank, Cetelem account for ~60% of passenger-car finance — leaves room for independent entrants. IT similarity is high — EU GDPR, SEPA, Bizum, and mature credit bureau infrastructure (CIRBE/ASNEF/Experian) deliver strong NetSol baseline reuse. The attractiveness↔IT mismatch is in repossession — leasing/renting is easy thanks to ownership, but consumer-loan collateral recovery takes 6-12 months due to court backlogs, so product mix drives recovery risk. The dark horse is EV share in the renting market (51.3% of new registrations), making residual-value risk the key lever for lease P&L. A staged strategy — renting/fleet first, then consumer finance under EFC licensing — is effective.",
@@ -801,7 +801,11 @@
       "base_country": "GB",
       "base_system": "NetSol",
       "region_system_exists": true,
-      "hq_baseline_cost": 8000,
+      "thresholds": {
+        "expansion_min_score": 75.0,
+        "hq_build_min_score": 35.0
+      },
+      "hq_baseline_cost": 8000000,
       "hq_baseline_months": 24,
       "hq_baseline_currency": "EUR",
       "items": [
@@ -900,34 +904,45 @@
       ]
     },
     "tab_1_3_tco": {
-      "build_cost": 3500.0,
+      "build_cost": 3500000.0,
       "build_months": 14.0,
       "annual_subscription": 37845.340000000004,
-      "annual_maintenance": 500,
-      "annual_recurring": 38345.340000000004,
+      "annual_maintenance": 630000.0,
+      "maintenance_rate": 0.18,
+      "annual_recurring": 667845.34,
       "operations_10y": 50000,
-      "system_cost_10y": 386953.4,
-      "total_tco_10y": 436953.4,
+      "system_cost_10y": 10178453.399999999,
+      "total_tco_10y": 10228453.399999999,
       "currency": "EUR",
       "currency_base": "EUR",
-      "total_tco_10y_eur": 436953.4,
+      "total_tco_10y_eur": 10228453.399999999,
       "similarity_score": 75.3125,
       "similarity_multiplier": 0.7,
       "similarity_band": "70~80",
+      "build_method": "baseline_reuse",
+      "hq_build_reference": {
+        "build_cost": 8000000,
+        "build_months": 24,
+        "build_cost_eur": 8000000,
+        "currency": "EUR",
+        "delta_vs_applied": 4500000.0,
+        "is_applied": false,
+        "note": "본사 자체구축 시 기본 비용/기간 (참고용, EUR 절대값)"
+      },
       "discount_applied": 0.3,
       "build_breakdown": {
         "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",
         "inputs": {
           "베이스라인 국가": "GB",
           "베이스라인 솔루션": "NetSol",
-          "B 구축비용": 5000,
+          "B 구축비용": 5000000,
           "B 구축기간(개월)": 20,
           "종합 유사도": 75.3,
           "승수 구간": "70~80",
           "적용 승수": 0.7
         },
         "outputs": {
-          "신규국 구축비용": 3500.0,
+          "신규국 구축비용": 3500000.0,
           "신규국 구축기간(개월)": 14.0
         },
         "currency": "EUR"
@@ -945,6 +960,7 @@
           "우리사 예상 점유율": 0.02
         }
       },
+      "is_subscription": true,
       "subscription_details": {
         "existing_volume": 80,
         "new_volume": 7581,

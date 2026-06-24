@@ -205,11 +205,37 @@ function ItemValue({ item }: { item: ReportItem }) {
       </div>
     )
   }
+  // 콤마(,)로 구분된 다중 세그먼트 값은 줄바꿈해서 가독성을 높인다.
+  // 단, 괄호 안 콤마(예: "(S.A., 최저자본)")는 분리하지 않는다.
+  // 값이 비면 dash()로 '—' 폴백.
+  const text = dash(value)
+  const segments = splitTopLevelCommas(text)
   return (
     <div className="font-body-md text-body-md text-primary text-right max-w-[55%] font-semibold">
-      {dash(value)}
+      {segments.length > 1
+        ? segments.map((seg, i) => <div key={i}>{seg}</div>)
+        : text}
     </div>
   )
+}
+
+/** 괄호 밖 콤마(, 또는 、)만 기준으로 분리. 괄호 안 콤마는 보존한다. */
+function splitTopLevelCommas(text: string): string[] {
+  const out: string[] = []
+  let depth = 0
+  let cur = ''
+  for (const ch of text) {
+    if (ch === '(' || ch === '（') depth++
+    else if (ch === ')' || ch === '）') depth = Math.max(0, depth - 1)
+    if ((ch === ',' || ch === '、') && depth === 0) {
+      out.push(cur.trim())
+      cur = ''
+    } else {
+      cur += ch
+    }
+  }
+  if (cur.trim()) out.push(cur.trim())
+  return out.filter(Boolean)
 }
 
 // ── 원천 데이터 항목 카드(라벨 + 값 + 게이트배지 + 선택적 차트 + 아코디언) ──
@@ -382,7 +408,6 @@ export function DecisionTreeSvg({
   expansionMin = 65,
   hqBuildMin = 55,
   isApac = false,
-  apacMin = 50,
 }: {
   score: number
   baseCountryKo: string
@@ -394,14 +419,12 @@ export function DecisionTreeSvg({
   expansionMin?: number
   /** 본사 자체구축 임계값(룰셋 hq_build_min_score). 미지정 시 55 폴백. */
   hqBuildMin?: number
-  /** APAC(아시아) — 권역 확산 분기 없이 내재화/외부솔루션 2지선 렌더. */
+  /** APAC(아시아) — 권역 확산·유사도 분기 없이 외부솔루션·자체구축 양쪽 동등 제시. */
   isApac?: boolean
-  /** APAC 내재화 임계값(룰셋 apac_internalization_min_score). 미지정 시 50 폴백. */
-  apacMin?: number
 }) {
-  // APAC — 권역 확산 경로가 없는 2지선 트리(내재화 / 외부솔루션).
+  // APAC — 권역 확산·유사도 분기 없이 외부솔루션·자체구축을 양쪽 동등 제시.
   if (isApac) {
-    return <DecisionTreeSvgApac score={score} decision={decision} apacMin={apacMin} />
+    return <DecisionTreeSvgApac />
   }
   // 엔진 decision을 시각화 분기로 매핑. decision이 없으면 score·임계값으로 폴백.
   // - baseline_system_expansion → 권역 내 확산 (B)
@@ -525,77 +548,70 @@ export function DecisionTreeSvg({
   )
 }
 
-// ── APAC 전용 2지선 결정 트리(내재화 / 외부솔루션) ─────────────────
-//   권역 내 확산 경로가 없다. 유사도 단일 임계값(apacMin)으로만 가른다.
-//   - 유사도 ≥ apacMin → 내재화(decision 'hq_build')
-//   - 유사도 < apacMin → 외부솔루션
-function DecisionTreeSvgApac({ score, decision, apacMin }: { score: number; decision?: string; apacMin: number }) {
-  // decision 우선, 없으면 임계값 폴백.
-  const branch: 'INT' | 'EXT' = decision === 'external_solution' ? 'EXT' : decision === 'hq_build' ? 'INT' : score >= apacMin ? 'INT' : 'EXT'
-  const isINT = branch === 'INT'
-  const isEXT = branch === 'EXT'
-  // 활성 경로 — 다이아몬드(중앙)에서 좌(내재화)/우(외부솔루션)로 분기.
-  const activePath = isINT
-    ? 'M450 140 L450 200 M450 320 L450 360 L230 360 L230 460'
-    : 'M450 140 L450 200 M450 320 L450 360 L670 360 L670 460'
-  const activeBullet = isINT ? { cx: 230, cy: 460 } : { cx: 670, cy: 460 }
+// ── APAC 전용 결정 트리(외부솔루션 / 자체구축 — 양쪽 동등 제시) ───────────
+//   권역 내 확산 경로도, 유사도 임계값 분기도 없다. 두 경로를 동등하게 함께
+//   제시한다(추천 강조 없음). 의사결정은 사용자 몫.
+function DecisionTreeSvgApac() {
+  // 양쪽 모두 활성 — 중립 동등 제시.
   const cardActive = 'border-2 bg-primary/10 border-primary rounded-xl p-md'
   const cardActiveShadow = { boxShadow: '0 6px 18px rgba(0,0,0,0.08)' }
-  const cardIdle = 'border-2 bg-surface-container border-outline-variant opacity-40 rounded-xl p-md'
   return (
     <div className="flex flex-col items-center pt-md gap-sm">
       <style>{`
         @keyframes dt-pop { 0%{transform:scale(.85);opacity:0} 60%{transform:scale(1.08);opacity:1} 100%{transform:scale(1);opacity:1} }
-        @keyframes dt-flow { to { stroke-dashoffset: -24; } }
         @keyframes dt-dash { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
         @keyframes dt-glow { 0%,100%{filter:drop-shadow(0 0 6px rgba(200,240,81,.55))} 50%{filter:drop-shadow(0 0 14px rgba(200,240,81,1))} }
-        .dt-diamond { animation: dt-pop .6s ease-out .3s both; transform-origin:center; }
-        .dt-flow-line { stroke:#9aa0a8; stroke-width:2; stroke-dasharray:6 6; animation:dt-flow 1.2s linear infinite; fill:none; }
+        .dt-node { animation: dt-pop .6s ease-out .3s both; transform-origin:center; }
         .dt-active-path { stroke:#14181C; stroke-width:4; stroke-linecap:round; fill:none; stroke-dasharray:1000; stroke-dashoffset:1000; animation: dt-dash 1.6s ease-out .6s forwards, dt-glow 2s ease-in-out 2.2s infinite; }
-        .dt-active-bullet { animation: dt-pop .5s ease-out 2s both, dt-glow 2s ease-in-out 2.4s infinite; transform-origin:center; transform-box:fill-box; }
         .dt-branch-card { animation: dt-pop .55s ease-out both; transform-origin:top center; }
-        .dt-branch-int { animation-delay:2.1s; } .dt-branch-ext { animation-delay:2.3s; }
+        .dt-branch-int { animation-delay:1.6s; } .dt-branch-ext { animation-delay:1.8s; }
         @media (prefers-reduced-motion: reduce) {
-          .dt-diamond,.dt-active-path,.dt-active-bullet,.dt-branch-card { animation: none !important; }
-          .dt-flow-line { animation: none !important; }
+          .dt-node,.dt-active-path,.dt-branch-card { animation: none !important; }
           .dt-active-path { stroke-dashoffset: 0 !important; }
         }
       `}</style>
       <svg
         className="w-full max-w-4xl block"
-        viewBox="0 0 900 520"
+        viewBox="0 0 900 400"
         preserveAspectRatio="xMidYMid meet"
         style={{ marginBottom: '-8px' }}
         role="img"
-        aria-label="APAC 시스템 결정 트리 (내재화/외부솔루션)"
+        aria-label="APAC 시스템 결정 트리 (외부솔루션·자체구축 양쪽 검토)"
       >
-        <g className="dt-diamond" style={{ animationDelay: '0.3s' }}>
-          <polygon points="450,200 525,260 450,320 375,260" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
-          <text x="450" y="255" textAnchor="middle" fontSize="12" fill="#14181C" fontWeight="700">유사도</text>
-          <text x="450" y="280" textAnchor="middle" fontSize="18" fill="#14181C" fontWeight="800">{score.toFixed(1)}</text>
+        {/* 시작 노드 — 진출 검토. 분기 없이 두 경로로 동시 연결. */}
+        <g className="dt-node">
+          <rect x="350" y="30" width="200" height="60" rx="12" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
+          <text x="450" y="58" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">APAC 진출 검토</text>
+          <text x="450" y="76" textAnchor="middle" fontSize="11" fill="#3a4048">두 경로 함께 검토</text>
         </g>
-        <path d="M450 320 L450 360 L230 360 L230 460" className="dt-flow-line" opacity="0.25" />
-        <text x="230" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isINT ? '#14181C' : '#9aa0a8'}>{`≥ ${apacMin} → 내재화`}</text>
-        <path d="M450 320 L450 360 L670 360 L670 460" className="dt-flow-line" opacity="0.25" />
-        <text x="670" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isEXT ? '#14181C' : '#9aa0a8'}>{`< ${apacMin} → 외부솔루션`}</text>
-        <path d={activePath} className="dt-active-path" />
-        <circle className="dt-active-bullet" cx={activeBullet.cx} cy={activeBullet.cy} r="7" fill="#14181C" />
+        {/* 좌(외부솔루션)·우(자체구축) 양쪽 모두 활성 경로로 점등. */}
+        <path d="M450 90 L450 140 L230 140 L230 230" className="dt-active-path" />
+        <path d="M450 90 L450 140 L670 140 L670 230" className="dt-active-path" style={{ animationDelay: '0.8s' }} />
+        <text x="230" y="125" textAnchor="middle" fontSize="13" fontWeight="700" fill="#14181C">외부솔루션 도입</text>
+        <text x="670" y="125" textAnchor="middle" fontSize="13" fontWeight="700" fill="#14181C">자체구축(내재화)</text>
       </svg>
       <div className="w-full max-w-4xl">
         <div className="grid grid-cols-2 gap-lg">
-          <div className={`dt-branch-card dt-branch-int ${isINT ? cardActive : cardIdle}`} style={isINT ? cardActiveShadow : undefined}>
-            <div className="flex items-center justify-center gap-xs">
-              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isINT ? 'text-primary' : 'text-text-secondary'}`}>domain</span>
-              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isINT ? 'text-primary' : 'text-text-secondary'}`}>내재화</span>
+          <div className="dt-branch-card dt-branch-ext" >
+            <div className={cardActive} style={cardActiveShadow}>
+              <div className="flex items-center justify-center gap-xs">
+                <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-primary">extension</span>
+                <span className="font-semibold font-body-md text-body-md uppercase tracking-wider text-primary">외부솔루션</span>
+              </div>
             </div>
           </div>
-          <div className={`dt-branch-card dt-branch-ext ${isEXT ? cardActive : cardIdle}`} style={isEXT ? cardActiveShadow : undefined}>
-            <div className="flex items-center justify-center gap-xs">
-              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>extension</span>
-              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>외부솔루션</span>
+          <div className="dt-branch-card dt-branch-int">
+            <div className={cardActive} style={cardActiveShadow}>
+              <div className="flex items-center justify-center gap-xs">
+                <span className="material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] text-primary">domain</span>
+                <span className="font-semibold font-body-md text-body-md uppercase tracking-wider text-primary">자체구축(내재화)</span>
+              </div>
             </div>
           </div>
         </div>
+        <p className="text-center font-label-sm text-label-sm text-text-secondary mt-md">
+          APAC은 권역 확산·유사도 분기를 적용하지 않습니다 — 두 경로를 동등하게 비교 검토합니다.
+        </p>
       </div>
     </div>
   )
@@ -673,7 +689,13 @@ export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded,
 //   그 외(권역 확산)   → 기존 구독료 구간표
 interface DecisionSidePanelProps {
   decision?: string
-  externalCandidates?: { name: string; cost_note?: string }[]
+  externalCandidates?: { name: string; category?: string | null; cost_note?: string }[]
+  externalSolutionSummary?: {
+    solution_type?: string | null
+    solution_type_insight?: string | null
+    vendor_pattern?: string | null
+    source?: string | null
+  } | null
   hqBaselineCost?: number
   hqBaselineMonths?: number
   hqBaselineCurrency?: string
@@ -684,36 +706,62 @@ interface DecisionSidePanelProps {
 export function DecisionSidePanel({
   decision,
   externalCandidates,
+  externalSolutionSummary,
   hqBaselineCost,
   hqBaselineMonths,
   hqBaselineCurrency = 'EUR',
   subscription,
   isApac = false,
 }: DecisionSidePanelProps) {
-  if (decision === 'external_solution') {
+  if (decision === 'external_solution' || decision === 'apac_dual') {
     const list = externalCandidates ?? []
     if (list.length === 0) {
-      return <p className="font-body-sm text-body-sm text-text-secondary">추천 외부솔루션 후보 데이터가 없습니다.</p>
+      return <p className="font-body-sm text-body-sm text-text-secondary">해당국 외부솔루션 후보 데이터가 없습니다.</p>
     }
     return (
       <div className="flex flex-col gap-sm">
         <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
-          권역 확산·본사 구축 기준 미달 → 현지 외부솔루션 도입을 검토합니다. 후보 벤더는 다음과 같습니다.
+          {decision === 'apac_dual'
+            ? '자체구축(내재화)과 함께 검토할 현지 외부솔루션 후보입니다. 자체구축 예상 비용은 TCO 탭을 참조하세요.'
+            : '권역 확산·본사 구축 기준 미달 → 현지 외부솔루션 도입을 검토합니다. 후보 벤더는 다음과 같습니다.'}
         </p>
         <ul className="flex flex-col gap-xs list-none p-0 m-0">
           {list.map((c, i) => (
             <li
               key={i}
-              className="flex items-center justify-between px-sm py-2 rounded-lg bg-surface-container border border-outline-variant"
+              className="flex items-center justify-between gap-xs px-sm py-2 rounded-lg bg-surface-container border border-outline-variant"
             >
-              <span className="flex items-center gap-xs">
-                <span className="material-symbols-outlined text-primary text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">extension</span>
-                <span className="font-body-md text-body-md text-text-primary font-semibold">{c.name}</span>
+              <span className="flex items-center gap-xs min-w-0">
+                <span className="font-body-md text-body-md text-text-primary font-semibold truncate">{c.name}</span>
+                {c.category && (
+                  <span className="shrink-0 font-label-sm text-label-sm px-2 py-[1px] rounded-full bg-primary/10 text-primary">
+                    {c.category}
+                  </span>
+                )}
               </span>
-              <span className="font-label-sm text-label-sm text-text-secondary">{c.cost_note ?? '별도 견적'}</span>
+              <span className="shrink-0 font-label-sm text-label-sm text-text-secondary">{c.cost_note ?? '별도 견적'}</span>
             </li>
           ))}
         </ul>
+        {externalSolutionSummary && (
+          <div className="mt-xs flex flex-col gap-xs rounded-lg bg-surface-light border border-outline-variant px-sm py-2">
+            {externalSolutionSummary.solution_type && (
+              <div className="flex flex-col">
+                <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">솔루션 유형</span>
+                <span className="font-body-sm text-body-sm text-text-primary">{externalSolutionSummary.solution_type}</span>
+              </div>
+            )}
+            {externalSolutionSummary.vendor_pattern && (
+              <div className="flex flex-col">
+                <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">벤더 패턴</span>
+                <span className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{externalSolutionSummary.vendor_pattern}</span>
+              </div>
+            )}
+            {externalSolutionSummary.source && (
+              <span className="font-label-sm text-label-sm text-text-secondary">출처: {externalSolutionSummary.source}</span>
+            )}
+          </div>
+        )}
         <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
           * 도입 비용은 벤더별 견적에 따라 산정됩니다.
         </p>

@@ -22,7 +22,7 @@
         "할부금융"
       ],
       "since": 2026,
-      "build_cost": 5000,
+      "build_cost": 5000000,
       "build_months": 20,
       "reuse_factor": 0.7
     },
@@ -34,7 +34,7 @@
         "리스"
       ],
       "since": 1989,
-      "build_cost": 1000,
+      "build_cost": 1000000,
       "build_months": 18,
       "reuse_factor": 0.5
     },
@@ -46,7 +46,7 @@
         "리스"
       ],
       "since": 1989,
-      "build_cost": 1000,
+      "build_cost": 1000000,
       "build_months": 18,
       "reuse_factor": 0.5
     },
@@ -58,7 +58,7 @@
         "운용리스"
       ],
       "since": 2016,
-      "build_cost": 8000,
+      "build_cost": 8000000,
       "build_months": 18,
       "reuse_factor": 1.0
     },
@@ -99,10 +99,10 @@
         "할부금융"
       ],
       "since": 2024,
-      "build_cost": 3641,
+      "build_cost": 3641000,
       "build_months": 18,
       "reuse_factor": 0.7,
-      "_note": "SA 권역 베이스라인. build_cost는 EUR 작업통화 기준(약 400만 USD 환산). SA 권역 표시통화는 USD(region_currency)."
+      "_note": "미주(NA) 권역 내 BR 참고치. 미주 베이스라인은 US. build_cost는 EUR 절대값(약 400만 USD 환산). 미주 권역 표시통화는 USD(region_currency)."
     },
     "ID": {
       "type": "JV"
@@ -114,13 +114,11 @@
   "region_baselines": {
     "EU": "GB",
     "NA": "US",
-    "APAC": "AU",
-    "SA": "BR"
+    "APAC": "AU"
   },
   "region_currency": {
     "EU": "EUR",
     "NA": "USD",
-    "SA": "USD",
     "APAC": "KRW",
     "_note": "권역별 보고서 표시통화. TCO는 EUR로 계산 후 이 통화로 환산해 노출(fx.rates 경유)."
   },
@@ -163,9 +161,9 @@
     "ID": "APAC",
     "CN": "APAC",
     "PR": "NA",
-    "BR": "SA",
-    "CL": "SA",
-    "AR": "SA",
+    "BR": "NA",
+    "CL": "NA",
+    "AR": "NA",
     "AT": "EU",
     "DK": "EU",
     "NL": "EU",
@@ -624,9 +622,9 @@
     },
     "BR": {
       "country_name": "Brazil",
-      "system_solution": "(SA baseline)",
+      "system_solution": "(BR reference)",
       "as_of": "2026-06-22",
-      "_note": "남미(SA) 베이스라인 — 브라질 country JSON target_score 기반. 운영자 검증 후 보정.",
+      "_note": "미주(NA) 내 브라질 참고치 — 브라질 country JSON target_score 기반. 미주 베이스라인은 US. 운영자 검증 후 보정.",
       "items": {
         "구매 패턴(할부·리스 비중)": {
           "dimensions": {
@@ -892,10 +890,10 @@
     "note": "시스템과 별도인 내부 운영비용 (10년 통금액)"
   },
   "hq_build_baseline": {
-    "cost": 8000,
+    "cost": 8000000,
     "months": 24,
     "currency": "EUR",
-    "note": "본사 자체구축 시 기본 비용/기간 (참고용)"
+    "note": "본사 자체구축 시 기본 비용/기간 (참고용, EUR 절대값)"
   },
   "maintenance_cost_annual": {
     "amount": 500,

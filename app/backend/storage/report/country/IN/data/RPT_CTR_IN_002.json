@@ -1,12 +1,12 @@
 {
-  "report_id": "RPT_CTR_IN_001",
+  "report_id": "RPT_CTR_IN_002",
   "report_type": "type1_country",
   "title": "인도 진출 진단 보고서",
   "target": {
     "country": "IN",
     "base_country": "AU"
   },
-  "generated_at": "2026-06-24T20:56:46.313924",
+  "generated_at": "2026-06-24T20:59:43.703820",
   "schema_version": "1.1",
   "overall_insight": "세계 3위 자동차 시장(2025년 신차 420만대). GDP 6.8% 고성장과 금융 침투율 80%로 매력도 최상위권. 그러나 RBI NBFC 인가·자본·거버넌스 부담, 결제 데이터 현지화, INR 변동성·자본통제 리스크가 진입 부담. 캡티브 강도 35%로 독립계 진입 여지 있고, 디지털 인프라(UPI·Account Aggregator)와 임베디드 금융이 단기 차별화 기회. 중고차 금융 25%·운용리스 미성숙은 개척 영역. NBFC 인가 우선·디지털 채널 중심 진입이 유효.",
   "overall_insight_en": "World's 3rd-largest auto market (4.2M new cars in 2025). High GDP growth of 6.8% and 80% finance penetration place attractiveness at the top tier. However, RBI NBFC licensing, capital/governance burden, payment data localization, and INR volatility/capital-control risk add entry friction. Captive intensity at 35% leaves room for independents; digital infrastructure (UPI, Account Aggregator) and embedded finance offer near-term differentiation. Used-car finance (25%) and immature operating lease are greenfield. NBFC-license-first, digital-channel-led entry is effective.",
@@ -812,17 +812,36 @@
       "external_candidates": [
         {
           "name": "Pennant Technologies",
+          "category": "글로벌",
           "cost_note": "별도 견적"
         },
         {
           "name": "Nucleus",
+          "category": "글로벌",
           "cost_note": "별도 견적"
         },
         {
           "name": "Misys",
+          "category": "글로벌",
+          "cost_note": "별도 견적"
+        },
+        {
+          "name": "Fiserv",
+          "category": "글로벌",
+          "cost_note": "별도 견적"
+        },
+        {
+          "name": "Tata Consultancy",
+          "category": "인도 SI",
           "cost_note": "별도 견적"
         }
       ],
+      "external_solution_summary": {
+        "solution_type": "글로벌 패키지 + 자체 코어 혼재, 클라우드 SaaS 전환 가속",
+        "solution_type_insight": "대형 은행 자체 코어 유지, NBFC·신규 진입자 클라우드 패키지 채택 가속. NetSol/Salesforce 유사도 양호.",
+        "vendor_pattern": "글로벌 패키지 + 현지 SI 혼재. 대형 은행은 자체 코어, NBFC·신규 진입자는 패키지 + 클라우드 SaaS 선호.",
+        "source": "Mordor Intelligence India BFSI Tech 2025"
+      },
       "items": [
         {
           "item": "금리 상한 규제",

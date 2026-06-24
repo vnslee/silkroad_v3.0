@@ -294,6 +294,7 @@ export default function RulesetForm() {
             unit="pt"
             onChange={setField}
             onReplace={setGroup}
+            hideKeys={['apac_internalization_min_score']}
           />
         </section>
       </div>
@@ -337,6 +338,7 @@ function WeightGroup({
   unit,
   onChange,
   onReplace,
+  hideKeys,
 }: {
   title: string
   hint?: string
@@ -350,8 +352,10 @@ function WeightGroup({
   unit?: string
   onChange: (group: WeightKey, key: string, value: number) => void
   onReplace: (group: WeightKey, next: Record<string, number>) => void
+  /** 화면에서 숨길 키(엔진 미사용 등) — 데이터엔 남기고 표시만 제외. */
+  hideKeys?: string[]
 }) {
-  const keys = Object.keys(values)
+  const keys = Object.keys(values).filter((k) => !hideKeys?.includes(k))
   if (keys.length === 0) return null
 
   const total = sumWeights(values)

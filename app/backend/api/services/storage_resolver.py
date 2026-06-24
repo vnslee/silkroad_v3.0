@@ -140,6 +140,19 @@ def _country_assets_map() -> dict:
         return {}
 
 
+def _baseline_codes() -> set:
+    """internal_latest.json 의 권위 있는 기준국 집합(ISO2). 실패 시 빈 set.
+
+    region_baselines(권역→기준국)와 country_to_region(국가→권역)을 교차해
+    실제 기준국 코드만 추린다. 리서치 스냅샷의 is_baseline 플래그는 신뢰하지 않고
+    여기서 파생 계산한다(엔진 resolve_base_country 와 동일한 단일 진실 소스).
+    """
+    internal = _load_internal()
+    region_baselines = internal.get("region_baselines", {}) or {}
+    # region_baselines 값(기준국 코드) 자체가 기준국 집합이다.
+    return {str(v).upper() for v in region_baselines.values() if v}
+
+
 def _hyundai_country_names() -> List[str]:
     """현대차 해외사업망 국가 영문명 목록(권역 무관, 평탄화). 실패 시 빈 리스트."""
     try:
@@ -217,6 +230,7 @@ def list_countries() -> List[CountrySummary]:
     status_map = _country_status_map()
     entry_mode_map = _country_entry_mode_map()
     assets_map = _country_assets_map()
+    baseline_codes = _baseline_codes()
 
     # 카탈로그 = 리서치 보유국 ∪ internal.json 진출 상태(country_status) 국가.
     #   리서치 폴더가 없어도 internal 룰셋에 진출 상태가 있는 국가(예: 독일 DE JV,
@@ -249,7 +263,9 @@ def list_countries() -> List[CountrySummary]:
                 name=name,
                 name_ko=data.get("country_ko") or geo.get("name_ko"),
                 region=data.get("region") or geo.get("region"),
-                is_baseline=bool(data.get("is_baseline", False)),
+                # 기준국 판정은 스냅샷 플래그가 아니라 internal region_baselines 에서
+                # 파생한다(권위 있는 단일 진실 소스). 스냅샷 is_baseline 은 신뢰하지 않음.
+                is_baseline=str(resolved_code).upper() in baseline_codes,
                 has_detail=_has_detail("country", code),
                 has_report=_has_report("country", code),
                 # 진출 상태(v3 map-colors) + 마커 좌표(v2 geo + 폴백) 둘 다 채운다.

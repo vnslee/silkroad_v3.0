@@ -6,8 +6,9 @@
 - tier_weights
 - decision_thresholds
 
-⚠️ quick_win_rules·maintenance_rate는 엔진 산식이 읽지 않으므로(퀵윈은 report_blend의 w_biz/w_it만
-사용, maintenance는 maintenance_cost_annual 사용) 화면에 노출하지 않는다. 값은 JSON에 보존하되 미편집.
+⚠️ quick_win_rules는 엔진 산식이 읽지 않으므로(퀵윈은 report_blend의 w_biz/w_it만 사용) 화면에 노출하지 않는다.
+maintenance_rate는 TCO 산식4(연 유지보수비 = 신규국 구축비 × maintenance_rate)에서 사용하나, 현재 편집 UI에는
+노출하지 않는다(값은 JSON에 보존). 값은 JSON에 보존하되 미편집.
 
 PUT은 위 키만 부분 갱신(merge)하고 나머지(country_assets·baseline_scoring·fx 등)는 보존한다.
 편집 불가 키를 건드리지 않으므로 데이터 계약 안전(엔진 무수정).

@@ -118,8 +118,15 @@ export interface DecisionTabData {
   hq_baseline_cost?: number
   hq_baseline_months?: number
   hq_baseline_currency?: string
-  /** 외부솔루션 결정 시 추천 벤더 후보(리서치 '솔루션 벤더' 파싱). */
-  external_candidates?: { name: string; cost_note?: string }[]
+  /** 외부솔루션 결정 시 추천 벤더 후보(리서치 '솔루션 벤더' 파싱). category=벤더 구분(글로벌/현지 SI 등). */
+  external_candidates?: { name: string; category?: string | null; cost_note?: string }[]
+  /** 외부솔루션 시장 요약 — 솔루션 유형·벤더 패턴(리서치 insight). */
+  external_solution_summary?: {
+    solution_type?: string | null
+    solution_type_insight?: string | null
+    vendor_pattern?: string | null
+    source?: string | null
+  } | null
   items: ReportItem[]
 }
 
@@ -153,8 +160,9 @@ export interface TcoTabData {
   similarity_score: number
   similarity_multiplier: number
   similarity_band: string
-  /** 구축비 산정 방식: 'hq_build'(내재화·본사 자체구축) | 'baseline_reuse'(확산·재사용). 구버전 데이터엔 없음. */
-  build_method?: 'hq_build' | 'baseline_reuse'
+  /** 구축비 산정 방식: 'hq_build'(내재화·본사 자체구축) | 'baseline_reuse'(확산·재사용) |
+   *  'apac_fixed'(APAC — 기준국 자산 고정값, 유사도 승수 미적용). 구버전 데이터엔 없음. */
+  build_method?: 'hq_build' | 'baseline_reuse' | 'apac_fixed'
   /** 내재화(본사 자체구축) 기준선 — 결정 경로와 무관하게 비교용. 구버전 데이터엔 없음. */
   hq_build_reference?: {
     build_cost: number
@@ -168,6 +176,8 @@ export interface TcoTabData {
     note?: string
   }
   discount_applied: number
+  /** 구독제 솔루션 여부(현재 EU 권역 NetSol만 true). false면 구독료 구간 대신 구축비 비교를 노출. 구버전 데이터엔 없음. */
+  is_subscription?: boolean
   build_breakdown: {
     formula?: string
     inputs: Record<string, any>
@@ -236,7 +246,8 @@ export interface RegionReportData {
   target: {
     region: string
     evaluated_countries: string[]
-    baseline_country: string
+    /** APAC(기준국 미적용)은 null. */
+    baseline_country: string | null
   }
   generated_at: string
   generated_by?: string
@@ -386,7 +397,10 @@ export interface RegionITRankingEntry {
 export interface RegionITSimilarityTab {
   nature: string
   source_flag: string
-  baseline_country: string
+  /** "absolute"(APAC — IT 성숙도 절대점수, 기준국 미적용) | "baseline"(기준국 대비 유사도). */
+  mode?: 'absolute' | 'baseline'
+  /** APAC(절대점수 모드)은 기준국이 없어 null. */
+  baseline_country: string | null
   weights: Record<string, number>
   tier_weights: Record<string, number | string>
   countries: RegionITCountry[]

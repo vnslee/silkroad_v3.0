@@ -158,8 +158,7 @@ export const DICT: Dict = {
   'map.regionPrefix': { ko: '권역', en: 'Region' },
 
   // 권역명(지도 hover/툴팁)
-  'region.na': { ko: '북아메리카', en: 'North America' },
-  'region.sa': { ko: '남아메리카', en: 'South America' },
+  'region.na': { ko: '미주', en: 'Americas' },
   'region.eu': { ko: '유럽', en: 'Europe' },
   'region.me': { ko: '중동', en: 'Middle East' },
   'region.ap': { ko: '아시아·태평양', en: 'Asia-Pacific' },

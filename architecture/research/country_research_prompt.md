@@ -21,7 +21,7 @@
 ```
 역할: 너는 20년차 글로벌 오토파이낸스 진출 컨설턴트다.
 대상 국가: {COUNTRY}
-권역: {REGION}  (EU | NORTH_AMERICA | SOUTH_AMERICA | APAC)
+권역: {REGION}  (EU | NORTH_AMERICA | APAC)   // NORTH_AMERICA=미주(남·북미 통합)
 타깃 세그먼트: {SEGMENT}  (예: 개인 신차 / B2B 리스)
 
 아래 항목을 조사해 지정된 JSON 스키마로만 출력하라.

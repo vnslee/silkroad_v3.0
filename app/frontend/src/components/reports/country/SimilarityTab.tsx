@@ -62,7 +62,6 @@ export function SimilarityTab({ data }: { data: CountryReportData }) {
           </div>
           <div className="p-md bg-surface-container rounded-lg border-l-4 border-primary mb-sm">
             <div className="flex items-center gap-xs mb-xs">
-              <span className="material-symbols-outlined text-primary text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">grade</span>
               <span className="font-semibold font-label-md text-label-md text-primary uppercase">Overall Score</span>
             </div>
             <div className="flex items-baseline gap-xs">

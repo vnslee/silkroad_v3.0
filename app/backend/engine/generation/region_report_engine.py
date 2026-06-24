@@ -623,12 +623,22 @@ class RegionReportEngine:
     # Tab 2-2: IT/Speed-to-Market Similarity (band, vs baseline)
     # ------------------------------------------------------------------
 
-    def _baseline_country_code(self) -> str:
+    def _is_apac(self) -> bool:
+        """APAC(아시아) 권역 여부. APAC은 기준국(baseline) 개념을 적용하지 않는다 —
+        IT 유사도는 절대점수(IT 성숙도)로, 퀵윈은 전 국가 동등 후보로 처리한다."""
+        return (self.region_data or {}).get("code") == "APAC"
+
+    def _baseline_country_code(self) -> Optional[str]:
         """Baseline B국 code. Prefer is_baseline flag in region data, then explicit
         baseline_country field, then internal config region_baselines.
 
         Falls back to first country whose code matches the configured baseline
-        case-insensitively (handles UK vs GB)."""
+        case-insensitively (handles UK vs GB).
+
+        APAC은 기준국 개념을 적용하지 않으므로 None을 반환한다(호출부가 절대점수
+        모드·baseline 미제외로 분기)."""
+        if self._is_apac():
+            return None
         countries = (self.region_data or {}).get("countries", []) or []
         # 1) is_baseline flag (most authoritative — comes from research data)
         for c in countries:
@@ -705,6 +715,40 @@ class RegionReportEngine:
 
         return None
 
+    def _it_axis_absolute(self, axis_key: str, target_item: Optional[Dict]) -> Optional[float]:
+        """절대 IT 성숙도 점수(0–100) — 기준국 대비가 아닌 대상국 항목값 자체를 점수화.
+
+        APAC처럼 기준국(baseline)을 두지 않는 권역에서 IT '유사도' 대신 'IT 성숙도'를
+        산출할 때 쓴다.
+          - numeric_1to5: value/5 × 100 (1점=20, 5점=100)
+          - gate        : PASS=100 / FAIL=30 (게이트 통과 자체를 성숙 신호로)
+          - categorical : 값 보유 시 중립 70 (텍스트 자체로는 성숙도를 단정 못함)
+        """
+        spec = self.IT_SIMILARITY_ITEM_MAP[axis_key]
+        kind = spec["type"]
+        if target_item is None:
+            return None
+
+        if kind == "numeric_1to5":
+            tv = self._coerce_numeric(target_item.get("value"))
+            if tv is None:
+                return None
+            return max(0.0, min(100.0, (tv / 5.0) * 100.0))
+
+        if kind == "gate":
+            tr = (target_item.get("gate_result") or "").upper()
+            if not tr:
+                return None
+            return 100.0 if "PASS" in tr else 30.0
+
+        if kind == "categorical":
+            tv = str(target_item.get("value") or "").strip()
+            if not tv:
+                return None
+            return 70.0  # 값 보유 — 중립 성숙도
+
+        return None
+
     def _bucket_10(self, score: Optional[float]) -> Optional[int]:
         """Round to nearest 10-point bucket per spec (착시 방지)."""
         if score is None:
@@ -713,7 +757,9 @@ class RegionReportEngine:
 
     def compute_it_similarity(self) -> Dict[str, Any]:
         weights = (self.internal_data.get("values", {}) or {}).get("it_readiness", {})
-        base_code = self._baseline_country_code()
+        # APAC은 기준국 미적용 → 절대점수(IT 성숙도) 모드. 그 외 권역은 기준국 대비 유사도.
+        absolute = self._is_apac()
+        base_code = self._baseline_country_code()  # APAC이면 None
         countries = self.region_data.get("countries", [])
         base_country = next((c for c in countries if c.get("code") == base_code), None)
         base_idx = self._country_items_index(base_country) if base_country else {}
@@ -730,9 +776,12 @@ class RegionReportEngine:
                     continue
                 source_item = self.IT_SIMILARITY_ITEM_MAP[axis_key]["item"]
                 target_item = idx.get(source_item)
-                raw_score = self._it_axis_similarity(
-                    axis_key, base_idx.get(source_item), target_item
-                )
+                if absolute:
+                    raw_score = self._it_axis_absolute(axis_key, target_item)
+                else:
+                    raw_score = self._it_axis_similarity(
+                        axis_key, base_idx.get(source_item), target_item
+                    )
                 bucket = self._bucket_10(raw_score)
                 # Tier 가중: 대상국 데이터의 신뢰도 — 기준국은 비교 잣대라 대상국 tier 사용
                 tier = (target_item or {}).get("tier")
@@ -773,9 +822,23 @@ class RegionReportEngine:
         for rank, c in enumerate(ranked, start=1):
             c["rank"] = rank
 
+        method = (
+            ("축별 raw = 수치(value/5×100) / gate(PASS=100·FAIL=30) / 범주(값 보유=70) "
+             "→ effective weight = item_weight × tier_multiplier → 가중평균 raw → 10점 구간 반올림.")
+            if absolute else
+            ("축별 raw = 수치(100−|Δ|×20) / 범주(텍스트 Jaccard 30+J×65) / gate(동일=90·한쪽 PASS=50) "
+             "→ effective weight = item_weight × tier_multiplier → 가중평균 raw → 10점 구간 반올림.")
+        )
+        note = (
+            "IT 성숙도 절대점수(기준국 미적용). 10점 구간 표기. 동률 시 raw로 타이브레이크. Tier 가중은 대상국 데이터 신뢰도 기준."
+            if absolute else
+            "10점 구간 표기. 소수점·1점 단위 비교 금지(spec). 동률 시 raw로 타이브레이크. Tier 가중은 대상국 데이터 신뢰도 기준."
+        )
         return {
             "nature": "score_multiaxis",
             "source_flag": "CALC",
+            # APAC(절대점수)은 기준국이 없다 → mode="absolute", baseline_country=None.
+            "mode": "absolute" if absolute else "baseline",
             "baseline_country": base_code,
             "weights": weights,
             "tier_weights": self.internal_data.get("tier_weights") or {},
@@ -783,9 +846,8 @@ class RegionReportEngine:
             "ranking": [{"rank": c["rank"], "country": c["country"],
                          "score_band": c["it_similarity_band"]}
                         for c in ranked],
-            "method": ("축별 raw = 수치(100−|Δ|×20) / 범주(텍스트 Jaccard 30+J×65) / gate(동일=90·한쪽 PASS=50) "
-                       "→ effective weight = item_weight × tier_multiplier → 가중평균 raw → 10점 구간 반올림."),
-            "note": "10점 구간 표기. 소수점·1점 단위 비교 금지(spec). 동률 시 raw로 타이브레이크. Tier 가중은 대상국 데이터 신뢰도 기준.",
+            "method": method,
+            "note": note,
         }
 
     # ------------------------------------------------------------------

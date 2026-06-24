@@ -30,9 +30,9 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
   // 퀵윈 최적 사분면(① 매력도≥50 & IT유사도≥50) 후보국 — 산점도 기준선과 동일.
   const quickwinOptimal = candidateRows.filter((r) => r.attractiveness >= 50 && r.it_similarity >= 50)
 
-  // 권역 인사이트 — 기준국(baseline) 언급 항목은 요약에서 제외.
+  // 권역 인사이트 — 기준국(baseline) 언급 항목은 요약에서 제외(APAC은 baseline 없음).
   const insights = es.ai_cross_insight.insights.filter(
-    (ins) => !/기준국|baseline/i.test(ins.ko) && !ins.ko.includes(`(${baseline})`),
+    (ins) => !/기준국|baseline/i.test(ins.ko) && (!baseline || !ins.ko.includes(`(${baseline})`)),
   )
   // 인사이트에 곁들일 권역 공통 뉴스 1건(헤드라인 + 시사점 한 줄).
   const regionNews = newsItems.find((n) => n.scope === 'region')
@@ -55,18 +55,23 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
         </div>
         <div className="flex flex-col gap-md [&_strong]:text-white">
           <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
-            <strong>{regionKo}</strong> 권역 평가 <strong>{data.data_quality.total_countries}</strong>개국 중 베이스라인{' '}
-            <strong>{countryKo(baseline)}({baseline})</strong>
+            <strong>{regionKo}</strong> 권역 평가 <strong>{data.data_quality.total_countries}</strong>개국
+            {baseline && (
+              <>
+                {' '}중 베이스라인{' '}
+                <strong>{countryKo(baseline)}({baseline})</strong>
+              </>
+            )}
             {enteredRows.length > 0 && (
               <>
-                {' '}및 진출국{' '}
+                {baseline ? ' 및' : ' 중'} 진출국{' '}
                 <strong>
                   {enteredRows.map((r) => `${countryKo(r.country)}(${r.country})`).join('·')}
                 </strong>
                 {' '}{enteredRows.length}개국
               </>
             )}
-            을(를) 제외한 후보 <strong>{candidateRows.length}</strong>개국을 스코어링한 결과, 최우선 퀵윈 후보는{' '}
+            {baseline || enteredRows.length > 0 ? '을(를) 제외한 ' : '에서 '}후보 <strong>{candidateRows.length}</strong>개국을 스코어링한 결과, 최우선 퀵윈 후보는{' '}
             <strong>{countryKo(top1.country)}({top1.country})</strong>(으)로 도출되었습니다.
           </p>
           <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>

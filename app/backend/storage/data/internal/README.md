@@ -43,9 +43,9 @@
 
 | 키 | 타입 | 설명 |
 |---|---|---|
-| `country_assets` | `{ISO2: {solution, type, build_cost, build_months, reuse_factor}}` | **기진출국**의 시스템·법인유형·구축비·기간. 유형1 TCO 산식에서 `B 구축비용·기간`으로 사용. `type`은 법인 유형(`"SA"`=단독법인 / `"JV"`=합작법인). `build_cost`는 **EUR 작업통화 기준**(천 EUR 단위; TCO는 EUR로 계산 후 권역 통화로 환산 표시). |
-| `region_baselines` | `{region: ISO2}` | 권역별 기준국(B국) — `EU=GB, NA=US, APAC=AU, SA=BR`. 권역 보고서에서 IT 유사도 비교 기준. |
-| `region_currency` | `{region: 통화코드}` | **권역별 보고서 표시통화** — `EU=EUR, NA=USD, SA=USD, APAC=KRW`. TCO는 EUR로 계산하고 출력 금액만 이 통화로 환산(`fx.rates` 경유). 매핑 없으면 EUR 폴백. |
+| `country_assets` | `{ISO2: {solution, type, build_cost, build_months, reuse_factor}}` | **기진출국**의 시스템·법인유형·구축비·기간. 유형1 TCO 산식에서 `B 구축비용·기간`으로 사용. `type`은 법인 유형(`"SA"`=단독법인 / `"JV"`=합작법인). `build_cost`는 **EUR 절대값**(예: GB=5,000,000; 천 단위 아님. TCO는 EUR로 계산 후 권역 통화로 환산 표시). |
+| `region_baselines` | `{region: ISO2}` | 권역별 기준국(B국) — `EU=GB, NA=US, APAC=AU`. 권역 보고서에서 IT 유사도 비교 기준. (NA=미주: 남·북미 통합 권역) |
+| `region_currency` | `{region: 통화코드}` | **권역별 보고서 표시통화** — `EU=EUR, NA=USD, APAC=KRW`. TCO는 EUR로 계산하고 출력 금액만 이 통화로 환산(`fx.rates` 경유). 매핑 없으면 EUR 폴백. |
 | `country_to_region` | `{ISO2: region}` | 국가 → 권역 매핑. 신규 국가 추가 시 여기에 등록. |
 | `country_status` | `{ISO2: "운영중"\|"준비중"\|"진출예정"\|"미진출"}` | 진출 단계 표시 (UI 용). 허용 값은 `_country_status_values` 배열에 명시. |
 | `_country_status_values` | `["운영중","준비중","진출예정","미진출"]` | `country_status` 가 가질 수 있는 값 목록(문서·검증용 상수). |
@@ -169,8 +169,8 @@
 | `subscription_tiers` | `[{min_volume, max_volume, price_per_unit, currency}]` | 구독료 단가 구간표 — 누적 건수에 단가 소급 적용 |
 | `existing_total_volume` | int | 현재 진출 시스템 전체국 누적 계약 건수 (구독료 산식 기준) |
 | `expected_market_share` | float | 우리사 예상 점유율 (산식2 예상 계약건수 계산) |
-| `maintenance_rate` | float | 연 유지보수율 (구축비 대비) |
-| `maintenance_cost_annual` | `{amount, currency, note}` | 연간 유지보수 비용 절대값 |
+| `maintenance_rate` | float | 연 유지보수율 (구축비 대비). **유형1 TCO 산식4에서 연 유지보수비 = 신규국 구축비 × maintenance_rate 로 사용**. |
+| `maintenance_cost_annual` | `{amount, currency, note}` | 연간 유지보수 비용 절대값 (레거시 fallback — 현재 TCO 산식은 `maintenance_rate` 기반이라 미사용). |
 | `operational_cost_10y` | `{amount, currency, note}` | 시스템과 별개인 10년 운영비 통금액 |
 | `hq_build_baseline` | `{cost, months, currency, note}` | 본사 자체구축 시 기본 비용·기간 (참고용 병기) |
 
@@ -207,7 +207,7 @@
 | 탭1-3 산식1 승수 | `country_report_engine.calculate_similarity_multiplier` | `similarity_multiplier_table` |
 | 탭1-3 산식2 예상 건수 | `country_report_engine.calculate_expected_contracts` | `expected_market_share` |
 | 탭1-3 산식3 구독료 | `country_report_engine.calculate_subscription_fee` | `subscription_tiers`, `existing_total_volume` |
-| 탭1-3 산식4 10년 TCO | `country_report_engine.calculate_tco_10y` | `country_assets`, `maintenance_cost_annual`, `operational_cost_10y`, `hq_build_baseline` |
+| 탭1-3 산식4 10년 TCO | `country_report_engine.calculate_tco_10y` | `country_assets`, `maintenance_rate`, `operational_cost_10y`, `hq_build_baseline` |
 | TCO 표시통화 환산 (EUR→권역통화) | `country_report_engine._region_currency` / `_from_eur` | `region_currency`, `country_to_region`, `fx.rates` |
 | 통화 환산 | both engines | `fx.rates`, `fx.as_of` |
 

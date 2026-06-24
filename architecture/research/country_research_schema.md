@@ -60,7 +60,7 @@ internal/                      자사 자산·계산 파라미터. 국가 무관
   "country": "Poland",
   "country_ko": "폴란드",
   "code": "PL",                    // ISO 3166-1 alpha-2. 파일명과 매칭
-  "region": "EU",                  // EU | NORTH_AMERICA | SOUTH_AMERICA | APAC
+  "region": "EU",                  // EU | NORTH_AMERICA | APAC  (NORTH_AMERICA=미주: 남·북미 통합)
   "is_baseline": false,            // 이 국가가 자사 베이스라인인지 (모든 국가 공통 필드)
   "currency": "PLN",
 
@@ -90,7 +90,7 @@ internal/                      자사 자산·계산 파라미터. 국가 무관
 | `item` | string | 항목명 (예: "오토금융 시장규모") |
 | `category` | enum | `business` \| `it` \| `shared` — 탭 필터용 |
 | `role` | enum | `gate` \| `score` \| `context` — 렌더 방식 분기 |
-| `region` | enum | `EU` \| `NORTH_AMERICA` \| `SOUTH_AMERICA` \| `APAC` |
+| `region` | enum | `EU` \| `NORTH_AMERICA` \| `APAC` (`NORTH_AMERICA`=미주: 남·북미 통합) |
 | `tier` | int(1~4) | 출처 신뢰도. 1=법령/공식, 4=AI추정 |
 | `source` | string | 출처 명시 |
 | `insight` | string | 컨설턴트 코멘트 (★AI 생성 — 검토 필요) |
@@ -204,9 +204,9 @@ internal/                      자사 자산·계산 파라미터. 국가 무관
   "updated_at": "2026-06-01T00:00:00+09:00",
 
   "country_assets": {               // 진출국별 자사 구축 실적. 진출하면 한 줄 추가.
-    "UK":    { "solution": "NetSol",     "build_cost": 5000, "build_months": 18, "reuse_factor": 0.70 },
-    "USA":   { "solution": "Salesforce", "build_cost": 6000, "build_months": 20, "reuse_factor": 0.50 },
-    "Korea": { "solution": "Self-built", "build_cost": 4500, "build_months": 16, "reuse_factor": 1.00 }
+    "UK":    { "solution": "NetSol",     "build_cost": 5000000, "build_months": 18, "reuse_factor": 0.70 },
+    "USA":   { "solution": "Salesforce", "build_cost": 6000000, "build_months": 20, "reuse_factor": 0.50 },
+    "Korea": { "solution": "Self-built", "build_cost": 4500000, "build_months": 16, "reuse_factor": 1.00 }
     // 폴란드 진출 시 → "Poland": {...} 추가 = 후보→베이스라인 승격
   },
 
@@ -218,7 +218,7 @@ internal/                      자사 자산·계산 파라미터. 국가 무관
     { "min": 0,  "max": 49,  "discount": 0.00 }
   ],
 
-  "maintenance_rate": 0.18,         // 운영비 = 구축비 × 이 비율
+  "maintenance_rate": 0.18,         // 연 유지보수비 = 구축비 × 이 비율 (TCO 산식4)
 
   "weights": {
     "business": { "시장규모": 0.30, "성장률": 0.20, "침투율": 0.20, "APR": 0.15, "캡티브강도": 0.15 },
@@ -229,7 +229,7 @@ internal/                      자사 자산·계산 파라미터. 국가 무관
 
 > **베이스라인 식별:** country 파일의 `is_baseline` 필드가 가짐. 비교 프로세스가 같은 region에서 `is_baseline:true`인 국가를 기준선으로 사용.
 > **자산 식별:** `country_assets`에 키가 있으면 자산 보유국. 보통 is_baseline:true 국가와 일치하나, 트리거가 달라 분리 유지.
-> build_cost 단위는 통화 통일(예: USD_K).
+> build_cost 단위는 **EUR 절대값**으로 통일(천 단위 아님; 예: 500만 EUR = 5000000). TCO는 EUR로 계산 후 권역 표시통화로 환산.
 
 ---
 

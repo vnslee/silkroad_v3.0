@@ -1,7 +1,7 @@
 """리서치 정책 (C5 보조) — 무엇을 리서치 트리거할 수 있는지의 단일 판정점.
 
 운영 정책(2026-06 결정):
-- **권역(region) 신규 추가·리서치는 전면 금지** — 권역 축은 보유한 것(EU/NA/SA/APAC)만
+- **권역(region) 신규 추가·리서치는 전면 금지** — 권역 축은 보유한 것(EU/NA/APAC)만
   운용한다. 신규 권역을 만드는 리서치 경로를 제거한다.
 - **국가(country) 리서치는 두 경우만 허용**:
   ① 이미 데이터를 보유한 국가의 재수행, 또는
@@ -22,10 +22,11 @@ from . import geo_reference, storage_resolver
 _log = config.get_logger("research_policy")
 
 # geo 참조의 권역 표기 → 사내/스토리지 권역 코드 정규화.
+# 미주(Americas) 통합: 남미(SOUTH_AMERICA)는 미주 권역 NA로 흡수한다.
 _GEO_REGION_ALIAS = {
     "AFRICA": "AF",
     "NORTH_AMERICA": "NA",
-    "SOUTH_AMERICA": "SA",
+    "SOUTH_AMERICA": "NA",
     "EU": "EU",
     "APAC": "APAC",
 }
