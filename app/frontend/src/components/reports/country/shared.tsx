@@ -1,0 +1,496 @@
+// PR1 국가 보고서 — 탭 공유 컴포넌트/유틸 (mockup 03_country_report 충실 이식)
+// 색은 시맨틱 Tailwind 클래스 우선. mockup 고유 raw hex(차트)는 인라인 style로 그대로 사용.
+import type { ReactNode } from 'react'
+import type { ReportItem } from '../types'
+import type { TimeseriesData } from '../../charts/types'
+
+/** 통화 €1,234 포맷 (mockup: 천단위 콤마, 소수 없음) */
+export function eur(value: number | null | undefined, symbol = '€'): string {
+  if (value === null || value === undefined || isNaN(value)) return '—'
+  return `${symbol}${Math.round(value).toLocaleString('en-US')}`
+}
+
+/** 천단위 콤마 정수 */
+export function intComma(value: number | null | undefined): string {
+  if (value === null || value === undefined || isNaN(value)) return '—'
+  return Math.round(value).toLocaleString('en-US')
+}
+
+/** 다국어 {ko,en} 또는 문자열을 한국어 텍스트로 안전 변환(React child로 객체 렌더 방지) */
+export function locText(value: unknown): string {
+  if (value === null || value === undefined) return ''
+  if (typeof value === 'string') return value
+  if (typeof value === 'object') {
+    const o = value as Record<string, unknown>
+    if (typeof o.ko === 'string') return o.ko
+    if (typeof o.en === 'string') return o.en
+  }
+  return String(value)
+}
+
+/** 숫자 .toFixed 안전 래퍼 — null/undefined/NaN이면 dash 반환 */
+export function fixed(value: number | null | undefined, digits = 1, dash = '—'): string {
+  if (value === null || value === undefined || isNaN(value)) return dash
+  return value.toFixed(digits)
+}
+
+/** 캡티브 금융사/OEM 화이트리스트 (백엔드 _CAPTIVE_HINTS 이식) */
+const CAPTIVE_HINTS = [
+  'Toyota', 'Volkswagen', 'VW', 'BMW', 'Mercedes-Benz', 'Mercedes', 'Audi',
+  'Ford', 'Renault', 'Hyundai', 'Kia', 'Honda', 'Nissan', 'Peugeot',
+  'Stellantis', 'Fiat', 'Volvo', 'SEAT', 'Skoda', 'Santander Consumer',
+  'BMW Bank', 'Volkswagen Financial', 'Toyota Financial', 'Mercedes-Benz Bank',
+  'Ford Credit', 'Hyundai Capital', 'Kia Capital', 'Renault Bank',
+]
+export function hasCaptiveHint(name: string | undefined | null): boolean {
+  if (!name) return false
+  const lower = String(name).toLowerCase()
+  return CAPTIVE_HINTS.some((k) => lower.includes(k.toLowerCase()))
+}
+
+/** "약 20%" / "8.39%" → 숫자 추출 */
+export function parseShare(raw: any): number {
+  if (raw === null || raw === undefined) return 0
+  const m = String(raw).match(/(\d+(?:\.\d+)?)/)
+  return m ? parseFloat(m[1]) : 0
+}
+
+// ── 섹션 카드(흰 카드 + 아이콘 헤더) ────────────────────────────
+interface PanelProps {
+  icon: string
+  title: ReactNode
+  right?: ReactNode
+  children: ReactNode
+  className?: string
+}
+export function Panel({ icon, title, right, children, className = '' }: PanelProps) {
+  return (
+    <section
+      className={`bg-surface-container-lowest border border-surface-border rounded-xl p-lg card-shadow ${className}`}
+    >
+      <div className="flex items-center justify-between gap-sm mb-md pb-sm border-b border-surface-border">
+        <div className="flex items-center gap-sm">
+          <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+            {icon}
+          </span>
+          <h2 className="font-headline-md text-headline-md text-primary m-0">{title}</h2>
+        </div>
+        {right}
+      </div>
+      {children}
+    </section>
+  )
+}
+
+// ── 캡티브 칩 ───────────────────────────────────────────────────
+export function CaptiveChip() {
+  return (
+    <span
+      className="inline-flex items-center gap-xs bg-secondary-container/30 text-secondary border border-secondary/40 px-2 py-[1px] rounded-full font-label-sm text-label-sm"
+      title="캡티브 금융사 보유 추정"
+    >
+      <span className="material-symbols-outlined text-[12px]">verified</span>
+      <span>캡티브</span>
+    </span>
+  )
+}
+
+// ── Tier 배지(원천 데이터 항목) ─────────────────────────────────
+const TIER_STYLE: Record<number, string> = {
+  1: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+  2: 'bg-blue-100 text-blue-800 border-blue-200',
+  3: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+  4: 'bg-surface-container text-text-secondary border-surface-border',
+}
+export function TierBadge({ tier }: { tier?: number }) {
+  if (!tier) return null
+  const style = TIER_STYLE[tier] ?? TIER_STYLE[4]
+  return (
+    <span className={`border px-2 py-0.5 rounded-full font-label-sm text-label-sm uppercase ${style}`}>
+      Tier {tier}
+    </span>
+  )
+}
+
+// ── 인사이트 박스(좌측 강조선) ──────────────────────────────────
+export function InsightBox({
+  children,
+  label = '인사이트',
+  icon = 'lightbulb',
+}: {
+  children: ReactNode
+  label?: string
+  icon?: string
+}) {
+  return (
+    <div className="bg-surface-container/60 p-sm rounded-md border-l-4 border-primary">
+      <div className="flex items-center gap-xs mb-xs">
+        <span className="material-symbols-outlined text-primary text-[14px]">{icon}</span>
+        <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">{label}</span>
+      </div>
+      <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{children}</p>
+    </div>
+  )
+}
+
+// ── 근거·인사이트 아코디언(details) ─────────────────────────────
+export function EvidenceAccordion({ source, insight, ai }: { source?: string; insight?: string; ai?: boolean }) {
+  if (!source && !insight) return null
+  return (
+    <details className="border-t border-surface-container-highest pt-sm group">
+      <summary className="flex items-center justify-between gap-xs cursor-pointer list-none">
+        <div className="flex items-center gap-xs">
+          <span className="material-symbols-outlined text-text-secondary text-[14px]">info</span>
+          <span className="font-label-sm text-label-sm text-text-secondary uppercase">근거 · 인사이트</span>
+          {ai && (
+            <span className="bg-purple-100 text-purple-700 border border-purple-200 px-2 py-0.5 rounded-full font-label-sm text-label-sm uppercase">
+              AI
+            </span>
+          )}
+        </div>
+        <span className="material-symbols-outlined text-text-secondary text-[16px] transition-transform group-open:rotate-180">
+          expand_more
+        </span>
+      </summary>
+      <div className="flex flex-col gap-sm mt-sm">
+        {source && (
+          <div>
+            <div className="flex items-center gap-xs mb-xs">
+              <span className="material-symbols-outlined text-text-secondary text-[14px]">source</span>
+              <span className="font-label-sm text-label-sm text-text-secondary uppercase">근거</span>
+            </div>
+            <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{source}</p>
+          </div>
+        )}
+        {insight && <InsightBox>{insight}</InsightBox>}
+      </div>
+    </details>
+  )
+}
+
+/** 원천 데이터 항목의 값 표시(문자열/숫자+단위). 순위형 list는 별도 처리. */
+function ItemValue({ item }: { item: ReportItem }) {
+  const { value, unit } = item
+  if (Array.isArray(value)) return null
+  if (typeof value === 'number') {
+    return (
+      <div className="font-body-md text-body-md text-primary text-right max-w-[55%] font-semibold">
+        <span className="font-semibold">{intComma(value)}</span>{' '}
+        {unit && <span className="text-text-secondary font-body-sm">{unit}</span>}
+      </div>
+    )
+  }
+  return (
+    <div className="font-body-md text-body-md text-primary text-right max-w-[55%] font-semibold">
+      {String(value)}
+    </div>
+  )
+}
+
+// ── 원천 데이터 항목 카드(라벨 + 값 + 게이트배지 + 선택적 차트 + 아코디언) ──
+export function EvidenceCard({ item, chart }: { item: ReportItem; chart?: ReactNode }) {
+  const gatePass = item.gate_result === 'PASS' || item.gate_result === 'pass'
+  return (
+    <div className="p-md bg-surface rounded-lg border border-surface-container-highest flex flex-col gap-sm">
+      <div className="flex items-start justify-between gap-sm">
+        <div className="flex items-center gap-xs flex-wrap">
+          <span className="font-label-md text-label-md text-text-primary uppercase tracking-wide">{item.item}</span>
+          <TierBadge tier={item.tier} />
+          {gatePass && (
+            <span className="bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-label-sm text-label-sm uppercase">
+              PASS
+            </span>
+          )}
+        </div>
+        <ItemValue item={item} />
+      </div>
+      {chart}
+      <EvidenceAccordion source={item.source} insight={item.insight} ai={item.insight_ai_generated} />
+    </div>
+  )
+}
+
+// ── 도넛(단일 퍼센트) ───────────────────────────────────────────
+// AISea: 라이트 카드 위 데이터는 잉크블랙(#14181C), 배경 링은 베이지 그레이.
+const DONUT = '#14181C'
+const DONUT_BG = '#e6e3db'
+export function Donut({
+  pct,
+  segLabel,
+  restLabel,
+}: {
+  pct: number
+  segLabel: string
+  restLabel: string
+}) {
+  const cx = 60
+  const cy = 60
+  const frac = Math.max(0, Math.min(100, pct)) / 100
+  const startAngle = -90
+  const endAngle = startAngle + frac * 360
+  const toXY = (radius: number, angleDeg: number) => {
+    const a = (angleDeg * Math.PI) / 180
+    return [cx + radius * Math.cos(a), cy + radius * Math.sin(a)]
+  }
+  const rOuter = 50
+  const rInner = 30
+  const [ox1, oy1] = toXY(rOuter, startAngle)
+  const [ox2, oy2] = toXY(rOuter, endAngle)
+  const [ix2, iy2] = toXY(rInner, endAngle)
+  const [ix1, iy1] = toXY(rInner, startAngle)
+  const large = frac > 0.5 ? 1 : 0
+  const segPath =
+    frac <= 0
+      ? ''
+      : `M ${ox1.toFixed(2)} ${oy1.toFixed(2)} A ${rOuter} ${rOuter} 0 ${large} 1 ${ox2.toFixed(2)} ${oy2.toFixed(2)} L ${ix2.toFixed(2)} ${iy2.toFixed(2)} A ${rInner} ${rInner} 0 ${large} 0 ${ix1.toFixed(2)} ${iy1.toFixed(2)} Z`
+  return (
+    <div className="flex items-center gap-md bg-surface-container-low rounded-md p-sm">
+      <svg viewBox="0 0 120 120" style={{ width: 100, height: 100 }} preserveAspectRatio="xMidYMid meet">
+        {/* 배경 링 */}
+        <path
+          d={`M ${cx} ${cy - rOuter} A ${rOuter} ${rOuter} 0 1 1 ${cx - 0.01} ${cy - rOuter} M ${cx} ${cy - rInner} A ${rInner} ${rInner} 0 1 0 ${cx + 0.01} ${cy - rInner} Z`}
+          fill={DONUT_BG}
+          fillRule="evenodd"
+        />
+        {segPath && <path d={segPath} fill={DONUT} />}
+        <text x="60" y="61" textAnchor="middle" fontSize="14" fontWeight="700" fill={DONUT}>
+          {Math.round(pct)}%
+        </text>
+      </svg>
+      <div className="flex flex-col gap-xs flex-1">
+        <div className="flex items-center gap-xs">
+          <span className="w-3 h-3 rounded-sm" style={{ background: DONUT }} />
+          <span className="font-label-sm text-label-sm text-text-secondary">{segLabel}</span>
+          <span className="font-label-sm text-label-sm text-text-primary font-semibold">{Math.round(pct)}%</span>
+        </div>
+        <div className="flex items-center gap-xs">
+          <span className="w-3 h-3 rounded-sm" style={{ background: DONUT_BG }} />
+          <span className="font-label-sm text-label-sm text-text-secondary">{restLabel}</span>
+          <span className="font-label-sm text-label-sm text-text-primary font-semibold">{100 - Math.round(pct)}%</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── 미니 시계열(원천 항목 안의 작은 라인차트) ───────────────────
+// AISea: viewBox 360x90, 과거 실선 + 전망 점선, 라이트면 데이터는 잉크블랙.
+const MINI = '#14181C'
+export function MiniTimeseries({ ts }: { ts: TimeseriesData }) {
+  const W = 360
+  const H = 90
+  const padL = 36
+  const padR = 12
+  const padT = 8
+  const padB = 18
+  const hist = ts.history ?? []
+  const fore = ts.forecast ?? []
+  const all = [...hist, ...fore]
+  if (all.length === 0) return null
+  const values = all.map((p) => p.value)
+  const min = Math.min(...values)
+  const max = Math.max(...values)
+  const span = max - min || 1
+  const xStep = (W - padL - padR) / (all.length - 1 || 1)
+  const toX = (i: number) => padL + i * xStep
+  const toY = (v: number) => padT + (1 - (v - min) / span) * (H - padT - padB)
+  const histPts = hist.map((p, i) => ({ x: toX(i), y: toY(p.value) }))
+  const forePts = fore.map((p, i) => ({ x: toX(hist.length - 1 + i + 1), y: toY(p.value) }))
+  const foreJoin = histPts.length && forePts.length ? [histPts[histPts.length - 1], ...forePts] : forePts
+  const toPath = (pts: { x: number; y: number }[]) =>
+    pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ')
+  return (
+    <div className="bg-surface-container-low rounded-md p-sm flex flex-col gap-xs">
+      <svg className="w-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ maxHeight: 100 }}>
+        <line x1={padL} y1={padT} x2={W - padR} y2={padT} stroke="#e6e3db" />
+        <line x1={padL} y1={(padT + H - padB) / 2} x2={W - padR} y2={(padT + H - padB) / 2} stroke="#e6e3db" />
+        <line x1={padL} y1={H - padB} x2={W - padR} y2={H - padB} stroke="#e6e3db" />
+        <text x={padL - 4} y="14" fontSize="9" fill="#9aa0a6" textAnchor="end">
+          {Math.round(max)}
+        </text>
+        <text x={padL - 4} y={H - padB - 1} fontSize="9" fill="#9aa0a6" textAnchor="end">
+          {Math.round(min)}
+        </text>
+        <text x={padL} y={H - 6} fontSize="9" fill="#9aa0a6" textAnchor="middle">
+          {all[0]?.year}
+        </text>
+        <text x={W - padR} y={H - 6} fontSize="9" fill="#9aa0a6" textAnchor="middle">
+          {all[all.length - 1]?.year}
+        </text>
+        {histPts.length > 1 && <path d={toPath(histPts)} fill="none" stroke={MINI} strokeWidth="2" />}
+        {foreJoin.length > 1 && (
+          <path d={toPath(foreJoin)} fill="none" stroke={MINI} strokeWidth="2" strokeDasharray="4 3" opacity="0.85" />
+        )}
+        {histPts.map((p, i) => (
+          <circle key={`h${i}`} cx={p.x} cy={p.y} r="2.5" fill={MINI} />
+        ))}
+        {forePts.map((p, i) => (
+          <circle key={`f${i}`} cx={p.x} cy={p.y} r="2.5" fill={MINI} opacity="0.7" />
+        ))}
+      </svg>
+      {(ts.cagr_hist != null || ts.cagr_forecast != null) && (
+        <div className="flex gap-md font-label-sm text-label-sm text-text-secondary">
+          {ts.cagr_hist != null && (
+            <span className="inline-flex items-center gap-xs">
+              <span className="w-2 h-2 rounded-full" style={{ background: MINI }} />
+              CAGR(과거): <span className="font-semibold text-text-primary">{ts.cagr_hist}%</span>
+            </span>
+          )}
+          {ts.cagr_forecast != null && (
+            <span className="inline-flex items-center gap-xs">
+              <span className="w-2 h-2 rounded-full" style={{ background: MINI, opacity: 0.7 }} />
+              CAGR(전망): <span className="font-semibold text-text-primary">{ts.cagr_forecast}%</span>
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── 시스템 결정 트리(탭0 요약 / 탭2) — mockup SVG 그대로(raw hex 유지) ──
+export function DecisionTreeSvg({ score, baseCountryKo }: { score: number; baseCountryKo: string }) {
+  return (
+    <div className="flex flex-col items-center pt-md gap-sm">
+      <style>{`
+        @keyframes dt-pop { 0%{transform:scale(.85);opacity:0} 60%{transform:scale(1.08);opacity:1} 100%{transform:scale(1);opacity:1} }
+        @keyframes dt-flow { to { stroke-dashoffset: -24; } }
+        @keyframes dt-dash { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+        @keyframes dt-glow { 0%,100%{filter:drop-shadow(0 0 6px rgba(200,240,81,.55))} 50%{filter:drop-shadow(0 0 14px rgba(200,240,81,1))} }
+        .dt-diamond { animation: dt-pop .6s ease-out .3s both; transform-origin:center; }
+        .dt-flow-line { stroke:#9aa0a8; stroke-width:2; stroke-dasharray:6 6; animation:dt-flow 1.2s linear infinite; fill:none; }
+        .dt-active-path { stroke:#14181C; stroke-width:4; stroke-linecap:round; fill:none; stroke-dasharray:1000; stroke-dashoffset:1000; animation: dt-dash 1.6s ease-out .6s forwards, dt-glow 2s ease-in-out 2.2s infinite; }
+        .dt-active-bullet { animation: dt-pop .5s ease-out 2s both, dt-glow 2s ease-in-out 2.4s infinite; transform-origin:center; transform-box:fill-box; }
+        .dt-branch-card { animation: dt-pop .55s ease-out both; transform-origin:top center; }
+        .dt-branch-b { animation-delay:2.1s; } .dt-branch-ext { animation-delay:2.3s; } .dt-branch-hq { animation-delay:2.5s; }
+        @media (prefers-reduced-motion: reduce) {
+          .dt-diamond,.dt-active-path,.dt-active-bullet,.dt-branch-card { animation: none !important; }
+          .dt-flow-line { animation: none !important; }
+          .dt-active-path { stroke-dashoffset: 0 !important; }
+        }
+      `}</style>
+      <svg
+        className="w-full max-w-4xl block"
+        viewBox="0 0 900 640"
+        preserveAspectRatio="xMidYMid meet"
+        style={{ marginBottom: '-8px' }}
+        role="img"
+        aria-label="시스템 결정 트리"
+      >
+        <g className="dt-diamond">
+          <polygon points="450,20 520,80 450,140 380,80" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
+          <text x="450" y="75" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">권역 내 구축</text>
+          <text x="450" y="92" textAnchor="middle" fontSize="14" fill="#14181C" fontWeight="700">시스템 존재?</text>
+        </g>
+        <path d="M450 140 L450 200" className="dt-flow-line" opacity="0.25" />
+        <text x="465" y="175" textAnchor="start" fontSize="14" fontWeight="700" fill="#14181C">YES ({baseCountryKo})</text>
+        <path d="M520 80 L820 80 L820 480 L520 480" className="dt-flow-line" opacity="0.25" />
+        <text x="700" y="70" textAnchor="middle" fontSize="14" fontWeight="700" fill="#9aa0a8">NO → 외부솔루션</text>
+        <g className="dt-diamond" style={{ animationDelay: '0.6s' }}>
+          <polygon points="450,200 525,260 450,320 375,260" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
+          <text x="450" y="255" textAnchor="middle" fontSize="12" fill="#14181C" fontWeight="700">유사도</text>
+          <text x="450" y="280" textAnchor="middle" fontSize="18" fill="#14181C" fontWeight="800">{score.toFixed(1)}</text>
+        </g>
+        <path d="M450 320 L450 360 L150 360 L150 560" className="dt-flow-line" opacity="0.25" />
+        <text x="300" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill="#14181C">≥ 70 → 권역 내 확산</text>
+        <path d="M450 320 L450 360 L750 360 L750 560" className="dt-flow-line" opacity="0.25" />
+        <text x="600" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill="#9aa0a8">50~70 → 본사 자체구축</text>
+        <path d="M450 320 L450 420" className="dt-flow-line" opacity="0.25" />
+        <text x="465" y="370" textAnchor="start" fontSize="14" fontWeight="700" fill="#9aa0a8">{'< 50'}</text>
+        <g className="dt-diamond" style={{ animationDelay: '1.0s' }}>
+          <polygon points="450,420 520,480 450,540 380,480" fill="#fbf9f9" stroke="#9aa0a8" strokeWidth="2" />
+          <text x="450" y="475" textAnchor="middle" fontSize="12" fill="#9aa0a8" fontWeight="700">외부솔루션</text>
+          <text x="450" y="492" textAnchor="middle" fontSize="12" fill="#9aa0a8" fontWeight="700">기준점 통과?</text>
+        </g>
+        <path d="M450 540 L450 615" className="dt-flow-line" opacity="0.25" />
+        <text x="465" y="585" textAnchor="start" fontSize="14" fontWeight="700" fill="#9aa0a8">YES → 외부솔루션</text>
+        <path d="M520 480 L750 480 L750 560" className="dt-flow-line" opacity="0.25" />
+        <text x="640" y="472" textAnchor="middle" fontSize="14" fontWeight="700" fill="#9aa0a8">NO (Fallback)</text>
+        {/* active path: region exists, ≥70 → B */}
+        <path d="M450 140 L450 200 M450 320 L450 360 L150 360 L150 560" className="dt-active-path" />
+        <circle className="dt-active-bullet" cx="150" cy="560" r="7" fill="#14181C" />
+      </svg>
+      <div className="w-full max-w-4xl">
+        <div className="grid grid-cols-3 gap-lg">
+          <div className="dt-branch-card dt-branch-b border-2 bg-primary/10 border-primary rounded-xl p-md" style={{ boxShadow: '0 6px 18px rgba(0,0,0,0.08)' }}>
+            <div className="flex items-center justify-center gap-xs">
+              <span className="material-symbols-outlined text-primary text-[20px]">expand_circle_down</span>
+              <span className="font-semibold font-body-md text-body-md text-primary uppercase tracking-wider">권역 내 확산</span>
+            </div>
+          </div>
+          <div className="dt-branch-card dt-branch-ext border-2 bg-surface-container border-outline-variant opacity-40 rounded-xl p-md">
+            <div className="flex items-center justify-center gap-xs">
+              <span className="material-symbols-outlined text-text-secondary text-[20px]">extension</span>
+              <span className="font-semibold font-body-md text-body-md text-text-secondary uppercase tracking-wider">외부솔루션</span>
+            </div>
+          </div>
+          <div className="dt-branch-card dt-branch-hq border-2 bg-surface-container border-outline-variant opacity-40 rounded-xl p-md">
+            <div className="flex items-center justify-center gap-xs">
+              <span className="material-symbols-outlined text-text-secondary text-[20px]">domain</span>
+              <span className="font-semibold font-body-md text-body-md text-text-secondary uppercase tracking-wider">본사 자체구축</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── 구독료 구간표(탭0/탭2 공유) ─────────────────────────────────
+interface SubTierTableProps {
+  tiers?: { min_volume: number; max_volume: number | null; price_per_unit: number }[]
+  appliedPrice?: number
+  existing?: number
+  newAdded?: number
+  newCumulative?: number
+}
+export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded, newCumulative }: SubTierTableProps) {
+  const rows = tiers ?? []
+  // 기준국 등 구독료 데이터가 없으면 표 자체를 생략(크래시 방지).
+  if (rows.length === 0) {
+    return <p className="font-body-sm text-body-sm text-text-secondary">구독료 구간 데이터가 없습니다.</p>
+  }
+  return (
+    <>
+      <table className="w-full font-body-md text-body-md">
+        <thead>
+          <tr className="text-text-secondary">
+            <th className="px-2 py-1.5 text-left font-label-md text-label-md uppercase">누적건수</th>
+            <th className="px-2 py-1.5 text-right font-label-md text-label-md uppercase">단가</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((t, i) => {
+            const isApplied = appliedPrice != null && Math.abs(t.price_per_unit - appliedPrice) < 1e-6
+            const lo = t.min_volume + (i === 0 ? 0 : 1)
+            const range = t.max_volume == null ? `${intComma(lo)}+` : `${intComma(t.min_volume)} ~ ${intComma(t.max_volume)}`
+            return (
+              <tr key={i} className={isApplied ? 'bg-primary/10 text-primary font-semibold' : 'text-text-primary'}>
+                <td className="px-2 py-1.5 border-b border-surface-container-highest">{range}</td>
+                <td className="px-2 py-1.5 border-b border-surface-container-highest text-right">€{(t.price_per_unit ?? 0).toFixed(2)}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+      <div className="flex flex-col gap-xs mt-md pt-sm border-t border-surface-container-highest font-body-md text-body-md">
+        <div className="flex justify-between">
+          <span className="text-text-secondary">기존 누적</span>
+          <span className="text-text-primary font-semibold">{intComma(existing)} 건</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-text-secondary">신규 추가</span>
+          <span className="text-text-primary font-semibold">{intComma(newAdded)} 건</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-text-secondary">신규 누적</span>
+          <span className="text-primary font-semibold">{intComma(newCumulative)} 건</span>
+        </div>
+        <div className="flex justify-between items-center mt-xs px-sm py-2 rounded-lg bg-primary/10 border-l-4 border-primary">
+          <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">적용 단가</span>
+          <span className="text-primary font-bold font-body-lg text-body-lg">€{(appliedPrice ?? 0).toFixed(2)}</span>
+        </div>
+      </div>
+    </>
+  )
+}

@@ -63,16 +63,28 @@ def list_region_detail_versions(region: str = Path(..., pattern=TARGET_ID_PATTER
 def get_country_detail(
     code: str = Path(..., pattern=TARGET_ID_PATTERN), version: Optional[str] = None
 ) -> Response:
-    html = _detail_html("country", code.upper(), version)
-    return Response(content=html, media_type="text/html")
+    # React 프론트엔드는 JSON을 요청 — 리서치 데이터 직접 반환
+    research_path = storage_resolver.research_latest_path("country", code.upper())
+    if research_path is None or not research_path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"country '{code.upper()}' 리서치 데이터 없음",
+        )
+    return Response(content=research_path.read_text(encoding="utf-8"), media_type="application/json")
 
 
 @router.get("/regions/{region}/detail")
 def get_region_detail(
     region: str = Path(..., pattern=TARGET_ID_PATTERN), version: Optional[str] = None
 ) -> Response:
-    html = _detail_html("region", region.upper(), version)
-    return Response(content=html, media_type="text/html")
+    # React 프론트엔드는 JSON을 요청 — 리서치 데이터 직접 반환
+    research_path = storage_resolver.research_latest_path("region", region.upper())
+    if research_path is None or not research_path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"region '{region.upper()}' 리서치 데이터 없음",
+        )
+    return Response(content=research_path.read_text(encoding="utf-8"), media_type="application/json")
 
 
 # ── 비동기 렌더링 잡 트리거 (3차 확장) ──────────────────────────

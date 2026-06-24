@@ -5,12 +5,12 @@
 
 export type LandColorKind = 'operating' | 'notEntered' | 'hyundai' | 'none'
 
-// 4색 팔레트 — Kinetic 톤에 맞춘 차분한 채도.
+// 4색 팔레트 — AISea 베이지 배경(#EDEBE4) 위에서 구분되는 차분한 채도.
 export const LAND_COLORS: Record<LandColorKind, string> = {
-  operating: '#D7E2DC', // 운영중 — 연초록 (R215 G226 B220)
-  notEntered: '#E6D8D2', // 미진출 — 연분홍 (R230 G216 B210)
-  hyundai: '#E2DDCF', // 현대 해외사업망 — 베이지 (R226 G221 B207)
-  none: '#D8DCE0', // 대상 외 — 회색
+  operating: '#C8E6D6', // 운영중 — 연에메랄드(AISea SA 톤)
+  notEntered: '#F4D6CE', // 미진출 — 연로즈(AISea APAC 톤)
+  hyundai: '#E0DAC8', // 현대 해외사업망 — 베이지
+  none: '#D4D2C8', // 대상 외 — 베이지 그레이
 }
 
 // 이름 정규화: 소문자 + 영문자만(공백·점·괄호·악센트 제거). "Czech Republic"↔"Czechia" 같은

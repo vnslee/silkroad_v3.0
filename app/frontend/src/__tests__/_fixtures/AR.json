@@ -1,0 +1,1850 @@
+{
+  "report_id": "RPT_CTR_AR_001",
+  "report_type": "type1_country",
+  "title": "아르헨티나 진출 진단 보고서",
+  "target": {
+    "country": "AR",
+    "base_country": "BR"
+  },
+  "generated_at": "2026-06-22T12:10:46.375632",
+  "schema_version": "1.2",
+  "overall_insight": "라틴아메리카 3위권 자동차 시장이나 초고인플레·외환통제·CCC 신용등급으로 변동성이 권역 최고 수준이다. 2025년 신차 약 45만대(ACARA)로 회복 중이며, 금융 침투율 약 45%의 절반 이상을 Plan de Ahorro(círculos de ahorro, 저축형 공동구매조합)가 차지하는 것이 아르헨티나의 결정적 특수성 — 무이자+행정비 구조로 인플레 헷지 구매 수단이 되어 신차 판매의 대들보다. 비용·난이도 드라이버는 매우 강하다: 명목 APR 75%·외환통제(cepo)·법인세 35%·이자 원천 35%(한·아르헨티나 조세조약 미체결)에 더해, 소비자 여신 BCRA EFNB 인가와 Plan de Ahorro IGJ administradora 인가의 이중 규제가 핵심이다. 다만 2024~2025 Milei 정부의 재정흑자·디스인플레·cepo 단계적 완화가 회복 사이클을 열어 진입 타이밍 매력을 키운다. 매력도↔IT 불일치 지점은 솔루션 정합성 — EU 데이터 적정성 인정·Veraz/BCRA Central de Deudores CB는 견고하나, Plan de Ahorro 운영·인플레 인덱싱 특화 시스템 필요로 NetSol 베이스라인 재사용은 40%대로 BR(50%대)보다 낮다. 반면 차량회수는 prenda con registro 자력집행(secuestro prendario)으로 BR보다 빨라 리스크 축의 다크호스다. 리스크 플래그는 외환통제·환율·정치(디폴트 이력)로, 자본회수·환헷지 시나리오 실사가 필수다. 한국 OEM 캡티브 직진입(점유 낮음)보다 은행계·핀테크 파트너십 + Plan de Ahorro administradora 결합으로 진입, B2B Leasing 우선 후 prenda 단계 확장이 유효하다.",
+  "overall_insight_en": "Latin America's #3 auto market, but hyperinflation, FX controls and a CCC sovereign rating make volatility the highest in the region. New-car sales recovering to ~450k units in 2025 (ACARA); of the ~45% finance penetration, more than half is taken by Plan de Ahorro (círculos de ahorro, savings-pool group-purchase schemes) — Argentina's decisive specificity, an interest-free + admin-fee structure that serves as an inflation-hedge purchase vehicle and the backbone of new-car sales. Cost/difficulty drivers are very strong: nominal APR 75% · FX controls (cepo) · 35% corporate tax · 35% interest WHT (no Korea-Argentina tax treaty), plus the dual regulation of BCRA EFNB consumer-credit licensing and IGJ administradora licensing for Plan de Ahorro. That said, the 2024-2025 Milei government's fiscal surplus, disinflation and gradual cepo easing open a recovery cycle, raising the appeal of entry timing. The attractiveness↔IT mismatch is solution fit — EU data-adequacy recognition and Veraz/BCRA Central de Deudores CB are solid, but the need for Plan de Ahorro operations and inflation-indexing specialization keeps NetSol baseline reuse in the 40s%, lower than BR (50s%). Conversely, repossession via prenda con registro self-enforcement (secuestro prendario) is faster than BR — a dark horse on the risk axis. Risk flags are FX controls · exchange rate · politics (default history); capital-recovery and FX-hedge scenario due diligence is essential. Rather than direct entry by a Korean OEM captive (low share), enter via bank/fintech partnerships + a Plan de Ahorro administradora combination, prioritizing B2B leasing first then expanding to the prenda stage.",
+  "country_meta": {
+    "country": "Argentina",
+    "country_ko": "아르헨티나",
+    "region": "SOUTH_AMERICA",
+    "currency": "ARS",
+    "data_year": 2025,
+    "fetched_at": "2026-06-21T21:00:00+09:00",
+    "fetched_by": "ai",
+    "entry_status": "미진출"
+  },
+  "data_quality": {
+    "completeness_pct": 97.95918367346938,
+    "total_items": 49,
+    "target_items": 48,
+    "timeseries_coverage": 65.3061224489796,
+    "source_tiers": {
+      "tier1": 17,
+      "tier2": 14,
+      "tier3": 18,
+      "tier4": 0
+    },
+    "items_by_category": {
+      "business": [
+        {
+          "item": "오토금융/리스 시장규모",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "GDP 성장률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "금융 이용률(신차)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "금융 이용률(중고차)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "평균 금리/APR",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "신차 판매대수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "캡티브 강도(점유율)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "금융사 점유율(Top 5)",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "법인세율",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "이자소득 원천징수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "배당 원천징수",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "EV 보급률",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "EV·ICE 잔존가치 리스크",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "해당국 정성 요약",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "브랜드 Top10",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 2
+        },
+        {
+          "item": "OEM 순위(Top 5)",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 2
+        },
+        {
+          "item": "금융사 순위(Top 5)",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "경쟁사 리스트",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "경쟁사 진출 형태",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "경쟁사 금리 범위",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 2
+        },
+        {
+          "item": "평균 신차가격",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        },
+        {
+          "item": "외부 이슈 스캔",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 3
+        }
+      ],
+      "shared": [
+        {
+          "item": "외국인 지분 한도",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "외환·배당 송금 자유도",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "국가신용등급",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "라이선스 취득 가능 여부(외국사)",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 1
+        },
+        {
+          "item": "금리 상한 규제",
+          "role": "gate",
+          "has_timeseries": false,
+          "source_tier": 2
+        },
+        {
+          "item": "최저자본금",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "법적 회수 소요기간",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "추심 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "충당금 규정",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "연체 분류 기준",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "의무보험 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "신용생명보험 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "보험 끼워팔기 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "AI 신용평가 규제",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "규제기관 식별",
+          "role": "context",
+          "has_timeseries": false,
+          "source_tier": 1
+        }
+      ],
+      "it": [
+        {
+          "item": "솔루션 벤더",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "솔루션 유형",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "신용정보(CB) 인프라",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        },
+        {
+          "item": "결제·정산 인프라",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 2
+        },
+        {
+          "item": "디지털 딜러 성숙도",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 3
+        },
+        {
+          "item": "국외이전 제한",
+          "role": "score",
+          "has_timeseries": true,
+          "source_tier": 1
+        }
+      ]
+    },
+    "critical_gaps": [],
+    "readiness": {
+      "can_generate": true,
+      "tabs": {
+        "1-1": {
+          "name": "Similarity Scoring (vs Baseline)",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-2": {
+          "name": "System Decision Tree",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-3": {
+          "name": "Contract Volume & 10Y TCO",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        },
+        "1-4": {
+          "name": "Market & Competition Background",
+          "ready": true,
+          "missing_count": 0,
+          "missing_fields": []
+        }
+      }
+    }
+  },
+  "tabs": {
+    "tab_1_1_similarity": {
+      "overall_score": 83.75000000000001,
+      "axes": {
+        "product": 75.0,
+        "regulatory": 92.85714285714286,
+        "system": 78.125,
+        "risk": 87.5
+      },
+      "items": [
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "axis": "product",
+          "weight": 0.15,
+          "dimensions": [
+            {
+              "dimension": "리스 취급 일치도",
+              "target_score": 2,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Leasing 신차 2% 미만 — 매우 낮음",
+              "note_en": "Leasing under 2% of new cars — very low"
+            },
+            {
+              "dimension": "렌탈 취급 일치도",
+              "target_score": 2,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "단기렌탈 시장 작음",
+              "note_en": "Short-term rental market is small"
+            },
+            {
+              "dimension": "플릿 취급 일치도",
+              "target_score": 2,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "플릿·캡티브 제한적, B2B 리스 초기",
+              "note_en": "Fleet/captive limited; B2B leasing early-stage"
+            },
+            {
+              "dimension": "상품별 비중 유사도",
+              "target_score": 2,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Plan de Ahorro 25%(글로벌 희귀) 구조로 GB와 큰 차이",
+              "note_en": "Plan de Ahorro 25% (globally rare) structure differs greatly from GB"
+            }
+          ],
+          "item_similarity": 75.0
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "axis": "regulatory",
+          "weight": 0.1,
+          "dimensions": [
+            {
+              "dimension": "현지 저장 강제",
+              "target_score": 5,
+              "base_score": 5,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "강제 현지화 없음",
+              "note_en": "No forced localization"
+            },
+            {
+              "dimension": "국외 이전 허용도",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "EU 적정성 인정국, 이전 용이",
+              "note_en": "EU adequacy-recognized country; transfer easy"
+            },
+            {
+              "dimension": "동의·보관 규제",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Ley 25.326 노후, 개정 진행 중",
+              "note_en": "Ley 25.326 aging, amendment underway"
+            },
+            {
+              "dimension": "GDPR 동등성",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "EU 적정성 인정이나 GDPR 정합 개정 중",
+              "note_en": "EU adequacy recognized but GDPR-alignment amendment underway"
+            }
+          ],
+          "item_similarity": 87.5
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "axis": "regulatory",
+          "weight": 0.25,
+          "dimensions": [
+            {
+              "dimension": "취득방식(등록 vs 인가)",
+              "target_score": 2,
+              "base_score": 2,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "EFNB(BCRA)+Plan de Ahorro(IGJ) 이중 인가 — 부담 큼",
+              "note_en": "EFNB (BCRA) + Plan de Ahorro (IGJ) dual licensing — heavy burden"
+            },
+            {
+              "dimension": "외국인 취득 가능",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "Ley 21.382 100% 허용, BCRA 인가",
+              "note_en": "Ley 21.382 100% allowed, BCRA licensing"
+            },
+            {
+              "dimension": "처리기간(개월)",
+              "target_score": 2,
+              "base_score": 2,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "BCRA 인가 12~24개월+",
+              "note_en": "BCRA licensing 12-24 months+"
+            },
+            {
+              "dimension": "최저자본금 수준",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "EFNB 자본금 BCRA 고시·인플레 연동",
+              "note_en": "EFNB capital BCRA-set and inflation-linked"
+            },
+            {
+              "dimension": "감독 강도",
+              "target_score": 2,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "BCRA+IGJ 이중 감독, 외환통제 결합",
+              "note_en": "BCRA + IGJ dual supervision, combined with FX controls"
+            }
+          ],
+          "item_similarity": 95.0
+        },
+        {
+          "item": "솔루션 유형",
+          "axis": "system",
+          "weight": 0.2,
+          "dimensions": [
+            {
+              "dimension": "배포형태(패키지/SI/SaaS)",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "Plan de Ahorro·인플레 인덱싱 특화로 NetSol 직접 재사용 40%대",
+              "note_en": "Plan de Ahorro/inflation-indexing specialization keeps direct NetSol reuse in the 40s%"
+            },
+            {
+              "dimension": "커스터마이징 자유도",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "Globant 등 현지 SI 의존도 큼",
+              "note_en": "High dependence on local SI such as Globant"
+            },
+            {
+              "dimension": "벤더 종속도",
+              "target_score": 2,
+              "base_score": 2,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "현지 SI+자체 코어 혼합, 종속도 높음",
+              "note_en": "Local SI + proprietary core mix, high lock-in"
+            },
+            {
+              "dimension": "멀티테넌시 여부",
+              "target_score": 2,
+              "base_score": 3,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "멀티테넌시 제한적",
+              "note_en": "Multi-tenancy limited"
+            }
+          ],
+          "item_similarity": 93.75
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "axis": "system",
+          "weight": 0.2,
+          "dimensions": [
+            {
+              "dimension": "온라인 신청 연동",
+              "target_score": 4,
+              "base_score": 5,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Mercado Pago·핀테크 강세, BR Pix보다는 낮음",
+              "note_en": "Mercado Pago/fintech strong, but lower than BR Pix"
+            },
+            {
+              "dimension": "비대면 계약 가능",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "전자서명·비대면 진행 중, 일부 대면 잔존",
+              "note_en": "E-signature/remote underway, some in-person remains"
+            },
+            {
+              "dimension": "API 개방도",
+              "target_score": 3,
+              "base_score": 5,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "Open Finance 미성숙, BCRA 단계적",
+              "note_en": "Open Finance immature, BCRA phased"
+            },
+            {
+              "dimension": "페이퍼리스 수준",
+              "target_score": 3,
+              "base_score": 4,
+              "gap": 1.0,
+              "similarity": 75.0,
+              "note": "Plan de Ahorro·prenda 등록 종이 절차 잔존",
+              "note_en": "Paper procedures remain for Plan de Ahorro/prenda registration"
+            }
+          ],
+          "item_similarity": 62.5
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "axis": "risk",
+          "weight": 0.1,
+          "dimensions": [
+            {
+              "dimension": "사법절차 필요",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "prenda 자력집행 약식, 일부 사법",
+              "note_en": "prenda self-enforcement is summary, some judicial"
+            },
+            {
+              "dimension": "회수 소요기간(일)",
+              "target_score": 4,
+              "base_score": 4,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "평균 60~150일",
+              "note_en": "Average 60-150 days"
+            },
+            {
+              "dimension": "자력구제 허용",
+              "target_score": 4,
+              "base_score": 2,
+              "gap": 2.0,
+              "similarity": 50.0,
+              "note": "secuestro prendario 자력집행 허용",
+              "note_en": "secuestro prendario self-enforcement allowed"
+            },
+            {
+              "dimension": "회수율",
+              "target_score": 3,
+              "base_score": 3,
+              "gap": 0.0,
+              "similarity": 100.0,
+              "note": "사법 적체·지역 편차",
+              "note_en": "Judicial backlog/regional variation"
+            }
+          ],
+          "item_similarity": 87.5
+        }
+      ],
+      "method": "dimension_based",
+      "scale": "1~5 per dimension → gap 0=100, gap 4=0",
+      "evidence_items": [
+        {
+          "item": "솔루션 유형",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": "은행계 자체 코어(Santander·Galicia·Macro) + 캡티브 자체 + Plan de Ahorro 전용 administradora 시스템 + 현지/글로벌 패키지 혼재",
+          "value_en": "Bank proprietary cores (Santander · Galicia · Macro) + captive proprietary + Plan de Ahorro dedicated administradora systems + local/global packages, mixed",
+          "unit": "type",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "업계",
+          "source_en": "Industry",
+          "insight": "대형 은행계·캡티브는 자체 코어, Plan de Ahorro administradora는 인플레 인덱싱·추첨·납입관리 전용 시스템 별도. 라틴 표준+아르헨티나 특화(인플레 조정)로 EU 베이스라인 정합성 중하위.",
+          "insight_en": "Large banks and captives use proprietary cores; Plan de Ahorro administradoras use dedicated systems for inflation indexing, draws and payment management. Latin standard + Argentina-specific (inflation adjustment) puts EU baseline fit in the lower-middle.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "디지털 채널 성숙도",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": 3,
+          "value_en": null,
+          "unit": "maturity_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "BCRA Transferencias 3.0(즉시결제, 2021~), Mercado Pago·Ualá(핀테크), DNI digital/AFIP 전자인증",
+          "source_en": "BCRA Transferencias 3.0 (instant payments, 2021-), Mercado Pago · Ualá (fintech), DNI digital/AFIP e-authentication",
+          "insight": "Transferencias 3.0(BCRA 즉시결제)·Mercado Pago·Ualá 등 핀테크 강세로 디지털 결제 발달하나, BR Pix·Open Finance 대비는 한 단계 낮음. 비대면 계약·전자서명 보편화 진행 중. EU 베이스라인 대비 중간.",
+          "insight_en": "Strong fintech (Transferencias 3.0 BCRA instant payments · Mercado Pago · Ualá) makes digital payments developed, but one step below BR's Pix/Open Finance. Remote contracting and e-signatures are spreading. Mid-level vs the EU baseline.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "디지털 딜러 성숙도",
+          "item_en": null,
+          "category": "it",
+          "role": "score",
+          "value": 3,
+          "value_en": null,
+          "unit": "maturity_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "업계 (Mercado Libre Vehículos·DeMotores·Kavak Argentina·OLX Autos)",
+          "source_en": "Industry (Mercado Libre Vehículos · DeMotores · Kavak Argentina · OLX Autos)",
+          "insight": "Mercado Libre Vehículos·DeMotores·Kavak(중고차)·OLX 등 디지털 채널 발달하나 BR 대비 한 단계 낮음. OEM 직판·임베디드 금융은 초기. 디지털 prenda 연동 기회 존재.",
+          "insight_en": "Digital channels such as Mercado Libre Vehículos · DeMotores · Kavak (used cars) · OLX are developed but one step below BR. OEM direct sales and embedded finance are early-stage. There is a digital-prenda integration opportunity.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "라이선스 체제(세그먼트별)",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "소비자 여신=BCRA EFNB(Compañía Financiera) 인가(S.A.+자본금+BCRA 감독), Plan de Ahorro=IGJ administradora 인가, B2B Leasing=Ley 25.248 등록",
+          "value_en": "Consumer credit = BCRA EFNB (Compañía Financiera) license (S.A. + capital + BCRA supervision); Plan de Ahorro = IGJ administradora license; B2B leasing = Ley 25.248 registration",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "segment",
+          "segment": "consumer_credit",
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Ley 21.526, BCRA 인가 규정, IGJ Resolución(Planes de Ahorro), Ley 25.248(Leasing)",
+          "source_en": "Ley 21.526, BCRA licensing rules, IGJ Resolución (Planes de Ahorro), Ley 25.248 (Leasing)",
+          "insight": "세그먼트별 인가 분기 — EFNB(소비자, BCRA), Plan de Ahorro(IGJ administradora), Leasing(등록). EU·BR 대비 Plan de Ahorro라는 별도 인가 축이 추가돼 복잡. BCRA 인가 처리기간·감독 강도 부담. 다만 외국인 취득은 가능.",
+          "insight_en": "Licensing branches by segment — EFNB (consumer, BCRA), Plan de Ahorro (IGJ administradora), leasing (registration). Complex vs EU/BR because of the additional Plan de Ahorro licensing axis. BCRA licensing lead time and supervisory intensity are a burden. Foreign acquisition is nonetheless possible.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "데이터 현지화 의무",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "Ley 25.326(PDPA, 2000) 적용. 강제 현지화 의무 없음 — 국외이전은 적정성/동의 기반. EU 적정성 인정국(2003)",
+          "value_en": "Ley 25.326 (PDPA, 2000) applies. No forced localization — cross-border transfer is adequacy/consent based. EU adequacy-recognized country (2003)",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "PASS",
+          "gate_scope": "operating_model",
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Ley 25.326 (Protección de Datos Personales), AAIP(정보접근·데이터보호청), EU 적정성 결정 2003/490/EC",
+          "source_en": "Ley 25.326 (Protección de Datos Personales), AAIP (Data Protection & Access to Information Agency), EU adequacy decision 2003/490/EC",
+          "insight": "Ley 25.326(2000, 오래됨)으로 강제 현지화 없음. EU 적정성 인정국(2003)이라 EU 연동 유리. 단 법령 노후화로 개정(GDPR 정합) 진행 중 — 향후 강화 가능성. 본사 연동 아키텍처 가능.",
+          "insight_en": "Ley 25.326 (2000, old) means no forced localization. EU adequacy-recognized country (2003) favors EU connectivity. However, the aging law is being amended (GDPR alignment) — possible future tightening. HQ-connected architecture is feasible.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "차량회수 절차 용이성",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": 4,
+          "value_en": null,
+          "unit": "ease_1to5",
+          "direction": "up",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Ley 12.962 prenda con registro(등록담보) 자력집행(ejecución prendaria), 업계",
+          "source_en": "Ley 12.962 prenda con registro (registered security) self-enforcement (ejecución prendaria), industry",
+          "insight": "prenda con registro(등록담보)는 자력집행(secuestro prendario) 절차로 비교적 빠른 회수 — BR보다 자력구제 강함. 등록담보권자가 신속 압류 가능. 단 사법 적체·지역 편차 존재. Leasing(Ley 25.248)은 소유권 기반 회수.",
+          "insight_en": "prenda con registro (registered security) uses self-enforcement (secuestro prendario) for relatively fast recovery — stronger self-help than BR. The registered secured creditor can seize swiftly. But judicial backlogs and regional variation exist. Leasing (Ley 25.248) recovers via ownership.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_2_decision": {
+      "decision": "external_solution",
+      "similarity_score": 83.75000000000001,
+      "recommendation": {
+        "ko": "권역 내 확산 가능 시스템 없음 → 외부솔루션 검토 (미달 시 본사 자체구축)",
+        "en": "No deployable regional system → review external solutions (HQ build as fallback)."
+      },
+      "base_country": "BR",
+      "base_system": "N/A",
+      "region_system_exists": false,
+      "hq_baseline_cost": 8000,
+      "hq_baseline_months": 24,
+      "hq_baseline_currency": "EUR",
+      "items": [
+        {
+          "item": "금리 상한 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "민법상 폭리(usura) 일반 원칙 + BCRA 신용금리 가이드. 명시적 단일 상한은 약하나 사법부 폭리 판단·소비자보호법 개입 여지",
+          "value_en": "Civil-code usury (usura) general principle + BCRA credit-rate guidance. An explicit single cap is weak, but courts may rule usury and consumer-protection law may intervene",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "FLAG",
+          "gate_scope": "segment",
+          "segment": "consumer_credit",
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Código Civil y Comercial(폭리 원칙), Ley 24.240(소비자보호법), BCRA 신용 규정",
+          "source_en": "Código Civil y Comercial (usury principle), Ley 24.240 (Consumer Protection Act), BCRA credit rules",
+          "insight": "명시적 경성 금리상한은 약하나 민법 폭리(usura)·소비자보호법(Ley 24.240)으로 사법·행정 개입 여지. 초고인플레로 명목금리 자체가 높아 분쟁 소지 — 정치/사법 리스크 상시. Tier 2 FLAG.",
+          "insight_en": "No explicit hard rate cap, but civil-code usury (usura) and the Consumer Protection Act (Ley 24.240) leave room for judicial/administrative intervention. Hyperinflation keeps nominal rates themselves high, creating dispute exposure — political/judicial risk is ever-present. Tier 2 FLAG.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "외환·배당 송금 자유도",
+          "item_en": null,
+          "category": "shared",
+          "role": "gate",
+          "value": "외환통제(cepo cambiario) 상존, 2024~2025 Milei 단계적 완화. 배당 송금 BCRA 승인·제한, MULC(공식 외환시장) 통한 송금 제약",
+          "value_en": "FX controls (cepo cambiario) persist, with gradual 2024-2025 Milei easing. Dividend remittance subject to BCRA approval/limits; transfer constraints via MULC (official FX market)",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": "FLAG",
+          "gate_scope": "country",
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "BCRA Comunicación 'A' (cepo cambiario), 2024~2025 단계적 완화 조치",
+          "source_en": "BCRA Comunicación 'A' (cepo cambiario), 2024-2025 gradual easing measures",
+          "insight": "외환통제(cepo)가 핵심 리스크 — 배당·이익 송금이 역사적으로 제약. 2024~2025 Milei 정부 cepo 부분 해제·MULC 정상화 진행 중이나 완전 자유화 아님. Tier 1이나 신뢰도·정책 변동성으로 FLAG — 자본회수 전략·재투자 옵션 실사 필수.",
+          "insight_en": "FX controls (cepo) are the core risk — dividend/profit remittance has historically been constrained. The 2024-2025 Milei government's partial cepo lifting and MULC normalization are underway but not fully liberalized. Tier 1 but FLAG due to credibility/policy volatility — capital-recovery strategy and reinvestment-option due diligence are essential.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "의무보험 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": "SOA(Seguro Obligatorio Automotor) 강제 — 제3자 인사·물적 책임 의무. 차량손해는 임의보험",
+          "value_en": "SOA (Seguro Obligatorio Automotor) mandatory — covers third-party bodily/property liability. Own-damage is optional insurance",
+          "unit": "regime",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 1,
+          "source": "Ley 24.449(교통법) SOA 의무, SSN(Superintendencia de Seguros) 감독",
+          "source_en": "Ley 24.449 (Traffic Act) SOA mandate, SSN (Superintendencia de Seguros) supervision",
+          "insight": "SOA(자동차 강제 책임보험) 의무 — 제3자 책임 커버. 차량손해는 임의(EU 유사). 금융·리스 차량은 임의보험 부보 관행. 베이스라인 보험연동 로직 재사용 70%대.",
+          "insight_en": "SOA (compulsory motor liability insurance) is mandatory — covers third-party liability. Own-damage is optional (similar to EU). Financed/leased vehicles conventionally carry optional cover. Baseline insurance-integration logic reuse in the 70s%.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "신용생명보험 규제",
+          "item_en": null,
+          "category": "shared",
+          "role": "score",
+          "value": "끼워팔기(venta atada) 소비자보호법상 제한. 신용생명보험 옵션화 권고, SSN 감독",
+          "value_en": "Tying (venta atada) restricted under the Consumer Protection Act. Credit life insurance recommended to be optional; SSN supervision",
+          "unit": "regime",
+          "direction": "down",
+          "axis": "similarity",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "Ley 24.240 Art. 가격·끼워팔기 규정, SSN(보험감독청)",
+          "source_en": "Ley 24.240 Art. on pricing/tying, SSN (insurance supervisor)",
+          "insight": "끼워팔기(venta atada) 소비자보호법상 제한 — 신용생명보험 강제판매 제약. 상품 옵션화 필수. EU IDD 수준 근접.",
+          "insight_en": "Tying (venta atada) is restricted under the Consumer Protection Act — constraining forced sale of credit life insurance. Product optionalization is essential. Close to the EU IDD level.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_3_tco": {
+      "build_cost": 3000.0,
+      "build_months": 10.799999999999999,
+      "annual_subscription": 0,
+      "annual_maintenance": 500,
+      "annual_recurring": 500,
+      "operations_10y": 50000,
+      "system_cost_10y": 8000.0,
+      "total_tco_10y": 58000.0,
+      "currency": "EUR",
+      "similarity_score": 83.75000000000001,
+      "similarity_multiplier": 0.6,
+      "similarity_band": "80~90",
+      "discount_applied": 0.4,
+      "build_breakdown": {
+        "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",
+        "inputs": {
+          "베이스라인 국가": "BR",
+          "베이스라인 솔루션": null,
+          "B 구축비용": 5000,
+          "B 구축기간(개월)": 18,
+          "종합 유사도": 83.8,
+          "승수 구간": "80~90",
+          "적용 승수": 0.6
+        },
+        "outputs": {
+          "신규국 구축비용": 3000.0,
+          "신규국 구축기간(개월)": 10.799999999999999
+        }
+      },
+      "expected_contracts": 1822,
+      "expected_contracts_breakdown": {
+        "value": 1822,
+        "formula": "신차 판매대수 × 금융이용률(신차) × (할부+리스 비중) × 우리사 예상 점유율",
+        "inputs": {
+          "신차 판매대수": 450000,
+          "신차 판매대수(원본값)": 450000.0,
+          "신차 판매대수(단위)": "units",
+          "금융 이용률(신차)_%": 45.0,
+          "구매 패턴(할부·리스 비중)_%": 45.0,
+          "우리사 예상 점유율": 0.02
+        }
+      },
+      "subscription_details": {
+        "applicable": false,
+        "new_volume": 1822,
+        "annual_fee": 0,
+        "currency": "EUR",
+        "note": "비구독 솔루션 — 구독료는 운영비에 포함"
+      },
+      "subscription_tiers": [
+        {
+          "min_volume": 0,
+          "max_volume": 2000,
+          "price_per_unit": 9.88,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 2001,
+          "max_volume": 4000,
+          "price_per_unit": 5.928,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 4001,
+          "max_volume": 7500,
+          "price_per_unit": 5.434,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 7501,
+          "max_volume": 10000,
+          "price_per_unit": 4.94,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 10001,
+          "max_volume": 20000,
+          "price_per_unit": 4.323,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 20001,
+          "max_volume": 80000,
+          "price_per_unit": 4.073,
+          "currency": "EUR"
+        },
+        {
+          "min_volume": 80001,
+          "max_volume": 999999,
+          "price_per_unit": 0.865,
+          "currency": "EUR"
+        }
+      ],
+      "existing_total_volume": 80,
+      "items": [
+        {
+          "item": "신차 판매대수",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 450000,
+          "value_en": null,
+          "unit": "units",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 359000
+              },
+              {
+                "year": 2022,
+                "value": 392000
+              },
+              {
+                "year": 2023,
+                "value": 449000
+              },
+              {
+                "year": 2024,
+                "value": 414000
+              },
+              {
+                "year": 2025,
+                "value": 450000
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 490000
+              },
+              {
+                "year": 2027,
+                "value": 520000
+              },
+              {
+                "year": 2028,
+                "value": 545000
+              },
+              {
+                "year": 2029,
+                "value": 565000
+              },
+              {
+                "year": 2030,
+                "value": 580000
+              }
+            ],
+            "cagr_hist": 5.8,
+            "cagr_forecast": 5.2,
+            "estimated": true
+          },
+          "tier": 2,
+          "source": "ACARA 2025 patentamientos (약 45만대, Milei 회복; 변동성 큼)",
+          "source_en": "ACARA 2025 patentamientos (~450k units, Milei recovery; high volatility)",
+          "insight": "2025년 약 45만대 — 변동성 큼(2018 80만대 정점 → 침체 → 회복). Milei 안정화·cepo 완화로 회복세. 인구 4,600만·모터리제이션 250대/1000명으로 성장 여력 있으나 거시 의존도 높음.",
+          "insight_en": "~450k units in 2025 — high volatility (2018 peak of 800k → downturn → recovery). Recovering on Milei stabilization and cepo easing. Population 46M and motorization of 250 vehicles/1,000 leave growth headroom, but macro dependence is high.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융 이용률(신차)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 45,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 48
+              },
+              {
+                "year": 2022,
+                "value": 47
+              },
+              {
+                "year": 2023,
+                "value": 40
+              },
+              {
+                "year": 2024,
+                "value": 42
+              },
+              {
+                "year": 2025,
+                "value": 45
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 48
+              },
+              {
+                "year": 2027,
+                "value": 50
+              },
+              {
+                "year": 2028,
+                "value": 52
+              },
+              {
+                "year": 2029,
+                "value": 53
+              },
+              {
+                "year": 2030,
+                "value": 55
+              }
+            ],
+            "cagr_hist": -1.6,
+            "cagr_forecast": 4.1,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "ACARA/AAFP 2025 (prenda 약 20%·Plan de Ahorro 약 25% 합산 약 45%)",
+          "source_en": "ACARA/AAFP 2025 (prenda ~20% + Plan de Ahorro ~25%, summing to ~45%)",
+          "insight": "신차의 약 45%가 금융 경유 — 그중 Plan de Ahorro(círculos de ahorro, 저축형 공동구매)가 약 25%로 압도적. prenda(담보대출)는 고금리로 위축. 2023 고인플레로 침투율 급락 후 회복 중. Plan de Ahorro가 아르헨티나 핵심 특수성.",
+          "insight_en": "~45% of new cars are financed — of which Plan de Ahorro (círculos de ahorro, savings-pool group-purchase) dominates at ~25%. prenda (secured loans) shrank under high rates. Penetration plunged on 2023 high inflation, now recovering. Plan de Ahorro is Argentina's core specificity.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "구매 패턴(할부·리스 비중)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 45,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 2,
+          "source": "ACARA/AAFP 2025 (Plan de Ahorro 약 25%·prenda 약 18%·Leasing 약 2%·현금 약 55%)",
+          "source_en": "ACARA/AAFP 2025 (Plan de Ahorro ~25% · prenda ~18% · leasing ~2% · cash ~55%)",
+          "insight": "신차의 약 45%가 신용/저축 경유 — Plan de Ahorro(저축형 공동구매조합) 약 25%가 핵심, prenda(담보대출) 18%, Leasing 2% 미만. Plan de Ahorro는 아르헨티나 특유 — 무이자에 가까운 인플레 헷지 구매 수단으로 신차 판매의 대들보. 리스 취급 매우 낮음.",
+          "insight_en": "~45% of new cars go through credit/savings — Plan de Ahorro (savings-pool group-purchase scheme) at ~25% is the core, prenda (secured loans) 18%, leasing under 2%. Plan de Ahorro is uniquely Argentine — a near-interest-free inflation-hedge purchase vehicle and the backbone of new-car sales. Lease volume is very low.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "캡티브 강도(점유율)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 50,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "AAFP 2025 (VW·Toyota·Stellantis(PSA)·Ford·GM·Renault 캡티브 + Plan de Ahorro administradora 합산 약 50%)",
+          "source_en": "AAFP 2025 (VW · Toyota · Stellantis (PSA) · Ford · GM · Renault captives + Plan de Ahorro administradoras sum to ~50%)",
+          "insight": "캡티브 강세 — VW·Toyota·Stellantis(Fiat·Peugeot)·Ford·GM·Renault OEM 캡티브가 Plan de Ahorro administradora 겸영으로 약 50% 장악. 은행계(Santander Río·Galicia·BBVA·Macro) 약 30%, 독립·핀테크 약 20%. 캡티브+Plan de Ahorro 결합이 진입장벽.",
+          "insight_en": "Captives are strong — VW · Toyota · Stellantis (Fiat · Peugeot) · Ford · GM · Renault OEM captives, also running Plan de Ahorro administradoras, hold ~50%. Banks (Santander Río · Galicia · BBVA · Macro) ~30%, independents/fintech ~20%. The captive + Plan de Ahorro combination is the entry barrier.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "평균 신차가격",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": "약 USD 22,000 (turismos 평균 거래가, 환율·인플레로 ARS 명목가 변동 극심)",
+          "value_en": "~USD 22,000 (turismos average transaction price; ARS nominal price swings sharply with FX/inflation)",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 3,
+          "source": "ACARA 2025 평균 거래가 추정, InfoAuto 시세",
+          "source_en": "ACARA 2025 average transaction price estimate, InfoAuto market prices",
+          "insight": "평균 신차 거래가 약 USD 22k(BR과 유사, EU 대비 낮음). ARS 명목가는 인플레·환율로 변동 극심 — Plan de Ahorro가 인플레 헷지 구매 수단으로 선호되는 배경. 가격은 USD 환산·인덱싱 처리 필수.",
+          "insight_en": "Average new-car transaction price ~USD 22k (similar to BR, lower than the EU). The ARS nominal price swings sharply with inflation/FX — the backdrop for Plan de Ahorro being preferred as an inflation-hedge purchase vehicle. Prices must be handled with USD conversion/indexing.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ]
+    },
+    "tab_1_4_market": {
+      "items": [
+        {
+          "item": "GDP 성장률",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 5.5,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 10.7
+              },
+              {
+                "year": 2022,
+                "value": 5.0
+              },
+              {
+                "year": 2023,
+                "value": -1.6
+              },
+              {
+                "year": 2024,
+                "value": -1.7
+              },
+              {
+                "year": 2025,
+                "value": 5.5
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 4.5
+              },
+              {
+                "year": 2027,
+                "value": 3.5
+              },
+              {
+                "year": 2028,
+                "value": 3.0
+              },
+              {
+                "year": 2029,
+                "value": 2.8
+              },
+              {
+                "year": 2030,
+                "value": 2.5
+              }
+            ],
+            "estimated": true
+          },
+          "tier": 1,
+          "source": "BCRA·INDEC·IMF WEO 2025",
+          "source_en": "BCRA, INDEC, IMF WEO 2025",
+          "insight": "Milei 정부 개혁·인플레 안정화로 침체 탈출 후 5.5% 강한 반등. 변동성 큰 매크로로 중기 둔화 전망. 환율·자본통제 리스크 잔존.",
+          "insight_en": "Strong 5.5% rebound after recession on Milei reforms and inflation stabilization. High macro volatility; medium-term moderation expected. FX and capital-control risks remain.",
+          "insight_ai_generated": false,
+          "status": "present"
+        },
+        {
+          "item": "오토금융 성장률(CAGR)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 12.9,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 8.0
+              },
+              {
+                "year": 2022,
+                "value": 10.0
+              },
+              {
+                "year": 2023,
+                "value": -18.0
+              },
+              {
+                "year": 2024,
+                "value": 5.0
+              },
+              {
+                "year": 2025,
+                "value": 25.0
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 18.0
+              },
+              {
+                "year": 2027,
+                "value": 15.0
+              },
+              {
+                "year": 2028,
+                "value": 12.0
+              },
+              {
+                "year": 2029,
+                "value": 10.0
+              },
+              {
+                "year": 2030,
+                "value": 9.0
+              }
+            ],
+            "cagr_hist": 6.5,
+            "cagr_forecast": 12.9,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "ACARA/AAFP/Mordor Argentina Auto Finance (2023 침체 → 2024~2025 Milei 디스인플레 회복)",
+          "source_en": "ACARA/AAFP/Mordor Argentina Auto Finance (2023 downturn → 2024-2025 Milei disinflation recovery)",
+          "insight": "변동성 극심 — 2023 침체(-18%) 후 2025 강한 회복(+25%). Milei 디스인플레·cepo 완화로 신용 정상화. 명목 성장 높으나 거시 변동성이 BR보다 훨씬 큼. 회복 사이클 초기 진입 타이밍 매력.",
+          "insight_en": "Extreme volatility — strong rebound in 2025 (+25%) after the 2023 downturn (-18%). Milei disinflation and cepo easing normalize credit. High nominal growth but macro volatility far exceeds BR. Attractive entry timing early in the recovery cycle.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융사 순위(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": [
+            {
+              "rank": 1,
+              "name": "Volkswagen S.A. de Ahorro (Plan Óvalo)",
+              "market_share": "약 16%"
+            },
+            {
+              "rank": 2,
+              "name": "Toyota Compañía Financiera/Plan",
+              "market_share": "약 14%"
+            },
+            {
+              "rank": 3,
+              "name": "Plan Rombo (Renault) / Volkswagen Financial Services",
+              "market_share": "약 12%"
+            },
+            {
+              "rank": 4,
+              "name": "Santander (Santander Río)",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 5,
+              "name": "Banco Galicia",
+              "market_share": "약 8%"
+            }
+          ],
+          "value_en": null,
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 3,
+          "source": "AAFP 2025 / Plan de Ahorro administradora·은행 공시 추정",
+          "source_en": "AAFP 2025 / Plan de Ahorro administradora and bank disclosures, estimated",
+          "insight": "VW Plan Óvalo(저축조합) 1위 약 16% — Plan de Ahorro administradora가 상위 독점. 톱5 합산 약 60% 캡티브 조합+은행계 집중. 신규 진입은 IGJ administradora 인가 또는 은행 파트너십 필요.",
+          "insight_en": "VW Plan Óvalo (savings pool) is #1 at ~16% — Plan de Ahorro administradoras dominate the top. Top-5 sum ~60% concentrated in captive pools + banks. New entrants need an IGJ administradora license or a bank partnership.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "금융사 점유율(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 16,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": null,
+          "tier": 3,
+          "source": "AAFP 2025 (Volkswagen S.A. de Ahorro/Plan Óvalo 약 16%, Toyota 14%, Plan Rombo(Renault) 12%, Santander 10%, Galicia 8% 추정)",
+          "source_en": "AAFP 2025 (Volkswagen S.A. de Ahorro/Plan Óvalo ~16%, Toyota 14%, Plan Rombo (Renault) 12%, Santander 10%, Galicia 8% est.)",
+          "insight": "VW Plan Óvalo(저축조합) 단독 1위 약 16%. 톱5 합산 약 60%로 캡티브 Plan de Ahorro+은행계 집중. 신규 진입은 디지털 prenda·중고차·핀테크 틈새 권장. Plan de Ahorro administradora 인가가 핵심 경로.",
+          "insight_en": "VW Plan Óvalo (savings pool) alone is #1 at ~16%. Top-5 sum ~60%, concentrated in captive Plan de Ahorro + banks. New entrants advised to target digital prenda · used-car · fintech niches. A Plan de Ahorro administradora license is the key route.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "경쟁사 금리 범위",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": "신차 prenda 명목 APR 약 60~90%(2025 디스인플레로 하락 중), Plan de Ahorro 무이자(추첨/입찰)+행정비(cuota administrativa) 약 연 8~15%, Leasing CET 변동",
+          "value_en": "New-car prenda nominal APR ~60-90% (falling on 2025 disinflation), Plan de Ahorro interest-free (draw/bid) + admin fee (cuota administrativa) ~8-15%/yr, leasing CET variable",
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "BCRA 신용통계 2025, AAFP, Plan de Ahorro administradora 공시",
+          "source_en": "BCRA credit statistics 2025, AAFP, Plan de Ahorro administradora disclosures",
+          "insight": "prenda 명목 APR 60~90%(초고인플레, 디스인플레로 급락 중). Plan de Ahorro는 무이자+행정비 8~15%로 인플레 환경에서 압도적 가격경쟁력 — 시장 점유 핵심 이유. 명목 금리는 실질 인플레 차감 해석 필수.",
+          "insight_en": "prenda nominal APR 60-90% (hyperinflation, falling on disinflation). Plan de Ahorro is interest-free + admin fee 8-15%, giving overwhelming price competitiveness in an inflationary environment — the core reason for its market share. Nominal rates must be read net of real inflation.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "OEM 순위(Top 5)",
+          "item_en": null,
+          "category": "business",
+          "role": "context",
+          "value": [
+            {
+              "rank": 1,
+              "name": "Toyota",
+              "market_share": "16.5%"
+            },
+            {
+              "rank": 2,
+              "name": "Volkswagen",
+              "market_share": "13.0%"
+            },
+            {
+              "rank": 3,
+              "name": "Fiat",
+              "market_share": "11.0%"
+            },
+            {
+              "rank": 4,
+              "name": "Peugeot",
+              "market_share": "9.5%"
+            },
+            {
+              "rank": 5,
+              "name": "Chevrolet",
+              "market_share": "8.5%"
+            }
+          ],
+          "value_en": null,
+          "unit": null,
+          "direction": null,
+          "axis": null,
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": "descriptive",
+          "timeseries": null,
+          "tier": 2,
+          "source": "ACARA 2025 patentamientos 추정",
+          "source_en": "ACARA 2025 patentamientos estimate",
+          "insight": "Toyota 1위 약 16.5%(현지 생산 Hilux 강세), Stellantis 그룹(Fiat+Peugeot+Citroën) 합산 약 30%. 한국 OEM(현대·기아)는 수입 의존으로 점유 낮음 — 캡티브 직진입보다 은행계·핀테크 파트너십 유리.",
+          "insight_en": "Toyota #1 at ~16.5% (locally produced Hilux strong); the Stellantis group (Fiat + Peugeot + Citroën) sums to ~30%. Korean OEMs (Hyundai/Kia) have low share due to import reliance — bank/fintech partnerships are more favorable than direct captive entry.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "EV 보급률",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 2,
+          "value_en": null,
+          "unit": "%",
+          "direction": "up",
+          "axis": "attractiveness",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 0.2
+              },
+              {
+                "year": 2022,
+                "value": 0.4
+              },
+              {
+                "year": 2023,
+                "value": 0.7
+              },
+              {
+                "year": 2024,
+                "value": 1.2
+              },
+              {
+                "year": 2025,
+                "value": 2.0
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 3.0
+              },
+              {
+                "year": 2027,
+                "value": 4.5
+              },
+              {
+                "year": 2028,
+                "value": 6.5
+              },
+              {
+                "year": 2029,
+                "value": 9.0
+              },
+              {
+                "year": 2030,
+                "value": 12.0
+              }
+            ],
+            "cagr_hist": 77.8,
+            "cagr_forecast": 43.0,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "ADEFA/AAVEA(아르헨티나 전기차협회) 2025 (BEV+PHEV+HEV 점유 약 2%, BEV 단독 <1%)",
+          "source_en": "ADEFA/AAVEA (Argentine EV association) 2025 (BEV+PHEV+HEV share ~2%, BEV alone <1%)",
+          "insight": "EV 보급 매우 낮음(약 2%, BR 7%·EU 대비 현저히 낮음) — 고관세·인플레·충전 인프라 미비. 2025 수입관세 일부 완화로 가속 시작. 잔가 데이터 희소로 EV 리스 보수적 설계 필요.",
+          "insight_en": "EV adoption is very low (~2%, markedly lower than BR's 7% and the EU) — high tariffs, inflation and inadequate charging infrastructure. Partial 2025 import-tariff easing is starting to accelerate it. Scarce residual-value data calls for conservative EV-lease design.",
+          "insight_ai_generated": true,
+          "status": "present"
+        },
+        {
+          "item": "EV·ICE 잔존가치 리스크",
+          "item_en": null,
+          "category": "business",
+          "role": "score",
+          "value": 62,
+          "value_en": null,
+          "unit": "%",
+          "direction": "down",
+          "axis": "difficulty",
+          "gate_result": null,
+          "gate_scope": null,
+          "segment": null,
+          "context_type": null,
+          "timeseries": {
+            "history": [
+              {
+                "year": 2021,
+                "value": 70
+              },
+              {
+                "year": 2022,
+                "value": 68
+              },
+              {
+                "year": 2023,
+                "value": 66
+              },
+              {
+                "year": 2024,
+                "value": 64
+              },
+              {
+                "year": 2025,
+                "value": 62
+              }
+            ],
+            "forecast": [
+              {
+                "year": 2026,
+                "value": 60
+              },
+              {
+                "year": 2027,
+                "value": 58
+              },
+              {
+                "year": 2028,
+                "value": 56
+              },
+              {
+                "year": 2029,
+                "value": 55
+              },
+              {
+                "year": 2030,
+                "value": 54
+              }
+            ],
+            "cagr_hist": -3.0,
+            "cagr_forecast": -2.6,
+            "estimated": true
+          },
+          "tier": 3,
+          "source": "Mercado Libre/InfoAuto 잔가 추정, AR 중고 EV 가격 분석 (데이터 희소)",
+          "source_en": "Mercado Libre/InfoAuto residual-value estimate, AR used-EV price analysis (scarce data)",
+          "insight": "EV 3년 잔가 추정 약 62%(BR 유사, 인플레로 명목가 상승 효과). 단 EV 표본 적고 충전 인프라 미비로 불확실성 큼. 신규 수입 EV 영향 향후 압박. 보수적 잔가 보증 권장.",
+          "insight_en": "Estimated 3-year EV residual value ~62% (similar to BR, with nominal-price uplift from inflation). But the EV sample is small and charging infrastructure inadequate, creating high uncertainty. Newly imported EVs will pressure values ahead. Conservative residual guarantees advised.",
+          "insight_ai_generated": true,
+          "status": "present"
+        }
+      ],
+      "competitors": {
+        "item": "경쟁사 리스트",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          "Volkswagen S.A. de Ahorro (Plan Óvalo)",
+          "Toyota Compañía Financiera de Argentina",
+          "Plan Rombo S.A. (Renault)",
+          "FCA Compañía Financiera (Stellantis/Fiat)",
+          "Peugeot/Citroën Plan",
+          "Ford Credit / Plan Ford",
+          "GMAC/Chevrolet Plan",
+          "Santander Río",
+          "Banco Galicia",
+          "BBVA Argentina",
+          "Banco Macro",
+          "Mercado Crédito (Mercado Libre)",
+          "Ualá"
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 3,
+        "source": "AAFP, BCRA EFNB 등록부, IGJ administradora 등록",
+        "source_en": "AAFP, BCRA EFNB register, IGJ administradora register",
+        "insight": "OEM 캡티브 Plan de Ahorro administradora(VW·Toyota·Renault·Stellantis·Ford·GM)+은행계(Santander·Galicia·BBVA·Macro)+핀테크(Mercado Crédito·Ualá) 혼재. 한국 OEM 캡티브 미진출 — 핀테크 협력·은행 파트너십이 빠른 진입 경로.",
+        "insight_en": "A mix of OEM captive Plan de Ahorro administradoras (VW · Toyota · Renault · Stellantis · Ford · GM) + banks (Santander · Galicia · BBVA · Macro) + fintech (Mercado Crédito · Ualá). No Korean OEM captive has entered — fintech collaboration and bank partnerships are the fast entry routes.",
+        "insight_ai_generated": true
+      },
+      "competitor_entry_form": {
+        "item": "경쟁사 진출 형태",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": "OEM 캡티브가 IGJ administradora de planes de ahorro + BCRA EFNB(Compañía Financiera) 결합 형태(VW Plan Óvalo·Toyota·Plan Rombo·Plan Ford) + 은행계(Santander·Galicia·BBVA·Macro) prenda + 핀테크(Mercado Crédito·Ualá). Leasing은 Ley 25.248 등록",
+        "value_en": "OEM captives combine an IGJ administradora de planes de ahorro + BCRA EFNB (Compañía Financiera) (VW Plan Óvalo · Toyota · Plan Rombo · Plan Ford) + banks (Santander · Galicia · BBVA · Macro) prenda + fintech (Mercado Crédito · Ualá). Leasing via Ley 25.248 registration",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 3,
+        "source": "AAFP, BCRA, IGJ",
+        "source_en": "AAFP, BCRA, IGJ",
+        "insight": "캡티브는 Plan de Ahorro administradora(IGJ)+Compañía Financiera(BCRA) 이중 결합이 표준 — 아르헨티나 특유. 신규 진입은 이 결합 또는 은행·핀테크 파트너십. 한국 OEM은 파트너십형 우선 검토.",
+        "insight_en": "Captives standardly combine a Plan de Ahorro administradora (IGJ) + Compañía Financiera (BCRA) — uniquely Argentine. New entrants use this combination or a bank/fintech partnership. Korean OEMs should prioritize a partnership form.",
+        "insight_ai_generated": true
+      },
+      "brand_top10": {
+        "item": "브랜드 Top10",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          "Toyota",
+          "Volkswagen",
+          "Fiat",
+          "Peugeot",
+          "Chevrolet",
+          "Ford",
+          "Renault",
+          "Citroën",
+          "Nissan",
+          "Jeep"
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 2,
+        "source": "ACARA 2025 patentamientos (Toyota 1위·Stellantis 그룹 합산 강세)",
+        "source_en": "ACARA 2025 patentamientos (Toyota #1; Stellantis group strong in aggregate)",
+        "insight": "Toyota 1위, VW·Fiat 강세. Stellantis(Fiat·Peugeot·Citroën·Jeep) 합산 최대 그룹. 현지 생산(Toyota Zárate·VW Pacheco·Stellantis Córdoba) 브랜드 우세 — 한국 브랜드 점유 낮아 캡티브 진입은 파트너십형 검토.",
+        "insight_en": "Toyota #1, with VW and Fiat strong. Stellantis (Fiat · Peugeot · Citroën · Jeep) is the largest combined group. Locally produced brands (Toyota Zárate · VW Pacheco · Stellantis Córdoba) dominate — Korean brand share is low, so captive entry should be studied as a partnership.",
+        "insight_ai_generated": true
+      },
+      "news": {
+        "item": "외부 이슈 스캔",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": [
+          {
+            "news_category": "geopolitical",
+            "headline": "아르헨티나 Milei 정부 2024~2025 재정흑자·디스인플레 성과, 외환통제(cepo) 단계적 완화",
+            "headline_en": "Argentina's Milei government posts 2024-2025 fiscal surplus and disinflation, gradually easing FX controls (cepo)",
+            "so_what": "거시 안정화 = 신용 정상화·시장 회복 기회. 단 cepo 완전 해제 전까지 자본회수·배당 송금 제약 상존 — 진입 자본구조 보수적으로.",
+            "so_what_en": "Macro stabilization = credit normalization and market-recovery opportunity. But capital-recovery and dividend-remittance constraints persist until cepo is fully lifted — keep the entry capital structure conservative.",
+            "publisher": "Reuters",
+            "pub_date": "2026-04-15",
+            "url": "https://www.reuters.com/..."
+          },
+          {
+            "news_category": "finance",
+            "headline": "아르헨티나-IMF 신규 프로그램·페소 안정, 정책금리 디스인플레로 급락",
+            "headline_en": "Argentina-IMF new program and peso stability; policy rate plunges on disinflation",
+            "so_what": "조달비용 하락 = 자동차금융 마진 정상화 기회. 단 IMF 조건·환율 재발 리스크 상시 — 환헷지·실질금리 모델 필수.",
+            "so_what_en": "Lower funding cost = auto-finance margin-normalization opportunity. But IMF conditions and recurring FX risk are ever-present — an FX-hedge and real-rate model is essential.",
+            "publisher": "Financial Times",
+            "pub_date": "2026-05-10",
+            "url": "https://www.ft.com/..."
+          },
+          {
+            "news_category": "auto_market",
+            "headline": "아르헨티나 2025 신차 patentamientos 회복, Plan de Ahorro 비중 여전히 신차 판매 견인",
+            "headline_en": "Argentina 2025 new-car patentamientos recover; Plan de Ahorro share still drives new-car sales",
+            "so_what": "시장 회복 + Plan de Ahorro(저축형 공동구매) 구조적 핵심 — 진입 시 IGJ administradora 인가 결합 전략 필수.",
+            "so_what_en": "Market recovery + Plan de Ahorro (savings-pool group-purchase) is structurally core — combining an IGJ administradora licensing strategy is essential at entry.",
+            "publisher": "Just Auto",
+            "pub_date": "2026-03-12",
+            "url": "https://www.just-auto.com/..."
+          },
+          {
+            "news_category": "credit_abs",
+            "headline": "아르헨티나 소비자신용 딜린퀀시 디스인플레로 하향 안정 관측",
+            "headline_en": "Argentine consumer-credit delinquency seen stabilizing downward on disinflation",
+            "so_what": "연체 안정 신호이나 거시 변동성 큼 — 충당금·심사기준 보수 유지. 회복 초기 신용정책 단계적 완화 권장.",
+            "so_what_en": "A signal of stabilizing arrears, but macro volatility is high — keep provisioning/underwriting conservative. Gradual easing of credit policy advised early in the recovery.",
+            "publisher": "Fitch",
+            "pub_date": "2026-04-22",
+            "url": "https://www.fitchratings.com/..."
+          },
+          {
+            "news_category": "auto_finance",
+            "headline": "조사 필요",
+            "headline_en": "Research needed",
+            "so_what": "조사 필요",
+            "so_what_en": "Research needed",
+            "publisher": "",
+            "pub_date": "",
+            "url": ""
+          }
+        ],
+        "value_en": null,
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "news",
+        "timeseries": null,
+        "tier": 3,
+        "source": "화이트리스트(Reuters·Financial Times·Just Auto·Fitch)",
+        "source_en": "Whitelist (Reuters · Financial Times · Just Auto · Fitch)",
+        "insight": "거시 안정화·시장 회복이 진입 타이밍 매력을 가리키나 외환통제·환율·정치 변동성이 보수적 자본구조를 요구. Plan de Ahorro가 시장 구조의 핵심. auto_finance 카테고리는 화이트리스트 출처 미확보 — 실사 단계 보강.",
+        "insight_en": "Macro stabilization and market recovery point to attractive entry timing, but FX controls, exchange rate and political volatility call for a conservative capital structure. Plan de Ahorro is the core of market structure. The auto_finance category lacks a secured whitelist source — reinforce at the due-diligence stage.",
+        "insight_ai_generated": true
+      },
+      "regulators": {
+        "item": "규제기관 식별",
+        "item_en": null,
+        "category": "shared",
+        "role": "context",
+        "value": "BCRA(중앙은행, 금융기관·EFNB 인가·건전성·외환) / IGJ(법인감독청, Plan de Ahorro administradora 인가) / SSN(보험감독청) / AAIP(개인정보·정보접근청) / AFIP(국세청) / Secretaría de Comercio·소비자보호 / CNV(증권위원회)",
+        "value_en": "BCRA (central bank; financial-institution/EFNB licensing, prudential, FX) / IGJ (corporate supervisor; Plan de Ahorro administradora licensing) / SSN (insurance supervisor) / AAIP (data protection & access to information) / AFIP (tax authority) / Secretaría de Comercio & consumer protection / CNV (securities commission)",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 1,
+        "source": "BCRA, IGJ, SSN, AAIP, AFIP 공식",
+        "source_en": "BCRA, IGJ, SSN, AAIP, AFIP official",
+        "insight": "BCRA가 금융·외환 통합 감독, Plan de Ahorro는 IGJ 별도 인가(아르헨티나 특유 이중 감독), 보험 SSN, 데이터 AAIP, 세무 AFIP. BR 대비 IGJ Plan de Ahorro 축이 추가돼 규제 복잡. 외환통제(cepo)가 BCRA 축의 핵심 변수.",
+        "insight_en": "BCRA supervises finance/FX in an integrated way; Plan de Ahorro is separately licensed by IGJ (uniquely Argentine dual supervision); insurance by SSN; data by AAIP; tax by AFIP. The IGJ Plan de Ahorro axis adds regulatory complexity vs BR. FX controls (cepo) are the core variable on the BCRA axis.",
+        "insight_ai_generated": false
+      },
+      "country_summary": {
+        "item": "해당국 정성 요약",
+        "item_en": null,
+        "category": "business",
+        "role": "context",
+        "value": "라틴 3위권 자동차 시장(2025 신차 약 45만대, 변동성 큼). 캡티브(VW·Toyota·Stellantis·Ford·GM·Renault)+Plan de Ahorro administradora 약 50%, 은행계(Santander·Galicia·BBVA·Macro) 약 30%. Plan de Ahorro(저축형 공동구매) 약 25%로 신차 판매 대들보, prenda 18%, Leasing 2% 미만. 소비자금융은 BCRA EFNB 인가+IGJ Plan de Ahorro administradora 인가, B2B Leasing은 Ley 25.248 등록. 초고인플레(명목 APR 75%)·외환통제(cepo)·CCC 신용등급이 핵심 리스크. 단 2024~2025 Milei 디스인플레·재정흑자·cepo 완화로 회복 사이클. EU 데이터 적정성 인정국, Veraz/BCRA Central de Deudores CB 견고.",
+        "value_en": "Latin America's #3 auto market (~450k new cars in 2025, high volatility). Captives (VW · Toyota · Stellantis · Ford · GM · Renault) + Plan de Ahorro administradoras ~50%, banks (Santander · Galicia · BBVA · Macro) ~30%. Plan de Ahorro (savings-pool group-purchase) ~25% is the backbone of new-car sales, prenda 18%, leasing under 2%. Consumer finance = BCRA EFNB license + IGJ Plan de Ahorro administradora license; B2B leasing = Ley 25.248 registration. Hyperinflation (nominal APR 75%) · FX controls (cepo) · CCC sovereign rating are the core risks. But 2024-2025 Milei disinflation, fiscal surplus and cepo easing drive a recovery cycle. EU data-adequacy-recognized country; Veraz/BCRA Central de Deudores CB solid.",
+        "unit": null,
+        "direction": null,
+        "axis": null,
+        "gate_result": null,
+        "gate_scope": null,
+        "segment": null,
+        "context_type": "descriptive",
+        "timeseries": null,
+        "tier": 3,
+        "source": "ACARA, ADEFA, AAFP, BCRA, IGJ, Mordor Intelligence",
+        "source_en": "ACARA, ADEFA, AAFP, BCRA, IGJ, Mordor Intelligence",
+        "insight": "회복 사이클 초기 매력 vs 초고인플레·외환통제·정치 리스크. Plan de Ahorro(공동구매조합)가 시장 핵심 — 진입 시 IGJ administradora 인가 결합 필수. 한국 OEM 캡티브 또는 은행계 파트너십, Leasing/Plan de Ahorro 우선 → prenda 단계 확장 권장.",
+        "insight_en": "Early recovery-cycle appeal vs hyperinflation, FX controls and political risk. Plan de Ahorro (savings-pool group-purchase) is the market's core — combining an IGJ administradora license is essential at entry. Korean OEMs are advised to use a captive or bank partnership, prioritizing leasing/Plan de Ahorro → then expanding to the prenda stage.",
+        "insight_ai_generated": true
+      }
+    }
+  }
+}
