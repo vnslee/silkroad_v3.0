@@ -1054,7 +1054,7 @@
           "tier": 3,
           "source": "업계 추정(여신금융협회·캐피탈사 자료 기반)",
           "source_en": null,
-          "insight": "신차 금융 침투율 60%대 중반. 현금 구매 비중이 여전히 높은 한국 특성상 침투율 추가 상승 여지 존재.",
+          "insight": "신차 금융 이용률 60%대 중반. 현금 구매 비중이 여전히 높은 한국 특성상 침투율 추가 상승 여지 존재.",
           "insight_en": null,
           "insight_ai_generated": true,
           "status": "present"
