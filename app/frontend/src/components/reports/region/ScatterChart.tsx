@@ -89,7 +89,7 @@ export function ScatterChart({ points }: { points: ScatterPoint[] }) {
           <span className="flex items-center gap-xs">
             <span
               className="inline-block w-3 h-3 rounded-full bg-white border-2"
-              style={{ borderColor: '#2f6be0', fontSize: '8px', lineHeight: '8px', textAlign: 'center', color: '#2f6be0' }}
+              style={{ borderColor: '#2f6be0', fontSize: 'clamp(6.8px, calc(6px + 0.222vw), 9.2px)', lineHeight: '8px', textAlign: 'center', color: '#2f6be0' }}
             >
               ★
             </span>

@@ -203,7 +203,7 @@ function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; 
     >
       <div className="bg-surface p-sm rounded-md border border-surface-container-highest mb-md">
         <div className="flex items-center gap-xs mb-xs">
-          <span className="material-symbols-outlined text-text-secondary text-[14px]">flag</span>
+          <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">flag</span>
           <span className="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">진출 형태</span>
         </div>
         <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{String(entryForm.value)}</p>
@@ -213,7 +213,7 @@ function CompetitorPanel({ competitors, entryForm }: { competitors: ReportItem; 
           <div key={key} className="p-sm bg-surface-container-low rounded-lg border border-surface-container-highest">
             <div className="flex items-center justify-between mb-xs">
               <div className="flex items-center gap-xs">
-                <span className="material-symbols-outlined text-primary text-[18px]">{GROUP_META[key].icon}</span>
+                <span className="material-symbols-outlined text-primary text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">{GROUP_META[key].icon}</span>
                 <span className="font-label-md text-label-md text-primary uppercase tracking-wider">{GROUP_META[key].label}</span>
               </div>
               <span className="font-label-sm text-label-sm text-text-secondary">{members.length}개</span>
@@ -283,7 +283,7 @@ function NewsPanel({ news }: { news: ReportItem }) {
             return (
               <div key={i} className="p-md bg-yellow-50 border border-yellow-200 rounded-lg">
                 <div className="flex items-center gap-xs mb-xs">
-                  <span className="material-symbols-outlined text-yellow-700 text-[18px]">warning</span>
+                  <span className="material-symbols-outlined text-yellow-700 text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">warning</span>
                   <span className="font-label-md text-label-md text-yellow-800 uppercase">{n.news_category}</span>
                 </div>
                 <p className="font-body-sm text-body-sm text-yellow-700">관련 화이트리스트 이슈 미확보 — 실사 단계 보강 필요</p>
@@ -301,7 +301,7 @@ function NewsPanel({ news }: { news: ReportItem }) {
               <h4 className="font-label-md text-label-md text-text-primary leading-relaxed m-0">{n.headline}</h4>
               <div className="bg-surface-container/60 p-sm rounded-md border-l-4 border-primary">
                 <div className="flex items-center gap-xs mb-xs">
-                  <span className="material-symbols-outlined text-primary text-[14px]">psychology</span>
+                  <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">psychology</span>
                   <span className="font-label-sm text-label-sm text-primary uppercase">So What</span>
                 </div>
                 <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{n.so_what}</p>

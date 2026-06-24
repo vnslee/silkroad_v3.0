@@ -82,6 +82,14 @@
       "lat": 40.46,
       "iso_numeric": "724"
     },
+    "ET": {
+      "name": "Ethiopia",
+      "name_ko": "에티오피아",
+      "region": "AFRICA",
+      "lon": 39.7823,
+      "lat": 9.145,
+      "iso_numeric": "231"
+    },
     "FR": {
       "name": "France",
       "name_ko": "프랑스",
@@ -97,6 +105,14 @@
       "lon": -3.44,
       "lat": 55.38,
       "iso_numeric": "826"
+    },
+    "GH": {
+      "name": "Ghana",
+      "name_ko": "가나",
+      "region": "AFRICA",
+      "lon": -1.0232,
+      "lat": 7.9465,
+      "iso_numeric": "288"
     },
     "HU": {
       "name": "Hungary",
@@ -130,6 +146,30 @@
       "lat": 41.87,
       "iso_numeric": "380"
     },
+    "JP": {
+      "name": "Japan",
+      "name_ko": "일본",
+      "region": "APAC",
+      "lon": 138.25,
+      "lat": 36.2,
+      "iso_numeric": "392"
+    },
+    "KE": {
+      "name": "Kenya",
+      "name_ko": "케냐",
+      "region": "AFRICA",
+      "lon": 37.9062,
+      "lat": -0.0236,
+      "iso_numeric": "404"
+    },
+    "KR": {
+      "name": "South Korea",
+      "name_ko": "대한민국",
+      "region": "APAC",
+      "lon": 127.77,
+      "lat": 35.91,
+      "iso_numeric": "410"
+    },
     "MX": {
       "name": "Mexico",
       "name_ko": "멕시코",
@@ -153,6 +193,14 @@
       "lon": 5.29,
       "lat": 52.13,
       "iso_numeric": "528"
+    },
+    "NZ": {
+      "name": "New Zealand",
+      "name_ko": "뉴질랜드",
+      "region": "APAC",
+      "lon": 174.89,
+      "lat": -40.9,
+      "iso_numeric": "554"
     },
     "PL": {
       "name": "Poland",
@@ -178,13 +226,13 @@
       "lat": 39.4,
       "iso_numeric": "620"
     },
-    "KE": {
-      "name": "Kenya",
-      "name_ko": "케냐",
-      "region": "AFRICA",
-      "lon": 37.9062,
-      "lat": -0.0236,
-      "iso_numeric": "404"
+    "SG": {
+      "name": "Singapore",
+      "name_ko": "싱가포르",
+      "region": "APAC",
+      "lon": 103.82,
+      "lat": 1.35,
+      "iso_numeric": "702"
     },
     "ZA": {
       "name": "South Africa",

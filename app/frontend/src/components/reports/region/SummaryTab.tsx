@@ -44,17 +44,17 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
         className="rounded-[18px] px-[30px] py-[28px] card-shadow text-white"
         style={{ background: 'linear-gradient(120deg,#14181C,#1f262d)' }}
       >
-        <div className="font-label-sm text-[12px] mb-sm" style={{ color: '#C8F051', letterSpacing: '.1em' }}>
+        <div className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mb-sm" style={{ color: '#C8F051', letterSpacing: '.1em' }}>
           권역 진단 보고서 · 퀵윈 스코어링
         </div>
         <div className="flex items-center gap-sm mb-md">
           <span className="material-symbols-outlined" style={{ color: '#C8F051', fontVariationSettings: "'FILL' 1" }}>
             auto_awesome
           </span>
-          <h2 className="text-[28px] font-bold leading-none text-white">요약</h2>
+          <h2 className="text-[clamp(23.8px,calc(21px_+_0.778vw),32.2px)] font-bold leading-none text-white">요약</h2>
         </div>
         <div className="flex flex-col gap-md [&_strong]:text-white">
-          <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+          <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
             <strong>{regionKo}</strong> 권역 평가 <strong>{data.data_quality.total_countries}</strong>개국 중 베이스라인{' '}
             <strong>{countryKo(baseline)}({baseline})</strong>
             {enteredRows.length > 0 && (
@@ -69,7 +69,7 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
             을(를) 제외한 후보 <strong>{candidateRows.length}</strong>개국을 스코어링한 결과, 최우선 퀵윈 후보는{' '}
             <strong>{countryKo(top1.country)}({top1.country})</strong>(으)로 도출되었습니다.
           </p>
-          <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+          <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
             1위 근거 — <strong>{cc.why_top1.ko}</strong>.
             {quickwinOptimal.length > 0 && (
               <>
@@ -82,12 +82,12 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
             )}
           </p>
           {insights.map((ins, i) => (
-            <p key={i} className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+            <p key={i} className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
               {ins.ko}
             </p>
           ))}
           {regionNews && (
-            <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+            <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
               <span style={{ color: '#C8F051' }}>최근 이슈 —</span> <strong>{regionNews.headline}</strong>. {regionNews.so_what}
             </p>
           )}
@@ -173,11 +173,11 @@ function Podium({ top3 }: { top3: RegionReportData['tabs']['executive_summary'][
                 </div>
                 <div className="mt-sm w-full grid grid-cols-2 gap-xs text-body-sm border-t border-surface-border pt-sm">
                   <div>
-                    <span className="text-text-secondary block text-[10px] uppercase tracking-wider">매력도</span>
+                    <span className="text-text-secondary block text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] uppercase tracking-wider">매력도</span>
                     <span className="font-semibold text-primary">{e.attractiveness}</span>
                   </div>
                   <div>
-                    <span className="text-text-secondary block text-[10px] uppercase tracking-wider">IT 유사도</span>
+                    <span className="text-text-secondary block text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] uppercase tracking-wider">IT 유사도</span>
                     <span className="font-semibold text-primary">{e.it_similarity_band}</span>
                   </div>
                 </div>
@@ -261,7 +261,7 @@ function NewsCard({ news }: { news: RegionReportData['tabs']['executive_summary'
                 권역 공통
               </span>
               {news.news_category && (
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary ml-xs">{news.news_category}</span>
+                <span className="text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] uppercase tracking-wider text-text-secondary ml-xs">{news.news_category}</span>
               )}
             </>
           ) : (

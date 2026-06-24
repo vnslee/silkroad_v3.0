@@ -93,7 +93,7 @@ export function SourcePill({ flag, suffix }: { flag: string; suffix?: string }) 
   const m = FLAG_META[flag] ?? { bg: '#eef0f2', fg: '#3a4048', label: flag }
   return (
     <span
-      className="inline-flex items-center gap-1 px-2 py-[2px] rounded-full text-[10px] font-semibold tracking-wide"
+      className="inline-flex items-center gap-1 px-2 py-[2px] rounded-full text-[clamp(8.5px,calc(7.5px_+_0.278vw),11.5px)] font-semibold tracking-wide"
       style={{ background: m.bg, color: m.fg }}
     >
       {m.label}

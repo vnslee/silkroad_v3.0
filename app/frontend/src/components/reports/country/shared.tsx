@@ -87,7 +87,7 @@ export function CaptiveChip() {
       className="inline-flex items-center gap-xs bg-secondary-container/30 text-secondary border border-secondary/40 px-2 py-[1px] rounded-full font-label-sm text-label-sm"
       title="캡티브 금융사 보유 추정"
     >
-      <span className="material-symbols-outlined text-[12px]">verified</span>
+      <span className="material-symbols-outlined text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)]">verified</span>
       <span>캡티브</span>
     </span>
   )
@@ -123,7 +123,7 @@ export function InsightBox({
   return (
     <div className="bg-surface-container/60 p-sm rounded-md border-l-4 border-primary">
       <div className="flex items-center gap-xs mb-xs">
-        <span className="material-symbols-outlined text-primary text-[14px]">{icon}</span>
+        <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">{icon}</span>
         <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">{label}</span>
       </div>
       <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{children}</p>
@@ -138,7 +138,7 @@ export function EvidenceAccordion({ source, insight, ai }: { source?: string; in
     <details className="border-t border-surface-container-highest pt-sm group">
       <summary className="flex items-center justify-between gap-xs cursor-pointer list-none">
         <div className="flex items-center gap-xs">
-          <span className="material-symbols-outlined text-text-secondary text-[14px]">info</span>
+          <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">info</span>
           <span className="font-label-sm text-label-sm text-text-secondary uppercase">근거 · 인사이트</span>
           {ai && (
             <span className="bg-purple-100 text-purple-700 border border-purple-200 px-2 py-0.5 rounded-full font-label-sm text-label-sm uppercase">
@@ -146,7 +146,7 @@ export function EvidenceAccordion({ source, insight, ai }: { source?: string; in
             </span>
           )}
         </div>
-        <span className="material-symbols-outlined text-text-secondary text-[16px] transition-transform group-open:rotate-180">
+        <span className="material-symbols-outlined text-text-secondary text-[clamp(13.6px,calc(12px_+_0.444vw),18.4px)] transition-transform group-open:rotate-180">
           expand_more
         </span>
       </summary>
@@ -154,7 +154,7 @@ export function EvidenceAccordion({ source, insight, ai }: { source?: string; in
         {source && (
           <div>
             <div className="flex items-center gap-xs mb-xs">
-              <span className="material-symbols-outlined text-text-secondary text-[14px]">source</span>
+              <span className="material-symbols-outlined text-text-secondary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">source</span>
               <span className="font-label-sm text-label-sm text-text-secondary uppercase">근거</span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">{source}</p>
@@ -466,19 +466,19 @@ export function DecisionTreeSvg({
         <div className="grid grid-cols-3 gap-lg">
           <div className={`dt-branch-card dt-branch-b ${isB ? cardActive : cardIdle}`} style={isB ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
-              <span className={`material-symbols-outlined text-[20px] ${isB ? 'text-primary' : 'text-text-secondary'}`}>expand_circle_down</span>
+              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isB ? 'text-primary' : 'text-text-secondary'}`}>expand_circle_down</span>
               <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isB ? 'text-primary' : 'text-text-secondary'}`}>권역 내 확산</span>
             </div>
           </div>
           <div className={`dt-branch-card dt-branch-ext ${isEXT ? cardActive : cardIdle}`} style={isEXT ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
-              <span className={`material-symbols-outlined text-[20px] ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>extension</span>
+              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>extension</span>
               <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>외부솔루션</span>
             </div>
           </div>
           <div className={`dt-branch-card dt-branch-hq ${isHQ ? cardActive : cardIdle}`} style={isHQ ? cardActiveShadow : undefined}>
             <div className="flex items-center justify-center gap-xs">
-              <span className={`material-symbols-outlined text-[20px] ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>domain</span>
+              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>domain</span>
               <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isHQ ? 'text-primary' : 'text-text-secondary'}`}>본사 자체구축</span>
             </div>
           </div>
@@ -594,7 +594,7 @@ export function DecisionSidePanel({
               className="flex items-center justify-between px-sm py-2 rounded-lg bg-surface-container border border-outline-variant"
             >
               <span className="flex items-center gap-xs">
-                <span className="material-symbols-outlined text-primary text-[18px]">extension</span>
+                <span className="material-symbols-outlined text-primary text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">extension</span>
                 <span className="font-body-md text-body-md text-text-primary font-semibold">{c.name}</span>
               </span>
               <span className="font-label-sm text-label-sm text-text-secondary">{c.cost_note ?? '별도 견적'}</span>

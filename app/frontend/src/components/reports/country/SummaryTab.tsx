@@ -67,7 +67,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
         className="rounded-[18px] px-[30px] py-[28px] card-shadow text-white"
         style={{ background: 'linear-gradient(120deg,#14181C,#1f262d)' }}
       >
-        <div className="font-label-sm text-[12px] mb-sm" style={{ color: '#C8F051', letterSpacing: '.1em' }}>
+        <div className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mb-sm" style={{ color: '#C8F051', letterSpacing: '.1em' }}>
           국가 진단 보고서 · IT 유사도
         </div>
         <div className="flex items-start justify-between gap-lg flex-wrap">
@@ -78,46 +78,46 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
                 alt=""
                 style={{ width: 34, height: 23, borderRadius: 3, objectFit: 'cover', boxShadow: '0 0 0 1px rgba(255,255,255,.15)' }}
               />
-              <span className="text-[28px] font-bold leading-none">
+              <span className="text-[clamp(23.8px,calc(21px_+_0.778vw),32.2px)] font-bold leading-none">
                 {countryKo}({countryCode})
               </span>
             </div>
             <div className="flex flex-col gap-sm">
-              <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+              <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
                 <strong className="text-white">{countryKo}({countryCode})</strong>의 종합 유사도는 베이스라인{' '}
                 <strong className="text-white">{baseKo}({baseCode})</strong> 대비{' '}
                 <strong className="text-white">{fixed(score)}점/100</strong>으로, 이에 따라 시스템 결정은{' '}
                 <strong className="text-white">{decisionLabel}</strong>(으)로 권고됩니다.
               </p>
               {isBaselineDeployed ? (
-                <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+                <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
                   {isBaselineSelf
                     ? `${countryKo}(${countryCode})은(는) 이미 시스템이 배포된 권역 기준국으로, 신규 구축·TCO 산정 대상이 아닙니다.`
                     : `${countryKo}(${countryCode})은(는) 이미 진출(운영중)한 국가로, 신규 구축·TCO 산정 대상이 아닙니다.`}
                 </p>
               ) : (
-                <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+                <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
                   예상 10년 TCO는 <strong className="text-white"><Money value={total} currency={tco.currency} inline subClassName="text-white/70" /></strong>이며, 구축 기간은 약{' '}
                   <strong className="text-white">{fixed(tco.build_months)}개월</strong>, 예상 신규 계약은{' '}
                   <strong className="text-white">{intComma(tco.expected_contracts)}건/년</strong>으로 추정됩니다.
                 </p>
               )}
               {recommendationText && (
-                <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+                <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
                   결론적으로, {recommendationText}을(를) 권고합니다.
                 </p>
               )}
             </div>
           </div>
           <div className="text-center flex-none">
-            <div className="font-bold leading-none" style={{ fontSize: 64, color: '#C8F051' }}>
+            <div className="font-bold leading-none" style={{ fontSize: 'clamp(54.4px, calc(48px + 1.778vw), 73.6px)', color: '#C8F051' }}>
               {fixed(score)}
             </div>
-            <div className="font-body-sm text-[12px] mt-1" style={{ color: '#AEB6C4' }}>
+            <div className="font-body-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mt-1" style={{ color: '#AEB6C4' }}>
               IT 유사도 점수
             </div>
             <div
-              className="mt-sm rounded-[9px] px-[14px] py-[6px] font-body-sm text-[12px] font-semibold inline-block"
+              className="mt-sm rounded-[9px] px-[14px] py-[6px] font-body-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] font-semibold inline-block"
               style={{ background: 'rgba(200,240,81,.16)', border: '1px solid rgba(200,240,81,.4)', color: '#C8F051' }}
             >
               {decisionLabel}
@@ -217,18 +217,30 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
         <div className="lg:col-span-12">
           <Panel title="국가 종합 인사이트">
             <ul className="flex flex-col gap-sm list-none p-0 m-0">
-              <li className="flex items-start gap-sm">
-                <span className="material-symbols-outlined text-primary text-[16px] mt-[2px]">arrow_right</span>
-                <span className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                  {data.overall_insight}
-                </span>
-              </li>
+              {splitSentences(data.overall_insight).map((sentence, i) => (
+                <li key={i} className="flex items-start gap-sm">
+                  <span className="material-symbols-outlined text-primary text-[clamp(13.6px,calc(12px_+_0.444vw),18.4px)] mt-[2px]">arrow_right</span>
+                  <span className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    {sentence}
+                  </span>
+                </li>
+              ))}
             </ul>
           </Panel>
         </div>
       </div>
     </div>
   )
+}
+
+// 종합 인사이트 한 문단을 문장 단위 불릿으로 분리.
+// 마침표 뒤가 공백/끝일 때만 자르되, 소수점·금액(12.9%, €5M 등)은 앞 글자가 숫자이므로 자르지 않는다.
+function splitSentences(text: string | null | undefined): string[] {
+  if (!text) return []
+  return text
+    .split(/(?<=[^\d]\.)\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean)
 }
 
 // 유사도 점수 도넛(KPI) — mockup viewBox 160x160, secondary 색

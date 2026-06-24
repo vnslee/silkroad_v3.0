@@ -87,10 +87,10 @@ export function RegionDetail({ data, className = '' }: Props) {
 function KpiCard({ value, label, color }: { value: number; label: string; color: string }) {
   return (
     <div className="bg-surface-container-lowest border border-surface-border rounded-[14px] p-md text-center">
-      <div className="font-mono text-[30px] font-bold leading-none" style={{ color }}>
+      <div className="font-mono text-[clamp(25.5px,calc(22.5px_+_0.833vw),34.5px)] font-bold leading-none" style={{ color }}>
         {value}
       </div>
-      <div className="font-body-sm text-[12px] text-[#6B7280] mt-1">{label}</div>
+      <div className="font-body-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] text-[#6B7280] mt-1">{label}</div>
     </div>
   )
 }
@@ -115,7 +115,7 @@ function ProductsCell({ products }: { products: string[] }) {
 function EnteredList({ rows }: { rows: RegionEnteredCountry[] }) {
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
-      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md">
+      <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
         기진출 국가
       </h3>
       <table className="w-full text-left border-collapse font-body-sm text-body-sm">
@@ -180,7 +180,7 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
   const statusByCode = Object.fromEntries(members.map((m) => [m.code, m.status]))
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
-      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md">
+      <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
         권역 지도
       </h3>
       <div ref={areaRef} className="flex-1 flex items-stretch justify-center min-h-[380px]">
@@ -246,7 +246,7 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
 function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2 flex flex-col h-full">
-      <h3 className="font-headline-md text-[18px] leading-[24px] text-primary font-bold mb-md">
+      <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
         진출 예정국 Quick-Win 순위
       </h3>
       <table className="w-full text-left border-collapse font-body-sm text-body-sm">
@@ -329,7 +329,7 @@ function RegionInsight({
   return (
     <div className="bg-surface rounded-lg p-lg border border-surface-border custom-shadow-level-2">
       <div className="flex items-center gap-sm mb-md">
-        <h3 className="font-headline-md text-[22px] leading-[30px] text-primary font-bold flex-1">
+        <h3 className="font-headline-md text-[clamp(18.7px,calc(16.5px_+_0.611vw),25.3px)] leading-[30px] text-primary font-bold flex-1">
           권역 인사이트
         </h3>
         <span className="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-2 py-0.5 rounded-full whitespace-nowrap">

@@ -111,7 +111,7 @@ export function TcoTab({ data }: { data: CountryReportData }) {
             <CumulativeChart tco={tco} />
             <div className="mt-md bg-surface-container/60 p-md rounded-lg border-l-4 border-primary">
               <div className="flex items-center gap-xs mb-xs">
-                <span className="material-symbols-outlined text-primary text-[14px]">function</span>
+                <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">function</span>
                 <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">산식</span>
               </div>
               <code className="block font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
@@ -191,7 +191,7 @@ function Kpi({ label, icon, value, sub }: { label: string; icon: string; value: 
     <div className="bg-surface-container-lowest border border-surface-border rounded-xl p-lg card-shadow flex flex-col">
       <div className="flex items-center justify-between mb-sm">
         <span className="font-label-md text-label-md text-primary uppercase tracking-wider">{label}</span>
-        <span className="material-symbols-outlined text-primary text-[24px]">{icon}</span>
+        <span className="material-symbols-outlined text-primary text-[clamp(20.4px,calc(18px_+_0.667vw),27.6px)]">{icon}</span>
       </div>
       <span className="font-display-lg text-display-lg text-primary leading-none">{value}</span>
       {sub && <span className="font-label-sm text-label-sm text-text-secondary mt-xs">{sub}</span>}
