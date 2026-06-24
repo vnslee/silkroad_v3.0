@@ -24,6 +24,7 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
             existing={sub.existing_volume ?? tco.existing_total_volume}
             newAdded={sub.new_volume ?? tco.expected_contracts}
             newCumulative={sub.total_volume ?? tco.existing_total_volume + tco.expected_contracts}
+            currency={sub.currency ?? tco.currency}
           />
         </Panel>
       </div>

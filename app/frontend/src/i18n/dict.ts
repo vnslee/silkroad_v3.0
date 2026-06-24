@@ -141,7 +141,7 @@ export const DICT: Dict = {
 
   // 범례 / 지도
   'legend.title': { ko: '진출 현황', en: 'Market status' },
-  'legend.established': { ko: '기진출', en: 'Active markets' },
+  'legend.established': { ko: '기 진출', en: 'Active markets' },
   'legend.candidate': { ko: '진출 후보', en: 'Candidate markets' },
   'legend.operating': { ko: '운영중', en: 'Operating' },
   'legend.notEntered': { ko: '진출 예정국', en: 'Planned markets' },

@@ -179,10 +179,10 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
     const markerLabel = (d: Marker): string =>
       langRef.current === 'ko' ? d.nameKo ?? d.name : d.name
 
-    // 권역 hover 툴팁 라벨 — 현재 언어(langRef)로 '권역 · OO' 조립.
+    // 권역 hover 툴팁 라벨 — 권역명만 표시(현재 언어, langRef).
     // effect가 lang에 의존하지 않으므로 t() 대신 translate(key, langRef.current) 사용.
     const regionTipText = (regKey: string): string =>
-      `${translate('map.regionPrefix', langRef.current)} · ${translate(`region.${regKey}`, langRef.current)}`
+      translate(`region.${regKey}`, langRef.current)
 
     // 각 육지 feature의 권역키를 centroid 경위도로 1회 계산해 캐시(mockup continentOf).
     const featRegion = new Map<GeoJSON.Feature, string>()

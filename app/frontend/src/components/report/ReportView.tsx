@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { api } from '../../api/client'
 import { paths } from '../../api/paths'
-import type { CountrySummary, Domain, RegionSummary, ReportRef } from '../../api/types'
+import type { CountrySummary, Domain, FxData, RegionSummary, ReportRef } from '../../api/types'
 import { buildMailtoUrl } from '../../utils/mailto'
+import { FxProvider } from '../reports/Money'
 import { Icon } from '../common/Icon'
 import { HeaderSelect, type SelectOption } from '../common/HeaderSelect'
 import { HeaderEmblem } from '../common/HeaderEmblem'
@@ -42,6 +43,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   const [error, setError] = useState<string | null>(null)
   const [catalog, setCatalog] = useState<CatalogItem[]>([])
   const [reportData, setReportData] = useState<CountryReportData | RegionReportData | null>(null)
+  const [fx, setFx] = useState<FxData | null>(null)
   const [loading, setLoading] = useState(false)
   // 인쇄 모드 — PDF 버튼을 누르면 모든 탭을 펼쳐 렌더한 뒤 브라우저 인쇄를 띄운다.
   const [printMode, setPrintMode] = useState(false)
@@ -74,6 +76,18 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   }
 
   const handlePrintPdf = () => setPrintMode(true)
+
+  // 환율(통화 한화 환산) — 1회 로드. 실패해도 보고서는 원본 통화로 동작(그레이스풀).
+  useEffect(() => {
+    let cancelled = false
+    api
+      .getFx()
+      .then((data) => !cancelled && setFx(data))
+      .catch(() => !cancelled && setFx(null))
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   // 카탈로그(대상 선택용)
   useEffect(() => {
@@ -332,10 +346,10 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
           </div>
         )}
         {reportData && !loading && (
-          <>
+          <FxProvider fx={fx}>
             {domain === 'country' && <CountryReport data={reportData as CountryReportData} />}
             {domain === 'region' && <RegionReport data={reportData as RegionReportData} />}
-          </>
+          </FxProvider>
         )}
       </div>
 
@@ -344,11 +358,13 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
       {printMode &&
         reportData &&
         createPortal(
-          domain === 'country' ? (
-            <CountryReport data={reportData as CountryReportData} printMode />
-          ) : (
-            <RegionReport data={reportData as RegionReportData} printMode />
-          ),
+          <FxProvider fx={fx}>
+            {domain === 'country' ? (
+              <CountryReport data={reportData as CountryReportData} printMode />
+            ) : (
+              <RegionReport data={reportData as RegionReportData} printMode />
+            )}
+          </FxProvider>,
           getPrintRoot(),
         )}
     </div>

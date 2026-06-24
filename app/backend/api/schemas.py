@@ -70,6 +70,14 @@ class ExistenceInfo(BaseModel):
     latest_report_id: Optional[str] = None
 
 
+class FxData(BaseModel):
+    """환율 스냅샷(internal_latest.json fx 블록). 기준통화 KRW, 각 통화 1단위당 KRW 환산율."""
+    base: str = "KRW"
+    as_of: Optional[str] = None
+    rates: Dict[str, float] = Field(default_factory=dict)
+    note: Optional[str] = None
+
+
 # ── 산출물 참조 (FR-4) ──────────────────────────────────────────
 class ReportRef(BaseModel):
     report_id: str

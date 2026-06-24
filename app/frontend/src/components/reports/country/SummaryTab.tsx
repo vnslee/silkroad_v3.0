@@ -1,6 +1,8 @@
 // 탭0 요약 — 네이비 그라디언트 헤더 + KPI(도넛/워터폴/막대) + 결정트리 + 구독료표 + 종합 인사이트
 import type { CountryReportData } from '../types'
-import { DecisionTreeSvg, SubscriptionTierTable, Panel, eur, intComma, locText, fixed } from './shared'
+import { DecisionTreeSvg, SubscriptionTierTable, Panel, intComma, locText, fixed } from './shared'
+import { Money, useFx } from '../Money'
+import { krwCompact } from '../../../utils/currency'
 
 export function SummaryTab({ data }: { data: CountryReportData }) {
   const sim = data.tabs.tab_1_1_similarity
@@ -69,7 +71,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
                 </p>
               ) : (
                 <p className="font-body-md text-[15px] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
-                  예상 10년 TCO는 <strong className="text-white">{eur(total)}</strong>이며, 구축 기간은 약{' '}
+                  예상 10년 TCO는 <strong className="text-white"><Money value={total} currency={tco.currency} inline subClassName="text-white/70" /></strong>이며, 구축 기간은 약{' '}
                   <strong className="text-white">{fixed(tco.build_months)}개월</strong>, 예상 신규 계약은{' '}
                   <strong className="text-white">{intComma(tco.expected_contracts)}건/년</strong>으로 추정됩니다.
                 </p>
@@ -117,7 +119,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
             {isBaselineDeployed ? (
               <p className="font-body-sm text-body-sm text-text-secondary">기준국 — 신규 TCO 산정 대상 아님</p>
             ) : (
-              <WaterfallMini steps={wf} total={total} />
+              <WaterfallMini steps={wf} total={total} currency={tco.currency} />
             )}
           </div>
         </div>
@@ -161,6 +163,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
               existing={sub.existing_volume ?? tco.existing_total_volume}
               newAdded={sub.new_volume ?? tco.expected_contracts}
               newCumulative={sub.total_volume ?? (tco.existing_total_volume + tco.expected_contracts)}
+              currency={sub.currency ?? tco.currency}
             />
           </Panel>
         </div>
@@ -210,7 +213,8 @@ function ScoreDonut({ score }: { score: number }) {
 }
 
 // TCO 워터폴(KPI) — 누적 막대, 마지막 총합 강조
-function WaterfallMini({ steps, total }: { steps: { label: string; value: number }[]; total: number }) {
+function WaterfallMini({ steps, total, currency }: { steps: { label: string; value: number }[]; total: number; currency: string }) {
+  const fx = useFx()
   const W = 360
   const H = 240
   const top = 16
@@ -242,7 +246,7 @@ function WaterfallMini({ steps, total }: { steps: { label: string; value: number
           <g key={i}>
             <rect x={x} y={y} width={barW} height={Math.max(h, 2)} fill={color} rx="3" />
             <text x={x + barW / 2} y={y - 6} fontSize={isTotal ? 11 : 10} fill={labelColor} fontWeight="700" textAnchor="middle">
-              {isTotal ? eur(b.value) : `+${eur(b.value)}`}
+              {isTotal ? krwCompact(b.value, currency, fx) : `+${krwCompact(b.value, currency, fx)}`}
             </text>
             <text x={x + barW / 2} y={230} fontSize="9.5" fill="#3a4048" textAnchor="middle">
               {b.label}

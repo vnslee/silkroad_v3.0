@@ -6,7 +6,7 @@ from typing import List
 from fastapi import APIRouter, Path
 
 from ..config import TARGET_ID_PATTERN
-from ..schemas import CountrySummary, ExistenceInfo, MapColorData, RegionSummary
+from ..schemas import CountrySummary, ExistenceInfo, FxData, MapColorData, RegionSummary
 from ..services import storage_resolver
 
 router = APIRouter(prefix="/api", tags=["catalog"])
@@ -29,6 +29,12 @@ def get_regions() -> List[RegionSummary]:
 def get_map_colors() -> MapColorData:
     # 지도 국가 채색 원천(country_status + 현대 해외사업망). 프론트가 색을 결정.
     return storage_resolver.map_color_data()
+
+
+@router.get("/fx", response_model=FxData)
+def get_fx() -> FxData:
+    # 환율 스냅샷(internal_latest.json fx). 통화 표시(한화 환산)에 프론트가 사용.
+    return FxData(**storage_resolver.fx_data())
 
 
 @router.get("/countries/{code}", response_model=ExistenceInfo)

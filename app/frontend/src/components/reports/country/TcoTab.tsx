@@ -1,6 +1,9 @@
 // 탭3 TCO·구독료 — KPI 4 + 구축산식 + 계약건수산식 + 워터폴 + 누적추이 + 구독료구간 + 승수표 + 근거항목
+import type { ReactNode } from 'react'
 import type { CountryReportData, ReportItem } from '../types'
-import { Panel, EvidenceCard, Donut, MiniTimeseries, eur, intComma } from './shared'
+import { Panel, EvidenceCard, Donut, MiniTimeseries, intComma } from './shared'
+import { Money, useFx } from '../Money'
+import { krwCompact } from '../../../utils/currency'
 
 const MULT_TABLE: { band: string; mult: number }[] = [
   { band: '90 ~ 100', mult: 50 },
@@ -42,7 +45,7 @@ export function TcoTab({ data }: { data: CountryReportData }) {
     <div className="flex flex-col gap-xl">
       {/* KPI 4 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-gutter">
-        <Kpi label="총 10년 TCO" icon="payments" value={eur(tco.total_tco_10y)} />
+        <Kpi label="총 10년 TCO" icon="payments" value={<Money value={tco.total_tco_10y} currency={tco.currency} />} />
         <Kpi label="예상 구축 기간" icon="schedule" value={`${tco.build_months.toFixed(1)}M`} />
         <Kpi label="예상 계약건수" icon="fact_check" value={`${intComma(tco.expected_contracts)} 건`} />
         <Kpi label="유사도 승수" icon="percent" value={`${mult}%`} sub={`구간 ${tco.similarity_band}`} />
@@ -55,11 +58,11 @@ export function TcoTab({ data }: { data: CountryReportData }) {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-6 gap-sm">
           <FormulaCell label="베이스라인" big={baseKo} small={tco.build_breakdown.inputs['베이스라인 솔루션'] ?? data.tabs.tab_1_2_decision.base_system} />
-          <FormulaCell label="B 구축비용" big={eur(bi['B 구축비용'])} small="internal.json" />
+          <FormulaCell label="B 구축비용" big={<Money value={bi['B 구축비용']} currency={bd.currency ?? tco.currency} />} small="internal.json" />
           <FormulaCell label="B 구축기간" big={`${bi['B 구축기간(개월)'] ?? bi['B 구축기간']}M`} small="internal.json" />
           <FormulaCell label="종합 유사도" big={tco.similarity_score.toFixed(1)} small="유사도 점수 결과" />
           <FormulaCell label="적용 승수" big={`${mult}%`} small={`구간 ${tco.similarity_band}`} />
-          <FormulaCell label="신규국 산출" big={eur(tco.build_cost)} small={`${tco.build_months.toFixed(1)}M`} highlight />
+          <FormulaCell label="신규국 산출" big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
         </div>
       </Panel>
 
@@ -179,7 +182,7 @@ export function TcoTab({ data }: { data: CountryReportData }) {
   )
 }
 
-function Kpi({ label, icon, value, sub }: { label: string; icon: string; value: string; sub?: string }) {
+function Kpi({ label, icon, value, sub }: { label: string; icon: string; value: ReactNode; sub?: string }) {
   return (
     <div className="bg-surface-container-lowest border border-surface-border rounded-xl p-lg card-shadow flex flex-col">
       <div className="flex items-center justify-between mb-sm">
@@ -192,7 +195,7 @@ function Kpi({ label, icon, value, sub }: { label: string; icon: string; value: 
   )
 }
 
-function FormulaCell({ label, big, small, highlight }: { label: string; big: string; small?: string; highlight?: boolean }) {
+function FormulaCell({ label, big, small, highlight }: { label: string; big: ReactNode; small?: string; highlight?: boolean }) {
   return (
     <div className={`p-sm rounded-lg ${highlight ? 'bg-primary/10 border-2 border-primary' : 'bg-surface border border-surface-container-highest'}`}>
       <div className={`font-label-sm text-label-sm uppercase tracking-wider ${highlight ? 'text-primary' : 'text-text-secondary'}`}>{label}</div>
@@ -226,6 +229,8 @@ function ContractBasisCard({ item }: { item: ReportItem }) {
 
 // 워터폴: 구축비 / 유지비(10Y=구독+유보) / 시스템소계 / 운영비(10Y) / 총TCO
 function TcoWaterfall({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
+  const fx = useFx()
+  const cur = tco.currency
   const W = 760
   const H = 320
   const top = 20
@@ -268,7 +273,7 @@ function TcoWaterfall({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }
           <g key={i}>
             <rect x={x} y={y} width={barW} height={Math.max(h, 2)} fill={b.color} opacity={opacity} rx="3" />
             <text x={x + barW / 2} y={y - 6} fontSize="11" fill={b.color} fontWeight="700" textAnchor="middle">
-              {b.mode === 'add' ? `+${eur(b.value)}` : eur(b.value)}
+              {b.mode === 'add' ? `+${krwCompact(b.value, cur, fx)}` : krwCompact(b.value, cur, fx)}
             </text>
             <text x={x + barW / 2} y="296" fontSize="11" fill="#3a4048" textAnchor="middle">
               {b.label}
@@ -282,6 +287,8 @@ function TcoWaterfall({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }
 
 // 10년 누적 비용 추이(Y0~Y10)
 function CumulativeChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
+  const fx = useFx()
+  const cur = tco.currency
   const W = 760
   const H = 320
   const left = 70
@@ -308,7 +315,7 @@ function CumulativeChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'
         <g key={i}>
           <line x1={left} y1={g.y} x2={right} y2={g.y} stroke="#e6e3db" />
           <text x={left - 6} y={g.y + 4} fontSize="10" fill="#9aa0a6" textAnchor="end">
-            {eur(g.v)}
+            {krwCompact(g.v, cur, fx)}
           </text>
         </g>
       ))}
@@ -319,10 +326,10 @@ function CumulativeChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'
       ))}
       <rect x={left - 7} y={coords[0].y} width="14" height={Math.max(bottom - coords[0].y, 4)} rx="3" fill="#14181C" />
       <text x={left} y={coords[0].y - 8} fontSize="11" fill="#14181C" fontWeight="700" textAnchor="middle">
-        구축 {eur(tco.build_cost)}
+        구축 {krwCompact(tco.build_cost, cur, fx)}
       </text>
       <text x={right - 6} y={20} fontSize="12" fill="#14181C" fontWeight="700" textAnchor="end">
-        Y10 누적 {eur(total)}
+        Y10 누적 {krwCompact(total, cur, fx)}
       </text>
       {coords.map((_, i) => (
         <text key={i} x={left + i * xStep} y="298" fontSize="10" fill="#9aa0a6" textAnchor="middle">
@@ -335,6 +342,8 @@ function CumulativeChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'
 
 // 구독료 구간 스텝차트(누적건수→단가, 현재 위치 마커)
 function StepChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
+  const fx = useFx()
+  const cur = tco.subscription_details.currency ?? tco.currency
   const W = 760
   const H = 260
   const left = 60
@@ -365,7 +374,7 @@ function StepChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
         <g key={i}>
           <line x1={left} y1={g.y} x2={right} y2={g.y} stroke="#e6e3db" />
           <text x={left - 6} y={g.y + 4} fontSize="10" fill="#9aa0a6" textAnchor="end">
-            €{g.v.toFixed(2)}
+            {krwCompact(g.v, cur, fx)}
           </text>
         </g>
       ))}
@@ -384,7 +393,7 @@ function StepChart({ tco }: { tco: CountryReportData['tabs']['tab_1_3_tco'] }) {
       <line x1={scaleX(current)} y1={top} x2={scaleX(current)} y2={bottom} stroke="#4f8a6d" strokeWidth="1.5" strokeDasharray="4 4" />
       <circle cx={scaleX(current)} cy={scaleY(appliedPrice)} r="6" fill="#4f8a6d" />
       <text x={scaleX(current) + 10} y={scaleY(appliedPrice) + 4} fontSize="12" fill="#4f8a6d" fontWeight="700">
-        현재 {intComma(current)}건 → €{appliedPrice.toFixed(2)}
+        현재 {intComma(current)}건 → {krwCompact(appliedPrice, cur, fx)}
       </text>
     </svg>
   )
