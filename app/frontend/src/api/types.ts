@@ -193,10 +193,12 @@ export interface ChatResponse {
 
 // 챗봇 SSE 스트림(POST /api/chat/stream) 이벤트 핸들러.
 // onToken: 답변 토큰 델타(타이핑 효과), onStatus: 도구 호출 중(분석 표시),
+// onReset: 직전까지 흘린 preamble 토큰 폐기(도구 호출 턴 → 버블 비움),
 // onDone: 종료(플래그·칩이 담긴 ChatResponse), onError: 오류.
 export interface ChatStreamHandlers {
   onToken?: (text: string) => void
   onStatus?: (tool: string) => void
+  onReset?: () => void
   onDone: (resp: ChatResponse) => void
   onError?: (detail: string) => void
 }

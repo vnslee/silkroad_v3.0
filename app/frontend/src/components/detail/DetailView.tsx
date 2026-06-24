@@ -250,9 +250,16 @@ export default function DetailView({ domain, code, mode }: Props) {
   }
 
   return (
+<<<<<<< HEAD
     <div className="content-scale flex h-full min-h-0 flex-col">
       {/* 헤더 chrome */}
       <div className="flex shrink-0 items-start justify-between gap-md border-b border-surface-border p-lg pr-16">
+=======
+    <div className="flex h-full min-h-0 flex-col">
+      {/* 헤더 chrome — relative z-overlay로 본문(sticky z-chrome)보다 위 스태킹 컨텍스트를 만들어
+          드롭다운(absolute top-full)이 본문 위로 펼쳐지게 한다. */}
+      <div className="relative z-overlay flex shrink-0 items-start justify-between gap-md border-b border-surface-border p-lg pr-16">
+>>>>>>> 42abc18 (야간 수술)
         <div className="flex items-center gap-md">
           <HeaderEmblem domain={domain} code={code} name={meta?.name} />
           <div>

@@ -448,9 +448,11 @@ def stream_agent(
       {"type": "token", "text": <delta>}  — 답변 텍스트 델타
       {"type": "final", "text": <full>, "trace": [...]}  — 종료(플래그 조립용)
 
-    텍스트 델타는 들어오는 대로 흘린다 — 도구 호출 턴에 짧은 preamble 텍스트가 섞일 수
-    있으나(자연스러운 에이전트 화법) 대개 도구 턴은 텍스트가 거의 없다. 최종 답변은 마지막
-    턴에 한 번에 흘러나온다. stop_on tool이 호출되면 토큰 없이 즉시 final로 종료한다.
+    텍스트 델타는 들어오는 대로 흘린다 — 단, 도구 호출로 끝나는 턴의 텍스트는 답변이 아니라
+    preamble(예: "조회해 드릴게요…")이므로, 그 턴에 텍스트를 흘렸으면 reset 이벤트를 보내
+    프론트가 그 버블을 버리게 한다(답변이 끊겼다 새 버블로 다시 쓰이는 현상 방지). 최종 답변은
+    도구 호출이 없는 마지막 턴에 흐른다. stop_on tool이 호출되면 토큰 없이 즉시 final로 종료한다.
+      {"type": "reset"}                   — 직전까지 흘린 preamble 토큰을 버리라는 신호
     """
     client = get_client()
     iters = max_iters or config.CHAT_AGENT_MAX_ITERS
@@ -465,14 +467,19 @@ def stream_agent(
     }
     try:
         for _ in range(iters):
+            turn_had_text = False
             with client.messages.stream(messages=convo, **kwargs) as stream:
                 for delta in stream.text_stream:
                     if delta:
+                        turn_had_text = True
                         yield {"type": "token", "text": delta}
                 message = stream.get_final_message()
             if getattr(message, "stop_reason", None) != "tool_use":
                 yield {"type": "final", "text": _all_text(message), "trace": trace}
                 return
+            # 도구 호출 턴 — 방금 흘린 텍스트는 답변이 아닌 preamble이므로 프론트가 버블을 버리게 한다.
+            if turn_had_text:
+                yield {"type": "reset"}
             calls = _tool_use_blocks(message)
             stop_calls = [c for c in calls if c["name"] in stop_on]
             if stop_calls:

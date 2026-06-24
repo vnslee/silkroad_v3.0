@@ -240,6 +240,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
           </Panel>
         </div>
         <div className="lg:col-span-12">
+<<<<<<< HEAD
           <Panel title={t('sum.overallInsight')}>
             <ul className="flex flex-col gap-sm list-none p-0 m-0">
               {splitSentences(lang === 'en' && data.overall_insight_en ? data.overall_insight_en : data.overall_insight).map((sentence, i) => (
@@ -248,9 +249,43 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
                     {sentence}
                   </span>
                 </li>
+=======
+          {/* 권역 상세 인사이트(RegionInsight)와 동일한 다크 히어로 카드 —
+              잉크블랙 그라디언트 + 라임그린(#C8F051) 라벨 + AI 아이콘(ai_icon.png). */}
+          <div
+            className="rounded-[18px] px-[30px] py-[28px] card-shadow text-white"
+            style={{ background: 'linear-gradient(120deg,#14181C,#1f262d)' }}
+          >
+            <div
+              className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mb-sm"
+              style={{ color: '#C8F051', letterSpacing: '.1em' }}
+            >
+              국가 진단 보고서 · AI 인사이트
+            </div>
+            <div className="flex items-center gap-sm mb-md">
+              <img
+                src={`${import.meta.env.BASE_URL}brand/ai_icon.png`}
+                alt=""
+                aria-hidden="true"
+                className="w-6 h-6 shrink-0 object-contain"
+              />
+              <h2 className="text-[clamp(18.7px,calc(16.5px_+_0.611vw),25.3px)] font-bold leading-none text-white m-0">
+                국가 종합 인사이트
+              </h2>
+            </div>
+            <div className="flex flex-col gap-sm [&_strong]:text-white">
+              {splitSentences(data.overall_insight).map((sentence, i) => (
+                <p
+                  key={i}
+                  className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0"
+                  style={{ color: 'rgba(255,255,255,.9)' }}
+                >
+                  {sentence}
+                </p>
+>>>>>>> 42abc18 (야간 수술)
               ))}
-            </ul>
-          </Panel>
+            </div>
+          </div>
         </div>
       </div>
     </div>

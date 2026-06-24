@@ -64,6 +64,18 @@ def test_qa_existing_asks_perspective_first():
     assert resp.answer is None
 
 
+def test_explore_without_target_streams_question_not_perspective():
+    # 탐색 진입("진출 검토 국가/권역 조사") — 구체적 대상 없음 → LLM이 list_available로
+    # 되묻는다. 스테일한 기본 대상(ES)에 관점 게이트를 걸지 말고 되묻기 답변을 그대로 흘려야 한다.
+    trace = [_sig("list_available")]
+    resp = chatbot._assemble(
+        trace, "어떤 국가나 권역을 알려주시겠어요?", _req("진출을 검토 중인 국가나 권역을 조사하고 싶어요.")
+    )
+    assert resp.intent == "qa"
+    assert resp.needs_perspective is False
+    assert resp.answer == "어떤 국가나 권역을 알려주시겠어요?"
+
+
 def test_qa_existing_with_perspective_returns_answer_and_actions():
     # 보유국 + 관점 지정 → 데이터 답변 + 선택지 칩(요약/재리서치/보고서).
     trace = [_lookup("ES", True, True)]

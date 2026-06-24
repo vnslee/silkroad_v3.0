@@ -62,6 +62,8 @@ def chat_stream(req: ChatRequest) -> StreamingResponse:
                 etype = ev["type"]
                 if etype == "token":
                     yield _sse("token", {"text": ev["text"]})
+                elif etype == "reset":
+                    yield _sse("reset", {})
                 elif etype == "status":
                     yield _sse("status", {"tool": ev["tool"]})
                 elif etype == "done":

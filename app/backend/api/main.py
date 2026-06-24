@@ -51,10 +51,31 @@ def health() -> dict:
 from pathlib import Path as _Path  # noqa: E402
 
 from fastapi.staticfiles import StaticFiles  # noqa: E402
+from starlette.responses import Response  # noqa: E402
+
+
+class _CacheAwareStaticFiles(StaticFiles):
+    """index.html(및 HTML)은 항상 재검증, 해시 자산은 장기 캐시.
+
+    Vite 빌드는 JS/CSS 파일명에 해시를 박으므로(`index-UnEMUvNI.js`) 영구 캐시해도
+    안전하다. 반면 진입점 index.html은 파일명이 고정 → Cache-Control이 없으면
+    브라우저·CloudFront가 옛 index.html을 붙들고 옛 번들을 가리켜 "예전 버전"이 뜬다.
+    HTML에 no-cache를 부여해 매 요청 etag 재검증(내용 같으면 304, 바뀌면 새로 수신)하게 한다.
+    """
+
+    def file_response(self, *args, **kwargs) -> Response:  # type: ignore[override]
+        resp = super().file_response(*args, **kwargs)
+        path = resp.headers.get("content-type", "")
+        if path.startswith("text/html"):
+            resp.headers["Cache-Control"] = "no-cache, must-revalidate"
+        elif "/assets/" in str(getattr(resp, "path", "")):
+            resp.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+        return resp
+
 
 _FRONTEND_DIST = _Path(__file__).resolve().parents[2] / "frontend" / "dist"
 if _FRONTEND_DIST.is_dir():
-    app.mount("/app", StaticFiles(directory=str(_FRONTEND_DIST), html=True), name="frontend")
+    app.mount("/app", _CacheAwareStaticFiles(directory=str(_FRONTEND_DIST), html=True), name="frontend")
     _log.info("frontend mounted at /app from %s", _FRONTEND_DIST)
 else:
     _log.info("frontend dist not found (%s) — /app not mounted", _FRONTEND_DIST)
