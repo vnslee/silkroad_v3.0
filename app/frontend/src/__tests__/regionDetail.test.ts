@@ -44,6 +44,15 @@ describe('buildRegionDetail (EU 3-소스 병합)', () => {
     // rank 오름차순 정렬은 컴포넌트가 하지만, 병합 결과에 rank가 유효한지 확인.
     const ranks = data.candidate_countries.map((c) => c.quick_win_rank)
     expect(new Set(ranks).size).toBe(ranks.length) // 중복 rank 없음
+    // 영문명이 병합돼야 한다(영어 모드에서 "폴란드 PL" 혼용 회귀 방지).
+    // member_names에 영문명이 있는 후보는 name_en이 채워진다.
+    const withEn = data.candidate_countries.filter((c) => c.name_en)
+    expect(withEn.length).toBeGreaterThan(0)
+  })
+
+  it('시계열 추세 행에도 영문명이 병합된다(영어 모드 혼용 회귀 방지)', () => {
+    const withEn = data.trends.filter((tr) => tr.name_en)
+    expect(withEn.length).toBeGreaterThan(0)
   })
 
   it('KPI = 후보 수·퀵윈 수·킬스위치 탈락 수 일관', () => {

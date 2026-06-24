@@ -45,11 +45,11 @@ export function KillswitchTab({ data }: { data: RegionReportData }) {
         <SourcePill flag="CALC" suffix="· status_matrix" />
       </div>
       {tierSummary ? (
-        <TierDistribution summary={tierSummary} />
+        <TierDistribution summary={tierSummary} lang={lang} />
       ) : (
         <p className="font-body-sm text-body-sm text-on-surface-variant -mt-sm">
-          통과 {ks.passed_count}개국 · 탈락 {ks.failed_count}개국. 탈락국(
-          {ks.failed_count > 0 ? ks.failed.join(', ') : '없음'})은 이후 스코어링에서 제외.
+          {t('rks.fallback.passed')} {ks.passed_count}{t('rks.fallback.failedMid')} {ks.failed_count}{t('rks.fallback.failedTail')}
+          {ks.failed_count > 0 ? ks.failed.join(', ') : t('rks.fallback.none')}{t('rks.fallback.excludedTail')}
         </p>
       )}
       <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-md shadow-[0_4px_8px_rgba(20,23,28,0.04)] overflow-x-auto">
@@ -104,37 +104,39 @@ export function KillswitchTab({ data }: { data: RegionReportData }) {
 }
 
 // 진출 형태 분포 — 비율 누적 막대 + 범례. 등급별 색상으로 권역 구성을 한눈에.
-function TierDistribution({ summary }: { summary: RegionReportData['tabs']['tab_2_0_killswitch']['tier_summary'] }) {
+function TierDistribution({ summary, lang }: { summary: RegionReportData['tabs']['tab_2_0_killswitch']['tier_summary']; lang: Lang }) {
+  const t = useT()
   const items = summary ?? []
-  const total = items.reduce((s, t) => s + t.count, 0)
+  const total = items.reduce((s, item) => s + item.count, 0)
   if (total === 0) return null
+  const unit = t('rks.dist.countriesUnit')
   return (
     <div className="-mt-sm flex flex-col gap-sm">
       {/* 누적 비율 막대 */}
       <div className="flex h-3 w-full overflow-hidden rounded-full bg-surface-container">
-        {items.map((t) => {
-          const style = TIER_STYLE[t.key] ?? TIER_FALLBACK
-          const pct = (t.count / total) * 100
+        {items.map((item) => {
+          const style = TIER_STYLE[item.key] ?? TIER_FALLBACK
+          const pct = (item.count / total) * 100
           if (pct === 0) return null
           return (
             <div
-              key={t.key}
+              key={item.key}
               className="h-full"
               style={{ width: `${pct}%`, background: style.bar }}
-              title={`${t.label.ko} ${t.count}개국 (${Math.round(pct)}%)`}
+              title={`${pickLang(lang, item.label.ko, item.label.en)} ${item.count}${unit} (${Math.round(pct)}%)`}
             />
           )
         })}
       </div>
       {/* 범례 — 색 점 + 라벨 + 개수 */}
       <div className="flex flex-wrap items-center gap-x-md gap-y-xs">
-        {items.map((t) => {
-          const style = TIER_STYLE[t.key] ?? TIER_FALLBACK
+        {items.map((item) => {
+          const style = TIER_STYLE[item.key] ?? TIER_FALLBACK
           return (
-            <span key={t.key} className="inline-flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant">
+            <span key={item.key} className="inline-flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant">
               <span className="h-2.5 w-2.5 rounded-full" style={{ background: style.bar }} />
-              {t.label.ko}
-              <span className="font-medium text-primary">{t.count}개국</span>
+              {pickLang(lang, item.label.ko, item.label.en)}
+              <span className="font-medium text-primary">{item.count}{unit}</span>
             </span>
           )
         })}

@@ -57,52 +57,57 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
         style={{ background: 'linear-gradient(120deg,#14181C,#1f262d)' }}
       >
         <div className="font-label-sm text-[clamp(10.2px,calc(9px_+_0.333vw),13.8px)] mb-sm" style={{ color: '#C8F051', letterSpacing: '.1em' }}>
-          권역 진단 보고서 · 퀵윈 스코어링
+          {t('rsum.hero.eyebrow')}
         </div>
         <div className="flex items-center gap-sm mb-md">
           <span className="material-symbols-outlined" style={{ color: '#C8F051', fontVariationSettings: "'FILL' 1" }}>
             auto_awesome
           </span>
-          <h2 className="text-[clamp(23.8px,calc(21px_+_0.778vw),32.2px)] font-bold leading-none text-white">요약</h2>
+          <h2 className="text-[clamp(23.8px,calc(21px_+_0.778vw),32.2px)] font-bold leading-none text-white">{t('rgn.tab.summary')}</h2>
         </div>
         <div className="flex flex-col gap-md [&_strong]:text-white">
           <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
-            <strong>{regionKo}</strong> 권역 평가 <strong>{data.data_quality.total_countries}</strong>개국
+            <strong>{regionKo}</strong> {t('rsum.body.evalCount')} <strong>{data.data_quality.total_countries}</strong>{t('rsum.body.countriesUnit')}
             {baseline && (
               <>
-                {' '}중 베이스라인{' '}
+                {' '}{t('rsum.body.baselineMid')}{' '}
                 <strong>{nameOf(lang, baseline)}({baseline})</strong>
               </>
             )}
             {enteredRows.length > 0 && (
               <>
-                {baseline ? ' 및' : ' 중'} 진출국{' '}
+                {' '}{baseline ? t('rsum.body.enteredAnd') : t('rsum.body.enteredMid')} {t('rsum.body.entered')}{' '}
                 <strong>
                   {enteredRows.map((r) => `${nameOf(lang, r.country)}(${r.country})`).join('·')}
                 </strong>
-                {' '}{enteredRows.length}개국
+                {' '}{enteredRows.length}{t('rsum.body.countriesUnit')}
               </>
             )}
-            {baseline || enteredRows.length > 0 ? '을(를) 제외한 ' : '에서 '}후보 <strong>{candidateRows.length}</strong>개국을 스코어링한 결과, 최우선 퀵윈 후보는{' '}
-            <strong>{nameOf(lang, top1.country)}({top1.country})</strong>(으)로 도출되었습니다.
+            {' '}{baseline || enteredRows.length > 0 ? t('rsum.body.excludeSuffix') : t('rsum.body.fromPrefix')} {t('rsum.body.candidate')} <strong>{candidateRows.length}</strong>{t('rsum.body.scoredResult')}{' '}
+            <strong>{nameOf(lang, top1.country)}({top1.country})</strong>{t('rsum.body.derived')}
           </p>
           <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
             {t('rsum.top1reason')} — <strong>{pickLang(lang, cc.why_top1.ko, cc.why_top1.en)}</strong>.
             {quickwinOptimal.length > 0 && (
               <>
-                {' '}후보 {candidateRows.length}개국 중 <strong>{quickwinOptimal.length}</strong>개국(
-                {quickwinOptimal.map((r) => r.country).join('·')})이 매력도·IT유사도 모두 높은 <strong>퀵윈 최적 영역</strong>에 위치합니다.
+                {' '}{t('rsum.body.candidate')} {candidateRows.length}{t('rsum.body.optimalMid')} <strong>{quickwinOptimal.length}</strong>{t('rsum.body.optimalCount')}
+                {quickwinOptimal.map((r) => r.country).join('·')}{t('rsum.body.optimalTail')} <strong>{t('rsum.body.optimalZone')}</strong>{t('rsum.body.optimalAt')}
               </>
             )}
             {cc.killswitch_failed_count > 0 && (
-              <> 킬스위치 탈락국은 <strong>{cc.killswitch_failed_count}</strong>개국입니다.</>
+              <> {t('rsum.body.killswitchFailed')} <strong>{cc.killswitch_failed_count}</strong>{t('rsum.body.killswitchUnit')}</>
             )}
           </p>
-          {insights.map((ins, i) => (
-            <p key={i} className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
-              {pickLang(lang, ins.ko, ins.en)}
-            </p>
-          ))}
+          {insights.length > 0 && (
+            <ul className="flex flex-col gap-sm list-none p-0 m-0">
+              {insights.map((ins, i) => (
+                <li key={i} className="flex items-start gap-sm font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
+                  <span aria-hidden="true" className="shrink-0 select-none leading-[1.6]" style={{ color: '#C8F051' }}>•</span>
+                  <span className="min-w-0">{pickLang(lang, ins.ko, ins.en)}</span>
+                </li>
+              ))}
+            </ul>
+          )}
           {regionNews && (
             <p className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0" style={{ color: 'rgba(255,255,255,.9)' }}>
               <span style={{ color: '#C8F051' }}>{t('rsum.recentIssue')} —</span>{' '}
@@ -122,7 +127,7 @@ export function SummaryTab({ data }: { data: RegionReportData }) {
           <div className="bg-surface-container-lowest border border-surface-border rounded-lg p-lg shadow-[0_4px_8px_rgba(20,23,28,0.04)] h-full">
             <div className="flex items-center gap-sm mb-md border-b border-surface-border pb-sm">
               <h2 className="font-headline-md text-headline-md text-primary m-0">{t('rsum.attrXit')}</h2>
-              <SourcePill flag="CALC" suffix="· 2축" />
+              <SourcePill flag="CALC" suffix={t('rsrc.sfx.twoAxis')} />
             </div>
             <ScatterChart points={points} />
           </div>

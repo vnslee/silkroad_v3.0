@@ -1,5 +1,5 @@
 {
-  "report_id": "RPT_RGN_EU_002",
+  "report_id": "RPT_RGN_EU_012",
   "report_type": "type2_region",
   "title": "European Union 권역 퀵윈 순위 보고서",
   "target": {
@@ -17,10 +17,10 @@
     ],
     "baseline_country": "GB"
   },
-  "generated_at": "2026-06-23T23:20:05.065433",
+  "generated_at": "2026-06-25T07:28:39.481410",
   "generated_by": "engine",
   "data_snapshot_id": "2026-06-22T16:00:00+09:00",
-  "config_version": "1.2",
+  "config_version": "1.6",
   "engine_version": "v1.0",
   "schema_version": "1.1",
   "fx": {
@@ -1488,6 +1488,7 @@
     "tab_2_2_it_similarity": {
       "nature": "score_multiaxis",
       "source_flag": "CALC",
+      "mode": "baseline",
       "baseline_country": "GB",
       "weights": {
         "솔루션 유형": 0.3,
@@ -2795,8 +2796,8 @@
       "nature": "ranking",
       "source_flag": "CALC",
       "weights": {
-        "w_biz": 0.6,
-        "w_it": 0.4
+        "w_biz": 0.9,
+        "w_it": 0.1
       },
       "baseline_country": "GB",
       "rows": [
@@ -2806,8 +2807,8 @@
           "attractiveness": 26.5,
           "it_similarity": 69.8,
           "it_similarity_band": 70,
-          "quickwin_raw": 43.8,
-          "quickwin_band": 40,
+          "quickwin_raw": 30.8,
+          "quickwin_band": 30,
           "is_baseline": false,
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
@@ -2827,28 +2828,7 @@
           "attractiveness": 54.8,
           "it_similarity": 69.5,
           "it_similarity_band": 70,
-          "quickwin_raw": 60.7,
-          "quickwin_band": 60,
-          "is_baseline": false,
-          "killswitch_excluded": false,
-          "killswitch_tier": "in_region_confidence",
-          "killswitch_tier_label": {
-            "ko": "권역내 확산",
-            "en": "In-Region Confidence"
-          },
-          "quickwin_penalty": 0,
-          "already_entered": false,
-          "excluded": false,
-          "exclusion_reason": null,
-          "rank": 2
-        },
-        {
-          "country": "ES",
-          "country_name": "Spain",
-          "attractiveness": 55.8,
-          "it_similarity": 65.8,
-          "it_similarity_band": 70,
-          "quickwin_raw": 59.8,
+          "quickwin_raw": 56.3,
           "quickwin_band": 60,
           "is_baseline": false,
           "killswitch_excluded": false,
@@ -2864,13 +2844,34 @@
           "rank": 3
         },
         {
+          "country": "ES",
+          "country_name": "Spain",
+          "attractiveness": 55.8,
+          "it_similarity": 65.8,
+          "it_similarity_band": 70,
+          "quickwin_raw": 56.8,
+          "quickwin_band": 60,
+          "is_baseline": false,
+          "killswitch_excluded": false,
+          "killswitch_tier": "in_region_confidence",
+          "killswitch_tier_label": {
+            "ko": "권역내 확산",
+            "en": "In-Region Confidence"
+          },
+          "quickwin_penalty": 0,
+          "already_entered": false,
+          "excluded": false,
+          "exclusion_reason": null,
+          "rank": 2
+        },
+        {
           "country": "FR",
           "country_name": "France",
           "attractiveness": 8.9,
           "it_similarity": 60.1,
           "it_similarity_band": 60,
-          "quickwin_raw": 29.4,
-          "quickwin_band": 30,
+          "quickwin_raw": 14.0,
+          "quickwin_band": 10,
           "is_baseline": false,
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
@@ -2889,8 +2890,8 @@
           "attractiveness": 64.6,
           "it_similarity": 98.3,
           "it_similarity_band": 100,
-          "quickwin_raw": 78.1,
-          "quickwin_band": 80,
+          "quickwin_raw": 68.0,
+          "quickwin_band": 70,
           "is_baseline": true,
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
@@ -2909,8 +2910,8 @@
           "attractiveness": 36.4,
           "it_similarity": 60.9,
           "it_similarity_band": 60,
-          "quickwin_raw": 46.2,
-          "quickwin_band": 50,
+          "quickwin_raw": 38.8,
+          "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
@@ -2929,8 +2930,8 @@
           "attractiveness": 39.6,
           "it_similarity": 69.5,
           "it_similarity_band": 70,
-          "quickwin_raw": 51.6,
-          "quickwin_band": 50,
+          "quickwin_raw": 42.6,
+          "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
@@ -2942,7 +2943,7 @@
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
-          "rank": 4
+          "rank": 5
         },
         {
           "country": "PL",
@@ -2950,8 +2951,8 @@
           "attractiveness": 76.6,
           "it_similarity": 69.4,
           "it_similarity_band": 70,
-          "quickwin_raw": 73.7,
-          "quickwin_band": 70,
+          "quickwin_raw": 75.9,
+          "quickwin_band": 80,
           "is_baseline": false,
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
@@ -2971,8 +2972,8 @@
           "attractiveness": 40.9,
           "it_similarity": 63.1,
           "it_similarity_band": 60,
-          "quickwin_raw": 49.8,
-          "quickwin_band": 50,
+          "quickwin_raw": 43.1,
+          "quickwin_band": 40,
           "is_baseline": false,
           "killswitch_excluded": false,
           "killswitch_tier": "in_region_confidence",
@@ -2984,49 +2985,49 @@
           "already_entered": false,
           "excluded": false,
           "exclusion_reason": null,
-          "rank": 5
+          "rank": 4
         }
       ],
       "ranking": [
         {
           "rank": 1,
           "country": "PL",
-          "score_band": 70,
+          "score_band": 80,
           "attractiveness": 76.6,
           "it_similarity_band": 70
         },
         {
           "rank": 2,
-          "country": "DK",
-          "score_band": 60,
-          "attractiveness": 54.8,
-          "it_similarity_band": 70
-        },
-        {
-          "rank": 3,
           "country": "ES",
           "score_band": 60,
           "attractiveness": 55.8,
           "it_similarity_band": 70
         },
         {
-          "rank": 4,
-          "country": "NL",
-          "score_band": 50,
-          "attractiveness": 39.6,
+          "rank": 3,
+          "country": "DK",
+          "score_band": 60,
+          "attractiveness": 54.8,
           "it_similarity_band": 70
         },
         {
-          "rank": 5,
+          "rank": 4,
           "country": "PT",
-          "score_band": 50,
+          "score_band": 40,
           "attractiveness": 40.9,
           "it_similarity_band": 60
         },
         {
+          "rank": 5,
+          "country": "NL",
+          "score_band": 40,
+          "attractiveness": 39.6,
+          "it_similarity_band": 70
+        },
+        {
           "rank": 6,
           "country": "AT",
-          "score_band": 40,
+          "score_band": 30,
           "attractiveness": 26.5,
           "it_similarity_band": 70
         }
@@ -3041,7 +3042,7 @@
         "rank": 1,
         "country": "PL",
         "country_name": "Poland",
-        "quickwin_score_band": 70,
+        "quickwin_score_band": 80,
         "attractiveness": 76.6,
         "it_similarity_band": 70,
         "killswitch_pass": true,
@@ -3114,76 +3115,6 @@
       },
       {
         "rank": 2,
-        "country": "DK",
-        "country_name": "Denmark",
-        "quickwin_score_band": 60,
-        "attractiveness": 54.8,
-        "it_similarity_band": 70,
-        "killswitch_pass": true,
-        "killswitch_tier": "in_region_confidence",
-        "killswitch_tier_label": {
-          "ko": "권역내 확산",
-          "en": "In-Region Confidence"
-        },
-        "market_brief": {
-          "신차_판매대수": 170000,
-          "금융_이용률_신차": 80,
-          "EV_보급률": 60
-        },
-        "competition_brief": {
-          "금융사_Top5": [
-            {
-              "rank": 1,
-              "name": "Ayvens (구 ALD+LeasePlan)",
-              "market_share": "약 18%"
-            },
-            {
-              "rank": 2,
-              "name": "Arval (BNP Paribas)",
-              "market_share": "약 11%"
-            },
-            {
-              "rank": 3,
-              "name": "Volkswagen Financial Services Denmark",
-              "market_share": "약 10%"
-            },
-            {
-              "rank": 4,
-              "name": "Nordea Finans",
-              "market_share": "약 8%"
-            },
-            {
-              "rank": 5,
-              "name": "Jyske Bank Finans / Jyske Finans",
-              "market_share": "약 7%"
-            }
-          ],
-          "경쟁사_진출_형태": "다국적 리스사 자회사(Ayvens·Arval·Athlon·Alphabet) + OEM 캡티브(VW FS·Toyota·Stellantis·BMW·MB) + 북유럽 은행계(Nordea Finans·Jyske Finans·Danske). 운용리스는 ApS/A/S 즉시 가능, 소비자금융은 FSA 인가 필요",
-          "경쟁사_진출_형태_en": "Multinational lessor subsidiaries (Ayvens, Arval, Athlon, Alphabet) + OEM captives (VW FS, Toyota, Stellantis, BMW, MB) + Nordic banks (Nordea Finans, Jyske Finans, Danske). Operating lease available immediately via ApS/A/S; consumer finance requires FSA licensing."
-        },
-        "top_news": {
-          "news_category": "auto_market",
-          "headline": "덴마크 2025년 BEV 점유 50% 돌파, EU에서 NO 다음 글로벌 2위",
-          "headline_en": "Denmark surpasses 50% BEV share in 2025 — #2 globally after NO",
-          "so_what": "BEV 압도적 시장 — EV 운용리스 전문 진입에 최적 환경. 잔가 모델 정교화가 손익 좌우, 한국 OEM(Kia·Hyundai) EV 라인업 우위 활용.",
-          "so_what_en": "BEV-dominant market — optimal for an EV operating-lease specialist entry. Residual-value model precision drives P&L; leverage the Korean OEM (Kia, Hyundai) EV-lineup edge.",
-          "publisher": "Automotive News Europe",
-          "pub_date": "2026-01-28",
-          "url": "https://europe.autonews.com/..."
-        },
-        "ai_comment": "운용리스·EV 전문 진입 → brugtleasing 중고리스 확장 → SE·NO·FI Nordic 통합 운영. 소비자금융은 사실상 진입 비매력 — B2B 한정 전략.",
-        "source_flags": {
-          "rank": "CALC",
-          "score": "CALC",
-          "market": "EXT",
-          "competition": "EXT",
-          "news": "NEWS",
-          "ai_comment": "AI"
-        },
-        "ai_comment_en": "Operating-lease/EV specialist entry → brugtleasing used-lease expansion → SE/NO/FI Nordic integrated operations. Consumer finance is effectively unattractive — a B2B-only strategy."
-      },
-      {
-        "rank": 3,
         "country": "ES",
         "country_name": "Spain",
         "quickwin_score_band": 60,
@@ -3251,6 +3182,76 @@
           "ai_comment": "AI"
         },
         "ai_comment_en": "Spain's appeal centers on EU-5 scale and fast-growing renting; key risks are EFC licensing burden and 2026 rate caps. Recommend entering renting/fleet first; expand into consumer credit after EFC licensing."
+      },
+      {
+        "rank": 3,
+        "country": "DK",
+        "country_name": "Denmark",
+        "quickwin_score_band": 60,
+        "attractiveness": 54.8,
+        "it_similarity_band": 70,
+        "killswitch_pass": true,
+        "killswitch_tier": "in_region_confidence",
+        "killswitch_tier_label": {
+          "ko": "권역내 확산",
+          "en": "In-Region Confidence"
+        },
+        "market_brief": {
+          "신차_판매대수": 170000,
+          "금융_이용률_신차": 80,
+          "EV_보급률": 60
+        },
+        "competition_brief": {
+          "금융사_Top5": [
+            {
+              "rank": 1,
+              "name": "Ayvens (구 ALD+LeasePlan)",
+              "market_share": "약 18%"
+            },
+            {
+              "rank": 2,
+              "name": "Arval (BNP Paribas)",
+              "market_share": "약 11%"
+            },
+            {
+              "rank": 3,
+              "name": "Volkswagen Financial Services Denmark",
+              "market_share": "약 10%"
+            },
+            {
+              "rank": 4,
+              "name": "Nordea Finans",
+              "market_share": "약 8%"
+            },
+            {
+              "rank": 5,
+              "name": "Jyske Bank Finans / Jyske Finans",
+              "market_share": "약 7%"
+            }
+          ],
+          "경쟁사_진출_형태": "다국적 리스사 자회사(Ayvens·Arval·Athlon·Alphabet) + OEM 캡티브(VW FS·Toyota·Stellantis·BMW·MB) + 북유럽 은행계(Nordea Finans·Jyske Finans·Danske). 운용리스는 ApS/A/S 즉시 가능, 소비자금융은 FSA 인가 필요",
+          "경쟁사_진출_형태_en": "Multinational lessor subsidiaries (Ayvens, Arval, Athlon, Alphabet) + OEM captives (VW FS, Toyota, Stellantis, BMW, MB) + Nordic banks (Nordea Finans, Jyske Finans, Danske). Operating lease available immediately via ApS/A/S; consumer finance requires FSA licensing."
+        },
+        "top_news": {
+          "news_category": "auto_market",
+          "headline": "덴마크 2025년 BEV 점유 50% 돌파, EU에서 NO 다음 글로벌 2위",
+          "headline_en": "Denmark surpasses 50% BEV share in 2025 — #2 globally after NO",
+          "so_what": "BEV 압도적 시장 — EV 운용리스 전문 진입에 최적 환경. 잔가 모델 정교화가 손익 좌우, 한국 OEM(Kia·Hyundai) EV 라인업 우위 활용.",
+          "so_what_en": "BEV-dominant market — optimal for an EV operating-lease specialist entry. Residual-value model precision drives P&L; leverage the Korean OEM (Kia, Hyundai) EV-lineup edge.",
+          "publisher": "Automotive News Europe",
+          "pub_date": "2026-01-28",
+          "url": "https://europe.autonews.com/..."
+        },
+        "ai_comment": "운용리스·EV 전문 진입 → brugtleasing 중고리스 확장 → SE·NO·FI Nordic 통합 운영. 소비자금융은 사실상 진입 비매력 — B2B 한정 전략.",
+        "source_flags": {
+          "rank": "CALC",
+          "score": "CALC",
+          "market": "EXT",
+          "competition": "EXT",
+          "news": "NEWS",
+          "ai_comment": "AI"
+        },
+        "ai_comment_en": "Operating-lease/EV specialist entry → brugtleasing used-lease expansion → SE/NO/FI Nordic integrated operations. Consumer finance is effectively unattractive — a B2B-only strategy."
       }
     ],
     "executive_summary": {
@@ -3260,22 +3261,22 @@
           {
             "rank": 1,
             "country": "PL",
-            "score_band": 70,
+            "score_band": 80,
             "attractiveness": 76.6,
             "it_similarity_band": 70
           },
           {
             "rank": 2,
-            "country": "DK",
+            "country": "ES",
             "score_band": 60,
-            "attractiveness": 54.8,
+            "attractiveness": 55.8,
             "it_similarity_band": 70
           },
           {
             "rank": 3,
-            "country": "ES",
+            "country": "DK",
             "score_band": 60,
-            "attractiveness": 55.8,
+            "attractiveness": 54.8,
             "it_similarity_band": 70
           }
         ],
@@ -3284,8 +3285,8 @@
           "in_region_confidence": 9
         },
         "why_top1": {
-          "ko": "폴란드 — 매력도 76.6, IT유사도 70 구간, 퀵윈 70 구간",
-          "en": "Poland(PL) — Attractiveness 76.6, IT band 70, Quickwin band 70"
+          "ko": "폴란드 — 매력도 76.6, IT유사도 70 구간, 퀵윈 80 구간",
+          "en": "Poland(PL) — Attractiveness 76.6, IT band 70, Quickwin band 80"
         }
       },
       "ai_cross_insight": {
@@ -3296,8 +3297,28 @@
             "en": "Top attractiveness (PL) and top IT similarity (AT) are different countries — trade-off between fast deployment (IT) and market potential (attractiveness)."
           },
           {
+            "ko": "후보 6개국 중 3개국(덴마크, 스페인, 폴란드)이 매력도·IT유사도 모두 50 이상인 퀵윈 최적 영역에 위치 — 시장성과 단기 확산성을 동시에 갖춘 우선 검토 대상.",
+            "en": "3 of 6 candidates (DK, ES, PL) sit in the quick-win sweet spot (attractiveness & IT similarity both ≥50) — priority targets combining market size and fast deployment."
+          },
+          {
+            "ko": "매력도 1위 폴란드(76.6)와 2위 스페인(55.8)의 격차가 20.8점 — 시장 매력도 측면에서 1위가 뚜렷이 앞섬.",
+            "en": "Top-attractiveness PL (76.6) leads #2 ES (55.8) by 20.8 points — a clear front-runner on market attractiveness."
+          },
+          {
+            "ko": "후보 6개국 중 5개국이 IT유사도 70 동일 밴드 — IT 확산 난이도는 권역 전반이 유사해, 매력도가 우선순위를 가르는 핵심 변수.",
+            "en": "5 of 6 candidates share the same top IT-similarity band (70) — deployment effort is broadly similar, so attractiveness becomes the key differentiator."
+          },
+          {
+            "ko": "1순위 폴란드 경쟁 구조 — 은행계 리스 자회사(PKO·mLeasing·Santander·EFL) + OEM 캡티브(VW FS·Toyota Bank·Stellantis FS·BMW·MB) +… 진입 전략 설계 시 기존 플레이어 구도를 우선 검토.",
+            "en": "Top candidate PL — incumbent landscape: 은행계 리스 자회사(PKO·mLeasing·Santander·EFL) + OEM 캡티브(VW FS·Toyota Bank·Stellantis FS·BMW·MB) +… Factor this competitive structure into entry strategy."
+          },
+          {
             "ko": "기준국 영국은 이미 시스템 보유국 → 순위에서 제외(B국 시스템 확산의 비교 기준).",
             "en": "Baseline GB already operates a deployed system — excluded from the ranking (used as the reference for system expansion)."
+          },
+          {
+            "ko": "킬스위치 평가 9개국 전부 단독 진출 가능 — 권역 전반의 규제·신용 게이트 리스크가 낮아 JV 없이 직접 진출 전략을 우선 검토할 수 있음.",
+            "en": "All 9 screened markets clear the kill-switch gates — low region-wide regulatory/credit risk means direct entry (without a JV) can be the primary strategy."
           }
         ]
       },

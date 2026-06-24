@@ -187,6 +187,8 @@ export const DICT: Dict = {
   'report.ext.noData': { ko: '해당국 외부솔루션 후보 데이터가 없습니다.', en: 'No external solution candidate data for this country.' },
   'report.ext.lead': { ko: '권역 확산·본사 구축 기준 미달 → 현지 외부솔루션 도입을 검토합니다. 후보 벤더는 다음과 같습니다.', en: 'Below the regional-expansion and HQ-build thresholds → consider a local external solution. Candidate vendors are below.' },
   'report.ext.leadApac': { ko: '자체구축(내재화)과 함께 검토할 현지 외부솔루션 후보입니다. 자체구축 예상 비용은 TCO 탭을 참조하세요.', en: 'Local external solution candidates to weigh alongside in-house build. See the TCO tab for in-house build cost estimates.' },
+  'report.ext.headingAlt': { ko: '함께 검토할 외부솔루션', en: 'External solutions to also consider' },
+  'report.ext.leadAlt': { ko: '권역 확산과 함께 검토할 수 있는 현지 외부솔루션 후보입니다.', en: 'Local external solution candidates to weigh alongside regional expansion.' },
   'report.ext.quote': { ko: '별도 견적', en: 'Quote on request' },
   'report.ext.solutionType': { ko: '솔루션 유형', en: 'Solution type' },
   'report.ext.vendorPattern': { ko: '벤더 패턴', en: 'Vendor pattern' },
@@ -195,6 +197,24 @@ export const DICT: Dict = {
   'report.hq.leadApac': { ko: '유사도 충분 → 본사 내재화 구축을 권고합니다. 예상 규모는 다음과 같습니다.', en: 'Sufficient similarity → HQ in-house build is recommended. Estimated scale below.' },
   'report.hq.cost': { ko: '예상 구축비용', en: 'Estimated build cost' },
   'report.hq.months': { ko: '예상 구축기간', en: 'Estimated build period' },
+  // 비구독 솔루션 패널(shared.tsx)
+  'report.nonsub.lead': {
+    ko: '비구독 솔루션 — 구독료 구간 대신 신규국 예상 구축비용·기간을 제시합니다. 구독료는 운영비에 포함됩니다.',
+    en: 'Non-subscription solution — instead of subscription tiers, shows the new market’s estimated build cost and period. Subscription is included in operations.',
+  },
+  'report.nonsub.note': {
+    ko: '* 자세한 산식은 TCO · 구독료 탭을 참조하세요.',
+    en: '* See the TCO · Subscription tab for the detailed formula.',
+  },
+  // MiniTimeseries CAGR 범례(shared.tsx)
+  'report.cagr.hist': { ko: 'CAGR(과거)', en: 'CAGR (history)' },
+  'report.cagr.forecast': { ko: 'CAGR(전망)', en: 'CAGR (forecast)' },
+  // 차트 aria-label(shared.tsx 결정 트리 SVG)
+  'report.aria.decisionTree': { ko: '시스템 결정 트리', en: 'System decision tree' },
+  'report.aria.decisionTreeApac': {
+    ko: 'APAC 시스템 결정 트리 (외부솔루션·자체구축 양쪽 검토)',
+    en: 'APAC system decision tree (external solution & in-house build, both reviewed)',
+  },
   'report.hq.note': { ko: '* 본사 자체구축 기준 baseline 값(참고용).', en: '* HQ in-house build baseline values (for reference).' },
   'report.hq.noteApac': { ko: '* 내재화 기준 baseline 값(참고용).', en: '* In-house build baseline values (for reference).' },
   // 결정 트리 SVG
@@ -231,6 +251,10 @@ export const DICT: Dict = {
   'mkt.evResidual': { ko: 'EV/ICE 잔존가치(3년)', en: 'EV/ICE residual value (3yr)' },
   'mkt.lineLegend': { ko: '실선=과거, 점선=전망 · 단위: %', en: 'Solid=history, dashed=forecast · unit: %' },
   'mkt.rateRange': { ko: '경쟁사 금리 범위', en: 'Competitor rate range' },
+  'mkt.aria.evTrend': { ko: 'EV 보급률·잔존가치 추이', en: 'EV adoption · residual value trend' },
+  'mkt.rate.newCarLoan': { ko: '신차 자동차대출', en: 'New-car auto loan' },
+  'mkt.rate.captivePromo': { ko: '캡티브 프로모', en: 'Captive promo' },
+  'mkt.rate.consumerAvg': { ko: '소비자신용 평균', en: 'Consumer credit avg.' },
   'mkt.regulators': { ko: '규제기관', en: 'Regulators' },
   'mkt.keyMetrics': { ko: '시장·경쟁 핵심 지표 (원천 데이터)', en: 'Market & competition key metrics (source data)' },
   'mkt.top5cum': { ko: 'Top 5 누적 점유율', en: 'Top 5 cumulative share' },
@@ -287,6 +311,10 @@ export const DICT: Dict = {
   'sum.decisionTree': { ko: '시스템 결정 트리', en: 'System decision tree' },
   'sum.noDecisionTree': { ko: '{country}은(는) 이미 시스템이 운영 중인 국가로, 신규 진출 결정 트리는 적용되지 않습니다.', en: '{country} already operates the system, so the new-entry decision tree does not apply.' },
   'sum.overallInsight': { ko: '국가 종합 인사이트', en: 'Country overall insight' },
+  'sum.insightEyebrow': { ko: '국가 진단 보고서 · AI 인사이트', en: 'Country diagnostic · AI insight' },
+  'sum.aria.scoreDonut': { ko: '유사도 점수 {score}', en: 'Similarity score {score}' },
+  'sum.aria.waterfall': { ko: '10년 TCO 워터폴', en: '10-year TCO waterfall' },
+  'sum.aria.buildBars': { ko: '구축 기간 비교', en: 'Build period comparison' },
 
   // ── TCO 탭 ──
   'tco.title': { ko: 'TCO · 구독료', en: 'TCO · Subscription' },
@@ -328,6 +356,75 @@ export const DICT: Dict = {
   'tco.panel.basisItems': { ko: '계약 규모 산정 근거 항목', en: 'Contract-volume basis items' },
   'tco.noSubTier': { ko: '이 국가는 구독료 구간이 적용되지 않습니다.', en: 'Subscription tiers do not apply to this country.' },
   'tco.current': { ko: '현재', en: 'Now' },
+  // 구축비용 산식 폴백 + 셀 라벨(TcoTab FormulaCell)
+  'tco.buildFormulaFallback': { ko: '구축비용/기간 = 베이스라인(B) 값 × 유사도 승수', en: 'Build cost/period = baseline (B) value × similarity multiplier' },
+  'tco.contractsFormulaFallback': { ko: '신차 판매대수 × 금융이용률(신차) × (할부+리스 비중) × 우리사 예상 점유율', en: 'New-car sales × auto-finance penetration (new) × (installment+lease share) × our expected share' },
+  'tco.cell.buildCost': { ko: '구축비용', en: 'Build cost' },
+  'tco.cell.buildPeriod': { ko: '구축기간', en: 'Build period' },
+  'tco.cell.baselineSelfBuild': { ko: '기준국 {base} 자체구축', en: 'Baseline {base} in-house build' },
+  'tco.cell.buildMethod': { ko: '구축 방식', en: 'Build method' },
+  'tco.cell.internalize': { ko: '내재화', en: 'In-house' },
+  'tco.cell.hqSelfBuild': { ko: '본사 자체구축', en: 'HQ in-house build' },
+  'tco.cell.hqBuildCost': { ko: '본사 자체구축 비용', en: 'HQ in-house build cost' },
+  'tco.cell.hqBuildPeriod': { ko: '본사 자체구축 기간', en: 'HQ in-house build period' },
+  'tco.cell.internalInfo': { ko: '내부정보', en: 'Internal data' },
+  'tco.cell.newMarketCalc': { ko: '신규국 산출', en: 'New-market result' },
+  'tco.cell.baseline': { ko: '베이스라인', en: 'Baseline' },
+  'tco.cell.bBuildCost': { ko: 'B 구축비용', en: 'B build cost' },
+  'tco.cell.bBuildPeriod': { ko: 'B 구축기간', en: 'B build period' },
+  'tco.cell.overallSim': { ko: '종합 유사도', en: 'Overall similarity' },
+  'tco.cell.simScoreResult': { ko: '유사도 점수 결과', en: 'Similarity score result' },
+  'tco.cell.appliedMult': { ko: '적용 승수', en: 'Applied multiplier' },
+  'tco.cell.band': { ko: '구간 {band}', en: 'Band {band}' },
+  'tco.cell.newCarSales': { ko: '신차 판매대수', en: 'New-car sales' },
+  'tco.cell.unitsPerYear': { ko: '대 / 년', en: 'units / yr' },
+  'tco.cell.finPenetration': { ko: '금융 이용률', en: 'Finance penetration' },
+  'tco.cell.newCarBasis': { ko: '신차 기준', en: 'New-car basis' },
+  'tco.cell.installmentLeaseShare': { ko: '할부·리스 비중', en: 'Installment·lease share' },
+  'tco.cell.purchasePattern': { ko: '구매 패턴', en: 'Purchase pattern' },
+  'tco.cell.ourShare': { ko: '우리사 점유율', en: 'Our market share' },
+  'tco.cell.expectedContracts': { ko: '예상 계약건수', en: 'Estimated contracts' },
+  'tco.cell.formulaResult': { ko: '= 산식 결과', en: '= formula result' },
+  'tco.unit.cases': { ko: '건', en: 'cases' },
+  // HqBuildCompare 차액/라벨
+  'tco.hq.compareTitle': { ko: '내재화(본사 자체구축) 기준선 비교', en: 'In-house build (HQ) baseline comparison' },
+  'tco.hq.appliedBuild': { ko: '적용 구축비', en: 'Applied build cost' },
+  'tco.hq.spread': { ko: '확산(재사용)', en: 'Expansion (reuse)' },
+  'tco.hq.ifInternalized': { ko: '내재화로 했다면', en: 'If in-house build' },
+  'tco.hq.currentMethod': { ko: '현재 적용 방식', en: 'Current method' },
+  'tco.hq.delta': { ko: '차액', en: 'Difference' },
+  'tco.hq.deltaSmall': { ko: '내재화 − 적용 구축비', en: 'In-house − applied build cost' },
+  'tco.delta.same': { ko: '동일', en: 'Same' },
+  'tco.hq.deltaPricier': { ko: '{amt} (내재화가 더 비쌈)', en: '{amt} (in-house is pricier)' },
+  'tco.hq.deltaCheaper': { ko: '{amt} (내재화가 더 저렴)', en: '{amt} (in-house is cheaper)' },
+  'tco.hq.reuseNote': { ko: '이 국가는 확산(재사용)으로 산정됐습니다. 위 내재화 금액은 본사 자체구축 표준 기준선(참고용)입니다.', en: 'This market is estimated via expansion (reuse). The in-house amount above is the HQ in-house-build standard baseline (for reference).' },
+  // BaselineBuildCompare
+  'tco.base.hqBuildCost': { ko: '본사 자체구축 비용', en: 'HQ in-house build cost' },
+  'tco.base.baselineBuildCost': { ko: '{base}(기준국) 구축비용', en: '{base} (baseline) build cost' },
+  'tco.base.internalizeStd': { ko: '내재화 표준', en: 'In-house standard' },
+  'tco.base.newMarketBuildCost': { ko: '신규국 구축비용', en: 'New-market build cost' },
+  'tco.base.simMult': { ko: '유사도 승수 {pct}%', en: 'Similarity multiplier {pct}%' },
+  'tco.base.deltaSaved': { ko: '{amt} (절감)', en: '{amt} (saved)' },
+  'tco.base.deltaIncreased': { ko: '+{amt} (증가)', en: '+{amt} (increased)' },
+  'tco.base.deltaSmall': { ko: '신규국 − 기준국', en: 'New market − baseline' },
+  // 워터폴 막대 + 누적차트 라벨 + aria
+  'tco.wf.build': { ko: '구축비', en: 'Build' },
+  'tco.wf.maint10y': { ko: '유지비(10Y)', en: 'Maintenance (10Y)' },
+  'tco.wf.systemSubtotal': { ko: '시스템 소계', en: 'System subtotal' },
+  'tco.wf.ops10y': { ko: '운영비(10Y)', en: 'Operations (10Y)' },
+  'tco.wf.totalTco': { ko: '총 TCO', en: 'Total TCO' },
+  'tco.aria.waterfall': { ko: '10년 TCO 워터폴', en: '10-year TCO waterfall' },
+  'tco.aria.cumulative': { ko: '10년 누적 비용 추이', en: '10-year cumulative cost trend' },
+  'tco.aria.stepChart': { ko: '구독료 구간 스텝차트', en: 'Subscription tier step chart' },
+  'tco.chart.buildLabel': { ko: '구축 {amt}', en: 'Build {amt}' },
+  'tco.chart.y10Cum': { ko: 'Y10 누적 {amt}', en: 'Y10 cumulative {amt}' },
+  // ContractBasisCard 도넛 라벨(seg/rest)
+  'tco.donut.finUse': { ko: '금융 이용', en: 'Finance use' },
+  'tco.donut.cash': { ko: '현금', en: 'Cash' },
+  'tco.donut.installmentLease': { ko: '할부·리스', en: 'Installment·lease' },
+  'tco.donut.cashEtc': { ko: '현금·기타', en: 'Cash·other' },
+  'tco.donut.captive': { ko: '캡티브 금융사', en: 'Captive lender' },
+  'tco.donut.others': { ko: '그 외', en: 'Others' },
 
   // ── 결정 트리 탭(DecisionTreeTab) ──
   'dtt.side.internalize': { ko: '내재화 예상 비용', en: 'Estimated in-house build cost' },
@@ -351,6 +448,41 @@ export const DICT: Dict = {
   'sim.baseline': { ko: '베이스라인', en: 'Baseline' },
   'sim.gap': { ko: '격차', en: 'Gap' },
   'sim.similarity': { ko: '유사도', en: 'Similarity' },
+  'sim.radarAria': { ko: '유사도 4축 레이더', en: 'Similarity 4-axis radar' },
+  'sim.overallScore': { ko: '종합 점수', en: 'Overall score' },
+  // 유사도 항목명(item) — 데이터 literal(한글)이라 영문 모드에서 valueLabel('sim.item', …)로 변환. 매핑 없으면 원문 유지.
+  'sim.item.구매 패턴(할부·리스 비중)': { ko: '구매 패턴(할부·리스 비중)', en: 'Purchase pattern (installment/lease mix)' },
+  'sim.item.데이터 현지화 의무': { ko: '데이터 현지화 의무', en: 'Data localization mandate' },
+  'sim.item.디지털 채널 성숙도': { ko: '디지털 채널 성숙도', en: 'Digital channel maturity' },
+  'sim.item.라이선스 체제(세그먼트별)': { ko: '라이선스 체제(세그먼트별)', en: 'Licensing regime (by segment)' },
+  'sim.item.솔루션 유형': { ko: '솔루션 유형', en: 'Solution type' },
+  'sim.item.차량회수 절차 용이성': { ko: '차량회수 절차 용이성', en: 'Vehicle repossession ease' },
+  // 유사도 차원명(dimension) — 데이터 literal(한글). valueLabel('sim.dim', …)로 변환. 매핑 없으면 원문 유지.
+  'sim.dim.API 개방도': { ko: 'API 개방도', en: 'API openness' },
+  'sim.dim.GDPR 동등성': { ko: 'GDPR 동등성', en: 'GDPR equivalence' },
+  'sim.dim.감독 강도': { ko: '감독 강도', en: 'Supervision intensity' },
+  'sim.dim.국외 이전 허용도': { ko: '국외 이전 허용도', en: 'Cross-border transfer allowance' },
+  'sim.dim.동의·보관 규제': { ko: '동의·보관 규제', en: 'Consent & retention rules' },
+  'sim.dim.렌탈 취급 일치도': { ko: '렌탈 취급 일치도', en: 'Rental handling alignment' },
+  'sim.dim.리스 취급 일치도': { ko: '리스 취급 일치도', en: 'Lease handling alignment' },
+  'sim.dim.멀티테넌시 여부': { ko: '멀티테넌시 여부', en: 'Multi-tenancy support' },
+  'sim.dim.배포형태(패키지/SI/SaaS)': { ko: '배포형태(패키지/SI/SaaS)', en: 'Deployment model (package/SI/SaaS)' },
+  'sim.dim.벤더 종속도': { ko: '벤더 종속도', en: 'Vendor lock-in' },
+  'sim.dim.비대면 계약 가능': { ko: '비대면 계약 가능', en: 'Remote contracting allowed' },
+  'sim.dim.사법절차 필요': { ko: '사법절차 필요', en: 'Judicial process required' },
+  'sim.dim.상품별 비중 유사도': { ko: '상품별 비중 유사도', en: 'Product-mix share similarity' },
+  'sim.dim.온라인 신청 연동': { ko: '온라인 신청 연동', en: 'Online application integration' },
+  'sim.dim.외국인 취득 가능': { ko: '외국인 취득 가능', en: 'Foreign acquisition allowed' },
+  'sim.dim.자력구제 허용': { ko: '자력구제 허용', en: 'Self-help repossession allowed' },
+  'sim.dim.처리기간(개월)': { ko: '처리기간(개월)', en: 'Processing time (months)' },
+  'sim.dim.최저자본금 수준': { ko: '최저자본금 수준', en: 'Minimum capital level' },
+  'sim.dim.취득방식(등록 vs 인가)': { ko: '취득방식(등록 vs 인가)', en: 'Acquisition mode (registration vs license)' },
+  'sim.dim.커스터마이징 자유도': { ko: '커스터마이징 자유도', en: 'Customization freedom' },
+  'sim.dim.페이퍼리스 수준': { ko: '페이퍼리스 수준', en: 'Paperless level' },
+  'sim.dim.플릿 취급 일치도': { ko: '플릿 취급 일치도', en: 'Fleet handling alignment' },
+  'sim.dim.현지 저장 강제': { ko: '현지 저장 강제', en: 'Local storage mandate' },
+  'sim.dim.회수 소요기간(일)': { ko: '회수 소요기간(일)', en: 'Recovery time (days)' },
+  'sim.dim.회수율': { ko: '회수율', en: 'Recovery rate' },
 
   // ── 권역 보고서 탭 라벨(RegionReport) ──
   'rgn.tab.summary': { ko: '요약', en: 'Summary' },
@@ -371,6 +503,15 @@ export const DICT: Dict = {
   'rsum.fullRanking': { ko: '전체 순위', en: 'Full ranking' },
   'rsum.externalScan': { ko: '외부 이슈 스캔', en: 'External issue scan' },
   'rsum.quickwinTop3': { ko: '퀵윈 순위 (Top 3)', en: 'Quick-win ranking (Top 3)' },
+
+  // ── 소스 플래그 배지(SourcePill) ──
+  'rsrc.calc': { ko: '계산값', en: 'Calculated' },
+  'rsrc.ext': { ko: '외부조사', en: 'External' },
+  'rsrc.news': { ko: '외부이슈', en: 'News' },
+  'rsrc.ai': { ko: 'AI 인사이트', en: 'AI insight' },
+  'rsrc.int': { ko: '내부자료', en: 'Internal' },
+  'rsrc.sfx.band10': { ko: '· 10점 구간', en: '· 10-pt band' },
+  'rsrc.sfx.twoAxis': { ko: '· 2축', en: '· 2-axis' },
 
   // ── 권역 킬스위치 탭 ──
   'rks.matrix': { ko: '킬스위치 매트릭스', en: 'Kill-switch matrix' },
@@ -410,6 +551,7 @@ export const DICT: Dict = {
   // 진출 상태 값(데이터/룰셋 literal) — 영문 모드에서 배지·태그 번역에 사용.
   'status.운영중': { ko: '운영중', en: 'Operating' },
   'status.기진출': { ko: '기진출', en: 'Active market' },
+  'status.진출': { ko: '진출', en: 'Active' },
   'status.미진출': { ko: '미진출', en: 'Not entered' },
   'status.진출예정': { ko: '진출예정', en: 'Planned' },
   'status.준비중': { ko: '준비중', en: 'In preparation' },
@@ -433,6 +575,49 @@ export const DICT: Dict = {
   'dtl.chart.autoFin': { ko: '오토금융 이용률(신차, %)', en: 'Auto finance penetration (new car, %)' },
   'dtl.chart.autoFinShort': { ko: '오토금융 이용률(신차)', en: 'Auto finance penetration (new car)' },
   'dtl.chart.sales': { ko: '신차 판매대수', en: 'New car sales' },
+  // 국가 상세 AI 인사이트 히어로 카드
+  'dtl.insight.eyebrow': { ko: '국가 진단 · AI 인사이트', en: 'Country diagnostic · AI insight' },
+  // 진단 패널 공통(상태 라벨)
+  'dtl.diag.status.good': { ko: '양호', en: 'Good' },
+  'dtl.diag.status.mid': { ko: '주의', en: 'Caution' },
+  'dtl.diag.status.low': { ko: '제약', en: 'Restricted' },
+  'dtl.diag.status.none': { ko: '정보', en: 'Info' },
+  'dtl.diag.days': { ko: '일', en: 'days' },
+  // ① 진입 규제 신호등
+  'dtl.gate.title': { ko: '진입 규제 신호등', en: 'Entry regulation signals' },
+  'dtl.gate.hint': {
+    ko: '외국인 진입·송금·라이선스·금리 규제를 신호등으로 요약 — 양호(진입 자유) · 주의(조건부) · 제약.',
+    en: 'Foreign entry, remittance, licensing and rate-cap rules summarized as signals — Good (free entry) · Caution (conditional) · Restricted.',
+  },
+  'dtl.gate.foreignEquity': { ko: '외국인 지분 한도', en: 'Foreign equity cap' },
+  'dtl.gate.fx': { ko: '외환·배당 송금', en: 'FX & dividend remittance' },
+  'dtl.gate.dataLocal': { ko: '데이터 현지화', en: 'Data localization' },
+  'dtl.gate.sovereign': { ko: '국가신용등급', en: 'Sovereign rating' },
+  'dtl.gate.license': { ko: '라이선스 취득', en: 'License acquisition' },
+  'dtl.gate.licenseRegime': { ko: '라이선스 체제', en: 'Licensing regime' },
+  'dtl.gate.rateCap': { ko: '금리 상한 규제', en: 'Rate-cap regulation' },
+  // ③ 채권 회수·리스크 환경
+  'dtl.recovery.title': { ko: '채권 회수·리스크 환경', en: 'Recovery & risk environment' },
+  'dtl.recovery.hint': {
+    ko: '담보 회수·추심·건전성 분류 — 1~5 척도(막대 색=진출 유리도). 회수 소요기간은 짧을수록 유리.',
+    en: 'Collateral recovery, collection and asset classification — 1–5 scale (bar color = entry favorability). Shorter recovery time is better.',
+  },
+  'dtl.recovery.repo': { ko: '차량회수 절차 용이성', en: 'Vehicle repossession ease' },
+  'dtl.recovery.collection': { ko: '추심 규제 강도', en: 'Collection regulation strength' },
+  'dtl.recovery.provision': { ko: '충당금 규정 성숙도', en: 'Provisioning rule maturity' },
+  'dtl.recovery.npl': { ko: '연체 분류 기준', en: 'Delinquency classification' },
+  'dtl.recovery.legalDays': { ko: '법적 회수 소요기간', en: 'Legal recovery time' },
+  // ④ IT 인프라 성숙도
+  'dtl.it.title': { ko: 'IT 인프라 성숙도', en: 'IT infrastructure maturity' },
+  'dtl.it.hint': {
+    ko: '디지털 채널·신용정보·결제·딜러 인프라 성숙도(1~5). 국외이전 제한은 낮을수록 유리.',
+    en: 'Digital channel, credit-bureau, payment and dealer infrastructure maturity (1–5). Lower cross-border transfer restriction is better.',
+  },
+  'dtl.it.channel': { ko: '디지털 채널', en: 'Digital channel' },
+  'dtl.it.cb': { ko: '신용정보(CB) 인프라', en: 'Credit bureau (CB) infra' },
+  'dtl.it.payment': { ko: '결제·정산 인프라', en: 'Payment & settlement infra' },
+  'dtl.it.dealer': { ko: '디지털 딜러', en: 'Digital dealer' },
+  'dtl.it.crossBorder': { ko: '데이터 국외이전 제한', en: 'Cross-border data restriction' },
 
   // ── 권역 요약 탭 추가 라벨 ──
   'rsum.attractiveness': { ko: '매력도', en: 'Attractiveness' },
@@ -445,6 +630,52 @@ export const DICT: Dict = {
   'rsum.news.regionCommon': { ko: '권역 공통', en: 'Region-wide' },
   'rsum.news.source': { ko: '출처:', en: 'Source:' },
   'rsum.news.original': { ko: '↗ 원문', en: '↗ Source' },
+  // 요약 패널 히어로(eyebrow) + 본문 조립 — 본문은 조각 합성이라 절(節) 단위로 키 분리.
+  'rsum.hero.eyebrow': { ko: '권역 진단 보고서 · 퀵윈 스코어링', en: 'Region diagnostic report · Quick-win scoring' },
+  'rsum.body.evalCount': { ko: '권역 평가', en: 'region evaluation:' },
+  'rsum.body.countriesUnit': { ko: '개국', en: 'countries' },
+  'rsum.body.baselineMid': { ko: '중 베이스라인', en: ', baseline' },
+  'rsum.body.enteredAnd': { ko: '및', en: 'and' },
+  'rsum.body.enteredMid': { ko: '중', en: 'of which' },
+  'rsum.body.entered': { ko: '진출국', en: 'active market(s)' },
+  'rsum.body.excludeSuffix': { ko: '을(를) 제외한', en: 'excluding' },
+  'rsum.body.fromPrefix': { ko: '에서', en: 'across' },
+  'rsum.body.candidate': { ko: '후보', en: 'candidate' },
+  'rsum.body.scoredResult': {
+    ko: '개국을 스코어링한 결과, 최우선 퀵윈 후보는',
+    en: 'candidate countries scored, the top quick-win candidate is',
+  },
+  'rsum.body.derived': { ko: '(으)로 도출되었습니다.', en: '.' },
+  'rsum.body.optimalMid': { ko: '개국 중', en: 'candidates,' },
+  'rsum.body.optimalCount': { ko: '개국(', en: ' (' },
+  'rsum.body.optimalTail': {
+    ko: ')이 매력도·IT유사도 모두 높은',
+    en: ') sit in the',
+  },
+  'rsum.body.optimalZone': { ko: '퀵윈 최적 영역', en: 'quick-win optimal zone' },
+  'rsum.body.optimalAt': { ko: '에 위치합니다.', en: '(high on both attractiveness and IT similarity).' },
+  'rsum.body.killswitchFailed': { ko: '킬스위치 탈락국은', en: 'Kill-switch failed countries:' },
+  'rsum.body.killswitchUnit': { ko: '개국입니다.', en: '.' },
+
+  // ── 권역 산점도(ScatterChart) — 사분면·축·범례 라벨 ──
+  'rsc.aria': { ko: '매력도 × IT 유사도 산점도', en: 'Attractiveness × IT similarity scatter plot' },
+  'rsc.q1': { ko: '① 퀵윈 최적', en: '① Quick-win optimal' },
+  'rsc.q1sub': { ko: 'IT↑ · 매력도↑', en: 'IT↑ · Attr↑' },
+  'rsc.q2': { ko: '② 단기 진출', en: '② Short-term entry' },
+  'rsc.q2sub': { ko: 'IT↑ · 매력도↓', en: 'IT↑ · Attr↓' },
+  'rsc.q3': { ko: '③ 중장기', en: '③ Mid-to-long term' },
+  'rsc.q3sub': { ko: 'IT↓ · 매력도↑', en: 'IT↓ · Attr↑' },
+  'rsc.q4': { ko: '④ 후순위', en: '④ Lower priority' },
+  'rsc.q4sub': { ko: 'IT↓ · 매력도↓', en: 'IT↓ · Attr↓' },
+  'rsc.axisX': { ko: '매력도 →', en: 'Attractiveness →' },
+  'rsc.axisY': { ko: 'IT 유사도 →', en: 'IT similarity →' },
+  'rsc.legend.q1': { ko: '퀵윈 최적 — 즉시 진출 1순위', en: 'Quick-win optimal — top priority for immediate entry' },
+  'rsc.legend.q2': { ko: '단기 진출 — 시스템 빠르나 시장 작음(거점·실험)', en: 'Short-term — fast systems but small market (foothold/pilot)' },
+  'rsc.legend.q3': { ko: '중장기 — 시장은 매력, 시스템 새로 짜야', en: 'Mid-to-long term — attractive market, systems need rebuilding' },
+  'rsc.legend.q4': { ko: '후순위/보류 — 둘 다 약함', en: 'Lower priority/hold — weak on both' },
+  'rsc.legend.top1': { ko: '1위 후보국 ★', en: 'Top-1 candidate ★' },
+  'rsc.legend.candidate': { ko: '후보국', en: 'Candidate' },
+  'rsc.legend.excluded': { ko: '킬스위치 탈락 (제외)', en: 'Kill-switch failed (excluded)' },
 
   // ── 권역 킬스위치 탭 추가 라벨 ──
   'rks.col.country': { ko: '국가', en: 'Country' },
@@ -452,6 +683,13 @@ export const DICT: Dict = {
   'rks.pass': { ko: '통과', en: 'Pass' },
   'rks.fail': { ko: '탈락', en: 'Fail' },
   'rks.flag': { ko: '주의', en: 'Flag' },
+  // tier_summary 없는 구버전 폴백 문구 + 분포 표 단위
+  'rks.fallback.passed': { ko: '통과', en: 'Passed' },
+  'rks.fallback.failedMid': { ko: '개국 · 탈락', en: 'countries · failed' },
+  'rks.fallback.failedTail': { ko: '개국. 탈락국(', en: 'countries. Failed countries (' },
+  'rks.fallback.excludedTail': { ko: ')은 이후 스코어링에서 제외.', en: ') are excluded from scoring.' },
+  'rks.fallback.none': { ko: '없음', en: 'none' },
+  'rks.dist.countriesUnit': { ko: '개국', en: 'countries' },
 
   // ── 권역 매력도 탭 추가 라벨 ──
   'rattr.weight': { ko: '가중치', en: 'Weight' },
@@ -464,6 +702,13 @@ export const DICT: Dict = {
   'rattr.surveyValue': { ko: '조사값', en: 'Survey value' },
   'rattr.normalized': { ko: '정규화 (0~100)', en: 'Normalized (0–100)' },
   'rattr.effectiveWeight': { ko: '유효 가중치', en: 'Effective weight' },
+  'rattr.total': { ko: '총', en: 'Total' },
+  'rattr.summaryNote': { ko: '/100 — 항목별 정규화×가중치 합산', en: '/100 — sum of per-item normalized × weight' },
+  'rattr.formula': {
+    ko: '매력도 = Σ(정규화 × 유효가중치) ÷ Σ(유효가중치). 유효가중치 = 항목 가중치 × Tier 멀티플라이어 (Tier1=1.0 고정, Tier2~4는 config 조정 가능). 정규화는 권역 내 min~max 기준. 역점수 항목은 100 − 정규화값 적용(경쟁강도).',
+    en: 'Attractiveness = Σ(normalized × effective weight) ÷ Σ(effective weight). Effective weight = item weight × tier multiplier (Tier 1 fixed at 1.0; Tiers 2–4 configurable). Normalization uses the in-region min–max. Reverse-score items apply 100 − normalized (competition intensity).',
+  },
+  'rattr.contribFormula': { ko: '기여 = 정규화 × 유효가중치', en: 'Contribution = normalized × effective weight' },
 
   // ── 권역 IT 탭 추가 라벨 ──
   'rit.col.rank': { ko: '순위', en: 'Rank' },
@@ -495,6 +740,38 @@ export const DICT: Dict = {
   'rit.qw.excluded': { ko: '기준국 (제외)', en: 'Baseline (excluded)' },
   'rit.qw.killswitchFail': { ko: '킬스위치 탈락', en: 'Kill-switch failed' },
   'rit.qw.evaluated': { ko: '평가 대상', en: 'Evaluated' },
+  // 히트맵 vs 기준국 라벨 + 정렬 주석(절대점수/유사도 모드)
+  'rit.vsBaseline': { ko: 'vs 기준국', en: 'vs baseline' },
+  'rit.heatmapNote.absolute': {
+    ko: '정렬: 종합 점수 내림차순 · 각국 IT 성숙도 절대점수. 셀 호버 시 raw 값 확인.',
+    en: 'Sorted by overall score (desc) · absolute IT maturity per country. Hover a cell for the raw value.',
+  },
+  'rit.heatmapNote.similarity': {
+    ko: '정렬: 종합 점수 내림차순 · 기준국은 비교용으로 하단 표시. 셀 호버 시 raw 값 확인.',
+    en: 'Sorted by overall score (desc) · baseline shown at the bottom for comparison. Hover a cell for the raw value.',
+  },
+  // IT 유사도/성숙도 산식 설명(절대점수/유사도)
+  'rit.formula.absolute': {
+    ko: '축별 raw 점수 = (수치 1~5) value/5×100 / (gate) PASS=100·FAIL=30 / (범주·라이선스/솔루션) 값 보유=70. 유효가중치 = 항목 가중치 × Tier 멀티플라이어(대상국 데이터 신뢰도 기준, Tier1=1.0 고정). 종합 = Σ(raw × 유효가중치) ÷ Σ(유효가중치) → 10점 구간 반올림.',
+    en: 'Per-axis raw score = (numeric 1–5) value/5×100 / (gate) PASS=100·FAIL=30 / (categorical·license/solution) value present=70. Effective weight = item weight × tier multiplier (by target-country data reliability; Tier 1 fixed at 1.0). Overall = Σ(raw × effective weight) ÷ Σ(effective weight) → rounded to a 10-pt band.',
+  },
+  'rit.formula.similarity': {
+    ko: '축별 raw 점수 = (수치 1~5) 100−|Δ|×20 / (범주·라이선스/솔루션) 텍스트 토큰 Jaccard 유사도 30+J×65 (완전 일치=100) / (gate) 동일=90·한쪽 PASS=50·기타=30. 유효가중치 = 항목 가중치 × Tier 멀티플라이어(대상국 데이터 신뢰도 기준, Tier1=1.0 고정). 종합 = Σ(raw × 유효가중치) ÷ Σ(유효가중치) → 10점 구간 반올림.',
+    en: 'Per-axis raw score = (numeric 1–5) 100−|Δ|×20 / (categorical·license/solution) text-token Jaccard similarity 30+J×65 (exact match=100) / (gate) same=90·one PASS=50·other=30. Effective weight = item weight × tier multiplier (by target-country data reliability; Tier 1 fixed at 1.0). Overall = Σ(raw × effective weight) ÷ Σ(effective weight) → rounded to a 10-pt band.',
+  },
+  'rit.formula.baselineCol': { ko: '기준국', en: 'Baseline' },
+  'rit.formula.targetCol': { ko: '대상국', en: 'Target' },
+  // 퀵윈 산식
+  'rit.qw.bandLabel': { ko: '퀵윈 구간', en: 'Quick-win band' },
+  'rit.qw.formula': {
+    ko: '퀵윈 = 매력도 × 비즈니스 가중치 + IT유사도 × IT 가중치. 킬스위치 탈락국 제외, 10점 구간 표기.',
+    en: 'Quick-win = attractiveness × business weight + IT similarity × IT weight. Kill-switch failures excluded; shown as a 10-pt band.',
+  },
+  'rit.qw.attr': { ko: '매력도', en: 'Attractiveness' },
+  'rit.qw.itSim': { ko: 'IT 유사도', en: 'IT similarity' },
+  'rit.qw.sumToBand': { ko: '합산 → 구간', en: 'Sum → band' },
+  'rit.qw.expandLabel': { ko: '산식 전개:', en: 'Expansion:' },
+  'rit.qw.bandTail': { ko: '→ 10점 구간', en: '→ 10-pt band' },
 
   // ── 권역 시장배경 탭 추가 라벨 ──
   'rmkt.oemTop5': { ko: 'OEM Top 5', en: 'Top 5 OEMs' },
@@ -503,6 +780,7 @@ export const DICT: Dict = {
   'rmkt.purchasePattern': { ko: '구매 패턴(할부·리스)', en: 'Purchase pattern (loan·lease)' },
   'rmkt.avgPrice': { ko: '평균 신차가격', en: 'Avg. new-car price' },
   'rmkt.countrySummary': { ko: '국가 요약', en: 'Country summary' },
+  'rmkt.approx': { ko: '약', en: '~' },
 
   // ── 권역 상세화면(RegionDetail) ──
   'rdtl.kpi.candidates': { ko: '분석 후보국', en: 'Candidate markets' },
@@ -631,6 +909,36 @@ export const DICT: Dict = {
   'shell.tag.regionDetail': { ko: '권역 정보', en: 'Region info' },
   'shell.title.countryDetail': { ko: '국가 상세', en: 'Country detail' },
   'shell.title.regionDetail': { ko: '권역 상세', en: 'Region detail' },
+
+  // ── 상세화면 chrome(DetailView) ──
+  'dv.noResearch': { ko: '리서치 데이터가 없습니다. 챗봇에서 리서치를 진행하세요.', en: 'No research data. Run research from the chatbot.' },
+  'dv.reportJob': { ko: '{name} 보고서 생성', en: 'Generating report for {name}' },
+  'dv.reportTriggerFailed': { ko: '보고서 생성 트리거 실패: {error}', en: 'Failed to trigger report generation: {error}' },
+  'dv.selectCountry': { ko: '국가 선택', en: 'Select country' },
+  'dv.selectRegion': { ko: '권역 선택', en: 'Select region' },
+  'dv.selectDataVersion': { ko: '데이터 버전 선택', en: 'Select data version' },
+  'dv.preparing': { ko: '상세화면을 준비 중입니다…', en: 'Preparing the detail view…' },
+  'dv.loading': { ko: '데이터를 불러오는 중...', en: 'Loading data…' },
+
+  // ── 보고서 chrome(ReportView) ──
+  'rv.summaryFallback': { ko: '진단 결과 요약', en: 'Diagnostic result summary' },
+  'rv.noReports': { ko: '생성된 보고서가 없습니다.', en: 'No reports have been generated.' },
+  'rv.createReport': { ko: '보고서 생성하기', en: 'Generate report' },
+  'rv.loading': { ko: '보고서를 불러오는 중…', en: 'Loading report…' },
+  'rv.selectCountry': { ko: '국가 선택', en: 'Select country' },
+  'rv.selectRegion': { ko: '권역 선택', en: 'Select region' },
+  'rv.selectReportVersion': { ko: '보고서 버전 선택', en: 'Select report version' },
+  'rv.baseline': { ko: '기준국', en: 'Baseline' },
+
+  // ── 보고서 선택 모달(ReportPickerModal) ──
+  'rpick.title': { ko: '보고서 선택', en: 'Select a report' },
+  'rpick.noReports': { ko: '생성된 보고서가 없습니다.', en: 'No reports have been generated.' },
+  'rpick.close': { ko: '닫기', en: 'Close' },
+
+  // ── 권역 보고서 chrome ──
+  'rgn.tablistAria': { ko: '권역 보고서 탭', en: 'Region report tabs' },
+  // 권역 상세 지도 aria
+  'rdtl.mapAria': { ko: '{code} 권역 진출 상태·시장규모 지도', en: '{code} region entry status and market size map' },
 }
 
 export function translate(key: string, lang: Lang): string {
