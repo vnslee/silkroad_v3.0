@@ -100,15 +100,15 @@ export function TcoTab({ data }: { data: CountryReportData }) {
           // 내재화: 베이스국 재사용 없이 본사 자체구축 표준값 적용(유사도 승수 미적용).
           <div className="grid grid-cols-2 md:grid-cols-4 gap-sm">
             <FormulaCell label="구축 방식" big="내재화" small="본사 자체구축" />
-            <FormulaCell label="본사 자체구축 비용" big={<Money value={bi['본사 자체구축 비용']} currency={tco.currency} />} small="internal.json" />
-            <FormulaCell label="본사 자체구축 기간" big={`${bi['본사 자체구축 기간(개월)']}M`} small="internal.json" />
+            <FormulaCell label="본사 자체구축 비용" big={<Money value={bi['본사 자체구축 비용']} currency={tco.currency} />} small="내부정보" />
+            <FormulaCell label="본사 자체구축 기간" big={`${bi['본사 자체구축 기간(개월)']}M`} small="내부정보" />
             <FormulaCell label="신규국 산출" big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-6 gap-sm">
             <FormulaCell label="베이스라인" big={baseKo} small={tco.build_breakdown.inputs['베이스라인 솔루션'] ?? data.tabs.tab_1_2_decision.base_system} />
-            <FormulaCell label="B 구축비용" big={<Money value={bi['B 구축비용']} currency={bd.currency ?? tco.currency} />} small="internal.json" />
-            <FormulaCell label="B 구축기간" big={`${bi['B 구축기간(개월)'] ?? bi['B 구축기간']}M`} small="internal.json" />
+            <FormulaCell label="B 구축비용" big={<Money value={bi['B 구축비용']} currency={bd.currency ?? tco.currency} />} small="내부정보" />
+            <FormulaCell label="B 구축기간" big={`${bi['B 구축기간(개월)'] ?? bi['B 구축기간']}M`} small="내부정보" />
             <FormulaCell label="종합 유사도" big={tco.similarity_score.toFixed(1)} small="유사도 점수 결과" />
             <FormulaCell label="적용 승수" big={`${mult}%`} small={`구간 ${tco.similarity_band}`} />
             <FormulaCell label="신규국 산출" big={<Money value={tco.build_cost} currency={tco.currency} />} small={`${tco.build_months.toFixed(1)}M`} highlight />
@@ -127,7 +127,7 @@ export function TcoTab({ data }: { data: CountryReportData }) {
           <FormulaCell label="신차 판매대수" big={intComma(ec['신차 판매대수'])} small="대 / 년" />
           <FormulaCell label="금융 이용률" big={`${ec['금융 이용률(신차)_%'] ?? 0}%`} small="신차 기준" />
           <FormulaCell label="할부·리스 비중" big={`${ec['구매 패턴(할부·리스 비중)_%'] ?? 0}%`} small="구매 패턴" />
-          <FormulaCell label="우리사 점유율" big={`${((ec['우리사 예상 점유율'] ?? 0) * 100).toFixed(1)}%`} small="internal.json" />
+          <FormulaCell label="우리사 점유율" big={`${((ec['우리사 예상 점유율'] ?? 0) * 100).toFixed(1)}%`} small="내부정보" />
           <FormulaCell label="예상 계약건수" big={`${intComma(tco.expected_contracts)} 건`} small="= 산식 결과" highlight />
         </div>
       </Panel>
@@ -159,7 +159,6 @@ export function TcoTab({ data }: { data: CountryReportData }) {
             <CumulativeChart tco={tco} />
             <div className="mt-md bg-surface-container/60 p-md rounded-lg border-l-4 border-primary">
               <div className="flex items-center gap-xs mb-xs">
-                <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">function</span>
                 <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">{t('tco.formula')}</span>
               </div>
               <code className="block font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
@@ -253,12 +252,12 @@ export function TcoTab({ data }: { data: CountryReportData }) {
   )
 }
 
-function Kpi({ label, icon, value, sub }: { label: string; icon: string; value: ReactNode; sub?: string }) {
+// icon prop은 호출부 호환용으로 유지하되 렌더하지 않음(KPI 카드에서 기호/아이콘 제거 요청).
+function Kpi({ label, value, sub }: { label: string; icon?: string; value: ReactNode; sub?: string }) {
   return (
     <div className="bg-surface-container-lowest border border-surface-border rounded-xl p-lg card-shadow flex flex-col">
-      <div className="flex items-center justify-between mb-sm">
+      <div className="flex items-center mb-sm">
         <span className="font-label-md text-label-md text-primary uppercase tracking-wider">{label}</span>
-        <span className="material-symbols-outlined text-primary text-[clamp(20.4px,calc(18px_+_0.667vw),27.6px)]">{icon}</span>
       </div>
       <span className="font-display-lg text-display-lg text-primary leading-none">{value}</span>
       {sub && <span className="font-label-sm text-label-sm text-text-secondary mt-xs">{sub}</span>}
@@ -294,7 +293,6 @@ function HqBuildCompare({ tco, ccy }: { tco: CountryReportData['tabs']['tab_1_3_
   return (
     <div className="mt-md bg-surface-container/60 p-md rounded-lg border-l-4 border-primary">
       <div className="flex items-center gap-xs mb-sm">
-        <span className="material-symbols-outlined text-primary text-[clamp(11.9px,calc(10.5px_+_0.389vw),16.1px)]">compare_arrows</span>
         <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider">
           내재화(본사 자체구축) 기준선 비교
         </span>
@@ -358,7 +356,7 @@ function BaselineBuildCompare({
   // 확산: B 구축비용 / 내재화: 본사 자체구축 비용 (둘 다 신규국 산출 전 기준값)
   const baseCost = isHq ? bi['본사 자체구축 비용'] : bi['B 구축비용']
   const baseLabel = isHq ? '본사 자체구축 비용' : `${baseKo}(기준국) 구축비용`
-  const baseSmall = isHq ? '내재화 표준' : (bi['베이스라인 솔루션'] ?? 'internal.json')
+  const baseSmall = isHq ? '내재화 표준' : (bi['베이스라인 솔루션'] ?? '내부정보')
   const delta = tco.build_cost - (baseCost ?? 0)
   const deltaLabel =
     Math.abs(delta) < 1

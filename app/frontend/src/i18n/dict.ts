@@ -261,6 +261,7 @@ export const DICT: Dict = {
   'sum.side.ext': { ko: '추천 외부솔루션', en: 'Recommended external solution' },
   'sum.side.hq': { ko: '본사 구축 예상 비용', en: 'Estimated HQ build cost' },
   'sum.side.sub': { ko: '구독료 구간표', en: 'Subscription tier table' },
+  'sum.side.build': { ko: '구축비용·기간', en: 'Build cost · period' },
   'sum.wf.build': { ko: '구축비', en: 'Build' },
   'sum.wf.sub': { ko: '구독료(10Y)', en: 'Subscription (10Y)' },
   'sum.wf.maint': { ko: '유지보수(10Y)', en: 'Maintenance (10Y)' },

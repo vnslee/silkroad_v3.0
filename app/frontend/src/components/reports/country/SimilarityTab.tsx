@@ -76,7 +76,6 @@ export function SimilarityTab({ data }: { data: CountryReportData }) {
           </div>
           <div className="p-md rounded-lg border-l-4 border-emerald-600" style={{ background: 'rgba(16,122,71,.06)' }}>
             <div className="flex items-center gap-xs mb-xs">
-              <span className="material-symbols-outlined text-emerald-700 text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)]">percent</span>
               <span className="font-semibold font-label-md text-label-md text-emerald-800 uppercase">{t('sim.tcoMult')}</span>
             </div>
             <div className="flex items-baseline gap-xs">

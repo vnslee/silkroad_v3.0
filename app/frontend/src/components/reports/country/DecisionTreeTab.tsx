@@ -18,6 +18,9 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
   // APAC(아시아) — 권역 확산·유사도 분기 없이 외부솔루션·자체구축(내재화)을 양쪽 동등 제시(decision="apac_dual").
   const isApac = dec.is_apac === true
   const isApacDual = dec.decision === 'apac_dual'
+  // 구독제(EU/NetSol) 여부 — is_subscription 우선, 구버전 데이터는 구독료 티어 존재로 추론.
+  // 비구독(미주 권역 확산 등)이면 구독료 구간표 대신 구축비용·기간을 노출(TCO 탭과 일관).
+  const isSubscription = tco.is_subscription ?? (tco.subscription_tiers?.length ?? 0) > 0
 
   // 우측 패널 제목/아이콘 — 결정별로 바뀐다. APAC(양쪽 제시)은 외부솔루션 후보를 노출.
   const sidePanelTitle = isApacDual
@@ -28,9 +31,17 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
         ? isApac
           ? t('dtt.side.internalize')
           : t('sum.side.hq')
-        : t('sum.side.sub')
+        : isSubscription
+          ? t('sum.side.sub')
+          : t('sum.side.build')
   const sidePanelIcon =
-    isApacDual || dec.decision === 'external_solution' ? 'extension' : dec.decision === 'hq_build' ? 'domain' : 'payments'
+    isApacDual || dec.decision === 'external_solution'
+      ? 'extension'
+      : dec.decision === 'hq_build'
+        ? 'domain'
+        : isSubscription
+          ? 'payments'
+          : 'build'
 
   // 기준국·이미 진출(운영중)한 국가는 신규 진출 결정 트리가 적용되지 않음 → 권고 안내로 대체.
   const isAlreadyDeployed =
@@ -68,6 +79,10 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
           <DecisionSidePanel
             decision={dec.decision}
             isApac={isApac}
+            isSubscription={isSubscription}
+            buildCost={tco.build_cost}
+            buildMonths={tco.build_months}
+            buildCurrency={tco.currency}
             externalCandidates={dec.external_candidates}
             externalSolutionSummary={dec.external_solution_summary}
             hqBaselineCost={dec.hq_baseline_cost}
