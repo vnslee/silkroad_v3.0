@@ -12,6 +12,8 @@ import { MarketTab } from './region/MarketTab'
 interface Props {
   data: RegionReportData
   className?: string
+  // 인쇄 모드 — true면 탭 네비 없이 모든 탭을 섹션 제목과 함께 세로로 펼쳐 렌더(PDF용).
+  printMode?: boolean
 }
 
 type TabId = 'summary' | 'killswitch' | 'attractiveness' | 'it' | 'market'
@@ -24,8 +26,42 @@ const TABS: { id: TabId; icon: string; label: string; sub: string }[] = [
   { id: 'market', icon: 'public', label: '시장배경', sub: 'Market' },
 ]
 
-export function RegionReport({ data, className = '' }: Props) {
+// 탭 id → 콘텐츠 컴포넌트(인쇄 시 전체 펼침에 재사용).
+function TabContent({ id, data }: { id: TabId; data: RegionReportData }) {
+  switch (id) {
+    case 'summary':
+      return <SummaryTab data={data} />
+    case 'killswitch':
+      return <KillswitchTab data={data} />
+    case 'attractiveness':
+      return <AttractivenessTab data={data} />
+    case 'it':
+      return <ITTab data={data} />
+    case 'market':
+      return <MarketTab data={data} />
+  }
+}
+
+export function RegionReport({ data, className = '', printMode = false }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>('summary')
+
+  // 인쇄 모드 — 모든 탭을 섹션 제목과 함께 세로로 펼쳐 렌더(탭별 새 페이지는 print CSS가 처리).
+  if (printMode) {
+    return (
+      <main className={`px-gutter sm:px-xl lg:px-[64px] py-xl ${className}`}>
+        <div className="max-w-7xl mx-auto">
+          {TABS.map((t) => (
+            <section key={t.id} className="report-print-section">
+              <h2 className="report-print-heading font-headline-md text-headline-md text-primary mb-md">
+                {t.label} <span className="text-text-secondary text-[0.7em]">{t.sub}</span>
+              </h2>
+              <TabContent id={t.id} data={data} />
+            </section>
+          ))}
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className={`px-gutter sm:px-xl lg:px-[64px] py-xl ${className}`}>
@@ -59,11 +95,7 @@ export function RegionReport({ data, className = '' }: Props) {
 
         {/* 탭 콘텐츠 */}
         <div role="tabpanel">
-          {activeTab === 'summary' && <SummaryTab data={data} />}
-          {activeTab === 'killswitch' && <KillswitchTab data={data} />}
-          {activeTab === 'attractiveness' && <AttractivenessTab data={data} />}
-          {activeTab === 'it' && <ITTab data={data} />}
-          {activeTab === 'market' && <MarketTab data={data} />}
+          <TabContent id={activeTab} data={data} />
         </div>
       </div>
     </main>

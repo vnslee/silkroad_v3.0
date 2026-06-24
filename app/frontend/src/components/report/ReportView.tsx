@@ -2,6 +2,7 @@
 // 헤더: 국기 + [국가/권역 선택] + Report ID·생성일 + [보고서 버전 선택] + 이름 + PDF·메일.
 // 본문은 React 컴포넌트로 직접 렌더링 (CountryReport / RegionReport).
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { api } from '../../api/client'
 import { paths } from '../../api/paths'
 import type { CountrySummary, Domain, RegionSummary, ReportRef } from '../../api/types'
@@ -42,7 +43,37 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   const [catalog, setCatalog] = useState<CatalogItem[]>([])
   const [reportData, setReportData] = useState<CountryReportData | RegionReportData | null>(null)
   const [loading, setLoading] = useState(false)
+  // 인쇄 모드 — PDF 버튼을 누르면 모든 탭을 펼쳐 렌더한 뒤 브라우저 인쇄를 띄운다.
+  const [printMode, setPrintMode] = useState(false)
   const t = useT()
+
+  // PDF — 서버 변환(weasyprint) 대신 화면(React 보고서)을 브라우저 인쇄로 저장.
+  //   ① printMode=true → 모든 탭을 펼친 보고서를 Portal로 body 직속(#print-root)에 렌더
+  //   (조상 팝업의 fixed/overflow 제약이 없어 페이지 단위 분할이 깔끔) → ② 다음 페인트 후
+  //   window.print() → ③ 인쇄 종료 시 원복. 화면과 동일하게 PDF 저장된다.
+  useEffect(() => {
+    if (!printMode) return
+    const id = requestAnimationFrame(() => requestAnimationFrame(() => window.print()))
+    const after = () => setPrintMode(false)
+    window.addEventListener('afterprint', after)
+    return () => {
+      cancelAnimationFrame(id)
+      window.removeEventListener('afterprint', after)
+    }
+  }, [printMode])
+
+  // #print-root 보장(없으면 생성) — Portal 대상.
+  const getPrintRoot = () => {
+    let el = document.getElementById('print-root')
+    if (!el) {
+      el = document.createElement('div')
+      el.id = 'print-root'
+      document.body.appendChild(el)
+    }
+    return el
+  }
+
+  const handlePrintPdf = () => setPrintMode(true)
 
   // 카탈로그(대상 선택용)
   useEffect(() => {
@@ -270,13 +301,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
             variant="outline"
             iconName="picture_as_pdf"
             text={t('action.pdf')}
-            onClick={() => {
-              // 다운로드 — 프로그램적 앵커 클릭(MicroExpander는 button이라 href 미지원).
-              const a = document.createElement('a')
-              a.href = paths.reportPdf(domain, code, selected)
-              a.download = ''
-              a.click()
-            }}
+            onClick={handlePrintPdf}
           />
           <MicroExpander
             variant="default"
@@ -287,7 +312,7 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
         </div>
       </div>
 
-      {/* 본문 — React 컴포넌트로 렌더링 */}
+      {/* 본문 — React 컴포넌트로 렌더링(화면용, 탭 전환 방식) */}
       <div className="flex-1 overflow-auto bg-surface">
         {loading && (
           <div className="flex h-full items-center justify-center">
@@ -306,6 +331,19 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
           </>
         )}
       </div>
+
+      {/* 인쇄용 — 모든 탭을 펼친 보고서를 body 직속(#print-root)에 Portal로 렌더.
+          화면엔 안 보이고(@media print에서만 표시), window.print() 시 이 영역만 PDF로 나간다. */}
+      {printMode &&
+        reportData &&
+        createPortal(
+          domain === 'country' ? (
+            <CountryReport data={reportData as CountryReportData} printMode />
+          ) : (
+            <RegionReport data={reportData as RegionReportData} printMode />
+          ),
+          getPrintRoot(),
+        )}
     </div>
   )
 }

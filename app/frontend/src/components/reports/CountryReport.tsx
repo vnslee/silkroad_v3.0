@@ -12,6 +12,8 @@ import { MarketTab } from './country/MarketTab'
 interface Props {
   data: CountryReportData
   className?: string
+  // 인쇄 모드 — true면 탭 네비 없이 모든 탭을 섹션 제목과 함께 세로로 펼쳐 렌더(PDF용).
+  printMode?: boolean
 }
 
 const TABS = [
@@ -22,8 +24,42 @@ const TABS = [
   { id: 'market', label: '시장·경쟁 배경' },
 ] as const
 
-export function CountryReport({ data, className = '' }: Props) {
+// 탭 id → 콘텐츠 컴포넌트(인쇄 시 전체 펼침에 재사용).
+function TabContent({ id, data }: { id: (typeof TABS)[number]['id']; data: CountryReportData }) {
+  switch (id) {
+    case 'summary':
+      return <SummaryTab data={data} />
+    case 'similarity':
+      return <SimilarityTab data={data} />
+    case 'decision':
+      return <DecisionTreeTab data={data} />
+    case 'tco':
+      return <TcoTab data={data} />
+    case 'market':
+      return <MarketTab data={data} />
+  }
+}
+
+export function CountryReport({ data, className = '', printMode = false }: Props) {
   const [activeTab, setActiveTab] = useState<(typeof TABS)[number]['id']>('summary')
+
+  // 인쇄 모드 — 모든 탭을 섹션 제목과 함께 세로로 펼쳐 렌더(탭별 새 페이지는 print CSS가 처리).
+  if (printMode) {
+    return (
+      <div className={`px-gutter sm:px-xl lg:px-[64px] py-xl ${className}`}>
+        <div className="max-w-7xl mx-auto">
+          {TABS.map((tab) => (
+            <section key={tab.id} className="report-print-section">
+              <h2 className="report-print-heading font-headline-md text-headline-md text-primary mb-md">
+                {tab.label}
+              </h2>
+              <TabContent id={tab.id} data={data} />
+            </section>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={`px-gutter sm:px-xl lg:px-[64px] py-xl ${className}`}>
@@ -52,11 +88,7 @@ export function CountryReport({ data, className = '' }: Props) {
         </div>
 
         {/* 탭 콘텐츠 */}
-        {activeTab === 'summary' && <SummaryTab data={data} />}
-        {activeTab === 'similarity' && <SimilarityTab data={data} />}
-        {activeTab === 'decision' && <DecisionTreeTab data={data} />}
-        {activeTab === 'tco' && <TcoTab data={data} />}
-        {activeTab === 'market' && <MarketTab data={data} />}
+        <TabContent id={activeTab} data={data} />
       </div>
     </div>
   )
