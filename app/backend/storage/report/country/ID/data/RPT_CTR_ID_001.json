@@ -6,7 +6,7 @@
     "country": "ID",
     "base_country": "AU"
   },
-  "generated_at": "2026-06-23T22:17:25.571452",
+  "generated_at": "2026-06-24T16:31:52.450865",
   "schema_version": "1.1",
   "overall_insight": "동남아 최대 자동차 시장(2025 신차 90만대)·5%대 안정 GDP 성장·금융 침투율 70%로 매력도 상위. OJK Multifinance 인가 + 외국 지분 한도 85%(2024 OJK 신규 가이드라인 기준) + IDR 변동성·자본통제 가능성이 진입 부담. Astra Group이 시장 30% 단독 점유 — 비-Astra 진입 전략 필요. 데이터 현지화 의무, BI 결제 데이터 국내 저장 의무 등 IT 아키텍처 제약 존재. 전기차(LCE·Hyundai Ioniq 5 현지생산) 가속과 디지털 신청 채널 확대가 단기 차별화 기회.",
   "overall_insight_en": "Largest SE Asian auto market (0.9M new cars 2025), stable 5%+ GDP growth, and 70% finance penetration place attractiveness in the upper tier. OJK multifinance licensing, 85% foreign-ownership cap (2024 OJK guidelines), IDR volatility, and potential capital controls add entry friction. Astra Group alone holds ~30% of the market — non-Astra entry strategy required. Data localization and BI payment-data domestic-storage rules constrain IT architecture. EV acceleration (LCE policy, Hyundai Ioniq 5 local production) and digital application channels offer near-term differentiation.",
@@ -18,7 +18,7 @@
     "data_year": 2025,
     "fetched_at": "2026-06-22T00:00:00+09:00",
     "fetched_by": "ai",
-    "entry_status": "진출예정"
+    "entry_status": "운영중"
   },
   "data_quality": {
     "completeness_pct": 97.95918367346938,
@@ -792,18 +792,21 @@
       ]
     },
     "tab_1_2_decision": {
-      "decision": "baseline_system_expansion",
-      "similarity_score": 69.6875,
+      "is_baseline": false,
+      "is_already_deployed": true,
+      "decision": "already_deployed",
       "recommendation": {
-        "ko": "권역 내 확산: AU 시스템(Self-built) 현지화",
-        "en": "Regional expansion: localize AU system (Self-built)."
+        "ko": "ID는 이미 진출(운영중)한 국가 — 시스템이 운영 중입니다. 신규 진출 결정 트리는 적용되지 않습니다.",
+        "en": "ID is already an operational market — the system is live. The new-entry decision tree does not apply."
       },
+      "similarity_score": 69.6875,
       "base_country": "AU",
       "base_system": "Self-built",
       "region_system_exists": true,
-      "hq_baseline_cost": 8000,
-      "hq_baseline_months": 24,
-      "hq_baseline_currency": "EUR",
+      "thresholds": {
+        "expansion_min_score": 75.0,
+        "hq_build_min_score": 35.0
+      },
       "items": [
         {
           "item": "금리 상한 규제",
@@ -900,133 +903,13 @@
       ]
     },
     "tab_1_3_tco": {
-      "build_cost": 11600000.0,
-      "build_months": 18.0,
-      "annual_subscription": 0.0,
-      "annual_maintenance": 725000.0,
-      "annual_recurring": 725000.0,
-      "operations_10y": 72500000.0,
-      "system_cost_10y": 18850000.0,
-      "total_tco_10y": 91350000.0,
-      "currency": "KRW",
-      "currency_base": "EUR",
-      "total_tco_10y_eur": 63000.0,
-      "similarity_score": 69.6875,
-      "similarity_multiplier": 1.0,
-      "similarity_band": "—",
-      "discount_applied": 0.0,
-      "build_breakdown": {
-        "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",
-        "inputs": {
-          "베이스라인 국가": "AU",
-          "베이스라인 솔루션": "Self-built",
-          "B 구축비용": 11600000.0,
-          "B 구축기간(개월)": 18,
-          "종합 유사도": 69.7,
-          "승수 구간": "—",
-          "적용 승수": 1.0
-        },
-        "outputs": {
-          "신규국 구축비용": 11600000.0,
-          "신규국 구축기간(개월)": 18.0
-        },
-        "currency": "KRW"
+      "is_baseline": false,
+      "is_already_deployed": true,
+      "message": {
+        "ko": "ID는 이미 진출(운영중)한 국가 — 신규 구축 비용·기간이 적용되지 않습니다. 운영 현황(기존 누적 계약·운영비)은 별도 관리 보고서를 참조하세요.",
+        "en": "ID is already an operational market — new build cost/duration do not apply. For operational figures (existing volume, opex), see the separate management report."
       },
-      "expected_contracts": 8568,
-      "expected_contracts_breakdown": {
-        "value": 8568,
-        "formula": "신차 판매대수 × 금융이용률(신차) × (할부+리스 비중) × 우리사 예상 점유율",
-        "inputs": {
-          "신차 판매대수": 900000,
-          "신차 판매대수(원본값)": 900000.0,
-          "신차 판매대수(단위)": "units",
-          "금융 이용률(신차)_%": 70.0,
-          "구매 패턴(할부·리스 비중)_%": 68.0,
-          "우리사 예상 점유율": 0.02
-        }
-      },
-      "subscription_details": {
-        "applicable": false,
-        "new_volume": 8568,
-        "annual_fee": 0,
-        "currency": "EUR",
-        "note": "비구독 솔루션 — 구독료는 운영비에 포함"
-      },
-      "subscription_tiers": [
-        {
-          "min_volume": 0,
-          "max_volume": 500,
-          "price_per_unit": 24.7,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 501,
-          "max_volume": 1000,
-          "price_per_unit": 9.88,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 1001,
-          "max_volume": 1500,
-          "price_per_unit": 8.645,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 1501,
-          "max_volume": 2000,
-          "price_per_unit": 7.41,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 2001,
-          "max_volume": 3000,
-          "price_per_unit": 6.175,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 3001,
-          "max_volume": 5000,
-          "price_per_unit": 5.681,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 5001,
-          "max_volume": 10000,
-          "price_per_unit": 4.94,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 10001,
-          "max_volume": 12000,
-          "price_per_unit": 4.693,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 12001,
-          "max_volume": 14000,
-          "price_per_unit": 4.446,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 14001,
-          "max_volume": 20000,
-          "price_per_unit": 4.323,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 20001,
-          "max_volume": 80000,
-          "price_per_unit": 4.076,
-          "currency": "EUR"
-        },
-        {
-          "min_volume": 80001,
-          "max_volume": 999999,
-          "price_per_unit": 0.865,
-          "currency": "EUR"
-        }
-      ],
-      "existing_total_volume": 80,
+      "currency": "IDR",
       "items": [
         {
           "item": "신차 판매대수",

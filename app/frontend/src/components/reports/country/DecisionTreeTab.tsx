@@ -10,12 +10,17 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
   const baseKo = baseKoMap[data.target.base_country] ?? data.target.base_country
   const sub = tco.subscription_details ?? ({} as NonNullable<typeof tco.subscription_details>)
 
+  // APAC(아시아) — 권역 확산 분기 없이 내재화/외부솔루션 2지선. hq_build를 '내재화'로 표기.
+  const isApac = dec.is_apac === true
+
   // 우측 패널 제목/아이콘 — 결정별로 바뀐다.
   const sidePanelTitle =
     dec.decision === 'external_solution'
       ? '추천 외부솔루션'
       : dec.decision === 'hq_build'
-        ? '본사 구축 예상 비용'
+        ? isApac
+          ? '내재화 예상 비용'
+          : '본사 구축 예상 비용'
         : '구독료 구간표'
   const sidePanelIcon = dec.decision === 'external_solution' ? 'extension' : dec.decision === 'hq_build' ? 'domain' : 'payments'
 
@@ -47,6 +52,8 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
             regionSystemExists={dec.region_system_exists}
             expansionMin={dec.thresholds?.expansion_min_score}
             hqBuildMin={dec.thresholds?.hq_build_min_score}
+            isApac={isApac}
+            apacMin={dec.thresholds?.apac_internalization_min_score}
           />
         </Panel>
       </div>
@@ -54,6 +61,7 @@ export function DecisionTreeTab({ data }: { data: CountryReportData }) {
         <Panel icon={sidePanelIcon} title={sidePanelTitle} className="h-full w-full">
           <DecisionSidePanel
             decision={dec.decision}
+            isApac={isApac}
             externalCandidates={dec.external_candidates}
             hqBaselineCost={dec.hq_baseline_cost}
             hqBaselineMonths={dec.hq_baseline_months}

@@ -62,7 +62,7 @@ export function buildRegionMapGeometry(
   members: RegionMapMember[],
   width = 320,
   height = 280,
-  pad = 14,
+  pad = 6,
 ): RegionMapGeometry | null {
   const matched: { member: RegionMapMember; feat: GeoJSON.Feature }[] = []
   for (const m of members) {
@@ -73,13 +73,21 @@ export function buildRegionMapGeometry(
   }
   if (matched.length === 0) return null
 
-  const fc: GeoJSON.FeatureCollection = {
+  // fit·bbox 계산은 "본토급" 멤버만 사용한다. PR(푸에르토리코)·하와이 같은
+  // 본토에서 멀리 떨어진 작은 영토가 끼면 bbox 가 거대해져 본토가 작게 보인다.
+  // d3.geoArea(스테라디안)로 최대 면적의 8% 미만인 멤버는 fit 대상에서 제외하되,
+  // path/라벨은 그대로 그린다(보이긴 함). 큰 멤버가 1개뿐이면 전체로 폴백.
+  const areas = matched.map((x) => d3.geoArea(x.feat))
+  const maxArea = Math.max(...areas, 0)
+  const major = matched.filter((_, i) => areas[i] >= maxArea * 0.08)
+  const fitFc: GeoJSON.FeatureCollection = {
     type: 'FeatureCollection',
-    features: matched.map((x) => x.feat),
+    features: (major.length > 0 ? major : matched).map((x) => x.feat),
   }
+
   const projection = d3
     .geoMercator()
-    .fitExtent([[pad, pad], [width - pad, height - pad]], fc)
+    .fitExtent([[pad, pad], [width - pad, height - pad]], fitFc)
   const path = d3.geoPath(projection)
 
   const shapes: RegionMapShape[] = []
@@ -89,5 +97,36 @@ export function buildRegionMapGeometry(
     const c = path.centroid(feat)
     shapes.push({ code: member.code, d, label: [c[0], c[1]] })
   }
-  return { shapes, viewBox: `0 0 ${width} ${height}`, width, height }
+
+  // fitExtent 만으로는 영역 종횡비와 권역 bbox 비율이 다르면 한 축으로만 채워져
+  // 큰 letterbox 여백이 남는다(가로로 넓은 패널 + 세로로 긴 권역 등).
+  // ① 실제 그려진 path 들의 합집합 bbox 로 콘텐츠 박스를 구하고,
+  // ② 그 박스를 영역(width×height) 종횡비에 맞춰 짧은 축으로 확장해
+  //    preserveAspectRatio="meet" 로도 letterbox 없이 영역을 꽉 채우게 한다.
+  const b = path.bounds(fitFc) // [[x0,y0],[x1,y1]] — 본토급 멤버 기준
+  let bx = b[0][0] - pad
+  let by = b[0][1] - pad
+  let bw = b[1][0] - b[0][0] + pad * 2
+  let bh = b[1][1] - b[0][1] + pad * 2
+
+  // 영역 종횡비에 맞춰 콘텐츠 박스를 확장(중앙 기준) → meet 여백 제거.
+  const areaRatio = width / height
+  const boxRatio = bw / bh
+  if (boxRatio < areaRatio) {
+    // 박스가 영역보다 세로로 긺 → 가로를 넓혀 비율을 맞춘다.
+    const newW = bh * areaRatio
+    bx -= (newW - bw) / 2
+    bw = newW
+  } else {
+    // 박스가 영역보다 가로로 넓음 → 세로를 넓혀 비율을 맞춘다.
+    const newH = bw / areaRatio
+    by -= (newH - bh) / 2
+    bh = newH
+  }
+  return {
+    shapes,
+    viewBox: `${bx} ${by} ${bw} ${bh}`,
+    width: bw,
+    height: bh,
+  }
 }

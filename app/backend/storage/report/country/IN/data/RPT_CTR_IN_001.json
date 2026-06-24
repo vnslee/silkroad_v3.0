@@ -6,7 +6,7 @@
     "country": "IN",
     "base_country": "AU"
   },
-  "generated_at": "2026-06-23T22:17:25.701554",
+  "generated_at": "2026-06-24T16:31:52.455268",
   "schema_version": "1.1",
   "overall_insight": "세계 3위 자동차 시장(2025년 신차 420만대). GDP 6.8% 고성장과 금융 침투율 80%로 매력도 최상위권. 그러나 RBI NBFC 인가·자본·거버넌스 부담, 결제 데이터 현지화, INR 변동성·자본통제 리스크가 진입 부담. 캡티브 강도 35%로 독립계 진입 여지 있고, 디지털 인프라(UPI·Account Aggregator)와 임베디드 금융이 단기 차별화 기회. 중고차 금융 25%·운용리스 미성숙은 개척 영역. NBFC 인가 우선·디지털 채널 중심 진입이 유효.",
   "overall_insight_en": "World's 3rd-largest auto market (4.2M new cars in 2025). High GDP growth of 6.8% and 80% finance penetration place attractiveness at the top tier. However, RBI NBFC licensing, capital/governance burden, payment data localization, and INR volatility/capital-control risk add entry friction. Captive intensity at 35% leaves room for independents; digital infrastructure (UPI, Account Aggregator) and embedded finance offer near-term differentiation. Used-car finance (25%) and immature operating lease are greenfield. NBFC-license-first, digital-channel-led entry is effective.",
@@ -792,15 +792,21 @@
       ]
     },
     "tab_1_2_decision": {
-      "decision": "baseline_system_expansion",
+      "decision": "hq_build",
+      "is_apac": true,
       "similarity_score": 66.5625,
       "recommendation": {
-        "ko": "권역 내 확산: AU 시스템(Self-built) 현지화",
-        "en": "Regional expansion: localize AU system (Self-built)."
+        "ko": "내재화 추천 (유사도 충분 → 본사 내재화 구축)",
+        "en": "Internalization recommended (sufficient similarity → in-house build)."
       },
       "base_country": "AU",
       "base_system": "Self-built",
       "region_system_exists": true,
+      "thresholds": {
+        "expansion_min_score": 75.0,
+        "hq_build_min_score": 35.0,
+        "apac_internalization_min_score": 50.0
+      },
       "hq_baseline_cost": 8000,
       "hq_baseline_months": 24,
       "hq_baseline_currency": "EUR",
@@ -900,35 +906,43 @@
       ]
     },
     "tab_1_3_tco": {
-      "build_cost": 9280000.0,
-      "build_months": 14.4,
+      "build_cost": 11600000.0,
+      "build_months": 24,
       "annual_subscription": 0.0,
       "annual_maintenance": 725000.0,
       "annual_recurring": 725000.0,
       "operations_10y": 72500000.0,
-      "system_cost_10y": 16530000.0,
-      "total_tco_10y": 89030000.0,
+      "system_cost_10y": 18850000.0,
+      "total_tco_10y": 91350000.0,
       "currency": "KRW",
       "currency_base": "EUR",
-      "total_tco_10y_eur": 61400.0,
+      "total_tco_10y_eur": 63000,
       "similarity_score": 66.5625,
-      "similarity_multiplier": 0.8,
+      "similarity_multiplier": 1.0,
       "similarity_band": "60~70",
+      "build_method": "hq_build",
+      "hq_build_reference": {
+        "build_cost": 11600000.0,
+        "build_months": 24,
+        "build_cost_eur": 8000,
+        "currency": "KRW",
+        "delta_vs_applied": 0.0,
+        "is_applied": true,
+        "note": "본사 자체구축 시 기본 비용/기간 (참고용)"
+      },
       "discount_applied": 0.2,
       "build_breakdown": {
-        "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",
+        "formula": "구축비용/기간 = 본사 자체구축 표준(hq_build_baseline) — 내재화 결정이므로 재사용 승수 미적용",
         "inputs": {
-          "베이스라인 국가": "AU",
-          "베이스라인 솔루션": "Self-built",
-          "B 구축비용": 11600000.0,
-          "B 구축기간(개월)": 18,
+          "구축 방식": "내재화(본사 자체구축)",
+          "본사 자체구축 비용": 11600000.0,
+          "본사 자체구축 기간(개월)": 24,
           "종합 유사도": 66.6,
-          "승수 구간": "60~70",
-          "적용 승수": 0.8
+          "적용 승수": 1.0
         },
         "outputs": {
-          "신규국 구축비용": 9280000.0,
-          "신규국 구축기간(개월)": 14.4
+          "신규국 구축비용": 11600000.0,
+          "신규국 구축기간(개월)": 24
         },
         "currency": "KRW"
       },

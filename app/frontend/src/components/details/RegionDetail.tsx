@@ -57,7 +57,7 @@ export function RegionDetail({ data, className = '' }: Props) {
     <div
       className={`flex items-start justify-center min-h-full w-full p-margin-mobile md:p-margin-desktop bg-background ${className}`}
     >
-      <div className="w-full max-w-5xl rounded-xl custom-shadow-level-3 flex flex-col border-surface-border bg-surface-container">
+      <div className="w-full max-w-5xl rounded-xl custom-shadow-level-3 flex flex-col border-surface-border bg-surface-container-lowest">
         <div className="p-lg flex flex-col gap-xl">
           {/* 제목(권역명)은 DetailView 헤더 chrome에 이미 노출 — 바디 중복 제거 */}
           {/* KPI 3카드 */}
@@ -183,7 +183,7 @@ function RegionMap({ code, members }: { code: string; members: RegionDetailData[
       <h3 className="font-headline-md text-[clamp(15.3px,calc(13.5px_+_0.5vw),20.7px)] leading-[24px] text-primary font-bold mb-md">
         권역 지도
       </h3>
-      <div ref={areaRef} className="flex-1 flex items-stretch justify-center min-h-[380px]">
+      <div ref={areaRef} className="flex-1 flex items-stretch justify-center min-h-[460px]">
         {geo ? (
           <svg
             viewBox={geo.viewBox}
@@ -254,7 +254,7 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
           <tr className="bg-surface-light border-b border-surface-border">
             <Th>#</Th>
             <Th>국가</Th>
-            <Th>종합점수</Th>
+            <Th align="center">종합점수</Th>
             <Th>판정</Th>
           </tr>
         </thead>
@@ -275,7 +275,7 @@ function QuickwinTable({ rows }: { rows: RegionCandidateCountry[] }) {
                   <span className="font-mono text-xs text-on-surface-variant">{r.code}</span>
                 </td>
                 <td className="p-sm">
-                  <div className="flex items-center gap-xs min-w-[88px]">
+                  <div className="flex items-center gap-xs min-w-[88px] mx-auto">
                     <div className="flex-1 w-full h-base bg-surface-border rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full"
@@ -387,8 +387,17 @@ function RegionNewsLine({
   )
 }
 
-function Th({ children }: { children: React.ReactNode }) {
+function Th({
+  children,
+  align = 'left',
+}: {
+  children: React.ReactNode
+  align?: 'left' | 'center' | 'right'
+}) {
+  const cls = align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : 'text-left'
   return (
-    <th className="p-sm font-label-md text-label-md text-outline font-semibold">{children}</th>
+    <th className={`p-sm font-label-md text-label-md text-outline font-semibold ${cls}`}>
+      {children}
+    </th>
   )
 }

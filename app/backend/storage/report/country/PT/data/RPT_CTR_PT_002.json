@@ -6,7 +6,7 @@
     "country": "PT",
     "base_country": "GB"
   },
-  "generated_at": "2026-06-24T15:23:50.551714",
+  "generated_at": "2026-06-24T16:31:52.487297",
   "schema_version": "1.1",
   "overall_insight": "EU 14위 자동차 시장이자 이베리아 반도 진출의 보조 시장. 2025년 신차 등록 약 22만대(ACAP)로 규모는 작으나 법인·렌팅(AOR-Aluguer Operacional de Veículos) 비중이 EU 톱급(신규 등록의 약 50%)인 구조가 핵심이다. 비용·난이도 드라이버는 명확하다 — 소비자 자동차금융은 Banco de Portugal(BdP) 인가 SFC(Sociedade Financeira para Crédito)/IFIC 등록(자본금 €7.5M·DL 100/2015·BdP 감독)과 강력한 사용자금리 상한(DL 133/2009 + BdP 분기 고시 평균 TAEG + 1/3 가산)이라는 이중 규제가 진입 부담의 핵심이다. 반면 B2B 렌팅(AOR)·금융리스(ALD-Aluguer com opção de compra)는 ANCAVE 자율규제 + IFIC 인가로 진입 부담 경감되어 유연하다. 비즈니스 매력도는 시장규모가 작아 단독 진입 매력은 제한적이나 ES(스페인) 동반 진출 시 이베리아 통합 운영의 보조 시장으로 가치가 크다. 캡티브(Stellantis·VW·Renault)와 은행계(Santander·BCP·Caixa) 양강 구조로 약 70% 점유 — 독립계 진입은 EV·렌팅·중고 틈새 공략 필요. IT 유사도는 양호 — EU GDPR·SEPA·MULTIBANCO(현지 결제·ATM)·Banco de Portugal CRC(신용정보)·CMD(시민이동인증) 인프라로 NetSol 베이스라인 재사용률 높음. 매력도↔IT 불일치 지점은 차량회수 — 렌팅·리스는 소유권 기반으로 용이하나 소비자대출 담보회수는 사법 적체로 평균 3~5년. 다크호스는 EV 보급률 가속(2025 BEV+PHEV 약 28%)과 인구 고령화로 인한 시장 정체 — 단기 매력보다 이베리아 ES+PT 통합/단계적 진입 전략이 유효하다. 렌팅·플릿 우선 진입(ANCAVE) 후 IFIC 등록 기반 소비자금융 확장.",
   "overall_insight_en": "Portugal is the EU's 14th-largest auto market and a secondary market for Iberian entry. With ~220k new registrations in 2025 (ACAP) the scale is small, but the core feature is a corporate/renting (AOR-Aluguer Operacional de Veiculos) share among the EU's highest (~50% of new registrations). The cost/difficulty drivers are clear — consumer auto-finance faces dual regulation: Banco de Portugal (BdP)-authorized SFC (Sociedade Financeira para Credito)/IFIC registration (capital EUR7.5M, DL 100/2015, BdP supervision) and a strong usury rate cap (DL 133/2009 + BdP quarterly published average TAEG + 1/3 add-on). By contrast B2B renting (AOR) and finance lease (ALD-Aluguer com opcao de compra) are flexible thanks to ANCAVE self-regulation + IFIC authorization, easing entry burden. Business attractiveness for standalone entry is limited by the small market, but as a secondary market for integrated Iberian operations alongside ES (Spain) the value is large. Captives (Stellantis, VW, Renault) and banks (Santander, BCP, Caixa) form a duopoly holding ~70% — independents must target EV, renting, and used-car niches. IT similarity is good — EU GDPR, SEPA, MULTIBANCO (local payments/ATM), Banco de Portugal CRC (credit information), and CMD (citizen mobile ID) infrastructure give a high NetSol baseline reuse rate. The attractiveness-IT mismatch is vehicle repossession — renting/lease are easy via ownership, but consumer-loan collateral recovery averages 3-5 years due to judicial backlog. Dark horses are accelerating EV adoption (2025 BEV+PHEV ~28%) and demographic aging causing market stagnation — rather than short-term attractiveness, an integrated/phased Iberian ES+PT entry strategy is effective. Enter renting/fleet first (ANCAVE), then expand into consumer finance on an IFIC-registration basis.",
@@ -792,18 +792,18 @@
       ]
     },
     "tab_1_2_decision": {
-      "decision": "hq_build",
+      "decision": "baseline_system_expansion",
       "similarity_score": 78.75,
       "recommendation": {
-        "ko": "본사 자체구축 추천 (유사도 중간 구간)",
-        "en": "HQ-built system recommended (similarity in mid range)."
+        "ko": "권역 내 확산: GB 시스템(NetSol) 현지화",
+        "en": "Regional expansion: localize GB system (NetSol)."
       },
       "base_country": "GB",
       "base_system": "NetSol",
       "region_system_exists": true,
       "thresholds": {
-        "expansion_min_score": 93.0,
-        "hq_build_min_score": 55.0
+        "expansion_min_score": 75.0,
+        "hq_build_min_score": 35.0
       },
       "hq_baseline_cost": 8000,
       "hq_baseline_months": 24,
@@ -918,6 +918,16 @@
       "similarity_score": 78.75,
       "similarity_multiplier": 0.7,
       "similarity_band": "70~80",
+      "build_method": "baseline_reuse",
+      "hq_build_reference": {
+        "build_cost": 8000,
+        "build_months": 24,
+        "build_cost_eur": 8000,
+        "currency": "EUR",
+        "delta_vs_applied": 4500.0,
+        "is_applied": false,
+        "note": "본사 자체구축 시 기본 비용/기간 (참고용)"
+      },
       "discount_applied": 0.3,
       "build_breakdown": {
         "formula": "구축비용/기간 = 베이스라인(B) 값 × 유사도 승수",

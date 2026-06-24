@@ -105,6 +105,8 @@ export interface DecisionTabData {
   is_baseline?: boolean
   /** 이미 진출(운영중)·기준국 등 신규 결정트리/TCO 산식 미적용 국가. */
   is_already_deployed?: boolean
+  /** APAC(아시아) — 권역 확산 분기 없이 내재화/외부솔루션 2지선으로 분기. */
+  is_apac?: boolean
   similarity_score: number
   /** 권역 확산 권고 문구. 엔진 산출은 {ko,en} 객체. */
   recommendation: string | { ko: string; en?: string }
@@ -112,7 +114,7 @@ export interface DecisionTabData {
   base_system: string
   region_system_exists: boolean
   /** 결정 트리 임계값(룰셋 decision_thresholds). 화면 라벨·분기 폴백에 사용. */
-  thresholds?: { expansion_min_score: number; hq_build_min_score: number }
+  thresholds?: { expansion_min_score: number; hq_build_min_score: number; apac_internalization_min_score?: number }
   hq_baseline_cost?: number
   hq_baseline_months?: number
   hq_baseline_currency?: string
@@ -151,6 +153,20 @@ export interface TcoTabData {
   similarity_score: number
   similarity_multiplier: number
   similarity_band: string
+  /** 구축비 산정 방식: 'hq_build'(내재화·본사 자체구축) | 'baseline_reuse'(확산·재사용). 구버전 데이터엔 없음. */
+  build_method?: 'hq_build' | 'baseline_reuse'
+  /** 내재화(본사 자체구축) 기준선 — 결정 경로와 무관하게 비교용. 구버전 데이터엔 없음. */
+  hq_build_reference?: {
+    build_cost: number
+    build_months: number
+    build_cost_eur?: number
+    currency?: string
+    /** 적용 구축비 대비 내재화 기준선 차액(표시통화). 양수면 내재화가 더 비쌈. */
+    delta_vs_applied: number
+    /** 이 국가의 실제 적용 방식이 내재화인지. */
+    is_applied: boolean
+    note?: string
+  }
   discount_applied: number
   build_breakdown: {
     formula?: string

@@ -11,6 +11,24 @@ export function eur(value: number | null | undefined, symbol = '€'): string {
   return `${symbol}${Math.round(value).toLocaleString('en-US')}`
 }
 
+/** 통화 코드 → 심볼. 매핑 없으면 코드+공백 폴백. */
+const CCY_SYMBOL: Record<string, string> = { EUR: '€', USD: '$', KRW: '₩', GBP: '£' }
+
+/**
+ * 통화-인식 금액 포맷. 엔진이 권역 표시통화로 이미 환산한 값을 받아 기호/단위만 입힌다.
+ * - KRW: 억 단위 표기(0.1억 단위 반올림). 예 11,600,000 → "₩0.1억", 850,000,000 → "₩8.5억".
+ * - 그 외(EUR/USD 등): 기호 + 천단위 콤마, 소수 없음.
+ */
+export function money(value: number | null | undefined, currency = 'EUR'): string {
+  if (value === null || value === undefined || isNaN(value)) return '—'
+  if (currency === 'KRW') {
+    const eok = Math.round((value / 1e8) * 10) / 10 // 0.1억 단위
+    return `₩${eok}억`
+  }
+  const sym = CCY_SYMBOL[currency] ?? currency + ' '
+  return `${sym}${Math.round(value).toLocaleString('en-US')}`
+}
+
 /** 천단위 콤마 정수 */
 export function intComma(value: number | null | undefined): string {
   if (value === null || value === undefined || isNaN(value)) return '—'
@@ -354,6 +372,8 @@ export function DecisionTreeSvg({
   regionSystemExists = true,
   expansionMin = 65,
   hqBuildMin = 55,
+  isApac = false,
+  apacMin = 50,
 }: {
   score: number
   baseCountryKo: string
@@ -365,7 +385,15 @@ export function DecisionTreeSvg({
   expansionMin?: number
   /** 본사 자체구축 임계값(룰셋 hq_build_min_score). 미지정 시 55 폴백. */
   hqBuildMin?: number
+  /** APAC(아시아) — 권역 확산 분기 없이 내재화/외부솔루션 2지선 렌더. */
+  isApac?: boolean
+  /** APAC 내재화 임계값(룰셋 apac_internalization_min_score). 미지정 시 50 폴백. */
+  apacMin?: number
 }) {
+  // APAC — 권역 확산 경로가 없는 2지선 트리(내재화 / 외부솔루션).
+  if (isApac) {
+    return <DecisionTreeSvgApac score={score} decision={decision} apacMin={apacMin} />
+  }
   // 엔진 decision을 시각화 분기로 매핑. decision이 없으면 score·임계값으로 폴백.
   // - baseline_system_expansion → 권역 내 확산 (B)
   // - hq_build                  → 본사 자체구축 (HQ)
@@ -488,6 +516,82 @@ export function DecisionTreeSvg({
   )
 }
 
+// ── APAC 전용 2지선 결정 트리(내재화 / 외부솔루션) ─────────────────
+//   권역 내 확산 경로가 없다. 유사도 단일 임계값(apacMin)으로만 가른다.
+//   - 유사도 ≥ apacMin → 내재화(decision 'hq_build')
+//   - 유사도 < apacMin → 외부솔루션
+function DecisionTreeSvgApac({ score, decision, apacMin }: { score: number; decision?: string; apacMin: number }) {
+  // decision 우선, 없으면 임계값 폴백.
+  const branch: 'INT' | 'EXT' = decision === 'external_solution' ? 'EXT' : decision === 'hq_build' ? 'INT' : score >= apacMin ? 'INT' : 'EXT'
+  const isINT = branch === 'INT'
+  const isEXT = branch === 'EXT'
+  // 활성 경로 — 다이아몬드(중앙)에서 좌(내재화)/우(외부솔루션)로 분기.
+  const activePath = isINT
+    ? 'M450 140 L450 200 M450 320 L450 360 L230 360 L230 460'
+    : 'M450 140 L450 200 M450 320 L450 360 L670 360 L670 460'
+  const activeBullet = isINT ? { cx: 230, cy: 460 } : { cx: 670, cy: 460 }
+  const cardActive = 'border-2 bg-primary/10 border-primary rounded-xl p-md'
+  const cardActiveShadow = { boxShadow: '0 6px 18px rgba(0,0,0,0.08)' }
+  const cardIdle = 'border-2 bg-surface-container border-outline-variant opacity-40 rounded-xl p-md'
+  return (
+    <div className="flex flex-col items-center pt-md gap-sm">
+      <style>{`
+        @keyframes dt-pop { 0%{transform:scale(.85);opacity:0} 60%{transform:scale(1.08);opacity:1} 100%{transform:scale(1);opacity:1} }
+        @keyframes dt-flow { to { stroke-dashoffset: -24; } }
+        @keyframes dt-dash { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+        @keyframes dt-glow { 0%,100%{filter:drop-shadow(0 0 6px rgba(200,240,81,.55))} 50%{filter:drop-shadow(0 0 14px rgba(200,240,81,1))} }
+        .dt-diamond { animation: dt-pop .6s ease-out .3s both; transform-origin:center; }
+        .dt-flow-line { stroke:#9aa0a8; stroke-width:2; stroke-dasharray:6 6; animation:dt-flow 1.2s linear infinite; fill:none; }
+        .dt-active-path { stroke:#14181C; stroke-width:4; stroke-linecap:round; fill:none; stroke-dasharray:1000; stroke-dashoffset:1000; animation: dt-dash 1.6s ease-out .6s forwards, dt-glow 2s ease-in-out 2.2s infinite; }
+        .dt-active-bullet { animation: dt-pop .5s ease-out 2s both, dt-glow 2s ease-in-out 2.4s infinite; transform-origin:center; transform-box:fill-box; }
+        .dt-branch-card { animation: dt-pop .55s ease-out both; transform-origin:top center; }
+        .dt-branch-int { animation-delay:2.1s; } .dt-branch-ext { animation-delay:2.3s; }
+        @media (prefers-reduced-motion: reduce) {
+          .dt-diamond,.dt-active-path,.dt-active-bullet,.dt-branch-card { animation: none !important; }
+          .dt-flow-line { animation: none !important; }
+          .dt-active-path { stroke-dashoffset: 0 !important; }
+        }
+      `}</style>
+      <svg
+        className="w-full max-w-4xl block"
+        viewBox="0 0 900 520"
+        preserveAspectRatio="xMidYMid meet"
+        style={{ marginBottom: '-8px' }}
+        role="img"
+        aria-label="APAC 시스템 결정 트리 (내재화/외부솔루션)"
+      >
+        <g className="dt-diamond" style={{ animationDelay: '0.3s' }}>
+          <polygon points="450,200 525,260 450,320 375,260" fill="#fbf9f9" stroke="#14181C" strokeWidth="2" />
+          <text x="450" y="255" textAnchor="middle" fontSize="12" fill="#14181C" fontWeight="700">유사도</text>
+          <text x="450" y="280" textAnchor="middle" fontSize="18" fill="#14181C" fontWeight="800">{score.toFixed(1)}</text>
+        </g>
+        <path d="M450 320 L450 360 L230 360 L230 460" className="dt-flow-line" opacity="0.25" />
+        <text x="230" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isINT ? '#14181C' : '#9aa0a8'}>{`≥ ${apacMin} → 내재화`}</text>
+        <path d="M450 320 L450 360 L670 360 L670 460" className="dt-flow-line" opacity="0.25" />
+        <text x="670" y="350" textAnchor="middle" fontSize="14" fontWeight="700" fill={isEXT ? '#14181C' : '#9aa0a8'}>{`< ${apacMin} → 외부솔루션`}</text>
+        <path d={activePath} className="dt-active-path" />
+        <circle className="dt-active-bullet" cx={activeBullet.cx} cy={activeBullet.cy} r="7" fill="#14181C" />
+      </svg>
+      <div className="w-full max-w-4xl">
+        <div className="grid grid-cols-2 gap-lg">
+          <div className={`dt-branch-card dt-branch-int ${isINT ? cardActive : cardIdle}`} style={isINT ? cardActiveShadow : undefined}>
+            <div className="flex items-center justify-center gap-xs">
+              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isINT ? 'text-primary' : 'text-text-secondary'}`}>domain</span>
+              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isINT ? 'text-primary' : 'text-text-secondary'}`}>내재화</span>
+            </div>
+          </div>
+          <div className={`dt-branch-card dt-branch-ext ${isEXT ? cardActive : cardIdle}`} style={isEXT ? cardActiveShadow : undefined}>
+            <div className="flex items-center justify-center gap-xs">
+              <span className={`material-symbols-outlined text-[clamp(17px,calc(15px_+_0.556vw),23px)] ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>extension</span>
+              <span className={`font-semibold font-body-md text-body-md uppercase tracking-wider ${isEXT ? 'text-primary' : 'text-text-secondary'}`}>외부솔루션</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── 구독료 구간표(탭0/탭2 공유) ─────────────────────────────────
 interface SubTierTableProps {
   tiers?: { min_volume: number; max_volume: number | null; price_per_unit: number }[]
@@ -553,9 +657,6 @@ export function SubscriptionTierTable({ tiers, appliedPrice, existing, newAdded,
   )
 }
 
-// 표시통화 코드 → 심볼(eur() 헬퍼는 심볼을 받는다). 매핑 없으면 코드+공백 폴백.
-const CURRENCY_SYMBOL: Record<string, string> = { EUR: '€', USD: '$', KRW: '₩', GBP: '£' }
-
 // ── 결정별 우측 패널(구독료/본사구축비용/외부솔루션 후보) ──────────────
 // decision에 따라 표시를 분기한다:
 //   external_solution → 추천 벤더 후보 리스트
@@ -568,6 +669,8 @@ interface DecisionSidePanelProps {
   hqBaselineMonths?: number
   hqBaselineCurrency?: string
   subscription: SubTierTableProps
+  /** APAC(아시아) — hq_build 결정을 '내재화'로 표기. */
+  isApac?: boolean
 }
 export function DecisionSidePanel({
   decision,
@@ -576,6 +679,7 @@ export function DecisionSidePanel({
   hqBaselineMonths,
   hqBaselineCurrency = 'EUR',
   subscription,
+  isApac = false,
 }: DecisionSidePanelProps) {
   if (decision === 'external_solution') {
     const list = externalCandidates ?? []
@@ -611,12 +715,14 @@ export function DecisionSidePanel({
     return (
       <div className="flex flex-col gap-sm">
         <p className="font-body-sm text-body-sm text-text-secondary leading-relaxed">
-          권역 확산 기준 미달, 외부솔루션 대비 적합 → 본사 자체구축을 권고합니다. 예상 규모는 다음과 같습니다.
+          {isApac
+            ? '유사도 충분 → 본사 내재화 구축을 권고합니다. 예상 규모는 다음과 같습니다.'
+            : '권역 확산 기준 미달, 외부솔루션 대비 적합 → 본사 자체구축을 권고합니다. 예상 규모는 다음과 같습니다.'}
         </p>
         <div className="flex flex-col gap-xs font-body-md text-body-md">
           <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-primary/10 border-l-4 border-primary">
             <span className="text-primary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축비용</span>
-            <span className="text-primary font-bold font-body-lg text-body-lg">{eur(hqBaselineCost ?? 0, CURRENCY_SYMBOL[hqBaselineCurrency] ?? hqBaselineCurrency + ' ')}</span>
+            <span className="text-primary font-bold font-body-lg text-body-lg">{money(hqBaselineCost ?? 0, hqBaselineCurrency)}</span>
           </div>
           <div className="flex justify-between items-center px-sm py-2 rounded-lg bg-surface-container border border-outline-variant">
             <span className="text-text-secondary font-semibold uppercase tracking-wider font-label-md text-label-md">예상 구축기간</span>
@@ -624,7 +730,7 @@ export function DecisionSidePanel({
           </div>
         </div>
         <p className="font-label-sm text-label-sm text-text-secondary mt-xs">
-          * 본사 자체구축 기준 baseline 값(참고용).
+          {isApac ? '* 내재화 기준 baseline 값(참고용).' : '* 본사 자체구축 기준 baseline 값(참고용).'}
         </p>
       </div>
     )

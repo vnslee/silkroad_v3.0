@@ -2,6 +2,16 @@
   "version": "1.6",
   "updated_at": "2026-06-24T15:46:26+09:00",
   "country_assets": {
+    "KR": {
+      "solution": "G-Core",
+      "type": "SA",
+      "products": [
+        "오토론",
+        "리스",
+        "할부금융"
+      ],
+      "since": 2025
+    },
     "GB": {
       "solution": "NetSol",
       "type": "SA",
@@ -134,7 +144,6 @@
     "CA": "운영중",
     "MX": "미진출",
     "NZ": "미진출",
-    "JP": "미진출",
     "KR": "미진출",
     "SG": "미진출",
     "IN": "미진출",
@@ -806,7 +815,8 @@
   "decision_thresholds": {
     "expansion_min_score": 75.0,
     "hq_build_min_score": 35.0,
-    "_note": "유형1 탭1-2 시스템 결정 트리 임계값. 유사도 ≥ expansion_min_score → B시스템 확산 / ≥ hq_build_min_score → 본사 자체구축 / 그 외 → 외부솔루션. 명세 §탭1-2 정책."
+    "apac_internalization_min_score": 50.0,
+    "_note": "유형1 탭1-2 시스템 결정 트리 임계값. 유사도 ≥ expansion_min_score → B시스템 확산 / ≥ hq_build_min_score → 본사 자체구축 / 그 외 → 외부솔루션. 명세 §탭1-2 정책. APAC(아시아)는 권역 확산 분기 없이 유사도 ≥ apac_internalization_min_score → 내재화(hq_build) / 미만 → 외부솔루션 2지선."
   },
   "maintenance_rate": 0.18,
   "subscription_tiers": [
