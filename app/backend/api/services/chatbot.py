@@ -1,421 +1,287 @@
-"""챗봇 서비스 (C12, L7·L8) — §6.5 분기. 무상태(Q5=A).
+"""챗봇 서비스 (C12, L7·L8) — LLM tool-use 에이전트. 무상태(Q5=A).
 
-데이터 보유 시 Bedrock 텍스트 답변, 없으면 needs_research 신호만 반환(직접 트리거
-안 함 — 프론트가 동의 후 research API 호출). history는 요청으로 전달(서버 세션 없음).
+규칙기반 골격(정규식 의도분류 + 하드코딩 국가별칭 dict + 거대 if-else)을 LLM tool-use
+에이전트 루프로 대체한다. LLM이 도구(chat_tools)를 호출해 대상을 식별·조회하고 리서치/보고서를
+'제안'하면, 코드가 정책·관점 게이트를 결정적으로 적용해 ChatResponse를 조립한다.
+
+설계 원칙:
+- 출력 스키마(ChatResponse)·프론트 칩 흐름은 보존(needs_*/auto_trigger/actions/resolved_*).
+- 트리거 가능 여부는 절대 LLM에 맡기지 않는다 — research_policy로 후처리에서 재검증(결정적 게이트).
+- 관점 되묻기(senario.md Case2/3)도 결정적 게이트로 유지: 보유 대상 qa인데 관점 미지정이면 되묻는다.
+- history는 요청으로 전달(서버 세션 없음).
 """
 from __future__ import annotations
 
-import re
 from typing import List, Optional
 
 from .. import config
-from ..schemas import ChatResponse, ChatTurn
-from . import bedrock_client, chatbot_flow, research_policy, storage_resolver
+from ..schemas import ChatRequest, ChatResponse, ChatTurn
+from . import bedrock_client, chat_tools, chatbot_flow, research_policy, storage_resolver
 
 _log = config.get_logger("chatbot")
 
-# 결정적 국가명→ISO alpha-2 매핑(한글·영문). LLM 분류가 실패/흔들려도 질문 텍스트에서
-# 대상을 직접 잡아 'ES 폴백' 버그를 막는다. 주요 진출 검토국을 폭넓게 수록(데이터 미보유국도
-# 포함 — 인식되면 '데이터 없음 → 리서치 트리거' 경로로 자연스럽게 흐른다).
-_COUNTRY_ALIASES: dict[str, str] = {
-    # ── 유럽 ──
-    "스페인": "ES", "spain": "ES", "españa": "ES",
-    "독일": "DE", "germany": "DE", "deutschland": "DE",
-    "프랑스": "FR", "france": "FR",
-    "이탈리아": "IT", "italy": "IT", "italia": "IT",
-    "영국": "GB", "uk": "GB", "united kingdom": "GB", "britain": "GB", "england": "GB",
-    "네덜란드": "NL", "netherlands": "NL", "holland": "NL",
-    "폴란드": "PL", "poland": "PL",
-    "포르투갈": "PT", "portugal": "PT",
-    "오스트리아": "AT", "austria": "AT",
-    "덴마크": "DK", "denmark": "DK",
-    "벨기에": "BE", "belgium": "BE",
-    "스위스": "CH", "switzerland": "CH",
-    "스웨덴": "SE", "sweden": "SE",
-    "노르웨이": "NO", "norway": "NO",
-    "핀란드": "FI", "finland": "FI",
-    "아일랜드": "IE", "ireland": "IE",
-    "그리스": "GR", "greece": "GR",
-    "체코": "CZ", "czech": "CZ", "czechia": "CZ",
-    "헝가리": "HU", "hungary": "HU",
-    "루마니아": "RO", "romania": "RO",
-    "터키": "TR", "튀르키예": "TR", "turkey": "TR", "türkiye": "TR",
-    "러시아": "RU", "russia": "RU",
-    "우크라이나": "UA", "ukraine": "UA",
-    # ── 북미 ──
-    "미국": "US", "usa": "US", "united states": "US", "america": "US",
-    "캐나다": "CA", "canada": "CA",
-    "멕시코": "MX", "mexico": "MX", "méxico": "MX",
-    "푸에르토리코": "PR", "puerto rico": "PR",
-    # ── 남미 ──
-    "브라질": "BR", "brazil": "BR",
-    "아르헨티나": "AR", "argentina": "AR",
-    "칠레": "CL", "chile": "CL",
-    "콜롬비아": "CO", "colombia": "CO",
-    "페루": "PE", "peru": "PE",
-    # ── 아시아·태평양 ──
-    "중국": "CN", "china": "CN",
-    "일본": "JP", "japan": "JP",
-    "한국": "KR", "korea": "KR", "대한민국": "KR", "south korea": "KR",
-    "인도": "IN", "india": "IN",
-    "인도네시아": "ID", "indonesia": "ID",
-    "베트남": "VN", "vietnam": "VN",
-    "태국": "TH", "thailand": "TH",
-    "말레이시아": "MY", "malaysia": "MY",
-    "필리핀": "PH", "philippines": "PH",
-    "싱가포르": "SG", "singapore": "SG",
-    "호주": "AU", "australia": "AU",
-    "뉴질랜드": "NZ", "new zealand": "NZ",
-    "대만": "TW", "taiwan": "TW",
-    "홍콩": "HK", "hong kong": "HK",
-    # ── 중동 ──
-    "사우디": "SA", "사우디아라비아": "SA", "saudi": "SA", "saudi arabia": "SA",
-    "아랍에미리트": "AE", "uae": "AE", "에미리트": "AE", "두바이": "AE", "dubai": "AE",
-    "이스라엘": "IL", "israel": "IL",
-    "카타르": "QA", "qatar": "QA",
-    # ── 아프리카 (개별 국가 — 데이터 없으면 리서치 트리거) ──
-    "나이지리아": "NG", "nigeria": "NG",
-    "케냐": "KE", "kenya": "KE",
-    "남아공": "ZA", "남아프리카공화국": "ZA", "south africa": "ZA",
-    "이집트": "EG", "egypt": "EG",
-    "모로코": "MA", "morocco": "MA",
-    "가나": "GH", "ghana": "GH",
-    "에티오피아": "ET", "ethiopia": "ET",
-    "탄자니아": "TZ", "tanzania": "TZ",
-}
-
-# 권역명→권역 코드 매핑(보유 권역 + 대륙 별칭). 프론트 지도 권역(MapView REGIONS6)과
-# 동일한 코드 체계(EU/NA/SA/APAC/ME/AF)를 따른다. 데이터 미보유 권역(AF/ME 등)도 매핑해
-# '권역 인식 → 멤버 국가 지정 → 리서치 트리거' 경로로 흐르게 한다.
-_REGION_ALIASES: dict[str, str] = {
-    "유럽연합": "EU", "유럽": "EU", "europe": "EU", "european union": "EU", "eu": "EU",
-    "북미": "NA", "north america": "NA", "na": "NA",
-    "남미": "SA", "남아메리카": "SA", "latin america": "SA", "south america": "SA",
-    "latam": "SA",
-    "아시아태평양": "APAC", "아시아·태평양": "APAC", "아시아": "APAC", "asia pacific": "APAC",
-    "apac": "APAC", "asia": "APAC",
-    "중동": "ME", "middle east": "ME", "me": "ME",
-    "아프리카": "AF", "africa": "AF", "af": "AF",
-}
-
-
-def _alias_in(alias: str, text: str) -> bool:
-    """별칭이 텍스트에 '독립 단어'로 등장하는지. 부분 문자열 오탐을 막는다.
-
-    한글은 \\b 단어경계가 동작하지 않아, 한글 별칭은 양옆에 한글(가-힣)이 붙어
-    더 긴 단어의 일부가 된 경우를 배제한다(예: "국가나"의 "가나", "이탈리아인"의
-    "이탈리아"). 영문 별칭은 알파벳 경계로 판정.
-    """
-    start = 0
-    while True:
-        idx = text.find(alias, start)
-        if idx < 0:
-            return False
-        before = text[idx - 1] if idx > 0 else ""
-        after = text[idx + len(alias)] if idx + len(alias) < len(text) else ""
-        # 별칭 종류에 따른 경계 문자 판정.
-        # 한글 별칭: 앞 글자만 검사한다. 한국어는 명사 뒤에 조사가 공백 없이 붙으므로
-        # (가나"에"·가나"를") 뒷 글자가 한글이어도 정상이다. 반면 앞 글자가 한글이면
-        # 더 긴 단어의 꼬리("국가"+"나"→가나)일 가능성이 높아 오탐으로 배제한다.
-        if re.search(r"[가-힣]", alias):
-            ok = not re.match(r"[가-힣]", before or "")
-        else:
-            ok = not ((before and before.isalpha()) or (after and after.isalpha()))
-        if ok:
-            return True
-        start = idx + 1
-
-
-def _match_alias(message: str) -> Optional[tuple]:
-    """질문 텍스트에서 국가/권역명을 직접 매칭. 국가 우선, 가장 긴 별칭 우선.
-
-    LLM 분류를 보강하는 결정적 폴백 — Bedrock 오류·found=false 시에도 대상을 잡는다.
-    단어 경계를 존중해 부분 문자열 오탐("국가나"→가나)을 막는다.
-    """
-    low = message.lower()
-    # 가장 긴 별칭부터 검사(부분 문자열 오탐 최소화).
-    for alias in sorted(_COUNTRY_ALIASES, key=len, reverse=True):
-        if _alias_in(alias, low):
-            return "country", _COUNTRY_ALIASES[alias]
-    for alias in sorted(_REGION_ALIASES, key=len, reverse=True):
-        if _alias_in(alias, low):
-            return "region", _REGION_ALIASES[alias]
-    return None
-
-
-def extract_member_codes(message: str) -> List[str]:
-    """메시지에서 언급된 모든 국가 코드를 추출(권역 리서치 멤버 후보).
-
-    권역 리서치는 포함할 멤버 국가가 필요하다. "아프리카 권역 중 나이지리아·케냐·남아공"
-    처럼 권역 + 여러 국가를 함께 말하면 그 국가들을 멤버로 잡는다. 등장 순서 보존·중복 제거.
-    """
-    low = message.lower()
-    found: List[str] = []
-    for alias in sorted(_COUNTRY_ALIASES, key=len, reverse=True):
-        if alias in low:
-            code = _COUNTRY_ALIASES[alias]
-            if code not in found:
-                found.append(code)
-    return found
-
-_SYSTEM = (
-    "너는 글로벌 오토파이낸스 진출 진단 서비스의 컨설턴트 챗봇이다. "
-    "제공된 참고 컨텍스트(국가/권역 리서치 요약)에 근거해 간결하고 실무적으로 답하라. "
-    "근거 없는 수치를 지어내지 말고, 모르면 모른다고 답하라. "
-    "답변은 10줄 이내로 핵심만 담아 너무 길지 않게 한다(senario.md 공통 사항)."
-)
-
-# 관점(perspective) → 컨텍스트 요약에 포함할 item.category 집합.
-# 리서치 데이터 category: business(비즈니스)·it(시스템)·shared(공통). shared는 항상 포함.
-_PERSPECTIVE_CATEGORIES: dict[str, set] = {
-    "business": {"business", "shared"},
-    "system": {"it", "shared"},
-    "both": {"business", "it", "shared"},
-}
+# 관점(perspective) → 답변 시 강조할 카테고리 라벨(senario.md).
 _PERSPECTIVE_LABEL = {"business": "비즈니스", "system": "시스템", "both": "비즈니스·시스템"}
+# 관점 되묻기 문구(senario.md Case2/3). _ask_for_perspective와 동일.
+_PERSPECTIVE_QUESTION = "어떤 관점으로 설명해 드릴까요? (비즈니스 / 시스템 / 둘 다)"
 
-# 대상(target) 추출 — 사용자 메시지에서 어떤 국가/권역 + 어떤 의도(qa/research/report)인지 식별.
-# 대상 식별과 의도 분류를 한 번의 LLM 호출로 함께 처리한다(추가 호출·레이턴시 없음).
-_RESOLVE_SYSTEM = (
-    "너는 사용자의 질문에서 ①'어떤 국가 또는 권역에 대한 질문인지'와 "
-    "②'무엇을 하려는 의도인지'를 동시에 식별하는 분류기다. "
-    "국가는 ISO 3166-1 alpha-2 대문자 코드(예: 스페인→ES, 독일→DE, 이탈리아→IT)로, "
-    "권역은 권역 코드(예: 유럽→EU, 북미→NA, 아시아태평양→APAC, 남미→SA, 중동→ME, 아프리카→AF)로 반환하라. "
-    "질문에 명시적 국가/권역이 없으면 found=false 로 답하라. "
-    "'국가', '권역', '나라', '어디', '검토 중인 곳'처럼 구체적 이름 없는 일반 명사만 "
-    "있으면 절대 코드를 추측하지 말고 반드시 found=false 로 답하라. "
-    "국가와 권역이 모두 언급되면 더 구체적인 국가를 우선한다. "
-    "단, '권역 리서치'·'권역 분석'처럼 권역 단위 작업을 명시하면 권역을 우선한다.\n"
-    "의도(intent)는 다음 중 하나로 분류하라: "
-    "report=진단 보고서/리포트를 생성·제작·발행하려는 의도(예: '보고서 만들어줘', '리포트 뽑아줄래?'), "
-    "research=신규/재조사(리서치)를 수행하려는 의도(예: '리서치 다시 해줘', '새로 조사해줘'), "
-    "qa=그 외 일반 질의응답(시장·지표·진출성 등을 묻는 모든 질문). "
-    "표현이 정형적이지 않아도 핵심 동작으로 판단하라."
+# 답변 생성 전 멈추는 신호 tool — 관점 되묻기는 답변을 만들지 않고 즉시 분기한다.
+_STOP_TOOLS = {"request_perspective"}
+
+
+# ── 시스템 프롬프트 ─────────────────────────────────────────────────
+_BASE_SYSTEM = (
+    "너는 글로벌 오토파이낸스 진출 진단 서비스의 컨설턴트 챗봇이다. "
+    "사용자의 질문에 대해 도구(tool)를 사용해 대상을 식별하고 보유 데이터를 조회한 뒤, "
+    "간결하고 실무적으로 답한다. 답변은 한국어로 10줄 이내, 핵심만 담는다(senario.md 공통)."
 )
 
-# '권역' 단위 작업 명시 신호 — 이때는 함께 언급된 개별 국가보다 권역을 우선한다.
-_REGION_INTENT_RE = re.compile(r"권역|region")
-
-# 구체 이름 없는 일반 지칭어 — 이 표현만 있고 별칭 매칭도 없으면 LLM이 코드를 환각해도
-# 신뢰하지 않고 되묻는다(예: "검토 중인 국가나 권역을 조사하고 싶어요" → GH 환각 방지).
-_GENERIC_TARGET_RE = re.compile(
-    r"국가|권역|나라|어디|어느\s*곳|검토\s*중인\s*곳|관심\s*있는\s*곳|country|region"
+# tool 사용 규칙 — 규칙기반 분기를 대체하는 행동 지침.
+_TOOL_RULES = (
+    "\n\n[도구 사용 규칙]\n"
+    "1. 사용자가 구체적 국가/권역을 언급하면 먼저 lookup_target으로 식별하라"
+    "(국가→ISO2, 권역→권역코드 변환은 네 지식으로 한다). 구체적 이름이 없으면 "
+    "lookup_target을 호출하지 말고 list_available로 보유 목록을 보여주며 어떤 대상인지 되물어라.\n"
+    "2. 답변의 사실 근거는 반드시 get_research_summary로 가져온 데이터다. "
+    "found=true면 그 데이터로만 답하라. 수치를 지어내지 마라.\n"
+    "3. get_research_summary가 found=false(보유 데이터 없음)면: ① 일반 지식으로 개괄 수준의 "
+    "잠정 답변을 제공하되, ② 반드시 '이는 보유 데이터가 아닌 일반 지식 기반 잠정 답변이라 "
+    "정확도에 한계가 있다'고 명시하고, ③ check_research_policy로 리서치 가능 여부를 확인한 뒤 "
+    "가능하면 propose_research로 리서치를 제안하라(불가하면 그 사유를 안내).\n"
+    "4. 사용자가 리서치/조사 수행을 원하면 check_research_policy 확인 후 propose_research를, "
+    "보고서/리포트 생성을 원하면 propose_report를 호출하라. 이 도구들은 제안만 할 뿐 실제로 "
+    "실행하지 않는다(사용자 동의 후 별도 처리).\n"
+    "5. 보유 데이터가 있는 대상에 대한 일반 질의인데 답변 관점(비즈니스/시스템/둘다)이 "
+    "주어지지 않았다면, 답변을 작성하지 말고 request_perspective를 호출하라. "
+    "컨텍스트에 '[관점]'이 주어졌으면 그 관점으로 바로 답하라."
 )
 
-_RESOLVE_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "found": {"type": "boolean"},
-        "domain": {"type": "string", "enum": ["country", "region"]},
-        "target_id": {"type": "string"},
-        "intent": {"type": "string", "enum": ["qa", "research", "report"]},
-    },
-    "required": ["found"],
-}
 
-
-def resolve_target(
-    message: str,
-    history: Optional[List[ChatTurn]] = None,
-) -> Optional[tuple]:
-    """사용자 메시지에서 (domain, target_id, intent)를 식별. 대상 식별 실패 시 None.
-
-    LLM 분류를 시도하되, 실패(Bedrock 오류·found=false·형식 불일치)하면 질문 텍스트의
-    결정적 국가/권역명 매칭으로 폴백한다. 대상이 둘 다 실패할 때만 None(라우터가 프론트
-    target으로 폴백) — 이로써 LLM이 흔들려도 'ES 고정' 버그가 재발하지 않는다.
-
-    의도(intent)는 같은 LLM 호출로 함께 받되, 없거나 폴백 경로면 None을 돌려준다 —
-    호출부(handle)가 None이면 정규식 _detect_intent로 보강한다.
-
-    '권역 리서치/분석'처럼 권역 단위 작업을 명시하면 함께 언급된 개별 국가보다 권역을
-    우선한다(결정적 — LLM의 '국가 우선' 경향에 좌우되지 않게 선처리). 이 결정적 경로는
-    대상만 정하고 의도는 정규식 보강에 맡긴다(intent=None)."""
-    # 권역 단위 작업 명시 + 권역명 매칭 → 권역 우선(결정적).
-    if _REGION_INTENT_RE.search(message.lower()):
-        low = message.lower()
-        for alias in sorted(_REGION_ALIASES, key=len, reverse=True):
-            if _alias_in(alias, low):
-                _log.info("권역 의도 감지 — 권역 우선: %s", _REGION_ALIASES[alias])
-                return "region", _REGION_ALIASES[alias], None
+def _agent_system(perspective: Optional[str]) -> str:
+    """에이전트 시스템 프롬프트 조립 — 기본 톤 + tool 규칙 + 보유 목록 + senario.md 틀."""
     countries = storage_resolver.list_countries()
     regions = storage_resolver.list_regions()
-    country_lines = ", ".join(f"{c.code}({c.name_ko or c.name})" for c in countries)
-    region_lines = ", ".join(f"{r.code}({r.name_ko or r.name})" for r in regions)
-    recent = ""
-    if history:
-        recent = "\n".join(f"{t.role}: {t.content}" for t in history[-4:])
-    prompt = (
-        f"[보유 국가] {country_lines}\n"
-        f"[보유 권역] {region_lines}\n"
-        f"[최근 대화]\n{recent}\n\n"
-        f"[현재 질문]\n{message}\n\n"
-        "위 질문이 가리키는 국가/권역과 의도를 식별해 JSON으로만 답하라. "
-        "구체적 국가/권역명이 실제로 언급된 경우에만 코드를 반환하고(보유 목록에 없어도 무방), "
-        "구체적 이름이 없으면 found=false 로 답하라(추측 금지)."
+    owned = (
+        "\n\n[현재 보유 데이터] "
+        f"국가({len(countries)}): {', '.join(c.code for c in countries) or '없음'} / "
+        f"권역: {', '.join(r.code for r in regions) or '없음'}"
     )
-    try:
-        out = bedrock_client.generate_structured(
-            prompt, _RESOLVE_SCHEMA, system=_RESOLVE_SYSTEM
+    system = _BASE_SYSTEM + _TOOL_RULES + owned
+    if perspective:
+        system += (
+            f"\n\n이번 답변은 '{_PERSPECTIVE_LABEL.get(perspective, perspective)}' "
+            "관점에 집중해 답하라."
         )
-        if out.get("found"):
-            domain = out.get("domain")
-            target_id = (out.get("target_id") or "").upper()
-            intent = out.get("intent")
-            if intent not in ("qa", "research", "report"):
-                intent = None
-            if domain in ("country", "region") and target_id:
-                # 환각 가드: 메시지에 구체 국가/권역명(별칭)이 전혀 없는데 일반 지칭어
-                # ("국가/권역/나라/어디")만 있으면 LLM 코드를 믿지 않고 되묻는다.
-                if _GENERIC_TARGET_RE.search(message) and not _match_alias(message):
-                    _log.info("일반 지칭어만 있고 별칭 매칭 없음 — LLM 환각(%s) 무시, 되묻기", target_id)
-                    return None
-                return domain, target_id, intent
-    except bedrock_client.BedrockError as exc:
-        _log.warning("LLM 대상/의도 추출 실패 — 결정적 매칭으로 폴백: %s", exc)
+    scenario = chatbot_flow.load_scenario()
+    if scenario:
+        system += f"\n\n[챗봇 시나리오]\n{scenario}"
+    return system
 
-    # 결정적 폴백: 질문 텍스트에서 국가/권역명 직접 매칭(ES 고정 버그 방지). 의도는 정규식 보강.
-    matched = _match_alias(message)
-    if matched:
-        _log.info("결정적 매칭으로 대상 식별: %s", matched)
-        return matched[0], matched[1], None
+
+def _build_messages(req: ChatRequest) -> list:
+    """history + 현재 질문 → Anthropic messages 배열. 관점·멤버 힌트를 현재 질문에 주입."""
+    messages: list = []
+    for turn in req.history or []:
+        messages.append({"role": turn.role, "content": turn.content})
+    hints: List[str] = []
+    if req.perspective:
+        hints.append(f"[관점] {_PERSPECTIVE_LABEL.get(req.perspective, req.perspective)}")
+    if req.member_codes:
+        hints.append(f"[멤버 후보] {', '.join(c.upper() for c in req.member_codes)}")
+    content = req.message if not hints else f"{chr(10).join(hints)}\n\n{req.message}"
+    messages.append({"role": "user", "content": content})
+    return messages
+
+
+# ── tool_trace → ChatResponse 결정적 조립 ───────────────────────────
+def _last_lookup(trace: List[dict]) -> Optional[dict]:
+    """trace에서 마지막으로 성공한 lookup_target 결과(error 없는)를 반환."""
+    for t in reversed(trace):
+        if t["name"] == "lookup_target":
+            r = t.get("result") or {}
+            if not r.get("error") and r.get("target_id"):
+                return r
     return None
 
 
-# 후속 질문(직전 대상을 이어감) 신호어 — 명시 대상 없이도 직전 대상 유지.
-_FOLLOWUP_RE = re.compile(
-    r"(거기|그곳|그\s*나라|그\s*국가|위\s*나라|해당\s*국가|방금|아까|이어서|"
-    r"그럼|그러면|더|추가로|자세히|상세|보고서|리포트|report|"
-    r"there|that country|it\b|more detail|continue)"
-)
+def _blocked_suffix() -> str:
+    return " 보유 중인 국가 정보로만 답변드릴 수 있어요."
 
 
-def continues_prior_target(
-    message: str, history: Optional[List[ChatTurn]] = None
-) -> bool:
-    """명시 대상이 없어도 직전 대상을 이어가는 후속 질문인지 판정.
+def _assemble(trace: List[dict], final_text: str, req: ChatRequest) -> ChatResponse:
+    """tool_trace + 최종 답변 → ChatResponse. 정책·관점 게이트를 결정적으로 적용.
 
-    대화 이력이 있고(이미 한 번 답변함) + 후속 신호어가 있으면 True → 라우터가
-    프론트의 직전 target을 유지한다. 첫 턴(이력 없음)에서는 False → 되묻기."""
-    has_prior = bool(history and any(t.role == "assistant" for t in history))
-    if not has_prior:
-        return False
-    return bool(_FOLLOWUP_RE.search(message.lower()))
+    우선순위: 보고서 제안 > 리서치 제안 > 관점 되묻기 > 일반 답변(qa).
+    트리거 허용 여부는 research_policy로 재검증(LLM 판단 무시)."""
+    names = {t["name"] for t in trace}
+    lookup = _last_lookup(trace)
+    if lookup:
+        domain = lookup["domain"]
+        target = lookup["target_id"]
+        exists = bool(lookup.get("exists"))
+        has_report = bool(lookup.get("has_report"))
+    else:
+        # lookup 없음 — 프론트가 보낸 직전 대상 유지(대화 연속성).
+        domain = req.domain
+        target = req.target_id.upper()
+        exists = storage_resolver.research_exists(domain, target)
+        has_report = storage_resolver.latest_report_id(domain, target) is not None
 
-
-def ask_for_target() -> ChatResponse:
-    """대상 국가를 식별하지 못했을 때 되묻는 응답(ES 등으로 임의 답변 금지).
-
-    보유 국가 목록을 함께 안내해 사용자가 고르도록 한다."""
-    countries = storage_resolver.list_countries()
-    names = ", ".join((c.name_ko or c.name) for c in countries) or "(없음)"
-    return ChatResponse(
-        intent="qa",
-        exists=False,
-        answer=(
-            "어느 국가에 대해 알려드릴까요? 국가명을 말씀해 주시면 진단을 도와드립니다.\n"
-            "(대륙·권역 전체보다 구체적인 국가를 지정해 주세요. 예: 나이지리아, 남아공)\n\n"
-            f"현재 보유 중인 국가 데이터: {names}\n"
-            "목록에 없는 국가는 리서치를 통해 새로 조사할 수 있어요."
-        ),
+    resp = ChatResponse(
+        resolved_domain=domain,
+        resolved_target_id=target,
+        exists=exists,
+        has_report=has_report,
     )
 
+    # ── 보고서 생성 제안 ──
+    if "propose_report" in names:
+        if exists:
+            resp.intent = "report"
+            resp.needs_report = True
+            resp.auto_trigger = True
+            resp.research_suggestion = (
+                f"{target} 진단 보고서를 {'재생성' if has_report else '생성'}합니다."
+            )
+            resp.actions = ["re_report" if has_report else "report"]
+            return resp
+        # 미보유 → 보고서 전에 리서치 필요.
+        allowed, reason = research_policy.research_allowed(domain, target)
+        resp.intent = "research"
+        if allowed:
+            resp.needs_research = True
+            resp.research_suggestion = (
+                f"{target} 보유 데이터가 없어 보고서를 만들 수 없습니다. 먼저 리서치를 진행할까요?"
+            )
+            resp.actions = ["research"]
+        else:
+            resp.research_suggestion = (reason or f"'{target}'는 리서치할 수 없습니다.") + _blocked_suffix()
+        return resp
 
-def _summarize(data: dict, perspective: Optional[str] = None) -> str:
-    """L8 컨텍스트 요약 — overall_insight + 핵심 score/gate items(토큰 절약).
+    # ── 리서치 수행 제안 ──
+    if "propose_research" in names:
+        allowed, reason = research_policy.research_allowed(domain, target)
+        resp.intent = "research"
+        if not allowed:
+            # 정책 거부 — 잠정답(있으면) 유지하고 거절 사유 안내.
+            resp.research_suggestion = (reason or f"'{target}'는 리서치할 수 없습니다.") + _blocked_suffix()
+            if final_text:
+                resp.answer = final_text
+            return resp
+        resp.needs_research = True
+        if exists:
+            resp.auto_trigger = True  # 보유국 재리서치 = 명시 요청 → 즉시 트리거.
+            resp.research_suggestion = f"{target} 리서치를 재수행합니다."
+            resp.actions = ["re_research"] if domain == "country" else []
+        else:
+            resp.research_suggestion = "외부 리서치를 진행할까요?"
+            resp.actions = ["research"]
+        return resp
 
-    perspective(business/system/both)가 주어지면 해당 관점 category의 item만 추린다
-    (senario.md 관점별 답변). 미지정이면 전체.
-    """
-    cats = _PERSPECTIVE_CATEGORIES.get(perspective or "")
-    parts: List[str] = []
-    oi = data.get("overall_insight")
-    if oi:
-        parts.append(f"[종합] {oi}")
-    items = data.get("items") or []
-    picked = 0
-    for it in items:
-        if cats is not None and it.get("category") not in cats:
-            continue
-        if it.get("role") in ("score", "gate"):
-            seg = f"- {it.get('item')}: {it.get('value', '')} {it.get('unit', '')}".rstrip()
-            ins = it.get("insight")
-            if ins:
-                seg += f" — {ins}"
-            parts.append(seg)
-            picked += 1
-            if picked >= 12:  # 핵심 N개만(토큰 절약)
-                break
-    return "\n".join(parts)
+    # ── 관점 되묻기(결정적 게이트, senario.md Case2/3) ──
+    # 보유 대상 qa인데 관점 미지정이면 답변 전에 되묻는다(LLM이 request_perspective를
+    # 안 불렀어도 강제). 답변은 싣지 않는다.
+    if exists and not req.perspective:
+        resp.intent = "qa"
+        resp.needs_perspective = True
+        resp.research_suggestion = _PERSPECTIVE_QUESTION
+        return resp
 
-
-# ── 의도 감지 (qa / research / report) ──────────────────────────
-# 보고서 생성은 사용자가 '보고서/리포트 생성·만들어'를 명시할 때만 트리거(요구사항).
-_REPORT_RE = re.compile(
-    r"(보고서|리포트|report).*(생성|제작|만들|작성|뽑|발행|재생성|다시\s*생성)"
-    r"|(생성|제작|만들|작성|뽑|발행|재생성|다시\s*생성).*(보고서|리포트|report)"
-)
-# 리서치 수행/재수행 명시 의도.
-_RESEARCH_RE = re.compile(
-    r"(리서치|조사|research).*(해|수행|진행|시작|돌려|재수행|다시|업데이트|갱신|새로)"
-    r"|(재수행|다시|업데이트|갱신|새로).*(리서치|조사|research)"
-)
+    # ── 일반 답변(qa) ──
+    resp.intent = "qa"
+    resp.answer = final_text or None
+    if exists:
+        resp.actions = _qa_actions(domain, True, has_report)
+    return resp
 
 
-def _detect_intent(message: str) -> str:
-    """메시지에서 사용자 의도 분류: report > research > qa(기본)."""
-    low = message.lower()
-    if _REPORT_RE.search(low):
-        return "report"
-    if _RESEARCH_RE.search(low):
-        return "research"
-    return "qa"
+# ── 후속 추천 질문(senario.md 틀 안) ───────────────────────────────
+def _generate_followups(domain: str, target_id: str, answer: str) -> List[str]:
+    """보유 대상 qa 답변에 이어질 후속 질문 2~3개를 경량 생성. 실패 시 [](회귀 없음).
+
+    senario.md 틀 안에서만 제안하도록 _suggestion_directive를 프롬프트에 주입한다.
+    답변 스트림 품질 보존을 위해 답변 생성과 분리된 별도 경량 호출."""
+    try:
+        prompt = (
+            f"방금 '{target_id}'({domain})에 대해 아래와 같이 답했다:\n{answer}\n\n"
+            "사용자가 이어서 물어볼 만한 짧은 후속 질문 2~3개를, 사용자가 그대로 보내도 "
+            "말이 되는 1인칭 질문 형태로 한 줄에 하나씩만 출력하라(번호·기호·설명 없이)."
+        )
+        text = bedrock_client.generate_text(prompt, system=_suggestion_directive())
+        lines = [ln.strip(" -•\t") for ln in (text or "").splitlines() if ln.strip()]
+        return lines[:3]
+    except Exception as exc:  # noqa: BLE001 — 후속칩 실패는 무시(답변은 이미 전달됨).
+        _log.warning("후속칩 생성 실패(생략): %s", exc)
+        return []
 
 
-def _suggestion_directive() -> str:
-    """후속 추천칩 생성 지침 — senario.md의 케이스·관점·보고서 틀 안에서만 제안하도록 제약.
+def _attach_followups(resp: ChatResponse) -> None:
+    """qa + 보유 + 답변 있음일 때만 후속칩을 단다(관점 되묻기·트리거 응답엔 안 단다)."""
+    if (
+        resp.intent == "qa"
+        and resp.exists
+        and resp.answer
+        and not resp.needs_perspective
+        and resp.resolved_domain
+        and resp.resolved_target_id
+    ):
+        resp.suggested_prompts = _generate_followups(
+            resp.resolved_domain, resp.resolved_target_id, resp.answer
+        )
 
-    senario.md를 런타임에 읽어 시스템 프롬프트에 주입한다(틀 SoT). 파일이 없으면 틀 없이도
-    동작(빈 문자열). 챗봇이 만들어내는 후속질문이 시나리오 범위를 벗어나지 않게 한다."""
-    scenario = chatbot_flow.load_scenario()
-    base = (
-        " 답변 뒤에는 사용자가 이어서 물어볼 만한 후속 질문 2~3개를 suggested_prompts로 제안하라. "
-        "후속 질문은 아래 챗봇 시나리오의 케이스·관점(비즈니스/시스템/Both)·보고서 흐름 안에서, "
-        "지금 다루는 대상 국가/권역에 대해 자연스럽게 더 깊이 들어가는 짧은 질문이어야 한다. "
-        "사용자가 그대로 보내도 말이 되는 1인칭 질문 형태로, 시나리오 밖 주제는 제안하지 마라."
+
+# ── 진입점: 동기 / 스트림 ───────────────────────────────────────────
+def handle_agent(req: ChatRequest) -> ChatResponse:
+    """챗봇 1턴 처리(동기) — tool-use 에이전트 루프 → ChatResponse.
+
+    POST /api/chat가 호출. 스트림(POST /api/chat/stream)과 같은 엔진·게이트를 공유하되
+    최종 답변을 한 번에 반환한다(스트림 미지원 클라이언트 폴백)."""
+    system = _agent_system(req.perspective)
+    messages = _build_messages(req)
+    final_text, trace = bedrock_client.run_agent(
+        messages, chat_tools.TOOLS, system, chat_tools.execute_tool, stop_on=_STOP_TOOLS
     )
-    if scenario:
-        base += f"\n\n[챗봇 시나리오]\n{scenario}"
-    return base
+    resp = _assemble(trace, final_text, req)
+    _attach_followups(resp)
+    return resp
 
 
-def _answer_existing(
-    domain: str,
-    target_id: str,
-    message: str,
-    history: Optional[List[ChatTurn]],
-    perspective: Optional[str] = None,
-) -> tuple:
-    """보유 데이터 기반 LLM 답변 + 후속 추천칩 → (answer, [suggested_prompts]).
+def stream_agent(req: ChatRequest):
+    """챗봇 1턴 처리(스트림) — bedrock_client.stream_agent 이벤트를 그대로 중계하는 제너레이터.
 
-    관점이 있으면 해당 관점으로 답한다. 후속칩은 senario.md 틀 안에서만 제안된다."""
-    data = storage_resolver._load_latest_research(domain, target_id) or {}
-    ctx = _summarize(data, perspective)
-    system = _SYSTEM
-    if perspective:
-        system += f" 이번 답변은 '{_PERSPECTIVE_LABEL.get(perspective, perspective)}' 관점에 집중해 답하라."
-    system += _suggestion_directive()
-    hist = [{"role": t.role, "content": t.content} for t in (history or [])]
-    return bedrock_client.generate_text_with_suggestions(
-        message, system=system, context=ctx, history=hist
-    )
+    yield하는 이벤트(라우터가 SSE 프레임으로 직렬화):
+      {"type": "status", "tool": <name>}   — 도구 호출 중(분석 표시)
+      {"type": "token", "text": <delta>}   — 답변 토큰(타이핑 효과)
+      {"type": "done", "response": <ChatResponse dict>}  — 종료(플래그·칩)
+
+    관점 되묻기(needs_perspective)면 답변 토큰을 흘리지 않는다 — request_perspective가
+    stop_on으로 루프를 답변 전에 멈추기 때문. 만약 토큰이 일부 새어도 done의 플래그가
+    최종 결정이며, 프론트가 done에서 버블을 정리한다."""
+    system = _agent_system(req.perspective)
+    messages = _build_messages(req)
+    final_text = ""
+    trace: List[dict] = []
+    for ev in bedrock_client.stream_agent(
+        messages, chat_tools.TOOLS, system, chat_tools.execute_tool, stop_on=_STOP_TOOLS
+    ):
+        if ev["type"] == "token":
+            yield {"type": "token", "text": ev["text"]}
+        elif ev["type"] == "status":
+            yield {"type": "status", "tool": ev["tool"]}
+        elif ev["type"] == "final":
+            final_text = ev.get("text", "")
+            trace = ev.get("trace", [])
+    resp = _assemble(trace, final_text, req)
+    _attach_followups(resp)
+    yield {"type": "done", "response": resp.model_dump()}
 
 
+# ── 보존·재사용 헬퍼 (기존 동작 유지) ───────────────────────────────
 def _qa_actions(domain: str, exists: bool, has_report: bool) -> List[str]:
-    """보유 대상 QA 답변에 함께 노출할 선택지(상세요약/리서치 재수행/보고서).
+    """보유 대상 qa 답변에 함께 노출할 선택지(상세요약/리서치 재수행/보고서).
 
     정책: 권역(region)은 재리서치를 제공하지 않는다(권역 리서치 전면 제외).
-    국가는 보유국이므로 재리서치 허용.
-    """
+    국가는 보유국이므로 재리서치 허용."""
     if not exists:
         return []
     actions = ["summary"]
@@ -425,175 +291,33 @@ def _qa_actions(domain: str, exists: bool, has_report: bool) -> List[str]:
     return actions
 
 
-def _region_research_blocked(target_id: str, exists: bool, has_report: bool) -> ChatResponse:
-    """권역 리서치 요청을 정중히 거절(트리거 없음). 보유 권역이면 보고서 선택지는 유지."""
-    return ChatResponse(
-        intent="qa",
-        exists=exists,
-        has_report=has_report,
-        needs_research=False,
-        research_suggestion=(
-            "권역 단위 신규 리서치는 현재 지원하지 않습니다. "
-            "보유 중인 권역(EU·북미·남미·아시아태평양) 정보로 답변드리거나, "
-            "권역 내 개별 국가의 리서치를 도와드릴 수 있어요."
-        ),
-        actions=_qa_actions("region", exists, has_report) if exists else [],
+def _suggestion_directive() -> str:
+    """후속 추천칩 생성 지침 — senario.md 케이스·관점·보고서 틀 안에서만 제안하도록 제약."""
+    scenario = chatbot_flow.load_scenario()
+    base = (
+        "너는 글로벌 오토파이낸스 진출 진단 서비스 챗봇의 후속 질문 제안기다. "
+        "후속 질문은 챗봇 시나리오의 케이스·관점(비즈니스/시스템/Both)·보고서 흐름 안에서, "
+        "지금 다루는 대상 국가/권역에 대해 자연스럽게 더 깊이 들어가는 짧은 질문이어야 한다. "
+        "시나리오 밖 주제는 제안하지 마라."
     )
+    if scenario:
+        base += f"\n\n[챗봇 시나리오]\n{scenario}"
+    return base
 
 
-def _country_research_blocked(target_id: str) -> ChatResponse:
-    """보유 권역 밖 국가의 신규 리서치 요청을 거절(트리거 없음)."""
-    _allowed, reason = research_policy.country_research_allowed(target_id)
+def ask_for_target() -> ChatResponse:
+    """대상 국가를 식별하지 못했을 때 되묻는 응답(임의 답변 금지). 보유 목록 안내.
+
+    에이전트가 list_available로 대화 중 처리하므로 평소엔 쓰이지 않으나, 라우터의
+    방어적 폴백 경로를 위해 보존한다."""
+    countries = storage_resolver.list_countries()
+    names = ", ".join((c.name_ko or c.name) for c in countries) or "(없음)"
     return ChatResponse(
         intent="qa",
         exists=False,
-        needs_research=False,
-        research_suggestion=(
-            (reason or f"'{target_id}'는 신규 리서치할 수 없습니다.")
-            + " 보유 중인 국가 정보로만 답변드릴 수 있어요."
+        answer=(
+            "어느 국가에 대해 알려드릴까요? 국가명을 말씀해 주시면 진단을 도와드립니다.\n\n"
+            f"현재 보유 중인 국가 데이터: {names}\n"
+            "목록에 없는 국가는 리서치를 통해 새로 조사할 수 있어요."
         ),
-        actions=[],
-    )
-
-
-def _ask_for_perspective(domain: str, target_id: str, has_report: bool) -> ChatResponse:
-    """QA 전에 관점(비즈니스/시스템/Both)을 되묻는 응답(senario.md). 답변은 하지 않는다."""
-    return ChatResponse(
-        intent="qa",
-        exists=True,
-        has_report=has_report,
-        needs_perspective=True,
-        research_suggestion="어떤 관점으로 설명해 드릴까요? (비즈니스 / 시스템 / 둘 다)",
-    )
-
-
-def handle(
-    domain: str,
-    target_id: str,
-    message: str,
-    history: Optional[List[ChatTurn]] = None,
-    member_codes: Optional[List[str]] = None,
-    perspective: Optional[str] = None,
-    intent: Optional[str] = None,
-) -> ChatResponse:
-    """챗봇 1턴 처리. §6.5 분기 + 의도(qa/research/report) 기반 트리거·선택지 노출.
-
-    원칙:
-    - 기본은 내부 보유 데이터로만 답변(qa).
-    - 보유국에 리서치 재수행/보고서 생성을 명시하면 즉시 트리거(auto_trigger=True).
-    - 미보유국은 리서치 의도를 먼저 묻고(needs_research), 사용자가 거절하면 보유국
-      정보에 한해서만 답변(프론트가 안내) — 없는 국가를 임의로 답하지 않는다.
-    - 보고서 생성은 '국가 + 보고서 생성' 명시일 때만 트리거.
-
-    intent(qa/research/report)는 resolve_target의 LLM 분류 결과를 받는다. None이면
-    정규식 _detect_intent로 보강한다(LLM 미사용·실패 시 회귀 없음)."""
-    exists = storage_resolver.research_exists(domain, target_id)
-    has_report = storage_resolver.latest_report_id(domain, target_id) is not None
-    if intent not in ("qa", "research", "report"):
-        intent = _detect_intent(message)
-
-    if domain == "region" and member_codes:
-        missing = [
-            c for c in member_codes
-            if not storage_resolver.research_exists("country", c)
-        ]
-    else:
-        missing = []
-
-    # 부분 데이터 — 권역은 있으나 일부 멤버 누락. 정책상 권역 리서치는 제외하므로
-    # 트리거하지 않고, 보유 정보로 답하거나 개별 국가 리서치를 안내한다.
-    if domain == "region" and exists and missing:
-        return _region_research_blocked(target_id, exists, has_report)
-
-    # ── 보고서 생성 의도 ──
-    if intent == "report":
-        if exists and not missing:
-            verb = "재생성" if has_report else "생성"
-            return ChatResponse(
-                intent="report",
-                exists=True,
-                has_report=has_report,
-                needs_report=True,
-                auto_trigger=True,
-                research_suggestion=f"{target_id} 진단 보고서를 {verb}합니다.",
-                actions=["re_report" if has_report else "report"],
-            )
-        # 미보유 → 보고서 전에 리서치 필요. 단, 정책상 막힌 대상은 리서치를 제안하지 않는다.
-        if domain == "region":
-            return _region_research_blocked(target_id, exists, has_report)
-        allowed, _reason = research_policy.country_research_allowed(target_id)
-        if not allowed:
-            return _country_research_blocked(target_id)
-        return ChatResponse(
-            intent="research",
-            exists=False,
-            needs_research=True,
-            research_suggestion=(
-                f"{target_id} 보유 데이터가 없어 보고서를 만들 수 없습니다. "
-                "먼저 외부 리서치를 진행할까요?"
-            ),
-            actions=["research"],
-        )
-
-    # ── 리서치 수행/재수행 의도 ──
-    if intent == "research":
-        # 정책: 권역 리서치는 신규·재수행 모두 제외. 보유 권역이면 보고서 선택지만 유지.
-        if domain == "region":
-            return _region_research_blocked(target_id, exists, has_report)
-        if exists and not missing:
-            return ChatResponse(
-                intent="research",
-                exists=True,
-                has_report=has_report,
-                needs_research=True,
-                auto_trigger=True,  # 보유국 재리서치 = 명시 요청 → 즉시 트리거.
-                research_suggestion=f"{target_id} 리서치를 재수행합니다.",
-                actions=["re_research"],
-            )
-        # 미보유 국가 신규 리서치 — 보유 권역 소속만 허용(정책).
-        allowed, _reason = research_policy.country_research_allowed(target_id)
-        if not allowed:
-            return _country_research_blocked(target_id)
-        return ChatResponse(
-            intent="research",
-            exists=False,
-            needs_research=True,
-            research_suggestion="외부 리서치를 진행할까요?",
-            actions=["research"],
-        )
-
-    # ── 일반 질의(qa) ──
-    if exists and not missing:
-        # 관점 미선택이면 먼저 되묻는다(senario.md Case2/3 — 비즈니스/시스템/Both).
-        if not perspective:
-            return _ask_for_perspective(domain, target_id, has_report)
-        answer, suggested = _answer_existing(
-            domain, target_id, message, history, perspective
-        )
-        return ChatResponse(
-            intent="qa",
-            exists=True,
-            has_report=has_report,
-            answer=answer,
-            actions=_qa_actions(domain, True, has_report),
-            suggested_prompts=suggested,
-        )
-
-    # 미보유 일반 질의 → 임의 답변 금지.
-    # 정책: 권역은 신규 리서치 제외 → 거절 안내. 국가는 보유 권역 소속만 리서치 제안.
-    if domain == "region":
-        return _region_research_blocked(target_id, exists, has_report)
-    allowed, _reason = research_policy.country_research_allowed(target_id)
-    if not allowed:
-        return _country_research_blocked(target_id)
-    sug = (
-        f"'{target_id}' 보유 정보가 없습니다. 외부 리서치를 진행할까요? "
-        "(원치 않으시면 보유 중인 국가 정보로만 답변드릴 수 있어요.)"
-    )
-    return ChatResponse(
-        intent="research",
-        exists=False,
-        needs_research=True,
-        research_suggestion=sug,
-        actions=["research"],
     )

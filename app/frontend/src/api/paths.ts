@@ -60,6 +60,7 @@ export const paths = {
   job: (jobId: string) => `${API}/jobs/${jobId}`,
   research: (domain: Domain, id: string) => `${base(domain, id)}/research`,
   chat: () => `${API}/chat`,
+  chatStream: () => `${API}/chat/stream`,
   chatFlow: () => `${API}/chat/flow`,
   ruleset: () => `${API}/ruleset`,
   rulesetVersions: () => `${API}/ruleset/versions`,

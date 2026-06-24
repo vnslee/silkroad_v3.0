@@ -98,6 +98,10 @@ _DEFAULT_CHAT_MODEL = (
 )
 CHAT_MODEL = os.environ.get("CHAT_MODEL", _DEFAULT_CHAT_MODEL)
 RESEARCH_MAX_TOKENS = int(os.environ.get("RESEARCH_MAX_TOKENS", "16000"))
+# 챗봇 에이전트 루프 — 짧은 답변·도구 왕복용. 리서치(16000)보다 작게(레이턴시·비용 절감).
+CHAT_MAX_TOKENS = int(os.environ.get("CHAT_MAX_TOKENS", "2000"))
+# tool-use 왕복 최대 반복(무한 루프 방지). 식별→요약→정책→제안이면 3~4회면 충분.
+CHAT_AGENT_MAX_ITERS = int(os.environ.get("CHAT_AGENT_MAX_ITERS", "6"))
 
 
 def web_search_supported() -> bool:
