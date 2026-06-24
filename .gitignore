@@ -23,6 +23,15 @@ yarn-error.log*
 
 # Frontend build output (배포 시 Dockerfile이 빌드 — 추적하지 않음)
 app/frontend/dist/
+*.tsbuildinfo
+
+# Test / coverage artifacts
+coverage/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+.vitest/
 
 # OS / Editor
 .DS_Store
