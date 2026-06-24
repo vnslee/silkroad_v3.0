@@ -1,5 +1,5 @@
 // AppShell(C1) — 라우팅·진입 모드 컨테이너 선택·전역 레이아웃·딥링크 인트로 스킵(L1·L2).
-import { lazy, Suspense, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { useRoute } from './app/useRoute'
 import { isDeepLink } from './app/route'
 import { PopupContainer } from './app/containers/PopupContainer'
@@ -24,16 +24,19 @@ function prefersReducedMotion(): boolean {
 export default function App() {
   const { route, navigate, goHome } = useRoute()
   // 인트로(지구본) 스킵 조건: ① 딥링크 진입 ② CI/로고로 지도 복귀(skipIntro 플래그) — 둘 다 지도부터.
-  // 플래그 읽기+소비를 useState 이니셜라이저 안에서 원자적으로 처리(StrictMode 이중 렌더에도 1회만 실행).
+  // ⚠️ 이니셜라이저는 순수해야 한다(부수효과 금지). StrictMode(dev)는 useState 이니셜라이저를
+  //    2번 호출하므로, 여기서 removeItem 하면 1차 호출이 플래그를 지워 2차 호출이 false를 반환 →
+  //    skipIntro가 무시되고 지구본이 다시 뜬다. 플래그 소비는 아래 useEffect로 분리.
   const [introDone, setIntroDone] = useState(() => {
     if (typeof window === 'undefined') return false
     if (isDeepLink(window.location.hash)) return true
-    if (sessionStorage.getItem('skipIntro') === '1') {
-      sessionStorage.removeItem('skipIntro') // 1회성: 소비 후 제거
-      return true
-    }
-    return false
+    return sessionStorage.getItem('skipIntro') === '1'
   })
+
+  // skipIntro 플래그 소비(1회성) — 마운트 후 제거. 이니셜라이저 밖이라 StrictMode 이중 호출 영향 없음.
+  useEffect(() => {
+    if (typeof window !== 'undefined') sessionStorage.removeItem('skipIntro')
+  }, [])
   // 인트로를 실제로 본 경우에만 지도 줌인 모핑(딥링크·reduced-motion 진입은 정적)
   const [mapEnter, setMapEnter] = useState(false)
 

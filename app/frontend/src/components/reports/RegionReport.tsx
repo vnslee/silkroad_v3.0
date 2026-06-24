@@ -18,12 +18,12 @@ interface Props {
 
 type TabId = 'summary' | 'killswitch' | 'attractiveness' | 'it' | 'market'
 
-const TABS: { id: TabId; icon: string; label: string; sub: string }[] = [
-  { id: 'summary', icon: 'summarize', label: '요약', sub: 'Summary' },
-  { id: 'killswitch', icon: 'verified_user', label: '킬스위치', sub: 'Kill-Switch' },
-  { id: 'attractiveness', icon: 'trending_up', label: '매력도', sub: 'Attractiveness' },
-  { id: 'it', icon: 'leaderboard', label: 'IT/순위', sub: 'IT & Ranking' },
-  { id: 'market', icon: 'public', label: '시장배경', sub: 'Market' },
+const TABS: { id: TabId; label: string; sub: string }[] = [
+  { id: 'summary', label: '요약', sub: 'Summary' },
+  { id: 'killswitch', label: '킬스위치', sub: 'Kill-Switch' },
+  { id: 'attractiveness', label: '매력도', sub: 'Attractiveness' },
+  { id: 'it', label: 'IT/순위', sub: 'IT & Ranking' },
+  { id: 'market', label: '시장배경', sub: 'Market' },
 ]
 
 // 탭 id → 콘텐츠 컴포넌트(인쇄 시 전체 펼침에 재사용).
@@ -84,7 +84,6 @@ export function RegionReport({ data, className = '', printMode = false }: Props)
                       : 'text-text-secondary hover:bg-surface-container'
                   }`}
                 >
-                  <span className="material-symbols-outlined text-[18px]">{t.icon}</span>
                   <span>{t.label}</span>
                   <span className="opacity-60 text-[10px]">{t.sub}</span>
                 </button>

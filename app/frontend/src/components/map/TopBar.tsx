@@ -24,15 +24,6 @@ function nav(hash: string) {
   window.location.hash = hash
 }
 
-function statusBadge(
-  c: { is_baseline?: boolean; has_report: boolean },
-  t: (k: string) => string,
-): { label: string; cls: string } {
-  if (c.is_baseline) return { label: t('badge.baseline'), cls: 'bg-secondary-fixed text-on-secondary-fixed-variant' }
-  if (c.has_report) return { label: t('badge.entered'), cls: 'bg-success-container text-success' }
-  return { label: t('badge.planned'), cls: 'bg-surface-container text-text-secondary' }
-}
-
 export function TopBar({ countries, regions }: Props) {
   const [menu, setMenu] = useState<MenuKey>(null)
   const [search, setSearch] = useState('')
@@ -80,7 +71,7 @@ export function TopBar({ countries, regions }: Props) {
       </button>
 
       {/* 내비 — 각 항목별 드롭다운을 트리거 아래에 앵커 */}
-      <nav className="flex flex-none items-center gap-[2px] whitespace-nowrap text-[14px]">
+      <nav className="flex flex-none items-center gap-[2px] whitespace-nowrap text-[16px]">
         <NavMenu
           label={t('nav.country')}
           open={menu === 'country'}
@@ -88,21 +79,19 @@ export function TopBar({ countries, regions }: Props) {
           onClose={close}
         >
           <Dropdown title={t('menu.countryTitle')}>
-            {countries.slice(0, 8).map((c) => {
-              const b = statusBadge(c, t)
-              return (
-                <DropdownRow
-                  key={c.code}
-                  onClick={() => {
-                    close()
-                    nav(`#/country/${c.code}/detail?mode=fullscreen`)
-                  }}
-                >
-                  <span className="truncate">{c.name_ko ? `${c.name_ko} (${c.name})` : c.name}</span>
-                  <span className={`rounded px-sm py-[1px] font-label-sm text-label-sm ${b.cls}`}>{b.label}</span>
-                </DropdownRow>
-              )
-            })}
+            {countries.slice(0, 8).map((c) => (
+              <DropdownRow
+                key={c.code}
+                onClick={() => {
+                  close()
+                  nav(`#/country/${c.code}/detail?mode=fullscreen`)
+                }}
+              >
+                <span className={`truncate ${c.is_baseline ? 'font-semibold text-on-surface' : ''}`}>
+                  {c.name_ko ? `${c.name_ko} (${c.name})` : c.name}
+                </span>
+              </DropdownRow>
+            ))}
           </Dropdown>
         </NavMenu>
         <NavMenu
@@ -112,21 +101,17 @@ export function TopBar({ countries, regions }: Props) {
           onClose={close}
         >
           <Dropdown title={t('menu.regionTitle')}>
-            {regions.map((r) => {
-              const b = statusBadge(r, t)
-              return (
-                <DropdownRow
-                  key={r.code}
-                  onClick={() => {
-                    close()
-                    nav(`#/region/${r.code}/detail?mode=fullscreen`)
-                  }}
-                >
-                  <span className="truncate">{r.name_ko ? `${r.name_ko} (${r.name})` : r.name}</span>
-                  <span className={`rounded px-sm py-[1px] font-label-sm text-label-sm ${b.cls}`}>{b.label}</span>
-                </DropdownRow>
-              )
-            })}
+            {regions.map((r) => (
+              <DropdownRow
+                key={r.code}
+                onClick={() => {
+                  close()
+                  nav(`#/region/${r.code}/detail?mode=fullscreen`)
+                }}
+              >
+                <span className="truncate">{r.name_ko ? `${r.name_ko} (${r.name})` : r.name}</span>
+              </DropdownRow>
+            ))}
           </Dropdown>
         </NavMenu>
         <NavMenu
@@ -232,9 +217,11 @@ function Dropdown({ title, children }: { title: string; children: React.ReactNod
   return (
     <div
       role="menu"
-      className="absolute left-0 top-[calc(100%+6px)] z-[2] w-[244px] animate-aisea-pop rounded-[13px] border border-surface-border bg-surface-container-lowest p-[7px] shadow-[0_16px_44px_rgba(20,23,28,0.14)]"
+      className="absolute left-0 top-[calc(100%+6px)] z-[2] w-max min-w-[120px] max-w-[240px] animate-aisea-pop rounded-[13px] border border-surface-border bg-surface-container-lowest p-[7px] shadow-[0_16px_44px_rgba(20,23,28,0.14)]"
     >
-      <div className="px-md pb-xs pt-sm font-label-sm text-label-sm tracking-wide text-outline">{title}</div>
+      {title && (
+        <div className="px-md pb-xs pt-sm font-label-sm text-label-sm tracking-wide text-outline">{title}</div>
+      )}
       {children}
     </div>
   )

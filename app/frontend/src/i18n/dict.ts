@@ -14,11 +14,11 @@ export const DICT: Dict = {
   'nav.report': { ko: '보고서', en: 'Reports' },
   'nav.ruleset': { ko: '룰셋', en: 'Ruleset' },
   'nav.toHome': { ko: '메인 지도로 이동', en: 'Go to map' },
-  'menu.countryTitle': { ko: '국가 정보 · 풀사이즈', en: 'Countries · Fullscreen' },
-  'menu.regionTitle': { ko: '권역 정보 · 풀사이즈', en: 'Regions · Fullscreen' },
-  'menu.reportTitle': { ko: '진단 보고서 · 풀사이즈', en: 'Reports · Fullscreen' },
-  'menu.countryReport': { ko: '📄 국가 진단 보고서', en: '📄 Country report' },
-  'menu.regionReport': { ko: '🗂️ 권역 진단 보고서', en: '🗂️ Region report' },
+  'menu.countryTitle': { ko: '', en: '' },
+  'menu.regionTitle': { ko: '', en: '' },
+  'menu.reportTitle': { ko: '', en: '' },
+  'menu.countryReport': { ko: '국가 진단 보고서', en: 'Country report' },
+  'menu.regionReport': { ko: '권역 진단 보고서', en: 'Region report' },
   'search.placeholder': { ko: '국가 검색…', en: 'Search country…' },
   'search.aria': { ko: '국가 검색', en: 'Search country' },
   'chat.aria': { ko: 'AISea 어시스턴트', en: 'AISea assistant' },
@@ -99,7 +99,7 @@ export const DICT: Dict = {
   'chat.summary.request': { ko: '{id} 핵심 지표를 요약해줘', en: 'Summarize key metrics for {id}' },
 
   // 화면 액션 버튼(상세/보고서 우측 상단)
-  'action.simulation': { ko: '시뮬레이션', en: 'Simulate' },
+  'action.simulation': { ko: '보고서 생성', en: 'Generate report' },
   'action.report': { ko: '보고서', en: 'Report' },
   'action.pdf': { ko: 'PDF', en: 'PDF' },
   'action.sendMail': { ko: '메일 발송', en: 'Send mail' },
@@ -111,8 +111,8 @@ export const DICT: Dict = {
 
   // 범례 / 지도
   'legend.title': { ko: '진출 현황', en: 'Market status' },
-  'legend.established': { ko: '기진출국', en: 'Active markets' },
-  'legend.candidate': { ko: '진출후보국', en: 'Candidate markets' },
+  'legend.established': { ko: '기진출', en: 'Active markets' },
+  'legend.candidate': { ko: '진출 후보', en: 'Candidate markets' },
   'legend.operating': { ko: '운영중', en: 'Operating' },
   'legend.notEntered': { ko: '진출 예정국', en: 'Planned markets' },
   'legend.hyundai': { ko: '현대차 사업망', en: 'Hyundai network' },

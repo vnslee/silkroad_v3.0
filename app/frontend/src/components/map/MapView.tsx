@@ -395,7 +395,7 @@ export function MapView({ onSelectCountry, onSelectRegion, enterAnim = false }: 
       {/* hover 툴팁 — 권역 라벨('권역 · OO') / 국가명(한·영). 배경색은 권역/마커별(mockup). */}
       {tip && (
         <div
-          className="pointer-events-none absolute z-chrome -translate-x-1/2 -translate-y-[calc(100%+10px)] whitespace-nowrap rounded-lg px-sm py-xs font-label-md text-label-md font-semibold text-white shadow-[0_6px_18px_rgba(20,23,28,0.24)]"
+          className="pointer-events-none absolute z-chrome -translate-x-1/2 -translate-y-[calc(100%+10px)] whitespace-nowrap rounded-lg px-md py-xs text-[14px] font-semibold text-white shadow-[0_6px_18px_rgba(20,23,28,0.24)]"
           style={{ left: tip.x, top: tip.y, background: tip.bg }}
         >
           {tip.text}

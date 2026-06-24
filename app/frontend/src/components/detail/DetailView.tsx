@@ -293,12 +293,14 @@ export default function DetailView({ domain, code, mode }: Props) {
             iconName="play_circle"
             text={t('action.simulation')}
             isLoading={simulating}
+            expanded
             onClick={runSimulation}
           />
           <MicroExpander
             variant="default"
             iconName="description"
             text={t('action.report')}
+            expanded
             onClick={() => {
               window.location.hash = `#/${domain}/${code}/report?mode=${mode}`
             }}

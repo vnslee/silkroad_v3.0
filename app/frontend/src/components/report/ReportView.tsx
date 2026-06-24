@@ -301,12 +301,14 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
             variant="outline"
             iconName="picture_as_pdf"
             text={t('action.pdf')}
+            expanded
             onClick={handlePrintPdf}
           />
           <MicroExpander
             variant="default"
             iconName="forward_to_inbox"
             text={t('action.sendMail')}
+            expanded
             onClick={onSendMail}
           />
         </div>

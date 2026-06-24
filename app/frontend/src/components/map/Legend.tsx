@@ -11,7 +11,7 @@ export function Legend() {
     { key: 'legend.notEntered', color: LAND_COLORS.notEntered },
   ]
   return (
-    <div className="absolute bottom-lg left-lg z-chrome flex items-center gap-md rounded-[11px] border border-surface-border bg-[rgba(255,255,255,0.92)] px-md py-sm font-label-md text-[11.5px] text-on-surface-variant shadow-[0_4px_14px_rgba(20,23,28,0.06)] backdrop-blur-[8px]">
+    <div className="absolute bottom-lg left-lg z-chrome flex items-center gap-md rounded-[11px] border border-surface-border bg-[rgba(255,255,255,0.92)] px-md py-sm font-label-md text-[13.5px] text-on-surface-variant shadow-[0_4px_14px_rgba(20,23,28,0.06)] backdrop-blur-[8px]">
       <span className="font-semibold text-on-surface">{t('legend.title')}</span>
       {lands.map((l) => (
         <span key={l.key} className="flex items-center gap-xs">

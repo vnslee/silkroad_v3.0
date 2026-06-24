@@ -86,6 +86,7 @@ export const MicroExpander = React.forwardRef<HTMLButtonElement, MicroExpanderPr
             {isLoading ? (
               <motion.span
                 key="spinner"
+                className="flex items-center justify-center leading-none"
                 initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 exit={{ opacity: 0, scale: 0.5 }}
@@ -96,6 +97,7 @@ export const MicroExpander = React.forwardRef<HTMLButtonElement, MicroExpanderPr
             ) : (
               <motion.span
                 key="icon"
+                className="flex items-center justify-center leading-none"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
