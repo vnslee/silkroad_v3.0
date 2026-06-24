@@ -260,16 +260,10 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
   }
 
   return (
-<<<<<<< HEAD
     <div className="content-scale flex h-full min-h-0 flex-col">
-      {/* 헤더 chrome */}
-      <div className="flex shrink-0 items-start justify-between gap-gutter border-b border-surface-border p-lg pr-16">
-=======
-    <div className="flex h-full min-h-0 flex-col">
       {/* 헤더 chrome — relative z-overlay로 본문(sticky z-chrome)보다 위 스태킹 컨텍스트를 만들어
           드롭다운(absolute top-full)이 본문 위로 펼쳐지게 한다. */}
       <div className="relative z-overlay flex shrink-0 items-start justify-between gap-gutter border-b border-surface-border p-lg pr-16">
->>>>>>> 42abc18 (야간 수술)
         <div className="flex items-start gap-md">
           {/* 국기(국가) / 권역 엠블럼 — 참조 RPT_CTR_PL_003 헤더 형식 */}
           <HeaderEmblem domain={domain} code={code} name={name} />

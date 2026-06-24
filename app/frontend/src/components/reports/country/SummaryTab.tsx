@@ -240,16 +240,6 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
           </Panel>
         </div>
         <div className="lg:col-span-12">
-<<<<<<< HEAD
-          <Panel title={t('sum.overallInsight')}>
-            <ul className="flex flex-col gap-sm list-none p-0 m-0">
-              {splitSentences(lang === 'en' && data.overall_insight_en ? data.overall_insight_en : data.overall_insight).map((sentence, i) => (
-                <li key={i} className="flex items-start gap-sm">
-                  <span className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                    {sentence}
-                  </span>
-                </li>
-=======
           {/* 권역 상세 인사이트(RegionInsight)와 동일한 다크 히어로 카드 —
               잉크블랙 그라디언트 + 라임그린(#C8F051) 라벨 + AI 아이콘(ai_icon.png). */}
           <div
@@ -274,7 +264,7 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
               </h2>
             </div>
             <div className="flex flex-col gap-sm [&_strong]:text-white">
-              {splitSentences(data.overall_insight).map((sentence, i) => (
+              {splitSentences(lang === 'en' && data.overall_insight_en ? data.overall_insight_en : data.overall_insight).map((sentence, i) => (
                 <p
                   key={i}
                   className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0"
@@ -282,7 +272,6 @@ export function SummaryTab({ data }: { data: CountryReportData }) {
                 >
                   {sentence}
                 </p>
->>>>>>> 42abc18 (야간 수술)
               ))}
             </div>
           </div>

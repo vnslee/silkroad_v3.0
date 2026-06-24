@@ -6,13 +6,10 @@ import type { CountryDetailData, CountryReportData, DetailItem, RankedEntity } f
 import type { RoseChartDatum } from '../charts'
 import { LineChart, RoseChart } from '../charts'
 import { locText } from '../reports/country/shared'
-<<<<<<< HEAD
 import { useT, valueLabel } from '../../i18n/dict'
 import { useLang } from '../../i18n/locale'
 import type { Lang } from '../../store'
-=======
 import { RegulatoryGates, RecoveryRiskPanel, ITMaturityPanel } from './CountryDiagnostics'
->>>>>>> 42abc18 (야간 수술)
 
 interface Props {
   data: CountryDetailData
@@ -169,16 +166,6 @@ export function CountryDetail({
 
             {/* 우: AI 인사이트 + 베이스라인 */}
             <div className="flex flex-col gap-lg lg:border-l border-surface-border lg:pl-lg">
-<<<<<<< HEAD
-              <h3 className="font-headline-md text-headline-md text-primary -mb-2">
-                {t('dtl.aiInsight')}
-              </h3>
-              <ul className="flex flex-col gap-xs">
-                {bullets.map((b, i) => (
-                  <li key={i} className="flex gap-sm py-[2px] first:pt-0">
-                    <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-[8px] shrink-0" />
-                    <span className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-=======
               {/* 권역 상세 인사이트(RegionInsight)와 동일한 다크 히어로 카드 —
                   잉크블랙 그라디언트 + 라임그린(#C8F051) 라벨 + AI 아이콘(ai_icon.png). */}
               <div
@@ -209,7 +196,6 @@ export function CountryDetail({
                       className="font-body-md text-[clamp(12.75px,calc(11.25px_+_0.417vw),17.25px)] leading-[1.6] m-0"
                       style={{ color: 'rgba(255,255,255,.9)' }}
                     >
->>>>>>> 42abc18 (야간 수술)
                       {b}
                     </p>
                   ))}

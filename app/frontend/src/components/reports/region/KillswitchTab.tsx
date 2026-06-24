@@ -33,18 +33,9 @@ export function KillswitchTab({ data }: { data: RegionReportData }) {
   const gates = ks.gates
   const t = useT()
   const lang = useLang()
-  const ctrLabel = t('rks.countries')
 
-<<<<<<< HEAD
-  // tier_summary가 있으면 분포 문구(JV 필수 N · JV 권고 M …), 없으면 통과/탈락 폴백.
-  const summary =
-    ks.tier_summary && ks.tier_summary.length > 0
-      ? ks.tier_summary.map((s) => `${pickLang(lang, s.label.ko, s.label.en)} ${s.count}${ctrLabel}`).join(' · ')
-      : null
-=======
   // tier_summary가 있으면 분포 표, 없으면 통과/탈락 폴백 문구.
   const tierSummary = ks.tier_summary && ks.tier_summary.length > 0 ? ks.tier_summary : null
->>>>>>> 42abc18 (야간 수술)
 
   return (
     <section className="flex flex-col gap-lg">
@@ -156,13 +147,8 @@ function TierDistribution({ summary }: { summary: RegionReportData['tabs']['tab_
 function TierPill({ country, lang }: { country: RegionKillswitchCountry; lang: Lang }) {
   const t = useT()
   if (country.tier) {
-<<<<<<< HEAD
-    const style = TIER_STYLE[country.tier] ?? { bg: '#eef0f2', fg: '#6b7280' }
-    const label = country.tier_label ? pickLang(lang, country.tier_label.ko, country.tier_label.en) : country.tier
-=======
     const style = TIER_STYLE[country.tier] ?? TIER_FALLBACK
-    const label = country.tier_label?.ko ?? country.tier
->>>>>>> 42abc18 (야간 수술)
+    const label = country.tier_label ? pickLang(lang, country.tier_label.ko, country.tier_label.en) : country.tier
     return (
       <span
         className="px-2 py-[2px] rounded-md font-label-sm text-label-sm"
