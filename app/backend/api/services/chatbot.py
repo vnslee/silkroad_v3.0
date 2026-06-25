@@ -54,7 +54,14 @@ _TOOL_RULES = (
     "실행하지 않는다(사용자 동의 후 별도 처리).\n"
     "5. 보유 데이터가 있는 대상에 대한 일반 질의인데 답변 관점(비즈니스/시스템/둘다)이 "
     "주어지지 않았다면, 답변을 작성하지 말고 request_perspective를 호출하라. "
-    "컨텍스트에 '[관점]'이 주어졌으면 그 관점으로 바로 답하라."
+    "컨텍스트에 '[관점]'이 주어졌으면 그 관점으로 바로 답하라.\n"
+    "6. 사용자가 '진출 검토 중인 국가나 권역을 조사하고 싶다'처럼 대상 없이 막연히 말하면, "
+    "도구를 호출하지 말고 한 번의 짧은 답변으로 '어떤 국가인지, 아니면 특정 권역 내 퀵윈 "
+    "후보 조사인지' 되물어라(senario.md Case2). 절대 임의의 국가(예: 직전 기본 대상)를 "
+    "가정해 답하거나 관점을 먼저 묻지 마라. 대상이 정해지기 전에는 request_perspective도 "
+    "호출하지 마라.\n"
+    "7. 같은 도구를 같은 인자로 두 번 호출하지 마라. 이미 얻은 결과로 판단해 다음 단계"
+    "(답변 또는 되묻기)로 진행하라. 되물을 때는 도구 없이 짧은 질문 한 번만 하고 끝내라."
 )
 
 
@@ -105,6 +112,22 @@ def _last_lookup(trace: List[dict]) -> Optional[dict]:
     return None
 
 
+def _last_grounded_target(trace: List[dict]) -> Optional[dict]:
+    """trace에서 found=true로 보유 데이터를 실제 조회한 get_research_summary의 대상.
+
+    lookup_target이 없어도(모델이 곧장 요약 조회로 답하면) 그 턴이 어떤 구체 대상에 대한
+    답변인지 알아내는 보조 신호다. 반환 {domain, target_id} 또는 None.
+    탐색 진입(대상 미식별)과 '구체 대상 qa'를 구분해 stale 기본 대상 게이트 오작동을 막는다."""
+    for t in reversed(trace):
+        if t["name"] == "get_research_summary":
+            r = t.get("result") or {}
+            inp = t.get("input") or {}
+            tid = (inp.get("target_id") or "").upper()
+            if r.get("found") and tid:
+                return {"domain": inp.get("domain"), "target_id": tid}
+    return None
+
+
 def _blocked_suffix() -> str:
     return " 보유 중인 국가 정보로만 답변드릴 수 있어요."
 
@@ -116,14 +139,25 @@ def _assemble(trace: List[dict], final_text: str, req: ChatRequest) -> ChatRespo
     트리거 허용 여부는 research_policy로 재검증(LLM 판단 무시)."""
     names = {t["name"] for t in trace}
     lookup = _last_lookup(trace)
-    # 이번 턴에 구체적 대상을 식별하지 못했고(LLM이 list_available로 "어떤 국가/권역?"을
-    # 되묻는 중), 리서치/보고서 제안도 없는 경우다. 이때 직전 기본 대상(req.target_id, 예: 초기
-    # ES)을 대상으로 삼아 관점 게이트를 걸면, 사용자가 아직 대상도 답하지 않았는데 "어떤 관점?"으로
-    # 되물어 되묻기 답변 말풍선이 사라지는 버그가 생긴다(senario.md 탐색 진입). 이 경우 LLM의
-    # 되묻기 답변을 그대로 흘리고 perspective·actions 게이트를 적용하지 않는다.
+    # lookup_target은 없지만 get_research_summary(found=true)로 구체 대상을 조회했다면
+    # 그 대상이 이번 턴의 답변 대상이다(모델이 lookup 생략하고 곧장 요약 조회한 경우).
+    grounded = _last_grounded_target(trace) if lookup is None else None
+    # 이번 턴에 구체적 대상을 식별하지 못한(lookup 실패) 탐색 진입 상황이다. 사용자가
+    # "조사하고 싶어요"처럼 대상 없이 입력하면 LLM은 "어떤 국가/권역?"을 되묻는다. 이때 직전
+    # 기본 대상(req.target_id, 예: 초기 ES)을 대상으로 삼아 관점/액션 게이트를 걸면, 사용자가
+    # 아직 대상도 답하지 않았는데 "어떤 관점?"으로 되물어 되묻기 답변 말풍선이 사라지는
+    # 버그가 생긴다(senario.md 탐색 진입). 이 경우 LLM의 되묻기 답변을 그대로 흘리고
+    # perspective·actions 게이트를 적용하지 않는다.
+    #
+    # ⚠️ 과거에는 'list_available 호출됨'을 조건으로 걸었으나, 모델이 그 도구를 안 부르고
+    # 곧장 request_perspective를 부르거나 도구 없이 끝나면 가드가 풀려 stale ES 게이트가
+    # 작동(대상도 안 정했는데 "어떤 관점?")하는 버그가 있었다. 이제 list_available 호출
+    # 여부에 의존하지 않고 'lookup 실패 + 관점 미전달'만으로 판단한다. 단, 관점 재전송 흐름
+    # (req.perspective 있음)은 대상이 이미 확정된 후속 답변이므로 게이트로 내려보낸다.
     asked_to_choose = (
         lookup is None
-        and "list_available" in names
+        and grounded is None
+        and not req.perspective
         and "propose_research" not in names
         and "propose_report" not in names
     )
@@ -132,6 +166,12 @@ def _assemble(trace: List[dict], final_text: str, req: ChatRequest) -> ChatRespo
         target = lookup["target_id"]
         exists = bool(lookup.get("exists"))
         has_report = bool(lookup.get("has_report"))
+    elif grounded:
+        # lookup_target 없이 요약 조회로 답한 구체 대상 — 그 대상으로 상태 확정.
+        domain = grounded["domain"] or req.domain
+        target = grounded["target_id"]
+        exists = storage_resolver.research_exists(domain, target)
+        has_report = storage_resolver.latest_report_id(domain, target) is not None
     else:
         # lookup 없음 — 프론트가 보낸 직전 대상 유지(대화 연속성).
         domain = req.domain
@@ -182,21 +222,29 @@ def _assemble(trace: List[dict], final_text: str, req: ChatRequest) -> ChatRespo
             return resp
         resp.needs_research = True
         if exists:
-            resp.auto_trigger = True  # 보유국 재리서치 = 명시 요청 → 즉시 트리거.
+            resp.auto_trigger = True  # 보유 대상 재리서치 = 명시 요청 → 즉시 트리거.
             resp.research_suggestion = f"{target} 리서치를 재수행합니다."
-            resp.actions = ["re_research"] if domain == "country" else []
+            # 보유 권역도 재수행 허용(보유 권역만, 정책 단일 판정점에서 이미 통과).
+            resp.actions = ["re_research"]
         else:
             resp.research_suggestion = "외부 리서치를 진행할까요?"
             resp.actions = ["research"]
         return resp
 
     # ── 대상 되묻기(탐색 진입) ──
-    # 이번 턴에 대상을 식별하지 못했고 LLM이 list_available로 "어떤 국가/권역?"을 되묻는 중이면,
-    # 스테일한 기본 대상(req.target_id)에 관점 게이트를 걸지 말고 되묻기 답변을 그대로 흘린다.
-    # (안 그러면 사용자가 대상도 답하기 전에 "어떤 관점?"으로 되물어 답변 말풍선이 사라진다.)
+    # 이번 턴에 대상을 식별하지 못했으면(lookup·grounded 모두 없음) 스테일한 기본 대상
+    # (req.target_id, 예: 초기 ES)에 관점 게이트를 걸지 말고 LLM의 되묻기 답변("어떤
+    # 국가/권역?")을 그대로 흘린다. (안 그러면 사용자가 대상도 답하기 전에 "어떤 관점?"으로
+    # 되물어 답변 말풍선이 사라진다 — senario.md Case2 탐색 진입.)
     if asked_to_choose:
         resp.intent = "qa"
-        resp.answer = final_text or None
+        # 모델이 되묻기 문구를 못 만들었으면(무진전 조기 종료 등) 결정적 되묻기 문구로 폴백 —
+        # 빈 답변으로 말풍선이 사라지는 일이 없게 한다.
+        resp.answer = final_text or ask_for_target().answer
+        # 탐색 진입 단계라 대상이 미정이므로 stale 기본 대상을 다음 턴에 물려주지 않는다
+        # (프론트가 resolved_*로 stale ES를 고정하지 않도록 비운다).
+        resp.resolved_domain = None
+        resp.resolved_target_id = None
         return resp
 
     # ── 관점 되묻기(결정적 게이트, senario.md Case2/3) ──

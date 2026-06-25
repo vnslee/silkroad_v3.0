@@ -11,6 +11,7 @@ agent_cb(key, status, percent) — 분야 agent별 진행률 보고(프로그레
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
 from typing import Callable, List, Optional
 
 from pydantic import ValidationError
@@ -380,56 +381,104 @@ def run(
             target_id, region or "", segment, progress_cb, agent_cb
         )
 
-    # region: 누락 멤버 국가 선행(Q6=A) — 각 멤버도 4-agent 파이프라인. 진행률은 step
-    # 기반이며 멤버 선행 조사는 40~70% 구간을 멤버 수로 분할한다. 내부 country 파이프라인이
-    # 자기 step(calling_bedrock/result_gen 등)을 그대로 보고하면 권역 percent를 덮어써
-    # 진행이 튀므로(40↔85 역행), 멤버 조사 동안엔 progress_cb를 래핑해 members_progress로
-    # 고정하고 percent는 해당 멤버의 하위 구간 안에서만 움직이게 한다.
-    members = member_codes or []
-    missing = [c for c in members if not storage_resolver.research_exists("country", c)]
-    n = max(1, len(missing))
-    # 국가 내부 step → 멤버 하위 구간 내 진척도(0~1) 근사.
-    _inner_frac = {"calling_bedrock": 0.1, "result_gen": 0.6, "saving": 0.85, "done": 1.0}
-    for idx, code in enumerate(missing):
-        lo = 40 + int(30 * idx / n)
-        hi = 40 + int(30 * (idx + 1) / n)
-        if progress_cb:
-            progress_cb(
-                "members_progress",
-                f"멤버 국가 {code} 선행 딥리서치 ({idx + 1}/{len(missing)})",
-                lo,
-            )
+    return _run_region_aggregate(target_id, member_codes, progress_cb)
 
-        def _member_progress(step: str, message: str, percent=None, *, _lo=lo, _hi=hi):
-            # 내부 step을 members_progress 구간 안의 percent로 환산(권역 잡 percent 보존).
-            frac = _inner_frac.get(step, 0.1)
-            mapped = _lo + int((_hi - _lo) * frac)
-            if progress_cb:
-                progress_cb("members_progress", message, mapped)
 
-        # agent_cb(분야 바)는 region 잡엔 agents[]가 없어 무시되므로 그대로 넘겨도 무해.
-        _run_country_multi_agent(code, target_id, segment, _member_progress, agent_cb)
+def _run_region_aggregate(
+    target_id: str,
+    member_codes: Optional[List[str]],
+    progress_cb: ProgressCb = None,
+) -> ResearchResult:
+    """권역 리서치 — 보유 country 최신본을 조립(aggregate)해 권역 JSON을 생성한다.
+
+    소비 코드(region_report_engine·regionDetail.ts)가 읽는 권역 JSON은 (1) 권역 메타와
+    (2) 멤버국 country 객체 배열(countries[])뿐인 **순수 집계**다(권역 레벨 고유 items·
+    overall_insight를 읽는 코드는 없음). 따라서 권역 리서치는 멤버 국가를 새로 딥리서치하지
+    않고, **이미 보유한 country 최신본만 참조**해 countries[]를 재조립한다(기존 EU 샘플의
+    fetched_by="aggregator" 생성 방식과 동일). 국가 데이터의 신규 조사는 country 리서치
+    경로(agent core gateway 4-agent)에서만 일어난다 — 여기선 자동 트리거하지 않는다.
+
+    멤버 country 최신본이 없으면 기존 권역 스냅샷의 해당 국가 객체를 보존(데이터 손실 방지).
+    """
+    region_code = target_id.upper()
+    if progress_cb:
+        progress_cb("calling_bedrock", f"권역 {region_code} 멤버국 데이터 수집", 20)
+
+    # 멤버 목록: 인자로 받은 것 우선, 없으면 internal country_to_region에서 권역 소속국.
+    src = storage_resolver.region_detail_sources(region_code)
+    members = [c.upper() for c in (member_codes or [])] or list(src.get("members", []))
+
+    # 기존 권역 스냅샷(있으면) — 메타 보존 + country 최신본 없는 멤버의 폴백 소스.
+    prev = storage_resolver._load_latest_research("region", region_code) or {}
+    prev_by_code = {
+        (c.get("code") or "").upper(): c
+        for c in prev.get("countries", [])
+        if isinstance(c, dict)
+    }
+    baseline_codes = storage_resolver._baseline_codes()
+
+    countries: list = []
+    used_latest: list = []
+    fallback: list = []
+    for code in members:
+        cdata = storage_resolver._load_latest_research("country", code)
+        if cdata:
+            # 보유 country 최신본을 그대로 채택(권역 baseline이면 is_baseline 보정).
+            obj = dict(cdata)
+            obj.setdefault("code", code)
+            if code in baseline_codes or code == (prev.get("baseline_country") or "").upper():
+                obj["is_baseline"] = True
+            countries.append(obj)
+            used_latest.append(code)
+        elif code in prev_by_code:
+            countries.append(prev_by_code[code])  # 최신본 없음 → 기존 스냅샷 보존
+            fallback.append(code)
+        # 둘 다 없으면 스킵(멤버지만 데이터 미보유 — 권역 집계에서 제외).
+
+    if not countries:
+        raise ResearchError(
+            f"권역 {region_code}에 집계할 멤버 country 데이터가 없습니다."
+        )
+    _log.info(
+        "권역 %s 집계: 최신본 %d(%s) + 스냅샷보존 %d(%s)",
+        region_code, len(used_latest), ",".join(used_latest) or "-",
+        len(fallback), ",".join(fallback) or "-",
+    )
 
     if progress_cb:
-        # 권역 종합 리서치 진입(70%). 단일 LLM 호출이라 내부 세분 진행은 없다.
-        progress_cb("region_synth", f"권역 {target_id} 종합 리서치", 70)
-    gateway = config.gateway_search_enabled()
-    # 권역 레벨 선검색 — market 질의 템플릿을 권역명으로 재사용(저충실도, region 명세 잠정).
-    region_sources = (
-        _prefetch_sources("market", target_id, target_id) if gateway else None
-    )
-    prompt = prompt_loader.load_region_prompt(
-        target_id, members, segment, sources=region_sources
-    )
-    data = bedrock_client.generate_structured(
-        prompt,
-        prompt_loader.region_json_schema(),
-        web_search=not gateway,
-        effort=_RESEARCH_EFFORT,
-    )
-    data.setdefault("code", target_id)
+        progress_cb("result_gen", f"권역 {region_code} 집계 조립", 70)
+
+    # 권역 메타 — 기존 스냅샷 우선 보존, 없으면 카탈로그/멤버에서 보강.
+    data = {
+        "region": prev.get("region") or region_code,
+        "region_ko": prev.get("region_ko") or f"{region_code}권역",
+        "code": region_code,
+        "schema_version": prev.get("schema_version") or "1.1",
+        "fetched_at": _now_iso(),
+        "fetched_by": "aggregator",
+        "baseline_country": _resolve_region_baseline(prev, countries, baseline_codes),
+        "countries": countries,
+    }
     schema_version = _validate("region", data)
     if progress_cb:
-        progress_cb("saving", f"권역 {target_id} 저장")
-    _, latest = storage_resolver.save_research("region", target_id, data)
-    return ResearchResult("region", target_id, latest, schema_version)
+        progress_cb("saving", f"권역 {region_code} 저장")
+    _, latest = storage_resolver.save_research("region", region_code, data)
+    return ResearchResult("region", region_code, latest, schema_version)
+
+
+def _now_iso() -> str:
+    """현재 UTC 시각(ISO 8601, 분 단위). 저장 파일명 타임스탬프 유도에 쓰인다."""
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M")
+
+
+def _resolve_region_baseline(prev: dict, countries: list, baseline_codes: set) -> str:
+    """권역 baseline 국가 코드 — 기존 스냅샷 > 멤버 is_baseline > internal baseline 순."""
+    if prev.get("baseline_country"):
+        return prev["baseline_country"]
+    for c in countries:
+        if c.get("is_baseline"):
+            return (c.get("code") or "").upper()
+    for c in countries:
+        if (c.get("code") or "").upper() in baseline_codes:
+            return c["code"].upper()
+    return ""

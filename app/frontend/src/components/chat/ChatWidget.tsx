@@ -182,34 +182,34 @@ export function ChatWidget() {
     setPerspectiveAsk(null)
     setSuggestions([])
     // 스트리밍 버블 — 첫 토큰 도착 시 생성하고 이후 델타를 누적한다.
-    let streamingIdx = -1
+    // ⚠️ 인덱스(setTurns updater 안에서 늦게 설정되는 값)에 의존하면 한 청크에 담겨 동기로
+    // 연속 호출되는 토큰들이 가드를 통과해 빈 버블이 여러 개 생긴다("문구 여러 번 + 마지막만
+    // 완성" 버그). 대신 동기 플래그(bubbleCreated)로 1회만 생성하고, 스트리밍 버블은 항상
+    // 마지막 turn이라는 불변식으로 갱신/제거한다(스트리밍 중엔 다른 turn이 추가되지 않는다).
+    let bubbleCreated = false
     let acc = ''
-    const ensureBubble = () => {
-      if (streamingIdx >= 0) return
-      setTyping(false)
-      setTurns((prev) => {
-        streamingIdx = prev.length
-        return [...prev, { role: 'assistant', content: '' }]
-      })
-    }
     const appendToken = (chunk: string) => {
-      ensureBubble()
       acc += chunk
-      setTurns((prev) => {
-        if (streamingIdx < 0 || streamingIdx >= prev.length) return prev
-        const next = [...prev]
-        next[streamingIdx] = { role: 'assistant', content: acc }
-        return next
-      })
-    }
-    // 도구 호출 턴의 preamble 토큰 폐기 — 흘린 버블을 제거하고 다시 타이핑 인디케이터로 돌아간다.
-    // (답변이 끊겼다 새 버블로 다시 쓰이는 현상 방지: 최종 답변 턴만 사용자에게 보인다.)
-    const resetBubble = () => {
-      if (streamingIdx >= 0) {
-        const idx = streamingIdx
-        setTurns((prev) => prev.filter((_, i) => i !== idx))
+      if (!bubbleCreated) {
+        bubbleCreated = true
+        setTyping(false)
+        setTurns((prev) => [...prev, { role: 'assistant', content: acc }])
+      } else {
+        setTurns((prev) => {
+          if (!prev.length) return prev
+          const next = [...prev]
+          next[next.length - 1] = { role: 'assistant', content: acc }
+          return next
+        })
       }
-      streamingIdx = -1
+    }
+    // 도구 호출 턴의 preamble 토큰 폐기 — 흘린 버블(마지막 turn)을 제거하고 다시 타이핑
+    // 인디케이터로 돌아간다(답변이 끊겼다 새 버블로 다시 쓰이는 현상 방지).
+    const resetBubble = () => {
+      if (bubbleCreated) {
+        setTurns((prev) => prev.slice(0, -1))
+      }
+      bubbleCreated = false
       acc = ''
       setTyping(true)
     }
@@ -232,20 +232,21 @@ export function ChatWidget() {
         (resp.needs_perspective || resp.auto_trigger || resp.needs_research || resp.needs_report)
 
       // 답변 텍스트 확정 — done.answer가 스트림 누적과 다르면 done 값을 신뢰(권위).
-      // 스트림 토큰이 없었는데 done.answer가 있으면 새 버블로 표시.
+      // 스트림 토큰이 없었는데 done.answer가 있으면 새 버블로 표시. 스트리밍 버블은 마지막 turn.
       if (resp.answer && resp.answer !== acc) {
-        if (streamingIdx >= 0) {
+        if (bubbleCreated) {
           setTurns((prev) => {
+            if (!prev.length) return prev
             const next = [...prev]
-            next[streamingIdx] = { role: 'assistant', content: resp.answer as string }
+            next[next.length - 1] = { role: 'assistant', content: resp.answer as string }
             return next
           })
         } else {
           pushAssistant(resp.answer)
         }
-      } else if ((!resp.answer && streamingIdx >= 0 && !acc) || (isBlockingBranch && streamingIdx >= 0)) {
-        // 빈 버블이거나, 분기 응답인데 답변이 새어 나온 버블이면 제거.
-        setTurns((prev) => prev.filter((_, i) => i !== streamingIdx))
+      } else if (bubbleCreated && ((!resp.answer && !acc) || isBlockingBranch)) {
+        // 빈 버블이거나, 분기 응답인데 답변이 새어 나온 버블이면 제거(마지막 turn).
+        setTurns((prev) => prev.slice(0, -1))
       }
       setTyping(false)
 
@@ -288,20 +289,15 @@ export function ChatWidget() {
         onReset: resetBubble,
         onDone,
         onError: (detail) => {
-          if (streamingIdx < 0) pushAssistant(`${t('chat.error')}${detail}`)
+          if (!bubbleCreated) pushAssistant(`${t('chat.error')}${detail}`)
         },
       },
     )
   }
 
   function startResearch(p: Pending) {
-    // 정책: 권역 신규 리서치는 지원하지 않는다(보유 권역만 운용). 방어적 가드 — 백엔드도 403.
-    if (p.domain === 'region') {
-      setPending(null)
-      setActions([])
-      pushAssistant(t('chat.research.regionBlocked'))
-      return
-    }
+    // 정책: 권역은 보유 권역 재수행만 허용(신규 권역 금지). 허용 판정은 백엔드 단일
+    // 판정점(research_policy)이 한다 — 신규 권역은 403을 돌려주고 아래 catch가 처리한다.
     api
       .triggerResearch(p.domain, p.id, undefined)
       .then((job) => {

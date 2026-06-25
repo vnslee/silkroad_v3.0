@@ -55,9 +55,24 @@ def research_versions(domain: str, target_id: str) -> list:
         if stem == f"{target_id}_latest":
             continue
         ver = stem[len(prefix):]
-        if ver:
-            versions.append(ver)
+        # `<ID>_news_*`(권역 뉴스) 등 별도 데이터 라인은 리서치 스냅샷 버전이 아니므로 제외.
+        if not ver or ver.startswith("news_") or ver == "news":
+            continue
+        versions.append(ver)
     return sorted(versions, reverse=True)
+
+
+def research_version_path(domain: str, target_id: str, version: str) -> Optional[Path]:
+    """버전(<TS>)에 해당하는 리서치 스냅샷 경로 `<ID>_<TS>.json`. 없으면 None.
+    glob+stem 매칭으로만 해석해 경로 탈출(../)을 차단한다(detail_html_by_id와 동일 방어)."""
+    d = _research_dir(domain, target_id)
+    if not d.is_dir():
+        return None
+    target_stem = f"{target_id}_{version}"
+    for p in d.glob(f"{target_id}_*.json"):
+        if p.stem == target_stem:
+            return p
+    return None
 
 
 def _load_latest_research(domain: str, target_id: str) -> Optional[dict]:

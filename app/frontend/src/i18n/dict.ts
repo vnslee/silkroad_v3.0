@@ -537,6 +537,7 @@ export const DICT: Dict = {
   'dtl.ver.latest': { ko: '최신 (latest)', en: 'Latest' },
   'dtl.ver.latestSub': { ko: '기본', en: 'Default' },
   'dtl.ver.rendered': { ko: '렌더본', en: 'Rendered' },
+  'dtl.ver.snapshot': { ko: '리서치 스냅샷', en: 'Research snapshot' },
   'dtl.ver.latestShort': { ko: '최신', en: 'Latest' },
   'dtl.keyTrend': { ko: '핵심 시장 지표 추이', en: 'Key market metric trend' },
   'dtl.competitorTop': { ko: '경쟁 금융사 Top {n}', en: 'Top {n} competitor lenders' },
