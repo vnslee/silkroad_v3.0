@@ -12,9 +12,11 @@ interface Props {
   domain?: Domain
   onMinimize?: () => void
   onViewReport?: (reportId: string) => void
+  // 리서치 완료 시 상세화면 팝업으로 이동.
+  onViewDetail?: () => void
 }
 
-export function ProgressModal({ jobId, kind, title, domain, onMinimize, onViewReport }: Props) {
+export function ProgressModal({ jobId, kind, title, domain, onMinimize, onViewReport, onViewDetail }: Props) {
   const { step, percent, status, result, agents } = useJobPolling(jobId)
   // 분야 agent별 실제 진행률(agents[])과 domain을 넘겨 4개 분야 바를 병렬로 채운다.
   // (이전엔 인자 누락으로 percent 순차 보간 폴백 → 병렬인데 순차처럼 보였음)
@@ -92,6 +94,15 @@ export function ProgressModal({ jobId, kind, title, domain, onMinimize, onViewRe
             className="mt-lg w-full rounded-[12px] bg-primary py-md text-center font-body-md text-[14px] font-bold text-on-primary shadow-[0_6px_18px_rgba(63,108,180,0.32)] transition-colors hover:bg-inverse-primary"
           >
             보고서 열기 →
+          </button>
+        )}
+        {/* 리서치 완료 시 상세화면 팝업 열기 */}
+        {done && kind === 'research' && onViewDetail && (
+          <button
+            onClick={onViewDetail}
+            className="mt-lg w-full rounded-[12px] bg-primary py-md text-center font-body-md text-[14px] font-bold text-on-primary shadow-[0_6px_18px_rgba(63,108,180,0.32)] transition-colors hover:bg-inverse-primary"
+          >
+            상세 보기 →
           </button>
         )}
         {status === 'failed' && (

@@ -329,6 +329,15 @@ def _all_text(message) -> str:
     )
 
 
+def _call_sig(call: dict) -> str:
+    """tool 호출의 동일성 서명(name + 정규화한 input). 중복 호출(무진전) 감지용."""
+    try:
+        payload = json.dumps(call.get("input") or {}, ensure_ascii=False, sort_keys=True)
+    except (TypeError, ValueError):
+        payload = str(call.get("input"))
+    return f"{call.get('name')}::{payload}"
+
+
 def _tool_use_blocks(message) -> List[dict]:
     """응답 content에서 tool_use 블록만 추출 → [{id, name, input}]."""
     out: List[dict] = []
@@ -392,6 +401,7 @@ def run_agent(
     stop_on = stop_on or set()
     convo = list(messages)
     trace: List[dict] = []
+    seen_sigs: set = set()  # 무진전(중복 도구 호출) 감지 — 같은 호출 반복 시 루프 조기 종료.
     kwargs: dict = {
         "model": config.CHAT_MODEL,
         "max_tokens": config.CHAT_MAX_TOKENS,
@@ -411,6 +421,14 @@ def run_agent(
                 for call in stop_calls:
                     trace.append({"name": call["name"], "input": call["input"], "result": None})
                 return _all_text(message), trace
+            # 무진전 감지: 이번 턴의 모든 도구 호출이 이미 본 동일 호출이면(같은 name+input)
+            # 같은 되묻기/조회가 반복되는 것이므로 더 돌리지 않고 현재 텍스트로 종료한다.
+            # (max_iters까지 같은 preamble을 반복 생성하는 현상 방지 — 6번 반복 버그.)
+            if calls and all(_call_sig(c) in seen_sigs for c in calls):
+                _log.info("에이전트 루프 무진전(중복 도구 호출) — 조기 종료")
+                return _all_text(message), trace
+            for c in calls:
+                seen_sigs.add(_call_sig(c))
             # tool_use → 실행하고 tool_result를 붙여 재호출.
             convo.append({"role": "assistant", "content": _serialize_content(message)})
             results = []
@@ -459,6 +477,7 @@ def stream_agent(
     stop_on = stop_on or set()
     convo = list(messages)
     trace: List[dict] = []
+    seen_sigs: set = set()  # 무진전(중복 도구 호출) 감지 — run_agent와 동일 정책.
     kwargs: dict = {
         "model": config.CHAT_MODEL,
         "max_tokens": config.CHAT_MAX_TOKENS,
@@ -477,16 +496,28 @@ def stream_agent(
             if getattr(message, "stop_reason", None) != "tool_use":
                 yield {"type": "final", "text": _all_text(message), "trace": trace}
                 return
-            # 도구 호출 턴 — 방금 흘린 텍스트는 답변이 아닌 preamble이므로 프론트가 버블을 버리게 한다.
-            if turn_had_text:
-                yield {"type": "reset"}
             calls = _tool_use_blocks(message)
             stop_calls = [c for c in calls if c["name"] in stop_on]
             if stop_calls:
+                # 관점 되묻기 등 — 흘린 preamble은 답변이 아니므로 버블을 버린다.
+                if turn_had_text:
+                    yield {"type": "reset"}
                 for call in stop_calls:
                     trace.append({"name": call["name"], "input": call["input"], "result": None})
                 yield {"type": "final", "text": _all_text(message), "trace": trace}
                 return
+            # 무진전 감지: 이번 턴의 모든 도구 호출이 이미 본 동일 호출이면 같은 되묻기/조회가
+            # 반복되는 것이므로 종료한다. 이때 방금 흘린 텍스트가 곧 보여줄 답변(되묻기 문구)이므로
+            # reset하지 않고 그대로 둔다(같은 문구 6번 반복 버그 방지).
+            if calls and all(_call_sig(c) in seen_sigs for c in calls):
+                _log.info("에이전트 스트림 무진전(중복 도구 호출) — 조기 종료")
+                yield {"type": "final", "text": _all_text(message), "trace": trace}
+                return
+            # 도구 호출 턴 — 방금 흘린 텍스트는 답변이 아닌 preamble이므로 프론트가 버블을 버리게 한다.
+            if turn_had_text:
+                yield {"type": "reset"}
+            for c in calls:
+                seen_sigs.add(_call_sig(c))
             convo.append({"role": "assistant", "content": _serialize_content(message)})
             results = []
             for call in calls:

@@ -22,6 +22,7 @@ import type {
   RegionReportData,
 } from '../reports/types'
 import { buildRegionDetail, type RegionResearchSnapshot } from '../../utils/regionDetail'
+import { formatTimestamp, formatVersionLabel } from '../../utils/format'
 
 interface Props {
   domain: Domain
@@ -199,6 +200,8 @@ export default function DetailView({ domain, code, mode }: Props) {
 
   const isCountry = domain === 'country'
   const meta = catalog.find((c) => c.code === code)
+  // 리서치 데이터 생성일시 — country/region 모두 detailData.fetched_at에 ISO 타임스탬프 보유.
+  const researchGeneratedLabel = formatTimestamp(detailData?.fetched_at)
   // 진출 상태 — 백엔드 country_detail 엔진과 동일 기준: country_status(meta.status) 우선,
   // 없으면 country_assets 보유(meta.entryMode) → '기진출', 둘 다 없으면 '미진출'. (hasReport 무관)
   const status = meta?.isBaseline
@@ -220,10 +223,10 @@ export default function DetailView({ domain, code, mode }: Props) {
     label: lang !== 'en' && c.nameKo ? `${c.nameKo} (${c.name})` : c.name,
     sub: c.code,
   }))
-  // 버전 옵션(최신 + 렌더본 ID들). value/label 모두 렌더 ID(DTL_<ID>_NNN).
+  // 버전 옵션(최신 + 리서치 스냅샷 타임스탬프들). value=<TS>, label=사람이 읽기 쉬운 일시.
   const versionOptions: SelectOption[] = [
     { value: '', label: t('dtl.ver.latest'), sub: t('dtl.ver.latestSub') },
-    ...versions.map((v) => ({ value: v, label: v, sub: t('dtl.ver.rendered') })),
+    ...versions.map((v) => ({ value: v, label: formatVersionLabel(v), sub: t('dtl.ver.snapshot') })),
   ]
 
   const goTarget = (newCode: string) => {
@@ -295,10 +298,19 @@ export default function DetailView({ domain, code, mode }: Props) {
                 trigger={
                   <span className="flex items-center gap-xs font-label-sm text-label-sm text-secondary">
                     <Icon name="history" className="text-[14px]" />
-                    {version ?? t('dtl.ver.latestShort')}
+                    {version ? formatVersionLabel(version) : t('dtl.ver.latestShort')}
                   </span>
                 }
               />
+              {/* 리서치 데이터 생성일시 — 보고서 헤더 Generated 표시와 동일 형식(YYYY-MM-DD HH:MM). */}
+              {researchGeneratedLabel && (
+                <>
+                  <span className="font-label-sm text-label-sm text-outline">·</span>
+                  <span className="font-label-sm text-label-sm text-text-secondary">
+                    Generated: {researchGeneratedLabel}
+                  </span>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -24,6 +24,13 @@ export function ProgressPanel() {
     window.location.hash = `#/${job.domain}/${job.id}/report/${reportId}?mode=popup`
   }
 
+  // 상세화면 팝업으로 이동(잡 정리 + 모달 닫기 + 해시 이동). 리서치 완료 시 Card/모달 '상세 보기' 공용.
+  const openDetail = (job: (typeof jobs)[number]) => {
+    store.removeJob(job.jobId)
+    setOpenJobId(null)
+    window.location.hash = `#/${job.domain}/${job.id}/detail?mode=popup`
+  }
+
   return (
     <>
       {/* 우상단 카드 — PS2(모달) 비활성 시. */}
@@ -34,11 +41,11 @@ export function ProgressPanel() {
             <HiddenPill jobCount={jobs.length} onShow={() => setHidden(false)} />
             {/* 폴링 유지를 위해 마운트만 하고 화면에서는 감춘다 */}
             <div className="hidden">
-              <Card onOpen={(id) => setOpenJobId(id)} onHide={() => setHidden(true)} onViewReport={openReport} />
+              <Card onOpen={(id) => setOpenJobId(id)} onHide={() => setHidden(true)} onViewReport={openReport} onViewDetail={openDetail} />
             </div>
           </>
         ) : (
-          <Card onOpen={(id) => setOpenJobId(id)} onHide={() => setHidden(true)} onViewReport={openReport} />
+          <Card onOpen={(id) => setOpenJobId(id)} onHide={() => setHidden(true)} onViewReport={openReport} onViewDetail={openDetail} />
         ))}
 
       {/* PS2 모달 — 정중앙 */}
@@ -52,6 +59,7 @@ export function ProgressPanel() {
               title={openJob.label}
               onMinimize={() => setOpenJobId(null)}
               onViewReport={(reportId) => openReport(openJob, reportId)}
+              onViewDetail={() => openDetail(openJob)}
             />
           </div>
         </div>
@@ -100,10 +108,12 @@ function Card({
   onOpen,
   onHide,
   onViewReport,
+  onViewDetail,
 }: {
   onOpen: (jobId: string) => void
   onHide: () => void
   onViewReport: (job: JobRef, reportId: string) => void
+  onViewDetail: (job: JobRef) => void
 }) {
   const jobs = useStore((s) => s.activeJobs)
   const job = jobs[jobs.length - 1]
@@ -116,6 +126,8 @@ function Card({
   const reportId =
     result && 'report_id' in result ? (result as { report_id: string }).report_id : null
   const canOpenReport = done && job?.kind === 'report' && !!reportId
+  // 완료된 리서치 잡이면 카드에서 바로 상세화면 팝업으로 이동(중간 모달 생략).
+  const canOpenDetail = done && job?.kind === 'research'
 
   if (!job) return null
 
@@ -173,12 +185,18 @@ function Card({
         </span>
       </div>
       <button
-        onClick={() => (canOpenReport ? onViewReport(job, reportId!) : onOpen(job.jobId))}
+        onClick={() =>
+          canOpenReport
+            ? onViewReport(job, reportId!)
+            : canOpenDetail
+              ? onViewDetail(job)
+              : onOpen(job.jobId)
+        }
         className={`w-full rounded-[10px] py-sm text-center font-body-sm text-[13px] font-semibold transition-opacity hover:opacity-90 ${
           done ? 'bg-success text-on-primary' : 'bg-primary-fixed text-primary'
         }`}
       >
-        {canOpenReport ? '보고서 열기 →' : done ? '결과 보기 →' : '상세 보기'}
+        {canOpenReport ? '보고서 열기 →' : canOpenDetail ? '상세 보기 →' : done ? '결과 보기 →' : '상세 보기'}
       </button>
     </div>
   )

@@ -7,6 +7,7 @@ import { api } from '../../api/client'
 import { paths } from '../../api/paths'
 import type { CountrySummary, Domain, FxData, RegionSummary, ReportRef } from '../../api/types'
 import { buildMailtoUrl } from '../../utils/mailto'
+import { formatTimestamp } from '../../utils/format'
 import { FxProvider } from '../reports/Money'
 import { Icon } from '../common/Icon'
 import { HeaderSelect, type SelectOption } from '../common/HeaderSelect'
@@ -193,24 +194,17 @@ export default function ReportView({ domain, code, reportId, mode }: Props) {
       : 'bg-surface-container text-text-secondary border-surface-border'
 
   // 생성일 — ISO 타임스탬프를 날짜+시:분(YYYY-MM-DD HH:MM)까지만 표시.
-  const generatedLabel = (() => {
-    const raw = current?.generated_at
-    if (!raw) return undefined
-    const d = new Date(raw)
-    if (Number.isNaN(d.getTime())) return raw.slice(0, 16).replace('T', ' ')
-    const p = (n: number) => String(n).padStart(2, '0')
-    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`
-  })()
+  const generatedLabel = formatTimestamp(current?.generated_at)
 
   const targetOptions: SelectOption[] = catalog.map((c) => ({
     value: c.code,
     label: c.nameKo ? `${c.nameKo} (${c.name})` : c.name,
     sub: c.code,
   }))
+  // 버전 드롭다운은 보고서 ID만 표시 — 생성일시(sub)는 헤더의 Generated 표기로 갈음(중복 제거).
   const versionOptions: SelectOption[] = reports.map((r) => ({
     value: r.report_id,
     label: r.report_id,
-    sub: r.generated_at ?? undefined,
   }))
 
   const goTarget = (newCode: string) => {

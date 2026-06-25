@@ -76,6 +76,42 @@ def test_explore_without_target_streams_question_not_perspective():
     assert resp.answer == "어떤 국가나 권역을 알려주시겠어요?"
 
 
+def test_explore_without_target_no_list_available_still_reasks():
+    # 회귀: 모델이 list_available를 안 부르고 곧장 끝내도(또는 무진전 조기 종료), 스테일한
+    # 기본 대상(ES)에 관점 게이트를 걸지 말고 되묻기 답변을 흘려야 한다. 과거엔 list_available
+    # 호출이 없으면 가드가 풀려 "어떤 관점?"이 바로 나왔다.
+    resp = chatbot._assemble(
+        [], "어떤 국가/권역을 조사할까요?", _req("진출 검토 중인 국가나 권역을 조사하고 싶어요.")
+    )
+    assert resp.needs_perspective is False
+    assert resp.answer == "어떤 국가/권역을 조사할까요?"
+    # 대상 미정 → stale 기본 대상을 다음 턴에 물려주지 않는다.
+    assert resp.resolved_target_id is None
+
+
+def test_explore_without_target_empty_text_falls_back_to_ask():
+    # 무진전 조기 종료로 최종 텍스트가 비어도 결정적 되묻기 문구로 폴백(빈 말풍선 방지).
+    resp = chatbot._assemble([], "", _req("조사 좀 하고 싶은데요"))
+    assert resp.needs_perspective is False
+    assert resp.answer  # 비어 있지 않아야 한다.
+
+
+def test_grounded_summary_without_lookup_resolves_target():
+    # lookup_target 없이 get_research_summary(found=true)로 답한 경우 → 그 대상으로 확정.
+    # 관점 미지정이면 그 대상(EU)에 대해 관점 되묻기가 정상 작동해야 한다(stale ES 아님).
+    trace = [
+        {
+            "name": "get_research_summary",
+            "input": {"domain": "region", "target_id": "EU"},
+            "result": {"found": True, "summary": "..."},
+        }
+    ]
+    resp = chatbot._assemble(trace, "유럽 답변", _req("유럽 권역 퀵윈 알려줘", domain="region", target_id="ES"))
+    assert resp.resolved_target_id == "EU"
+    assert resp.resolved_domain == "region"
+    assert resp.needs_perspective is True  # 관점 미지정 → 되묻기.
+
+
 def test_qa_existing_with_perspective_returns_answer_and_actions():
     # 보유국 + 관점 지정 → 데이터 답변 + 선택지 칩(요약/재리서치/보고서).
     trace = [_lookup("ES", True, True)]
@@ -157,3 +193,74 @@ def test_handle_agent_assembles_from_trace(monkeypatch):
     assert resp.needs_report is True
     assert resp.auto_trigger is True
     assert resp.resolved_target_id == "ES"
+
+
+# ── 에이전트 루프 무진전(중복 도구 호출) 조기 종료 (6번 반복 버그) ──────
+class _Block:
+    def __init__(self, type, text=None, name=None, id=None, input=None):
+        self.type = type
+        self.text = text
+        self.name = name
+        self.id = id
+        self.input = input
+
+
+class _Msg:
+    def __init__(self, content, stop_reason):
+        self.content = content
+        self.stop_reason = stop_reason
+
+
+class _Stream:
+    def __init__(self, msg):
+        self._msg = msg
+        self.text_stream = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def get_final_message(self):
+        return self._msg
+
+
+class _FakeMessages:
+    """매 호출 같은 tool_use(같은 name+input)를 돌려주는 가짜 — 무진전 상황 재현."""
+
+    def __init__(self):
+        self.calls = 0
+
+    def stream(self, **kwargs):
+        self.calls += 1
+        msg = _Msg(
+            [
+                _Block("text", text="조사를 진행할까요?"),
+                _Block("tool_use", name="list_available", id=f"t{self.calls}", input={"kind": "both"}),
+            ],
+            stop_reason="tool_use",
+        )
+        return _Stream(msg)
+
+
+class _FakeClient:
+    def __init__(self):
+        self.messages = _FakeMessages()
+
+
+def test_run_agent_stops_on_no_progress(monkeypatch):
+    # 같은 도구를 같은 인자로 반복 호출하면 max_iters(6)까지 돌지 말고 조기 종료해야 한다.
+    fake = _FakeClient()
+    monkeypatch.setattr(bedrock_client, "get_client", lambda: fake)
+    text, trace = bedrock_client.run_agent(
+        [{"role": "user", "content": "조사하고 싶어요"}],
+        tools=[],
+        system="sys",
+        tool_executor=lambda name, inp: {"ok": True},
+        max_iters=6,
+    )
+    # 첫 턴은 실행(seen에 등록), 둘째 턴이 동일 호출이라 조기 종료 → 호출 2회로 끝나야 한다.
+    assert fake.messages.calls == 2
+    assert text == "조사를 진행할까요?"
+    assert len(trace) == 1  # 도구는 한 번만 실제 실행됨.

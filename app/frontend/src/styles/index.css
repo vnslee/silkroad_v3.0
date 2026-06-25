@@ -234,6 +234,13 @@
   /* 섹션(탭)마다 새 페이지로 시작 — 첫 섹션은 제외 */
   .report-print-section { break-before: page; }
   .report-print-section:first-child { break-before: auto; }
+
+  /* 탭 안의 하위 영역(카드/패널/차트 블록)마다 새 페이지로 분할.
+     구조: section.report-print-section > h2(제목) + [탭 루트 컨테이너] > [하위 영역들].
+     'h2 + *'가 탭 루트 컨테이너, 그 직속 자식(> *)이 각 하위 영역이다.
+     첫 하위 영역은 제목 바로 아래에 두려고 break-before 해제(빈 페이지 방지). */
+  .report-print-section > .report-print-heading + * > * { break-before: page; }
+  .report-print-section > .report-print-heading + * > *:first-child { break-before: auto; }
   .report-print-heading {
     break-after: avoid;
     border-bottom: 2px solid #101622;
@@ -241,11 +248,21 @@
   }
 
   /* 차트 SVG: 인쇄 폭이 넓어지면 viewBox 비율대로 과도하게 커져 빈 페이지처럼 보임 → 높이 제한 */
-  .report-print-area svg { max-height: 320px !important; height: auto; }
+  #print-root svg { max-height: 320px !important; height: auto; }
 
   /* 제목·표 행·이미지만 끊김 방지, 나머지는 화면처럼 자연스럽게 흐르게 둔다 */
   h1, h2, h3, h4 { break-after: avoid; }
   tr, img { break-inside: avoid; }
+
+  /* 카드·패널·차트 블록은 페이지 경계에서 중간에 잘리지 않게 통째로 한 페이지에.
+     (한 페이지보다 큰 블록은 브라우저가 규칙을 무시하고 흘려보내므로 안전.)
+     Panel/히어로 카드는 .card-shadow, 그 외 카드는 둥근 모서리 컨테이너 패턴으로 잡는다. */
+  #print-root .card-shadow,
+  #print-root [class*="bg-surface-container"][class*="rounded-"],
+  #print-root figure,
+  #print-root table {
+    break-inside: avoid;
+  }
 
   /* sticky 탭 네비 등은 인쇄에서 위치 고정 해제 */
   .sticky { position: static !important; }

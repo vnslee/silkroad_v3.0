@@ -66,6 +66,27 @@ export function formatDate(dateString: string): string {
 }
 
 /**
+ * ISO 타임스탬프 → "YYYY-MM-DD HH:MM" (보고서 헤더 Generated 표시와 동일 형식).
+ * 값이 없으면 undefined, 파싱 실패 시 앞 16자만 잘라 'T'를 공백으로.
+ */
+export function formatTimestamp(raw: string | null | undefined): string | undefined {
+  if (!raw) return undefined
+  const d = new Date(raw)
+  if (Number.isNaN(d.getTime())) return raw.slice(0, 16).replace('T', ' ')
+  const p = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`
+}
+
+/**
+ * 리서치 버전 타임스탬프("YYYY-MM-DDTHHMM") → "YYYY-MM-DD HH:MM" (드롭다운 라벨용).
+ * 형식이 어긋나면 원본을 그대로 반환.
+ */
+export function formatVersionLabel(version: string): string {
+  const m = /^(\d{4}-\d{2}-\d{2})T(\d{2})(\d{2})$/.exec(version)
+  return m ? `${m[1]} ${m[2]}:${m[3]}` : version
+}
+
+/**
  * 스코어에 따른 색상 반환 (0-100) — mockup 퀵윈 순위 색 체계와 일치.
  *   ≥70 green(#137333) · ≥55 blue(#1967d2) · ≥45 amber(#b06000) · 그 미만 red(#c5221f)
  */
